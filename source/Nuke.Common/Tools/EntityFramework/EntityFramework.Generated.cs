@@ -56,6 +56,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--force</c> via <see cref="EntityFrameworkDatabaseDropSettings.Force"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDatabaseDropSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDatabaseDropSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDatabaseDropSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDatabaseDropSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDatabaseDropSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDatabaseDropSettings.Project"/></li>
@@ -84,6 +85,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--force</c> via <see cref="EntityFrameworkDatabaseDropSettings.Force"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDatabaseDropSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDatabaseDropSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDatabaseDropSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDatabaseDropSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDatabaseDropSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDatabaseDropSettings.Project"/></li>
@@ -109,6 +111,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--force</c> via <see cref="EntityFrameworkDatabaseDropSettings.Force"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDatabaseDropSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDatabaseDropSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDatabaseDropSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDatabaseDropSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDatabaseDropSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDatabaseDropSettings.Project"/></li>
@@ -130,10 +133,11 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <ul>
         ///     <li><c>&lt;migration&gt;</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Migration"/></li>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Configuration"/></li>
+        ///     <li><c>--connection</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Connection"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Context"/></li>
-        ///     <li><c>--dry-run</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.DryRun"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Project"/></li>
@@ -158,10 +162,11 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <ul>
         ///     <li><c>&lt;migration&gt;</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Migration"/></li>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Configuration"/></li>
+        ///     <li><c>--connection</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Connection"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Context"/></li>
-        ///     <li><c>--dry-run</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.DryRun"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Project"/></li>
@@ -183,10 +188,11 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <ul>
         ///     <li><c>&lt;migration&gt;</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Migration"/></li>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Configuration"/></li>
+        ///     <li><c>--connection</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Connection"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Context"/></li>
-        ///     <li><c>--dry-run</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.DryRun"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDatabaseUpdateSettings.Project"/></li>
@@ -210,6 +216,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextInfoSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextInfoSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextInfoSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextInfoSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextInfoSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextInfoSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextInfoSettings.Project"/></li>
@@ -236,6 +243,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextInfoSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextInfoSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextInfoSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextInfoSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextInfoSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextInfoSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextInfoSettings.Project"/></li>
@@ -259,6 +267,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextInfoSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextInfoSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextInfoSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextInfoSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextInfoSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextInfoSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextInfoSettings.Project"/></li>
@@ -282,6 +291,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextListSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextListSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextListSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextListSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextListSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextListSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextListSettings.Project"/></li>
@@ -308,6 +318,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextListSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextListSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextListSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextListSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextListSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextListSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextListSettings.Project"/></li>
@@ -331,6 +342,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextListSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextListSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextListSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextListSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextListSettings.NoColor"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextListSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextListSettings.Project"/></li>
@@ -355,11 +367,16 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Configuration"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Context"/></li>
         ///     <li><c>--context-dir</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.ContextDirectory"/></li>
+        ///     <li><c>--context-namespace</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.ContextNamespace"/></li>
         ///     <li><c>--data-annotations</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.DataAnnotations"/></li>
         ///     <li><c>--force</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Force"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Json"/></li>
+        ///     <li><c>--namespace</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Namespace"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoColor"/></li>
+        ///     <li><c>--no-onconfiguring</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoOnConfiguring"/></li>
+        ///     <li><c>--no-pluralize</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoPluralize"/></li>
         ///     <li><c>--output-dir</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.OutputDirectory"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Project"/></li>
@@ -390,11 +407,16 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Configuration"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Context"/></li>
         ///     <li><c>--context-dir</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.ContextDirectory"/></li>
+        ///     <li><c>--context-namespace</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.ContextNamespace"/></li>
         ///     <li><c>--data-annotations</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.DataAnnotations"/></li>
         ///     <li><c>--force</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Force"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Json"/></li>
+        ///     <li><c>--namespace</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Namespace"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoColor"/></li>
+        ///     <li><c>--no-onconfiguring</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoOnConfiguring"/></li>
+        ///     <li><c>--no-pluralize</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoPluralize"/></li>
         ///     <li><c>--output-dir</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.OutputDirectory"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Project"/></li>
@@ -422,11 +444,16 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Configuration"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Context"/></li>
         ///     <li><c>--context-dir</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.ContextDirectory"/></li>
+        ///     <li><c>--context-namespace</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.ContextNamespace"/></li>
         ///     <li><c>--data-annotations</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.DataAnnotations"/></li>
         ///     <li><c>--force</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Force"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Json"/></li>
+        ///     <li><c>--namespace</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Namespace"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoColor"/></li>
+        ///     <li><c>--no-onconfiguring</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoOnConfiguring"/></li>
+        ///     <li><c>--no-pluralize</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.NoPluralize"/></li>
         ///     <li><c>--output-dir</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.OutputDirectory"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextScaffoldSettings.Project"/></li>
@@ -443,6 +470,84 @@ namespace Nuke.Common.Tools.EntityFramework
             return configurator.Invoke(EntityFrameworkDbContextScaffold, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary>
+        ///   <p>The <c>dotnet ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDbContextScriptSettings.Configuration"/></li>
+        ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextScriptSettings.Context"/></li>
+        ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextScriptSettings.Framework"/></li>
+        ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextScriptSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextScriptSettings.NoBuild"/></li>
+        ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextScriptSettings.NoColor"/></li>
+        ///     <li><c>--output</c> via <see cref="EntityFrameworkDbContextScriptSettings.Output"/></li>
+        ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextScriptSettings.PrefixOutput"/></li>
+        ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextScriptSettings.Project"/></li>
+        ///     <li><c>--runtime</c> via <see cref="EntityFrameworkDbContextScriptSettings.Runtime"/></li>
+        ///     <li><c>--startup-project</c> via <see cref="EntityFrameworkDbContextScriptSettings.StartupProject"/></li>
+        ///     <li><c>--verbose</c> via <see cref="EntityFrameworkDbContextScriptSettings.Verbose"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> EntityFrameworkDbContextScript(EntityFrameworkDbContextScriptSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new EntityFrameworkDbContextScriptSettings();
+            using var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDbContextScriptSettings.Configuration"/></li>
+        ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextScriptSettings.Context"/></li>
+        ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextScriptSettings.Framework"/></li>
+        ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextScriptSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextScriptSettings.NoBuild"/></li>
+        ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextScriptSettings.NoColor"/></li>
+        ///     <li><c>--output</c> via <see cref="EntityFrameworkDbContextScriptSettings.Output"/></li>
+        ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextScriptSettings.PrefixOutput"/></li>
+        ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextScriptSettings.Project"/></li>
+        ///     <li><c>--runtime</c> via <see cref="EntityFrameworkDbContextScriptSettings.Runtime"/></li>
+        ///     <li><c>--startup-project</c> via <see cref="EntityFrameworkDbContextScriptSettings.StartupProject"/></li>
+        ///     <li><c>--verbose</c> via <see cref="EntityFrameworkDbContextScriptSettings.Verbose"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> EntityFrameworkDbContextScript(Configure<EntityFrameworkDbContextScriptSettings> configurator)
+        {
+            return EntityFrameworkDbContextScript(configurator(new EntityFrameworkDbContextScriptSettings()));
+        }
+        /// <summary>
+        ///   <p>The <c>dotnet ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.</p>
+        ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--configuration</c> via <see cref="EntityFrameworkDbContextScriptSettings.Configuration"/></li>
+        ///     <li><c>--context</c> via <see cref="EntityFrameworkDbContextScriptSettings.Context"/></li>
+        ///     <li><c>--framework</c> via <see cref="EntityFrameworkDbContextScriptSettings.Framework"/></li>
+        ///     <li><c>--json</c> via <see cref="EntityFrameworkDbContextScriptSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkDbContextScriptSettings.NoBuild"/></li>
+        ///     <li><c>--no-color</c> via <see cref="EntityFrameworkDbContextScriptSettings.NoColor"/></li>
+        ///     <li><c>--output</c> via <see cref="EntityFrameworkDbContextScriptSettings.Output"/></li>
+        ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkDbContextScriptSettings.PrefixOutput"/></li>
+        ///     <li><c>--project</c> via <see cref="EntityFrameworkDbContextScriptSettings.Project"/></li>
+        ///     <li><c>--runtime</c> via <see cref="EntityFrameworkDbContextScriptSettings.Runtime"/></li>
+        ///     <li><c>--startup-project</c> via <see cref="EntityFrameworkDbContextScriptSettings.StartupProject"/></li>
+        ///     <li><c>--verbose</c> via <see cref="EntityFrameworkDbContextScriptSettings.Verbose"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(EntityFrameworkDbContextScriptSettings Settings, IReadOnlyCollection<Output> Output)> EntityFrameworkDbContextScript(CombinatorialConfigure<EntityFrameworkDbContextScriptSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(EntityFrameworkDbContextScript, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
         ///   <p>The <c>dotnet ef migrations add</c> command is used to add a new migration.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
         /// </summary>
@@ -454,6 +559,8 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsAddSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsAddSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsAddSettings.Json"/></li>
+        ///     <li><c>--namespace</c> via <see cref="EntityFrameworkMigrationsAddSettings.Namespace"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsAddSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsAddSettings.NoColor"/></li>
         ///     <li><c>--output-dir</c> via <see cref="EntityFrameworkMigrationsAddSettings.OutputDirectory"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsAddSettings.PrefixOutput"/></li>
@@ -482,6 +589,8 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsAddSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsAddSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsAddSettings.Json"/></li>
+        ///     <li><c>--namespace</c> via <see cref="EntityFrameworkMigrationsAddSettings.Namespace"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsAddSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsAddSettings.NoColor"/></li>
         ///     <li><c>--output-dir</c> via <see cref="EntityFrameworkMigrationsAddSettings.OutputDirectory"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsAddSettings.PrefixOutput"/></li>
@@ -507,6 +616,8 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsAddSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsAddSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsAddSettings.Json"/></li>
+        ///     <li><c>--namespace</c> via <see cref="EntityFrameworkMigrationsAddSettings.Namespace"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsAddSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsAddSettings.NoColor"/></li>
         ///     <li><c>--output-dir</c> via <see cref="EntityFrameworkMigrationsAddSettings.OutputDirectory"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsAddSettings.PrefixOutput"/></li>
@@ -528,10 +639,13 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkMigrationsListSettings.Configuration"/></li>
+        ///     <li><c>--connection</c> via <see cref="EntityFrameworkMigrationsListSettings.Connection"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsListSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsListSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsListSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsListSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsListSettings.NoColor"/></li>
+        ///     <li><c>--no-connect</c> via <see cref="EntityFrameworkMigrationsListSettings.NoConnect"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsListSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsListSettings.Project"/></li>
         ///     <li><c>--runtime</c> via <see cref="EntityFrameworkMigrationsListSettings.Runtime"/></li>
@@ -554,10 +668,13 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkMigrationsListSettings.Configuration"/></li>
+        ///     <li><c>--connection</c> via <see cref="EntityFrameworkMigrationsListSettings.Connection"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsListSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsListSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsListSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsListSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsListSettings.NoColor"/></li>
+        ///     <li><c>--no-connect</c> via <see cref="EntityFrameworkMigrationsListSettings.NoConnect"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsListSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsListSettings.Project"/></li>
         ///     <li><c>--runtime</c> via <see cref="EntityFrameworkMigrationsListSettings.Runtime"/></li>
@@ -577,10 +694,13 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkMigrationsListSettings.Configuration"/></li>
+        ///     <li><c>--connection</c> via <see cref="EntityFrameworkMigrationsListSettings.Connection"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsListSettings.Context"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsListSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsListSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsListSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsListSettings.NoColor"/></li>
+        ///     <li><c>--no-connect</c> via <see cref="EntityFrameworkMigrationsListSettings.NoConnect"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsListSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsListSettings.Project"/></li>
         ///     <li><c>--runtime</c> via <see cref="EntityFrameworkMigrationsListSettings.Runtime"/></li>
@@ -601,10 +721,11 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <ul>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Configuration"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Context"/></li>
+        ///     <li><c>--force</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Force"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.NoColor"/></li>
-        ///     <li><c>--output-dir</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.OutputDirectory"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Project"/></li>
         ///     <li><c>--runtime</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Runtime"/></li>
@@ -628,10 +749,11 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <ul>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Configuration"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Context"/></li>
+        ///     <li><c>--force</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Force"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.NoColor"/></li>
-        ///     <li><c>--output-dir</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.OutputDirectory"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Project"/></li>
         ///     <li><c>--runtime</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Runtime"/></li>
@@ -652,10 +774,11 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   <ul>
         ///     <li><c>--configuration</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Configuration"/></li>
         ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Context"/></li>
+        ///     <li><c>--force</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Force"/></li>
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Framework"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.NoColor"/></li>
-        ///     <li><c>--output-dir</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.OutputDirectory"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Project"/></li>
         ///     <li><c>--runtime</c> via <see cref="EntityFrameworkMigrationsRemoveSettings.Runtime"/></li>
@@ -681,7 +804,9 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Framework"/></li>
         ///     <li><c>--idempotent</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Idempotent"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsScriptSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsScriptSettings.NoColor"/></li>
+        ///     <li><c>--no-transactions</c> via <see cref="EntityFrameworkMigrationsScriptSettings.NoTransactions"/></li>
         ///     <li><c>--output</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Output"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsScriptSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Project"/></li>
@@ -711,7 +836,9 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Framework"/></li>
         ///     <li><c>--idempotent</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Idempotent"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsScriptSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsScriptSettings.NoColor"/></li>
+        ///     <li><c>--no-transactions</c> via <see cref="EntityFrameworkMigrationsScriptSettings.NoTransactions"/></li>
         ///     <li><c>--output</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Output"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsScriptSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Project"/></li>
@@ -738,7 +865,9 @@ namespace Nuke.Common.Tools.EntityFramework
         ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Framework"/></li>
         ///     <li><c>--idempotent</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Idempotent"/></li>
         ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Json"/></li>
+        ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsScriptSettings.NoBuild"/></li>
         ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsScriptSettings.NoColor"/></li>
+        ///     <li><c>--no-transactions</c> via <see cref="EntityFrameworkMigrationsScriptSettings.NoTransactions"/></li>
         ///     <li><c>--output</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Output"/></li>
         ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsScriptSettings.PrefixOutput"/></li>
         ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsScriptSettings.Project"/></li>
@@ -803,6 +932,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string Runtime { get; internal set; }
         /// <summary>
+        ///   Don't build the project. Intended to be used when the build is up-to-date.
+        /// </summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary>
         ///   Don't colorize output.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
@@ -827,6 +960,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--framework {value}", Framework)
               .Add("--configuration {value}", Configuration)
               .Add("--runtime {value}", Runtime)
+              .Add("--no-build", NoBuild)
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
@@ -853,9 +987,9 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string Migration { get; internal set; }
         /// <summary>
-        ///   This option shows which database would be dropped, but doesn't drop it.
+        ///   The connection string to the database. Defaults to the one specified in <c>AddDbContext</c> or <c>OnConfiguring</c>. Added in EF Core 5.0.
         /// </summary>
-        public virtual bool? DryRun { get; internal set; }
+        public virtual string Connection { get; internal set; }
         /// <summary>
         ///   Show JSON output.
         /// </summary>
@@ -885,6 +1019,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string Runtime { get; internal set; }
         /// <summary>
+        ///   Don't build the project. Intended to be used when the build is up-to-date.
+        /// </summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary>
         ///   Don't colorize output.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
@@ -901,7 +1039,7 @@ namespace Nuke.Common.Tools.EntityFramework
             arguments
               .Add("ef database update")
               .Add("{value}", Migration)
-              .Add("--dry-run", DryRun)
+              .Add("--connection {value}", Connection)
               .Add("--json", Json)
               .Add("--context {value}", Context)
               .Add("--project {value}", Project)
@@ -909,6 +1047,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--framework {value}", Framework)
               .Add("--configuration {value}", Configuration)
               .Add("--runtime {value}", Runtime)
+              .Add("--no-build", NoBuild)
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
@@ -959,6 +1098,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string Runtime { get; internal set; }
         /// <summary>
+        ///   Don't build the project. Intended to be used when the build is up-to-date.
+        /// </summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary>
         ///   Don't colorize output.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
@@ -981,6 +1124,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--framework {value}", Framework)
               .Add("--configuration {value}", Configuration)
               .Add("--runtime {value}", Runtime)
+              .Add("--no-build", NoBuild)
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
@@ -1031,6 +1175,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string Runtime { get; internal set; }
         /// <summary>
+        ///   Don't build the project. Intended to be used when the build is up-to-date.
+        /// </summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary>
         ///   Don't colorize output.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
@@ -1053,6 +1201,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--framework {value}", Framework)
               .Add("--configuration {value}", Configuration)
               .Add("--runtime {value}", Runtime)
+              .Add("--no-build", NoBuild)
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
@@ -1095,6 +1244,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string ContextDirectory { get; internal set; }
         /// <summary>
+        ///   The namespace to use for the generated <c>DbContext</c> class. Note: overrides <c>--namespace</c>. Added in EF Core 5.0.
+        /// </summary>
+        public virtual string ContextNamespace { get; internal set; }
+        /// <summary>
         ///   Overwrite existing files.
         /// </summary>
         public virtual bool? Force { get; internal set; }
@@ -1102,6 +1255,10 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   The directory to put entity class files in. Paths are relative to the project directory.
         /// </summary>
         public virtual string OutputDirectory { get; internal set; }
+        /// <summary>
+        ///   The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0.
+        /// </summary>
+        public virtual string Namespace { get; internal set; }
         /// <summary>
         ///   The schemas of tables to generate entity types for. To specify multiple schemas, repeat <c>--schema</c> for each one. If this option is omitted, all schemas are included.
         /// </summary>
@@ -1116,6 +1273,14 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Use table and column names exactly as they appear in the database. If this option is omitted, database names are changed to more closely conform to C# name style conventions.
         /// </summary>
         public virtual bool? UseDatabaseNames { get; internal set; }
+        /// <summary>
+        ///   Suppresses generation of the <c>OnConfiguring</c> method in the generated <c>DbContext</c> class. Added in EF Core 5.0.
+        /// </summary>
+        public virtual bool? NoOnConfiguring { get; internal set; }
+        /// <summary>
+        ///   Don't use the pluralizer. Added in EF Core 5.0
+        /// </summary>
+        public virtual bool? NoPluralize { get; internal set; }
         /// <summary>
         ///   Show JSON output.
         /// </summary>
@@ -1141,6 +1306,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string Runtime { get; internal set; }
         /// <summary>
+        ///   Don't build the project. Intended to be used when the build is up-to-date.
+        /// </summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary>
         ///   Don't colorize output.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
@@ -1161,17 +1330,104 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--data-annotations", DataAnnotations)
               .Add("--context {value}", Context)
               .Add("--context-dir {value}", ContextDirectory)
+              .Add("--context-namespace {value}", ContextNamespace)
               .Add("--force", Force)
               .Add("--output-dir {value}", OutputDirectory)
+              .Add("--namespace {value}", Namespace)
               .Add("--schema {value}", Schemas)
               .Add("--table {value}", Tables)
               .Add("--use-database-names", UseDatabaseNames)
+              .Add("--no-onconfiguring", NoOnConfiguring)
+              .Add("--no-pluralize", NoPluralize)
               .Add("--json", Json)
               .Add("--project {value}", Project)
               .Add("--startup-project {value}", StartupProject)
               .Add("--framework {value}", Framework)
               .Add("--configuration {value}", Configuration)
               .Add("--runtime {value}", Runtime)
+              .Add("--no-build", NoBuild)
+              .Add("--no-color", NoColor)
+              .Add("--prefix-output", PrefixOutput)
+              .Add("--verbose", Verbose);
+            return base.ConfigureProcessArguments(arguments);
+        }
+    }
+    #endregion
+    #region EntityFrameworkDbContextScriptSettings
+    /// <summary>
+    ///   Used within <see cref="EntityFrameworkTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class EntityFrameworkDbContextScriptSettings : ToolSettings
+    {
+        /// <summary>
+        ///   Path to the EntityFramework executable.
+        /// </summary>
+        public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        /// <summary>
+        ///   The file to write the result to.
+        /// </summary>
+        public virtual string Output { get; internal set; }
+        /// <summary>
+        ///   Show JSON output.
+        /// </summary>
+        public virtual bool? Json { get; internal set; }
+        /// <summary>
+        ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
+        /// </summary>
+        public virtual string Context { get; internal set; }
+        /// <summary>
+        ///   Relative path to the project folder of the target project. Default value is the current folder.
+        /// </summary>
+        public virtual string Project { get; internal set; }
+        /// <summary>
+        ///   Relative path to the project folder of the startup project. Default value is the current folder.
+        /// </summary>
+        public virtual string StartupProject { get; internal set; }
+        /// <summary>
+        ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
+        /// </summary>
+        public virtual string Framework { get; internal set; }
+        /// <summary>
+        ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
+        /// </summary>
+        public virtual string Configuration { get; internal set; }
+        /// <summary>
+        ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
+        /// </summary>
+        public virtual string Runtime { get; internal set; }
+        /// <summary>
+        ///   Don't build the project. Intended to be used when the build is up-to-date.
+        /// </summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary>
+        ///   Don't colorize output.
+        /// </summary>
+        public virtual bool? NoColor { get; internal set; }
+        /// <summary>
+        ///   Prefix output with level.
+        /// </summary>
+        public virtual bool? PrefixOutput { get; internal set; }
+        /// <summary>
+        ///   Show verbose output.
+        /// </summary>
+        public virtual bool? Verbose { get; internal set; }
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
+        {
+            arguments
+              .Add("ef dbcontext script")
+              .Add("--output {value}", Output)
+              .Add("--json", Json)
+              .Add("--context {value}", Context)
+              .Add("--project {value}", Project)
+              .Add("--startup-project {value}", StartupProject)
+              .Add("--framework {value}", Framework)
+              .Add("--configuration {value}", Configuration)
+              .Add("--runtime {value}", Runtime)
+              .Add("--no-build", NoBuild)
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
@@ -1202,6 +1458,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
+        ///   The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0.
+        /// </summary>
+        public virtual string Namespace { get; internal set; }
+        /// <summary>
         ///   Show JSON output.
         /// </summary>
         public virtual bool? Json { get; internal set; }
@@ -1230,6 +1490,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string Runtime { get; internal set; }
         /// <summary>
+        ///   Don't build the project. Intended to be used when the build is up-to-date.
+        /// </summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary>
         ///   Don't colorize output.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
@@ -1247,6 +1511,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("ef migrations add")
               .Add("{value}", Name)
               .Add("--output-dir {value}", OutputDirectory)
+              .Add("--namespace {value}", Namespace)
               .Add("--json", Json)
               .Add("--context {value}", Context)
               .Add("--project {value}", Project)
@@ -1254,6 +1519,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--framework {value}", Framework)
               .Add("--configuration {value}", Configuration)
               .Add("--runtime {value}", Runtime)
+              .Add("--no-build", NoBuild)
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
@@ -1276,6 +1542,14 @@ namespace Nuke.Common.Tools.EntityFramework
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
         public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
+        ///   The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring. Added in EF Core 5.0.
+        /// </summary>
+        public virtual string Connection { get; internal set; }
+        /// <summary>
+        ///   Don't connect to the database. Added in EF Core 5.0.
+        /// </summary>
+        public virtual bool? NoConnect { get; internal set; }
+        /// <summary>
         ///   Show JSON output.
         /// </summary>
         public virtual bool? Json { get; internal set; }
@@ -1304,6 +1578,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string Runtime { get; internal set; }
         /// <summary>
+        ///   Don't build the project. Intended to be used when the build is up-to-date.
+        /// </summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary>
         ///   Don't colorize output.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
@@ -1319,6 +1597,8 @@ namespace Nuke.Common.Tools.EntityFramework
         {
             arguments
               .Add("ef migrations list")
+              .Add("--connection {value}", Connection)
+              .Add("--no-connect", NoConnect)
               .Add("--json", Json)
               .Add("--context {value}", Context)
               .Add("--project {value}", Project)
@@ -1326,6 +1606,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--framework {value}", Framework)
               .Add("--configuration {value}", Configuration)
               .Add("--runtime {value}", Runtime)
+              .Add("--no-build", NoBuild)
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
@@ -1348,9 +1629,9 @@ namespace Nuke.Common.Tools.EntityFramework
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
         public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
-        ///   The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'.
+        ///   Revert the migration (roll back the changes that were applied to the database).
         /// </summary>
-        public virtual string OutputDirectory { get; internal set; }
+        public virtual bool? Force { get; internal set; }
         /// <summary>
         ///   Show JSON output.
         /// </summary>
@@ -1380,6 +1661,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string Runtime { get; internal set; }
         /// <summary>
+        ///   Don't build the project. Intended to be used when the build is up-to-date.
+        /// </summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary>
         ///   Don't colorize output.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
@@ -1395,7 +1680,7 @@ namespace Nuke.Common.Tools.EntityFramework
         {
             arguments
               .Add("ef migrations remove")
-              .Add("--output-dir {value}", OutputDirectory)
+              .Add("--force", Force)
               .Add("--json", Json)
               .Add("--context {value}", Context)
               .Add("--project {value}", Project)
@@ -1403,6 +1688,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--framework {value}", Framework)
               .Add("--configuration {value}", Configuration)
               .Add("--runtime {value}", Runtime)
+              .Add("--no-build", NoBuild)
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
@@ -1441,6 +1727,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual bool? Idempotent { get; internal set; }
         /// <summary>
+        ///   Don't generate SQL transaction statements. Added in EF Core 5.0.
+        /// </summary>
+        public virtual bool? NoTransactions { get; internal set; }
+        /// <summary>
         ///   Show JSON output.
         /// </summary>
         public virtual bool? Json { get; internal set; }
@@ -1469,6 +1759,10 @@ namespace Nuke.Common.Tools.EntityFramework
         /// </summary>
         public virtual string Runtime { get; internal set; }
         /// <summary>
+        ///   Don't build the project. Intended to be used when the build is up-to-date.
+        /// </summary>
+        public virtual bool? NoBuild { get; internal set; }
+        /// <summary>
         ///   Don't colorize output.
         /// </summary>
         public virtual bool? NoColor { get; internal set; }
@@ -1488,6 +1782,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("{value}", To)
               .Add("--output {value}", Output)
               .Add("--idempotent", Idempotent)
+              .Add("--no-transactions", NoTransactions)
               .Add("--json", Json)
               .Add("--context {value}", Context)
               .Add("--project {value}", Project)
@@ -1495,6 +1790,7 @@ namespace Nuke.Common.Tools.EntityFramework
               .Add("--framework {value}", Framework)
               .Add("--configuration {value}", Configuration)
               .Add("--runtime {value}", Runtime)
+              .Add("--no-build", NoBuild)
               .Add("--no-color", NoColor)
               .Add("--prefix-output", PrefixOutput)
               .Add("--verbose", Verbose);
@@ -1825,6 +2121,63 @@ namespace Nuke.Common.Tools.EntityFramework
             return toolSettings;
         }
         #endregion
+        #region NoBuild
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDatabaseDropSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkDatabaseDropSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDatabaseDropSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDatabaseDropSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDatabaseDropSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDatabaseDropSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkDatabaseDropSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
+            return toolSettings;
+        }
+        #endregion
         #region NoColor
         /// <summary>
         ///   <p><em>Sets <see cref="EntityFrameworkDatabaseDropSettings.NoColor"/></em></p>
@@ -2030,60 +2383,27 @@ namespace Nuke.Common.Tools.EntityFramework
             return toolSettings;
         }
         #endregion
-        #region DryRun
+        #region Connection
         /// <summary>
-        ///   <p><em>Sets <see cref="EntityFrameworkDatabaseUpdateSettings.DryRun"/></em></p>
-        ///   <p>This option shows which database would be dropped, but doesn't drop it.</p>
+        ///   <p><em>Sets <see cref="EntityFrameworkDatabaseUpdateSettings.Connection"/></em></p>
+        ///   <p>The connection string to the database. Defaults to the one specified in <c>AddDbContext</c> or <c>OnConfiguring</c>. Added in EF Core 5.0.</p>
         /// </summary>
         [Pure]
-        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : EntityFrameworkDatabaseUpdateSettings
+        public static T SetConnection<T>(this T toolSettings, string connection) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DryRun = dryRun;
+            toolSettings.Connection = connection;
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Resets <see cref="EntityFrameworkDatabaseUpdateSettings.DryRun"/></em></p>
-        ///   <p>This option shows which database would be dropped, but doesn't drop it.</p>
+        ///   <p><em>Resets <see cref="EntityFrameworkDatabaseUpdateSettings.Connection"/></em></p>
+        ///   <p>The connection string to the database. Defaults to the one specified in <c>AddDbContext</c> or <c>OnConfiguring</c>. Added in EF Core 5.0.</p>
         /// </summary>
         [Pure]
-        public static T ResetDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
+        public static T ResetConnection<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.DryRun = null;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Enables <see cref="EntityFrameworkDatabaseUpdateSettings.DryRun"/></em></p>
-        ///   <p>This option shows which database would be dropped, but doesn't drop it.</p>
-        /// </summary>
-        [Pure]
-        public static T EnableDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DryRun = true;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Disables <see cref="EntityFrameworkDatabaseUpdateSettings.DryRun"/></em></p>
-        ///   <p>This option shows which database would be dropped, but doesn't drop it.</p>
-        /// </summary>
-        [Pure]
-        public static T DisableDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DryRun = false;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Toggles <see cref="EntityFrameworkDatabaseUpdateSettings.DryRun"/></em></p>
-        ///   <p>This option shows which database would be dropped, but doesn't drop it.</p>
-        /// </summary>
-        [Pure]
-        public static T ToggleDryRun<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.DryRun = !toolSettings.DryRun;
+            toolSettings.Connection = null;
             return toolSettings;
         }
         #endregion
@@ -2285,6 +2605,63 @@ namespace Nuke.Common.Tools.EntityFramework
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoBuild
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDatabaseUpdateSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkDatabaseUpdateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDatabaseUpdateSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDatabaseUpdateSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDatabaseUpdateSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDatabaseUpdateSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkDatabaseUpdateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
             return toolSettings;
         }
         #endregion
@@ -2670,6 +3047,63 @@ namespace Nuke.Common.Tools.EntityFramework
             return toolSettings;
         }
         #endregion
+        #region NoBuild
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextInfoSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkDbContextInfoSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextInfoSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDbContextInfoSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDbContextInfoSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDbContextInfoSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextInfoSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
+            return toolSettings;
+        }
+        #endregion
         #region NoColor
         /// <summary>
         ///   <p><em>Sets <see cref="EntityFrameworkDbContextInfoSettings.NoColor"/></em></p>
@@ -3052,6 +3486,63 @@ namespace Nuke.Common.Tools.EntityFramework
             return toolSettings;
         }
         #endregion
+        #region NoBuild
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextListSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkDbContextListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextListSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDbContextListSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDbContextListSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDbContextListSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
+            return toolSettings;
+        }
+        #endregion
         #region NoColor
         /// <summary>
         ///   <p><em>Sets <see cref="EntityFrameworkDbContextListSettings.NoColor"/></em></p>
@@ -3386,6 +3877,30 @@ namespace Nuke.Common.Tools.EntityFramework
             return toolSettings;
         }
         #endregion
+        #region ContextNamespace
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScaffoldSettings.ContextNamespace"/></em></p>
+        ///   <p>The namespace to use for the generated <c>DbContext</c> class. Note: overrides <c>--namespace</c>. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T SetContextNamespace<T>(this T toolSettings, string contextNamespace) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ContextNamespace = contextNamespace;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScaffoldSettings.ContextNamespace"/></em></p>
+        ///   <p>The namespace to use for the generated <c>DbContext</c> class. Note: overrides <c>--namespace</c>. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetContextNamespace<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ContextNamespace = null;
+            return toolSettings;
+        }
+        #endregion
         #region Force
         /// <summary>
         ///   <p><em>Sets <see cref="EntityFrameworkDbContextScaffoldSettings.Force"/></em></p>
@@ -3464,6 +3979,30 @@ namespace Nuke.Common.Tools.EntityFramework
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Namespace
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScaffoldSettings.Namespace"/></em></p>
+        ///   <p>The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNamespace<T>(this T toolSettings, string @namespace) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Namespace = @namespace;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScaffoldSettings.Namespace"/></em></p>
+        ///   <p>The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNamespace<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Namespace = null;
             return toolSettings;
         }
         #endregion
@@ -3686,6 +4225,120 @@ namespace Nuke.Common.Tools.EntityFramework
             return toolSettings;
         }
         #endregion
+        #region NoOnConfiguring
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScaffoldSettings.NoOnConfiguring"/></em></p>
+        ///   <p>Suppresses generation of the <c>OnConfiguring</c> method in the generated <c>DbContext</c> class. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoOnConfiguring<T>(this T toolSettings, bool? noOnConfiguring) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoOnConfiguring = noOnConfiguring;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScaffoldSettings.NoOnConfiguring"/></em></p>
+        ///   <p>Suppresses generation of the <c>OnConfiguring</c> method in the generated <c>DbContext</c> class. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoOnConfiguring<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoOnConfiguring = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDbContextScaffoldSettings.NoOnConfiguring"/></em></p>
+        ///   <p>Suppresses generation of the <c>OnConfiguring</c> method in the generated <c>DbContext</c> class. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoOnConfiguring<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoOnConfiguring = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDbContextScaffoldSettings.NoOnConfiguring"/></em></p>
+        ///   <p>Suppresses generation of the <c>OnConfiguring</c> method in the generated <c>DbContext</c> class. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoOnConfiguring<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoOnConfiguring = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDbContextScaffoldSettings.NoOnConfiguring"/></em></p>
+        ///   <p>Suppresses generation of the <c>OnConfiguring</c> method in the generated <c>DbContext</c> class. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoOnConfiguring<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoOnConfiguring = !toolSettings.NoOnConfiguring;
+            return toolSettings;
+        }
+        #endregion
+        #region NoPluralize
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScaffoldSettings.NoPluralize"/></em></p>
+        ///   <p>Don't use the pluralizer. Added in EF Core 5.0</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoPluralize<T>(this T toolSettings, bool? noPluralize) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoPluralize = noPluralize;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScaffoldSettings.NoPluralize"/></em></p>
+        ///   <p>Don't use the pluralizer. Added in EF Core 5.0</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoPluralize<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoPluralize = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDbContextScaffoldSettings.NoPluralize"/></em></p>
+        ///   <p>Don't use the pluralizer. Added in EF Core 5.0</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoPluralize<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoPluralize = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDbContextScaffoldSettings.NoPluralize"/></em></p>
+        ///   <p>Don't use the pluralizer. Added in EF Core 5.0</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoPluralize<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoPluralize = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDbContextScaffoldSettings.NoPluralize"/></em></p>
+        ///   <p>Don't use the pluralizer. Added in EF Core 5.0</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoPluralize<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoPluralize = !toolSettings.NoPluralize;
+            return toolSettings;
+        }
+        #endregion
         #region Json
         /// <summary>
         ///   <p><em>Sets <see cref="EntityFrameworkDbContextScaffoldSettings.Json"/></em></p>
@@ -3863,6 +4516,63 @@ namespace Nuke.Common.Tools.EntityFramework
             return toolSettings;
         }
         #endregion
+        #region NoBuild
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScaffoldSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScaffoldSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDbContextScaffoldSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDbContextScaffoldSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDbContextScaffoldSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextScaffoldSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
+            return toolSettings;
+        }
+        #endregion
         #region NoColor
         /// <summary>
         ///   <p><em>Sets <see cref="EntityFrameworkDbContextScaffoldSettings.NoColor"/></em></p>
@@ -4036,6 +4746,469 @@ namespace Nuke.Common.Tools.EntityFramework
         #endregion
     }
     #endregion
+    #region EntityFrameworkDbContextScriptSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="EntityFrameworkTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class EntityFrameworkDbContextScriptSettingsExtensions
+    {
+        #region Output
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.Output"/></em></p>
+        ///   <p>The file to write the result to.</p>
+        /// </summary>
+        [Pure]
+        public static T SetOutput<T>(this T toolSettings, string output) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Output = output;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.Output"/></em></p>
+        ///   <p>The file to write the result to.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Output = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Json
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.Json"/></em></p>
+        ///   <p>Show JSON output.</p>
+        /// </summary>
+        [Pure]
+        public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Json = json;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.Json"/></em></p>
+        ///   <p>Show JSON output.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Json = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDbContextScriptSettings.Json"/></em></p>
+        ///   <p>Show JSON output.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Json = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDbContextScriptSettings.Json"/></em></p>
+        ///   <p>Show JSON output.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Json = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDbContextScriptSettings.Json"/></em></p>
+        ///   <p>Show JSON output.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Json = !toolSettings.Json;
+            return toolSettings;
+        }
+        #endregion
+        #region Context
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.Context"/></em></p>
+        ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
+        /// </summary>
+        [Pure]
+        public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Context = context;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.Context"/></em></p>
+        ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Context = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Project
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.Project"/></em></p>
+        ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
+        /// </summary>
+        [Pure]
+        public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = project;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.Project"/></em></p>
+        ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Project = null;
+            return toolSettings;
+        }
+        #endregion
+        #region StartupProject
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.StartupProject"/></em></p>
+        ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
+        /// </summary>
+        [Pure]
+        public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StartupProject = startupProject;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.StartupProject"/></em></p>
+        ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.StartupProject = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Framework
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.Framework"/></em></p>
+        ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = framework;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.Framework"/></em></p>
+        ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Framework = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Configuration
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.Configuration"/></em></p>
+        ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = configuration;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.Configuration"/></em></p>
+        ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Configuration = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Runtime
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.Runtime"/></em></p>
+        ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = runtime;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.Runtime"/></em></p>
+        ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Runtime = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoBuild
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDbContextScriptSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDbContextScriptSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDbContextScriptSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
+            return toolSettings;
+        }
+        #endregion
+        #region NoColor
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.NoColor"/></em></p>
+        ///   <p>Don't colorize output.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoColor = noColor;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.NoColor"/></em></p>
+        ///   <p>Don't colorize output.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoColor = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDbContextScriptSettings.NoColor"/></em></p>
+        ///   <p>Don't colorize output.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoColor = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDbContextScriptSettings.NoColor"/></em></p>
+        ///   <p>Don't colorize output.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoColor = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDbContextScriptSettings.NoColor"/></em></p>
+        ///   <p>Don't colorize output.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoColor = !toolSettings.NoColor;
+            return toolSettings;
+        }
+        #endregion
+        #region PrefixOutput
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.PrefixOutput"/></em></p>
+        ///   <p>Prefix output with level.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PrefixOutput = prefixOutput;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.PrefixOutput"/></em></p>
+        ///   <p>Prefix output with level.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PrefixOutput = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDbContextScriptSettings.PrefixOutput"/></em></p>
+        ///   <p>Prefix output with level.</p>
+        /// </summary>
+        [Pure]
+        public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PrefixOutput = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDbContextScriptSettings.PrefixOutput"/></em></p>
+        ///   <p>Prefix output with level.</p>
+        /// </summary>
+        [Pure]
+        public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PrefixOutput = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDbContextScriptSettings.PrefixOutput"/></em></p>
+        ///   <p>Prefix output with level.</p>
+        /// </summary>
+        [Pure]
+        public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
+            return toolSettings;
+        }
+        #endregion
+        #region Verbose
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkDbContextScriptSettings.Verbose"/></em></p>
+        ///   <p>Show verbose output.</p>
+        /// </summary>
+        [Pure]
+        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = verbose;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkDbContextScriptSettings.Verbose"/></em></p>
+        ///   <p>Show verbose output.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkDbContextScriptSettings.Verbose"/></em></p>
+        ///   <p>Show verbose output.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkDbContextScriptSettings.Verbose"/></em></p>
+        ///   <p>Show verbose output.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkDbContextScriptSettings.Verbose"/></em></p>
+        ///   <p>Show verbose output.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkDbContextScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Verbose = !toolSettings.Verbose;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
     #region EntityFrameworkMigrationsAddSettingsExtensions
     /// <summary>
     ///   Used within <see cref="EntityFrameworkTasks"/>.
@@ -4089,6 +5262,30 @@ namespace Nuke.Common.Tools.EntityFramework
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Namespace
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkMigrationsAddSettings.Namespace"/></em></p>
+        ///   <p>The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNamespace<T>(this T toolSettings, string @namespace) where T : EntityFrameworkMigrationsAddSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Namespace = @namespace;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkMigrationsAddSettings.Namespace"/></em></p>
+        ///   <p>The namespace to use for all generated classes. Defaults to generated from the root namespace and the output directory. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNamespace<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Namespace = null;
             return toolSettings;
         }
         #endregion
@@ -4293,6 +5490,63 @@ namespace Nuke.Common.Tools.EntityFramework
             return toolSettings;
         }
         #endregion
+        #region NoBuild
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkMigrationsAddSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkMigrationsAddSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkMigrationsAddSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkMigrationsAddSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkMigrationsAddSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsAddSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsAddSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
+            return toolSettings;
+        }
+        #endregion
         #region NoColor
         /// <summary>
         ///   <p><em>Sets <see cref="EntityFrameworkMigrationsAddSettings.NoColor"/></em></p>
@@ -4474,6 +5728,87 @@ namespace Nuke.Common.Tools.EntityFramework
     [ExcludeFromCodeCoverage]
     public static partial class EntityFrameworkMigrationsListSettingsExtensions
     {
+        #region Connection
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkMigrationsListSettings.Connection"/></em></p>
+        ///   <p>The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T SetConnection<T>(this T toolSettings, string connection) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Connection = connection;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkMigrationsListSettings.Connection"/></em></p>
+        ///   <p>The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetConnection<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Connection = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoConnect
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkMigrationsListSettings.NoConnect"/></em></p>
+        ///   <p>Don't connect to the database. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoConnect<T>(this T toolSettings, bool? noConnect) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConnect = noConnect;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkMigrationsListSettings.NoConnect"/></em></p>
+        ///   <p>Don't connect to the database. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoConnect<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConnect = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkMigrationsListSettings.NoConnect"/></em></p>
+        ///   <p>Don't connect to the database. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoConnect<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConnect = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkMigrationsListSettings.NoConnect"/></em></p>
+        ///   <p>Don't connect to the database. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoConnect<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConnect = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsListSettings.NoConnect"/></em></p>
+        ///   <p>Don't connect to the database. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoConnect<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoConnect = !toolSettings.NoConnect;
+            return toolSettings;
+        }
+        #endregion
         #region Json
         /// <summary>
         ///   <p><em>Sets <see cref="EntityFrameworkMigrationsListSettings.Json"/></em></p>
@@ -4675,6 +6010,63 @@ namespace Nuke.Common.Tools.EntityFramework
             return toolSettings;
         }
         #endregion
+        #region NoBuild
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkMigrationsListSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkMigrationsListSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkMigrationsListSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkMigrationsListSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsListSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsListSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
+            return toolSettings;
+        }
+        #endregion
         #region NoColor
         /// <summary>
         ///   <p><em>Sets <see cref="EntityFrameworkMigrationsListSettings.NoColor"/></em></p>
@@ -4856,27 +6248,60 @@ namespace Nuke.Common.Tools.EntityFramework
     [ExcludeFromCodeCoverage]
     public static partial class EntityFrameworkMigrationsRemoveSettingsExtensions
     {
-        #region OutputDirectory
+        #region Force
         /// <summary>
-        ///   <p><em>Sets <see cref="EntityFrameworkMigrationsRemoveSettings.OutputDirectory"/></em></p>
-        ///   <p>The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'.</p>
+        ///   <p><em>Sets <see cref="EntityFrameworkMigrationsRemoveSettings.Force"/></em></p>
+        ///   <p>Revert the migration (roll back the changes that were applied to the database).</p>
         /// </summary>
         [Pure]
-        public static T SetOutputDirectory<T>(this T toolSettings, string outputDirectory) where T : EntityFrameworkMigrationsRemoveSettings
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OutputDirectory = outputDirectory;
+            toolSettings.Force = force;
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Resets <see cref="EntityFrameworkMigrationsRemoveSettings.OutputDirectory"/></em></p>
-        ///   <p>The directory (and sub-namespace) to use. Paths are relative to the project directory. Defaults to 'Migrations'.</p>
+        ///   <p><em>Resets <see cref="EntityFrameworkMigrationsRemoveSettings.Force"/></em></p>
+        ///   <p>Revert the migration (roll back the changes that were applied to the database).</p>
         /// </summary>
         [Pure]
-        public static T ResetOutputDirectory<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
+        public static T ResetForce<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.OutputDirectory = null;
+            toolSettings.Force = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkMigrationsRemoveSettings.Force"/></em></p>
+        ///   <p>Revert the migration (roll back the changes that were applied to the database).</p>
+        /// </summary>
+        [Pure]
+        public static T EnableForce<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkMigrationsRemoveSettings.Force"/></em></p>
+        ///   <p>Revert the migration (roll back the changes that were applied to the database).</p>
+        /// </summary>
+        [Pure]
+        public static T DisableForce<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsRemoveSettings.Force"/></em></p>
+        ///   <p>Revert the migration (roll back the changes that were applied to the database).</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleForce<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = !toolSettings.Force;
             return toolSettings;
         }
         #endregion
@@ -5078,6 +6503,63 @@ namespace Nuke.Common.Tools.EntityFramework
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoBuild
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkMigrationsRemoveSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkMigrationsRemoveSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkMigrationsRemoveSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkMigrationsRemoveSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkMigrationsRemoveSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsRemoveSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
             return toolSettings;
         }
         #endregion
@@ -5391,6 +6873,63 @@ namespace Nuke.Common.Tools.EntityFramework
             return toolSettings;
         }
         #endregion
+        #region NoTransactions
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkMigrationsScriptSettings.NoTransactions"/></em></p>
+        ///   <p>Don't generate SQL transaction statements. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoTransactions<T>(this T toolSettings, bool? noTransactions) where T : EntityFrameworkMigrationsScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoTransactions = noTransactions;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkMigrationsScriptSettings.NoTransactions"/></em></p>
+        ///   <p>Don't generate SQL transaction statements. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoTransactions<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoTransactions = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkMigrationsScriptSettings.NoTransactions"/></em></p>
+        ///   <p>Don't generate SQL transaction statements. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoTransactions<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoTransactions = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkMigrationsScriptSettings.NoTransactions"/></em></p>
+        ///   <p>Don't generate SQL transaction statements. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoTransactions<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoTransactions = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsScriptSettings.NoTransactions"/></em></p>
+        ///   <p>Don't generate SQL transaction statements. Added in EF Core 5.0.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoTransactions<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoTransactions = !toolSettings.NoTransactions;
+            return toolSettings;
+        }
+        #endregion
         #region Json
         /// <summary>
         ///   <p><em>Sets <see cref="EntityFrameworkMigrationsScriptSettings.Json"/></em></p>
@@ -5589,6 +7128,63 @@ namespace Nuke.Common.Tools.EntityFramework
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Runtime = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoBuild
+        /// <summary>
+        ///   <p><em>Sets <see cref="EntityFrameworkMigrationsScriptSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkMigrationsScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = noBuild;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="EntityFrameworkMigrationsScriptSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="EntityFrameworkMigrationsScriptSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="EntityFrameworkMigrationsScriptSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsScriptSettings.NoBuild"/></em></p>
+        ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsScriptSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoBuild = !toolSettings.NoBuild;
             return toolSettings;
         }
         #endregion
