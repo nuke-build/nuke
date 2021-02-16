@@ -1,0 +1,67 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "name": "CorFlags",
+  "officialUrl": "https://docs.microsoft.com/en-us/dotnet/framework/tools/corflags-exe-corflags-conversion-tool",
+  "help": "The CorFlags Conversion tool allows you to configure the CorFlags section of the header of a portable executable image.",
+  "pathExecutable": "CorFlags.exe",
+  "tasks": [
+    {
+      "help": "The CorFlags Conversion tool allows you to configure the CorFlags section of the header of a portable executable image.",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "-nologo",
+            "help": "Suppresses the Microsoft startup banner display."
+          },
+          {
+            "name": "UpgradeCLRHeader",
+            "type": "bool",
+            "format": "-UpgradeCLRHeader",
+            "help": "Upgrades the CLR header version to 2.5. <em>Note</em>: Assemblies must have a CLR header version of 2.5 or greater to run natively."
+          },
+          {
+            "name": "RevertCLRHeader",
+            "type": "bool",
+            "format": "-RevertCLRHeader",
+            "help": "Reverts the CLR header version to 2.0."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "-Force",
+            "help": "Forces an update even if the assembly is strong-named. <em>Important</em>: If you update a strong-named assembly, you must sign it again before executing its code."
+          },
+          {
+            "name": "Assembly",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the assembly for which to configure the CorFlags."
+          },
+          {
+            "name": "ILOnly",
+            "type": "bool",
+            "format": "-ILONLY{value}",
+            "customValue": true,
+            "help": "Sets/clears the ILONLY flag."
+          },
+          {
+            "name": "Require32Bit",
+            "type": "bool",
+            "format": "-32BIT{value}",
+            "customValue": true,
+            "help": "Sets/clears the 32BITREQUIRED flag."
+          },
+          {
+            "name": "Prefer32Bit",
+            "type": "bool",
+            "format": "-32BITPREF{value}",
+            "customValue": true,
+            "help": "Sets/clears the 32BITPREFERRED flag."
+          }
+        ]
+      }
+    }
+  ]
+}
