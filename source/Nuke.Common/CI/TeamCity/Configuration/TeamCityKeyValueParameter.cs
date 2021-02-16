@@ -21,11 +21,12 @@ namespace Nuke.Common.CI.TeamCity.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
-            writer.WriteLine("param(");
+            writer.WriteLine("text(");
             using (writer.Indent())
             {
                 writer.WriteLine($"{Key.DoubleQuote()},");
-                writer.WriteLine(Value.DoubleQuote());
+                writer.WriteLine($"{Value.DoubleQuote()},");
+                writer.WriteLine($"display = ParameterDisplay.{TeamCityParameterDisplay.Hidden.ToString().ToUpperInvariant()}");
             }
 
             writer.WriteLine(")");
