@@ -118,9 +118,10 @@ project {
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
-        param(
+        text(
             "teamcity.runner.commandline.stdstreams.encoding",
-            "UTF-8"
+            "UTF-8",
+            display = ParameterDisplay.HIDDEN
         )
     }
 }
@@ -143,9 +144,10 @@ object Compile : BuildType({
         }
     }
     params {
-        param(
+        text(
             "teamcity.ui.runButton.caption",
-            "Compile"
+            "Compile",
+            display = ParameterDisplay.HIDDEN
         )
     }
 })
@@ -169,9 +171,10 @@ object Pack : BuildType({
         }
     }
     params {
-        param(
+        text(
             "teamcity.ui.runButton.caption",
-            "Pack"
+            "Pack",
+            display = ParameterDisplay.HIDDEN
         )
     }
     triggers {
@@ -254,9 +257,10 @@ object Test : BuildType({
     }
     artifactRules = "**/*"
     params {
-        param(
+        text(
             "teamcity.ui.runButton.caption",
-            "Test"
+            "Test",
+            display = ParameterDisplay.HIDDEN
         )
     }
     triggers {
@@ -301,9 +305,10 @@ object Coverage : BuildType({
         }
     }
     params {
-        param(
+        text(
             "teamcity.ui.runButton.caption",
-            "Coverage"
+            "Coverage",
+            display = ParameterDisplay.HIDDEN
         )
     }
     triggers {
@@ -344,9 +349,10 @@ object Publish : BuildType({
         }
     }
     params {
-        param(
+        text(
             "teamcity.ui.runButton.caption",
-            "Publish"
+            "Publish",
+            display = ParameterDisplay.HIDDEN
         )
     }
     dependencies {
@@ -418,9 +424,10 @@ object Announce : BuildType({
             value = "",
             allowEmpty = false,
             display = ParameterDisplay.PROMPT)
-        param(
+        text(
             "teamcity.ui.runButton.caption",
-            "Announce"
+            "Announce",
+            display = ParameterDisplay.HIDDEN
         )
     }
     triggers {
