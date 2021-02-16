@@ -32,7 +32,6 @@ namespace Nuke.GlobalTool
             words = words.Substring(CommandName.Length).TrimStart();
 
             var buildSchemaFile = GetBuildSchemaFile(rootDirectory);
-            var localParametersFile = GetLocalParametersFile(rootDirectory);
             if (!File.Exists(buildSchemaFile))
             {
                 Build(buildScript.NotNull(), $"--{CompletionParameterName}");
@@ -40,7 +39,8 @@ namespace Nuke.GlobalTool
             }
 
             var position = EnvironmentInfo.GetParameter<int?>("position");
-            var completionItems = SchemaUtility.GetCompletionItems(buildSchemaFile, localParametersFile);
+            var profileNames = GetProfileNames(rootDirectory);
+            var completionItems = SchemaUtility.GetCompletionItems(buildSchemaFile, profileNames);
             foreach (var item in CompletionUtility.GetRelevantCompletionItems(words, completionItems))
                 Console.WriteLine(item);
 
