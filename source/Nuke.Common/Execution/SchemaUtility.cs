@@ -53,6 +53,7 @@ namespace Nuke.Common.Execution
 {
   ""$schema"": ""http://json-schema.org/draft-04/schema#"",
   ""title"": ""Build Schema"",
+  ""$ref"": ""#/definitions/build"",
   ""definitions"": {
     ""build"": {
       ""type"": ""object"",
@@ -87,42 +88,28 @@ namespace Nuke.Common.Execution
             return schema;
         }
 
-        public static void WriteParametersSchemaFile()
+        public static void WriteDefaultParametersFile()
         {
-            var parametersSchemaFile = GetParametersSchemaFile(NukeBuild.RootDirectory);
-            var buildSchemaFile = GetBuildSchemaFile(NukeBuild.RootDirectory);
-            var parametersSchema = GetParametersSchema(Path.GetFileName(buildSchemaFile));
-            File.WriteAllText(parametersSchemaFile, parametersSchema.ToString());
+            var parametersFile = GetDefaultParametersFile(NukeBuild.RootDirectory);
+            if (File.Exists(parametersFile))
+                return;
+
+            File.WriteAllLines(parametersFile,
+                new[]
+                {
+                    "{",
+                    "  \"$schema\": \"./build.schema.json\"",
+                    "}"
+                });
         }
 
-        public static JObject GetParametersSchema(string buildSchemaFile)
-        {
-            return JObject.Parse($@"
-{{
-  ""$schema"": ""http://json-schema.org/draft-04/schema#"",
-  ""title"": ""NUKE Profile Schema"",
-  ""$ref"": ""{buildSchemaFile}#/definitions/build"",
-  ""properties"": {{
-    ""$profiles"": {{
-      ""type"": ""object"",
-      ""additionalProperties"": {{
-        ""$ref"": ""{buildSchemaFile}#/definitions/build""
-      }}
-    }}
-  }}
-}}
-");
-        }
-
-
-        public static IReadOnlyDictionary<string, string[]> GetCompletionItems(string buildSchemaFile, string localParametersFile)
+        public static IReadOnlyDictionary<string, string[]> GetCompletionItems(string buildSchemaFile, IEnumerable<string> profileNames)
         {
             var schema = JObject.Parse(File.ReadAllText(buildSchemaFile));
-            var parameters = JObject.Parse(File.ReadAllText(localParametersFile));
 
             var completionItems = new Dictionary<string, string[]>();
             completionItems.AddDictionary(GetCompletionItemsForBuildSchema(schema));
-            completionItems[LoadedLocalProfilesParameterName] = GetCompletionItemsForLocalProfiles(parameters).ToArray();
+            completionItems[LoadedLocalProfilesParameterName] = profileNames.ToArray();
             return completionItems;
         }
 
@@ -137,11 +124,6 @@ namespace Nuke.Common.Execution
 
             var properties = schema["definitions"].NotNull()["build"].NotNull()["properties"].NotNull().Value<JObject>().Properties();
             return properties.ToDictionary(x => x.Name, x => GetEnumValues((JObject) x.Value));
-        }
-
-        private static string[] GetCompletionItemsForLocalProfiles(JObject obj)
-        {
-            return obj["$profiles"]?.Children<JProperty>().Select(x => x.Name).ToArray() ?? new string[0];
         }
     }
 }
