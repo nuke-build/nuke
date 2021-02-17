@@ -36,6 +36,7 @@ namespace Nuke.Common
         public const string VisualStudioDebugParameterName = "visual-studio-debug";
         internal const string CompletionParameterName = "shell-completion";
         internal const string ParametersFilePrefix = "parameters";
+        internal const string DefaultProfileName = "$default";
 
         internal static AbsolutePath GlobalTemporaryDirectory => (AbsolutePath) Path.GetTempPath();
 
@@ -101,6 +102,16 @@ namespace Nuke.Common
                 .Select(x => x.ToString())
                 .Select(Path.GetFileNameWithoutExtension)
                 .Select(x => x.TrimStart(ParametersFilePrefix).TrimStart("."));
+        }
+
+        internal static string GetCredentialStoreName(AbsolutePath rootDirectory, [CanBeNull] string profile)
+        {
+            return $"NUKE: {rootDirectory} ({profile ?? DefaultProfileName})";
+        }
+
+        internal static string GetProfilePasswordEnvironmentVariableName(string profile)
+        {
+            return $"NUKE_PARAMS_{profile.Replace("?", "_")}";
         }
     }
 }
