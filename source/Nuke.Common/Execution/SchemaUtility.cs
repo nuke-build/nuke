@@ -36,7 +36,8 @@ namespace Nuke.Common.Execution
                         MemberType = x.GetMemberType(),
                         ScalarType = x.GetMemberType().GetScalarType(),
                         EnumValues = ParameterService.GetParameterValueSet(x, build)?.Select(x => x.Text),
-                        IsRequired = x.HasCustomAttribute<RequiredAttribute>()
+                        IsRequired = x.HasCustomAttribute<RequiredAttribute>(),
+                        IsSecret = x.HasCustomAttribute<SecretAttribute>()
                     })
                 .OrderBy(x => x.Name).ToList();
 
@@ -72,6 +73,9 @@ namespace Nuke.Common.Execution
 
                 if (parameter.Description != null)
                     property["description"] = parameter.Description;
+
+                if (parameter.IsSecret)
+                    property["default"] = "Secrets must be entered via 'nuke :secret [profile]'";
 
                 if (parameter.EnumValues != null && !parameter.MemberType.IsCollectionLike())
                     property["enum"] = new JArray(parameter.EnumValues);

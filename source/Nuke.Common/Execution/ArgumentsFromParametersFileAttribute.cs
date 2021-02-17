@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.IO;
@@ -20,17 +21,29 @@ namespace Nuke.Common.Execution
     [PublicAPI]
     public class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
     {
+        private bool GenerationMode { get; } = EnvironmentInfo.GetParameter<string>(ConfigurationParameterName) != null;
+
         public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var parameterMembers = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true);
+            var passwords = new Dictionary<string, byte[]>();
 
-            IEnumerable<string> ConvertToArguments(string name, string[] values)
+            IEnumerable<string> ConvertToArguments(string profile, string name, string[] values)
             {
                 var member = parameterMembers.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(name));
                 var scalarType = member?.GetMemberType().GetScalarType();
+                var mustDecrypt = (member?.HasCustomAttribute<SecretAttribute>() ?? false) && !GenerationMode;
+                var decryptedValues = values.Select(x => mustDecrypt ? DecryptValue(profile, name, x) : x);
+                var convertedValues = decryptedValues.Select(x => ConvertValue(scalarType, x));
                 Logger.Trace($"Passing argument for '{name}'{(member != null ? $" on '{member.DeclaringType.NotNull().Name}'" : string.Empty)}.");
-                return new[] { $"--{ParameterService.GetParameterDashedName(name)}" }.Concat(values.Select(x => ConvertValue(scalarType, x)));
+                return new[] { $"--{ParameterService.GetParameterDashedName(name)}" }.Concat(convertedValues);
             }
+
+            string DecryptValue(string profile, string name, string value)
+                => EncryptionUtility.Decrypt(
+                    value,
+                    passwords[profile] = passwords.GetValueOrDefault(profile) ?? Encoding.UTF8.GetBytes(EncryptionUtility.GetPassword(profile)),
+                    name);
 
             // TODO: Abstract AbsolutePath/Solution/Project etc.
             string ConvertValue(Type scalarType, string value)
@@ -40,11 +53,11 @@ namespace Nuke.Common.Execution
                     ? EnvironmentInfo.WorkingDirectory.GetUnixRelativePathTo(NukeBuild.RootDirectory / value)
                     : value;
 
-            var arguments = GetParameters().SelectMany(x => ConvertToArguments(x.Name, x.Values)).ToArray();
+            var arguments = GetParameters().SelectMany(x => ConvertToArguments(x.Profile, x.Name, x.Values)).ToArray();
             ParameterService.Instance.ArgumentsFromFilesService = new ParameterService(() => arguments, () => throw new NotSupportedException());
         }
 
-        private IEnumerable<(string Name, string[] Values)> GetParameters()
+        private IEnumerable<(string Profile, string Name, string[] Values)> GetParameters()
         {
             IEnumerable<string> GetValues(JProperty property)
                 => property.Value is JArray array
@@ -66,10 +79,10 @@ namespace Nuke.Common.Execution
                 }
             }
 
-            return new[] { Constants.GetDefaultParametersFile(NukeBuild.RootDirectory) }
-                .Concat(NukeBuild.LoadedLocalProfiles.Select(x => Constants.GetParameterProfileFile(NukeBuild.RootDirectory, x)))
-                .ForEachLazy(x => ControlFlow.Assert(File.Exists(x), $"File.Exists({x})"))
-                .SelectMany(Load);
+            return new[] { (File: Constants.GetDefaultParametersFile(NukeBuild.RootDirectory), Profile: Constants.DefaultProfileName) }
+                .Concat(NukeBuild.LoadedLocalProfiles.Select(x => (File: Constants.GetParametersProfileFile(NukeBuild.RootDirectory, x), Profile: x)))
+                .ForEachLazy(x => ControlFlow.Assert(File.Exists(x.File), $"File.Exists({x.File})"))
+                .SelectMany(x => Load(x.File), (x, r) => (x.Profile, r.Name, r.Values));
         }
     }
 }
