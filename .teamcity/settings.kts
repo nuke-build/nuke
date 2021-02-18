@@ -92,6 +92,21 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
+        password (
+            "env.SlackAppAccessToken",
+            label = "SlackAppAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.SlackUserAccessToken",
+            label = "SlackUserAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.AzurePipelinesAccessToken",
+            label = "AzurePipelinesAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
         text (
             "env.SignPathApiToken",
             label = "SignPathApiToken",
