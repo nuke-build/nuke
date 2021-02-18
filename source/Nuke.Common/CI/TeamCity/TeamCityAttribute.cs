@@ -278,6 +278,8 @@ namespace Nuke.Common.CI.TeamCity
 
             TeamCityParameterType GetParameterType()
             {
+                if (member.HasCustomAttribute<SecretAttribute>())
+                    return TeamCityParameterType.Password;
                 if (member.GetMemberType() == typeof(bool))
                     return TeamCityParameterType.Checkbox;
                 if (valueSet != null)

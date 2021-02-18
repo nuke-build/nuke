@@ -48,11 +48,10 @@ project {
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
-        text (
+        password (
             "env.NuGetApiKey",
             label = "NuGetApiKey",
             value = "",
-            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         select (
             "env.Configuration",
@@ -61,11 +60,10 @@ project {
             value = "Release",
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
-        text (
+        password (
             "env.GitHubToken",
             label = "GitHubToken",
             value = "",
-            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         checkbox (
             "env.IgnoreFailedSources",
@@ -388,41 +386,35 @@ object Announce : BuildType({
         }
     }
     params {
-        text (
+        password (
             "env.TwitterConsumerKey",
             label = "TwitterConsumerKey",
             value = "",
-            allowEmpty = false,
             display = ParameterDisplay.PROMPT)
-        text (
+        password (
             "env.TwitterConsumerSecret",
             label = "TwitterConsumerSecret",
             value = "",
-            allowEmpty = false,
             display = ParameterDisplay.PROMPT)
-        text (
+        password (
             "env.TwitterAccessToken",
             label = "TwitterAccessToken",
             value = "",
-            allowEmpty = false,
             display = ParameterDisplay.PROMPT)
-        text (
+        password (
             "env.TwitterAccessTokenSecret",
             label = "TwitterAccessTokenSecret",
             value = "",
-            allowEmpty = false,
             display = ParameterDisplay.PROMPT)
-        text (
+        password (
             "env.SlackWebhook",
             label = "SlackWebhook",
             value = "",
-            allowEmpty = false,
             display = ParameterDisplay.PROMPT)
-        text (
+        password (
             "env.GitterAuthToken",
             label = "GitterAuthToken",
             value = "",
-            allowEmpty = false,
             display = ParameterDisplay.PROMPT)
         text(
             "teamcity.ui.runButton.caption",

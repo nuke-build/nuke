@@ -371,12 +371,11 @@ object Publish : BuildType({
         }
     }
     params {
-        text (
+        password (
             "env.ApiKey",
             label = "ApiKey",
             description = "NuGet Api Key",
             value = "",
-            allowEmpty = false,
             display = ParameterDisplay.PROMPT)
         text(
             "teamcity.ui.runButton.caption",
