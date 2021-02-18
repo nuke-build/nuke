@@ -181,11 +181,13 @@ namespace Nuke.Common.CI.AzurePipelines
 
         protected virtual IEnumerable<(string Key, string Value)> GetImports()
         {
+            static string GetSecretValue(string secret) => $"$({secret})";
+
             if (ImportSystemAccessTokenAs != null)
-                yield return (ImportSystemAccessTokenAs, "$(System.AccessToken)");
+                yield return (ImportSystemAccessTokenAs, GetSecretValue("System.AccessToken"));
 
             foreach (var secret in ImportSecrets)
-                yield return (secret, $"$({secret})");
+                yield return (secret, GetSecretValue(secret));
         }
 
         protected virtual string GetArtifact(string artifact)
