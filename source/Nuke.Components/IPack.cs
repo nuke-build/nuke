@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.IO;
@@ -13,6 +14,7 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 namespace Nuke.Components
 {
+    [PublicAPI]
     public interface IPack : ICompile, IHazArtifacts
     {
         AbsolutePath PackagesDirectory => ArtifactsDirectory / "packages";
@@ -23,18 +25,21 @@ namespace Nuke.Components
             .Executes(() =>
             {
                 DotNetPack(_ => _
-                    .SetProject(Solution)
-                    .SetConfiguration(Configuration)
-                    .SetNoBuild(InvokedTargets.Contains(Compile))
-                    .SetOutputDirectory(PackagesDirectory)
-                    .WhenNotNull(this as IHazGitVersion, (_, o) => _
-                        .SetVersion(o.Versioning.NuGetVersionV2))
-                    .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _
-                        .SetVersion(o.Versioning.NuGetPackageVersion))
-                    .WhenNotNull(this as IHazChangelog, (_, o) => _
-                        .SetPackageReleaseNotes(o.ReleaseNotes))
+                    .Apply(PackSettingsBase)
                     .Apply(PackSettings));
             });
+
+        sealed Configure<DotNetPackSettings> PackSettingsBase => _ => _
+            .SetProject(Solution)
+            .SetConfiguration(Configuration)
+            .SetNoBuild(InvokedTargets.Contains(Compile))
+            .SetOutputDirectory(PackagesDirectory)
+            .WhenNotNull(this as IHazGitVersion, (_, o) => _
+                .SetVersion(o.Versioning.NuGetVersionV2))
+            .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _
+                .SetVersion(o.Versioning.NuGetPackageVersion))
+            .WhenNotNull(this as IHazChangelog, (_, o) => _
+                .SetPackageReleaseNotes(o.NuGetReleaseNotes));
 
         Configure<DotNetPackSettings> PackSettings => _ => _;
     }

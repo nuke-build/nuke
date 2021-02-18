@@ -4,14 +4,18 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
+using Nuke.Common;
 using Nuke.Common.Tools.GitVersion;
 using static Nuke.Common.ValueInjection.ValueInjectionUtility;
 
 namespace Nuke.Components
 {
-    public interface IHazGitVersion
+    [PublicAPI]
+    public interface IHazGitVersion : INukeBuild
     {
-        [GitVersion]
+        [Required]
+        [GitVersion(Framework = "netcoreapp3.1", NoFetch = true)]
         GitVersion Versioning => TryGetValue(() => Versioning);
     }
 }

@@ -28,11 +28,10 @@ project {
     buildType(Test_P1T2)
     buildType(Test_P2T2)
     buildType(Test)
-    buildType(Coverage)
     buildType(Publish)
     buildType(Announce)
 
-    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, Coverage, Publish, Announce)
+    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, Publish, Announce)
 
     params {
         select (
@@ -42,35 +41,22 @@ project {
             value = "Normal",
             options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
             display = ParameterDisplay.NORMAL)
-        text (
-            "env.CodecovToken",
-            label = "CodecovToken",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.NuGetApiKey",
-            label = "NuGetApiKey",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        select (
-            "env.Configuration",
-            label = "Configuration",
-            description = "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
-            value = "Release",
-            options = listOf("Debug" to "Debug", "Release" to "Release"),
-            display = ParameterDisplay.NORMAL)
         password (
             "env.GitHubToken",
             label = "GitHubToken",
             value = "",
             display = ParameterDisplay.NORMAL)
-        checkbox (
-            "env.IgnoreFailedSources",
-            label = "IgnoreFailedSources",
-            value = "False",
-            checked = "True",
-            unchecked = "False",
+        text (
+            "env.PublicNuGetApiKey",
+            label = "PublicNuGetApiKey",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.GitHubRegistryApiKey",
+            label = "GitHubRegistryApiKey",
+            value = "",
+            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
             "env.EnterpriseAccessToken",
@@ -92,6 +78,31 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
+        checkbox (
+            "env.IgnoreFailedSources",
+            label = "IgnoreFailedSources",
+            description = "Ignore unreachable sources during Restore",
+            value = "False",
+            checked = "True",
+            unchecked = "False",
+            display = ParameterDisplay.NORMAL)
+        select (
+            "env.Configuration",
+            label = "Configuration",
+            value = "Release",
+            options = listOf("Debug" to "Debug", "Release" to "Release"),
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.CodecovToken",
+            label = "CodecovToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.NuGetSource",
+            label = "NuGetSource",
+            value = "https://api.nuget.org/v3/index.json",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         password (
             "env.SlackAppAccessToken",
             label = "SlackAppAccessToken",
@@ -107,11 +118,10 @@ project {
             label = "AzurePipelinesAccessToken",
             value = "",
             display = ParameterDisplay.NORMAL)
-        text (
+        password (
             "env.SignPathApiToken",
             label = "SignPathApiToken",
             value = "",
-            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
             "env.SignPathOrganizationId",
@@ -298,50 +308,6 @@ object Test : BuildType({
         }
     }
 })
-object Coverage : BuildType({
-    name = "📊 Coverage"
-    vcs {
-        root(DslContext.settingsRoot)
-        cleanCheckout = true
-    }
-    artifactRules = "output/coverage-report.zip => output"
-    steps {
-        exec {
-            path = "build.cmd"
-            arguments = "Coverage --skip"
-            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
-        }
-        exec {
-            path = "build.sh"
-            arguments = "Coverage --skip"
-            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
-        }
-    }
-    params {
-        text(
-            "teamcity.ui.runButton.caption",
-            "Coverage",
-            display = ParameterDisplay.HIDDEN
-        )
-    }
-    triggers {
-        finishBuildTrigger {
-            buildType = "${Test.id}"
-        }
-    }
-    dependencies {
-        snapshot(Test) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-            onDependencyCancel = FailureAction.CANCEL
-        }
-        artifacts(Test) {
-            artifactRules = """
-                output/test-results/*.trx => output/test-results
-                output/test-results/*.xml => output/test-results
-            """.trimIndent()
-        }
-    }
-})
 object Publish : BuildType({
     name = "🚚 Publish"
     type = Type.DEPLOYMENT
@@ -362,6 +328,11 @@ object Publish : BuildType({
         }
     }
     params {
+        password (
+            "env.NuGetApiKey",
+            label = "NuGetApiKey",
+            value = "",
+            display = ParameterDisplay.PROMPT)
         text(
             "teamcity.ui.runButton.caption",
             "Publish",

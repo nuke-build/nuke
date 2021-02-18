@@ -4,13 +4,17 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
+using Nuke.Common;
 using Nuke.Common.ProjectModel;
 using static Nuke.Common.ValueInjection.ValueInjectionUtility;
 
 namespace Nuke.Components
 {
-    public interface IHazSolution
+    [PublicAPI]
+    public interface IHazSolution : INukeBuild
     {
+        [Required]
         [Solution]
         Solution Solution => TryGetValue(() => Solution);
     }
