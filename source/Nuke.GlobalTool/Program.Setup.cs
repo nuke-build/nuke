@@ -182,15 +182,18 @@ namespace Nuke.GlobalTool
                                        [FORMAT_SDK] = "9A19103F-16F7-4668-BE54-9A1E7A4F7556"
                                    }[projectFormat];
 
-            if (solutionFile == null)
+            FileSystemTasks.EnsureExistingDirectory(rootDirectory / Constants.NukeDirectoryName);
+
+            if (solutionFile != null)
             {
-                FileSystemTasks.Touch(rootDirectory / Constants.ConfigurationFileName);
-            }
-            else
-            {
-                TextTasks.WriteAllText(
-                    rootDirectory / Constants.ConfigurationFileName,
-                    GetUnixRelativePath(rootDirectory, solutionFile));
+                var parametersFile = Constants.GetDefaultParametersFile(rootDirectory);
+                SerializationTasks.JsonSerializeToFile(
+                    new Dictionary<string, string>
+                    {
+                        { "$schema", "./build.schema.json" },
+                        { "Solution", rootDirectory.GetUnixRelativePathTo(solutionFile).ToString() }
+                    },
+                    parametersFile);
 
                 tokens.AddPair(SolutionFile);
 

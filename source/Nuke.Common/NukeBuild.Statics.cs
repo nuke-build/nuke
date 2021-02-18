@@ -100,8 +100,8 @@ namespace Nuke.Common
             return TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory)
                 .NotNull(new[]
                          {
-                             $"Could not locate '{ConfigurationFileName}' file while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
-                             "Either create the file to mark the root directory, or use the --root parameter."
+                             $"Could not locate '{NukeDirectoryName}' directory while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
+                             "Either create the directory to mark the root directory, or use the --root parameter to use the working directory."
                          }.JoinNewLine());
         }
 

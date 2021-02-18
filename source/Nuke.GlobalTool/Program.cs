@@ -66,11 +66,11 @@ namespace Nuke.GlobalTool
 
             if (rootDirectory == null || buildScript == null)
             {
-                var missingFile = rootDirectory == null
-                    ? Constants.ConfigurationFileName
-                    : "build.ps1/sh";
+                var missingItem = rootDirectory == null
+                    ? $"{Constants.NukeDirectoryName} directory"
+                    : "build.ps1/sh files";
 
-                return UserConfirms($"Could not find {missingFile} file. Do you want to setup a build?")
+                return UserConfirms($"Could not find {missingItem}. Do you want to setup a build?")
                     ? Setup(new string[0], rootDirectory, buildScript: null)
                     : 0;
             }

@@ -8,6 +8,8 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
+using Nuke.Common.Utilities;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -57,27 +59,13 @@ namespace Nuke.Common.ProjectModel
             if (_relativePath != null)
                 return PathConstruction.Combine(NukeBuild.RootDirectory, _relativePath);
 
-            var parameterValue = EnvironmentInfo.GetParameter<AbsolutePath>(member);
-            if (parameterValue != null)
-                return parameterValue;
-
-            return GetSolutionFileFromConfigurationFile();
-        }
-
-        private string GetSolutionFileFromConfigurationFile()
-        {
-            var nukeFile = Path.Combine(NukeBuild.RootDirectory, Constants.ConfigurationFileName);
-            ControlFlow.Assert(File.Exists(nukeFile), $"File.Exists({nukeFile})");
-
-            var solutionFileRelative = File.ReadAllLines(nukeFile).ElementAtOrDefault(0);
-            ControlFlow.Assert(solutionFileRelative != null && !solutionFileRelative.Contains(value: '\\'),
-                $"First line of {Constants.ConfigurationFileName} must provide solution path using UNIX separators");
-
-            var solutionFile = Path.GetFullPath(Path.Combine(NukeBuild.RootDirectory, solutionFileRelative));
-            ControlFlow.Assert(File.Exists(solutionFile),
-                $"Solution file '{solutionFile}' provided via {Constants.ConfigurationFileName} does not exist.");
-
-            return (AbsolutePath) solutionFile;
+            var solutionFile = EnvironmentInfo.GetParameter<AbsolutePath>(member);
+            return solutionFile.NotNull(
+                new[]
+                {
+                    $"No solution file defined for '{member.Name}'.",
+                    $"Invoke: nuke --save-profile --{ParameterService.GetParameterDashedName(member)} <value>"
+                }.JoinNewLine());
         }
     }
 }
