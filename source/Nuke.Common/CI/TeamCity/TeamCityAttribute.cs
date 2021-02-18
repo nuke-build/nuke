@@ -268,7 +268,7 @@ namespace Nuke.Common.CI.TeamCity
             var valueSeparator = attribute.Separator ?? " ";
 
             // TODO: Abstract AbsolutePath/Solution/Project etc.
-            var defaultValue = member.GetValue(build);
+            var defaultValue = !member.HasCustomAttribute<SecretAttribute>() ? member.GetValue(build) : default(string);
             // TODO: enumerables of ...
             if (defaultValue != null &&
                 (member.GetMemberType() == typeof(AbsolutePath) ||
