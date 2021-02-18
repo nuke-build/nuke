@@ -210,7 +210,7 @@ namespace Nuke.Common.Tests.CI
                 .Consumes(Test)
                 .Produces(CoverageReportArchive);
 
-            [Parameter("NuGet Api Key")] public readonly string ApiKey;
+            [Parameter("NuGet Api Key")] [Secret] public readonly string ApiKey;
 
             [Parameter("NuGet Source for Packages")]
             public readonly string Source = "https://api.nuget.org/v3/index.json";
