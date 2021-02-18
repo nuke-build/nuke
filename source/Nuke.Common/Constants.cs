@@ -26,7 +26,7 @@ namespace Nuke.Common
             "GitLab"
         };
 
-        internal const string ConfigurationFileName = ".nuke";
+        internal const string NukeDirectoryName = ".nuke";
 
         internal const string TargetsSeparator = "+";
         internal const string InvokedTargetsParameterName = "Target";
@@ -45,12 +45,17 @@ namespace Nuke.Common
         {
             return (AbsolutePath) FileSystemTasks.FindParentDirectory(
                 startDirectory,
-                predicate: x => x.GetFiles(ConfigurationFileName).Any());
+                predicate: x => x.GetDirectories(NukeDirectoryName).Any());
+        }
+
+        internal static AbsolutePath GetNukeDirectory(AbsolutePath rootDirectory)
+        {
+            return rootDirectory / NukeDirectoryName;
         }
 
         internal static AbsolutePath GetTemporaryDirectory(AbsolutePath rootDirectory)
         {
-            return rootDirectory / ".tmp";
+            return GetNukeDirectory(rootDirectory) / "temp";
         }
 
         internal static AbsolutePath GetCompletionFile(AbsolutePath rootDirectory)
@@ -78,22 +83,22 @@ namespace Nuke.Common
 
         internal static AbsolutePath GetBuildSchemaFile(AbsolutePath rootDirectory)
         {
-            return GetTemporaryDirectory(rootDirectory) / "build.schema.json";
+            return GetNukeDirectory(rootDirectory) / "build.schema.json";
         }
 
         internal static AbsolutePath GetDefaultParametersFile(AbsolutePath rootDirectory)
         {
-            return GetTemporaryDirectory(rootDirectory) / $"{ParametersFilePrefix}.json";
+            return GetNukeDirectory(rootDirectory) / $"{ParametersFilePrefix}.json";
         }
 
         internal static IEnumerable<AbsolutePath> GetParametersProfileFiles(AbsolutePath rootDirectory)
         {
-            return GetTemporaryDirectory(rootDirectory).GlobFiles($"{ParametersFilePrefix}.*.json");
+            return GetNukeDirectory(rootDirectory).GlobFiles($"{ParametersFilePrefix}.*.json");
         }
 
         internal static AbsolutePath GetParametersProfileFile(AbsolutePath rootDirectory, string name)
         {
-            return GetTemporaryDirectory(rootDirectory) / $"{ParametersFilePrefix}.{name}.json";
+            return GetNukeDirectory(rootDirectory) / $"{ParametersFilePrefix}.{name}.json";
         }
 
         public static IEnumerable<string> GetProfileNames(AbsolutePath rootDirectory)

@@ -23,7 +23,8 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(NukeRootDirectory)' != ''">
-    <None Include="$(NukeRootDirectory)\.nuke" LinkBase="config" />
+    <None Include="$(NukeRootDirectory)\.nuke\parameters.json" LinkBase="config" />
+    <None Include="$(NukeRootDirectory)\.nuke\parameters.*.json" LinkBase="config" />
     <None Include="$(NukeRootDirectory)\global.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\global.json')" />
     <None Include="$(NukeRootDirectory)\nuget.config" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\nuget.config')" />
     <None Include="$(NukeRootDirectory)\GitVersion.yml" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\GitVersion.yml')" />

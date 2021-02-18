@@ -85,7 +85,7 @@ namespace Nuke.GlobalTool
         {
             return PushAndSetNext(() =>
             {
-                var directories = EnvironmentInfo.WorkingDirectory.GlobFiles($"**/{ConfigurationFileName}")
+                var directories = EnvironmentInfo.WorkingDirectory.GlobDirectories($"**/{NukeDirectoryName}")
                     .Where(x => !x.Equals(EnvironmentInfo.WorkingDirectory))
                     .Select(x => x.Parent)
                     .Select(x => (x, EnvironmentInfo.WorkingDirectory.GetRelativePathTo(x).ToString()))
