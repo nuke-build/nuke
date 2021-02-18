@@ -50,7 +50,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                     writer.WriteLine($"options = listOf({mappings.JoinComma()}),");
                 }
 
-                if (Options == null && Type != TeamCityParameterType.Checkbox)
+                if (Options == null && Type != TeamCityParameterType.Checkbox && Type != TeamCityParameterType.Password)
                     writer.WriteLine($"allowEmpty = {(Display != TeamCityParameterDisplay.Prompt).ToString().ToLowerInvariant()},");
 
                 writer.WriteLine($"display = ParameterDisplay.{Display.ToString().ToUpperInvariant()})");
