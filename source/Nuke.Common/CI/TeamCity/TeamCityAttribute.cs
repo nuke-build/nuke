@@ -290,7 +290,7 @@ namespace Nuke.Common.CI.TeamCity
             return new TeamCityConfigurationParameter
                    {
                        // TODO: #555 - Should this use ParameterService.GetParameterMemberName(member) ?
-                       Name = member.Name,
+                       Name = ParameterService.GetParameterMemberName(member),
                        Description = attribute.Description,
                        Options = valueSet?.ToDictionary(x => x.Item1, x => x.Item2),
                        Type = GetParameterType(),
