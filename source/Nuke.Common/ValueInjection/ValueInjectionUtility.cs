@@ -86,6 +86,7 @@ namespace Nuke.Common.ValueInjection
 
         public static IReadOnlyCollection<MemberInfo> GetParameterMembers(Type type, bool includeUnlisted)
         {
+            // TODO: check duplicated names
             return GetInjectionMembers(type)
                 .Where(x => x.Attribute is ParameterAttribute attribute && (includeUnlisted || attribute.List))
                 .Select(x => x.Member).ToList();
