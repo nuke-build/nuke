@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
@@ -12,20 +13,22 @@ using static Nuke.Common.ValueInjection.ValueInjectionUtility;
 
 namespace Nuke.Components
 {
+    [PublicAPI]
     public interface IRestore : IHazSolution, INukeBuild
     {
         Target Restore => _ => _
             .Executes(() =>
             {
                 DotNetRestore(_ => _
-                    .SetProjectFile(Solution)
-                    .SetIgnoreFailedSources(IgnoreFailedSources)
-                    .When(IsServerBuild, _ => _
-                        .SetProperty("ContinuesIntegrationBuild", true))
-                    // RestorePackagesWithLockFile
-                    // .SetProperty("RestoreLockedMode", true))
+                    .Apply(RestoreSettingsBase)
                     .Apply(RestoreSettings));
             });
+
+        sealed Configure<DotNetRestoreSettings> RestoreSettingsBase => _ => _
+            .SetProjectFile(Solution)
+            .SetIgnoreFailedSources(IgnoreFailedSources);
+        // RestorePackagesWithLockFile
+        // .SetProperty("RestoreLockedMode", true));
 
         Configure<DotNetRestoreSettings> RestoreSettings => _ => _;
 

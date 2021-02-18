@@ -10,7 +10,32 @@ using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
+using Nuke.Components;
+using static Nuke.Enterprise.Notifications.IHazAzurePipelinesAccessToken;
+using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
+#if ENTERPRISE
+using Nuke.Enterprise.Notifications;
+#endif
 
+[AzurePipelines(
+    suffix: null,
+    AzurePipelinesImage.UbuntuLatest,
+    AzurePipelinesImage.WindowsLatest,
+    AzurePipelinesImage.MacOsLatest,
+    ImportSecrets = new[]
+                    {
+                        nameof(EnterpriseAccessToken),
+#if ENTERPRISE
+                        Slack + nameof(IHazSlackCredentials.AppAccessToken),
+                        Slack + nameof(IHazSlackCredentials.UserAccessToken),
+#endif
+                    },
+#if ENTERPRISE
+    ImportSystemAccessTokenAs = IHazAzurePipelinesAccessToken.AzurePipelines + nameof(IHazAzurePipelinesAccessToken.AccessToken),
+#endif
+    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
+    NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
+    ExcludedTargets = new[] { nameof(Clean), nameof(IReportTestCoverage.ReportTestCoverage), nameof(SignPackages) })]
 partial class Build
 {
     public class AzurePipelinesAttribute : Nuke.Common.CI.AzurePipelines.AzurePipelinesAttribute
@@ -32,11 +57,11 @@ partial class Build
 
             var dictionary = new Dictionary<string, string>
                              {
-                                 { nameof(Compile), "⚙️" },
-                                 { nameof(Test), "🚦" },
-                                 { nameof(Pack), "📦" },
-                                 { nameof(Coverage), "📊" },
-                                 { nameof(Publish), "🚚" },
+                                 { nameof(ICompile.Compile), "⚙️" },
+                                 { nameof(ITest.Test), "🚦" },
+                                 { nameof(IPack.Pack), "📦" },
+                                 { nameof(IReportTestCoverage.ReportTestCoverage), "📊" },
+                                 { nameof(IPublish.Publish), "🚚" },
                                  { nameof(Announce), "🗣" }
                              };
             var symbol = dictionary.GetValueOrDefault(job.Name).NotNull("symbol != null");

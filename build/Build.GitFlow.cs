@@ -10,6 +10,7 @@ using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Components;
 using Octokit;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
@@ -42,12 +43,13 @@ partial class Build
         .OnlyWhenStatic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnHotfixBranch())
         .Executes(() =>
         {
-            FinalizeChangelog(ChangelogFile, MajorMinorPatchVersion, GitRepository);
+            var changelogFile = From<IHazChangelog>().ChangelogFile;
+            FinalizeChangelog(changelogFile, MajorMinorPatchVersion, GitRepository);
             Logger.Info("Please review CHANGELOG.md and press any key to continue...");
             System.Console.ReadKey();
 
-            Git($"add {ChangelogFile}");
-            Git($"commit -m \"Finalize {Path.GetFileName(ChangelogFile)} for {MajorMinorPatchVersion}\"");
+            Git($"add {changelogFile}");
+            Git($"commit -m \"Finalize {Path.GetFileName(changelogFile)} for {MajorMinorPatchVersion}\"");
         });
 
     [UsedImplicitly]

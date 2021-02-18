@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,14 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
-using Nuke.Common.ValueInjection;
 using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.SignPath.SignPathTasks;
+using static Nuke.Common.ValueInjection.ValueInjectionUtility;
 
 namespace Nuke.Components
 {
@@ -47,12 +48,16 @@ namespace Nuke.Components
     /// </ul>
     /// </para>
     /// </remarks>
+    [PublicAPI]
+    [ParameterPrefix(SignPath)]
     public interface ISignPackages : INukeBuild
     {
-        [Parameter] string SignPathApiToken => ValueInjectionUtility.TryGetValue(() => SignPathApiToken);
-        [Parameter] string SignPathOrganizationId => ValueInjectionUtility.TryGetValue(() => SignPathOrganizationId);
-        [Parameter] string SignPathProjectSlug => ValueInjectionUtility.TryGetValue(() => SignPathProjectSlug);
-        [Parameter] string SignPathPolicySlug => ValueInjectionUtility.TryGetValue(() => SignPathPolicySlug);
+        public const string SignPath = nameof(SignPath);
+
+        [Parameter] [Secret] string ApiToken => TryGetValue(() => ApiToken);
+        [Parameter] string OrganizationId => TryGetValue(() => OrganizationId);
+        [Parameter] string ProjectSlug => TryGetValue(() => ProjectSlug);
+        [Parameter] string PolicySlug => TryGetValue(() => PolicySlug);
 
         AbsolutePath SignPathTemporaryDirectory => TemporaryDirectory / "signpath";
         AbsolutePath SignPathRequestDirectory => SignPathTemporaryDirectory / "signing-request";
@@ -66,11 +71,13 @@ namespace Nuke.Components
         private AppVeyor AppVeyor => AppVeyor.Instance;
 
         Target SignPackages => _ => _
+            .TryDependsOn<IPack>()
+            .TryDependentFor<IPublish>()
             .OnlyWhenStatic(() => AppVeyor != null)
-            .Requires(() => SignPathApiToken)
-            .Requires(() => SignPathOrganizationId)
-            .Requires(() => SignPathProjectSlug)
-            .Requires(() => SignPathPolicySlug)
+            .Requires(() => ApiToken)
+            .Requires(() => OrganizationId)
+            .Requires(() => ProjectSlug)
+            .Requires(() => PolicySlug)
             .Executes(async () =>
             {
                 EnsureCleanDirectory(SignPathTemporaryDirectory);
@@ -80,12 +87,12 @@ namespace Nuke.Components
                 AppVeyor.PushArtifact(SignPathRequestArchive);
 
                 var signingRequestUrl = await GetSigningRequestUrlViaAppVeyor(
-                    SignPathApiToken,
-                    SignPathOrganizationId,
-                    SignPathProjectSlug,
-                    SignPathPolicySlug);
+                    ApiToken,
+                    OrganizationId,
+                    ProjectSlug,
+                    PolicySlug);
                 await DownloadSignedArtifactFromUrl(
-                    SignPathApiToken,
+                    ApiToken,
                     signingRequestUrl,
                     SignPathResponseArchive);
 
