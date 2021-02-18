@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using HtmlAgilityPack;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
@@ -14,16 +15,16 @@ using Nuke.Components;
 
 partial class Build : ISignPackages
 {
-    public IEnumerable<AbsolutePath> SignPathPackages => PackageFiles
-        .Where(x => Path.GetFileName(x).StartsWithAny(
-            "Nuke.Common",
-            "Nuke.Components",
-            "Nuke.CodeGeneration",
-            "Nuke.GlobalTool"));
+    public IEnumerable<AbsolutePath> SignPathPackages
+        => From<IPack>().PackagesDirectory.GlobFiles("*.nupkg")
+            .Where(x => Path.GetFileName(x).StartsWithAny(
+                "Nuke.Common",
+                "Nuke.Components",
+                "Nuke.CodeGeneration",
+                "Nuke.GlobalTool"));
 
     public Target SignPackages => _ => _
-        .Inherit<ISignPackages>(x => x.SignPackages)
+        .Inherit<ISignPackages>()
         .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
-        .OnlyWhenStatic(() => EnvironmentInfo.IsWin)
-        .TriggeredBy(Pack);
+        .OnlyWhenStatic(() => EnvironmentInfo.IsWin);
 }

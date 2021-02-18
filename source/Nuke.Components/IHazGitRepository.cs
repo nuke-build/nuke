@@ -4,13 +4,17 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
+using Nuke.Common;
 using Nuke.Common.Git;
 using static Nuke.Common.ValueInjection.ValueInjectionUtility;
 
 namespace Nuke.Components
 {
-    public interface IHazGitRepository
+    [PublicAPI]
+    public interface IHazGitRepository : INukeBuild
     {
+        [Required]
         [GitRepository]
         GitRepository GitRepository => TryGetValue(() => GitRepository);
     }

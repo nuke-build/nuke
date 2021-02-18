@@ -47,13 +47,9 @@ jobs:
             TwitterAccessTokenSecret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
       - uses: actions/upload-artifact@v1
         with:
-          name: packages
-          path: output/packages
-      - uses: actions/upload-artifact@v1
-        with:
           name: test-results
           path: output/test-results
       - uses: actions/upload-artifact@v1
         with:
-          name: coverage-report.zip
-          path: output/coverage-report.zip
+          name: packages
+          path: output/packages

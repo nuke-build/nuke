@@ -7,9 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Nuke.Common;
+using Nuke.Common.ChangeLog;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities;
+using Nuke.Components;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
@@ -23,30 +25,27 @@ partial class Build
     [Parameter] [Secret] readonly string GitterAuthToken;
     [Parameter] [Secret] readonly string SlackWebhook;
 
-    [Parameter] [Secret] readonly string TwitterConsumerKey;
-    [Parameter] [Secret] readonly string TwitterConsumerSecret;
-    [Parameter] [Secret] readonly string TwitterAccessToken;
-    [Parameter] [Secret] readonly string TwitterAccessTokenSecret;
+    IEnumerable<string> ChangelogSectionNotes => ChangelogTasks.ExtractChangelogSectionNotes(From<IHazChangelog>().ChangelogFile);
 
     Target Announce => _ => _
         .DependsOn(ReleaseImage)
         .WhenSkipped(DependencyBehavior.Skip)
-        .TriggeredBy(Publish)
+        .TriggeredBy<IPublish>()
         .OnlyWhenStatic(() => IsOriginalRepository && GitRepository.IsOnMasterBranch())
-        .Requires(() => TwitterConsumerKey)
-        .Requires(() => TwitterConsumerSecret)
-        .Requires(() => TwitterAccessToken)
-        .Requires(() => TwitterAccessTokenSecret)
+        .Requires(() => TwitterCredentials.ConsumerKey)
+        .Requires(() => TwitterCredentials.ConsumerSecret)
+        .Requires(() => TwitterCredentials.AccessToken)
+        .Requires(() => TwitterCredentials.AccessTokenSecret)
         .Requires(() => SlackWebhook)
         .Requires(() => GitterAuthToken)
         .Executes(async () =>
         {
             var client = new TwitterClient(
                 new TwitterCredentials(
-                    TwitterConsumerKey,
-                    TwitterConsumerSecret,
-                    TwitterAccessToken,
-                    TwitterAccessTokenSecret));
+                    TwitterCredentials.ConsumerKey,
+                    TwitterCredentials.ConsumerSecret,
+                    TwitterCredentials.AccessToken,
+                    TwitterCredentials.AccessTokenSecret));
 
             var media = await client.Upload.UploadTweetImageAsync(
                 new UploadTweetImageParameters(ReadAllBytes(ReleaseImageFile))
