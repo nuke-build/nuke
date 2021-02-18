@@ -36,6 +36,9 @@ using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.Codecov.CodecovTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
+#if ENTERPRISE
+using Nuke.Enterprise.Notifications;
+#endif
 
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
@@ -83,8 +86,8 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
                         nameof(CodecovToken),
                         nameof(EnterpriseAccessToken),
                         #if ENTERPRISE
-                        nameof(Nuke.Enterprise.Notifications.INotifySlack.AppAccessToken),
-                        nameof(Nuke.Enterprise.Notifications.INotifySlack.UserAccessToken),
+                        IHazSlackCredentials.ParameterPrefix + nameof(IHazSlackCredentials.AppAccessToken),
+                        IHazSlackCredentials.ParameterPrefix + nameof(IHazSlackCredentials.UserAccessToken),
                         #endif
                     })]
 [AppVeyor(
@@ -102,12 +105,12 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
                     {
                         nameof(EnterpriseAccessToken),
                         #if ENTERPRISE
-                        nameof(Nuke.Enterprise.Notifications.INotifySlack.AppAccessToken),
-                        nameof(Nuke.Enterprise.Notifications.INotifySlack.UserAccessToken),
+                        IHazSlackCredentials.ParameterPrefix + nameof(IHazSlackCredentials.AppAccessToken),
+                        IHazSlackCredentials.ParameterPrefix + nameof(IHazSlackCredentials.UserAccessToken),
                         #endif
                     },
     #if ENTERPRISE
-    ImportSystemAccessTokenAs = nameof(Nuke.Enterprise.Notifications.IHazAzurePipelinesAccessToken.AccessToken),
+    ImportSystemAccessTokenAs = IHazAzurePipelinesAccessToken.ParameterPrefix + nameof(IHazAzurePipelinesAccessToken.AccessToken),
     #endif
     InvokedTargets = new[] { nameof(Test), nameof(Pack) },
     NonEntryTargets = new[] { nameof(Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
