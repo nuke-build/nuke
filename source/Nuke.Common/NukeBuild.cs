@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
 
@@ -133,7 +134,7 @@ namespace Nuke.Common
                 ? BuildProjectDirectory / "obj" / "project.assets.json"
                 : null;
 
-        internal IEnumerable<string> TargetNames => ExecutableTargetFactory.GetTargetProperties(GetType()).Select(x => x.Name);
+        internal IEnumerable<string> TargetNames => ExecutableTargetFactory.GetTargetProperties(GetType()).Select(x => x.GetDisplayShortName());
         internal IEnumerable<string> HostNames => Host.AvailableTypes.Select(x => x.Name);
 
         public bool IsSuccessful => (!ExitCode.HasValue || ExitCode == 0) && ExecutionPlan

@@ -6,7 +6,13 @@
     "build": {
       "type": "object",
       "properties": {
-        "ComponentParam": {
+        "ComponentParam1": {
+          "type": "string"
+        },
+        "ComponentParam2": {
+          "type": "string"
+        },
+        "ComponentParam3": {
           "type": "string"
         },
         "Continue": {
@@ -71,7 +77,11 @@
           "description": "List of targets to be skipped. Empty list skips all dependencies",
           "items": {
             "type": "string",
-            "enum": []
+            "enum": [
+              "Bar",
+              "Foo",
+              "Zoo"
+            ]
           }
         },
         "Target": {
@@ -79,7 +89,11 @@
           "description": "List of targets to be executed. Default is '{default_target}'",
           "items": {
             "type": "string",
-            "enum": []
+            "enum": [
+              "Bar",
+              "Foo",
+              "Zoo"
+            ]
           }
         },
         "Verbosities": {
