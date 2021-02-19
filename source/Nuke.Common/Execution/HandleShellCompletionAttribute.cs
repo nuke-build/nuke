@@ -4,12 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Linq;
-using Nuke.Common.IO;
-using Nuke.Common.Utilities;
-using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Execution

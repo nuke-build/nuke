@@ -7,7 +7,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+#if NETFRAMEWORK
 using Nuke.Common.Utilities.Collections;
+#endif
 
 namespace Nuke.Common.Tooling
 {
