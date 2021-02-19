@@ -79,12 +79,23 @@ namespace Nuke.Common.Tests
             [Parameter] public int? NullableInteger;
             [Parameter] public Verbosity[] Verbosities;
             [Parameter] [Secret] public string Secret;
+            public string Param2 => "";
+            string ITestComponent.Param3 => "";
+
+            Target ITestComponent.Bar => _ => _;
+            public Target Zoo => _ => _;
         }
 
         [ParameterPrefix("Component")]
         interface ITestComponent : INukeBuild
         {
-            [Parameter] string Param => ValueInjectionUtility.TryGetValue(() => Param);
+            [Parameter] string Param1 => ValueInjectionUtility.TryGetValue(() => Param1);
+            [Parameter] string Param2 => ValueInjectionUtility.TryGetValue(() => Param2);
+            [Parameter] string Param3 => ValueInjectionUtility.TryGetValue(() => Param3);
+
+            Target Foo => _ => _;
+            Target Bar => _ => _;
+            Target Zoo => _ => _;
         }
     }
 }
