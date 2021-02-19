@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.SpaceAutomation.Configuration
 {

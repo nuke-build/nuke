@@ -121,7 +121,7 @@ namespace Nuke.Common.CI.GitHubActions
 
         private void Write(string[] escapedTokens, [CanBeNull] string message)
         {
-            System.Console.WriteLine($"##[{escapedTokens.JoinSpace()}]{EscapeMessage(message)}");
+            Console.WriteLine($"##[{escapedTokens.JoinSpace()}]{EscapeMessage(message)}");
         }
 
         private string EscapeMessage([CanBeNull] string data)

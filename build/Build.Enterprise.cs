@@ -11,7 +11,6 @@ using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Utilities;
 using Nuke.Enterprise.Auditing;
-using Nuke.Enterprise.CI;
 using Nuke.Enterprise.Notifications;
 
 [AuditBuildMembers(

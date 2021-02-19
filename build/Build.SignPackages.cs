@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using HtmlAgilityPack;
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
