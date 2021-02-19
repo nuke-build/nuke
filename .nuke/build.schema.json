@@ -129,15 +129,15 @@
               "Install",
               "InstallFonts",
               "Milestone",
-              "Nuke.Components.IPublish.Publish",
-              "Nuke.Components.ITest.Test",
               "Pack",
+              "Publish",
               "References",
               "Release",
               "ReleaseImage",
               "ReportCoverage",
               "Restore",
               "SignPackages",
+              "Test",
               "UpdateContributors"
             ]
           }
@@ -178,15 +178,15 @@
               "Install",
               "InstallFonts",
               "Milestone",
-              "Nuke.Components.IPublish.Publish",
-              "Nuke.Components.ITest.Test",
               "Pack",
+              "Publish",
               "References",
               "Release",
               "ReleaseImage",
               "ReportCoverage",
               "Restore",
               "SignPackages",
+              "Test",
               "UpdateContributors"
             ]
           }
