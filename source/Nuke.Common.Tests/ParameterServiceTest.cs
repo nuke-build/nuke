@@ -6,8 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using FluentAssertions;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;

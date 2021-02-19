@@ -22,8 +22,8 @@ namespace Nuke.Common.Tools.CloudFoundry
         private static string CurrentOsRid
             => EnvironmentInfo.Platform switch
             {
-                PlatformFamily.Windows => (Environment.Is64BitOperatingSystem ? "win-x64" : "win-x32"),
-                PlatformFamily.Linux => (Environment.Is64BitOperatingSystem ? "linux-x64" : "linux-x32"),
+                PlatformFamily.Windows => Environment.Is64BitOperatingSystem ? "win-x64" : "win-x32",
+                PlatformFamily.Linux => Environment.Is64BitOperatingSystem ? "linux-x64" : "linux-x32",
                 PlatformFamily.OSX => "osx-x64",
                 _ => throw new PlatformNotSupportedException()
             };

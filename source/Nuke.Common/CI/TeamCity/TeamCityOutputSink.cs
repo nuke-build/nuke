@@ -6,7 +6,6 @@ using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;

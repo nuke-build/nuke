@@ -12,7 +12,6 @@ using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
@@ -56,7 +55,7 @@ namespace Nuke.Common.Tests.CI
                 yield return
                 (
                     null,
-                    new TestTeamCityAttribute()
+                    new TestTeamCityAttribute
                     {
                         Description = "description",
                         Version = "1.3.3.7",

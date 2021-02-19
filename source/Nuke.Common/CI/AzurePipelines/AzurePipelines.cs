@@ -34,7 +34,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
         internal AzurePipelines(Action<string> messageSink)
         {
-            _messageSink = messageSink ?? System.Console.WriteLine;
+            _messageSink = messageSink ?? Console.WriteLine;
         }
 
         protected internal override OutputSink OutputSink => new AzurePipelinesOutputSink(this);

@@ -16,7 +16,6 @@ using Nuke.Common.IO;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities;
 using static Nuke.Common.ControlFlow;
-using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.MSBuildTasks
 {

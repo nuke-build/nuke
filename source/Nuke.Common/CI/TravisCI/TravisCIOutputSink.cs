@@ -24,8 +24,8 @@ namespace Nuke.Common.CI.TravisCI
         internal override IDisposable WriteBlock(string text)
         {
             return DelegateDisposable.CreateBracket(
-                () => System.Console.WriteLine($"travis_fold:start:{text}"),
-                () => System.Console.WriteLine($"travis_fold:end:{text}"));
+                () => Console.WriteLine($"travis_fold:start:{text}"),
+                () => Console.WriteLine($"travis_fold:end:{text}"));
         }
     }
 }
