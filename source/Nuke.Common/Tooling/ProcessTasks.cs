@@ -201,7 +201,7 @@ namespace Nuke.Common.Tooling
                     ? $"{DateTime.Now.ToLongTimeString()} {outputFilter.Invoke(data)}"
                     : outputFilter.Invoke(data);
 
-            process.OutputDataReceived += (s, e) =>
+            process.OutputDataReceived += (_, e) =>
             {
                 if (e.Data == null)
                     return;
@@ -212,7 +212,7 @@ namespace Nuke.Common.Tooling
                 logFile?.WriteLine($"[STD] {processedOutput}");
                 logger?.Invoke(OutputType.Std, processedOutput);
             };
-            process.ErrorDataReceived += (s, e) =>
+            process.ErrorDataReceived += (_, e) =>
             {
                 if (e.Data == null)
                     return;
