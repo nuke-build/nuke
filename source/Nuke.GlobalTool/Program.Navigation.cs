@@ -21,7 +21,7 @@ namespace Nuke.GlobalTool
         // function nuke. { nuke :PushWithCurrentRootDirectory; cd $(nuke :GetNextDirectory) }
         // function nuke.. { nuke :PushWithParentRootDirectory; cd $(nuke :GetNextDirectory) }
 
-        static string SessionId
+        private static string SessionId
             => EnvironmentInfo.Platform switch
             {
                 PlatformFamily.OSX => EnvironmentInfo.GetVariable<string>("TERM_SESSION_ID")?.Substring(7).NotNull("TERM_SESSION_ID != null"),
@@ -29,7 +29,7 @@ namespace Nuke.GlobalTool
                 _ => throw new NotSupportedException($"{EnvironmentInfo.Platform} has no session id selector.")
             };
 
-        static string SessionFile => GlobalTemporaryDirectory / $"nuke-{SessionId}.dat";
+        private static string SessionFile => GlobalTemporaryDirectory / $"nuke-{SessionId}.dat";
 
         [UsedImplicitly]
         public static int GetNextDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)

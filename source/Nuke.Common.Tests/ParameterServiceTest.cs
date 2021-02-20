@@ -221,7 +221,7 @@ namespace Nuke.Common.Tests
                 .Should().BeEquivalentTo(verbosities);
         }
 
-        class TestBuild : NukeBuild, ITestComponent
+        private class TestBuild : NukeBuild, ITestComponent
         {
             [Parameter] public string String;
             [Parameter] public int[] Set;
@@ -229,7 +229,7 @@ namespace Nuke.Common.Tests
         }
 
         [ParameterPrefix("Interface")]
-        interface ITestComponent : INukeBuild
+        private interface ITestComponent : INukeBuild
         {
             [Parameter] bool Param => ValueInjectionUtility.TryGetValue<bool?>(() => Param) ?? false;
         }

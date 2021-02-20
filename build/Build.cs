@@ -131,7 +131,7 @@ partial class Build
             DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
         });
 
-    private T From<T>()
+    T From<T>()
         where T : INukeBuild
         => (T) (object) this;
 }

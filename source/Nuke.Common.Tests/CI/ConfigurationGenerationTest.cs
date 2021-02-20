@@ -175,9 +175,9 @@ namespace Nuke.Common.Tests.CI
             [Parameter("Configuration for compilation")]
             public readonly Configuration Configuration = Configuration.Debug;
 
-            [Parameter] readonly string[] StringArray = new[] { "first", "second" };
-            [Parameter] readonly int[] IntegerArray = new[] { 1, 2 };
-            [Parameter] readonly Configuration[] ConfigurationArray = new[] { Configuration.Debug, Configuration.Release };
+            [Parameter] public readonly string[] StringArray = new[] { "first", "second" };
+            [Parameter] public readonly int[] IntegerArray = new[] { 1, 2 };
+            [Parameter] public readonly Configuration[] ConfigurationArray = new[] { Configuration.Debug, Configuration.Release };
 
             public AbsolutePath OutputDirectory => RootDirectory / "output";
 

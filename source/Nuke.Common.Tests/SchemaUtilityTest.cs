@@ -72,7 +72,7 @@ namespace Nuke.Common.Tests
                 });
         }
 
-        class TestBuild : NukeBuild, ITestComponent
+        private class TestBuild : NukeBuild, ITestComponent
         {
             [Parameter] public string Param;
             [Parameter] public bool? NullableBool;
@@ -87,7 +87,7 @@ namespace Nuke.Common.Tests
         }
 
         [ParameterPrefix("Component")]
-        interface ITestComponent : INukeBuild
+        private interface ITestComponent : INukeBuild
         {
             [Parameter] string Param1 => ValueInjectionUtility.TryGetValue(() => Param1);
             [Parameter] string Param2 => ValueInjectionUtility.TryGetValue(() => Param2);
