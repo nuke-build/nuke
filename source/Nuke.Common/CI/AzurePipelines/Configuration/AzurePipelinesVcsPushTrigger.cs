@@ -3,11 +3,13 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.AzurePipelines.Configuration
 {
+    [PublicAPI]
     public class AzurePipelinesVcsPushTrigger : ConfigurationEntity
     {
         public bool Disabled { get; set; }
