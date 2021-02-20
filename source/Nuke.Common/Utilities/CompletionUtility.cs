@@ -64,7 +64,7 @@ namespace Nuke.Common.Utilities
                         suggestedItems.Add(item);
                     else if (item.StartsWithOrdinalIgnoreCase(currentWord))
                     {
-                        var normalizedItem = item.ReplaceRegex(currentWord, x => currentWord, RegexOptions.IgnoreCase);
+                        var normalizedItem = item.ReplaceRegex(currentWord, _ => currentWord, RegexOptions.IgnoreCase);
                         if (normalizedItem != item)
                         {
                             var letters = currentWord.Where(char.IsLetter).ToList();

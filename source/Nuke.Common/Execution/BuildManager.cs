@@ -32,7 +32,7 @@ namespace Nuke.Common.Execution
         {
             Console.OutputEncoding = Encoding.UTF8;
             Console.InputEncoding = Encoding.UTF8;
-            Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
+            Console.CancelKeyPress += (_, _) => s_cancellationHandlers.ForEach(x => x());
 
             var build = Create<T>();
 

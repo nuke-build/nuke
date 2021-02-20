@@ -46,7 +46,7 @@ namespace Nuke.Common
         {
             string ExpandUnixEnvironmentVariables()
                 => value
-                    .ReplaceRegex("^~", x => Environment.GetEnvironmentVariable("HOME"))
+                    .ReplaceRegex("^~", _ => Environment.GetEnvironmentVariable("HOME"))
                     .ReplaceRegex(@"\$([a-z_][a-z0-9_]*)", x => Environment.GetEnvironmentVariable(x.Groups[1].Value), RegexOptions.IgnoreCase);
 
             return IsWin
@@ -93,7 +93,7 @@ namespace Nuke.Common
             var inSingleQuotes = false;
             var inDoubleQuotes = false;
             var escaped = false;
-            return commandLine.Split((c, i) =>
+            return commandLine.Split((c, _) =>
                     {
                         if (c == '\"' && !inSingleQuotes && !escaped)
                             inDoubleQuotes = !inDoubleQuotes;
