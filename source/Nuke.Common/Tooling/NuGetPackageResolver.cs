@@ -125,6 +125,7 @@ namespace Nuke.Common.Tooling
                 .WhereNotNull();
         }
 
+        // ReSharper disable once CognitiveComplexity
         [ItemNotNull]
         private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromConfigFile(
             string packagesConfigFile,

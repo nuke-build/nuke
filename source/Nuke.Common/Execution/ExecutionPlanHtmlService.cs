@@ -35,6 +35,7 @@ namespace Nuke.Common.Execution
                           });
         }
 
+        // ReSharper disable once CognitiveComplexity
         private static string GetGraphDefinition(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var builder = new StringBuilder();
