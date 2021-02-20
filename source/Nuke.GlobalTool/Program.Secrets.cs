@@ -27,6 +27,7 @@ namespace Nuke.GlobalTool
         private const string DiscardAndExit = "<Discard & Exit>";
         private const string DeletePasswordAndExit = "<Delete Password & Exit>";
 
+        // ReSharper disable once CognitiveComplexity
         [UsedImplicitly]
         public static int Secrets(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {

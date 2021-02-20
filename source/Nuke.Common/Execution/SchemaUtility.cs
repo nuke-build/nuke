@@ -23,6 +23,7 @@ namespace Nuke.Common.Execution
             File.WriteAllText(buildSchemaFile, buildSchema.ToString());
         }
 
+        // ReSharper disable once CognitiveComplexity
         public static JObject GetBuildSchema(NukeBuild build)
         {
             var parameters = ValueInjectionUtility

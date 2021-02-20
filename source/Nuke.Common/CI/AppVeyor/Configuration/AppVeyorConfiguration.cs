@@ -29,6 +29,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
         public string SkipCommitsMessage { get; set; }
         public string SkipCommitsAuthor { get; set; }
 
+        // ReSharper disable once CognitiveComplexity
         public override void Write(CustomFileWriter writer)
         {
             using (writer.WriteBlock("image:"))

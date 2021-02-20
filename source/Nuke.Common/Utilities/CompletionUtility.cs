@@ -13,6 +13,7 @@ namespace Nuke.Common.Utilities
 {
     public static class CompletionUtility
     {
+        // ReSharper disable once CognitiveComplexity
         public static IEnumerable<string> GetRelevantCompletionItems(
             string words,
             IReadOnlyDictionary<string, string[]> completionItems)

@@ -60,6 +60,7 @@ namespace Nuke.Common.Tools.Unity.Logging
             }
         }
 
+        // ReSharper disable once CognitiveComplexity
         private void ReadLogFile()
         {
             while (!File.Exists(_file))

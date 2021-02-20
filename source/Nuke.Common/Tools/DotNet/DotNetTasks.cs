@@ -32,6 +32,7 @@ namespace Nuke.Common.Tools.DotNet
 
     public static partial class DotNetTasks
     {
+        // ReSharper disable once CognitiveComplexity
         internal static void CustomLogger(OutputType type, string output)
         {
             if (type == OutputType.Err)

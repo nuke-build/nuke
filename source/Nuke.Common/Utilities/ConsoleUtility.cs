@@ -25,6 +25,7 @@ namespace Nuke.Common.Utilities
 
         private static bool s_interrupted;
 
+        // ReSharper disable once CognitiveComplexity
         [CanBeNull]
         public static string PromptForInput(string question, string defaultValue)
         {
@@ -69,6 +70,7 @@ namespace Nuke.Common.Utilities
             return result;
         }
 
+        // ReSharper disable once CognitiveComplexity
         public static T PromptForChoice<T>(string question, params (T Value, string Description)[] options)
         {
             if (s_interrupted)
@@ -109,6 +111,7 @@ namespace Nuke.Common.Utilities
             return options[selection].Value;
         }
 
+        // ReSharper disable once CognitiveComplexity
         public static string ReadSecret()
         {
             var secret = string.Empty;
