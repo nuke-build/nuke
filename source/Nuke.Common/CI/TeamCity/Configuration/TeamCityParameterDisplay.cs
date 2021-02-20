@@ -4,9 +4,11 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
+    [PublicAPI]
     public enum TeamCityParameterDisplay
     {
         Normal,

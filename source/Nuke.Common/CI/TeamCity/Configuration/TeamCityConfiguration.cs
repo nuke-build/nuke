@@ -4,11 +4,13 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
+    [PublicAPI]
     public class TeamCityConfiguration : ConfigurationEntity
     {
         public virtual string[] Header =>

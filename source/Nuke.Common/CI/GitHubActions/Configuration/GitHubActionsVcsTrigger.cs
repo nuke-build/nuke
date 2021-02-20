@@ -4,12 +4,14 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
+    [PublicAPI]
     public class GitHubActionsVcsTrigger : GitHubActionsDetailedTrigger
     {
         public GitHubActionsTrigger Kind { get; set; }

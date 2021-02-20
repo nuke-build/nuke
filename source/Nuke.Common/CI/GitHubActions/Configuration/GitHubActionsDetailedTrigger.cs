@@ -4,9 +4,11 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
+    [PublicAPI]
     public abstract class GitHubActionsDetailedTrigger : ConfigurationEntity
     {
     }

@@ -4,11 +4,13 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
+    [PublicAPI]
     public class TeamCityBuildType : ConfigurationEntity
     {
         public string Id { get; set; }
