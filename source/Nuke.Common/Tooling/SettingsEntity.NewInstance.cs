@@ -6,9 +6,11 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.Tooling
 {
+    [PublicAPI]
     public static partial class SettingsEntityExtensions
     {
         public static T NewInstance<T>(this T settingsEntity)

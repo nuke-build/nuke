@@ -4,10 +4,12 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
+    [PublicAPI]
     public class GitHubActionsScheduledTrigger : GitHubActionsDetailedTrigger
     {
         public string Cron { get; set; }

@@ -8,6 +8,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.AzurePipelines.Configuration
 {
+    [PublicAPI]
     public class AzurePipelinesConfiguration : ConfigurationEntity
     {
         public string[] VariableGroups { get; set; }

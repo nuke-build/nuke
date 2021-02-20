@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -8,6 +9,7 @@ using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.CI.AzurePipelines.Configuration
 {
+    [PublicAPI]
     public class AzurePipelinesJob : ConfigurationEntity
     {
         public string Name { get; set; }

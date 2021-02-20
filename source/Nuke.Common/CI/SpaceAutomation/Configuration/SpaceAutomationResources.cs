@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.SpaceAutomation.Configuration
 {
+    [PublicAPI]
     public class SpaceAutomationResources : ConfigurationEntity
     {
         public int? Cpu { get; set; }

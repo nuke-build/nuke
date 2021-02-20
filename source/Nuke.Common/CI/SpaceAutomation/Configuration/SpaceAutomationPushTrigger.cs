@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.SpaceAutomation.Configuration
 {
+    [PublicAPI]
     public class SpaceAutomationPushTrigger : SpaceAutomationTrigger
     {
         public bool? OnPush { get; set; }

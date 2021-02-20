@@ -5,11 +5,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
+    [PublicAPI]
     public class GitHubActionsRunStep : GitHubActionsStep
     {
         public string Command { get; set; }
