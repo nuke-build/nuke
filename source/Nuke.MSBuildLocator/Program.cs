@@ -134,7 +134,7 @@ namespace Nuke.MSBuildLocator
                 var process = new Process { StartInfo = info };
                 process.Start();
 
-                process.ErrorDataReceived += (s, e) => Console.Error.WriteLine(e.Data);
+                process.ErrorDataReceived += (_, e) => Console.Error.WriteLine(e.Data);
                 process.WaitForExit();
                 Trace.Assert(process.ExitCode == 0, "process.ExitCode == 0");
 

@@ -38,7 +38,7 @@ namespace Nuke.Common.Tools.Unity.Logging
                                      NotifyFilter = NotifyFilters.CreationTime | NotifyFilters.LastWrite
                                  };
 
-            _fileSystemWatcher.Changed += (s, e) => _logResetEvent.Set();
+            _fileSystemWatcher.Changed += (_, _) => _logResetEvent.Set();
 
             _cancellationTokenSource = new CancellationTokenSource();
             _logReaderThread = new Thread(ReadLogFile);

@@ -42,7 +42,7 @@ namespace Nuke.Common.Tests
         [Fact]
         public void TestSplit()
         {
-            "msbuild-configuration".Split((x, i) => !char.IsLetter(x))
+            "msbuild-configuration".Split((x, _) => !char.IsLetter(x))
                 .Should().Equal("msbuild", "configuration");
 
             "MSBuildConfiguration".SplitCamelHumps()

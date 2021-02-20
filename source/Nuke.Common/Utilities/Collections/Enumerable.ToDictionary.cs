@@ -30,7 +30,7 @@ namespace Nuke.Common.Utilities.Collections
                 }
                 catch (ArgumentException exception)
                 {
-                    exceptionFactory ??= (ex, k) => ex;
+                    exceptionFactory ??= (ex, _) => ex;
                     throw exceptionFactory(exception, key);
                 }
             }
