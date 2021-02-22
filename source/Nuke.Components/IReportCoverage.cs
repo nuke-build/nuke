@@ -22,7 +22,7 @@ using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 namespace Nuke.Components
 {
     [PublicAPI]
-    public interface IReportTestCoverage : ITest, IHazReports, IHazGitRepository, IHazGitVersion
+    public interface IReportCoverage : ITest, IHazReports, IHazGitRepository, IHazGitVersion
     {
         bool CreateCoverageHtmlReport { get; }
         bool ReportToCodecov { get; }
@@ -31,8 +31,10 @@ namespace Nuke.Components
         string CoverageReportDirectory => ReportDirectory / "coverage-report";
         string CoverageReportArchive => Path.ChangeExtension(CoverageReportDirectory, ".zip");
 
-        Target ReportTestCoverage => _ => _
+        Target ReportCoverage => _ => _
             .DependsOn(Test)
+            .TryDependentFor<IPublish>()
+            .TryAfter<ITest>()
             .Consumes(Test)
             .Produces(CoverageReportArchive)
             .Requires(() => !ReportToCodecov || CodecovToken != null)
