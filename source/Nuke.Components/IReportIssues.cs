@@ -18,12 +18,14 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 namespace Nuke.Components
 {
     [PublicAPI]
-    public interface IReportCodeIssues : IRestore, IHazReports
+    public interface IReportIssues : IRestore, IHazReports
     {
         AbsolutePath InspectCodeReportFile => ReportDirectory / "inspect-code.xml";
 
-        Target ReportCodeIssues => _ => _
+        Target ReportIssues => _ => _
             .DependsOn(Restore)
+            .TryDependentFor<IPublish>()
+            .TryAfter<ITest>()
             .Executes(() =>
             {
                 ReSharperInspectCode(_ => _
@@ -37,12 +39,12 @@ namespace Nuke.Components
                 InspectCodeCheckResults();
             });
 
-        IEnumerable<(string PackageId, string Version)> InspectCodePlugins
-            => new (string PackageId, string Version)[0];
+        IEnumerable<(string PackageId, string Version)> InspectCodePlugins => new (string PackageId, string Version)[0];
 
         sealed Configure<ReSharperInspectCodeSettings> InspectCodeSettingsBase => _ => _
             .SetTargetPath(Solution)
             .SetOutput(InspectCodeReportFile)
+            .SetSeverity(ReSharperSeverity.WARNING)
             .When(RootDirectory.Contains(DotNetPath), _ => _
                 .SetDotNetCore(DotNetPath));
 
@@ -100,7 +102,7 @@ namespace Nuke.Components
             }
 
             Logger.Normal();
-            InspectCodeWriteSummary(issues);
+            ReportIssueCount(issues);
         }
 
         void InspectCodeWriteIssueSummary(List<(string TypeId, string Message, string File, string Line, string Severity, string CategoryId)> issues)
@@ -120,11 +122,11 @@ namespace Nuke.Components
             }
         }
 
-        sealed void InspectCodeWriteSummary(
+        sealed void ReportIssueCount(
             List<(string TypeId, string Message, string File, string Line, string Severity, string CategoryId)> issues)
         {
             var errorCount = issues.Count(x => x.Severity == nameof(ReSharperSeverity.ERROR));
-            var warningCount = issues.Count - errorCount;
+            var warningCount = issues.Count(x => x.Severity == nameof(ReSharperSeverity.WARNING));
 
             var summaryMessage = $"Found {errorCount} errors and {warningCount} warnings in {Solution}.";
 
@@ -135,8 +137,11 @@ namespace Nuke.Components
                 ControlFlow.Fail(summaryMessage);
             else if (errorCount > 0 || warningCount > 0)
                 Logger.Warn(summaryMessage);
-            else
-                Logger.Success($"No issues found in {Solution}. Impressive!");
+
+            if (errorCount > 0)
+                ReportSummary("Errors", errorCount.ToString());
+            if (warningCount > 0)
+                ReportSummary("Warnings", warningCount.ToString());
         }
 
         string InspectCodeIssueMessage(string typeId, string file, string line, string message)

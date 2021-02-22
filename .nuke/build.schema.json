@@ -13,6 +13,10 @@
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
         },
+        "CodecovToken": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secret [profile]'"
+        },
         "Configuration": {
           "type": "string",
           "enum": [
@@ -88,10 +92,6 @@
         "PublicNuGetApiKey": {
           "type": "string"
         },
-        "ReportingCodecovToken": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
         "Root": {
           "type": "string",
           "description": "Root directory during build execution"
@@ -115,7 +115,6 @@
           "items": {
             "type": "string",
             "enum": [
-              "Analysis",
               "Announce",
               "Changelog",
               "CheckoutExternalRepositories",
@@ -135,6 +134,8 @@
               "Release",
               "ReleaseImage",
               "ReportCoverage",
+              "ReportDuplicates",
+              "ReportIssues",
               "Restore",
               "SignPackages",
               "Test",
@@ -164,7 +165,6 @@
           "items": {
             "type": "string",
             "enum": [
-              "Analysis",
               "Announce",
               "Changelog",
               "CheckoutExternalRepositories",
@@ -184,6 +184,8 @@
               "Release",
               "ReleaseImage",
               "ReportCoverage",
+              "ReportDuplicates",
+              "ReportIssues",
               "Restore",
               "SignPackages",
               "Test",

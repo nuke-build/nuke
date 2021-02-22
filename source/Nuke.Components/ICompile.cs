@@ -19,6 +19,7 @@ namespace Nuke.Components
     {
         Target Compile => _ => _
             .DependsOn(Restore)
+            .WhenSkipped(DependencyBehavior.Skip)
             .Executes(() =>
             {
                 DotNetBuild(_ => _
