@@ -181,8 +181,6 @@ namespace Nuke.Common.Execution
                     // TODO: should get actual build type name
                     .Replace("value(Build).", string.Empty);
 
-            target.SkipReason = null; // solely for testing
-
             foreach (var condition in conditions)
             {
                 if (!condition.Compile().Invoke())
