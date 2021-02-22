@@ -5,10 +5,9 @@
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Components;
 using static Nuke.Components.IHazTwitterCredentials;
-using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #if ENTERPRISE
 using Nuke.Enterprise.Notifications;
-
+using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #endif
 
 [GitHubActions(
@@ -22,7 +21,6 @@ using Nuke.Enterprise.Notifications;
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     ImportSecrets = new[]
                     {
-                        nameof(IReportTestCoverage.CodecovToken),
                         nameof(EnterpriseAccessToken),
 #if ENTERPRISE
                         Slack + nameof(IHazSlackCredentials.AppAccessToken),

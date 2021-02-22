@@ -51,5 +51,9 @@ jobs:
           path: output/test-results
       - uses: actions/upload-artifact@v1
         with:
+          name: coverage-report.zip
+          path: output/reports/coverage-report.zip
+      - uses: actions/upload-artifact@v1
+        with:
           name: packages
           path: output/packages

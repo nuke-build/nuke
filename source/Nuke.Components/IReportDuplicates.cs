@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
+using Nuke.Common.CI.TeamCity;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.ReSharper;
 using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
@@ -13,11 +14,12 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 namespace Nuke.Components
 {
     [PublicAPI]
-    public interface IReportCodeDuplicates : IHazReports, IHazSolution
+    public interface IReportDuplicates : IHazReports, IHazSolution
     {
         AbsolutePath DupFinderReportFile => ReportDirectory / "dupfinder.xml";
 
-        Target ReportCodeDuplicates => _ => _
+        Target ReportDuplicates => _ => _
+            .TryDependentFor<IPublish>()
             .Executes(() =>
             {
                 ReSharperDupFinder(_ => _
@@ -28,6 +30,8 @@ namespace Nuke.Components
                         "**/*.Generated.cs",
                         "**/obj/**",
                         "**/bin/**"));
+
+                TeamCity.Instance?.ImportData(TeamCityImportType.DotNetDupFinder, DupFinderReportFile);
             });
     }
 }

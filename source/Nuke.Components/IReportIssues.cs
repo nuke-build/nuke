@@ -18,12 +18,13 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 namespace Nuke.Components
 {
     [PublicAPI]
-    public interface IReportCodeIssues : IRestore, IHazReports
+    public interface IReportIssues : IRestore, IHazReports
     {
         AbsolutePath InspectCodeReportFile => ReportDirectory / "inspect-code.xml";
 
-        Target ReportCodeIssues => _ => _
+        Target ReportIssues => _ => _
             .DependsOn(Restore)
+            .TryDependentFor<IPublish>()
             .Executes(() =>
             {
                 ReSharperInspectCode(_ => _
@@ -37,12 +38,12 @@ namespace Nuke.Components
                 InspectCodeCheckResults();
             });
 
-        IEnumerable<(string PackageId, string Version)> InspectCodePlugins
-            => new (string PackageId, string Version)[0];
+        IEnumerable<(string PackageId, string Version)> InspectCodePlugins => new (string PackageId, string Version)[0];
 
         sealed Configure<ReSharperInspectCodeSettings> InspectCodeSettingsBase => _ => _
             .SetTargetPath(Solution)
             .SetOutput(InspectCodeReportFile)
+            .SetSeverity(ReSharperSeverity.WARNING)
             .When(RootDirectory.Contains(DotNetPath), _ => _
                 .SetDotNetCore(DotNetPath));
 

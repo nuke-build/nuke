@@ -28,10 +28,11 @@ project {
     buildType(Test_P1T2)
     buildType(Test_P2T2)
     buildType(Test)
-    buildType(Publish)
-    buildType(Announce)
+    buildType(ReportDuplicates)
+    buildType(ReportIssues)
+    buildType(ReportCoverage)
 
-    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, Publish, Announce)
+    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, ReportDuplicates, ReportIssues, ReportCoverage)
 
     params {
         select (
@@ -40,6 +41,16 @@ project {
             description = "Logging verbosity during build execution. Default is 'Normal'.",
             value = "Normal",
             options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.SlackWebhook",
+            label = "SlackWebhook",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.GitterAuthToken",
+            label = "GitterAuthToken",
+            value = "",
             display = ParameterDisplay.NORMAL)
         password (
             "env.GitHubToken",
@@ -78,6 +89,26 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterConsumerKey",
+            label = "TwitterConsumerKey",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterConsumerSecret",
+            label = "TwitterConsumerSecret",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterAccessToken",
+            label = "TwitterAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterAccessTokenSecret",
+            label = "TwitterAccessTokenSecret",
+            value = "",
+            display = ParameterDisplay.NORMAL)
         checkbox (
             "env.IgnoreFailedSources",
             label = "IgnoreFailedSources",
@@ -102,6 +133,11 @@ project {
             label = "NuGetSource",
             value = "https://api.nuget.org/v3/index.json",
             allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.NuGetApiKey",
+            label = "NuGetApiKey",
+            value = "",
             display = ParameterDisplay.NORMAL)
         password (
             "env.SlackAppAccessToken",
@@ -308,9 +344,8 @@ object Test : BuildType({
         }
     }
 })
-object Publish : BuildType({
-    name = "🚚 Publish"
-    type = Type.DEPLOYMENT
+object ReportDuplicates : BuildType({
+    name = "🎭 ReportDuplicates"
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -318,99 +353,100 @@ object Publish : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Publish --skip"
+            arguments = "ReportDuplicates --skip"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Publish --skip"
+            arguments = "ReportDuplicates --skip"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     params {
-        password (
-            "env.NuGetApiKey",
-            label = "NuGetApiKey",
-            value = "",
-            display = ParameterDisplay.PROMPT)
         text(
             "teamcity.ui.runButton.caption",
-            "Publish",
+            "Report Duplicates",
             display = ParameterDisplay.HIDDEN
         )
+    }
+    triggers {
+        vcs {
+            triggerRules = "+:**"
+        }
+    }
+})
+object ReportIssues : BuildType({
+    name = "💣 ReportIssues"
+    vcs {
+        root(DslContext.settingsRoot)
+        cleanCheckout = true
+    }
+    steps {
+        exec {
+            path = "build.cmd"
+            arguments = "Restore ReportIssues --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
+            path = "build.sh"
+            arguments = "Restore ReportIssues --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
+        }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Report Issues",
+            display = ParameterDisplay.HIDDEN
+        )
+    }
+    triggers {
+        vcs {
+            triggerRules = "+:**"
+        }
+    }
+})
+object ReportCoverage : BuildType({
+    name = "📊 ReportCoverage"
+    vcs {
+        root(DslContext.settingsRoot)
+        cleanCheckout = true
+    }
+    artifactRules = "output/reports/coverage-report.zip => output/reports"
+    steps {
+        exec {
+            path = "build.cmd"
+            arguments = "ReportCoverage --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
+            path = "build.sh"
+            arguments = "ReportCoverage --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
+        }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Report Coverage",
+            display = ParameterDisplay.HIDDEN
+        )
+    }
+    triggers {
+        vcs {
+            triggerRules = "+:**"
+        }
     }
     dependencies {
         snapshot(Test) {
             onDependencyFailure = FailureAction.FAIL_TO_START
             onDependencyCancel = FailureAction.CANCEL
         }
-        snapshot(Pack) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-            onDependencyCancel = FailureAction.CANCEL
-        }
-        artifacts(Pack) {
-            artifactRules = "output/packages/*.nupkg => output/packages"
-        }
-    }
-})
-object Announce : BuildType({
-    name = "🗣 Announce"
-    vcs {
-        root(DslContext.settingsRoot)
-        cleanCheckout = true
-    }
-    steps {
-        exec {
-            path = "build.cmd"
-            arguments = "DownloadFonts InstallFonts ReleaseImage Announce --skip"
-            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
-        }
-        exec {
-            path = "build.sh"
-            arguments = "DownloadFonts InstallFonts ReleaseImage Announce --skip"
-            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
-        }
-    }
-    params {
-        password (
-            "env.TwitterConsumerKey",
-            label = "TwitterConsumerKey",
-            value = "",
-            display = ParameterDisplay.PROMPT)
-        password (
-            "env.TwitterConsumerSecret",
-            label = "TwitterConsumerSecret",
-            value = "",
-            display = ParameterDisplay.PROMPT)
-        password (
-            "env.TwitterAccessToken",
-            label = "TwitterAccessToken",
-            value = "",
-            display = ParameterDisplay.PROMPT)
-        password (
-            "env.TwitterAccessTokenSecret",
-            label = "TwitterAccessTokenSecret",
-            value = "",
-            display = ParameterDisplay.PROMPT)
-        password (
-            "env.SlackWebhook",
-            label = "SlackWebhook",
-            value = "",
-            display = ParameterDisplay.PROMPT)
-        password (
-            "env.GitterAuthToken",
-            label = "GitterAuthToken",
-            value = "",
-            display = ParameterDisplay.PROMPT)
-        text(
-            "teamcity.ui.runButton.caption",
-            "Announce",
-            display = ParameterDisplay.HIDDEN
-        )
-    }
-    triggers {
-        finishBuildTrigger {
-            buildType = "${Publish.id}"
+        artifacts(Test) {
+            artifactRules = """
+                output/test-results/*.trx => output/test-results
+                output/test-results/*.xml => output/test-results
+            """.trimIndent()
         }
     }
 })

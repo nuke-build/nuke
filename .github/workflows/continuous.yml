@@ -41,7 +41,6 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-            CodecovToken: ${{ secrets.CODECOV_TOKEN }}
             EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
             SlackAppAccessToken: ${{ secrets.SLACK_APP_ACCESS_TOKEN }}
             SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
@@ -60,7 +59,6 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-            CodecovToken: ${{ secrets.CODECOV_TOKEN }}
             EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
             SlackAppAccessToken: ${{ secrets.SLACK_APP_ACCESS_TOKEN }}
             SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
@@ -79,7 +77,6 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-            CodecovToken: ${{ secrets.CODECOV_TOKEN }}
             EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
             SlackAppAccessToken: ${{ secrets.SLACK_APP_ACCESS_TOKEN }}
             SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}

@@ -39,9 +39,9 @@ partial class Build
         ICompile,
         IPack,
         ITest,
-        IReportTestCoverage,
-        IReportCodeIssues,
-        IReportCodeDuplicates,
+        IReportCoverage,
+        IReportIssues,
+        IReportDuplicates,
         IPublish
 {
     /// Support plugins are available for:
@@ -93,19 +93,19 @@ partial class Build
         .Inherit<ITest>()
         .Partition(() => TestPartition);
 
-    bool IReportTestCoverage.CreateCoverageHtmlReport => true;
-    bool IReportTestCoverage.ReportToCodecov => TeamCity != null;
+    bool IReportCoverage.CreateCoverageHtmlReport => true;
+    bool IReportCoverage.ReportToCodecov => false;
 
-    IEnumerable<(string PackageId, string Version)> IReportCodeIssues.InspectCodePlugins
+    IEnumerable<(string PackageId, string Version)> IReportIssues.InspectCodePlugins
         => new (string PackageId, string Version)[]
            {
                new("ReSharperPlugin.CognitiveComplexity", ReSharperPluginLatest)
            };
 
-    bool IReportCodeIssues.InspectCodeFailOnWarning => false;
-    bool IReportCodeIssues.InspectCodeReportWarnings => true;
-    IEnumerable<string> IReportCodeIssues.InspectCodeFailOnIssues => new[] { "CognitiveComplexity" };
-    IEnumerable<string> IReportCodeIssues.InspectCodeFailOnCategories => new string[0];
+    bool IReportIssues.InspectCodeFailOnWarning => false;
+    bool IReportIssues.InspectCodeReportWarnings => true;
+    IEnumerable<string> IReportIssues.InspectCodeFailOnIssues => new[] { "CognitiveComplexity" };
+    IEnumerable<string> IReportIssues.InspectCodeFailOnCategories => new string[0];
 
     string PublicNuGetSource => "https://api.nuget.org/v3/index.json";
     string GitHubRegistrySource => $"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json";
