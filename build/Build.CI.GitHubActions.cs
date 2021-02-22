@@ -5,10 +5,9 @@
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Components;
 using static Nuke.Components.IHazTwitterCredentials;
-using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #if ENTERPRISE
 using Nuke.Enterprise.Notifications;
-
+using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #endif
 
 [GitHubActions(
@@ -19,10 +18,16 @@ using Nuke.Enterprise.Notifications;
     OnPushBranchesIgnore = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
     OnPullRequestBranches = new[] { DevelopBranch },
     PublishArtifacts = false,
-    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
+    InvokedTargets = new[]
+                     {
+                         nameof(ITest.Test),
+                         nameof(IPack.Pack),
+                         nameof(IReportDuplicates.ReportDuplicates),
+                         nameof(IReportIssues.ReportIssues),
+                         nameof(IReportCoverage.ReportCoverage)
+                     },
     ImportSecrets = new[]
                     {
-                        nameof(IReportTestCoverage.CodecovToken),
                         nameof(EnterpriseAccessToken),
 #if ENTERPRISE
                         Slack + nameof(IHazSlackCredentials.AppAccessToken),

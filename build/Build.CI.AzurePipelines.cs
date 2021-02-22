@@ -11,10 +11,9 @@ using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
 using Nuke.Components;
-using static Nuke.Enterprise.Notifications.IHazAzurePipelinesAccessToken;
-using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #if ENTERPRISE
 using Nuke.Enterprise.Notifications;
+using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #endif
 
 [AzurePipelines(
@@ -35,7 +34,7 @@ using Nuke.Enterprise.Notifications;
 #endif
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
-    ExcludedTargets = new[] { nameof(Clean), nameof(IReportTestCoverage.ReportTestCoverage), nameof(SignPackages) })]
+    ExcludedTargets = new[] { nameof(Clean) })]
 partial class Build
 {
     public class AzurePipelinesAttribute : Nuke.Common.CI.AzurePipelines.AzurePipelinesAttribute
@@ -55,16 +54,7 @@ partial class Build
         {
             var job = base.GetJob(executableTarget, jobs, relevantTargets);
 
-            var dictionary = new Dictionary<string, string>
-                             {
-                                 { nameof(ICompile.Compile), "⚙️" },
-                                 { nameof(ITest.Test), "🚦" },
-                                 { nameof(IPack.Pack), "📦" },
-                                 { nameof(IReportTestCoverage.ReportTestCoverage), "📊" },
-                                 { nameof(IPublish.Publish), "🚚" },
-                                 { nameof(Announce), "🗣" }
-                             };
-            var symbol = dictionary.GetValueOrDefault(job.Name).NotNull("symbol != null");
+            var symbol = CustomNames.GetValueOrDefault(job.Name).NotNull("symbol != null");
             job.DisplayName = job.PartitionName == null
                 ? $"{symbol} {job.DisplayName}"
                 : $"{symbol} {job.DisplayName} 🧩";
