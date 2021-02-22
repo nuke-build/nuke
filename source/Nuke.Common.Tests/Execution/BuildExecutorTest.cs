@@ -40,19 +40,32 @@ namespace Nuke.Common.Tests.Execution
         }
 
         [Fact]
-        public void TestUserSkipped()
+        public void TestParameterSkipped_None()
         {
             ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
             AssertSkipped(A, B, C);
+        }
 
+        [Fact]
+        public void TestParameterSkipped_Single()
+        {
             ExecuteBuild(skippedTargets: new[] { A });
             AssertExecuted(B, C);
             AssertSkipped(A);
+            A.SkipReason.Should().Be("via --skip parameter");
+        }
 
+        [Fact]
+        public void TestParameterSkipped_Multiple()
+        {
             ExecuteBuild(skippedTargets: new[] { A, B });
             AssertExecuted(C);
             AssertSkipped(A, B);
+        }
 
+        [Fact]
+        public void TestParameterSkipped_DependencyBehavior_Skip()
+        {
             B.DependencyBehavior = DependencyBehavior.Skip;
             ExecuteBuild(skippedTargets: new[] { B });
             AssertExecuted(C);
@@ -65,14 +78,22 @@ namespace Nuke.Common.Tests.Execution
             B.StaticConditions.Add(True);
             ExecuteBuild();
             AssertExecuted(A, B, C);
+        }
 
+        [Fact]
+        public void TestStaticCondition_DependencyBehavior_Execute()
+        {
             B.StaticConditions.Add(False);
-
             B.DependencyBehavior = DependencyBehavior.Execute;
             ExecuteBuild();
             AssertExecuted(A, C);
             AssertSkipped(B);
+        }
 
+        [Fact]
+        public void TestStaticCondition_DependencyBehavior_Skip()
+        {
+            B.StaticConditions.Add(False);
             B.DependencyBehavior = DependencyBehavior.Skip;
             ExecuteBuild();
             AssertExecuted(C);
@@ -80,7 +101,7 @@ namespace Nuke.Common.Tests.Execution
         }
 
         [Fact]
-        public void TestDynamicCondition()
+        public void TestDynamicCondition_Unchanged()
         {
             var condition = false;
             B.DynamicConditions.Add(() => condition);
@@ -88,7 +109,13 @@ namespace Nuke.Common.Tests.Execution
             ExecuteBuild();
             AssertExecuted(A, C);
             AssertSkipped(B);
+        }
 
+        [Fact]
+        public void TestDynamicCondition_Changed()
+        {
+            var condition = false;
+            B.DynamicConditions.Add(() => condition);
             A.Actions.Add(() => condition = true);
             ExecuteBuild();
             AssertExecuted(A, B, C);
