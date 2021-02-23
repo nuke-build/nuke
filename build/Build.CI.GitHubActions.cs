@@ -18,7 +18,14 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
     OnPushBranchesIgnore = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
     OnPullRequestBranches = new[] { DevelopBranch },
     PublishArtifacts = false,
-    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
+    InvokedTargets = new[]
+                     {
+                         nameof(ITest.Test),
+                         nameof(IPack.Pack),
+                         nameof(IReportDuplicates.ReportDuplicates),
+                         nameof(IReportIssues.ReportIssues),
+                         nameof(IReportCoverage.ReportCoverage)
+                     },
     ImportSecrets = new[]
                     {
                         nameof(EnterpriseAccessToken),
