@@ -70,7 +70,7 @@
           {
             "name": "Severity",
             "type": "ReSharperSeverity",
-            "format": "--severity {value}",
+            "format": "--severity={value}",
             "help": "By default, InspectCode only reports issues with the severity level Suggestion and higher. This parameter lets you change the minimal reported severity level to <c>INFO</c>, <c>HINT</c>, <c>SUGGESTION</c>, <c>WARNING</c>, <c>ERROR</c>. For example, <c>-s=WARNING</c>."
           },
           {
