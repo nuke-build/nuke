@@ -148,5 +148,11 @@ namespace Nuke.Common
         /// When set to a non-null value, <see cref="Execute{T}"/> will return the value of <see cref="ExitCode"/>.
         /// </summary>
         public int? ExitCode { get; set; }
+
+        public void ReportSummary(string caption, string text)
+        {
+            ExecutionPlan.Single(x => x.Status == ExecutionStatus.Executing)
+                .SummaryInformation.Add((caption, text));
+        }
     }
 }

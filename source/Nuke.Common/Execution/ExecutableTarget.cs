@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
@@ -39,6 +40,12 @@ namespace Nuke.Common.Execution
         public ExecutionStatus Status { get; set; }
         public TimeSpan Duration { get; set; }
         public bool Invoked { get; set; }
-        public string SkipReason { get; set; }
+        public List<(string Caption, string Text)> SummaryInformation { get; } = new List<(string Caption, string Text)>();
+
+        public string SkipReason
+        {
+            get => SummaryInformation.FirstOrDefault(x => x.Caption == nameof(SkipReason)).Text;
+            set => SummaryInformation.Add((nameof(SkipReason), value));
+        }
     }
 }
