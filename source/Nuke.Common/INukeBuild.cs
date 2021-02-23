@@ -13,6 +13,9 @@ namespace Nuke.Common
 {
     public interface INukeBuild
     {
+        // TODO: add ExitCode
+        void ReportSummary(string caption, string text);
+
         IReadOnlyCollection<ExecutableTarget> InvokedTargets { get; }
         IReadOnlyCollection<ExecutableTarget> SkippedTargets { get; }
         IReadOnlyCollection<ExecutableTarget> ExecutingTargets { get; }
