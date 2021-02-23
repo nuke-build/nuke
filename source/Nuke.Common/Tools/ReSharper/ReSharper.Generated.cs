@@ -505,7 +505,7 @@ namespace Nuke.Common.Tools.ReSharper
               .Add("--absolute-paths", AbsolutePaths)
               .Add("--project={value}", Project)
               .Add("--no-swea", NoSwea)
-              .Add("--severity {value}", Severity)
+              .Add("--severity={value}", Severity)
               .Add("--dumpIssuesTypes", DumpIssuesTypes)
               .Add("--settings={value}", Settings)
               .Add("--disable-settings-layers={value}", DisableSettingsLayers, separator: ';')
