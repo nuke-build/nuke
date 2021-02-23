@@ -38,6 +38,12 @@ namespace Nuke.Common.Execution
     }
 
     [PublicAPI]
+    public interface IOnTargetSummaryUpdated : IBuildExtension
+    {
+        void OnTargetSummaryUpdated(NukeBuild build, ExecutableTarget target);
+    }
+
+    [PublicAPI]
     public interface IOnTargetSkipped : IBuildExtension
     {
         void OnTargetSkipped(NukeBuild build, ExecutableTarget target);

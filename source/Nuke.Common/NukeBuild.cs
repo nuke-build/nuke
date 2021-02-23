@@ -148,5 +148,12 @@ namespace Nuke.Common
         /// When set to a non-null value, <see cref="Execute{T}"/> will return the value of <see cref="ExitCode"/>.
         /// </summary>
         public int? ExitCode { get; set; }
+
+        public void ReportSummary(Configure<IDictionary<string, string>> configurator = null)
+        {
+            var target = ExecutionPlan.Single(x => x.Status == ExecutionStatus.Executing);
+            target.SummaryInformation = configurator.InvokeSafe(new Dictionary<string, string>()).ToDictionary(x => x.Key, x => x.Value);
+            ExecuteExtension<IOnTargetSummaryUpdated>(x => x.OnTargetSummaryUpdated(this, target));
+        }
     }
 }

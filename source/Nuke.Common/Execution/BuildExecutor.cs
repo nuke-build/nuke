@@ -117,8 +117,14 @@ namespace Nuke.Common.Execution
                 }
                 catch (Exception exception)
                 {
+                    build.ReportSummary(_ =>
+                        target.SummaryInformation.Any()
+                            ? target.SummaryInformation
+                            : _.AddPair(exception.GetType().Name, exception.Message));
+
                     Logger.Error(exception);
                     target.Status = ExecutionStatus.Failed;
+
                     build.ExecuteExtension<IOnTargetFailed>(x => x.OnTargetFailed(build, target));
                     build.OnTargetFailed(target.Name);
                     if (!target.ProceedAfterFailure && !failureMode)

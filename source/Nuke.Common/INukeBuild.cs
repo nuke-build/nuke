@@ -8,11 +8,14 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common
 {
     public interface INukeBuild
     {
+        void ReportSummary(Configure<IDictionary<string, string>> configurator = null);
+
         IReadOnlyCollection<ExecutableTarget> InvokedTargets { get; }
         IReadOnlyCollection<ExecutableTarget> SkippedTargets { get; }
         IReadOnlyCollection<ExecutableTarget> ExecutingTargets { get; }

@@ -149,11 +149,11 @@ namespace Nuke.Common.OutputSinks
             var allColumns = firstColumn + secondColumn + thirdColumn;
             var totalDuration = build.ExecutionPlan.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
 
-            string CreateLine(string target, string executionStatus, string duration, string appendix = null)
+            string CreateLine(string target, string executionStatus, string duration, string information = null)
                 => target.PadRight(firstColumn, paddingChar: ' ')
                    + executionStatus.PadRight(secondColumn, paddingChar: ' ')
                    + duration.PadLeft(thirdColumn, paddingChar: ' ')
-                   + (appendix != null ? $"   // {appendix}" : string.Empty);
+                   + (information != null ? $"   // {information}" : string.Empty);
 
             static string GetDurationOrBlank(ExecutableTarget target)
                 => target.Status == ExecutionStatus.Executed ||
@@ -165,13 +165,18 @@ namespace Nuke.Common.OutputSinks
             static string GetDuration(TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}".Replace("0:00", "< 1sec");
 
+            static string GetInformation(ExecutableTarget target)
+                => target.SummaryInformation.Any()
+                    ? target.SummaryInformation.Select(x => $"{x.Key}: {x.Value}").JoinComma()
+                    : null;
+
             WriteNormal(new string(c: '═', count: allColumns));
             WriteInformation(CreateLine("Target", "Status", "Duration"));
             //WriteInformationInternal($"{{0,-{firstColumn}}}{{1,-{secondColumn}}}{{2,{thirdColumn}}}{{3,1}}", "Target", "Status", "Duration", "Test");
             WriteNormal(new string(c: '─', count: allColumns));
             foreach (var target in build.ExecutionPlan)
             {
-                var line = CreateLine(target.Name, target.Status.ToString(), GetDurationOrBlank(target), target.SkipReason);
+                var line = CreateLine(target.Name, target.Status.ToString(), GetDurationOrBlank(target), GetInformation(target));
                 switch (target.Status)
                 {
                     case ExecutionStatus.Skipped:
