@@ -20,6 +20,5 @@ namespace Nuke.Components
         [Parameter] [Secret] string ConsumerSecret => ValueInjectionUtility.TryGetValue(() => ConsumerSecret);
         [Parameter] [Secret] string AccessToken => ValueInjectionUtility.TryGetValue(() => AccessToken);
         [Parameter] [Secret] string AccessTokenSecret => ValueInjectionUtility.TryGetValue(() => AccessTokenSecret);
-
     }
 }

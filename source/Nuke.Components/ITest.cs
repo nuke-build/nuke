@@ -45,7 +45,7 @@ namespace Nuke.Components
                 finally
                 {
                     ReportTestResults();
-                    ReportMetadata();
+                    ReportTestCount();
                 }
             });
 
@@ -58,7 +58,7 @@ namespace Nuke.Components
                     files: new string[] { x }));
         }
 
-        void ReportMetadata()
+        void ReportTestCount()
         {
             IEnumerable<string> GetOutcomes(AbsolutePath file)
                 => XmlTasks.XmlPeek(
@@ -73,9 +73,10 @@ namespace Nuke.Components
             var skippedTests = outcomes.Count(x => x == "NotExecuted");
 
             if (failedTests > 0)
-                ControlFlow.Fail($"{failedTests} failed tests ({passedTests} passed, {skippedTests} skipped).");
-            else
-                Logger.Info($"{passedTests} passed tests ({skippedTests} skipped).");
+                ReportSummary("Failed", failedTests.ToString());
+            ReportSummary("Passed", passedTests.ToString());
+            if (skippedTests > 0)
+                ReportSummary("Skipped", skippedTests.ToString());
         }
 
         sealed Configure<DotNetTestSettings> TestSettingsBase => _ => _

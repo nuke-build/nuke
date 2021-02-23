@@ -20,6 +20,7 @@ namespace Nuke.Components
 
         Target ReportDuplicates => _ => _
             .TryDependentFor<IPublish>()
+            .TryAfter<ITest>()
             .Executes(() =>
             {
                 ReSharperDupFinder(_ => _
