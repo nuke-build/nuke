@@ -16,7 +16,7 @@ using Nuke.Enterprise.Notifications;
 [AuditBuildMembers(
     DeclaringTypes = new[] { typeof(Build) },
     Members = new[] { nameof(RootDirectory), nameof(Host), nameof(Verbosity) })]
-// [CustomNotifySlack(ReportAllBuilds = true)]
+[CustomNotifySlack(ReportAllBuilds = true, ShowPassed = true, ShowSkipped = true)]
 partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken
 {
     const string SlackGeneral = "C9Q99MFU0";
