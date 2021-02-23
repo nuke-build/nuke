@@ -133,40 +133,40 @@ namespace Nuke.Common.Execution
 
         private static void MarkSkippedTargets(NukeBuild build, IReadOnlyCollection<string> skippedTargets)
         {
-            void MarkTargetSkipped(ExecutableTarget target)
+            void MarkTargetSkipped(ExecutableTarget target, string reason = null)
             {
-                if (build.InvokedTargets.Contains(target))
+                if (target.Invoked)
                     return;
 
                 target.Status = ExecutionStatus.Skipped;
+                target.SkipReason ??= reason;
 
                 if (target.DependencyBehavior == DependencyBehavior.Execute)
                     return;
 
                 target.ExecutionDependencies.ForEach(TryMarkTargetSkipped);
                 target.Triggers.ForEach(TryMarkTargetSkipped);
-            }
 
-            void TryMarkTargetSkipped(ExecutableTarget target)
-            {
-                var executingTargets = build.ExecutionPlan.Where(x => x.Status == ExecutionStatus.NotRun);
-                if (executingTargets.Any(x => x.ExecutionDependencies.Contains(target) || x.Triggers.Contains(target)))
-                    return;
+                void TryMarkTargetSkipped(ExecutableTarget dependentTarget)
+                {
+                    var executingTargets = build.ExecutionPlan.Where(x => x.Status == ExecutionStatus.NotRun);
+                    if (executingTargets.Any(x => x.ExecutionDependencies.Contains(dependentTarget) || x.Triggers.Contains(dependentTarget)))
+                        return;
 
-                MarkTargetSkipped(target);
+                    MarkTargetSkipped(dependentTarget, reason: $"skipping {target.Name}");
+                }
             }
 
             if (skippedTargets != null)
             {
                 build.ExecutionPlan
                     .Where(x => skippedTargets.Count == 0 || skippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))
-                    .ForEachLazy(x => x.SkipReason = "via --skip parameter")
-                    .ForEach(MarkTargetSkipped);
+                    .ForEach(x => MarkTargetSkipped(x, reason: "via --skip parameter"));
             }
 
             build.ExecutionPlan
                 .Where(x => HasSkippingCondition(x, x.StaticConditions))
-                .ForEach(MarkTargetSkipped);
+                .ForEach(x => MarkTargetSkipped(x));
         }
 
         private static bool HasSkippingCondition(ExecutableTarget target, IEnumerable<Expression<Func<bool>>> conditions)
