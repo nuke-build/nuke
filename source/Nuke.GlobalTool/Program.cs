@@ -51,13 +51,20 @@ namespace Nuke.GlobalTool
             var hasCommand = args.FirstOrDefault()?.StartsWithOrdinalIgnoreCase(CommandPrefix.ToString()) ?? false;
             if (hasCommand)
             {
-                var command = args.First().Trim(CommandPrefix);
+                var command = args.First().Trim(CommandPrefix).Replace("-", string.Empty);
                 if (string.IsNullOrWhiteSpace(command))
                     ControlFlow.Fail($"No command specified. Usage is: nuke {CommandPrefix}<command> [args]");
 
-                var commandHandler = typeof(Program).GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                var availableCommands = typeof(Program).GetMethods(BindingFlags.Static | BindingFlags.Public);
+                var commandHandler = availableCommands
                     .SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));
-                ControlFlow.Assert(commandHandler != null, $"Command '{command}' is not supported.");
+                ControlFlow.Assert(commandHandler != null,
+                    new[]
+                        {
+                            $"Command '{command}' is not supported.",
+                            "Available commands are:"
+                        }
+                        .Concat(availableCommands.Select(x => $"  - {x.Name}").OrderBy(x => x)).JoinNewLine());
                 // TODO: add assertions about return type and parameters
 
                 var commandArguments = new object[] { args.Skip(count: 1).ToArray(), rootDirectory, buildScript };

@@ -45,7 +45,7 @@ namespace Nuke.GlobalTool
 
         // ReSharper disable once CognitiveComplexity
         [UsedImplicitly]
-        private static int Setup(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
+        public static int Setup(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             PrintInfo();
 
