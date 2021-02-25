@@ -34,18 +34,18 @@ namespace Nuke.Common
         /// Logs a message as failure. Halts execution.
         /// </summary>
         [ContractAnnotation("=> halt")]
-        public static void Fail(object value)
+        public static void Fail(object value, Exception exception = null)
         {
-            Fail(value.ToString());
+            Fail(value.ToString(), exception);
         }
 
         /// <summary>
         /// Logs a message as failure. Halts execution.
         /// </summary>
         [ContractAnnotation("=> halt")]
-        public static void Fail(string text)
+        public static void Fail(string text, Exception exception = null)
         {
-            throw new Exception(text);
+            throw new Exception(text, innerException: exception);
         }
 
         /// <summary>
