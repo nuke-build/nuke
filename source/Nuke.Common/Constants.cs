@@ -16,6 +16,7 @@ namespace Nuke.Common
     {
         internal static readonly string[] KnownWords =
         {
+            "DotNet",
             "GitHub",
             "GitVersion",
             "MSBuild",
