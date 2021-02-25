@@ -77,11 +77,6 @@ namespace Nuke.Common
             return GetTemporaryDirectory(rootDirectory) / $"{VisualStudioDebugParameterName}.log";
         }
 
-        internal static AbsolutePath GetMissingPackageFile(AbsolutePath rootDirectory)
-        {
-            return GetTemporaryDirectory(rootDirectory) / "missing-package.log";
-        }
-
         internal static AbsolutePath GetBuildSchemaFile(AbsolutePath rootDirectory)
         {
             return GetNukeDirectory(rootDirectory) / "build.schema.json";
