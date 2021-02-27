@@ -173,7 +173,7 @@ namespace Nuke.GlobalTool
             #region Generation
 
             var buildDirectory = rootDirectory / buildDirectoryName;
-            var buildProjectFile = rootDirectory / buildDirectoryName / (buildProjectName + ".csproj");
+            var buildProjectFile = rootDirectory / buildDirectoryName / buildProjectName + ".csproj";
             var buildProjectGuid = Guid.NewGuid().ToString().ToUpper();
             var buildProjectKind = new Dictionary<string, string>
                                    {
@@ -296,72 +296,12 @@ namespace Nuke.GlobalTool
                         })));
             MakeExecutable(bashScript);
 
-            // if (Directory.Exists(Path.Combine(rootDirectory, ".git")))
-            //     ProcessTasks.StartProcess($"git update-index --chmod=+x {bashScript}", logOutput: false);
-            // if (Directory.Exists(Path.Combine(rootDirectory, ".svn")))
-            //     ProcessTasks.StartProcess($"svn propset svn:executable on {bashScript}", logOutput: false);
-
             if (tokens.ContainsKey(SrcDir))
                 FileSystemTasks.EnsureExistingDirectory(rootDirectory / "src");
             if (tokens.ContainsKey(SourceDir))
                 FileSystemTasks.EnsureExistingDirectory(rootDirectory / "source");
             if (tokens.ContainsKey(TestsDir))
                 FileSystemTasks.EnsureExistingDirectory(rootDirectory / "tests");
-
-            #endregion
-
-            #region Wizard+Generation (addon)
-
-            if (new[] { "addon", "addin", "plugin" }.Any(x => x.EqualsOrdinalIgnoreCase(args.FirstOrDefault())))
-            {
-                ControlFlow.Assert(tokens.ContainsKey(SourceDir), "tokens.ContainsKey('SOURCE_DIR')");
-
-                var organization = PromptForInput("Organization name:", defaultValue: "nuke-build");
-                var addonName = PromptForInput("Organization name:", defaultValue: null);
-                var authors = PromptForInput("Author names separated by comma:", defaultValue: "Matthias Koch, Sebastian Karasek");
-                var packageName = PromptForInput("Package name on nuget.org:", defaultValue: null);
-
-                TextTasks.WriteAllLines(
-                    rootDirectory / "README.md",
-                    FillTemplate(
-                        GetTemplate("README.md"),
-                        tokens: GetDictionary(
-                            new
-                            {
-                                Organization = organization,
-                                AddonName = addonName,
-                                Authors = authors,
-                                PackageName = packageName
-                            })));
-
-                TextTasks.WriteAllLines(
-                    rootDirectory / "LICENSE",
-                    FillTemplate(
-                        GetTemplate("LICENSE"),
-                        tokens: GetDictionary(
-                            new
-                            {
-                                DateTime.Now.Year,
-                                Authors = authors
-                            })));
-
-                TextTasks.WriteAllLines(
-                    rootDirectory / "CHANGELOG.md",
-                    GetTemplate("CHANGELOG.md"));
-
-                TextTasks.WriteAllText(
-                    $"{solutionFile}.DotSettings.ext",
-                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/nuke-common.sln.DotSettings");
-                TextTasks.WriteAllText(
-                    solutionDirectory / "source" / "Inspections.DotSettings.ext",
-                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/Inspections.DotSettings");
-                TextTasks.WriteAllText(
-                    solutionDirectory / "source" / "CodeStyle.DotSettings.ext",
-                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/CodeStyle.DotSettings");
-                TextTasks.WriteAllText(
-                    solutionDirectory / "source" / "Configuration.props.ext",
-                    "https://raw.githubusercontent.com/nuke-build/nuke/develop/source/Configuration.props");
-            }
 
             #endregion
 
