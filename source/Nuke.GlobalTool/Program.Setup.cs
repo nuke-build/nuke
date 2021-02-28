@@ -14,6 +14,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using static Nuke.Common.Constants;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Utilities.ConsoleUtility;
@@ -181,15 +182,15 @@ namespace Nuke.GlobalTool
                                        [FORMAT_SDK] = "9A19103F-16F7-4668-BE54-9A1E7A4F7556"
                                    }[projectFormat];
 
-            FileSystemTasks.EnsureExistingDirectory(rootDirectory / Constants.NukeDirectoryName);
+            FileSystemTasks.EnsureExistingDirectory(rootDirectory / NukeDirectoryName);
 
             if (solutionFile != null)
             {
-                var parametersFile = Constants.GetDefaultParametersFile(rootDirectory);
+                var parametersFile = GetDefaultParametersFile(rootDirectory);
                 SerializationTasks.JsonSerializeToFile(
                     new Dictionary<string, string>
                     {
-                        { "$schema", "./build.schema.json" },
+                        { "$schema", $"./{BuildSchemaFileName}" },
                         { "Solution", rootDirectory.GetUnixRelativePathTo(solutionFile).ToString() }
                     },
                     parametersFile);

@@ -28,6 +28,8 @@ namespace Nuke.Common
         };
 
         internal const string NukeDirectoryName = ".nuke";
+        internal const string NukeCommonPackageId = nameof(Nuke) + "." + nameof(Common);
+        internal const string BuildSchemaFileName = "build.schema.json";
 
         internal const string TargetsSeparator = "+";
         internal const string InvokedTargetsParameterName = "Target";
@@ -42,11 +44,14 @@ namespace Nuke.Common
         internal static AbsolutePath GlobalTemporaryDirectory => (AbsolutePath) Path.GetTempPath();
 
         [CanBeNull]
-        internal static AbsolutePath TryGetRootDirectoryFrom(string startDirectory)
+        internal static AbsolutePath TryGetRootDirectoryFrom(string startDirectory, bool includeLegacy = false)
         {
             return (AbsolutePath) FileSystemTasks.FindParentDirectory(
                 startDirectory,
-                predicate: x => x.GetDirectories(NukeDirectoryName).Any());
+                predicate: x =>
+                    includeLegacy
+                        ? x.GetFileSystemInfos(NukeDirectoryName).Any()
+                        : x.GetDirectories(NukeDirectoryName).Any());
         }
 
         internal static AbsolutePath GetNukeDirectory(AbsolutePath rootDirectory)
@@ -79,7 +84,7 @@ namespace Nuke.Common
 
         internal static AbsolutePath GetBuildSchemaFile(AbsolutePath rootDirectory)
         {
-            return GetNukeDirectory(rootDirectory) / "build.schema.json";
+            return GetNukeDirectory(rootDirectory) / BuildSchemaFileName;
         }
 
         internal static AbsolutePath GetDefaultParametersFile(AbsolutePath rootDirectory)
