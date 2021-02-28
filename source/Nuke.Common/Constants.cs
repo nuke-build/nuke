@@ -42,11 +42,14 @@ namespace Nuke.Common
         internal static AbsolutePath GlobalTemporaryDirectory => (AbsolutePath) Path.GetTempPath();
 
         [CanBeNull]
-        internal static AbsolutePath TryGetRootDirectoryFrom(string startDirectory)
+        internal static AbsolutePath TryGetRootDirectoryFrom(string startDirectory, bool includeLegacy = true)
         {
             return (AbsolutePath) FileSystemTasks.FindParentDirectory(
                 startDirectory,
-                predicate: x => x.GetDirectories(NukeDirectoryName).Any());
+                predicate: x =>
+                    includeLegacy
+                        ? x.GetFileSystemInfos(NukeDirectoryName).Any()
+                        : x.GetDirectories(NukeDirectoryName).Any());
         }
 
         internal static AbsolutePath GetNukeDirectory(AbsolutePath rootDirectory)
