@@ -70,13 +70,25 @@ namespace Nuke.Common.ProjectModel
         {
             var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
                          ToolPathResolver.GetPathExecutable("dotnet");
-            var output = ProcessTasks.StartProcess(dotnet, "--info", logOutput: false).AssertZeroExitCode().Output;
-            var basePath = (AbsolutePath) output
-                .Select(x => x.Text.Trim())
-                .Single(x => x.StartsWith("Base Path:"))
-                .TrimStart("Base Path:").Trim();
 
-            return (string) (basePath / "MSBuild.dll");
+            string TryFromBasePath()
+            {
+                var output = ProcessTasks.StartProcess(dotnet, "--info", logOutput: false).AssertZeroExitCode().Output;
+                return output
+                    .Select(x => x.Text.Trim())
+                    .SingleOrDefault(x => x.StartsWith("Base Path:"))
+                    ?.TrimStart("Base Path:").Trim();
+            }
+
+            string TryFromSdkList()
+            {
+                var output = ProcessTasks.StartProcess(dotnet, "--list-sdks", logOutput: false).AssertZeroExitCode().Output;
+                var latestInstalledSdkParts = output.Last().Text.Split(' ');
+                return (AbsolutePath) latestInstalledSdkParts.ElementAt(1).Trim('[', ']') / latestInstalledSdkParts.ElementAt(0);
+            }
+
+            var sdkDirectory = (AbsolutePath) (TryFromBasePath() ?? TryFromSdkList());
+            return (string) (sdkDirectory / "MSBuild.dll");
         });
 
         public static Microsoft.Build.Evaluation.Project ParseProject(
@@ -93,12 +105,13 @@ namespace Nuke.Common.ProjectModel
 
                 var projectCollection = new ProjectCollection();
                 var projectRoot = Microsoft.Build.Construction.ProjectRootElement.Open(projectFile, projectCollection, preserveFormatting: true);
-                var msbuildProject = Microsoft.Build.Evaluation.Project.FromProjectRootElement(projectRoot, new Microsoft.Build.Definition.ProjectOptions
-                {
-                    GlobalProperties = GetProperties(configuration, targetFramework),
-                    ToolsVersion = projectCollection.DefaultToolsVersion,
-                    ProjectCollection = projectCollection
-                });
+                var msbuildProject = Microsoft.Build.Evaluation.Project.FromProjectRootElement(projectRoot,
+                    new Microsoft.Build.Definition.ProjectOptions
+                    {
+                        GlobalProperties = GetProperties(configuration, targetFramework),
+                        ToolsVersion = projectCollection.DefaultToolsVersion,
+                        ProjectCollection = projectCollection
+                    });
 
                 var targetFrameworks = msbuildProject.AllEvaluatedItems
                     .Where(x => x.ItemType == "_TargetFrameworks")
