@@ -4,11 +4,14 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
+    // https://github.com/actions/cache
+    [PublicAPI]
     public class GitHubActionsCacheStep : GitHubActionsStep
     {
         public string[] IncludePatterns { get; set; }

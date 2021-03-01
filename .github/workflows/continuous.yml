@@ -37,7 +37,7 @@ jobs:
           path: |
             .tmp
             ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
+          key: ${{ runner.os }}-${{ hashFiles('global.json', 'source/**/*.csproj') }}
       - name: Run './build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage'
         run: ./build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage
         env:
@@ -55,7 +55,7 @@ jobs:
           path: |
             .tmp
             ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
+          key: ${{ runner.os }}-${{ hashFiles('global.json', 'source/**/*.csproj') }}
       - name: Run './build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage'
         run: ./build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage
         env:
@@ -73,7 +73,7 @@ jobs:
           path: |
             .tmp
             ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
+          key: ${{ runner.os }}-${{ hashFiles('global.json', 'source/**/*.csproj') }}
       - name: Run './build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage'
         run: ./build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage
         env:
