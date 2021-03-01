@@ -25,6 +25,13 @@ stages:
         displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: |
+                .tmp
+                $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
@@ -39,6 +46,13 @@ stages:
         strategy:
           parallel: 2
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: |
+                .tmp
+                $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
@@ -55,6 +69,13 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: |
+                .tmp
+                $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
@@ -77,6 +98,13 @@ stages:
         displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: |
+                .tmp
+                $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
@@ -91,6 +119,13 @@ stages:
         strategy:
           parallel: 2
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: |
+                .tmp
+                $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
@@ -107,6 +142,13 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: |
+                .tmp
+                $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
@@ -129,6 +171,13 @@ stages:
         displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: |
+                .tmp
+                $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
@@ -143,6 +192,13 @@ stages:
         strategy:
           parallel: 2
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: |
+                .tmp
+                $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
@@ -159,6 +215,13 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | **/global.json, **/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: |
+                .tmp
+                $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
