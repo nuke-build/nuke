@@ -27,7 +27,7 @@ stages:
         steps:
           - task: Cache@2
             inputs:
-              key: $(Agent.OS) | **/global.json, **/*.csproj
+              key: $(Agent.OS) | global.json, source/*/*.csproj
               restoreKeys: $(Agent.OS)
               path: ~/.nuget/packages
           - task: CmdLine@2
@@ -46,7 +46,7 @@ stages:
         steps:
           - task: Cache@2
             inputs:
-              key: $(Agent.OS) | **/global.json, **/*.csproj
+              key: $(Agent.OS) | global.json, source/*/*.csproj
               restoreKeys: $(Agent.OS)
               path: ~/.nuget/packages
           - task: CmdLine@2
@@ -67,7 +67,7 @@ stages:
         steps:
           - task: Cache@2
             inputs:
-              key: $(Agent.OS) | **/global.json, **/*.csproj
+              key: $(Agent.OS) | global.json, source/*/*.csproj
               restoreKeys: $(Agent.OS)
               path: ~/.nuget/packages
           - task: CmdLine@2
@@ -94,7 +94,7 @@ stages:
         steps:
           - task: Cache@2
             inputs:
-              key: $(Agent.OS) | **/global.json, **/*.csproj
+              key: $(Agent.OS) | global.json, source/*/*.csproj
               restoreKeys: $(Agent.OS)
               path: ~/.nuget/packages
           - task: CmdLine@2
@@ -113,7 +113,7 @@ stages:
         steps:
           - task: Cache@2
             inputs:
-              key: $(Agent.OS) | **/global.json, **/*.csproj
+              key: $(Agent.OS) | global.json, source/*/*.csproj
               restoreKeys: $(Agent.OS)
               path: ~/.nuget/packages
           - task: CmdLine@2
@@ -134,7 +134,7 @@ stages:
         steps:
           - task: Cache@2
             inputs:
-              key: $(Agent.OS) | **/global.json, **/*.csproj
+              key: $(Agent.OS) | global.json, source/*/*.csproj
               restoreKeys: $(Agent.OS)
               path: ~/.nuget/packages
           - task: CmdLine@2
@@ -161,7 +161,7 @@ stages:
         steps:
           - task: Cache@2
             inputs:
-              key: $(Agent.OS) | **/global.json, **/*.csproj
+              key: $(Agent.OS) | global.json, source/*/*.csproj
               restoreKeys: $(Agent.OS)
               path: ~/.nuget/packages
           - task: CmdLine@2
@@ -180,7 +180,7 @@ stages:
         steps:
           - task: Cache@2
             inputs:
-              key: $(Agent.OS) | **/global.json, **/*.csproj
+              key: $(Agent.OS) | global.json, source/*/*.csproj
               restoreKeys: $(Agent.OS)
               path: ~/.nuget/packages
           - task: CmdLine@2
@@ -201,7 +201,7 @@ stages:
         steps:
           - task: Cache@2
             inputs:
-              key: $(Agent.OS) | **/global.json, **/*.csproj
+              key: $(Agent.OS) | global.json, source/*/*.csproj
               restoreKeys: $(Agent.OS)
               path: ~/.nuget/packages
           - task: CmdLine@2
