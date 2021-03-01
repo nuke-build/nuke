@@ -26,6 +26,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
                          nameof(IReportIssues.ReportIssues),
                          nameof(IReportCoverage.ReportCoverage)
                      },
+    CacheKeyFiles = new[]{ "global.json", "source/**/*.csproj" },
     ImportSecrets = new[]
                     {
                         nameof(EnterpriseAccessToken),
