@@ -108,12 +108,17 @@ namespace Nuke.Common.CI.GitHubActions
                          {
                              Using = "actions/checkout@v1"
                          };
-            yield return new GitHubActionsCacheStep
-                         {
-                             IncludePatterns = CacheIncludePatterns,
-                             ExcludePatterns = CacheExcludePatterns,
-                             KeyFiles = CacheKeyFiles
-                         };
+
+            if (CacheKeyFiles.Any())
+            {
+                yield return new GitHubActionsCacheStep
+                             {
+                                 IncludePatterns = CacheIncludePatterns,
+                                 ExcludePatterns = CacheExcludePatterns,
+                                 KeyFiles = CacheKeyFiles
+                             };
+            }
+
             yield return new GitHubActionsRunStep
                          {
                              Command = $"./{BuildCmdPath} {InvokedTargets.JoinSpace()}",
