@@ -29,9 +29,7 @@ stages:
             inputs:
               key: $(Agent.OS) | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS)
-              path: |
-                .tmp
-                $(UserProfile)/.nuget/packages
+              path: $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
@@ -50,9 +48,7 @@ stages:
             inputs:
               key: $(Agent.OS) | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS)
-              path: |
-                .tmp
-                $(UserProfile)/.nuget/packages
+              path: $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
@@ -73,9 +69,7 @@ stages:
             inputs:
               key: $(Agent.OS) | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS)
-              path: |
-                .tmp
-                $(UserProfile)/.nuget/packages
+              path: $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
@@ -102,9 +96,7 @@ stages:
             inputs:
               key: $(Agent.OS) | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS)
-              path: |
-                .tmp
-                $(UserProfile)/.nuget/packages
+              path: $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
@@ -123,9 +115,7 @@ stages:
             inputs:
               key: $(Agent.OS) | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS)
-              path: |
-                .tmp
-                $(UserProfile)/.nuget/packages
+              path: $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
@@ -146,9 +136,7 @@ stages:
             inputs:
               key: $(Agent.OS) | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS)
-              path: |
-                .tmp
-                $(UserProfile)/.nuget/packages
+              path: $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
@@ -175,9 +163,7 @@ stages:
             inputs:
               key: $(Agent.OS) | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS)
-              path: |
-                .tmp
-                $(UserProfile)/.nuget/packages
+              path: $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
@@ -196,9 +182,7 @@ stages:
             inputs:
               key: $(Agent.OS) | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS)
-              path: |
-                .tmp
-                $(UserProfile)/.nuget/packages
+              path: $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
@@ -219,9 +203,7 @@ stages:
             inputs:
               key: $(Agent.OS) | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS)
-              path: |
-                .tmp
-                $(UserProfile)/.nuget/packages
+              path: $(UserProfile)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
