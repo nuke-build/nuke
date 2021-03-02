@@ -103,7 +103,7 @@ namespace Nuke.Common.Execution
                 new[]
                 {
                     "{",
-                    "  \"$schema\": \"./build.schema.json\"",
+                    $"  \"$schema\": \"./{BuildSchemaFileName}\"",
                     "}"
                 });
         }
