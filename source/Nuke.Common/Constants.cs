@@ -28,6 +28,7 @@ namespace Nuke.Common
         };
 
         internal const string NukeDirectoryName = ".nuke";
+        internal const string BuildSchemaFileName = "build.schema.json";
 
         internal const string TargetsSeparator = "+";
         internal const string InvokedTargetsParameterName = "Target";
@@ -82,7 +83,7 @@ namespace Nuke.Common
 
         internal static AbsolutePath GetBuildSchemaFile(AbsolutePath rootDirectory)
         {
-            return GetNukeDirectory(rootDirectory) / "build.schema.json";
+            return GetNukeDirectory(rootDirectory) / BuildSchemaFileName;
         }
 
         internal static AbsolutePath GetDefaultParametersFile(AbsolutePath rootDirectory)
