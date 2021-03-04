@@ -233,10 +233,17 @@ namespace Nuke.Common.CI.TeamCity
 
             foreach (var triggerDependency in executableTarget.TriggerDependencies)
             {
-                yield return new TeamCityFinishBuildTrigger
-                             {
-                                 BuildType = buildTypes[triggerDependency].Single(x => x.Partition == null)
-                             };
+                if (buildTypes.Contains(triggerDependency))
+                {
+                    yield return new TeamCityFinishBuildTrigger
+                                {
+                                    BuildType = buildTypes[triggerDependency].Single(x => x.Partition == null)
+                                };
+                }
+                else
+                {
+                    throw new Exception($"Trigger '{triggerDependency.Triggers.FirstOrDefault()?.Name}' not found. Maybe it is missing in the NonEntryTargets?");
+                }
             }
         }
 
