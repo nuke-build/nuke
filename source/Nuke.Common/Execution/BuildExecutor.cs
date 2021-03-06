@@ -103,7 +103,7 @@ namespace Nuke.Common.Execution
 
             using (Logger.Block(target.Name))
             {
-                target.Status = ExecutionStatus.Executing;
+                target.Status = ExecutionStatus.Running;
                 build.ExecuteExtension<IOnTargetStart>(x => x.OnTargetStart(build, target));
                 build.OnTargetStart(target.Name);
                 var stopwatch = Stopwatch.StartNew();
