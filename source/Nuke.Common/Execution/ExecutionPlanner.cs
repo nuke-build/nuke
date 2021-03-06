@@ -38,7 +38,7 @@ namespace Nuke.Common.Execution
                 invokedTargets = executionPlan.Concat(additionallyTriggered).ToList();
             } while (additionallyTriggered.Count > 0);
 
-            return executionPlan;
+            return executionPlan.ForEachLazy(x => x.Status = ExecutionStatus.Scheduled).ToList();
         }
 
         private static IReadOnlyCollection<ExecutableTarget> GetExecutionPlanInternal(
@@ -47,7 +47,7 @@ namespace Nuke.Common.Execution
         {
             var vertexDictionary = GetVertexDictionary(executableTargets);
             var graphAsList = vertexDictionary.Values.ToList();
-            var executingTargets = new List<ExecutableTarget>();
+            var scheduledTargets = new List<ExecutableTarget>();
 
             var scc = new StronglyConnectedComponentFinder<ExecutableTarget>();
             var cycles = scc.DetectCycle(graphAsList).Cycles().ToList();
@@ -75,15 +75,15 @@ namespace Nuke.Common.Execution
 
                 var executableTarget = independent.Value;
                 if (!invokedTargets.Contains(executableTarget) &&
-                    !executingTargets.SelectMany(x => x.ExecutionDependencies).Contains(executableTarget))
+                    !scheduledTargets.SelectMany(x => x.ExecutionDependencies).Contains(executableTarget))
                     continue;
 
-                executingTargets.Add(executableTarget);
+                scheduledTargets.Add(executableTarget);
             }
 
-            executingTargets.Reverse();
+            scheduledTargets.Reverse();
 
-            return executingTargets;
+            return scheduledTargets;
         }
 
         private static IReadOnlyDictionary<ExecutableTarget, Vertex<ExecutableTarget>> GetVertexDictionary(
