@@ -16,13 +16,13 @@ using static Nuke.Common.CI.InvokeBuildServerConfigurationGenerationAttribute;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    public class ArgumentsFromCommitMessageAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
+    public class ArgumentsFromCommitMessageAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
         private bool GenerationMode { get; } = EnvironmentInfo.GetParameter<string>(ConfigurationParameterName) != null;
 
         public string Prefix { get; set; } = "[nuke++]";
 
-        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             if (GenerationMode)
                 return;

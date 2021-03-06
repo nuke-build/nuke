@@ -8,9 +8,9 @@ using System.Linq;
 
 namespace Nuke.Common.Execution
 {
-    internal class HandleHelpRequestsAttribute : BuildExtensionAttributeBase, IOnAfterLogo
+    internal class HandleHelpRequestsAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
-        public void OnAfterLogo(
+        public void OnBuildInitialized(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
