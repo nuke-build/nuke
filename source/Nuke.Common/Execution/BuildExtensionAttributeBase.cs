@@ -23,15 +23,15 @@ namespace Nuke.Common.Execution
     }
 
     [PublicAPI]
-    public interface IOnBeforeLogo : IBuildExtension
+    public interface IOnBuildCreated : IBuildExtension
     {
-        void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets);
+        void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets);
     }
 
     [PublicAPI]
-    public interface IOnAfterLogo : IBuildExtension
+    public interface IOnBuildInitialized : IBuildExtension
     {
-        void OnAfterLogo(
+        void OnBuildInitialized(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan);
@@ -44,9 +44,9 @@ namespace Nuke.Common.Execution
     }
 
     [PublicAPI]
-    public interface IOnTargetStart : IBuildExtension
+    public interface IOnTargetRunning : IBuildExtension
     {
-        void OnTargetStart(NukeBuild build, ExecutableTarget target);
+        void OnTargetRunning(NukeBuild build, ExecutableTarget target);
     }
 
     [PublicAPI]

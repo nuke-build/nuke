@@ -14,7 +14,7 @@ namespace Nuke.Common.IO
     /// Allows to configure the case-sensitivity used for globbing operations in <see cref="PathConstruction"/>.
     /// </summary>
     [PublicAPI]
-    public sealed class GlobbingOptionsAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
+    public sealed class GlobbingOptionsAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
         private readonly GlobbingCaseSensitivity _caseSensitivity;
 
@@ -23,7 +23,7 @@ namespace Nuke.Common.IO
             _caseSensitivity = caseSensitivity;
         }
 
-        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             PathConstruction.GlobbingCaseSensitivity = _caseSensitivity;
         }

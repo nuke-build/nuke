@@ -49,7 +49,7 @@ namespace Nuke.Common
         }
 
         /// <summary>
-        /// Method that is invoked after the build has finished (successful or failed).
+        /// Method that is invoked after the build has finished (succeeded or failed).
         /// </summary>
         protected internal virtual void OnBuildFinished()
         {
@@ -58,14 +58,7 @@ namespace Nuke.Common
         /// <summary>
         /// Method that is invoked before a target is about to start.
         /// </summary>
-        protected internal virtual void OnTargetStart(string target)
-        {
-        }
-
-        /// <summary>
-        /// Method that is invoked when a shadow target is absent.
-        /// </summary>
-        protected internal virtual void OnTargetAbsent(string target)
+        protected internal virtual void OnTargetRunning(string target)
         {
         }
 

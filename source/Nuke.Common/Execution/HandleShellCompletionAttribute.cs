@@ -9,9 +9,9 @@ using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Execution
 {
-    internal class HandleShellCompletionAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
+    internal class HandleShellCompletionAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             SchemaUtility.WriteBuildSchemaFile(build);
             SchemaUtility.WriteDefaultParametersFile();

@@ -13,11 +13,11 @@ using JetBrains.Annotations;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    public class HandleVisualStudioDebuggingAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
+    public class HandleVisualStudioDebuggingAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
         public int TimeoutInMilliseconds { get; } = 10_000;
 
-        public void OnBeforeLogo(
+        public void OnBuildCreated(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
