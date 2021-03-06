@@ -137,10 +137,7 @@ namespace Nuke.Common
         internal IEnumerable<string> TargetNames => ExecutableTargetFactory.GetTargetProperties(GetType()).Select(x => x.GetDisplayShortName());
         internal IEnumerable<string> HostNames => Host.AvailableTypes.Select(x => x.Name);
 
-        public bool IsSuccessful => (!ExitCode.HasValue || ExitCode == 0) && ExecutionPlan
-            .All(x => x.Status != ExecutionStatus.Failed &&
-                      x.Status != ExecutionStatus.NotRun &&
-                      x.Status != ExecutionStatus.Aborted);
+        public bool IsSuccessful => ExecutionPlan.All(x => x.Status != ExecutionStatus.Failed && x.Status != ExecutionStatus.Aborted);
 
         /// <summary>
         /// Gets or sets the build exit code.
