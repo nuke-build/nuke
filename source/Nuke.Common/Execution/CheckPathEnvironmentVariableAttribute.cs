@@ -11,9 +11,9 @@ using Nuke.Common.Tooling;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    public class CheckPathEnvironmentVariableAttribute : BuildExtensionAttributeBase, IOnAfterLogo
+    public class CheckPathEnvironmentVariableAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
-        public void OnAfterLogo(
+        public void OnBuildInitialized(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
