@@ -167,6 +167,13 @@ namespace Nuke.Common
                       x.Status != ExecutionStatus.NotRun &&
                       x.Status != ExecutionStatus.Aborted);
 
+        public bool IsFailing => ExecutionPlan.Any(x => x.Status is
+            ExecutionStatus.Failed or
+            ExecutionStatus.Aborted or
+            ExecutionStatus.NotRun);
+
+        public bool IsFinished => !ScheduledTargets.Concat(RunningTargets).Any();
+
         /// <summary>
         /// Gets or sets the build exit code.
         /// When set to <value>null</value> (default), <see cref="Execute{T}"/> will return a <em>0</em> exit code on build success; or a <em>-1</em> exit code on build failure.
