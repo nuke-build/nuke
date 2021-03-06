@@ -92,7 +92,7 @@ namespace Nuke.Common.Execution
                 if (build.ExecutionPlan != null)
                 {
                     build.ExecutionPlan
-                        .Where(x => x.Status == ExecutionStatus.Executing)
+                        .Where(x => x.Status == ExecutionStatus.Running)
                         .ForEach(x => x.Status = ExecutionStatus.Aborted);
 
                     Logger.OutputSink.WriteSummary(build);
