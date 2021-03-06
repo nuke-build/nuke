@@ -163,6 +163,8 @@ namespace Nuke.Common
         internal IEnumerable<string> HostNames => Host.AvailableTypes.Select(x => x.Name);
 
         public bool IsSuccessful => ExecutionPlan.All(x => x.Status != ExecutionStatus.Failed && x.Status != ExecutionStatus.Aborted);
+        public bool IsFailing => !IsSuccessful;
+        public bool IsFinished => !ScheduledTargets.Concat(RunningTargets).Any();
 
         /// <summary>
         /// Gets or sets the build exit code.
