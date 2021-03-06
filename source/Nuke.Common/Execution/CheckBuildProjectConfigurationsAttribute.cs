@@ -14,11 +14,11 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    public class CheckBuildProjectConfigurationsAttribute : BuildExtensionAttributeBase, IOnAfterLogo
+    public class CheckBuildProjectConfigurationsAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
         public int TimeoutInMilliseconds { get; set; } = 500;
 
-        public void OnAfterLogo(
+        public void OnBuildInitialized(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)

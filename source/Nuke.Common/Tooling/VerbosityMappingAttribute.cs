@@ -11,7 +11,7 @@ using Nuke.Common.Execution;
 namespace Nuke.Common.Tooling
 {
     [PublicAPI]
-    public class VerbosityMappingAttribute : BuildExtensionAttributeBase, IOnAfterLogo
+    public class VerbosityMappingAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
         private readonly Type _targetType;
 
@@ -25,7 +25,7 @@ namespace Nuke.Common.Tooling
         public string Normal { get; set; }
         public string Verbose { get; set; }
 
-        public void OnAfterLogo(
+        public void OnBuildInitialized(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)

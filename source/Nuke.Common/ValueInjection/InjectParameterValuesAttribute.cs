@@ -9,9 +9,9 @@ using Nuke.Common.Execution;
 
 namespace Nuke.Common.ValueInjection
 {
-    public class InjectParameterValuesAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
+    public class InjectParameterValuesAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             ValueInjectionUtility.InjectValues(build, x => x is ParameterAttribute);
         }

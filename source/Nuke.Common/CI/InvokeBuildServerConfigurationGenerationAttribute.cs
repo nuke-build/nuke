@@ -15,9 +15,9 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.CI
 {
     public class InvokeBuildServerConfigurationGenerationAttribute
-        : BuildServerConfigurationGenerationAttributeBase, IOnBeforeLogo
+        : BuildServerConfigurationGenerationAttributeBase, IOnBuildCreated
     {
-        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             if (NukeBuild.IsServerBuild)
                 return;
