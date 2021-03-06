@@ -91,9 +91,15 @@ namespace Nuke.Common.Execution
             {
                 if (build.ExecutionPlan != null)
                 {
-                    build.ExecutionPlan
-                        .Where(x => x.Status == ExecutionStatus.Running)
-                        .ForEach(x => x.Status = ExecutionStatus.Aborted);
+                    foreach (var target in build.ExecutionPlan)
+                    {
+                        target.Status = target.Status switch
+                        {
+                            ExecutionStatus.Running => ExecutionStatus.Aborted,
+                            ExecutionStatus.Scheduled => ExecutionStatus.NotRun,
+                            _ => target.Status
+                        };
+                    }
 
                     Logger.OutputSink.WriteSummary(build);
                 }

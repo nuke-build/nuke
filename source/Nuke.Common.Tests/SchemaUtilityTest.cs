@@ -48,7 +48,7 @@ namespace Nuke.Common.Tests
         },
         ""Target"": {
           ""type"": ""array"",
-          ""description"": ""List of targets to be executed. Default is '{default_target}'"",
+          ""description"": ""List of targets to be invoked. Default is '{default_target}'"",
           ""items"": {
             ""type"": ""string"",
             ""enum"": [
