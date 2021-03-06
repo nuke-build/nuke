@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -193,6 +193,11 @@ namespace Nuke.Common.ChangeLog
                     .TrimEnd(']');
 
             var index = content.FindIndex(IsReleaseHead);
+            if (index < 0)
+            {
+                yield break;
+            }
+
             while (index < content.Count)
             {
                 var line = content[index];
