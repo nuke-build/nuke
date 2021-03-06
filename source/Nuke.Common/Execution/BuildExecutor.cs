@@ -27,7 +27,7 @@ namespace Nuke.Common.Execution
         public static void Execute(NukeBuild build, [CanBeNull] IReadOnlyCollection<string> skippedTargets)
         {
             MarkSkippedTargets(build, skippedTargets);
-            RequirementService.ValidateRequirements(build, build.ExecutingTargets.ToList());
+            RequirementService.ValidateRequirements(build, build.ScheduledTargets.ToList());
             var previouslyExecutedTargets = UpdateInvocationHash(build);
 
             BuildManager.CancellationHandler += ExecuteAssuredTargets;
@@ -44,8 +44,8 @@ namespace Nuke.Common.Execution
 
             void ExecuteAssuredTargets()
             {
-                var assuredTargets = build.ExecutionPlan.Where(x => x.AssuredAfterFailure && x.Status == ExecutionStatus.NotRun);
-                assuredTargets.ForEach(x => Execute(build, x, previouslyExecutedTargets, failureMode: true));
+                var assuredScheduledTargets = build.ExecutionPlan.Where(x => x.AssuredAfterFailure && x.Status == ExecutionStatus.Scheduled);
+                assuredScheduledTargets.ForEach(x => Execute(build, x, previouslyExecutedTargets, failureMode: true));
             }
         }
 
@@ -149,8 +149,8 @@ namespace Nuke.Common.Execution
 
                 void TryMarkTargetSkipped(ExecutableTarget dependentTarget)
                 {
-                    var executingTargets = build.ExecutionPlan.Where(x => x.Status == ExecutionStatus.NotRun);
-                    if (executingTargets.Any(x => x.ExecutionDependencies.Contains(dependentTarget) || x.Triggers.Contains(dependentTarget)))
+                    var scheduledTargets = build.ExecutionPlan.Where(x => x.Status == ExecutionStatus.Scheduled);
+                    if (scheduledTargets.Any(x => x.ExecutionDependencies.Contains(dependentTarget) || x.Triggers.Contains(dependentTarget)))
                         return;
 
                     MarkTargetSkipped(dependentTarget, reason: $"skipping {target.Name}");
