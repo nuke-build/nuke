@@ -28,6 +28,7 @@ namespace Nuke.Common
         bool IsSuccessful { get; }
         bool IsFailing { get; }
         bool IsFinished { get; }
+        int? ExitCode { get; set; }
 
         AbsolutePath RootDirectory { get; }
         AbsolutePath TemporaryDirectory { get; }
