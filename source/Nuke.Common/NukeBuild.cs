@@ -148,7 +148,7 @@ namespace Nuke.Common
 
         public void ReportSummary(string caption, string text)
         {
-            ExecutionPlan.Single(x => x.Status == ExecutionStatus.Executing)
+            ExecutionPlan.Single(x => x.Status == ExecutionStatus.Running)
                 .SummaryInformation.Add((caption, text));
         }
     }
