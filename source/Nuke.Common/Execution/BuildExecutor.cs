@@ -110,9 +110,9 @@ namespace Nuke.Common.Execution
                 try
                 {
                     target.Actions.ForEach(x => x());
-                    target.Status = ExecutionStatus.Executed;
-                    build.ExecuteExtension<IOnTargetExecuted>(x => x.OnTargetExecuted(build, target));
-                    build.OnTargetExecuted(target.Name);
+                    target.Status = ExecutionStatus.Succeeded;
+                    build.ExecuteExtension<IOnTargetSucceeded>(x => x.OnTargetSucceeded(build, target));
+                    build.OnTargetSucceeded(target.Name);
                     AppendToBuildAttemptFile(target.Name);
                 }
                 catch (Exception exception)
