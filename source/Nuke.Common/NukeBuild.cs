@@ -166,6 +166,8 @@ namespace Nuke.Common
             .All(x => x.Status != ExecutionStatus.Failed &&
                       x.Status != ExecutionStatus.NotRun &&
                       x.Status != ExecutionStatus.Aborted);
+        public bool IsFailing => !IsSuccessful;
+        public bool IsFinished => !ScheduledTargets.Concat(RunningTargets).Any();
 
         /// <summary>
         /// Gets or sets the build exit code.

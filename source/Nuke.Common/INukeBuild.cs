@@ -25,6 +25,8 @@ namespace Nuke.Common
         IReadOnlyCollection<ExecutableTarget> FinishedTargets { get; }
 
         bool IsSuccessful { get; }
+        bool IsFailing { get; }
+        bool IsFinished { get; }
 
         AbsolutePath RootDirectory { get; }
         AbsolutePath TemporaryDirectory { get; }
