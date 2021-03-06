@@ -78,7 +78,7 @@ namespace Nuke.Common
         /// <summary>
         /// Gets the list of targets that were invoked.
         /// </summary>
-        [Parameter("List of targets to be executed. Default is '{default_target}'.",
+        [Parameter("List of targets to be invoked. Default is '{default_target}'.",
             Name = InvokedTargetsParameterName,
             Separator = TargetsSeparator,
             ValueProviderMember = nameof(TargetNames))]
@@ -94,9 +94,34 @@ namespace Nuke.Common
         public IReadOnlyCollection<ExecutableTarget> SkippedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Skipped).ToList();
 
         /// <summary>
-        /// Gets the list of targets that are executing.
+        /// Gets the list of targets that are scheduled.
         /// </summary>
-        public IReadOnlyCollection<ExecutableTarget> ExecutingTargets => ExecutionPlan.Where(x => x.Status != ExecutionStatus.Skipped).ToList();
+        public IReadOnlyCollection<ExecutableTarget> ScheduledTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Scheduled).ToList();
+
+        /// <summary>
+        /// Gets the list of targets that are running.
+        /// </summary>
+        public IReadOnlyCollection<ExecutableTarget> RunningTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Running).ToList();
+
+        /// <summary>
+        /// Gets the list of targets that were aborted.
+        /// </summary>
+        public IReadOnlyCollection<ExecutableTarget> AbortedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Aborted).ToList();
+
+        /// <summary>
+        /// Gets the list of targets that have failed.
+        /// </summary>
+        public IReadOnlyCollection<ExecutableTarget> FailedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Failed).ToList();
+
+        /// <summary>
+        /// Gets the list of targets that have succeeded.
+        /// </summary>
+        public IReadOnlyCollection<ExecutableTarget> SucceededTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Succeeded).ToList();
+
+        /// <summary>
+        /// Gets the list of targets that have been finished (failed or succeeded).
+        /// </summary>
+        public IReadOnlyCollection<ExecutableTarget> FinishedTargets => FailedTargets.Concat(SucceededTargets).ToList();
 
         /// <summary>
         /// Gets a value whether to show the execution plan (HTML).
