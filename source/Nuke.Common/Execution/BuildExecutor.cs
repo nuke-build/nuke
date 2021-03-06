@@ -90,7 +90,6 @@ namespace Nuke.Common.Execution
             {
                 target.Status = ExecutionStatus.Skipped;
                 build.ExecuteExtension<IOnTargetSkipped>(x => x.OnTargetSkipped(build, target));
-                build.OnTargetSkipped(target.Name);
                 AppendToBuildAttemptFile(target.Name);
                 return;
             }
@@ -105,14 +104,12 @@ namespace Nuke.Common.Execution
             {
                 target.Status = ExecutionStatus.Running;
                 build.ExecuteExtension<IOnTargetRunning>(x => x.OnTargetRunning(build, target));
-                build.OnTargetRunning(target.Name);
                 var stopwatch = Stopwatch.StartNew();
                 try
                 {
                     target.Actions.ForEach(x => x());
                     target.Status = ExecutionStatus.Succeeded;
                     build.ExecuteExtension<IOnTargetSucceeded>(x => x.OnTargetSucceeded(build, target));
-                    build.OnTargetSucceeded(target.Name);
                     AppendToBuildAttemptFile(target.Name);
                 }
                 catch (Exception exception)
@@ -122,7 +119,6 @@ namespace Nuke.Common.Execution
                     if (!target.SummaryInformation.Any())
                         target.SummaryInformation.Add((exception.GetType().Name, exception.Message));
                     build.ExecuteExtension<IOnTargetFailed>(x => x.OnTargetFailed(build, target));
-                    build.OnTargetFailed(target.Name);
                     if (!target.ProceedAfterFailure && !failureMode)
                         throw new TargetExecutionException(target.Name, exception);
                 }
