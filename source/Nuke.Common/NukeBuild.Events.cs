@@ -79,7 +79,7 @@ namespace Nuke.Common
         /// <summary>
         /// Method that is invoked when a target has been executed successfully. 
         /// </summary>
-        protected internal virtual void OnTargetExecuted(string target)
+        protected internal virtual void OnTargetSucceeded(string target)
         {
         }
 
