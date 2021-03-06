@@ -17,7 +17,12 @@ namespace Nuke.Common
 
         IReadOnlyCollection<ExecutableTarget> InvokedTargets { get; }
         IReadOnlyCollection<ExecutableTarget> SkippedTargets { get; }
-        IReadOnlyCollection<ExecutableTarget> ExecutingTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> ScheduledTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> RunningTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> AbortedTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> FailedTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> SucceededTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> FinishedTargets { get; }
 
         bool IsSuccessful { get; }
 
