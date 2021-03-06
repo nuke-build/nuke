@@ -156,7 +156,7 @@ namespace Nuke.Common.OutputSinks
                    + (information != null ? $"   // {information}" : string.Empty);
 
             static string GetDurationOrBlank(ExecutableTarget target)
-                => target.Status == ExecutionStatus.Executed ||
+                => target.Status == ExecutionStatus.Succeeded ||
                    target.Status == ExecutionStatus.Failed ||
                    target.Status == ExecutionStatus.Aborted
                     ? GetDuration(target.Duration)
@@ -182,7 +182,7 @@ namespace Nuke.Common.OutputSinks
                     case ExecutionStatus.Skipped:
                         WriteNormal(line);
                         break;
-                    case ExecutionStatus.Executed:
+                    case ExecutionStatus.Succeeded:
                         WriteSuccess(line);
                         break;
                     case ExecutionStatus.Aborted:
@@ -192,6 +192,8 @@ namespace Nuke.Common.OutputSinks
                     case ExecutionStatus.Failed:
                         WriteError(line);
                         break;
+                    default:
+                        throw new NotSupportedException(target.Status.ToString());
                 }
             }
 
