@@ -19,11 +19,11 @@ using static Nuke.Common.CI.BuildServerConfigurationGenerationAttributeBase;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
-    public class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
+    public class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
         private bool GenerationMode { get; } = EnvironmentInfo.GetParameter<string>(ConfigurationParameterName) != null;
 
-        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var parameterMembers = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true);
             var passwords = new Dictionary<string, byte[]>();

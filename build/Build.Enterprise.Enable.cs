@@ -21,9 +21,9 @@ partial class Build
 {
     [Parameter] readonly string EnterpriseAccessToken;
 
-    public class RestartWithEnterpriseAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
+    public class RestartWithEnterpriseAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var accessToken = EnvironmentInfo.GetParameter<string>(nameof(EnterpriseAccessToken));
             var enterpriseDirectory = ((Build) build).ExternalRepositoriesDirectory / "enterprise";

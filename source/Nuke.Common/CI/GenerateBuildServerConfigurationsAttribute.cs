@@ -11,9 +11,9 @@ using Nuke.Common.Utilities.Collections;
 namespace Nuke.Common.CI
 {
     public class GenerateBuildServerConfigurationsAttribute
-        : BuildServerConfigurationGenerationAttributeBase, IOnBeforeLogo
+        : BuildServerConfigurationGenerationAttributeBase, IOnBuildCreated
     {
-        public void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var configurationId = EnvironmentInfo.GetParameter<string>(ConfigurationParameterName);
             if (configurationId == null)
