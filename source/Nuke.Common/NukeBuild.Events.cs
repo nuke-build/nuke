@@ -13,6 +13,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common
 {
+    [EventInvoker(Priority = float.MinValue)]
     public abstract partial class NukeBuild
     {
         internal List<IBuildExtension> BuildExtensions { get; }

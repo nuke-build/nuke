@@ -41,7 +41,6 @@ namespace Nuke.Common.Execution
                 build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
 
                 build.ExecuteExtension<IOnBuildCreated>(x => x.OnBuildCreated(build, build.ExecutableTargets));
-                build.OnBuildCreated();
 
                 Logger.OutputSink = NukeBuild.Host.OutputSink;
 
@@ -66,7 +65,6 @@ namespace Nuke.Common.Execution
                     EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
 
                 build.ExecuteExtension<IOnBuildInitialized>(x => x.OnBuildInitialized(build, build.ExecutableTargets, build.ExecutionPlan));
-                build.OnBuildInitialized();
 
                 CancellationHandler += Finish;
                 BuildExecutor.Execute(
@@ -104,7 +102,6 @@ namespace Nuke.Common.Execution
                     Logger.OutputSink.WriteSummary(build);
                 }
 
-                build.OnBuildFinished();
                 build.ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
             }
         }
