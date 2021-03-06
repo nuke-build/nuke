@@ -84,17 +84,19 @@ namespace Nuke.Common.Execution
             }
             finally
             {
-                if (build.ExecutionPlan?.Any(x => x.Status != ExecutionStatus.NotRun) ?? false)
-                    Finish();
+                Finish();
             }
 
             void Finish()
             {
-                build.ExecutionPlan
-                    .Where(x => x.Status == ExecutionStatus.Executing)
-                    .ForEach(x => x.Status = ExecutionStatus.Aborted);
+                if (build.ExecutionPlan != null)
+                {
+                    build.ExecutionPlan
+                        .Where(x => x.Status == ExecutionStatus.Executing)
+                        .ForEach(x => x.Status = ExecutionStatus.Aborted);
 
-                Logger.OutputSink.WriteSummary(build);
+                    Logger.OutputSink.WriteSummary(build);
+                }
 
                 build.OnBuildFinished();
                 build.ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
