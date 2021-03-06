@@ -11,7 +11,7 @@ namespace Nuke.Common.Execution
     {
         NotRun,
         Skipped,
-        Executed,
+        Succeeded,
         Failed,
         Executing,
         Aborted,

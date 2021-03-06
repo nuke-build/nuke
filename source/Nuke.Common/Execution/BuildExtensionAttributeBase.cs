@@ -56,9 +56,9 @@ namespace Nuke.Common.Execution
     }
 
     [PublicAPI]
-    public interface IOnTargetExecuted : IBuildExtension
+    public interface IOnTargetSucceeded : IBuildExtension
     {
-        void OnTargetExecuted(NukeBuild build, ExecutableTarget target);
+        void OnTargetSucceeded(NukeBuild build, ExecutableTarget target);
     }
 
     [PublicAPI]
