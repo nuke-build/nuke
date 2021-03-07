@@ -195,13 +195,13 @@ namespace Nuke.Common
     public enum DependencyBehavior
     {
         /// <summary>
-        /// Execute all dependencies.
-        /// </summary>
-        Execute,
-
-        /// <summary>
         /// Skip all dependencies which are not required by another target.
         /// </summary>
-        Skip
+        Skip,
+
+        /// <summary>
+        /// Execute all dependencies.
+        /// </summary>
+        Execute
     }
 }
