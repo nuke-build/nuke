@@ -44,9 +44,19 @@ namespace Nuke.Common.IO
             return Directory.Exists(path);
         }
 
+        public static void EnsureExistingParentDirectory(AbsolutePath file)
+        {
+            EnsureExistingParentDirectory((string) file);
+        }
+
         public static void EnsureExistingParentDirectory(string file)
         {
             EnsureExistingDirectory(Path.GetDirectoryName(file).NotNull($"Path.GetDirectoryName({file}) != null"));
+        }
+
+        public static void EnsureExistingDirectory(AbsolutePath directory)
+        {
+            EnsureExistingDirectory((string) directory);
         }
 
         public static void EnsureExistingDirectory(string directory)
@@ -56,6 +66,11 @@ namespace Nuke.Common.IO
 
             Logger.Info($"Creating directory '{directory}'...");
             Directory.CreateDirectory(directory);
+        }
+
+        public static void EnsureCleanDirectory(AbsolutePath directory)
+        {
+            EnsureCleanDirectory((string) directory);
         }
 
         public static void EnsureCleanDirectory(string directory)
