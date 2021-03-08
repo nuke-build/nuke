@@ -45,6 +45,7 @@ namespace Nuke.Common
     /// </example>
     [PublicAPI]
     // Before logo
+    [UpdateNotificationAttribute(Priority = float.MaxValue)]
     [ArgumentsFromParametersFile(Priority = 150)]
     [ArgumentsFromCommitMessage(Priority = 150)]
     [InjectParameterValues(Priority = 100)]
