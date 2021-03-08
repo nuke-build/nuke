@@ -221,6 +221,7 @@ namespace Nuke.Common.Tests
                 .Should().BeEquivalentTo(verbosities);
         }
 
+#pragma warning disable CS0649
         private class TestBuild : NukeBuild, ITestComponent
         {
             [Parameter] public string String;
@@ -233,5 +234,6 @@ namespace Nuke.Common.Tests
         {
             [Parameter] bool Param => ValueInjectionUtility.TryGetValue<bool?>(() => Param) ?? false;
         }
+#pragma warning restore CS0649
     }
 }
