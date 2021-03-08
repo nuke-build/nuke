@@ -10,21 +10,13 @@ namespace Nuke.Common.Tools.Npm
     {
         public static void CustomLogger(OutputType type, string output)
         {
-            switch (type)
-            {
-                case OutputType.Std:
-                    Logger.Normal(output);
-                    break;
-                case OutputType.Err:
-                {
-                    if (output.StartsWith("npmWARN") || output.StartsWith("npm WARN"))
-                        Logger.Warn(output);
-                    else
-                        Logger.Error(output);
-
-                    break;
-                }
-            }
+            var outputLowered = output.ToLower();
+            if (outputLowered.Contains("err!") || outputLowered.Contains("error:"))
+                Logger.Error(output);
+            else if (outputLowered.Contains("warn"))
+                Logger.Warn(output);
+            else
+                Logger.Normal(output);
         }
     }
 }
