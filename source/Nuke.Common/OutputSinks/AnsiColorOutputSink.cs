@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -56,17 +56,17 @@ namespace Nuke.Common.OutputSinks
             return $"{ErrorSequence}{text}{ResetSequence}";
         }
 
-        internal override void WriteNormal(string text)
+        protected internal override void WriteNormal(string text)
         {
             Console.WriteLine(text);
         }
 
-        internal override void WriteTrace(string text)
+        protected internal override void WriteTrace(string text)
         {
             Console.WriteLine(FormatTrace(text));
         }
 
-        internal override void WriteInformation(string text)
+        protected internal override void WriteInformation(string text)
         {
             Console.WriteLine(FormatInformation(text));
         }
@@ -85,7 +85,7 @@ namespace Nuke.Common.OutputSinks
                 Console.WriteLine(FormatError(details));
         }
 
-        internal override void WriteSuccess(string text)
+        protected internal override void WriteSuccess(string text)
         {
             Console.WriteLine(FormatSuccess(text));
         }

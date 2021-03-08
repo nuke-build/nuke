@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,22 +15,22 @@ namespace Nuke.Common.OutputSinks
     [ExcludeFromCodeCoverage]
     internal class SystemColorOutputSink : OutputSink
     {
-        internal override void WriteNormal(string text)
+        protected internal override void WriteNormal(string text)
         {
             Console.WriteLine(text);
         }
 
-        internal override void WriteSuccess(string text)
+        protected internal override void WriteSuccess(string text)
         {
             WriteWithColors(text, ConsoleColor.Green);
         }
 
-        internal override void WriteTrace(string text)
+        protected internal override void WriteTrace(string text)
         {
             WriteWithColors(text, ConsoleColor.Gray);
         }
 
-        internal override void WriteInformation(string text)
+        protected internal override void WriteInformation(string text)
         {
             WriteWithColors(text, ConsoleColor.Cyan);
         }

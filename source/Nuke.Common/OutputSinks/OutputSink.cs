@@ -259,10 +259,10 @@ namespace Nuke.Common.OutputSinks
             WriteNormal(string.Empty);
         }
 
-        protected abstract void WriteNormal(string text);
-        protected abstract void WriteSuccess(string text);
-        protected abstract void WriteTrace(string text);
-        protected abstract void WriteInformation(string text);
+        protected internal abstract void WriteNormal(string text);
+        protected internal abstract void WriteSuccess(string text);
+        protected internal abstract void WriteTrace(string text);
+        protected internal abstract void WriteInformation(string text);
 
         protected abstract void WriteWarning(string text, string details = null);
         protected abstract void WriteError(string text, string details = null);
