@@ -22,6 +22,7 @@ namespace Nuke.Common
             RootDirectory = GetRootDirectory();
             TemporaryDirectory = GetTemporaryDirectory(RootDirectory);
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
+
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
             BuildProjectFile = GetBuildProjectFile(BuildAssemblyDirectory);
             BuildProjectDirectory = BuildProjectFile?.Parent;
@@ -100,8 +101,8 @@ namespace Nuke.Common
             return TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory)
                 .NotNull(new[]
                          {
-                             $"Could not locate '{NukeDirectoryName}' directory while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
-                             "Either create the directory to mark the root directory, or use the --root parameter to use the working directory."
+                             $"Could not locate '{NukeDirectoryName}' directory/file while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
+                             "Either create a directory/file to mark the root directory, or add '--root [path]' to the invocation."
                          }.JoinNewLine());
         }
 

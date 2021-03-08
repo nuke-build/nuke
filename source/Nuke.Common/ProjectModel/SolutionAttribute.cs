@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -49,25 +50,37 @@ namespace Nuke.Common.ProjectModel
 
         public override object GetValue(MemberInfo member, object instance)
         {
+            var solutionFile = TryGetSolutionFileFromNukeFile() ??
+                               GetSolutionFileFromParametersFile(member);
             var deserializer = typeof(SolutionSerializer).GetMethod(nameof(SolutionSerializer.DeserializeFromFile)).NotNull()
                 .MakeGenericMethod(member.GetMemberType());
-            return deserializer.Invoke(obj: null, new object[] { GetSolutionFile(member) });
+            return deserializer.Invoke(obj: null, new object[] { solutionFile });
         }
 
         // TODO: allow wildcard matching? [Solution("nuke-*.sln")] -- no globbing?
         // TODO: for just [Solution] without parameter being passed, do wildcard search?
-        private string GetSolutionFile(MemberInfo member)
+        private string GetSolutionFileFromParametersFile(MemberInfo member)
         {
-            if (_relativePath != null)
-                return PathConstruction.Combine(NukeBuild.RootDirectory, _relativePath);
+            return _relativePath != null
+                ? PathConstruction.Combine(NukeBuild.RootDirectory, _relativePath)
+                : EnvironmentInfo.GetParameter<AbsolutePath>(member).NotNull($"No solution file defined for '{member.Name}'.");
+        }
 
-            var solutionFile = EnvironmentInfo.GetParameter<AbsolutePath>(member);
-            return solutionFile.NotNull(
-                new[]
-                {
-                    $"No solution file defined for '{member.Name}'.",
-                    $"Invoke: nuke --save-profile --{ParameterService.GetParameterDashedName(member)} <value>"
-                }.JoinNewLine());
+        private string TryGetSolutionFileFromNukeFile()
+        {
+            var nukeFile = Path.Combine(NukeBuild.RootDirectory, Constants.NukeFileName);
+            if (!File.Exists(nukeFile))
+                return null;
+
+            var solutionFileRelative = File.ReadAllLines(nukeFile).ElementAtOrDefault(0);
+            ControlFlow.Assert(solutionFileRelative != null && !solutionFileRelative.Contains(value: '\\'),
+                $"First line of {Constants.NukeFileName} must provide solution path using UNIX separators");
+
+            var solutionFile = Path.GetFullPath(Path.Combine(NukeBuild.RootDirectory, solutionFileRelative));
+            ControlFlow.Assert(File.Exists(solutionFile),
+                $"Solution file '{solutionFile}' provided via {Constants.NukeFileName} does not exist.");
+
+            return (AbsolutePath) solutionFile;
         }
     }
 }

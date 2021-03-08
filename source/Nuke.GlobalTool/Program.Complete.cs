@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
@@ -31,15 +32,17 @@ namespace Nuke.GlobalTool
             words = words.Substring(CommandName.Length).TrimStart();
 
             var buildSchemaFile = GetBuildSchemaFile(rootDirectory);
-            if (!File.Exists(buildSchemaFile))
+            var completionFile = GetCompletionFile(rootDirectory);
+            if (!File.Exists(buildSchemaFile) && !File.Exists(completionFile))
             {
                 Build(buildScript.NotNull(), $"--{CompletionParameterName}");
                 return 1;
             }
 
             var position = EnvironmentInfo.GetParameter<int?>("position");
-            var profileNames = GetProfileNames(rootDirectory);
-            var completionItems = SchemaUtility.GetCompletionItems(buildSchemaFile, profileNames);
+            var completionItems = IsLegacy(rootDirectory)
+                ? SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(completionFile)
+                : SchemaUtility.GetCompletionItems(buildSchemaFile, GetProfileNames(rootDirectory));
             foreach (var item in CompletionUtility.GetRelevantCompletionItems(words, completionItems))
                 Console.WriteLine(item);
 

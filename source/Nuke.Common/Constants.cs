@@ -27,6 +27,7 @@ namespace Nuke.Common
             "GitLab"
         };
 
+        internal const string NukeFileName = NukeDirectoryName;
         internal const string NukeDirectoryName = ".nuke";
         internal const string NukeCommonPackageId = nameof(Nuke) + "." + nameof(Common);
         internal const string BuildSchemaFileName = "build.schema.json";
@@ -50,9 +51,13 @@ namespace Nuke.Common
             return (AbsolutePath) FileSystemTasks.FindParentDirectory(
                 startDirectory,
                 predicate: x =>
-                    includeLegacy
-                        ? x.GetFileSystemInfos(NukeDirectoryName).Any()
-                        : x.GetDirectories(NukeDirectoryName).Any());
+                    x.GetDirectories(NukeDirectoryName).Any() ||
+                    includeLegacy && x.GetFiles(NukeFileName).Any());
+        }
+
+        internal static bool IsLegacy(AbsolutePath rootDirectory)
+        {
+            return File.Exists(rootDirectory / NukeFileName);
         }
 
         internal static AbsolutePath GetNukeDirectory(AbsolutePath rootDirectory)
@@ -62,7 +67,9 @@ namespace Nuke.Common
 
         internal static AbsolutePath GetTemporaryDirectory(AbsolutePath rootDirectory)
         {
-            return GetNukeDirectory(rootDirectory) / "temp";
+            return !IsLegacy(rootDirectory)
+                ? GetNukeDirectory(rootDirectory) / "temp"
+                : rootDirectory / ".tmp";
         }
 
         internal static AbsolutePath GetCompletionFile(AbsolutePath rootDirectory)

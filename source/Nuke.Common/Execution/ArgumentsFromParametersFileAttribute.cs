@@ -25,6 +25,9 @@ namespace Nuke.Common.Execution
 
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
+            if (!Directory.Exists(Constants.GetNukeDirectory(NukeBuild.RootDirectory)))
+                return;
+
             var parameterMembers = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true);
             var passwords = new Dictionary<string, byte[]>();
 
