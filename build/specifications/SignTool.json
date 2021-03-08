@@ -82,7 +82,7 @@
           },
           {
             "name": "FileDigestAlgorithm",
-            "type": "string",
+            "type": "SignToolDigestAlgorithm",
             "format": "/fd {value}",
             "help": "Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)"
           },
@@ -150,7 +150,7 @@
           },
           {
             "name": "TimestampServerDigestAlgorithm",
-            "type": "string",
+            "type": "SignToolDigestAlgorithm",
             "format": "/td {value}",
             "help": "Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server."
           },
@@ -291,6 +291,13 @@
       "values": [
         "Embedded",
         "DetachedSignedData"
+      ]
+    },
+    {
+      "name": "SignToolDigestAlgorithm",
+      "values": [
+        "SHA1",
+        "SHA256"
       ]
     }
   ]
