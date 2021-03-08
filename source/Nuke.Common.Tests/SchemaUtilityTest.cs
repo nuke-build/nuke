@@ -72,6 +72,7 @@ namespace Nuke.Common.Tests
                 });
         }
 
+#pragma warning disable CS0649
         private class TestBuild : NukeBuild, ITestComponent
         {
             [Parameter] public string Param;
@@ -97,5 +98,6 @@ namespace Nuke.Common.Tests
             Target Bar => _ => _;
             Target Zoo => _ => _;
         }
+#pragma warning restore CS0649
     }
 }
