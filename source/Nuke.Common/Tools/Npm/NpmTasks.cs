@@ -11,6 +11,9 @@ namespace Nuke.Common.Tools.Npm
         public static void CustomLogger(OutputType type, string output)
         {
             var outputLowered = output.ToLower();
+            
+            //err! covers NPM errors
+            //error: covers angular errors
             if (outputLowered.Contains("err!") || outputLowered.Contains("error:"))
                 Logger.Error(output);
             else if (outputLowered.Contains("warn"))
