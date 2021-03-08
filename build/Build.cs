@@ -27,7 +27,6 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 [CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
 [ShutdownDotNetAfterServerBuild]
-[TeamCitySetDotCoverHomePath]
 partial class Build
     : NukeBuild,
         IHazTwitterCredentials,
