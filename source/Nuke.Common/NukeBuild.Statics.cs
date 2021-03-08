@@ -20,6 +20,8 @@ namespace Nuke.Common
         static NukeBuild()
         {
             RootDirectory = GetRootDirectory();
+            CheckForRequiredUpdate();
+
             TemporaryDirectory = GetTemporaryDirectory(RootDirectory);
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
@@ -127,6 +129,27 @@ namespace Nuke.Common
                     .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))
                 .FirstOrDefault(x => x != null)
                 ?.FullName;
+        }
+
+        private static void CheckForRequiredUpdate()
+        {
+            if (Directory.Exists(RootDirectory / ".nuke"))
+                return;
+
+            Logger.Error(
+                new[]
+                {
+                    "--- UPDATE REQUIRED FROM 5.1.0 ---",
+                    string.Empty,
+                    "1. Update your global tool",
+                    "   dotnet tool update Nuke.GlobalTool -g",
+                    "2. Update your build",
+                    "   nuke :update",
+                    "3. Confirm on \"Update configuration file\"",
+                    "   (Others are be optional)"
+                }.JoinNewLine());
+
+            Environment.Exit(1);
         }
     }
 }
