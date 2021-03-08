@@ -50,7 +50,7 @@
   </ItemGroup>
 
   <!-- Import Nuke.Enterprise -->
-  <PropertyGroup Condition="Exists('..\external\enterprise\Nuke.Enterprise.csproj')">
+  <PropertyGroup Condition="Exists('..\external\enterprise\.gitignore')">
     <DefineConstants>$(DefineConstants);ENTERPRISE</DefineConstants>
     <NukeEnterprise>True</NukeEnterprise>
     <AppendTargetFrameworkToOutputPath>True</AppendTargetFrameworkToOutputPath>
