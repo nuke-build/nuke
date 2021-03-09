@@ -48,7 +48,7 @@ namespace Nuke.Common.Execution
             // TODO: Abstract AbsolutePath/Solution/Project etc.
             string ConvertValue(Type scalarType, string value)
                 => scalarType == typeof(AbsolutePath) ||
-                   scalarType == typeof(Solution) ||
+                   typeof(Solution).IsAssignableFrom(scalarType) ||
                    scalarType == typeof(Project)
                     ? EnvironmentInfo.WorkingDirectory.GetUnixRelativePathTo(NukeBuild.RootDirectory / value)
                     : value;

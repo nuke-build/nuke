@@ -38,7 +38,7 @@ namespace Nuke.Common.Tests
         {
             var solution = ProjectModelTasks.ParseSolution(SolutionFile);
 
-            solution.GetProjects("*.Tests").Should().HaveCount(2);
+            solution.GetProjects("*.Tests").Should().HaveCountGreaterOrEqualTo(2);
         }
 
         [Fact]
