@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <NoWarn>$(NoWarn);NU5128;CS0649</NoWarn>
+
+    <IncludeSymbols></IncludeSymbols>
+    <SymbolPackageFormat></SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0-5.final" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.1" PrivateAssets="all" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" PrivateAssets="all" GeneratePathProperty="true" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="$(PkgNewtonsoft_Json)\lib\netstandard2.0\*.*" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+  </PropertyGroup>
+
+  <Target Name="GetDependencyTargetPaths">
+    <ItemGroup>
+      <TargetPathWithTargetPlatformMoniker Include="$(PkgNewtonsoft_Json)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+    </ItemGroup>
+  </Target>
+
+  <ItemGroup>
+    <Compile Include="..\Nuke.Common\Constants.cs" LinkBase=".\Linked" />
+    <Compile Include="..\Nuke.Common\EnvironmentInfo.Platform.cs" LinkBase=".\Linked" />
+    <Compile Include="..\Nuke.Common\IO\AbsolutePath.cs" LinkBase=".\Linked\IO" />
+    <Compile Include="..\Nuke.Common\IO\PathConstruction.cs" LinkBase=".\Linked\IO" />
+    <Compile Include="..\Nuke.Common\IO\RelativePath.cs" LinkBase=".\Linked\IO" />
+    <Compile Include="..\Nuke.Common\IO\WinRelativePath.cs" LinkBase=".\Linked\IO" />
+    <Compile Include="..\Nuke.Common\IO\UnixRelativePath.cs" LinkBase=".\Linked\IO" />
+    <Compile Include="..\Nuke.Common\ProjectModel\*.cs" LinkBase=".\Linked\ProjectModel" />
+    <Compile Include="..\Nuke.Common\Utilities\Collections\*.cs" LinkBase=".\Linked\Utilities" />
+    <Compile Include="..\Nuke.Common\Utilities\String.*.cs" LinkBase=".\Linked\Utilities" />
+
+    <Compile Remove="..\Nuke.Common\ProjectModel\SolutionAttribute.cs" LinkBase=".\Linked\ProjectModel" />
+    <Compile Remove="..\Nuke.Common\ProjectModel\ProjectExtensions.cs" LinkBase=".\Linked\ProjectModel" />
+    <Compile Remove="..\Nuke.Common\ProjectModel\ProjectModelTasks.cs" LinkBase=".\Linked\ProjectModel" />
+  </ItemGroup>
+
+</Project>

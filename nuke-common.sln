@@ -30,6 +30,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Components", "source\N
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Enterprise", "external\enterprise\Nuke.Enterprise.csproj", "{5205C6B4-AA9B-45BF-ADFD-F48E631B1935}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.SourceGenerators", "source\Nuke.SourceGenerators\Nuke.SourceGenerators.csproj", "{6FA754E7-04F4-4C5E-BA50-0D87028B0963}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.SourceGenerators.Tests", "source\Nuke.SourceGenerators.Tests\Nuke.SourceGenerators.Tests.csproj", "{82D47ABA-67B8-423D-97A7-979858FAAD43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -74,6 +78,14 @@ Global
 		{5205C6B4-AA9B-45BF-ADFD-F48E631B1935}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5205C6B4-AA9B-45BF-ADFD-F48E631B1935}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5205C6B4-AA9B-45BF-ADFD-F48E631B1935}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FA754E7-04F4-4C5E-BA50-0D87028B0963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FA754E7-04F4-4C5E-BA50-0D87028B0963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FA754E7-04F4-4C5E-BA50-0D87028B0963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FA754E7-04F4-4C5E-BA50-0D87028B0963}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82D47ABA-67B8-423D-97A7-979858FAAD43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82D47ABA-67B8-423D-97A7-979858FAAD43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82D47ABA-67B8-423D-97A7-979858FAAD43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82D47ABA-67B8-423D-97A7-979858FAAD43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
