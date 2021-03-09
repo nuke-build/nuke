@@ -1,0 +1,189 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "name": "ILRepack",
+  "officialUrl": "https://github.com/gluck/il-repack#readme",
+  "help": "ILRepack is meant at replacing <a href=\"https://github.com/dotnet/ILMerge\">ILMerge</a> / <a href=\"https://evain.net/blog/articles/2006/11/06/an-introduction-to-mono-merge\">Mono.Merge</a>.<para/>The former being closed-source (<a href=\"https://github.com/Microsoft/ILMerge\">now open-sourced</a>), impossible to customize, slow, resource consuming and many more. The later being deprecated, unsupported, and based on an old version of Mono.Cecil.<para/>Here we're using latest (slightly modified) Cecil sources (0.9), you can find the fork <a href=\"https://github.com/gluck/cecil\">here</a>. Mono.Posix is also required (build only, it gets merged afterwards) for executable bit set on target file.",
+  "packageId": "ILRepack",
+  "packageExecutable": "ILRepack.exe",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "KeyFile",
+            "type": "string",
+            "format": "--keyfile:{value}",
+            "help": "Specifies a keyfile to sign the output assembly."
+          },
+          {
+            "name": "KeyContainer",
+            "type": "string",
+            "format": "--keycontainer:{value}",
+            "help": "Specifies a key container to sign the output assembly (takes precedence over <c>--keyfile</c>)."
+          },
+          {
+            "name": "LogFile",
+            "type": "string",
+            "format": "--log:{value}",
+            "help": "Enable logging (to a file, if given) (default is disabled)."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--ver:{value}",
+            "help": "Target assembly version."
+          },
+          {
+            "name": "Union",
+            "type": "string",
+            "format": "--union",
+            "help": "Merges types with identical names into one."
+          },
+          {
+            "name": "NoDebug",
+            "type": "string",
+            "format": "--ndebug",
+            "help": "Disables symbol file generation."
+          },
+          {
+            "name": "CopyAttributes",
+            "type": "string",
+            "format": "--copyattrs",
+            "help": "Copy assembly attributes (by default only the primary assembly attributes are copied)."
+          },
+          {
+            "name": "Attr",
+            "type": "string",
+            "format": "--attr:{value}",
+            "help": "Take assembly attributes from the given assembly file."
+          },
+          {
+            "name": "AllowMultiple",
+            "type": "string",
+            "format": "--allowMultiple",
+            "help": "When <c>--copyattrs</c> is specified, allows multiple attributes (if type allows)."
+          },
+          {
+            "name": "Target",
+            "type": "ILRepackTarget",
+            "format": "--target:{value}",
+            "help": "Specify target assembly kind (<c>library</c>, <c>exe</c>, <c>winexe</c> supported, default is same as first assembly)."
+          },
+          {
+            "name": "TargetPlatform",
+            "type": "string",
+            "format": "--targetplatform:{value}",
+            "help": "Specify target platform (v1, v1.1, v2, v4 supported)."
+          },
+          {
+            "name": "Xmldocs",
+            "type": "bool",
+            "format": "--xmldocs",
+            "help": "Merges XML documentation as well."
+          },
+          {
+            "name": "Lib",
+            "type": "string",
+            "format": "--lib:{value}",
+            "help": "Adds the path to the search directories for referenced assemblies (can be specified multiple times)."
+          },
+          {
+            "name": "Internalize",
+            "type": "bool",
+            "format": "--internalize",
+            "help": "Sets all types but the ones from the first assembly <c>internal</c>."
+          },
+          {
+            "name": "InternalizeExcludeFile",
+            "type": "string",
+            "format": "--internalize:{value}",
+            "help": "Exclude file contains one regex per line to compare against fullname of types NOT to internalize."
+          },
+          {
+            "name": "RenameInternalized",
+            "type": "bool",
+            "format": "--renameInternalized",
+            "help": "Rename all internalized types."
+          },
+          {
+            "name": "DelaySign",
+            "type": "bool",
+            "format": "--delaysign",
+            "help": "Sets the key, but don't sign the assembly."
+          },
+          {
+            "name": "AllowDuplicate",
+            "type": "List<string>",
+            "format": "--allowdup:{value}",
+            "help": "Allows the specified type for being duplicated in input assemblies."
+          },
+          {
+            "name": "AllowDuplicateResources",
+            "type": "bool",
+            "format": "--allowduplicateresources",
+            "help": "Allows to duplicate resources in output assembly (by default they're ignored)."
+          },
+          {
+            "name": "ZeroPekind",
+            "type": "bool",
+            "format": "--zeropekind",
+            "help": "Allows assemblies with Zero <c>PeKind</c> (but obviously only IL will get merged)."
+          },
+          {
+            "name": "Wildcards",
+            "type": "bool",
+            "format": "--wildcards",
+            "help": "Allows (and resolves) file wildcards (e.g. <c>*.dll</c>) in input assemblies."
+          },
+          {
+            "name": "Parallel",
+            "type": "bool",
+            "format": "--parallel",
+            "help": "Use as many CPUs as possible to merge the assemblies."
+          },
+          {
+            "name": "Pause",
+            "type": "bool",
+            "format": "--pause",
+            "help": "Pause execution once completed (good for debugging)."
+          },
+          {
+            "name": "RepackDrop",
+            "type": "bool",
+            "format": "--repackdrop:AttributeClass",
+            "help": "Allows dropping specific members during merging (<a href=\"https://github.com/gluck/il-repack/issues/215\">#215</a>)."
+          },
+          {
+            "name": "Verbose",
+            "type": "bool",
+            "format": "--verbose",
+            "help": "Shows more logs."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--out:{value}",
+            "help": "Target assembly path, <c>symbol/config/doc</c> files will be written here as well."
+          },
+          {
+            "name": "Assemblies",
+            "type": "List<string>",
+            "format": "{value}",
+            "help": "Primary and other assemblies to be merged."
+          }
+
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "ILRepackTarget",
+      "values": [
+        "library",
+        "exe",
+        "winexe"
+      ]
+    }
+  ]
+}
