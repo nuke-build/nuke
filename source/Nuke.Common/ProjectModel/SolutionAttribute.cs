@@ -45,6 +45,7 @@ namespace Nuke.Common.ProjectModel
         }
 
         public override bool List { get; set; }
+        public bool GenerateProjects { get; set; }
 
         public override object GetValue(MemberInfo member, object instance)
         {
