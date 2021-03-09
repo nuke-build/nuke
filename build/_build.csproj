@@ -18,6 +18,7 @@
 <!--    <ToolCommandName>build</ToolCommandName>-->
   </PropertyGroup>
 
+  <!-- Test properties for external files -->
 <!--  <ItemGroup>-->
 <!--    <NukeExternalFiles Include="https://github.com/nuke-build/common/tree/develop/source/Nuke.GlobalTool/templates" BasePath="..\download">-->
 <!--      <TargetFramework>Bla</TargetFramework>-->
@@ -25,6 +26,15 @@
 <!--      <NuGetSource>https://www.myget.org/F/matkoch/api/v2/package</NuGetSource>-->
 <!--      <NukeVersion>9999.0.0</NukeVersion>-->
 <!--    </NukeExternalFiles>-->
+<!--  </ItemGroup>-->
+  
+  <!-- Test properties for source generators -->
+<!--  <PropertyGroup>-->
+<!--    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>-->
+<!--    <CompilerGeneratedFilesOutputPath>$(BaseIntermediateOutputPath)\GeneratedFiles</CompilerGeneratedFilesOutputPath>-->
+<!--  </PropertyGroup>-->
+<!--  <ItemGroup>-->
+<!--    <PackageReference Include="Nuke.SourceGenerators" Version="1.0.0-beta01" OutputItemType="Analyzer" />-->
 <!--  </ItemGroup>-->
 
   <PropertyGroup>
@@ -45,6 +55,7 @@
   <ItemGroup>
     <ProjectReference Include="..\source\Nuke.Components\Nuke.Components.csproj" />
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
+    <ProjectReference Include="..\source\Nuke.SourceGenerators\Nuke.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 
   <!-- Import Nuke.Enterprise -->
