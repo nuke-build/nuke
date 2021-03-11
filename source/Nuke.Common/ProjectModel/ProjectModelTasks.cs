@@ -30,7 +30,7 @@ namespace Nuke.Common.ProjectModel
         {
             ControlFlow.Assert(folderNameProvider != null || solutions != null, "folderNameProvider != null || solutions!= null");
 
-            var solution = SolutionSerializer.Deserialize(
+            var solution = SolutionSerializer.DeserializeFromContent<Solution>(
                 new[]
                 {
                     "Microsoft Visual Studio Solution File, Format Version 12.00",
@@ -63,7 +63,7 @@ namespace Nuke.Common.ProjectModel
 
         public static Solution ParseSolution(string solutionFile)
         {
-            return SolutionSerializer.Deserialize(solutionFile);
+            return SolutionSerializer.DeserializeFromFile<Solution>(solutionFile);
         }
 
         private static Lazy<string> s_msbuildPathResolver = Lazy.Create(() =>
