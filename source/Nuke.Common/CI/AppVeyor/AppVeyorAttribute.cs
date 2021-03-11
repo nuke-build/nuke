@@ -87,7 +87,7 @@ namespace Nuke.Common.CI.AppVeyor
 
         protected AppVeyorBranches GetBranches()
         {
-            if (BranchesOnly.Length == 0 || BranchesExcept.Length == 0)
+            if (BranchesOnly.Length == 0 && BranchesExcept.Length == 0)
                 return null;
 
             return new AppVeyorBranches
