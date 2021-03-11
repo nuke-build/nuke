@@ -26,6 +26,15 @@ namespace Nuke.Common.ProjectModel
 
         public IDictionary<string, string> Items { get; set; }
 
+        public IReadOnlyCollection<SolutionFolder> SolutionFolders => Solution.AllSolutionFolders.Where(x => x.SolutionFolder == this).ToList();
+        public IReadOnlyCollection<Project> Projects => Solution.AllProjects.Where(x => x.SolutionFolder == this).ToList();
+
+        [CanBeNull]
+        public Project GetProject(string name)
+        {
+            return Projects.SingleOrDefault(x => x.Name == name);
+        }
+
         internal override string RelativePath => Name;
     }
 }
