@@ -206,6 +206,16 @@ namespace Nuke.Common.CI.AzurePipelines
                     .AddPairWhenValueNotNull("code", code));
         }
 
+        public void SetVariable(string name, string value, bool? isSecret = null)
+        {
+            WriteCommand(
+                "task.setvariable",
+                value,
+                dictionaryConfigurator: x => x
+                    .AddPair("variable", name)
+                    .AddPairWhenValueNotNull("issecret", isSecret));
+        }
+
         private string GetText(AzurePipelinesIssueType type)
         {
             return type switch
