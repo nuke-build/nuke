@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
@@ -59,7 +60,6 @@ namespace Nuke.SourceGenerators
             }
 
             var source = compilationUnit.NormalizeWhitespace().ToFullString();
-            File.WriteAllText("/Users/matt/code/nuke/log.log", source);
             context.AddSource(nameof(SolutionProjectsAsPropertiesGenerator), source);
         }
 
@@ -70,9 +70,6 @@ namespace Nuke.SourceGenerators
             IReadOnlyCollection<Project> projects,
             bool isSolution = false)
         {
-            if (projects.Count == 0)
-                return null;
-
             string GetMemberName(string name) => name
                 .Replace(".", string.Empty)
                 .Replace("-", string.Empty);
@@ -93,7 +90,7 @@ namespace Nuke.SourceGenerators
 
             MemberDeclarationSyntax GetSolutionFolderProperty(string name)
                 => ParseMemberDeclaration(
-                    $@"public {GetSolutionFolderTypeName(name)} {GetMemberName(name)} => new(SolutionFolder.GetSolutionFolder(""{name}"");");
+                    $@"public {GetSolutionFolderTypeName(name)} {GetMemberName(name)} => new(SolutionFolder.GetSolutionFolder(""{name}""));");
 
             return ClassDeclaration(isSolution ? name : GetSolutionFolderTypeName(name)) // TODO: check for multiple solution fields
                 .AddModifiers(Token(SyntaxKind.InternalKeyword))
@@ -105,7 +102,6 @@ namespace Nuke.SourceGenerators
                 .AddMembers(projects.Select(project => GetProjectPropertyDeclaration(project.Name)).ToArray())
                 .AddMembers(solutionFolders.Select(x => GetSolutionFolderProperty(x.Name)).ToArray())
                 .AddMembers(solutionFolders.Select(x => GetSolutionFolderDeclaration(x.Name, x.SolutionFolders, x.Projects))
-                    .WhereNotNull()
                     .ToArray<MemberDeclarationSyntax>());
         }
 
@@ -126,14 +122,6 @@ namespace Nuke.SourceGenerators
                 // For testing only
                 : Directory.GetCurrentDirectory());
             return Constants.TryGetRootDirectoryFrom(startDirectory).NotNull();
-        }
-    }
-
-    public static class Extensions
-    {
-        public static T When<T>(this T obj, bool condition, Func<T, T> action)
-        {
-            return condition ? action.Invoke(obj) : obj;
         }
     }
 }

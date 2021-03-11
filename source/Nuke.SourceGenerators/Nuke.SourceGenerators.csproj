@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <IncludeBuildOutput>false</IncludeBuildOutput>
-    <NoWarn>$(NoWarn);NU5128</NoWarn>
+    <NoWarn>$(NoWarn);NU5128;CS0649</NoWarn>
 
     <IncludeSymbols></IncludeSymbols>
     <SymbolPackageFormat></SymbolPackageFormat>

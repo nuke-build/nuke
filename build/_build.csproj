@@ -55,7 +55,7 @@
   <ItemGroup>
     <ProjectReference Include="..\source\Nuke.Components\Nuke.Components.csproj" />
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
-    <ProjectReference Include="..\source\Nuke.SourceGenerators\Nuke.SourceGenerators.csproj" OutputItemType="Analyzer" />
+    <ProjectReference Include="..\source\Nuke.SourceGenerators\Nuke.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 
   <!-- Import Nuke.Enterprise -->

@@ -2,33 +2,26 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.Loader;
-using System.Text;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.Emit;
-using Microsoft.CodeAnalysis.Host.Mef;
-using Microsoft.CodeAnalysis.Text;
-using Nuke.Common;
 using Nuke.Common.ProjectModel;
+using VerifyXunit;
 using Xunit;
 
 namespace Nuke.SourceGenerators.Tests
 {
+    [UsesVerify]
     public class SolutionProjectsAsPropertiesGeneratorTest
     {
-
         [Fact]
-        public async Task TestGenerateProjectMembers()
+        public Task TestGenerateProjectMembers()
         {
-            // Given
-            var sourceCode = @"
+            var inputCompilation = CreateCompilation(@"
 using Nuke.Common;
 using Nuke.Common.ProjectModel;
 
@@ -36,65 +29,29 @@ partial class Build : NukeBuild
 {
     [Solution(GenerateProjects = true)]
     readonly Solution Solution;
-}";
-            var outputAssembly = Path.Combine(EnvironmentInfo.WorkingDirectory, $"Test_{nameof(TestGenerateProjectMembers)}.dll");
+}");
 
-            // When
-            var result = await WhenTheSourceCodeIsCompiled(sourceCode, outputAssembly);
+            var generator = new SolutionProjectsAsPropertiesGenerator();
+            var driver = (GeneratorDriver) CSharpGeneratorDriver.Create(generator);
+            var result = driver.RunGeneratorsAndUpdateCompilation(inputCompilation, out _, out _).GetRunResult();
 
-            // Then
-            result.Success.Should().BeTrue();
-            var ctx = new AssemblyLoadContext(nameof(TestGenerateProjectMembers), isCollectible: true);
-            var loadedAssembly = ctx.LoadFromAssemblyPath(outputAssembly);
-            loadedAssembly.GetType("Build")
-                .Should().NotBeNull()
-                .And.Subject.GetMember("NukeCommon").Should().HaveCount(1);
+            if (!result.Diagnostics.IsEmpty)
+                throw new Exception(string.Join(Environment.NewLine, result.Diagnostics.Select(x => x.GetMessage())));
+            return Verifier.Verify(result.GeneratedTrees.Single().GetRoot().ToFullString());
         }
 
-        private async Task<EmitResult> WhenTheSourceCodeIsCompiled(string sourceCode, string outputAssembly, [CallerMemberName] string compilationAssemblyName = "TestCompilation")
+        private static Compilation CreateCompilation(string source)
         {
-            var host = MefHostServices.Create(MefHostServices.DefaultAssemblies);
-            var projectInfo = ProjectInfo.Create(
-                ProjectId.CreateNewId(),
-                VersionStamp.Create(),
-                compilationAssemblyName,
-                compilationAssemblyName,
-                LanguageNames.CSharp
-                )
-                .WithCompilationOptions(new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary).WithNullableContextOptions(NullableContextOptions.Enable))
-                .WithParseOptions(new CSharpParseOptions(LanguageVersion.Preview))
-                .WithMetadataReferences(new[]
+            return CSharpCompilation.Create("compilation",
+                new[] { CSharpSyntaxTree.ParseText(source) },
+                new[]
                 {
-                    MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
+                    MetadataReference.CreateFromFile(typeof(object).GetTypeInfo().Assembly.Location),
                     MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(object).Assembly.Location)!, "netstandard.dll")),
                     MetadataReference.CreateFromFile(Path.Combine(Path.GetDirectoryName(typeof(object).Assembly.Location)!, "System.Runtime.dll")),
                     MetadataReference.CreateFromFile(typeof(SolutionAttribute).Assembly.Location)
-                })
-                .WithAnalyzerReferences(new[]{
-                    new AnalyzerFileReference(typeof(SolutionProjectsAsPropertiesGenerator).Assembly.Location, new DataBuilderGeneratorAnalyzerLoader())
-                    });
-
-            var compilation = await new AdhocWorkspace(host)
-                .CurrentSolution
-                .AddProject(projectInfo)
-                .AddDocument(DocumentId.CreateNewId(projectInfo.Id, compilationAssemblyName + ".cs"), compilationAssemblyName + ".cs", SourceText.From(sourceCode, Encoding.UTF8))
-                .GetProject(projectInfo.Id)!
-                .GetCompilationAsync();
-
-            var result = compilation!.Emit(outputAssembly);
-            return result;
-        }
-
-        private class DataBuilderGeneratorAnalyzerLoader : IAnalyzerAssemblyLoader
-        {
-            public void AddDependencyLocation(string fullPath)
-            {
-            }
-
-            public Assembly LoadFromPath(string fullPath)
-            {
-                return typeof(SolutionProjectsAsPropertiesGenerator).Assembly;
-            }
+                },
+                new CSharpCompilationOptions(OutputKind.ConsoleApplication));
         }
     }
 }
