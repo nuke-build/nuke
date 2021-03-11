@@ -58,14 +58,25 @@ namespace Nuke.Common.ProjectModel
 
         public static IReadOnlyCollection<string> GetTargetFrameworks(this Project project)
         {
-            var msbuildProject = project.GetMSBuildProject();
-            var targetFrameworkProperty = msbuildProject.GetProperty("TargetFramework");
-            if (targetFrameworkProperty != null)
-                return new[] { targetFrameworkProperty.EvaluatedValue };
+            return project.GetSplittedPropertyValue("TargetFramework", "TargetFrameworks");
+        }
 
-            var targetFrameworksProperty = msbuildProject.GetProperty("TargetFrameworks");
-            if (targetFrameworksProperty != null)
-                return targetFrameworksProperty.EvaluatedValue.Split(';');
+        public static IReadOnlyCollection<string> GetRuntimeIdentifiers(this Project project)
+        {
+            return project.GetSplittedPropertyValue("RuntimeIdentifier", "RuntimeIdentifiers");
+        }
+
+        private static IReadOnlyCollection<string> GetSplittedPropertyValue(
+            this Project project,
+            params string[] names)
+        {
+            var msbuildProject = project.GetMSBuildProject();
+            foreach (var name in names)
+            {
+                var property = msbuildProject.GetProperty(name);
+                if (property != null)
+                    return property.EvaluatedValue.Split(';');
+            }
 
             return new string[0];
         }
