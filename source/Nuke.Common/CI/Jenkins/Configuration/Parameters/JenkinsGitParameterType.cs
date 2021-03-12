@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Nuke.Common.CI.Jenkins.Configuration.Parameters
 {
-    public enum GitParameterType
+    public enum JenkinsGitParameterType
     {
         PT_TAG,
         PT_BRANCH,

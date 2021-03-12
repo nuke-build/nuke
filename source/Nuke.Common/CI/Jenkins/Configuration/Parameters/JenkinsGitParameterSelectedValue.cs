@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Nuke.Common.CI.Jenkins.Configuration.Parameters
 {
-    public enum GitParameterSelectedValue
+    public enum JenkinsGitParameterSelectedValue
     {
         NONE,
         TOP,

@@ -12,10 +12,10 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Parameters
     /// <summary>
     /// Represents a git jenkins parameter, see <see href="https://plugins.jenkins.io/git-parameter/">git parameter plugin</see>.
     /// </summary>
-    public class GitParameter : Parameter
+    public class JenkinsGitParameter : JenkinsParameter
     {
         /// <inheritdoc />
-        public GitParameter(string name, string defaultValue, string description = "")
+        public JenkinsGitParameter(string name, string defaultValue, string description = "")
             : base(name, defaultValue, description)
         {
         }
@@ -26,18 +26,18 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Parameters
         /// Branch - list of all branch in repository - returns Branch Name
         /// Revision - list of all revision sha1 in repository followed by its author and date - returns Tag SHA1
         /// </summary>
-        public GitParameterType GitParameterType { get; set; }
+        public JenkinsGitParameterType GitParameterType { get; set; }
 
         /// <summary>
         /// Which value is selected, after loaded parameters. If you choose 'default', but default value is not present on the list, nothing is selected.
         /// </summary>
-        public GitParameterSelectedValue ParameterSelectedValue { get; set; } = GitParameterSelectedValue.TOP;
+        public JenkinsGitParameterSelectedValue ParameterSelectedValue { get; set; } = JenkinsGitParameterSelectedValue.TOP;
 
         /// <summary>
         /// Select how to sort the downloaded parameters. Only applies to a branch or a tag.
         ///  When smart sorting is chosen, the compare treats a sequence of digits as a single character.
         /// </summary>
-        public GitParameterSortMode ParameterSortMode { get; set; } = GitParameterSortMode.ASCENDING;
+        public JenkinsGitParameterSortMode ParameterSortMode { get; set; } = JenkinsGitParameterSortMode.ASCENDING;
 
         /// <summary>
         /// Name of branch to look in. Used only if listing revisions.

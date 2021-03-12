@@ -11,13 +11,13 @@ namespace Nuke.Common.CI.Jenkins.Configuration
     /// <summary>
     /// Represents a stage condition, see <see href="https://www.jenkins.io/doc/book/pipeline/syntax/#when">when</see>.
     /// </summary>
-    public class StageCondition : ConfigurationEntity
+    public class JenkinsStageCondition : ConfigurationEntity
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="StageCondition"/> class.
+        /// Initializes a new instance of <see cref="JenkinsStageCondition"/> class.
         /// </summary>
         /// <param name="condition">Condition context.</param>
-        public StageCondition(string condition)
+        public JenkinsStageCondition(string condition)
         {
             Condition = condition;
         }
@@ -35,7 +35,7 @@ namespace Nuke.Common.CI.Jenkins.Configuration
                 return;
             }
 
-            using (writer.WriteBlock("when"))
+            using (writer.WriteJenkinsPipelineBlock("when"))
             {
                 writer.WriteLine($"{Condition}");
             }

@@ -34,7 +34,7 @@ namespace Nuke.Common.CI.Jenkins
         /// <summary>
         /// Gets or sets the type of test framework results format to use to parse results.
         /// </summary>
-        public XUnitReportType XUnitReportType { get; set; } = XUnitReportType.NUnit2;
+        public JenkinsXUnitReportType XUnitReportType { get; set; } = JenkinsXUnitReportType.NUnit2;
 
         /// <summary>
         /// Gets or sets names of targets that generate test results.
@@ -87,21 +87,22 @@ namespace Nuke.Common.CI.Jenkins
 
         protected virtual JenkinsPipeline GetPipeline(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            var agent = new Agent(AgentName);
-            var parametersReader = new ParametersReader(build);
+            var agent = new JenkinsAgent(AgentName);
+            var parametersReader = new JenkinsParametersReader(build);
             var parameters = parametersReader.GetGlobalParameters(relevantTargets).ToList();
 
             if (UseGitParameterWithBranch)
             {
-                var gitParameter = new GitParameter("BRANCH", DefaultGitBranch, "Branch to use for checkout")
+                var gitParameter = new JenkinsGitParameter("BRANCH", DefaultGitBranch, "Branch to use for checkout")
                                    {
-                                       ParameterSelectedValue = GitParameterSelectedValue.DEFAULT, GitParameterType = GitParameterType.PT_BRANCH,
+                                       ParameterSelectedValue = JenkinsGitParameterSelectedValue.DEFAULT,
+                                       GitParameterType = JenkinsGitParameterType.PT_BRANCH,
                                        BranchFilter = "origin/(.*)"
                                    };
                 parameters.Add(gitParameter);
             }
 
-            var lookupTable = new LookupTable<ExecutableTarget, Stage>();
+            var lookupTable = new LookupTable<ExecutableTarget, JenkinsStage>();
             var jenkinsStages = relevantTargets
                 .SelectMany(GetJenkinsStages, (x, y) => (ExecutableTarget: x, Stage: y))
                 .ForEachLazy(x => lookupTable.Add(x.ExecutableTarget, x.Stage))
@@ -111,10 +112,10 @@ namespace Nuke.Common.CI.Jenkins
             return new JenkinsPipeline(agent, parameters, jenkinsStages);
         }
 
-        private IEnumerable<Stage> GetJenkinsStages(ExecutableTarget executableTarget)
+        private IEnumerable<JenkinsStage> GetJenkinsStages(ExecutableTarget executableTarget)
         {
             var buildCmdPath = BuildCmdPath;
-            var factory = new StageFactory(buildCmdPath);
+            var factory = new JenkinsStageFactory(buildCmdPath);
             var producesTests = TargetsWithTestResults?.Any(x => x.Equals(executableTarget.Name, StringComparison.InvariantCultureIgnoreCase))
                                 ?? false;
             yield return factory.Create(executableTarget, producesTests, XUnitReportType);

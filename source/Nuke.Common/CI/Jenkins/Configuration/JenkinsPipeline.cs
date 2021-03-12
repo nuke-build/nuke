@@ -16,9 +16,9 @@ namespace Nuke.Common.CI.Jenkins.Configuration
     /// </summary>
     public class JenkinsPipeline : ConfigurationEntity
     {
-        private readonly IEnumerable<Parameter> _parameters;
-        private readonly IEnumerable<Stage> _stages;
-        private readonly Agent _agent;
+        private readonly IEnumerable<JenkinsParameter> _parameters;
+        private readonly IEnumerable<JenkinsStage> _stages;
+        private readonly JenkinsAgent _agent;
 
         /// <summary>
         /// Initializes a new instance of <see cref="JenkinsPipeline"/> class.
@@ -26,7 +26,7 @@ namespace Nuke.Common.CI.Jenkins.Configuration
         /// <param name="agent">Agent.</param>
         /// <param name="parameters">List of parameters.</param>
         /// <param name="stages">List of stages.</param>
-        public JenkinsPipeline(Agent agent, IEnumerable<Parameter> parameters, IEnumerable<Stage> stages)
+        public JenkinsPipeline(JenkinsAgent agent, IEnumerable<JenkinsParameter> parameters, IEnumerable<JenkinsStage> stages)
         {
             _agent = agent;
             _parameters = parameters;
@@ -36,13 +36,13 @@ namespace Nuke.Common.CI.Jenkins.Configuration
         /// <inheritdoc />
         public override void Write(CustomFileWriter writer)
         {
-            using (writer.WriteBlock("pipeline"))
+            using (writer.WriteJenkinsPipelineBlock("pipeline"))
             {
                 _agent.Write(writer);
 
                 if (_parameters?.Any() ?? false)
                 {
-                    using (writer.WriteBlock("parameters"))
+                    using (writer.WriteJenkinsPipelineBlock("parameters"))
                     {
                         _parameters.ForEach(x => x.Write(writer));
                     }
@@ -50,7 +50,7 @@ namespace Nuke.Common.CI.Jenkins.Configuration
 
                 if (_stages?.Any() ?? false)
                 {
-                    using (writer.WriteBlock("stages"))
+                    using (writer.WriteJenkinsPipelineBlock("stages"))
                     {
                         _stages.ForEach(x => x.Write(writer));
                     }

@@ -19,20 +19,20 @@ namespace Nuke.Common.CI.Jenkins.Configuration
     /// <summary>
     /// Parameters reader, as helper class for Jenkins parameter.
     /// </summary>
-    internal sealed class ParametersReader
+    internal sealed class JenkinsParametersReader
     {
         private readonly NukeBuild _build;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ParametersReader"/> class.
+        /// Initializes a new instance of <see cref="JenkinsParametersReader"/> class.
         /// </summary>
         /// <param name="build">Instance of <see cref="NukeBuild"/>.</param>
-        public ParametersReader(NukeBuild build)
+        public JenkinsParametersReader(NukeBuild build)
         {
             _build = build;
         }
 
-        public IEnumerable<Parameter> GetGlobalParameters(IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        public IEnumerable<JenkinsParameter> GetGlobalParameters(IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return ValueInjectionUtility.GetParameterMembers(_build.GetType(), includeUnlisted: false)
                 .Except(relevantTargets.SelectMany(x => x.Requirements
@@ -42,7 +42,7 @@ namespace Nuke.Common.CI.Jenkins.Configuration
                 .Select(GetParameter);
         }
 
-        private Parameter GetParameter(MemberInfo member)
+        private JenkinsParameter GetParameter(MemberInfo member)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             var valueSet = ParameterService.GetParameterValueSet(member, _build);
@@ -55,29 +55,29 @@ namespace Nuke.Common.CI.Jenkins.Configuration
                 defaultValue = (UnixRelativePath) PathConstruction.GetRelativePath(NukeBuild.RootDirectory, defaultValue.ToString());
 
             // get other parameter types !
-            ParameterType GetParameterType()
+            JenkinsParameterType GetParameterType()
             {
                 if (member.GetMemberType() == typeof(bool?))
-                    return ParameterType.BooleanParameter;
+                    return JenkinsParameterType.BooleanParameter;
 
                 if (member.GetMemberType().IsEnum)
-                    return ParameterType.ChoiceParameter;
+                    return JenkinsParameterType.ChoiceParameter;
 
-                return ParameterType.StringParameter;
+                return JenkinsParameterType.StringParameter;
             }
 
             var parameterType = GetParameterType();
 
-            Parameter parameter = parameterType switch
+            JenkinsParameter parameter = parameterType switch
             {
-                ParameterType.StringParameter =>
-                    new StringParameter(member.Name, defaultValue?.ToString() ?? "", attribute.Description),
+                JenkinsParameterType.StringParameter =>
+                    new JenkinsStringParameter(member.Name, defaultValue?.ToString() ?? "", attribute.Description),
 
-                ParameterType.BooleanParameter =>
-                    new BooleanParameter(member.Name, bool.Parse(defaultValue?.ToString() ?? "false"), attribute.Description),
+                JenkinsParameterType.BooleanParameter =>
+                    new JenkinsBooleanParameter(member.Name, bool.Parse(defaultValue?.ToString() ?? "false"), attribute.Description),
 
-                ParameterType.ChoiceParameter
-                    => new ChoiceParameter(member.Name,
+                JenkinsParameterType.ChoiceParameter
+                    => new JenkinsChoiceParameter(member.Name,
                         defaultValue?.ToString() ?? "",
                         attribute.Description,
                         valueSet?.Select(x => x.Text).ToArray()),

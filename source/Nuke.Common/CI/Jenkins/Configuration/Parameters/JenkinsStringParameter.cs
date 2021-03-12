@@ -9,20 +9,20 @@ using Nuke.Common.Utilities;
 namespace Nuke.Common.CI.Jenkins.Configuration.Parameters
 {
     /// <summary>
-    /// Represents a boolean jenkins parameter, see <see href="https://www.jenkins.io/doc/book/pipeline/syntax/#available-parameters">booleanParam</see>.
+    /// Represents a string jenkins parameter, see <see href="https://www.jenkins.io/doc/book/pipeline/syntax/#available-parameters">string</see>.
     /// </summary>
-    public class BooleanParameter : Parameter
+    public class JenkinsStringParameter : JenkinsParameter
     {
         /// <inheritdoc />
-        public BooleanParameter(string name, bool defaultValue, string description = "")
-            : base(name, defaultValue ? "true" : "false", description)
+        public JenkinsStringParameter(string name, string defaultValue, string description = "")
+            : base(name, defaultValue, description)
         {
         }
 
         /// <inheritdoc />
         public override void Write(CustomFileWriter writer)
         {
-            var str = $"booleanParam name: {Name.SingleQuote()}, defaultValue: {DefaultValue}, description: {Description.SingleQuote()}";
+            var str = $"string name: {Name.SingleQuote()}, defaultValue: {DefaultValue.SingleQuote()}, description: {Description.SingleQuote()}";
             writer.WriteLine(str);
         }
     }

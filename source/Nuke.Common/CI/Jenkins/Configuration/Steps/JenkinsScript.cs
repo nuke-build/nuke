@@ -11,15 +11,15 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
     /// <summary>
     /// Represents a script block, see <see href="https://www.jenkins.io/doc/book/pipeline/syntax/#script">script</see>.
     /// </summary>
-    internal class Script : Step
+    internal class JenkinsScript : JenkinsStep
     {
-        private readonly Step _stepToWrap;
+        private readonly JenkinsStep _stepToWrap;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Script"/> class.
+        /// Initializes a new instance of <see cref="JenkinsScript"/> class.
         /// </summary>
         /// <param name="stepToWrap"></param>
-        public Script(Step stepToWrap)
+        public JenkinsScript(JenkinsStep stepToWrap)
         {
             _stepToWrap = stepToWrap;
         }
@@ -27,7 +27,7 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
         /// <inheritdoc />
         public override void Write(CustomFileWriter writer)
         {
-            using (writer.WriteBlock("script"))
+            using (writer.WriteJenkinsPipelineBlock("script"))
             {
                 _stepToWrap.Write(writer);
             }

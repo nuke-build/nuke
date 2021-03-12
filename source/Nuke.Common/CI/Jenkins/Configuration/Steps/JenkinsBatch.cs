@@ -11,19 +11,19 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
     /// <summary>
     /// Calls a batch script, see <see href="https://www.jenkins.io/doc/pipeline/steps/workflow-durable-task-step/#bat-windows-batch-script">bat</see>.
     /// </summary>
-    internal class Batch : Step
+    internal class JenkinsBatch : JenkinsStep
     {
         protected readonly string BatchScript;
         protected readonly bool ReturnStdOutput;
         protected readonly bool ReturnExitCode;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Batch"/> class.
+        /// Initializes a new instance of <see cref="JenkinsBatch"/> class.
         /// </summary>
         /// <param name="batchScript">Name of batch script.</param>
         /// <param name="returnStdOutput">Return std output.</param>
         /// <param name="returnExitCode">Return exit code.</param>
-        public Batch(string batchScript, bool returnStdOutput = false, bool returnExitCode = false)
+        public JenkinsBatch(string batchScript, bool returnStdOutput = false, bool returnExitCode = false)
         {
             BatchScript = batchScript;
             ReturnStdOutput = returnStdOutput;

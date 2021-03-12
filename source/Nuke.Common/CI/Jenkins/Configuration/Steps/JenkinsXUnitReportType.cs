@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Nuke.Common.CI.Jenkins.Configuration.Steps
 {
-    public enum XUnitReportType
+    public enum JenkinsXUnitReportType
     {
         AUnit,
         BoostTest,

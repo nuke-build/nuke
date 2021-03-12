@@ -7,13 +7,12 @@ using System.Linq;
 
 namespace Nuke.Common.CI.Jenkins.Configuration.Parameters
 {
-    public enum ParameterType
+    public enum JenkinsGitParameterSortMode
     {
-        StringParameter,
-        TextParameter,
-        BooleanParameter,
-        ChoiceParameter,
-        PasswordParameter,
-        GitParameter
+        NONE,
+        ASCENDING_SMART,
+        DESCENDING_SMART,
+        ASCENDING,
+        DESCENDING
     }
 }

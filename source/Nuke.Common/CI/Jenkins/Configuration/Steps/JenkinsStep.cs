@@ -10,7 +10,7 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
     /// <summary>
     /// Base class for jenkins steps, <see href="https://www.jenkins.io/doc/pipeline/steps/">Pipeline Steps Reference</see>.
     /// </summary>
-    public abstract class Step : ConfigurationEntity
+    public abstract class JenkinsStep : ConfigurationEntity
     {
     }
 }

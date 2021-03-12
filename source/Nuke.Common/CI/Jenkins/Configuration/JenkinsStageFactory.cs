@@ -12,52 +12,52 @@ using Nuke.Common.IO;
 namespace Nuke.Common.CI.Jenkins.Configuration
 {
     /// <summary>
-    /// Creates a <see cref="Stage"/> class.
+    /// Creates a <see cref="JenkinsStage"/> class.
     /// </summary>
-    internal class StageFactory
+    internal class JenkinsStageFactory
     {
         private readonly string _buildCmdPath;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="StageFactory"/> class.
+        /// Initializes a new instance of <see cref="JenkinsStageFactory"/> class.
         /// </summary>
         /// <param name="buildCmdPath">Path to build command.</param>
-        public StageFactory(string buildCmdPath)
+        public JenkinsStageFactory(string buildCmdPath)
         {
             _buildCmdPath = buildCmdPath;
         }
 
         /// <summary>
-        /// Creates a new <see cref="Stage"/> class.
+        /// Creates a new <see cref="JenkinsStage"/> class.
         /// </summary>
         /// <param name="target">Executable target.</param>
         /// <param name="producesTestResults">Produces test results.</param>
         /// <param name="reportType">Report type.</param>
         /// <returns></returns>
-        public Stage Create(ExecutableTarget target, bool producesTestResults, XUnitReportType reportType)
+        public JenkinsStage Create(ExecutableTarget target, bool producesTestResults, JenkinsXUnitReportType reportType)
         {
-            var steps = new List<Step>();
+            var steps = new List<JenkinsStep>();
 
-            var batchStep = new Batch($"{_buildCmdPath} {target.Name} --skip --no-logo", returnStdOutput: false, returnExitCode: false);
-            var shStep = new Sh($"{_buildCmdPath.Replace(".cmd", ".sh")} {target.Name} --skip --no-logo",
+            var batchStep = new JenkinsBatch($"{_buildCmdPath} {target.Name} --skip --no-logo", returnStdOutput: false, returnExitCode: false);
+            var shStep = new JenkinsSh($"{_buildCmdPath.Replace(".cmd", ".sh")} {target.Name} --skip --no-logo",
                 returnStdOutput: false,
                 returnExitCode: false);
 
-            var ifElseConditionStep = new IfElseScripted("isUnix()", shStep, batchStep);
-            var scriptedStep = new Script(ifElseConditionStep);
+            var ifElseConditionStep = new JenkinsIfElseScripted("isUnix()", shStep, batchStep);
+            var scriptedStep = new JenkinsScript(ifElseConditionStep);
 
-            steps.Add(target.ProceedAfterFailure ? new CatchError(scriptedStep) : scriptedStep);
+            steps.Add(target.ProceedAfterFailure ? new JenkinsCatchError(scriptedStep) : scriptedStep);
 
             var artifacts = ArtifactExtensions.ArtifactProducts[target.Definition];
             var artifactRules = artifacts.Select(GetArtifactPath).ToList();
 
-            steps.AddRange(artifactRules.Select(x => new ArchiveArtifacts(GetArtifactPath(x))));
+            steps.AddRange(artifactRules.Select(x => new JenkinsArchiveArtifacts(GetArtifactPath(x))));
             if (producesTestResults)
             {
-                steps.Add(new Xunit(reportType, string.Join(",", artifactRules)));
+                steps.Add(new JenkinsXunit(reportType, string.Join(",", artifactRules)));
             }
 
-            return new Stage(target.Name, steps);
+            return new JenkinsStage(target.Name, steps);
         }
 
         private static string GetArtifactPath(string source)

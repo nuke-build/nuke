@@ -11,19 +11,19 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
     /// <summary>
     /// Represents a if else block, see <see href="https://www.jenkins.io/doc/book/pipeline/syntax/#flow-control">Flow Control</see>.
     /// </summary>
-    internal class IfElseScripted : Step
+    internal class JenkinsIfElseScripted : JenkinsStep
     {
         private readonly string _condition;
-        private readonly Step _ifTrue;
-        private readonly Step _ifFalse;
+        private readonly JenkinsStep _ifTrue;
+        private readonly JenkinsStep _ifFalse;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="IfElseScripted"/> class.
+        /// Initializes a new instance of <see cref="JenkinsIfElseScripted"/> class.
         /// </summary>
         /// <param name="condition"></param>
         /// <param name="ifTrue"></param>
         /// <param name="ifFalse"></param>
-        public IfElseScripted(string condition, Step ifTrue, Step ifFalse)
+        public JenkinsIfElseScripted(string condition, JenkinsStep ifTrue, JenkinsStep ifFalse)
         {
             _condition = condition;
             _ifTrue = ifTrue;
@@ -33,12 +33,12 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
         /// <inheritdoc />
         public override void Write(CustomFileWriter writer)
         {
-            using (writer.WriteBlock($"if ({_condition})"))
+            using (writer.WriteJenkinsPipelineBlock($"if ({_condition})"))
             {
                 _ifTrue.Write(writer);
             }
 
-            using (writer.WriteBlock("else"))
+            using (writer.WriteJenkinsPipelineBlock("else"))
             {
                 _ifFalse.Write(writer);
             }

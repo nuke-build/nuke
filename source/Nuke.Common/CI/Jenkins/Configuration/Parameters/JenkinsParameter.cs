@@ -10,15 +10,15 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Parameters
     /// <summary>
     /// Abstract class for a Jenkins parameter.
     /// </summary>
-    public abstract class Parameter : ConfigurationEntity
+    public abstract class JenkinsParameter : ConfigurationEntity
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="Parameter"/> class.
+        /// Initializes a new instance of <see cref="JenkinsParameter"/> class.
         /// </summary>
         /// <param name="name">Parameter name.</param>
         /// <param name="defaultValue">Default value.</param>
         /// <param name="description">Parameter description.</param>
-        protected Parameter(string name, string defaultValue, string description = "")
+        protected JenkinsParameter(string name, string defaultValue, string description = "")
         {
             Name = name;
             Description = description;

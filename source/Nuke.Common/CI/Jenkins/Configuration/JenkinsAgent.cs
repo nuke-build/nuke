@@ -12,14 +12,14 @@ namespace Nuke.Common.CI.Jenkins.Configuration
     /// Jenkins Agent, see <see href="https://www.jenkins.io/doc/book/pipeline/syntax/#agent">agent</see>.
     /// </summary>
     /// <remarks>One agent for the whole pipeline is supported yet.</remarks>
-    public class Agent : ConfigurationEntity
+    public class JenkinsAgent : ConfigurationEntity
     {
         private readonly string _label;
 
         /// <summary>
         /// Jenkins Agent will be set to "any"
         /// </summary>
-        public Agent()
+        public JenkinsAgent()
             : this("any")
         {
         }
@@ -28,7 +28,7 @@ namespace Nuke.Common.CI.Jenkins.Configuration
         ///     Jenkins Agent will be set to "label $value$".
         /// </summary>
         /// <param name="label">Agent label.</param>
-        public Agent(string label)
+        public JenkinsAgent(string label)
         {
             _label = label;
         }
@@ -42,7 +42,7 @@ namespace Nuke.Common.CI.Jenkins.Configuration
                 return;
             }
 
-            using (writer.WriteBlock("agent"))
+            using (writer.WriteJenkinsPipelineBlock("agent"))
             {
                 writer.WriteLine($"label {_label.SingleQuote()}");
             }

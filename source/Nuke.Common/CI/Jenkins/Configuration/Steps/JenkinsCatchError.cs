@@ -11,15 +11,15 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
     /// <summary>
     /// Represents a catch error block, see <see href="https://www.jenkins.io/doc/pipeline/steps/workflow-basic-steps/#catcherror-catch-error-and-set-build-result-to-failure">catchError</see>.
     /// </summary>
-    internal class CatchError : Step
+    internal class JenkinsCatchError : JenkinsStep
     {
-        private readonly Step _stepDefinition;
+        private readonly JenkinsStep _stepDefinition;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="CatchError"/> class.
+        /// Initializes a new instance of <see cref="JenkinsCatchError"/> class.
         /// </summary>
         /// <param name="stepDefinition"></param>
-        public CatchError(Step stepDefinition)
+        public JenkinsCatchError(JenkinsStep stepDefinition)
         {
             _stepDefinition = stepDefinition;
         }
@@ -39,7 +39,7 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
         {
             var buildResult = BuildResult.ToString().ToUpper().SingleQuote();
             var stageResult = StageResult.ToString().ToUpper().SingleQuote();
-            using (writer.WriteBlock($"catchError(buildResult: {buildResult}, stageResult:{stageResult})"))
+            using (writer.WriteJenkinsPipelineBlock($"catchError(buildResult: {buildResult}, stageResult:{stageResult})"))
             {
                 _stepDefinition.Write(writer);
             }

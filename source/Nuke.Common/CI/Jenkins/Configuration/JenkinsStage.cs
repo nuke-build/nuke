@@ -14,15 +14,15 @@ namespace Nuke.Common.CI.Jenkins.Configuration
     /// <summary>
     /// Represents a Jenkins stage, see <see href="https://www.jenkins.io/doc/pipeline/steps/pipeline-stage-step/#stage-stage">stage</see>
     /// </summary>
-    public class Stage : ConfigurationEntity
+    public class JenkinsStage : ConfigurationEntity
     {
         /// <summary>
-        /// Initializes a new instance of <see cref="Stage"/> class.
+        /// Initializes a new instance of <see cref="JenkinsStage"/> class.
         /// </summary>
         /// <param name="name">Stage name.</param>
         /// <param name="steps">List of steps.</param>
         /// <param name="condition">Stage condition.</param>
-        public Stage(string name, IEnumerable<Step> steps, StageCondition condition = null)
+        public JenkinsStage(string name, IEnumerable<JenkinsStep> steps, JenkinsStageCondition condition = null)
         {
             Name = name;
             Steps = steps;
@@ -32,7 +32,7 @@ namespace Nuke.Common.CI.Jenkins.Configuration
         /// <summary>
         /// Stage condition.
         /// </summary>
-        public StageCondition Condition { get; }
+        public JenkinsStageCondition Condition { get; }
 
         /// <summary>
         /// Stage name.
@@ -42,15 +42,15 @@ namespace Nuke.Common.CI.Jenkins.Configuration
         /// <summary>
         /// List of steps.
         /// </summary>
-        public IEnumerable<Step> Steps { get; }
+        public IEnumerable<JenkinsStep> Steps { get; }
 
         /// <inheritdoc />
         public override void Write(CustomFileWriter writer)
         {
-            using (writer.WriteBlock($"stage({Name.DoubleQuote()})"))
+            using (writer.WriteJenkinsPipelineBlock($"stage({Name.DoubleQuote()})"))
             {
                 Condition?.Write(writer);
-                using (writer.WriteBlock("steps"))
+                using (writer.WriteJenkinsPipelineBlock("steps"))
                 {
                     Steps.ForEach(x => x.Write(writer));
                 }

@@ -169,7 +169,7 @@ namespace Nuke.Common.Tests.CI
                         TargetsToBuild = new[] { nameof(Test) },
                         UseGitParameterWithBranch = true,
                         DefaultGitBranch = "develop",
-                        XUnitReportType = XUnitReportType.xUnitDotNet,
+                        XUnitReportType = JenkinsXUnitReportType.xUnitDotNet,
                         TargetsWithTestResults = new[] { nameof(Test) },
                         AgentName = "test_agent"
                     }

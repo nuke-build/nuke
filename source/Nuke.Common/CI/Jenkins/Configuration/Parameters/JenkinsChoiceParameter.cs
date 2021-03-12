@@ -11,12 +11,12 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Parameters
     /// <summary>
     /// Represents a choice jenkins parameter, see <see href="https://www.jenkins.io/doc/book/pipeline/syntax/#available-parameters">choice</see>.
     /// </summary>
-    public class ChoiceParameter : Parameter
+    public class JenkinsChoiceParameter : JenkinsParameter
     {
         private readonly string[] _choices;
 
         /// <inheritdoc />
-        public ChoiceParameter(string name, string defaultValue, string description, params string[] choices)
+        public JenkinsChoiceParameter(string name, string defaultValue, string description, params string[] choices)
             : base(name, defaultValue, description)
         {
             _choices = choices;

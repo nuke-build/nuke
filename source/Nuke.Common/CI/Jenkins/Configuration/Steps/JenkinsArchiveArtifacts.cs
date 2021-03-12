@@ -12,17 +12,17 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
     /// Used for the Jenkins Core functionality to <see href="https://www.jenkins.io/doc/pipeline/steps/core/#archiveartifacts-archive-the-artifacts">archive artifacts</see>.
     /// </summary>
     /// <remarks>Parameter FollowSymlinks is not supported yet.</remarks>
-    internal class ArchiveArtifacts : Step
+    internal class JenkinsArchiveArtifacts : JenkinsStep
     {
         private readonly string _includesPattern;
         private readonly string _excludesPattern;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="ArchiveArtifacts"/> class.
+        /// Initializes a new instance of <see cref="JenkinsArchiveArtifacts"/> class.
         /// </summary>
         /// <param name="includesPattern">Include pattern.</param>
         /// <param name="excludesPattern">Exclude pattern.</param>
-        public ArchiveArtifacts(string includesPattern, string excludesPattern = "")
+        public JenkinsArchiveArtifacts(string includesPattern, string excludesPattern = "")
 
         {
             _includesPattern = includesPattern;

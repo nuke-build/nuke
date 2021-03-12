@@ -11,19 +11,19 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
     /// <summary>
     /// Used to publish tests results with <see href="https://plugins.jenkins.io/xunit/">xUnit</see> plugin.
     /// </summary>
-    internal class Xunit : Step
+    internal class JenkinsXunit : JenkinsStep
     {
-        private readonly XUnitReportType _xUnitReportType;
+        private readonly JenkinsXUnitReportType _xUnitReportType;
         private readonly string _includesPattern;
         private readonly string _excludesPattern;
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Xunit"/> class.
+        /// Initializes a new instance of <see cref="JenkinsXunit"/> class.
         /// </summary>
         /// <param name="xUnitReportType">Report type.</param>
         /// <param name="includesPattern">Include pattern.</param>
         /// <param name="excludesPattern">Exclude pattern.</param>
-        public Xunit(XUnitReportType xUnitReportType, string includesPattern, string excludesPattern = "")
+        public JenkinsXunit(JenkinsXUnitReportType xUnitReportType, string includesPattern, string excludesPattern = "")
         {
             _xUnitReportType = xUnitReportType;
             _includesPattern = includesPattern;

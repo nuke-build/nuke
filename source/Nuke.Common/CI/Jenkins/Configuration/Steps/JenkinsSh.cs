@@ -11,10 +11,10 @@ namespace Nuke.Common.CI.Jenkins.Configuration.Steps
     /// <summary>
     /// Calls a shell script, see <see href="https://www.jenkins.io/doc/pipeline/steps/workflow-durable-task-step/#sh-shell-script">sh</see>.
     /// </summary>
-    internal class Sh : Batch
+    internal class JenkinsSh : JenkinsBatch
     {
         /// <inheritdoc />
-        public Sh(string batchScript, bool returnStdOutput = false, bool returnExitCode = false)
+        public JenkinsSh(string batchScript, bool returnStdOutput = false, bool returnExitCode = false)
             : base(batchScript, returnStdOutput, returnExitCode)
         {
         }
