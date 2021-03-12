@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,11 +12,11 @@ using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.CI.Jenkins.Configuration.Steps;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using VerifyXunit;
-using VerifyTests;
 using Xunit;
 
 namespace Nuke.Common.Tests.CI
@@ -160,6 +160,20 @@ namespace Nuke.Common.Tests.CI
                         OnCronSchedule = "* 0 * * *",
                     }
                 );
+
+                yield return
+                (
+                    null,
+                    new TestJenkinsAttribute("JenkinsTestFile")
+                    {
+                        TargetsToBuild = new[] { nameof(Test) },
+                        UseGitParameterWithBranch = true,
+                        DefaultGitBranch = "develop",
+                        XUnitReportType = XUnitReportType.xUnitDotNet,
+                        TargetsWithTestResults = new[] { nameof(Test) },
+                        AgentName = "test_agent"
+                    }
+                 );
             }
 
             public AbsolutePath SourceDirectory => RootDirectory / "src";
