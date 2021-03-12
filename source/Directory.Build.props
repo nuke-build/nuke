@@ -13,7 +13,7 @@
 
   <PropertyGroup>
     <Description>Cross-platform build automation system</Description>
-    <Authors>Matthias Koch, Sebastian Karasek</Authors>
+    <Authors>Matthias Koch, Ulrich Buchgraber, Sebastian Karasek</Authors>
     <Copyright>Copyright $([System.DateTime]::Now.Year) Maintainers of NUKE</Copyright>
     <PackageTags>build automation continuous-integration tools orchestration</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
