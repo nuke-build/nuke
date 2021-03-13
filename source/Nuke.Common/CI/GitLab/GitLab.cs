@@ -49,7 +49,7 @@ namespace Nuke.Common.CI.GitLab
         }
 
         internal void EndSection(string text)
-        {            
+        {
             var sectionId = GetSectionId(text);
             var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             Console.WriteLine($"{SectionStartSequence}section_end:{unixTimestamp}:{sectionId}{SectionResetSequence}");
