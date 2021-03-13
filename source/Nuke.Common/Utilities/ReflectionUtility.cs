@@ -146,7 +146,8 @@ namespace Nuke.Common.Utilities
         public static IEnumerable<MemberInfo> GetAllMembers(
             this Type buildType,
             Func<MemberInfo, bool> filter,
-            BindingFlags bindingFlags)
+            BindingFlags bindingFlags,
+            bool allowAmbiguity)
         {
             var interfaceMembers = buildType.GetInterfaces()
                 .SelectMany(x => x.GetMembers(bindingFlags))
@@ -163,11 +164,11 @@ namespace Nuke.Common.Utilities
                 var memberType = interfacePropertiesByName.First().MemberType;
                 var classMember = classMembers.GetValueOrDefault(memberName);
 
-                ControlFlow.Assert(interfacePropertiesByName.Count() == 1 || classMember != null,
+                ControlFlow.Assert(allowAmbiguity || interfacePropertiesByName.Count() == 1 || classMember != null,
                     new[] { $"{memberType} '{memberName}' must be implemented explicitly because it is inherited from multiple interfaces:" }
                         .Concat(interfacePropertiesByName.Select(x => $" - {x.DeclaringType.NotNull().Name}"))
                         .JoinNewLine());
-                ControlFlow.Assert(classMember == null || classMember.IsPublic(),
+                ControlFlow.Assert(allowAmbiguity || classMember == null || classMember.IsPublic(),
                     new[] { $"{memberType} '{memberName}' must be marked public to override inherited member from:" }
                         .Concat(interfacePropertiesByName.Select(x => $" - {x.DeclaringType.NotNull().Name}"))
                         .JoinNewLine());

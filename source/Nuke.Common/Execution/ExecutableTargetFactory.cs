@@ -93,7 +93,8 @@ namespace Nuke.Common.Execution
             // TODO: static targets?
             return buildType.GetAllMembers(
                 x => x is PropertyInfo property && property.PropertyType == typeof(Target),
-                ReflectionUtility.Instance).Cast<PropertyInfo>();
+                bindingFlags: ReflectionUtility.Instance,
+                allowAmbiguity: false).Cast<PropertyInfo>();
         }
     }
 }
