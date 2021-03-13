@@ -35,31 +35,32 @@ project {
     buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, ReportDuplicates, ReportIssues, ReportCoverage)
 
     params {
+        checkbox (
+            "env.AutoStash",
+            label = "AutoStash",
+            value = "True",
+            checked = "True",
+            unchecked = "False",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.AzurePipelinesAccessToken",
+            label = "AzurePipelinesAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.CodecovToken",
+            label = "CodecovToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
         select (
-            "env.Verbosity",
-            label = "Verbosity",
-            description = "Logging verbosity during build execution. Default is 'Normal'.",
-            value = "Normal",
-            options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.SlackWebhook",
-            label = "SlackWebhook",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.GitterAuthToken",
-            label = "GitterAuthToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.GitHubToken",
-            label = "GitHubToken",
-            value = "",
+            "env.Configuration",
+            label = "Configuration",
+            value = "Release",
+            options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
         text (
-            "env.PublicNuGetApiKey",
-            label = "PublicNuGetApiKey",
+            "env.EnterpriseAccessToken",
+            label = "EnterpriseAccessToken",
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
@@ -69,44 +70,14 @@ project {
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
-        text (
-            "env.EnterpriseAccessToken",
-            label = "EnterpriseAccessToken",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        checkbox (
-            "env.AutoStash",
-            label = "AutoStash",
-            value = "True",
-            checked = "True",
-            unchecked = "False",
-            display = ParameterDisplay.NORMAL)
-        checkbox (
-            "env.UseHttps",
-            label = "UseHttps",
-            value = "False",
-            checked = "True",
-            unchecked = "False",
-            display = ParameterDisplay.NORMAL)
         password (
-            "env.TwitterConsumerKey",
-            label = "TwitterConsumerKey",
+            "env.GitHubToken",
+            label = "GitHubToken",
             value = "",
             display = ParameterDisplay.NORMAL)
         password (
-            "env.TwitterConsumerSecret",
-            label = "TwitterConsumerSecret",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.TwitterAccessToken",
-            label = "TwitterAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.TwitterAccessTokenSecret",
-            label = "TwitterAccessTokenSecret",
+            "env.GitterAuthToken",
+            label = "GitterAuthToken",
             value = "",
             display = ParameterDisplay.NORMAL)
         checkbox (
@@ -117,42 +88,11 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
-        select (
-            "env.Configuration",
-            label = "Configuration",
-            value = "Release",
-            options = listOf("Debug" to "Debug", "Release" to "Release"),
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.CodecovToken",
-            label = "CodecovToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
         text (
-            "env.NuGetSource",
-            label = "NuGetSource",
-            value = "https://api.nuget.org/v3/index.json",
+            "env.PublicNuGetApiKey",
+            label = "PublicNuGetApiKey",
+            value = "",
             allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.NuGetApiKey",
-            label = "NuGetApiKey",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.SlackAppAccessToken",
-            label = "SlackAppAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.SlackUserAccessToken",
-            label = "SlackUserAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.AzurePipelinesAccessToken",
-            label = "AzurePipelinesAccessToken",
-            value = "",
             display = ParameterDisplay.NORMAL)
         password (
             "env.SignPathApiToken",
@@ -166,16 +106,65 @@ project {
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
+            "env.SignPathPolicySlug",
+            label = "SignPathPolicySlug",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
             "env.SignPathProjectSlug",
             label = "SignPathProjectSlug",
             value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathPolicySlug",
-            label = "SignPathPolicySlug",
+        password (
+            "env.SlackAppAccessToken",
+            label = "SlackAppAccessToken",
             value = "",
-            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.SlackUserAccessToken",
+            label = "SlackUserAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.SlackWebhook",
+            label = "SlackWebhook",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterAccessToken",
+            label = "TwitterAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterAccessTokenSecret",
+            label = "TwitterAccessTokenSecret",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterConsumerKey",
+            label = "TwitterConsumerKey",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterConsumerSecret",
+            label = "TwitterConsumerSecret",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        checkbox (
+            "env.UseHttps",
+            label = "UseHttps",
+            value = "False",
+            checked = "True",
+            unchecked = "False",
+            display = ParameterDisplay.NORMAL)
+        select (
+            "env.Verbosity",
+            label = "Verbosity",
+            description = "Logging verbosity during build execution. Default is 'Normal'.",
+            value = "Normal",
+            options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
             display = ParameterDisplay.NORMAL)
         text(
             "teamcity.runner.commandline.stdstreams.encoding",

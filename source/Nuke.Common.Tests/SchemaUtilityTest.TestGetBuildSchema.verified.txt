@@ -9,12 +9,6 @@
         "ComponentParam1": {
           "type": "string"
         },
-        "ComponentParam2": {
-          "type": "string"
-        },
-        "ComponentParam3": {
-          "type": "string"
-        },
         "Continue": {
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"

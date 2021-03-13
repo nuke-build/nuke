@@ -71,13 +71,6 @@
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
         },
-        "NuGetApiKey": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
-        "NuGetSource": {
-          "type": "string"
-        },
         "Plan": {
           "type": "boolean",
           "description": "Shows the execution plan (HTML)"
