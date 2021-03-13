@@ -45,10 +45,13 @@ namespace Nuke.Common.ProjectModel
         }
 
         public override bool List { get; set; }
+        public bool GenerateProjects { get; set; }
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            return ProjectModelTasks.ParseSolution(GetSolutionFile(member));
+            var deserializer = typeof(SolutionSerializer).GetMethod(nameof(SolutionSerializer.DeserializeFromFile)).NotNull()
+                .MakeGenericMethod(member.GetMemberType());
+            return deserializer.Invoke(obj: null, new object[] { GetSolutionFile(member) });
         }
 
         // TODO: allow wildcard matching? [Solution("nuke-*.sln")] -- no globbing?

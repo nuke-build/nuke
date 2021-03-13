@@ -16,16 +16,18 @@ namespace Nuke.Common.ProjectModel
 {
     internal static class SolutionSerializer
     {
-        public static Solution Deserialize(string solutionFile)
+        public static T DeserializeFromFile<T>(string solutionFile)
+            where T : Solution, new()
         {
-            return Deserialize(TextTasks.ReadAllLines(solutionFile), solutionFile);
+            return DeserializeFromContent<T>(TextTasks.ReadAllLines(solutionFile), solutionFile);
         }
 
-        public static Solution Deserialize(string[] content, string solutionFile = null)
+        public static T DeserializeFromContent<T>(string[] content, string solutionFile = null)
+            where T : Solution, new()
         {
             var trimmedContent = content.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
 
-            var solution = new Solution
+            var solution = new T
                            {
                                Path = (AbsolutePath) solutionFile,
                                Header = content.TakeWhile(x => !x.StartsWith("Project")).ToArray(),

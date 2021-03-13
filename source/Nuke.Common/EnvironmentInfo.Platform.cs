@@ -20,7 +20,7 @@ namespace Nuke.Common
         OSX
     }
 
-    public static partial class EnvironmentInfo
+    partial class EnvironmentInfo
     {
         /// <summary>
         /// Returns whether the operating system is x64 or not.

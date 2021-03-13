@@ -1,0 +1,28 @@
+using Nuke.Common.ProjectModel;
+
+internal class Solution : Nuke.Common.ProjectModel.Solution
+{
+    private Solution SolutionFolder => this;
+    public Project _build => SolutionFolder.GetProject("_build");
+    public Project NukeCommon => SolutionFolder.GetProject("Nuke.Common");
+    public Project NukeCommonTests => SolutionFolder.GetProject("Nuke.Common.Tests");
+    public Project NukeMSBuildLocator => SolutionFolder.GetProject("Nuke.MSBuildLocator");
+    public Project NukeCodeGeneration => SolutionFolder.GetProject("Nuke.CodeGeneration");
+    public Project NukeGlobalTool => SolutionFolder.GetProject("Nuke.GlobalTool");
+    public Project NukeGlobalToolTests => SolutionFolder.GetProject("Nuke.GlobalTool.Tests");
+    public Project NukeMSBuildTasks => SolutionFolder.GetProject("Nuke.MSBuildTasks");
+    public Project NukeComponents => SolutionFolder.GetProject("Nuke.Components");
+    public Project NukeEnterprise => SolutionFolder.GetProject("Nuke.Enterprise");
+    public Project NukeSourceGenerators => SolutionFolder.GetProject("Nuke.SourceGenerators");
+    public Project NukeSourceGeneratorsTests => SolutionFolder.GetProject("Nuke.SourceGenerators.Tests");
+    public SolutionFolder_misc misc => new(SolutionFolder.GetSolutionFolder("misc"));
+    internal class SolutionFolder_misc
+    {
+        private SolutionFolder SolutionFolder
+        {
+            get;
+        }
+
+        public SolutionFolder_misc(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;
+    }
+}

@@ -45,6 +45,7 @@ namespace Nuke.Common
     /// </example>
     [PublicAPI]
     // Before logo
+    [UpdateNotificationAttribute(Priority = float.MaxValue)]
     [ArgumentsFromParametersFile(Priority = 150)]
     [ArgumentsFromCommitMessage(Priority = 150)]
     [InjectParameterValues(Priority = 100)]
@@ -162,7 +163,11 @@ namespace Nuke.Common
         internal IEnumerable<string> TargetNames => ExecutableTargetFactory.GetTargetProperties(GetType()).Select(x => x.GetDisplayShortName());
         internal IEnumerable<string> HostNames => Host.AvailableTypes.Select(x => x.Name);
 
-        public bool IsSuccessful => ExecutionPlan.All(x => x.Status != ExecutionStatus.Failed && x.Status != ExecutionStatus.Aborted);
+        public bool IsSuccessful => ExecutionPlan.All(x => x.Status is
+            ExecutionStatus.Succeeded or
+            ExecutionStatus.Skipped or
+            ExecutionStatus.Collective);
+
         public bool IsFailing => !IsSuccessful;
         public bool IsFinished => !ScheduledTargets.Concat(RunningTargets).Any();
 
