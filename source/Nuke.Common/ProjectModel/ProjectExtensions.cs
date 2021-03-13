@@ -56,16 +56,19 @@ namespace Nuke.Common.ProjectModel
             return project.GetItemMetadata(itemGroupName, metadataName).Select(Convert<T>);
         }
 
+        [CanBeNull]
         public static IReadOnlyCollection<string> GetTargetFrameworks(this Project project)
         {
             return project.GetSplittedPropertyValue("TargetFramework", "TargetFrameworks");
         }
 
+        [CanBeNull]
         public static IReadOnlyCollection<string> GetRuntimeIdentifiers(this Project project)
         {
             return project.GetSplittedPropertyValue("RuntimeIdentifier", "RuntimeIdentifiers");
         }
 
+        [CanBeNull]
         private static IReadOnlyCollection<string> GetSplittedPropertyValue(
             this Project project,
             params string[] names)
@@ -78,7 +81,7 @@ namespace Nuke.Common.ProjectModel
                     return property.EvaluatedValue.Split(';');
             }
 
-            return new string[0];
+            return null;
         }
 
         public static string GetOutputType(this Project project)
