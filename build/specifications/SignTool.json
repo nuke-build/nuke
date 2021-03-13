@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
   "references": [
-    "https://raw.githubusercontent.com/dotnet/docs/master/docs/framework/tools/signtool-exe.md"
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/framework/tools/signtool-exe.md"
   ],
   "name": "SignTool",
   "officialUrl": "https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe",
