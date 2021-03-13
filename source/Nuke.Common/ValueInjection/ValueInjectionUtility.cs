@@ -89,16 +89,19 @@ namespace Nuke.Common.ValueInjection
             // TODO: check duplicated names
             return GetInjectionMembers(type)
                 .Where(x => x.Attribute is ParameterAttribute attribute && (includeUnlisted || attribute.List))
-                .Select(x => x.Member).ToList();
+                .Select(x => x.Member)
+                .OrderBy(ParameterService.GetParameterMemberName).ToList();
         }
 
         public static IReadOnlyCollection<(MemberInfo Member, ValueInjectionAttributeBase Attribute)> GetInjectionMembers(Type type)
         {
             return type
-                .GetMembers(ReflectionUtility.All)
-                .Concat(type.GetInterfaces().SelectMany(x => x.GetMembers(ReflectionUtility.All)))
-                .Select(x => (Member: x, Attribute: x.GetCustomAttribute<ValueInjectionAttributeBase>()))
-                .Where(x => x.Attribute != null).ToList();
+                .GetAllMembers(
+                    x => x.HasCustomAttribute<ValueInjectionAttributeBase>(),
+                    bindingFlags: ReflectionUtility.All,
+                    allowAmbiguity: true)
+                .OrderBy(x => x.Name)
+                .Select(x => (Member: x, Attribute: x.GetCustomAttribute<ValueInjectionAttributeBase>())).ToList();
         }
     }
 }
