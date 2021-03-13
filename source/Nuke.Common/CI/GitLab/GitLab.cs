@@ -6,6 +6,8 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+
+using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitLab
@@ -24,6 +26,12 @@ namespace Nuke.Common.CI.GitLab
         {
         }
 
+        public string SectionStartSequence { get; } = "\u001b[0K";
+
+        public string SectionResetSequence { get; } = "\u001b[0K\r";
+
+        protected internal override OutputSink OutputSink => new GitLabOutputSink(this);
+
         string IBuildServer.Branch => CommitRefName;
         string IBuildServer.Commit => CommitSha;
 
@@ -31,6 +39,26 @@ namespace Nuke.Common.CI.GitLab
         /// Mark that job is executed in CI environment.
         /// </summary>
         public bool Ci => EnvironmentInfo.GetVariable<bool>("CI");
+
+        //// https://docs.gitlab.com/ee/ci/jobs/#expand-and-collapse-job-log-sections
+        internal void Section(string text)
+        {
+            var sectionId = GetSectionId(text);
+            var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            Console.WriteLine($"{SectionStartSequence}section_start:{unixTimestamp}:{sectionId}{SectionResetSequence}{text}");
+        }
+
+        internal void EndSection(string text)
+        {            
+            var sectionId = GetSectionId(text);
+            var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            Console.WriteLine($"{SectionStartSequence}section_end:{unixTimestamp}:{sectionId}{SectionResetSequence}");
+        }
+
+        private string GetSectionId(string text)
+        {
+            return text.GetMD5Hash();
+        }
 
         /// <summary>
         /// The branch or tag name for which project is built.
