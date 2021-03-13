@@ -55,7 +55,10 @@ partial class Build
 
     GitVersion GitVersion => From<IHazGitVersion>().Versioning;
     GitRepository GitRepository => From<IHazGitRepository>().GitRepository;
-    Solution Solution => From<IHazSolution>().Solution;
+
+    [Solution(GenerateProjects = true)]  readonly Solution Solution;
+    Nuke.Common.ProjectModel.Solution IHazSolution.Solution => Solution;
+
     IHazTwitterCredentials TwitterCredentials => From<IHazTwitterCredentials>();
 
     AbsolutePath OutputDirectory => RootDirectory / "output";
@@ -76,11 +79,8 @@ partial class Build
             EnsureCleanDirectory(OutputDirectory);
         });
 
-    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool");
-    Project MSBuildTasksProject => Solution.GetProject("Nuke.MSBuildTasks");
-
     IEnumerable<(Project Project, string Framework)> ICompile.PublishConfigurations =>
-        from project in new[] { GlobalToolProject, MSBuildTasksProject }
+        from project in new[] { Solution.Nuke_GlobalTool, Solution.Nuke_MSBuildTasks }
         from framework in project.GetTargetFrameworks()
         select (project, framework);
 
@@ -129,8 +129,8 @@ partial class Build
         .DependsOn<IPack>()
         .Executes(() =>
         {
-            SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
-            DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
+            SuppressErrors(() => DotNet($"tool uninstall -g {Solution.Nuke_GlobalTool.Name}"));
+            DotNet($"tool install -g {Solution.Nuke_GlobalTool.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
         });
 
     T From<T>()
