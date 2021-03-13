@@ -39,8 +39,7 @@ namespace Nuke.Common.Execution
                         EnumValues = ParameterService.GetParameterValueSet(x, build)?.Select(x => x.Text),
                         IsRequired = x.HasCustomAttribute<RequiredAttribute>(),
                         IsSecret = x.HasCustomAttribute<SecretAttribute>()
-                    })
-                .OrderBy(x => x.Name).ToList();
+                    }).ToList();
 
             string GetJsonType(Type type)
                 => type.IsCollectionLike()

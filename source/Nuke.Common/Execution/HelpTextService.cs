@@ -41,8 +41,7 @@ namespace Nuke.Common.Execution
             var defaultTarget = build.ExecutableTargets.SingleOrDefault(x => x.IsDefault);
             var builder = new StringBuilder();
 
-            var parameters = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
-                .OrderBy(x => x.Name).ToList();
+            var parameters = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false);
             var padRightParameter = Math.Max(parameters.Max(x => x.Name.Length), val2: 16);
 
             void PrintParameter(MemberInfo parameter)
