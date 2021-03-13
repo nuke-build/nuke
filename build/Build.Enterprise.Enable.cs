@@ -27,7 +27,7 @@ partial class Build
         {
             var accessToken = EnvironmentInfo.GetParameter<string>(nameof(EnterpriseAccessToken));
             var enterpriseDirectory = ((Build) build).ExternalRepositoriesDirectory / "enterprise";
-            if (accessToken == null)
+            if (accessToken.IsNullOrEmpty())
             {
                 FileSystemTasks.EnsureExistingDirectory(enterpriseDirectory);
                 File.WriteAllText(
