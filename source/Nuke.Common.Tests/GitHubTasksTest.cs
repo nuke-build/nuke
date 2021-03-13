@@ -20,6 +20,8 @@ namespace Nuke.Common.Tests
         {
             var rootDirectory = (AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / "..";
             var repository = GitRepository.FromLocalDirectory(rootDirectory).NotNull();
+            if (!repository.IsGitHubRepository())
+                return;
 
             var rawUrl = $"https://raw.githubusercontent.com/{repository.Identifier}/{repository.Branch}";
             var blobUrl = $"https://github.com/{repository.Identifier}/blob/{repository.Branch}";

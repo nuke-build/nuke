@@ -73,8 +73,6 @@ namespace Nuke.Common.Tests
         {
             AssertProperty(instance, property);
             Assert.True(instance.Ci);
-            Assert.True(instance.GitLabCi);
-            Assert.True(instance.Server);
         }
 
         public static IEnumerable<object[]> Properties(Type type)
