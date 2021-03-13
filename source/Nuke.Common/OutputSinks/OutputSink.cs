@@ -77,11 +77,11 @@ namespace Nuke.Common.OutputSinks
                 WriteFailedBuild();
 
             bool HasHighUsage()
-                => // global tool
+                => // interface implementations
                    build.GetType().GetInterfaces().Length > 1 ||
                    // configuration generation
                    build.GetType().GetCustomAttributes<ConfigurationAttributeBase>().Any() ||
-                   // interface implementations
+                   // global tool
                    NukeBuild.BuildProjectFile == null;
 
             T TryGetValue<T>(Func<T> func)
