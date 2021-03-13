@@ -33,5 +33,11 @@ namespace Nuke.Common.Utilities
         {
             return s_unicodeRegex.Replace(str, m => ((char) int.Parse(m.Groups["Value"].Value, NumberStyles.HexNumber)).ToString());
         }
+
+        [Pure]
+        public static string ReplaceKnownWords(this string str)
+        {
+            return Constants.KnownWords.Aggregate(str, (s, r) => s.ReplaceRegex(r, _ => r, RegexOptions.IgnoreCase));
+        }
     }
 }
