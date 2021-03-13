@@ -15,14 +15,16 @@
 // ------------------------------------------------------------------------------
 
 job("Name") {
+    volumeSize = 10.gb
+
     git {
         depth = UNLIMITED_DEPTH
     }
 
     container("mcr.microsoft.com/dotnet/sdk:5.0") {
         resources {
-            cpu = 2048
-            memory = 4096
+            cpu = 1.cpu
+            memory = 2000.mb
         }
         shellScript {
             content = "./build.sh Test"
@@ -43,6 +45,10 @@ job("Name") {
                 -"exclude-path"
             }
         }
-        cron("* 0 * * *")
+        schedule { cron("* 0 * * *") }
+    }
+
+    failOn {
+        timeOut { timeOutInMinutes = 15 }
     }
 }

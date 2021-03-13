@@ -148,8 +148,9 @@ namespace Nuke.Common.Tests.CI
                     new TestSpaceAutomationAttribute("Name", "mcr.microsoft.com/dotnet/sdk:5.0")
                     {
                         InvokedTargets = new[] { nameof(Test) },
-                        ResourcesCpu = 2048,
-                        ResourcesMemory = 4096,
+                        VolumeSize = "10.gb",
+                        ResourcesCpu = "1.cpu",
+                        ResourcesMemory = "2000.mb",
                         OnPush = true,
                         OnPushBranchIncludes = new[] { "refs/heads/include" },
                         OnPushBranchExcludes = new[] { "refs/heads/exclude" },
@@ -158,6 +159,7 @@ namespace Nuke.Common.Tests.CI
                         OnPushPathIncludes = new[] { "include-path" },
                         OnPushPathExcludes = new[] { "exclude-path" },
                         OnCronSchedule = "* 0 * * *",
+                        TimeoutInMinutes = 15
                     }
                 );
             }

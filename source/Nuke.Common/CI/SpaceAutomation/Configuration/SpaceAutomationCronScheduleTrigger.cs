@@ -12,7 +12,7 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
-            writer.WriteLine($"cron({CronExpression.DoubleQuote()})");
+            writer.WriteLine($"schedule {{ cron({CronExpression.DoubleQuote()}) }}");
         }
     }
 }
