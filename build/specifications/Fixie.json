@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://raw.githubusercontent.com/fixie/fixie/main/src/Fixie.Console/Program.cs"
+  ],
+  "name": "Fixie",
+  "officialUrl": "https://fixie.github.io/",
+  "help": "Fixie is a .NET modern test framework similar to NUnit and xUnit, but with an emphasis on low-ceremony defaults and flexible customization.",
+  "packageId": "fixie.console",
+  "packageExecutable": "dotnet-fixie.dll",
+  "tasks": [
+    {
+      "help": "The <c>dotnet fixie</c> command is used to execute Fixie unit tests in a given project.",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "--configuration {value}",
+            "help": "The configuration under which to build. When this option is omitted, the default configuration is `Debug`."
+          },
+          {
+            "name": "NoBuild",
+            "type": "bool",
+            "format": "--no-build",
+            "help": "Skip building the test project prior to running it."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "--framework {value}",
+            "help": "Only run test assemblies targeting a specific framework."
+          },
+          {
+            "name": "Report",
+            "type": "string",
+            "format": "--report {value}",
+            "help": "Write test results to the specified path, using the xUnit XML format."
+          },
+          {
+            "name": "CustomArguments",
+            "type": "string",
+            "format": "-- {value}",
+            "help": "Arbitrary arguments made available to custom discovery/execution classes."
+          }
+        ]
+      }
+    }
+  ]
+}
