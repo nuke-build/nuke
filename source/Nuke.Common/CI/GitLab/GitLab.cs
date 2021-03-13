@@ -50,7 +50,7 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The commit tag name. Present only when building tags.
         /// </summary>
-        public string CommitTag => EnvironmentInfo.GetVariable<string>("CI_COMMIT_TAG");
+        [CanBeNull] public string CommitTag => EnvironmentInfo.GetVariable<string>("CI_COMMIT_TAG");
 
         /// <summary>
         /// The path to CI config file. Defaults to <c>.gitlab-ci.yml</c>.
@@ -58,34 +58,14 @@ namespace Nuke.Common.CI.GitLab
         public string ConfigPath => EnvironmentInfo.GetVariable<string>("CI_CONFIG_PATH");
 
         /// <summary>
-        /// Whether <a href="https://docs.gitlab.com/ce/ci/variables/README.html#debug-tracing">debug tracing</a> is enabled.
-        /// </summary>
-        public bool DebugTrace => EnvironmentInfo.GetVariable<bool>("CI_DEBUG_TRACE");
-
-        /// <summary>
         /// Marks that the job is executed in a disposable environment (something that is created only for this job and disposed of/destroyed after the execution - all executors except <c>shell</c> and <c>ssh</c>). If the environment is disposable, it is set to true, otherwise it is not defined at all.
         /// </summary>
         public bool DisposableEnvironment => EnvironmentInfo.GetVariable<bool>("CI_DISPOSABLE_ENVIRONMENT");
 
         /// <summary>
-        /// The name of the environment for this job.
-        /// </summary>
-        public string EnvironmentName => EnvironmentInfo.GetVariable<string>("CI_ENVIRONMENT_NAME");
-
-        /// <summary>
-        /// A simplified version of the environment name, suitable for inclusion in DNS, URLs, Kubernetes labels, etc.
-        /// </summary>
-        public string EnvironmentSlug => EnvironmentInfo.GetVariable<string>("CI_ENVIRONMENT_SLUG");
-
-        /// <summary>
-        /// The URL of the environment for this job.
-        /// </summary>
-        public string EnvironmentUrl => EnvironmentInfo.GetVariable<string>("CI_ENVIRONMENT_URL");
-
-        /// <summary>
         /// The unique id of the current job that GitLab CI uses internally.
         /// </summary>
-        public string JobId => EnvironmentInfo.GetVariable<string>("CI_JOB_ID");
+        public long JobId => EnvironmentInfo.GetVariable<long>("CI_JOB_ID");
 
         /// <summary>
         /// The flag to indicate that job was manually started.
@@ -120,7 +100,7 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The unique id of runner being used.
         /// </summary>
-        public string RunnerId => EnvironmentInfo.GetVariable<string>("CI_RUNNER_ID");
+        public long RunnerId => EnvironmentInfo.GetVariable<long>("CI_RUNNER_ID");
 
         /// <summary>
         /// The defined runner tags.
@@ -130,7 +110,7 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The unique id of the current pipeline that GitLab CI uses internally.
         /// </summary>
-        public string PipelineId => EnvironmentInfo.GetVariable<string>("CI_PIPELINE_ID");
+        public long PipelineId => EnvironmentInfo.GetVariable<long>("CI_PIPELINE_ID");
 
         /// <summary>
         /// The flag to indicate that job was <a href="https://docs.gitlab.com/ce/ci/triggers/README.html">triggered</a>.
@@ -145,12 +125,12 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The full path where the repository is cloned and where the job is run.
         /// </summary>
-        public string ProjectDir => EnvironmentInfo.GetVariable<string>("CI_PROJECT_DIR");
+        public string ProjectDirectory => EnvironmentInfo.GetVariable<string>("CI_PROJECT_DIR");
 
         /// <summary>
         /// The unique id of the current project that GitLab CI uses internally.
         /// </summary>
-        public string ProjectId => EnvironmentInfo.GetVariable<string>("CI_PROJECT_ID");
+        public long ProjectId => EnvironmentInfo.GetVariable<long>("CI_PROJECT_ID");
 
         /// <summary>
         /// The project name that is currently being built (actually it is project folder name).
@@ -203,11 +183,6 @@ namespace Nuke.Common.CI.GitLab
         public string RegistryUser => EnvironmentInfo.GetVariable<string>("CI_REGISTRY_USER");
 
         /// <summary>
-        /// Mark that job is executed in CI environment.
-        /// </summary>
-        public bool Server => EnvironmentInfo.GetVariable<bool>("CI_SERVER");
-
-        /// <summary>
         /// The name of CI server that is used to coordinate jobs.
         /// </summary>
         public string ServerName => EnvironmentInfo.GetVariable<string>("CI_SERVER_NAME");
@@ -223,29 +198,9 @@ namespace Nuke.Common.CI.GitLab
         public string ServerVersion => EnvironmentInfo.GetVariable<string>("CI_SERVER_VERSION");
 
         /// <summary>
-        /// Marks that the job is executed in a shared environment (something that is persisted across CI invocations like <c>shell</c> or <c>ssh</c> executor). If the environment is shared, it is set to true, otherwise it is not defined at all.
-        /// </summary>
-        public bool SharedEnvironment => EnvironmentInfo.GetVariable<bool>("CI_SHARED_ENVIRONMENT");
-
-        /// <summary>
-        /// Number of attempts to download artifacts running a job.
-        /// </summary>
-        public int ArtifactDownloadAttempts => EnvironmentInfo.GetVariable<int>("ARTIFACT_DOWNLOAD_ATTEMPTS");
-
-        /// <summary>
-        /// Number of attempts to fetch sources running a job.
-        /// </summary>
-        public int GetSourcesAttempts => EnvironmentInfo.GetVariable<int>("GET_SOURCES_ATTEMPTS");
-
-        /// <summary>
-        /// Mark that job is executed in GitLab CI environment.
-        /// </summary>
-        public bool GitLabCi => EnvironmentInfo.GetVariable<bool>("GITLAB_CI");
-
-        /// <summary>
         /// The id of the user who started the job.
         /// </summary>
-        public string GitLabUserId => EnvironmentInfo.GetVariable<string>("GITLAB_USER_ID");
+        public long GitLabUserId => EnvironmentInfo.GetVariable<long>("GITLAB_USER_ID");
 
         /// <summary>
         /// The email of the user who started the job.
@@ -261,10 +216,5 @@ namespace Nuke.Common.CI.GitLab
         /// The real name of the user who started the job.
         /// </summary>
         public string GitLabUserName => EnvironmentInfo.GetVariable<string>("GITLAB_USER_NAME");
-
-        /// <summary>
-        /// Number of attempts to restore the cache running a job.
-        /// </summary>
-        public int RestoreCacheAttempts => EnvironmentInfo.GetVariable<int>("RESTORE_CACHE_ATTEMPTS");
     }
 }
