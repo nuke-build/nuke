@@ -36,19 +36,12 @@ project {
     buildTypesOrder = arrayListOf(Restore, Compile, Test_P1T2, Test_P2T2, Test, Coverage, Pack, Publish, Announce)
 
     params {
-        select (
-            "env.Verbosity",
-            label = "Verbosity",
-            description = "Logging verbosity during build execution. Default is 'Normal'.",
-            value = "Normal",
-            options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
-            display = ParameterDisplay.NORMAL)
-        checkbox (
-            "env.IgnoreFailedSources",
-            label = "IgnoreFailedSources",
-            value = "False",
-            checked = "True",
-            unchecked = "False",
+        text (
+            "env.AzurePipelinesSystemAccessToken",
+            label = "AzurePipelinesSystemAccessToken",
+            description = "Azure Pipelines System Access Token",
+            value = "",
+            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         select (
             "env.Configuration",
@@ -56,18 +49,6 @@ project {
             description = "Configuration for compilation",
             value = "Debug",
             options = listOf("Debug" to "Debug", "Release" to "Release"),
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.StringArray",
-            label = "StringArray",
-            value = "first second",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.IntegerArray",
-            label = "IntegerArray",
-            value = "1 2",
-            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         select (
             "env.ConfigurationArray",
@@ -78,6 +59,26 @@ project {
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
         text (
+            "env.GitHubToken",
+            label = "GitHubToken",
+            description = "GitHub Token",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        checkbox (
+            "env.IgnoreFailedSources",
+            label = "IgnoreFailedSources",
+            value = "False",
+            checked = "True",
+            unchecked = "False",
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.IntegerArray",
+            label = "IntegerArray",
+            value = "1 2",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
             "env.Source",
             label = "Source",
             description = "NuGet Source for Packages",
@@ -85,18 +86,17 @@ project {
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
-            "env.GitHubToken",
-            label = "GitHubToken",
-            description = "GitHub Token",
-            value = "",
+            "env.StringArray",
+            label = "StringArray",
+            value = "first second",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
-        text (
-            "env.AzurePipelinesSystemAccessToken",
-            label = "AzurePipelinesSystemAccessToken",
-            description = "Azure Pipelines System Access Token",
-            value = "",
-            allowEmpty = true,
+        select (
+            "env.Verbosity",
+            label = "Verbosity",
+            description = "Logging verbosity during build execution. Default is 'Normal'.",
+            value = "Normal",
+            options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
             display = ParameterDisplay.NORMAL)
         text(
             "teamcity.runner.commandline.stdstreams.encoding",
