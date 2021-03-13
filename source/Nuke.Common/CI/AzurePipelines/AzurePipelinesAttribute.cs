@@ -24,6 +24,8 @@ namespace Nuke.Common.CI.AzurePipelines
         private readonly string _suffix;
         private readonly AzurePipelinesImage[] _images;
 
+        private bool? _triggerBatch;
+
         public AzurePipelinesAttribute(
             AzurePipelinesImage image,
             params AzurePipelinesImage[] images)
@@ -53,7 +55,13 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] InvokedTargets { get; set; } = new string[0];
 
         public bool TriggerDisabled { get; set; }
-        public bool? TriggerBatch { get; set; }
+
+        public bool TriggerBatch
+        {
+            set => _triggerBatch = value;
+            get => throw new NotSupportedException();
+        }
+
         public string[] TriggerBranchesInclude { get; set; } = new string[0];
         public string[] TriggerBranchesExclude { get; set; } = new string[0];
         public string[] TriggerTagsInclude { get; set; } = new string[0];
@@ -93,7 +101,7 @@ namespace Nuke.Common.CI.AzurePipelines
         protected AzurePipelinesVcsPushTrigger GetVcsPushTrigger()
         {
             if (!TriggerDisabled &&
-                !TriggerBatch.HasValue &&
+                _triggerBatch == null &&
                 TriggerBranchesInclude.Length == 0 &&
                 TriggerBranchesExclude.Length == 0 &&
                 TriggerTagsInclude.Length == 0 &&
@@ -105,7 +113,7 @@ namespace Nuke.Common.CI.AzurePipelines
             return new AzurePipelinesVcsPushTrigger
                    {
                        Disabled = TriggerDisabled,
-                       Batch = TriggerBatch,
+                       Batch = _triggerBatch,
                        BranchesInclude = TriggerBranchesInclude,
                        BranchesExclude = TriggerBranchesExclude,
                        TagsInclude = TriggerTagsInclude,
