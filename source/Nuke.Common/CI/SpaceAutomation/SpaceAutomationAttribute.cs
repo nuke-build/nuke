@@ -20,6 +20,9 @@ namespace Nuke.Common.CI.SpaceAutomation
         private readonly string _name;
         private readonly string _image;
 
+        private bool? _onPush;
+        private int? _timeoutInMinutes;
+
         public SpaceAutomationAttribute(string name, string image)
         {
             _name = name;
@@ -33,28 +36,16 @@ namespace Nuke.Common.CI.SpaceAutomation
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
         public override IEnumerable<string> IrrelevantTargetNames => new string[0];
 
-        private int? _resourcesCpu;
-        private int? _resourcesMemory;
-        private bool? _onPush;
-
-        public int ResourcesCpu
-        {
-            set => _resourcesCpu = value;
-            get => _resourcesCpu ?? 0;
-        }
-
-        public int ResourcesMemory
-        {
-            set => _resourcesMemory = value;
-            get => _resourcesMemory ?? 0;
-        }
+        public string VolumeSize { get; set; }
+        public string ResourcesCpu { get; set; }
+        public string ResourcesMemory { get; set; }
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
         public bool OnPush
         {
             set => _onPush = value;
-            get => _onPush ?? false;
+            get => throw new NotSupportedException();
         }
 
         public string[] OnPushBranchIncludes { get; set; }
@@ -66,6 +57,12 @@ namespace Nuke.Common.CI.SpaceAutomation
 
         public string OnCronSchedule { get; set; }
 
+        public int TimeoutInMinutes
+        {
+            set => _timeoutInMinutes = value;
+            get => throw new NotSupportedException();
+        }
+
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
             return new CustomFileWriter(streamWriter, indentationFactor: 4, commentPrefix: "//");
@@ -76,8 +73,10 @@ namespace Nuke.Common.CI.SpaceAutomation
             return new SpaceAutomationConfiguration
                    {
                        Name = _name,
+                       VolumeSize = VolumeSize,
                        Container = GetContainer(),
-                       Triggers = GetTriggers().ToArray()
+                       Triggers = GetTriggers().ToArray(),
+                       TimeoutInMinutes = _timeoutInMinutes
                    };
         }
 
@@ -94,10 +93,11 @@ namespace Nuke.Common.CI.SpaceAutomation
 
         protected virtual SpaceAutomationResources GetResources()
         {
-            ControlFlow.Assert(_resourcesCpu == null || ResourcesCpu > 0, "ResourcesCpu > 0");
-            ControlFlow.Assert(_resourcesMemory == null || ResourcesMemory > 0, "ResourcesMemory > 0");
-
-            return new SpaceAutomationResources { Cpu = _resourcesCpu, Memory = _resourcesMemory };
+            return new SpaceAutomationResources
+                   {
+                       Cpu = ResourcesCpu,
+                       Memory = ResourcesMemory
+                   };
         }
 
         protected virtual IEnumerable<SpaceAutomationTrigger> GetTriggers()

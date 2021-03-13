@@ -8,8 +8,8 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
     [PublicAPI]
     public class SpaceAutomationResources : ConfigurationEntity
     {
-        public int? Cpu { get; set; }
-        public int? Memory { get; set; }
+        public string Cpu { get; set; }
+        public string Memory { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
