@@ -14,7 +14,6 @@ using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
@@ -107,7 +106,11 @@ partial class Build
     IEnumerable<string> IReportIssues.InspectCodeFailOnCategories => new string[0];
 
     string PublicNuGetSource => "https://api.nuget.org/v3/index.json";
-    string GitHubRegistrySource => $"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json";
+
+    string GitHubRegistrySource => GitHubActions != null
+        ? $"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json"
+        : null;
+
     [Parameter] readonly string PublicNuGetApiKey;
     [Parameter] readonly string GitHubRegistryApiKey;
 
