@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitLab
@@ -20,12 +21,44 @@ namespace Nuke.Common.CI.GitLab
     {
         internal static bool IsRunningGitLab => !Environment.GetEnvironmentVariable("GITLAB_CI").IsNullOrEmpty();
 
+        private const string SectionStartSequence = "\u001b[0K";
+        private const string SectionResetSequence = "\r\u001b[0K";
+
+        private readonly Action<string> _messageSink;
+
         internal GitLab()
+            : this(messageSink: null)
         {
+        }
+
+        internal GitLab(Action<string> messageSink)
+        {
+            _messageSink = messageSink ?? Console.WriteLine;
         }
 
         string IBuildServer.Branch => CommitRefName;
         string IBuildServer.Commit => CommitSha;
+
+        protected internal override OutputSink OutputSink => new GitLabOutputSink(this);
+
+        public void BeginSection(string text)
+        {
+            var sectionId = GetSectionId(text);
+            var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            _messageSink($"{SectionStartSequence}section_start:{unixTimestamp}:{sectionId}{SectionResetSequence}{text}");
+        }
+
+        public void EndSection(string text)
+        {
+            var sectionId = GetSectionId(text);
+            var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            _messageSink($"{SectionStartSequence}section_end:{unixTimestamp}:{sectionId}{SectionResetSequence}");
+        }
+
+        private string GetSectionId(string text)
+        {
+            return text.GetMD5Hash();
+        }
 
         /// <summary>
         /// Mark that job is executed in CI environment.
