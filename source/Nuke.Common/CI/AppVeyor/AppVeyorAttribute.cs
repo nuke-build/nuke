@@ -22,16 +22,31 @@ namespace Nuke.Common.CI.AppVeyor
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public class AppVeyorAttribute : ConfigurationAttributeBase
     {
+        private readonly string _suffix;
         private readonly AppVeyorImage[] _images;
 
-        public AppVeyorAttribute(AppVeyorImage image, params AppVeyorImage[] images)
+        public AppVeyorAttribute(
+            AppVeyorImage image,
+            params AppVeyorImage[] images)
+            : this(suffix: null, image, images)
         {
+        }
+
+        public AppVeyorAttribute(
+            [CanBeNull] string suffix,
+            AppVeyorImage image,
+            params AppVeyorImage[] images)
+        {
+            _suffix = suffix;
             _images = new[] { image }.Concat(images).ToArray();
         }
 
+        public override string IdPostfix => _suffix;
+
         public override Type HostType => typeof(AppVeyor);
-        public override string ConfigurationFile => NukeBuild.RootDirectory / "appveyor.yml";
+        public override string ConfigurationFile => NukeBuild.RootDirectory / ConfigurationFileName;
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        private string ConfigurationFileName => _suffix != null ? $"appveyor.{_suffix}.yml" : "appveyor.yml";
 
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
         public override IEnumerable<string> IrrelevantTargetNames => new string[0];
