@@ -68,6 +68,9 @@ class Build : NukeBuild
             MSBuild(s => s                                                                      // MSBUILD
                 .SetTargetPath(Solution)                                                        // MSBUILD
                 .SetTargets("Restore"));                                                        // MSBUILD
+            DotNetMSBuild(s => s                                                                // DOTNET MSBUILD
+                .SetTargetPath(Solution)                                                        // DOTNET MSBUILD
+                .SetTargets("Restore"));                                                        // DOTNET MSBUILD
             DotNetRestore(s => s                                                                // DOTNET
                 .SetProjectFile(Solution));                                                     // DOTNET
         });
@@ -85,6 +88,15 @@ class Build : NukeBuild
                 .SetInformationalVersion(GitVersion.InformationalVersion)                       // MSBUILD && GITVERSION
                 .SetMaxCpuCount(Environment.ProcessorCount)                                     // MSBUILD
                 .SetNodeReuse(IsLocalBuild));                                                   // MSBUILD
+            DotNetMSBuild(s => s                                                                // DOTNET MSBUILD
+                .SetTargetPath(Solution)                                                        // DOTNET MSBUILD
+                .SetTargets("Rebuild")                                                          // DOTNET MSBUILD
+                .SetConfiguration(Configuration)                                                // DOTNET MSBUILD
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)                                  // DOTNET MSBUILD && GITVERSION
+                .SetFileVersion(GitVersion.AssemblySemFileVer)                                  // DOTNET MSBUILD && GITVERSION
+                .SetInformationalVersion(GitVersion.InformationalVersion)                       // DOTNET MSBUILD && GITVERSION
+                .SetMaxCpuCount(Environment.ProcessorCount)                                     // DOTNET MSBUILD
+                .SetNodeReuse(IsLocalBuild));                                                   // DOTNET MSBUILD
             DotNetBuild(s => s                                                                  // DOTNET
                 .SetProjectFile(Solution)                                                       // DOTNET
                 .SetConfiguration(Configuration)                                                // DOTNET
