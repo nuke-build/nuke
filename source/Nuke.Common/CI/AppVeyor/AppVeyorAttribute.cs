@@ -63,6 +63,7 @@ namespace Nuke.Common.CI.AppVeyor
         public string SkipCommitsAuthor { get; set; }
         public string[] Init { get; set; } = new string[0];
         public string[] Cache { get; set; } = new string[0];
+        public string[] Secrets { get; set; } = new string[0];
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -88,7 +89,8 @@ namespace Nuke.Common.CI.AppVeyor
                        InvokedTargets = InvokedTargets,
                        Init = Init,
                        Cache = Cache,
-                       Artifacts = GetArtifacts(relevantTargets).ToArray()
+                       Artifacts = GetArtifacts(relevantTargets).ToArray(),
+                       Secrets = GetSecrets()
                    };
         }
 
@@ -110,6 +112,13 @@ namespace Nuke.Common.CI.AppVeyor
                        Only = BranchesOnly,
                        Except = BranchesExcept
                    };
+        }
+
+        private Dictionary<string, string> GetSecrets()
+        {
+            return Secrets
+                .Select(x => x.Split(':'))
+                .ToDictionary(x => x.ElementAt(0).Trim(), x => x.ElementAt(1).Trim());
         }
     }
 }
