@@ -168,7 +168,11 @@ namespace Nuke.Common
             ExecutionStatus.Skipped or
             ExecutionStatus.Collective);
 
-        public bool IsFailing => !IsSuccessful;
+        public bool IsFailing => ExecutionPlan.Any(x => x.Status is
+            ExecutionStatus.Failed or
+            ExecutionStatus.Aborted or
+            ExecutionStatus.NotRun);
+
         public bool IsFinished => !ScheduledTargets.Concat(RunningTargets).Any();
 
         /// <summary>
