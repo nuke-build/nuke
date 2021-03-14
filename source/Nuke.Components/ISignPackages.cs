@@ -71,7 +71,7 @@ namespace Nuke.Components
         private AppVeyor AppVeyor => AppVeyor.Instance;
 
         Target SignPackages => _ => _
-            .TryDependsOn<IPack>()
+            .TriggeredBy<IPack>()
             .TryDependentFor<IPublish>()
             .OnlyWhenStatic(() => AppVeyor != null)
             .Requires(() => ApiToken)

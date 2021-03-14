@@ -120,10 +120,9 @@ partial class Build
 
     Target IPublish.Publish => _ => _
         .Inherit<IPublish>()
-        .Consumes(From<IPack>().Pack);
-        // .Requires(() => IsOriginalRepository && GitRepository.IsOnMasterBranch() ||
-        //                 IsOriginalRepository && GitRepository.IsOnReleaseBranch() ||
-        //                 !IsOriginalRepository && GitRepository.IsOnDevelopBranch());
+        .Consumes(From<IPack>().Pack)
+        .Requires(() => IsOriginalRepository && (GitRepository.IsOnMasterBranch() || GitRepository.IsOnReleaseBranch()) ||
+                        !IsOriginalRepository);
 
     Target Install => _ => _
         .DependsOn<IPack>()

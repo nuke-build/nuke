@@ -9,36 +9,49 @@
 #
 #     - To trigger manual generation invoke:
 #
-#         nuke --generate-configuration AppVeyor --host AppVeyor
+#         nuke --generate-configuration AppVeyor_deployment --host AppVeyor
 #
 # </auto-generated>
 # ------------------------------------------------------------------------------
 
 image:
   - Visual Studio 2019
-  - Ubuntu1804
+
+branches:
+  only:
+    - master
+    - /release\/*/
 
 skip_tags: true
 
 build_script:
-  - cmd: .\build.cmd Test Pack
-  - sh: ./build.cmd Test Pack
+  - cmd: .\build.cmd Publish
+  - sh: ./build.cmd Publish
 
 artifacts:
   - path: output/test-results/*.trx
   - path: output/test-results/*.xml
-  - path: output/coverage-report.zip
+  - path: output/reports/coverage-report.zip
   - path: output/packages/*.nupkg
 
 environment:
   SignPathApiToken:
     secure: zYFzA/7H1MDXDlpX6SAyv41kiBmu8Vh3kvWC7tPfk7eVdhh9mGQgXC7AzgcGnpsg
-  SignPathOrganizationId: 0fdaf334-6910-41f4-83d2-e58e4cccb087
-  SignPathProjectSlug: nuke
-  SignPathPolicySlug: release-signing
-  AppAccessToken:
+  SlackAppAccessToken:
     secure: HPPJFlTf6aaHXIbCYTkBIesRrjBIm1X0TijzI7xgI6ATYeAXuXoNiRABh/ORJn8RqX461KG7WgkZcWfxiNaGV4X99tc8SOwBMVAv/qk6INM=
-  UserAccessToken:
+  SlackUserAccessToken:
     secure: cMArtN7cGnW6zI9ryMiQZSfcv2y+6Ads8KPvZIN18ITMd3ivAg4/E9JSh0CsFury1vzJ8haKI9lv2E+u4lUT9Q==
   EnterpriseAccessToken:
     secure: 3nWSVRsMDisi41a6kclhRl7pwacy5zLuWIMZy2J5yD+62uHga2Pquc1SiuIZgu2K
+  NuGetApiKey:
+    secure: TODO
+  GitterAuthToken:
+    secure: TODO
+  TwitterConsumerKey:
+    secure: TODO
+  TwitterConsumerSecret:
+    secure: TODO
+  TwitterAccessToken:
+    secure: TODO
+  TwitterAccessTokenSecret:
+    secure: TODO

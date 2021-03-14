@@ -34,7 +34,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #endif
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(DownloadFonts), nameof(InstallFonts), nameof(ReleaseImage) },
-    ExcludedTargets = new[] { nameof(Clean) },
+    ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) },
     CacheKeyFiles = new[]{ "global.json", "source/**/*.csproj" })]
 partial class Build
 {

@@ -31,7 +31,7 @@ using Nuke.Components;
             nameof(InstallFonts),
             nameof(ReleaseImage)
         },
-    ExcludedTargets = new[] { nameof(Clean) })]
+    ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) })]
 partial class Build
 {
     public class TeamCityAttribute : Nuke.Common.CI.TeamCity.TeamCityAttribute

@@ -14,6 +14,10 @@ using Nuke.Components;
 
 partial class Build : ISignPackages
 {
+    public string OrganizationId => "0fdaf334-6910-41f4-83d2-e58e4cccb087";
+    public string ProjectSlug => "nuke";
+    public string PolicySlug => "release-signing";
+
     public IEnumerable<AbsolutePath> SignPathPackages
         => From<IPack>().PackagesDirectory.GlobFiles("*.nupkg")
             .Where(x => Path.GetFileName(x).EqualsAnyOrdinalIgnoreCase(

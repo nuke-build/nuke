@@ -99,24 +99,6 @@ project {
             label = "SignPathApiToken",
             value = "",
             display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathOrganizationId",
-            label = "SignPathOrganizationId",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathPolicySlug",
-            label = "SignPathPolicySlug",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathProjectSlug",
-            label = "SignPathProjectSlug",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
         password (
             "env.SlackAppAccessToken",
             label = "SlackAppAccessToken",
