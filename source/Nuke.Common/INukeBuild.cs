@@ -8,12 +8,13 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common
 {
     public interface INukeBuild
     {
-        void ReportSummary(string caption, string text);
+        void ReportSummary(Configure<IDictionary<string, string>> configurator);
 
         IReadOnlyCollection<ExecutableTarget> InvokedTargets { get; }
         IReadOnlyCollection<ExecutableTarget> SkippedTargets { get; }

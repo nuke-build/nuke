@@ -181,10 +181,11 @@ namespace Nuke.Common
         /// </summary>
         public int? ExitCode { get; set; }
 
-        public void ReportSummary(string caption, string text)
+        public void ReportSummary(Configure<IDictionary<string, string>> configurator)
         {
-            ExecutionPlan.Single(x => x.Status == ExecutionStatus.Running)
-                .SummaryInformation.Add((caption, text));
+            var target = ExecutionPlan.Single(x => x.Status == ExecutionStatus.Running);
+            target.SummaryInformation = configurator(new Dictionary<string, string>()).ToDictionary(x => x.Key, x => x.Value);
+            ExecuteExtension<IOnTargetSummaryUpdated>(x => x.OnTargetSummaryUpdated(this, target));
         }
     }
 }

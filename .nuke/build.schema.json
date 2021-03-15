@@ -42,6 +42,13 @@
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
         },
+        "GitterRoomId": {
+          "type": "string"
+        },
+        "GlobalSolution": {
+          "type": "string",
+          "description": "Path to a solution file that is automatically loaded. Default is nuke-global.sln"
+        },
         "Help": {
           "type": "boolean",
           "description": "Shows the help text for this build assembly"
@@ -154,7 +161,7 @@
         },
         "Target": {
           "type": "array",
-          "description": "List of targets to be executed. Default is '{default_target}'",
+          "description": "List of targets to be invoked. Default is '{default_target}'",
           "items": {
             "type": "string",
             "enum": [

@@ -117,7 +117,7 @@ namespace Nuke.Common.Execution
                     Logger.Error(exception);
                     target.Status = ExecutionStatus.Failed;
                     if (!target.SummaryInformation.Any())
-                        target.SummaryInformation.Add((exception.GetType().Name, exception.Message));
+                        target.SummaryInformation = new Dictionary<string, string> { [exception.GetType().Name] = exception.Message };
                     build.ExecuteExtension<IOnTargetFailed>(x => x.OnTargetFailed(build, target));
                     if (!target.ProceedAfterFailure && !failureMode)
                         throw new TargetExecutionException(target.Name, exception);

@@ -10,6 +10,7 @@ using Nuke.Common.CI;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 namespace Nuke.Components
@@ -27,6 +28,9 @@ namespace Nuke.Components
                 DotNetPack(_ => _
                     .Apply(PackSettingsBase)
                     .Apply(PackSettings));
+
+                ReportSummary(_ => _
+                    .AddPair("Packages", PackagesDirectory.GlobFiles("*.nupkg").Count.ToString()));
             });
 
         sealed Configure<DotNetPackSettings> PackSettingsBase => _ => _

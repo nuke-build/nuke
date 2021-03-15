@@ -167,7 +167,7 @@ namespace Nuke.Common.OutputSinks
 
             static string GetInformation(ExecutableTarget target)
                 => target.SummaryInformation.Any()
-                    ? target.SummaryInformation.Select(x => $"{x.Caption}: {x.Text}").JoinComma()
+                    ? target.SummaryInformation.Select(x => $"{x.Key}: {x.Value}").JoinComma()
                     : null;
 
             WriteNormal(new string(c: '═', count: allColumns));

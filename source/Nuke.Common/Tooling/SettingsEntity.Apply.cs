@@ -9,7 +9,6 @@ namespace Nuke.Common.Tooling
     partial class SettingsEntityExtensions
     {
         public static T Apply<T>(this T settings, Configure<T> configurator)
-            where T : ISettingsEntity, new()
         {
             return configurator(settings);
         }

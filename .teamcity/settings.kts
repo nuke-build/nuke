@@ -80,6 +80,12 @@ project {
             label = "GitterAuthToken",
             value = "",
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.GitterRoomId",
+            label = "GitterRoomId",
+            value = "593f3dadd73408ce4f66db89",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         checkbox (
             "env.IgnoreFailedSources",
             label = "IgnoreFailedSources",
@@ -102,19 +108,19 @@ project {
         text (
             "env.SignPathOrganizationId",
             label = "SignPathOrganizationId",
-            value = "",
+            value = "0fdaf334-6910-41f4-83d2-e58e4cccb087",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
             "env.SignPathPolicySlug",
             label = "SignPathPolicySlug",
-            value = "",
+            value = "release-signing",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
             "env.SignPathProjectSlug",
             label = "SignPathProjectSlug",
-            value = "",
+            value = "nuke",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         password (

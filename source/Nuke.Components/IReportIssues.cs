@@ -12,6 +12,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.ReSharper;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 
@@ -138,10 +139,11 @@ namespace Nuke.Components
             else if (errorCount > 0 || warningCount > 0)
                 Logger.Warn(summaryMessage);
 
-            if (errorCount > 0)
-                ReportSummary("Errors", errorCount.ToString());
-            if (warningCount > 0)
-                ReportSummary("Warnings", warningCount.ToString());
+            ReportSummary(_ => _
+                .When(errorCount > 0, _ => _
+                    .AddPair("Errors", errorCount.ToString()))
+                .When(warningCount > 0, _ => _
+                    .AddPair("Warnings", warningCount.ToString())));
         }
 
         string InspectCodeIssueMessage(string typeId, string file, string line, string message)

@@ -40,12 +40,12 @@ namespace Nuke.Common.Execution
         public ExecutionStatus Status { get; set; }
         public TimeSpan Duration { get; set; }
         public bool Invoked { get; set; }
-        public List<(string Caption, string Text)> SummaryInformation { get; } = new List<(string Caption, string Text)>();
+        public IReadOnlyDictionary<string, string> SummaryInformation { get; internal set; } = new Dictionary<string, string>();
 
         public string SkipReason
         {
-            get => SummaryInformation.FirstOrDefault(x => x.Caption == nameof(SkipReason)).Text;
-            set => SummaryInformation.Add((nameof(SkipReason), value));
+            get => SummaryInformation.GetValueOrDefault(nameof(SkipReason));
+            set => SummaryInformation = new Dictionary<string, string> { [nameof(SkipReason)] = value };
         }
     }
 }
