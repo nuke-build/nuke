@@ -11,7 +11,8 @@
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-nuget-push.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-install.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-uninstall.md",
-    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-update.md"
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-update.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-msbuild.md"
   ],
   "name": "DotNet",
   "officialUrl": "https://docs.microsoft.com/en-us/dotnet/core/tools/",
@@ -399,6 +400,89 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet msbuild</c> command allows access to a fully functional MSBuild.<para/>The command has the exact same capabilities as the existing MSBuild command-line client for SDK-style projects only. The options are all the same. For more information about the available options, see the <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference\">MSBuild command-line reference</a>.<para/>The <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build\">dotnet build</a> command is equivalent to <c>dotnet msbuild -restore</c>. When you don't want to build the project and you have a specific target you want to run, use <c>dotnet build</c> or <c>dotnet msbuild</c> and specify the target.",
+      "postfix": "MSBuild",
+      "definiteArgument": "msbuild",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "The solution or project file on which MSBuild is executed."
+          },
+          {
+            "name": "DetailedSummary",
+            "type": "bool",
+            "format": "/detailedsummary",
+            "help": "Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes."
+          },
+          {
+            "name": "MaxCpuCount",
+            "type": "int",
+            "format": "/maxcpucount:{value}",
+            "help": "<p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/bb651793.aspx\">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p>"
+          },
+          {
+            "name": "NodeReuse",
+            "type": "bool",
+            "format": "/nodeReuse:{value}",
+            "help": "<p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>"
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "/nologo",
+            "help": "Don't display the startup banner or the copyright message."
+          },
+          {
+            "name": "Restore",
+            "type": "bool",
+            "format": "/restore",
+            "help": "Runs the <c>Restore</c> target prior to building the actual targets."
+          },
+          {
+            "name": "Targets",
+            "type": "List<string>",
+            "format": "/target:{value}",
+            "separator": ";",
+            "help": "<p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ee216359.aspx\">Target Build Order</a> and <a href=\"https://msdn.microsoft.com/en-us/library/ms171463.aspx\">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ms171462.aspx\">Targets</a>.</p>"
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "/verbosity:{value}",
+            "help": "<p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p>"
+          },
+          {
+            "name": "Loggers",
+            "type": "List<string>",
+            "format": "/logger:{value}",
+            "help": "Specifies the loggers to use to log events from MSBuild."
+          },
+          {
+            "name": "NoConsoleLogger",
+            "type": "bool",
+            "format": "/noconsolelogger",
+            "help": "Disable the default console logger, and don't log events to the console."
+          },
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "/property:Configuration={value}",
+            "help": "Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time."
+          },
+          {
+            "name": "GraphBuild",
+            "type": "bool",
+            "format": "/graphBuild",
+            "help": "Causes MSBuild to construct and build a project graph. Constructing a graph involves identifying project references to form dependencies. Building that graph involves attempting to build project references prior to the projects that reference them, differing from traditional MSBuild scheduling. Requires MSBuild 16 or later."
           }
         ]
       }
@@ -996,6 +1080,14 @@
         {
           "name": "PublishProfile",
           "type": "string"
+        },
+        {
+          "name": "Platform",
+          "type": "string"
+        },
+        {
+          "name": "ContinuesIntegrationBuild",
+          "type": "bool"
         }
       ]
     }
