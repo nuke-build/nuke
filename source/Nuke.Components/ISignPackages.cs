@@ -91,6 +91,10 @@ namespace Nuke.Components
                     OrganizationId,
                     ProjectSlug,
                     PolicySlug);
+
+                ReportSummary(_ => _
+                    .AddPair("Request", signingRequestUrl.Replace("api/v1", "Web")));
+
                 await DownloadSignedArtifactFromUrl(
                     ApiToken,
                     signingRequestUrl,
