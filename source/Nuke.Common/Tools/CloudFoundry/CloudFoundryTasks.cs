@@ -4,8 +4,10 @@
 
 using System;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.CloudFoundry
@@ -32,22 +34,35 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Create task which will complete when creation of an asynchronous service is complete.
         ///   This uses polling to query it repeatedly
         /// </summary>
-        public static async Task CloudFoundryEnsureServiceReady(string serviceInstance)
+        public static async Task CloudFoundryEnsureServiceReady(string serviceInstance) => await CloudFoundryEnsureServiceReady(serviceInstance, TimeSpan.FromSeconds(5));
+
+        /// <summary>
+        ///   Create task which will complete when creation of an asynchronous service is complete.
+        ///   This uses polling to query it repeatedly
+        /// </summary>
+        public static async Task CloudFoundryEnsureServiceReady(string serviceInstance, TimeSpan checkInterval)
         {
+            var guid = CloudFoundry($"service {serviceInstance} --guid", logOutput: false, logInvocation: false).First().Text;
             bool IsCreating()
             {
-                var commandResult = CloudFoundryGetServiceInfo(c => c
-                        .SetServiceInstance(serviceInstance))
-                    .First(x => x.Text.StartsWith("status:"))
-                    .Text;
-                var result = Regex.Match(commandResult, @"(?<=^status:\s+)[a-z].+", RegexOptions.Multiline).Value;
-                return result == "create in progress";
+                var jsonString = CloudFoundryCurl(c => c
+                        .SetPath($"/v2/service_instances/{guid}")
+                        .DisableProcessLogOutput()
+                        .DisableProcessLogInvocation())
+                    .EnsureOnlyStd()
+                    .Aggregate(new StringBuilder(), (sb, output) => sb.AppendLine(output.Text), sb => sb.ToString());
+                var response = JObject.Parse(jsonString);
+                if (response.ContainsKey("error_code"))
+                    throw new Exception($"Service creation failed with \n{response["description"]}");
+                return response.SelectToken("entity.last_operation.state")?.ToString() == "in progress";
             }
 
+            Logger.Normal($"Waiting service {serviceInstance} to finish provisioning");
             while (IsCreating())
             {
-                await Task.Delay(5000);
+                await Task.Delay(checkInterval);
             }
+            Logger.Normal($"Service {serviceInstance} is finished provisioning");
         }
     }
 }
