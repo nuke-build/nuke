@@ -32,6 +32,7 @@ namespace Nuke.Common
         internal const string BuildSchemaFileName = "build.schema.json";
 
         internal const string TargetsSeparator = "+";
+        internal const string RootDirectoryParameterName = "Root";
         internal const string InvokedTargetsParameterName = "Target";
         internal const string SkippedTargetsParameterName = "Skip";
         internal const string LoadedLocalProfilesParameterName = "Profile";
