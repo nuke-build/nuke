@@ -8,6 +8,7 @@ using System.Linq;
 using FluentAssertions;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Xunit;
 
 namespace Nuke.Common.Tests
@@ -17,6 +18,12 @@ namespace Nuke.Common.Tests
         private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory()).NotNull();
 
         private static AbsolutePath SolutionFile => RootDirectory / "nuke-common.sln";
+
+        static ProjectModelTest()
+        {
+            ToolPathResolver.NuGetPackagesConfigFile = RootDirectory / "build" / "_build.csproj";
+        }
+        
 
         [Fact]
         public void SolutionTest()

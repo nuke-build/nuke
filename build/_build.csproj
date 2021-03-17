@@ -50,6 +50,7 @@
     <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.3.2]" />
     <PackageDownload Include="ReportGenerator" Version="[4.6.1]" />
     <PackageDownload Include="xunit.runner.console" Version="[2.4.1]" />
+    <PackageDownload Include="MSBuild.Microsoft.VisualStudio.Web.targets" Version="[14.0.0.3]" />
   </ItemGroup>
 
   <ItemGroup>

@@ -148,6 +148,9 @@ namespace Nuke.Common.ProjectModel
                 properties.Add("Configuration", configuration);
             if (targetFramework != null)
                 properties.Add("TargetFramework", targetFramework);
+            AbsolutePath webTarget = (AbsolutePath)ToolPathResolver.GetPackageExecutable("MSBuild.Microsoft.VisualStudio.Web.targets", "Microsoft.WebApplication.targets");
+            var vsToolsPath = webTarget.Parent.Parent;
+            properties.Add("VSToolsPath", vsToolsPath);
             return properties;
         }
     }
