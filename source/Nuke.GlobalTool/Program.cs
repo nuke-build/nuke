@@ -23,8 +23,7 @@ namespace Nuke.GlobalTool
         {
             try
             {
-                // TODO: parse from --root argument
-                var rootDirectory = Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory());
+                var rootDirectory = TryGetRootDirectory();
 
                 var buildScript = rootDirectory != null
                     ? (AbsolutePath) new DirectoryInfo(rootDirectory)
@@ -44,6 +43,20 @@ namespace Nuke.GlobalTool
         private static void PrintInfo()
         {
             Logger.Info($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
+        }
+
+        [CanBeNull]
+        private static AbsolutePath TryGetRootDirectory()
+        {
+            // TODO: copied in NukeBuild.GetRootDirectory
+            var parameterValue = EnvironmentInfo.GetParameter(() => NukeBuild.RootDirectory);
+            if (parameterValue != null)
+                return parameterValue;
+
+            if (EnvironmentInfo.GetParameter<bool>(() => NukeBuild.RootDirectory))
+                return EnvironmentInfo.WorkingDirectory;
+
+            return Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory());
         }
 
         private static int Handle(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
