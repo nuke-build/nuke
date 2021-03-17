@@ -34,7 +34,7 @@ namespace Nuke.Common
         /// <summary>
         /// Gets the full path to the root directory.
         /// </summary>
-        [Parameter("Root directory during build execution.", Name = "Root")]
+        [Parameter("Root directory during build execution.", Name = RootDirectoryParameterName)]
         public static AbsolutePath RootDirectory { get; }
 
         /// <summary>
