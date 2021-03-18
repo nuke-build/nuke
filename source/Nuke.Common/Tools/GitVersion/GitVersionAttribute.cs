@@ -28,6 +28,7 @@ namespace Nuke.Common.Tools.GitVersion
         public bool UpdateAssemblyInfo { get; set; }
         public bool UpdateBuildNumber { get; set; } = true;
         public bool NoFetch { get; set; }
+        public bool NoCache { get; set; } = true;
 
         public override object GetValue(MemberInfo member, object instance)
         {
@@ -45,6 +46,7 @@ namespace Nuke.Common.Tools.GitVersion
             var gitVersion = GitVersionTasks.GitVersion(s => s
                     .SetFramework(Framework)
                     .SetNoFetch(NoFetch)
+                    .SetNoCache(NoCache)
                     .DisableProcessLogOutput()
                     .SetUpdateAssemblyInfo(UpdateAssemblyInfo))
                 .Result;
