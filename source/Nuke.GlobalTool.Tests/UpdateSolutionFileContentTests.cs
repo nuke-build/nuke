@@ -10,7 +10,7 @@ using Xunit;
 
 namespace Nuke.GlobalTool.Tests
 {
-    public class ProgramTest
+    public class UpdateSolutionFileContentTests
     {
         [Theory]
         [InlineData(
@@ -128,7 +128,7 @@ Global
 	EndGlobalSection
 EndGlobal
 ")]
-        public void TestUpdateSolutionFileContent(string input, string expected)
+        public void Test(string input, string expected)
         {
             var content = input.SplitLineBreaks().ToList();
             Program.UpdateSolutionFileContent(content, "RELATIVE", "GUID", "KIND", "NAME");
