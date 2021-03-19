@@ -15,8 +15,8 @@ namespace Nuke.GlobalTool
 {
     partial class Program
     {
-        private const string PACKAGE_TYPE_DOWNLOAD = "PackageDownload";
-        private const string PACKAGE_TYPE_REFERENCE = "PackageReference";
+        public const string PACKAGE_TYPE_DOWNLOAD = "PackageDownload";
+        public const string PACKAGE_TYPE_REFERENCE = "PackageReference";
 
         [UsedImplicitly]
         public static int AddPackage(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
