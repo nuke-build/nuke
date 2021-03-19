@@ -19,6 +19,8 @@ namespace Nuke.GlobalTool
     {
         private const char CommandPrefix = ':';
 
+        private static string CurrentBuildScriptName => EnvironmentInfo.IsWin ? "build.ps1" : "build.sh";
+
         private static int Main(string[] args)
         {
             try
@@ -27,7 +29,7 @@ namespace Nuke.GlobalTool
 
                 var buildScript = rootDirectory != null
                     ? (AbsolutePath) new DirectoryInfo(rootDirectory)
-                        .EnumerateFiles($"build.{(EnvironmentInfo.IsWin ? "ps1" : "sh")}", maxDepth: 2)
+                        .EnumerateFiles(CurrentBuildScriptName, maxDepth: 2)
                         .FirstOrDefault()?.FullName.DoubleQuoteIfNeeded()
                     : null;
 
