@@ -309,7 +309,7 @@ namespace Nuke.GlobalTool
             return 0;
         }
 
-        public static void UpdateSolutionFileContent(
+        internal static void UpdateSolutionFileContent(
             List<string> content,
             string buildProjectFileRelative,
             string buildProjectGuid,
