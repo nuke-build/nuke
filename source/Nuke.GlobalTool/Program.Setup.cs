@@ -242,6 +242,14 @@ namespace Nuke.GlobalTool
             }
 
             WriteAllLines(
+                buildDirectory / "Directory.Build.props",
+                GetTemplate("Directory.Build.props"));
+
+            WriteAllLines(
+                buildDirectory / "Directory.Build.targets",
+                GetTemplate("Directory.Build.targets"));
+
+            WriteAllLines(
                 $"{buildProjectFile}.DotSettings",
                 GetTemplate("_build.csproj.DotSettings"));
 
