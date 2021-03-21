@@ -1080,6 +1080,22 @@
         {
           "name": "PublishProfile",
           "type": "string"
+        },
+        {
+          "name": "Platform",
+          "type": "string"
+        },
+        {
+          "name": "ContinuousIntegrationBuild",
+          "type": "bool"
+        },
+        {
+          "name": "DeterministicSourcePaths",
+          "type": "bool"
+        },
+        {
+          "name": "Deterministic",
+          "type": "bool"
         }
       ]
     }
