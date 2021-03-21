@@ -12,15 +12,10 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.Git;
 using Nuke.Common.Utilities;
 using static Nuke.Common.Constants;
 using static Nuke.Common.ControlFlow;
-using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.IO.TextTasks;
 using static Nuke.Common.Tooling.NuGetPackageResolver;
-using static Nuke.Common.Tooling.ProcessTasks;
-using static Nuke.Common.Utilities.TemplateUtility;
 
 namespace Nuke.GlobalTool
 {
@@ -152,72 +147,6 @@ namespace Nuke.GlobalTool
             jobject["sdk"] ??= new JObject();
             jobject["sdk"].NotNull()["version"] = latestInstalledSdk;
             SerializationTasks.JsonSerializeToFile(jobject, globalJsonFile);
-        }
-
-        private static void WriteBuildScripts(
-            AbsolutePath scriptDirectory,
-            AbsolutePath rootDirectory,
-            [CanBeNull] AbsolutePath solutionDirectory,
-            AbsolutePath buildDirectory,
-            string buildProjectName,
-            string targetPlatform)
-        {
-            WriteAllLines(
-                scriptDirectory / "build.cmd",
-                FillTemplate(GetTemplate("build.cmd")));
-
-            WriteAllLines(
-                scriptDirectory / "build.sh",
-                FillTemplate(
-                    GetTemplate($"build.{targetPlatform}.sh"),
-                    tokens: GetDictionary(
-                        new
-                        {
-                            RootDirectory = scriptDirectory.GetUnixRelativePathTo(rootDirectory),
-                            SolutionDirectory = scriptDirectory.GetUnixRelativePathTo(solutionDirectory ?? rootDirectory),
-                            BuildDirectory = scriptDirectory.GetUnixRelativePathTo(buildDirectory),
-                            BuildProjectName = buildProjectName,
-                            NuGetVersion = "latest"
-                        })));
-
-            WriteAllLines(
-                scriptDirectory / "build.ps1",
-                FillTemplate(
-                    GetTemplate($"build.{targetPlatform}.ps1"),
-                    tokens: GetDictionary(
-                        new
-                        {
-                            RootDirectory = scriptDirectory.GetWinRelativePathTo(rootDirectory),
-                            SolutionDirectory = scriptDirectory.GetWinRelativePathTo(solutionDirectory ?? rootDirectory),
-                            BuildDirectory = scriptDirectory.GetWinRelativePathTo(buildDirectory),
-                            BuildProjectName = buildProjectName,
-                            NuGetVersion = "latest"
-                        })));
-
-            MakeExecutable(scriptDirectory / "build.cmd");
-            MakeExecutable(scriptDirectory / "build.sh");
-
-            void MakeExecutable(string scriptPath)
-            {
-                if (Directory.Exists(rootDirectory / ".git"))
-                    StartProcess("git", $"update-index --add --chmod=+x {scriptPath}", logInvocation: false, logOutput: false);
-
-                if (Directory.Exists(rootDirectory / ".svn"))
-                    StartProcess("svn", $"propset svn:executable on {scriptPath}", logInvocation: false, logOutput: false);
-
-                if (IsUnix)
-                    StartProcess("chmod", $"+x {scriptPath}", logInvocation: false, logOutput: false);
-            }
-        }
-
-        private static void WriteConfigurationFile(AbsolutePath rootDirectory, [CanBeNull] AbsolutePath solutionFile)
-        {
-            var parametersFile = GetDefaultParametersFile(rootDirectory);
-            var dictionary = new Dictionary<string, string> { ["$schema"] = $"./{BuildSchemaFileName}" };
-            if (solutionFile != null)
-                dictionary["Solution"] = rootDirectory.GetUnixRelativePathTo(solutionFile).ToString();
-            SerializationTasks.JsonSerializeToFile(dictionary, parametersFile);
-            GitTasks.Git($"add {parametersFile}", logInvocation: false, logOutput: false);
         }
     }
 }
