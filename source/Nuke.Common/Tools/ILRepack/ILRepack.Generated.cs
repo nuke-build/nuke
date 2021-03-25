@@ -54,7 +54,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///     <li><c>--allowdup</c> via <see cref="ILRepackSettings.AllowDuplicate"/></li>
         ///     <li><c>--allowduplicateresources</c> via <see cref="ILRepackSettings.AllowDuplicateResources"/></li>
         ///     <li><c>--allowMultiple</c> via <see cref="ILRepackSettings.AllowMultiple"/></li>
-        ///     <li><c>--attr:<path></c> via <see cref="ILRepackSettings.Attr"/></li>
+        ///     <li><c>--attr:&lt;path&gt;</c> via <see cref="ILRepackSettings.Attr"/></li>
         ///     <li><c>--copyattrs</c> via <see cref="ILRepackSettings.CopyAttributes"/></li>
         ///     <li><c>--delaysign</c> via <see cref="ILRepackSettings.DelaySign"/></li>
         ///     <li><c>--internalize</c> via <see cref="ILRepackSettings.Internalize"/></li>
@@ -64,7 +64,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///     <li><c>--lib</c> via <see cref="ILRepackSettings.Lib"/></li>
         ///     <li><c>--log</c> via <see cref="ILRepackSettings.LogFile"/></li>
         ///     <li><c>--ndebug</c> via <see cref="ILRepackSettings.NoDebug"/></li>
-        ///     <li><c>--out:<path></c> via <see cref="ILRepackSettings.Output"/></li>
+        ///     <li><c>--out:&lt;path&gt;</c> via <see cref="ILRepackSettings.Output"/></li>
         ///     <li><c>--parallel</c> via <see cref="ILRepackSettings.Parallel"/></li>
         ///     <li><c>--pause</c> via <see cref="ILRepackSettings.Pause"/></li>
         ///     <li><c>--renameInternalized</c> via <see cref="ILRepackSettings.RenameInternalized"/></li>
@@ -97,7 +97,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///     <li><c>--allowdup</c> via <see cref="ILRepackSettings.AllowDuplicate"/></li>
         ///     <li><c>--allowduplicateresources</c> via <see cref="ILRepackSettings.AllowDuplicateResources"/></li>
         ///     <li><c>--allowMultiple</c> via <see cref="ILRepackSettings.AllowMultiple"/></li>
-        ///     <li><c>--attr:<path></c> via <see cref="ILRepackSettings.Attr"/></li>
+        ///     <li><c>--attr:&lt;path&gt;</c> via <see cref="ILRepackSettings.Attr"/></li>
         ///     <li><c>--copyattrs</c> via <see cref="ILRepackSettings.CopyAttributes"/></li>
         ///     <li><c>--delaysign</c> via <see cref="ILRepackSettings.DelaySign"/></li>
         ///     <li><c>--internalize</c> via <see cref="ILRepackSettings.Internalize"/></li>
@@ -107,7 +107,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///     <li><c>--lib</c> via <see cref="ILRepackSettings.Lib"/></li>
         ///     <li><c>--log</c> via <see cref="ILRepackSettings.LogFile"/></li>
         ///     <li><c>--ndebug</c> via <see cref="ILRepackSettings.NoDebug"/></li>
-        ///     <li><c>--out:<path></c> via <see cref="ILRepackSettings.Output"/></li>
+        ///     <li><c>--out:&lt;path&gt;</c> via <see cref="ILRepackSettings.Output"/></li>
         ///     <li><c>--parallel</c> via <see cref="ILRepackSettings.Parallel"/></li>
         ///     <li><c>--pause</c> via <see cref="ILRepackSettings.Pause"/></li>
         ///     <li><c>--renameInternalized</c> via <see cref="ILRepackSettings.RenameInternalized"/></li>
@@ -137,7 +137,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///     <li><c>--allowdup</c> via <see cref="ILRepackSettings.AllowDuplicate"/></li>
         ///     <li><c>--allowduplicateresources</c> via <see cref="ILRepackSettings.AllowDuplicateResources"/></li>
         ///     <li><c>--allowMultiple</c> via <see cref="ILRepackSettings.AllowMultiple"/></li>
-        ///     <li><c>--attr:<path></c> via <see cref="ILRepackSettings.Attr"/></li>
+        ///     <li><c>--attr:&lt;path&gt;</c> via <see cref="ILRepackSettings.Attr"/></li>
         ///     <li><c>--copyattrs</c> via <see cref="ILRepackSettings.CopyAttributes"/></li>
         ///     <li><c>--delaysign</c> via <see cref="ILRepackSettings.DelaySign"/></li>
         ///     <li><c>--internalize</c> via <see cref="ILRepackSettings.Internalize"/></li>
@@ -147,7 +147,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///     <li><c>--lib</c> via <see cref="ILRepackSettings.Lib"/></li>
         ///     <li><c>--log</c> via <see cref="ILRepackSettings.LogFile"/></li>
         ///     <li><c>--ndebug</c> via <see cref="ILRepackSettings.NoDebug"/></li>
-        ///     <li><c>--out:<path></c> via <see cref="ILRepackSettings.Output"/></li>
+        ///     <li><c>--out:&lt;path&gt;</c> via <see cref="ILRepackSettings.Output"/></li>
         ///     <li><c>--parallel</c> via <see cref="ILRepackSettings.Parallel"/></li>
         ///     <li><c>--pause</c> via <see cref="ILRepackSettings.Pause"/></li>
         ///     <li><c>--renameInternalized</c> via <see cref="ILRepackSettings.RenameInternalized"/></li>
