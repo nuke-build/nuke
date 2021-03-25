@@ -15,34 +15,34 @@ namespace Nuke.Common.OutputSinks
     [ExcludeFromCodeCoverage]
     internal class SystemColorOutputSink : OutputSink
     {
-        internal override void WriteNormal(string text)
+        public override void WriteNormal(string text)
         {
             Console.WriteLine(text);
         }
 
-        internal override void WriteSuccess(string text)
+        public override void WriteSuccess(string text)
         {
             WriteWithColors(text, ConsoleColor.Green);
         }
 
-        internal override void WriteTrace(string text)
+        public override void WriteTrace(string text)
         {
             WriteWithColors(text, ConsoleColor.Gray);
         }
 
-        internal override void WriteInformation(string text)
+        public override void WriteInformation(string text)
         {
             WriteWithColors(text, ConsoleColor.Cyan);
         }
 
-        protected override void WriteWarning(string text, string details = null)
+        public override void WriteWarning(string text, string details = null)
         {
             WriteWithColors(text, ConsoleColor.Yellow);
             if (details != null)
                 WriteWithColors(details, ConsoleColor.Yellow);
         }
 
-        protected override void WriteError(string text, string details = null)
+        public override void WriteError(string text, string details = null)
         {
             WriteWithColors(text, ConsoleColor.Red);
             if (details != null)

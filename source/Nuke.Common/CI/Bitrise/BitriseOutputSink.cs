@@ -21,7 +21,7 @@ namespace Nuke.Common.CI.Bitrise
         protected override string ErrorCode => "31;1";
         protected override string SuccessCode => "32;1";
 
-        internal override IDisposable WriteBlock(string text)
+        public override IDisposable WriteBlock(string text)
         {
             return DelegateDisposable.CreateBracket(
                 () => WriteNormal(FigletTransform.GetText(text, "ansi-shadow")));

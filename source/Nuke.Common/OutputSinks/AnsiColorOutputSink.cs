@@ -56,36 +56,36 @@ namespace Nuke.Common.OutputSinks
             return $"{ErrorSequence}{text}{ResetSequence}";
         }
 
-        internal override void WriteNormal(string text)
+        public override void WriteNormal(string text)
         {
             Console.WriteLine(text);
         }
 
-        internal override void WriteTrace(string text)
+        public override void WriteTrace(string text)
         {
             Console.WriteLine(FormatTrace(text));
         }
 
-        internal override void WriteInformation(string text)
+        public override void WriteInformation(string text)
         {
             Console.WriteLine(FormatInformation(text));
         }
 
-        protected override void WriteWarning(string text, string details = null)
+        public override void WriteWarning(string text, string details = null)
         {
             Console.WriteLine(FormatWarning(text));
             if (details != null)
                 Console.WriteLine(FormatWarning(details));
         }
 
-        protected override void WriteError(string text, string details = null)
+        public override void WriteError(string text, string details = null)
         {
             Console.WriteLine(FormatError(text));
             if (details != null)
                 Console.WriteLine(FormatError(details));
         }
 
-        internal override void WriteSuccess(string text)
+        public override void WriteSuccess(string text)
         {
             Console.WriteLine(FormatSuccess(text));
         }

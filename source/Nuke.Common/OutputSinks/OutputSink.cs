@@ -33,7 +33,7 @@ namespace Nuke.Common.OutputSinks
 
         internal readonly List<Tuple<LogLevel, string>> SevereMessages = new List<Tuple<LogLevel, string>>();
 
-        internal virtual IDisposable WriteBlock(string text)
+        public virtual IDisposable WriteBlock(string text)
         {
             return DelegateDisposable.CreateBracket(
                 () =>
@@ -59,7 +59,7 @@ namespace Nuke.Common.OutputSinks
             Logger.Normal("╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝");
         }
 
-        internal virtual void WriteSummary(NukeBuild build)
+        public virtual void WriteSummary(NukeBuild build)
         {
             if (SevereMessages.Count > 0)
             {
@@ -259,12 +259,12 @@ namespace Nuke.Common.OutputSinks
             WriteNormal(string.Empty);
         }
 
-        internal abstract void WriteNormal(string text);
-        internal abstract void WriteSuccess(string text);
-        internal abstract void WriteTrace(string text);
-        internal abstract void WriteInformation(string text);
+        public abstract void WriteNormal(string text);
+        public  abstract void WriteSuccess(string text);
+        public  abstract void WriteTrace(string text);
+        public  abstract void WriteInformation(string text);
 
-        protected abstract void WriteWarning(string text, string details = null);
-        protected abstract void WriteError(string text, string details = null);
+        public  abstract void WriteWarning(string text, string details = null);
+        public  abstract void WriteError(string text, string details = null);
     }
 }

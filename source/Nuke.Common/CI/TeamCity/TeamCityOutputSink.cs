@@ -29,7 +29,7 @@ namespace Nuke.Common.CI.TeamCity
         protected override string ErrorCode => "31";
         protected override string SuccessCode => "32";
 
-        internal override IDisposable WriteBlock(string text)
+        public override IDisposable WriteBlock(string text)
         {
             var stopWatch = new Stopwatch();
 
@@ -51,7 +51,7 @@ namespace Nuke.Common.CI.TeamCity
 
         protected override bool EnableWriteErrors => false;
 
-        protected override void WriteWarning(string text, string details = null)
+        public override void WriteWarning(string text, string details = null)
         {
             _teamCity.WriteWarning(text);
             if (details != null)

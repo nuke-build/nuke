@@ -28,7 +28,7 @@ namespace Nuke.Common.CI.GitLab
         protected override string ErrorCode => "31;1";
         protected override string SuccessCode => "32;1";
 
-        internal override IDisposable WriteBlock(string text)
+        public override IDisposable WriteBlock(string text)
         {
             return DelegateDisposable.CreateBracket(
                 () => _gitlab.BeginSection(text),
