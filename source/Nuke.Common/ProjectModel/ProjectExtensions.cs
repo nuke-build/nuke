@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Microsoft.Build.Evaluation.Context;
+using Nuke.Common.Utilities;
 using static Nuke.Common.Utilities.ReflectionUtility;
 
 namespace Nuke.Common.ProjectModel
@@ -74,6 +76,7 @@ namespace Nuke.Common.ProjectModel
             params string[] names)
         {
             var msbuildProject = project.GetMSBuildProject();
+            
             foreach (var name in names)
             {
                 var property = msbuildProject.GetProperty(name);
