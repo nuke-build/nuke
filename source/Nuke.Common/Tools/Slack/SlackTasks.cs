@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using Nuke.Common.Gitter;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.Slack
 {
@@ -66,7 +67,7 @@ namespace Nuke.Common.Tools.Slack
                     : "https://slack.com/api/chat.update",
                 message,
                 accessToken);
-            return response["ts"].NotNull().Value<string>();
+            return response.GetPropertyStringValue("ts");
         }
 
         private static async Task<JObject> PostMessage(string url, object message, string accessToken)
@@ -79,7 +80,10 @@ namespace Nuke.Common.Tools.Slack
             var responseContent = await response.Content.ReadAsStringAsync();
             ControlFlow.Assert(response.StatusCode == HttpStatusCode.OK, responseContent);
 
-            return SerializationTasks.JsonDeserialize<JObject>(responseContent);
+            var jobject = SerializationTasks.JsonDeserialize<JObject>(responseContent);
+            var error = jobject.GetPropertyValueOrNull<string>("error");
+            ControlFlow.Assert(error == null, error);
+            return jobject;
         }
     }
 }
