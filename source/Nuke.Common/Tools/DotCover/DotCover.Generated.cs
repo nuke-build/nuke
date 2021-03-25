@@ -4451,7 +4451,7 @@ namespace Nuke.Common.Tools.DotCover
         public static DotCoverReportType Xml = (DotCoverReportType) "Xml";
         public static DotCoverReportType DetailedXml = (DotCoverReportType) "DetailedXml";
         public static DotCoverReportType NDependXML = (DotCoverReportType) "NDependXML";
-        public static explicit operator DotCoverReportType(string value)
+        public static implicit operator DotCoverReportType(string value)
         {
             return new DotCoverReportType { Value = value };
         }

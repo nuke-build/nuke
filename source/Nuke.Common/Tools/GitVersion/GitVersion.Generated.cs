@@ -1282,7 +1282,7 @@ namespace Nuke.Common.Tools.GitVersion
     {
         public static GitVersionOutput json = (GitVersionOutput) "json";
         public static GitVersionOutput buildserver = (GitVersionOutput) "buildserver";
-        public static explicit operator GitVersionOutput(string value)
+        public static implicit operator GitVersionOutput(string value)
         {
             return new GitVersionOutput { Value = value };
         }
@@ -1303,7 +1303,7 @@ namespace Nuke.Common.Tools.GitVersion
         public static GitVersionVerbosity warn = (GitVersionVerbosity) "warn";
         public static GitVersionVerbosity error = (GitVersionVerbosity) "error";
         public static GitVersionVerbosity none = (GitVersionVerbosity) "none";
-        public static explicit operator GitVersionVerbosity(string value)
+        public static implicit operator GitVersionVerbosity(string value)
         {
             return new GitVersionVerbosity { Value = value };
         }

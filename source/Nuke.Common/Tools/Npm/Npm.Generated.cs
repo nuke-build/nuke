@@ -1198,7 +1198,7 @@ namespace Nuke.Common.Tools.Npm
     {
         public static NpmOnlyMode production = (NpmOnlyMode) "production";
         public static NpmOnlyMode development = (NpmOnlyMode) "development";
-        public static explicit operator NpmOnlyMode(string value)
+        public static implicit operator NpmOnlyMode(string value)
         {
             return new NpmOnlyMode { Value = value };
         }

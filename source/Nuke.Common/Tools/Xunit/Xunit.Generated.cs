@@ -1532,7 +1532,7 @@ namespace Nuke.Common.Tools.Xunit
         public static Xunit2ReporterType Quiet = (Xunit2ReporterType) "Quiet";
         public static Xunit2ReporterType TeamCity = (Xunit2ReporterType) "TeamCity";
         public static Xunit2ReporterType Verbose = (Xunit2ReporterType) "Verbose";
-        public static explicit operator Xunit2ReporterType(string value)
+        public static implicit operator Xunit2ReporterType(string value)
         {
             return new Xunit2ReporterType { Value = value };
         }
@@ -1552,7 +1552,7 @@ namespace Nuke.Common.Tools.Xunit
         public static Xunit2ResultFormat XmlV1 = (Xunit2ResultFormat) "XmlV1";
         public static Xunit2ResultFormat NUnit = (Xunit2ResultFormat) "NUnit";
         public static Xunit2ResultFormat HTML = (Xunit2ResultFormat) "HTML";
-        public static explicit operator Xunit2ResultFormat(string value)
+        public static implicit operator Xunit2ResultFormat(string value)
         {
             return new Xunit2ResultFormat { Value = value };
         }
@@ -1572,7 +1572,7 @@ namespace Nuke.Common.Tools.Xunit
         public static Xunit2ParallelOption collections = (Xunit2ParallelOption) "collections";
         public static Xunit2ParallelOption assemblies = (Xunit2ParallelOption) "assemblies";
         public static Xunit2ParallelOption all = (Xunit2ParallelOption) "all";
-        public static explicit operator Xunit2ParallelOption(string value)
+        public static implicit operator Xunit2ParallelOption(string value)
         {
             return new Xunit2ParallelOption { Value = value };
         }
@@ -1591,7 +1591,7 @@ namespace Nuke.Common.Tools.Xunit
         public static Xunit2AppDomainMode IfAvailable = (Xunit2AppDomainMode) "IfAvailable";
         public static Xunit2AppDomainMode Required = (Xunit2AppDomainMode) "Required";
         public static Xunit2AppDomainMode Denied = (Xunit2AppDomainMode) "Denied";
-        public static explicit operator Xunit2AppDomainMode(string value)
+        public static implicit operator Xunit2AppDomainMode(string value)
         {
             return new Xunit2AppDomainMode { Value = value };
         }

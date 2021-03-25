@@ -1664,7 +1664,7 @@ namespace Nuke.Common.Tools.SpecFlow
         public static SpecFlowToolIntegration VS2012 = (SpecFlowToolIntegration) "VS2012";
         public static SpecFlowToolIntegration VS2013 = (SpecFlowToolIntegration) "VS2013";
         public static SpecFlowToolIntegration TFS = (SpecFlowToolIntegration) "TFS";
-        public static explicit operator SpecFlowToolIntegration(string value)
+        public static implicit operator SpecFlowToolIntegration(string value)
         {
             return new SpecFlowToolIntegration { Value = value };
         }

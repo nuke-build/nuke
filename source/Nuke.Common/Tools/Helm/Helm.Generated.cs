@@ -22406,7 +22406,7 @@ namespace Nuke.Common.Tools.Helm
     {
         public static HelmOutputFormat json = (HelmOutputFormat) "json";
         public static HelmOutputFormat yaml = (HelmOutputFormat) "yaml";
-        public static explicit operator HelmOutputFormat(string value)
+        public static implicit operator HelmOutputFormat(string value)
         {
             return new HelmOutputFormat { Value = value };
         }

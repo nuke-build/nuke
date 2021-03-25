@@ -21970,7 +21970,7 @@ namespace Nuke.Common.Tools.Pulumi
         public static PulumiSecretsProvider azurekeyvault = (PulumiSecretsProvider) "azurekeyvault";
         public static PulumiSecretsProvider gcpkms = (PulumiSecretsProvider) "gcpkms";
         public static PulumiSecretsProvider hashivault = (PulumiSecretsProvider) "hashivault";
-        public static explicit operator PulumiSecretsProvider(string value)
+        public static implicit operator PulumiSecretsProvider(string value)
         {
             return new PulumiSecretsProvider { Value = value };
         }

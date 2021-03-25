@@ -920,7 +920,7 @@ namespace Nuke.Common.Tools.VSWhere
         public static VSWhereFormat text = (VSWhereFormat) "text";
         public static VSWhereFormat value = (VSWhereFormat) "value";
         public static VSWhereFormat xml = (VSWhereFormat) "xml";
-        public static explicit operator VSWhereFormat(string value)
+        public static implicit operator VSWhereFormat(string value)
         {
             return new VSWhereFormat { Value = value };
         }
