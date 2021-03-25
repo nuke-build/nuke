@@ -248,6 +248,7 @@ namespace Nuke.Common.CI.TeamCity
         protected virtual IEnumerable<TeamCityParameter> GetGlobalParameters(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
+                // TODO: except build.ExecutableTargets ?
                 .Except(relevantTargets.SelectMany(x => x.Requirements
                     .Where(y => !(y is Expression<Func<bool>>))
                     .Select(y => y.GetMemberInfo())))
