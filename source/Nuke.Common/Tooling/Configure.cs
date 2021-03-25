@@ -11,8 +11,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tooling
 {
-    public delegate T Configure<T>(T settings)
-        where T : new();
+    public delegate T Configure<T>(T settings);
 
     public delegate TSettings Configure<TSettings, in TValue>(TSettings settings, TValue value)
         where TSettings : new();
@@ -23,7 +22,6 @@ namespace Nuke.Common.Tooling
     public static class ConfigureExtensions
     {
         public static T InvokeSafe<T>([CanBeNull] this Configure<T> configurator, T obj)
-            where T : new()
         {
             return (configurator ?? (x => x)).Invoke(obj);
         }
