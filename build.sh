@@ -30,7 +30,8 @@ function FirstJsonValue {
 }
 
 # Print environment variables
-env | sort
+# WARNING: Make sure that secrets are actually scrambled in build log
+# env | sort
 
 # Check if any dotnet is installed
 if [[ -x "$(command -v dotnet)" ]]; then
