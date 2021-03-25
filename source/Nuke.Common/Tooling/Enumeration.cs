@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -46,6 +47,16 @@ namespace Nuke.Common.Tooling
         public static implicit operator string([CanBeNull] Enumeration value)
         {
             return value?.Value;
+        }
+
+        public static bool operator ==(Enumeration a, Enumeration b)
+        {
+            return EqualityComparer<Enumeration>.Default.Equals(a, b);
+        }
+
+        public static bool operator !=(Enumeration a, Enumeration b)
+        {
+            return !EqualityComparer<Enumeration>.Default.Equals(a, b);
         }
 
         protected bool Equals(Enumeration other)
