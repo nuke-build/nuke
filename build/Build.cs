@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.CI;
+using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
@@ -51,11 +52,15 @@ partial class Build
 
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
+    [CI] readonly AppVeyor AppVeyor;
     [CI] readonly GitHubActions GitHubActions;
 
     GitVersion GitVersion => From<IHazGitVersion>().Versioning;
     GitRepository GitRepository => From<IHazGitRepository>().GitRepository;
-    Solution Solution => From<IHazSolution>().Solution;
+
+    [Solution(GenerateProjects = true)] readonly Solution Solution;
+    Nuke.Common.ProjectModel.Solution IHazSolution.Solution => Solution;
+
     IHazTwitterCredentials TwitterCredentials => From<IHazTwitterCredentials>();
 
     AbsolutePath OutputDirectory => RootDirectory / "output";
@@ -76,11 +81,8 @@ partial class Build
             EnsureCleanDirectory(OutputDirectory);
         });
 
-    Project GlobalToolProject => Solution.GetProject("Nuke.GlobalTool");
-    Project MSBuildTasksProject => Solution.GetProject("Nuke.MSBuildTasks");
-
     IEnumerable<(Project Project, string Framework)> ICompile.PublishConfigurations =>
-        from project in new[] { GlobalToolProject, MSBuildTasksProject }
+        from project in new[] { Solution.Nuke_GlobalTool, Solution.Nuke_MSBuildTasks }
         from framework in project.GetTargetFrameworks()
         select (project, framework);
 
@@ -120,17 +122,19 @@ partial class Build
 
     Target IPublish.Publish => _ => _
         .Inherit<IPublish>()
-        .Consumes(From<IPack>().Pack);
-        // .Requires(() => IsOriginalRepository && GitRepository.IsOnMasterBranch() ||
-        //                 IsOriginalRepository && GitRepository.IsOnReleaseBranch() ||
-        //                 !IsOriginalRepository && GitRepository.IsOnDevelopBranch());
+        .Consumes(From<IPack>().Pack)
+        .Requires(() => IsOriginalRepository && (GitRepository.IsOnMasterBranch() || GitRepository.IsOnReleaseBranch()) ||
+                        !IsOriginalRepository)
+        // Note: temporary workaround for SignPath
+        .OnlyWhenStatic(() => AppVeyor == null || GitRepository.IsOnMasterBranch())
+        .WhenSkipped(DependencyBehavior.Execute);
 
     Target Install => _ => _
         .DependsOn<IPack>()
         .Executes(() =>
         {
-            SuppressErrors(() => DotNet($"tool uninstall -g {GlobalToolProject.Name}"));
-            DotNet($"tool install -g {GlobalToolProject.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
+            SuppressErrors(() => DotNet($"tool uninstall -g {Solution.Nuke_GlobalTool.Name}"));
+            DotNet($"tool install -g {Solution.Nuke_GlobalTool.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
         });
 
     T From<T>()

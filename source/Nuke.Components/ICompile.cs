@@ -10,6 +10,7 @@ using Nuke.Common;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 namespace Nuke.Components
@@ -33,6 +34,12 @@ namespace Nuke.Components
                             .SetProject(v.Project)
                             .SetFramework(v.Framework)),
                     PublishDegreeOfParallelism);
+
+                ReportSummary(_ => _
+                    .WhenNotNull(this as IHazGitVersion, (_, o) => _
+                        .AddPair("Version", o.Versioning.FullSemVer))
+                    .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _
+                        .AddPair("Version", o.Versioning.SemVer2)));
             });
 
         sealed Configure<DotNetBuildSettings> CompileSettingsBase => _ => _

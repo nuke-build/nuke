@@ -9,6 +9,7 @@ using System.Text;
 using Nuke.Common;
 using Nuke.Common.ChangeLog;
 using Nuke.Common.Git;
+using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities;
 using Nuke.Components;
@@ -24,6 +25,7 @@ partial class Build
     [Parameter] [Secret] readonly string GitHubToken;
     [Parameter] [Secret] readonly string GitterAuthToken;
     [Parameter] [Secret] readonly string SlackWebhook;
+    [Parameter] readonly string GitterRoomId;
 
     IEnumerable<string> ChangelogSectionNotes => ChangelogTasks.ExtractChangelogSectionNotes(From<IHazChangelog>().ChangelogFile);
 
@@ -56,22 +58,27 @@ partial class Build
             await client.Tweets.PublishTweetAsync(
                 new PublishTweetParameters
                 {
-                    Text = "🔥 Check out the new release! 🏗",
+                    Text = new[]
+                        {
+                            $"🔥 Check out the new {MajorMinorPatchVersion} release! 🏗",
+                            string.Empty,
+                            $"More information at 👉 {GitRepository.GetGitHubBrowseUrl(From<IHazChangelog>().ChangelogFile)}"
+                        }.JoinNewLine(),
                     Medias = new List<IMedia> { media }
                 });
 
             await SendSlackMessageAsync(_ => _
                     .SetText(new StringBuilder()
-                        .AppendLine($"<!here> :mega::shipit: *NUKE {GitVersion.SemVer} IS OUT!!!*")
+                        .AppendLine($"<!here> :mega::shipit: *NUKE {MajorMinorPatchVersion} IS OUT!!!*")
                         .AppendLine()
                         .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ")).JoinNewLine()).ToString()),
                 SlackWebhook);
 
             SendGitterMessage(new StringBuilder()
-                    .AppendLine($"@/all :mega::shipit: **NUKE {GitVersion.SemVer} IS OUT!!!**")
+                    .AppendLine($"@/all :mega::shipit: **NUKE {MajorMinorPatchVersion} IS OUT!!!**")
                     .AppendLine()
                     .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
-                "593f3dadd73408ce4f66db89",
+                GitterRoomId,
                 GitterAuthToken);
         });
 }
