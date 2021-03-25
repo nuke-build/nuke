@@ -43,6 +43,11 @@ namespace Nuke.Common.Tooling
     {
         protected string Value { get; set; }
 
+        public static implicit operator string([CanBeNull] Enumeration value)
+        {
+            return value?.Value;
+        }
+
         protected bool Equals(Enumeration other)
         {
             return string.Equals(Value, other.Value);
