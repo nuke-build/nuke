@@ -1144,7 +1144,7 @@ namespace Nuke.Common.Tools.VSTest
         public static VsTestPlatform x86 = (VsTestPlatform) "x86";
         public static VsTestPlatform x64 = (VsTestPlatform) "x64";
         public static VsTestPlatform ARM = (VsTestPlatform) "ARM";
-        public static explicit operator VsTestPlatform(string value)
+        public static implicit operator VsTestPlatform(string value)
         {
             return new VsTestPlatform { Value = value };
         }
@@ -1163,7 +1163,7 @@ namespace Nuke.Common.Tools.VSTest
         public static VsTestFramework Framework35 = (VsTestFramework) "Framework35";
         public static VsTestFramework Framework40 = (VsTestFramework) "Framework40";
         public static VsTestFramework Framework45 = (VsTestFramework) "Framework45";
-        public static explicit operator VsTestFramework(string value)
+        public static implicit operator VsTestFramework(string value)
         {
             return new VsTestFramework { Value = value };
         }

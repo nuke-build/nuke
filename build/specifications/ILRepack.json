@@ -171,7 +171,6 @@
             "format": "{value}",
             "help": "Primary and other assemblies to be merged."
           }
-
         ]
       }
     }

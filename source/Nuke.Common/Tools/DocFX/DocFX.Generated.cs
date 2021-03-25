@@ -8491,7 +8491,7 @@ namespace Nuke.Common.Tools.DocFX
         public static DocFXLogLevel Suggestion = (DocFXLogLevel) "Suggestion";
         public static DocFXLogLevel Warning = (DocFXLogLevel) "Warning";
         public static DocFXLogLevel Error = (DocFXLogLevel) "Error";
-        public static explicit operator DocFXLogLevel(string value)
+        public static implicit operator DocFXLogLevel(string value)
         {
             return new DocFXLogLevel { Value = value };
         }
@@ -8509,7 +8509,7 @@ namespace Nuke.Common.Tools.DocFX
     {
         public static DocFXTemplateCommand Export = (DocFXTemplateCommand) "Export";
         public static DocFXTemplateCommand List = (DocFXTemplateCommand) "List";
-        public static explicit operator DocFXTemplateCommand(string value)
+        public static implicit operator DocFXTemplateCommand(string value)
         {
             return new DocFXTemplateCommand { Value = value };
         }
