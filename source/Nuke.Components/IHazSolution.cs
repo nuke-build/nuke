@@ -14,8 +14,6 @@ namespace Nuke.Components
     [PublicAPI]
     public interface IHazSolution : INukeBuild
     {
-        [Required]
-        [Solution]
-        Solution Solution => TryGetValue(() => Solution);
+        [Solution] [Required] Solution Solution => TryGetValue(() => Solution);
     }
 }

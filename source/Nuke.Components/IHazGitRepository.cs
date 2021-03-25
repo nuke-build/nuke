@@ -14,8 +14,6 @@ namespace Nuke.Components
     [PublicAPI]
     public interface IHazGitRepository : INukeBuild
     {
-        [Required]
-        [GitRepository]
-        GitRepository GitRepository => TryGetValue(() => GitRepository);
+        [GitRepository] [Required] GitRepository GitRepository => TryGetValue(() => GitRepository);
     }
 }

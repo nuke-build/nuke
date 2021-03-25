@@ -14,8 +14,6 @@ namespace Nuke.Components
     [PublicAPI]
     public interface IHazNerdbankGitVersioning
     {
-        [Required]
-        [NerdbankGitVersioning]
-        NerdbankGitVersioning Versioning => TryGetValue(() => Versioning);
+        [NerdbankGitVersioning] [Required] NerdbankGitVersioning Versioning => TryGetValue(() => Versioning);
     }
 }

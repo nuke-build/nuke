@@ -5,53 +5,52 @@
 #if ENTERPRISE
 
 using System;
+using Nuke.Common;
 using Nuke.Common.CI.AppVeyor;
-using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.CI.TeamCity;
-using Nuke.Common.Utilities;
+using Nuke.Common.Git;
 using Nuke.Enterprise.Auditing;
 using Nuke.Enterprise.Notifications;
 
 [AuditBuildMembers(
     DeclaringTypes = new[] { typeof(Build) },
     Members = new[] { nameof(RootDirectory), nameof(Host), nameof(Verbosity) })]
-// [CustomNotifySlack(ReportBuilds = BuildReporting.OnlyFailing)]
-partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken
+[DeploymentSlackNotification]
+[BuildStatusSlackNotification]
+partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazGitHubAccessToken
 {
-    const string SlackGeneral = "C9Q99MFU0";
+    string IHazGitHubAccessToken.AccessToken => GitHubToken;
 
-    public class CustomNotifySlackAttribute : NotifySlackAttribute
+    public class DeploymentSlackNotificationAttribute : SlackNotificationAttribute
     {
+        public override bool ReportBuildAlways => Host is AppVeyor { ProjectSlug: "nuke-deployment" };
+
         public override string ReceiverId => Host switch
         {
-            AppVeyor appveyor => appveyor.JobName.TrimStart("Image: ") switch
-            {
-                "Visual Studio 2019" => "C01ML0PRVST",
-                "Ubuntu1804" => "C01N0PFG73L",
-                _ => throw new Exception(appveyor.JobName)
-            },
-            GitHubActions actions => actions.GitHubJob switch
-            {
-                "windows-latest" => "C01NDCGA12M",
-                "macOS-latest" => "C01ML0NMPAB",
-                "ubuntu-latest" => "C01N6UACLG4",
-                _ => throw new Exception(actions.GitHubJob)
-            },
-            AzurePipelines pipelines => pipelines.StageName switch
-            {
-                "windows_latest" => "C01NDV8HVNV",
-                "macOS_latest" => "C01MUHCL03Y",
-                "ubuntu_latest" => "C01N7FNN9E0",
-                _ => throw new Exception(pipelines.StageName)
-            },
-            TeamCity teamcity => "C01NR66S62U",
+            AppVeyor { ProjectSlug: "nuke-deployment", RepositoryBranch: "master" } => "C01SNUZL50V",
+            AppVeyor { ProjectSlug: "nuke-deployment" } => "G01HT7MCQ2D",
             _ => null
         };
+    }
 
-        public override bool Distributed => Host is
-            Nuke.Common.CI.TeamCity.TeamCity or
-            Nuke.Common.CI.AzurePipelines.AzurePipelines;
+    public class BuildStatusSlackNotificationAttribute : SlackNotificationAttribute
+    {
+        public override bool ReportBuildAlways => true;
+        public override string ReceiverId => Host is GitHubActions _ or AppVeyor _ ? "U9S0MU8A3" : null;
+        public override bool ShowCommits => false;
+        public override bool ShowTargets => false;
+
+        public override string Timestamp => Host switch
+        {
+            AppVeyor { ProjectSlug: "nuke-continuous", JobName: "Image: Visual Studio 2019" } => "1617073137.006600",
+            AppVeyor { ProjectSlug: "nuke-continuous", JobName: "Image: Ubuntu1804" } => "1617073148.007000",
+            GitHubActions { GitHubJob: "windows-latest" } => "1617073157.007100",
+            GitHubActions { GitHubJob: "macOS-latest" } => "1617073163.007200",
+            GitHubActions { GitHubJob: "ubuntu-latest" } => "1617073169.007300",
+            _ => throw new NotSupportedException(Host.ToString())
+        };
+
+        public override bool ShouldNotify(NukeBuild build) => ((Build) build).GitRepository.IsOnDevelopBranch();
     }
 }
 #endif

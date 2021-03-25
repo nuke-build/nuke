@@ -91,10 +91,21 @@ namespace Nuke.Components
                     OrganizationId,
                     ProjectSlug,
                     PolicySlug);
-                await DownloadSignedArtifactFromUrl(
-                    ApiToken,
-                    signingRequestUrl,
-                    SignPathResponseArchive);
+
+                ReportSummary(_ => _
+                    .AddPair("Approve/Deny Request", signingRequestUrl.Replace("api/v1", "Web")));
+
+                try
+                {
+                    await DownloadSignedArtifactFromUrl(
+                        ApiToken,
+                        signingRequestUrl,
+                        SignPathResponseArchive);
+                }
+                finally
+                {
+                    ReportSummary(_ => _);
+                }
 
                 UncompressZip(SignPathResponseArchive, SignPathResponseDirectory);
 

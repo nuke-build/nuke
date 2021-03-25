@@ -19,7 +19,6 @@ namespace Nuke.Components
         AbsolutePath DupFinderReportFile => ReportDirectory / "dupfinder.xml";
 
         Target ReportDuplicates => _ => _
-            .TryDependentFor<IPublish>()
             .TryAfter<ITest>()
             .Executes(() =>
             {
