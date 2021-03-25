@@ -37,7 +37,7 @@ namespace Nuke.CodeGeneration.Generators
                     .ForEach(enumeration.Values,
                         x => w.WriteLine(
                             $"public static {enumeration.Name} {GetIdentifier(x).EscapeProperty()} = ({enumeration.Name}) {x.DoubleQuote()};"))
-                    .WriteLine($"public static explicit operator {enumeration.Name}(string value)")
+                    .WriteLine($"public static implicit operator {enumeration.Name}(string value)")
                     .WriteBlock(w2 => w2
                         .WriteLine($"return new {enumeration.Name} {{ Value = value }};")))
                 .WriteLine("#endregion");
