@@ -1,0 +1,22 @@
+---
+format_version: '2'
+default_step_lib_source: 'https://github.com/bitrise-io/bitrise-steplib.git'
+project_type: other
+trigger_map:
+  - push_branch: develop
+    workflow: continuous
+workflows:
+  continuous:
+    steps:
+      - activate-ssh-key@4:
+          run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | ne ""}}'
+      - script:
+          title: Run build.sh
+          inputs:
+            - content: |-
+                #!/bin/bash
+                set -e
+                set -x
+                git clone ${GIT_REPOSITORY_URL} . --branch ${BITRISE_GIT_BRANCH}
+                git reset --hard ${BITRISE_GIT_COMMIT}
+                ./build.sh test pack
