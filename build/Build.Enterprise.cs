@@ -16,8 +16,10 @@ using Nuke.Enterprise.Notifications;
     DeclaringTypes = new[] { typeof(Build) },
     Members = new[] { nameof(RootDirectory), nameof(Host), nameof(Verbosity) })]
 [CustomNotifySlack(ReportBuildFailed = true, ReportBuildStatusChanged = true)]
-partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken
+partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazGitHubAccessToken
 {
+    string IHazGitHubAccessToken.AccessToken => GitHubToken;
+
     public class CustomNotifySlackAttribute : NotifySlackAttribute
     {
         public override bool ReportBuildSucceeded => Host is AppVeyor { ProjectSlug: "nuke-deployment" };
