@@ -9951,6 +9951,162 @@ namespace Nuke.Common.Tools.Docker
             return configurator.Invoke(DockerBuilderBuild, DockerLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary>
+        ///   <p>Build an image from a Dockerfile using Docker Buildx plugin.</p>
+        ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerBuildxBuildSettings.CliSettings"/></li>
+        ///     <li><c>&lt;path&gt;</c> via <see cref="DockerBuildxBuildSettings.Path"/></li>
+        ///     <li><c>--add-host</c> via <see cref="DockerBuildxBuildSettings.AddHost"/></li>
+        ///     <li><c>--allow</c> via <see cref="DockerBuildxBuildSettings.Allow"/></li>
+        ///     <li><c>--build-arg</c> via <see cref="DockerBuildxBuildSettings.BuildArg"/></li>
+        ///     <li><c>--builder</c> via <see cref="DockerBuildxBuildSettings.Builder"/></li>
+        ///     <li><c>--cache-from</c> via <see cref="DockerBuildxBuildSettings.CacheFrom"/></li>
+        ///     <li><c>--cache-to</c> via <see cref="DockerBuildxBuildSettings.CacheTo"/></li>
+        ///     <li><c>--cgroup-parent</c> via <see cref="DockerBuildxBuildSettings.CgroupParent"/></li>
+        ///     <li><c>--compress</c> via <see cref="DockerBuildxBuildSettings.Compress"/></li>
+        ///     <li><c>--cpu-period</c> via <see cref="DockerBuildxBuildSettings.CpuPeriod"/></li>
+        ///     <li><c>--cpu-quota</c> via <see cref="DockerBuildxBuildSettings.CpuQuota"/></li>
+        ///     <li><c>--cpu-shares</c> via <see cref="DockerBuildxBuildSettings.CpuShares"/></li>
+        ///     <li><c>--cpuset-cpus</c> via <see cref="DockerBuildxBuildSettings.CpusetCpus"/></li>
+        ///     <li><c>--cpuset-mems</c> via <see cref="DockerBuildxBuildSettings.CpusetMems"/></li>
+        ///     <li><c>--file</c> via <see cref="DockerBuildxBuildSettings.File"/></li>
+        ///     <li><c>--iidfile</c> via <see cref="DockerBuildxBuildSettings.Iidfile"/></li>
+        ///     <li><c>--isolation</c> via <see cref="DockerBuildxBuildSettings.Isolation"/></li>
+        ///     <li><c>--label</c> via <see cref="DockerBuildxBuildSettings.Label"/></li>
+        ///     <li><c>--load</c> via <see cref="DockerBuildxBuildSettings.Load"/></li>
+        ///     <li><c>--memory</c> via <see cref="DockerBuildxBuildSettings.Memory"/></li>
+        ///     <li><c>--memory-swap</c> via <see cref="DockerBuildxBuildSettings.MemorySwap"/></li>
+        ///     <li><c>--network</c> via <see cref="DockerBuildxBuildSettings.Network"/></li>
+        ///     <li><c>--no-cache</c> via <see cref="DockerBuildxBuildSettings.NoCache"/></li>
+        ///     <li><c>--output</c> via <see cref="DockerBuildxBuildSettings.Output"/></li>
+        ///     <li><c>--platform</c> via <see cref="DockerBuildxBuildSettings.Platform"/></li>
+        ///     <li><c>--progress</c> via <see cref="DockerBuildxBuildSettings.Progress"/></li>
+        ///     <li><c>--pull</c> via <see cref="DockerBuildxBuildSettings.Pull"/></li>
+        ///     <li><c>--push</c> via <see cref="DockerBuildxBuildSettings.Push"/></li>
+        ///     <li><c>--quiet</c> via <see cref="DockerBuildxBuildSettings.Quiet"/></li>
+        ///     <li><c>--rm</c> via <see cref="DockerBuildxBuildSettings.Rm"/></li>
+        ///     <li><c>--secret</c> via <see cref="DockerBuildxBuildSettings.Secret"/></li>
+        ///     <li><c>--security-opt</c> via <see cref="DockerBuildxBuildSettings.SecurityOpt"/></li>
+        ///     <li><c>--shm-size</c> via <see cref="DockerBuildxBuildSettings.ShmSize"/></li>
+        ///     <li><c>--ssh</c> via <see cref="DockerBuildxBuildSettings.Ssh"/></li>
+        ///     <li><c>--tag</c> via <see cref="DockerBuildxBuildSettings.Tag"/></li>
+        ///     <li><c>--target</c> via <see cref="DockerBuildxBuildSettings.Target"/></li>
+        ///     <li><c>--ulimit</c> via <see cref="DockerBuildxBuildSettings.Ulimit"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DockerBuildxBuild(DockerBuildxBuildSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new DockerBuildxBuildSettings();
+            using var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Build an image from a Dockerfile using Docker Buildx plugin.</p>
+        ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerBuildxBuildSettings.CliSettings"/></li>
+        ///     <li><c>&lt;path&gt;</c> via <see cref="DockerBuildxBuildSettings.Path"/></li>
+        ///     <li><c>--add-host</c> via <see cref="DockerBuildxBuildSettings.AddHost"/></li>
+        ///     <li><c>--allow</c> via <see cref="DockerBuildxBuildSettings.Allow"/></li>
+        ///     <li><c>--build-arg</c> via <see cref="DockerBuildxBuildSettings.BuildArg"/></li>
+        ///     <li><c>--builder</c> via <see cref="DockerBuildxBuildSettings.Builder"/></li>
+        ///     <li><c>--cache-from</c> via <see cref="DockerBuildxBuildSettings.CacheFrom"/></li>
+        ///     <li><c>--cache-to</c> via <see cref="DockerBuildxBuildSettings.CacheTo"/></li>
+        ///     <li><c>--cgroup-parent</c> via <see cref="DockerBuildxBuildSettings.CgroupParent"/></li>
+        ///     <li><c>--compress</c> via <see cref="DockerBuildxBuildSettings.Compress"/></li>
+        ///     <li><c>--cpu-period</c> via <see cref="DockerBuildxBuildSettings.CpuPeriod"/></li>
+        ///     <li><c>--cpu-quota</c> via <see cref="DockerBuildxBuildSettings.CpuQuota"/></li>
+        ///     <li><c>--cpu-shares</c> via <see cref="DockerBuildxBuildSettings.CpuShares"/></li>
+        ///     <li><c>--cpuset-cpus</c> via <see cref="DockerBuildxBuildSettings.CpusetCpus"/></li>
+        ///     <li><c>--cpuset-mems</c> via <see cref="DockerBuildxBuildSettings.CpusetMems"/></li>
+        ///     <li><c>--file</c> via <see cref="DockerBuildxBuildSettings.File"/></li>
+        ///     <li><c>--iidfile</c> via <see cref="DockerBuildxBuildSettings.Iidfile"/></li>
+        ///     <li><c>--isolation</c> via <see cref="DockerBuildxBuildSettings.Isolation"/></li>
+        ///     <li><c>--label</c> via <see cref="DockerBuildxBuildSettings.Label"/></li>
+        ///     <li><c>--load</c> via <see cref="DockerBuildxBuildSettings.Load"/></li>
+        ///     <li><c>--memory</c> via <see cref="DockerBuildxBuildSettings.Memory"/></li>
+        ///     <li><c>--memory-swap</c> via <see cref="DockerBuildxBuildSettings.MemorySwap"/></li>
+        ///     <li><c>--network</c> via <see cref="DockerBuildxBuildSettings.Network"/></li>
+        ///     <li><c>--no-cache</c> via <see cref="DockerBuildxBuildSettings.NoCache"/></li>
+        ///     <li><c>--output</c> via <see cref="DockerBuildxBuildSettings.Output"/></li>
+        ///     <li><c>--platform</c> via <see cref="DockerBuildxBuildSettings.Platform"/></li>
+        ///     <li><c>--progress</c> via <see cref="DockerBuildxBuildSettings.Progress"/></li>
+        ///     <li><c>--pull</c> via <see cref="DockerBuildxBuildSettings.Pull"/></li>
+        ///     <li><c>--push</c> via <see cref="DockerBuildxBuildSettings.Push"/></li>
+        ///     <li><c>--quiet</c> via <see cref="DockerBuildxBuildSettings.Quiet"/></li>
+        ///     <li><c>--rm</c> via <see cref="DockerBuildxBuildSettings.Rm"/></li>
+        ///     <li><c>--secret</c> via <see cref="DockerBuildxBuildSettings.Secret"/></li>
+        ///     <li><c>--security-opt</c> via <see cref="DockerBuildxBuildSettings.SecurityOpt"/></li>
+        ///     <li><c>--shm-size</c> via <see cref="DockerBuildxBuildSettings.ShmSize"/></li>
+        ///     <li><c>--ssh</c> via <see cref="DockerBuildxBuildSettings.Ssh"/></li>
+        ///     <li><c>--tag</c> via <see cref="DockerBuildxBuildSettings.Tag"/></li>
+        ///     <li><c>--target</c> via <see cref="DockerBuildxBuildSettings.Target"/></li>
+        ///     <li><c>--ulimit</c> via <see cref="DockerBuildxBuildSettings.Ulimit"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> DockerBuildxBuild(Configure<DockerBuildxBuildSettings> configurator)
+        {
+            return DockerBuildxBuild(configurator(new DockerBuildxBuildSettings()));
+        }
+        /// <summary>
+        ///   <p>Build an image from a Dockerfile using Docker Buildx plugin.</p>
+        ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerBuildxBuildSettings.CliSettings"/></li>
+        ///     <li><c>&lt;path&gt;</c> via <see cref="DockerBuildxBuildSettings.Path"/></li>
+        ///     <li><c>--add-host</c> via <see cref="DockerBuildxBuildSettings.AddHost"/></li>
+        ///     <li><c>--allow</c> via <see cref="DockerBuildxBuildSettings.Allow"/></li>
+        ///     <li><c>--build-arg</c> via <see cref="DockerBuildxBuildSettings.BuildArg"/></li>
+        ///     <li><c>--builder</c> via <see cref="DockerBuildxBuildSettings.Builder"/></li>
+        ///     <li><c>--cache-from</c> via <see cref="DockerBuildxBuildSettings.CacheFrom"/></li>
+        ///     <li><c>--cache-to</c> via <see cref="DockerBuildxBuildSettings.CacheTo"/></li>
+        ///     <li><c>--cgroup-parent</c> via <see cref="DockerBuildxBuildSettings.CgroupParent"/></li>
+        ///     <li><c>--compress</c> via <see cref="DockerBuildxBuildSettings.Compress"/></li>
+        ///     <li><c>--cpu-period</c> via <see cref="DockerBuildxBuildSettings.CpuPeriod"/></li>
+        ///     <li><c>--cpu-quota</c> via <see cref="DockerBuildxBuildSettings.CpuQuota"/></li>
+        ///     <li><c>--cpu-shares</c> via <see cref="DockerBuildxBuildSettings.CpuShares"/></li>
+        ///     <li><c>--cpuset-cpus</c> via <see cref="DockerBuildxBuildSettings.CpusetCpus"/></li>
+        ///     <li><c>--cpuset-mems</c> via <see cref="DockerBuildxBuildSettings.CpusetMems"/></li>
+        ///     <li><c>--file</c> via <see cref="DockerBuildxBuildSettings.File"/></li>
+        ///     <li><c>--iidfile</c> via <see cref="DockerBuildxBuildSettings.Iidfile"/></li>
+        ///     <li><c>--isolation</c> via <see cref="DockerBuildxBuildSettings.Isolation"/></li>
+        ///     <li><c>--label</c> via <see cref="DockerBuildxBuildSettings.Label"/></li>
+        ///     <li><c>--load</c> via <see cref="DockerBuildxBuildSettings.Load"/></li>
+        ///     <li><c>--memory</c> via <see cref="DockerBuildxBuildSettings.Memory"/></li>
+        ///     <li><c>--memory-swap</c> via <see cref="DockerBuildxBuildSettings.MemorySwap"/></li>
+        ///     <li><c>--network</c> via <see cref="DockerBuildxBuildSettings.Network"/></li>
+        ///     <li><c>--no-cache</c> via <see cref="DockerBuildxBuildSettings.NoCache"/></li>
+        ///     <li><c>--output</c> via <see cref="DockerBuildxBuildSettings.Output"/></li>
+        ///     <li><c>--platform</c> via <see cref="DockerBuildxBuildSettings.Platform"/></li>
+        ///     <li><c>--progress</c> via <see cref="DockerBuildxBuildSettings.Progress"/></li>
+        ///     <li><c>--pull</c> via <see cref="DockerBuildxBuildSettings.Pull"/></li>
+        ///     <li><c>--push</c> via <see cref="DockerBuildxBuildSettings.Push"/></li>
+        ///     <li><c>--quiet</c> via <see cref="DockerBuildxBuildSettings.Quiet"/></li>
+        ///     <li><c>--rm</c> via <see cref="DockerBuildxBuildSettings.Rm"/></li>
+        ///     <li><c>--secret</c> via <see cref="DockerBuildxBuildSettings.Secret"/></li>
+        ///     <li><c>--security-opt</c> via <see cref="DockerBuildxBuildSettings.SecurityOpt"/></li>
+        ///     <li><c>--shm-size</c> via <see cref="DockerBuildxBuildSettings.ShmSize"/></li>
+        ///     <li><c>--ssh</c> via <see cref="DockerBuildxBuildSettings.Ssh"/></li>
+        ///     <li><c>--tag</c> via <see cref="DockerBuildxBuildSettings.Tag"/></li>
+        ///     <li><c>--target</c> via <see cref="DockerBuildxBuildSettings.Target"/></li>
+        ///     <li><c>--ulimit</c> via <see cref="DockerBuildxBuildSettings.Ulimit"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(DockerBuildxBuildSettings Settings, IReadOnlyCollection<Output> Output)> DockerBuildxBuild(CombinatorialConfigure<DockerBuildxBuildSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(DockerBuildxBuild, DockerLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
         ///   <p>Display a live stream of container(s) resource usage statistics.</p>
         ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
         /// </summary>
@@ -21310,6 +21466,222 @@ namespace Nuke.Common.Tools.Docker
         }
     }
     #endregion
+    #region DockerBuildxBuildSettings
+    /// <summary>
+    ///   Used within <see cref="DockerTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DockerBuildxBuildSettings : DockerSettings
+    {
+        /// <summary>
+        ///   Path to the Docker executable.
+        /// </summary>
+        public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+        public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
+        /// <summary>
+        ///   Add a custom host-to-IP mapping <c>host:ip</c>.
+        /// </summary>
+        public virtual IReadOnlyList<string> AddHost => AddHostInternal.AsReadOnly();
+        internal List<string> AddHostInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Allow extra privileged entitlement, e.g. <c>network.host</c>, <c>security.insecure</c>.
+        /// </summary>
+        public virtual IReadOnlyList<string> Allow => AllowInternal.AsReadOnly();
+        internal List<string> AllowInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Set build-time variables.
+        /// </summary>
+        public virtual IReadOnlyList<string> BuildArg => BuildArgInternal.AsReadOnly();
+        internal List<string> BuildArgInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Override the configured builder instance.
+        /// </summary>
+        public virtual string Builder { get; internal set; }
+        /// <summary>
+        ///   External cache sources (eg. <c>user/app:cache, type=local,src=path/to/dir</c>).
+        /// </summary>
+        public virtual IReadOnlyList<string> CacheFrom => CacheFromInternal.AsReadOnly();
+        internal List<string> CacheFromInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Cache export destinations (eg. <c>user/app:cache, type=local,dest=path/to/dir</c>)
+        /// </summary>
+        public virtual IReadOnlyList<string> CacheTo => CacheToInternal.AsReadOnly();
+        internal List<string> CacheToInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Optional parent cgroup for the container.
+        /// </summary>
+        public virtual string CgroupParent { get; internal set; }
+        /// <summary>
+        ///   Compress the build context using gzip.
+        /// </summary>
+        public virtual bool? Compress { get; internal set; }
+        /// <summary>
+        ///   Limit the CPU CFS (Completely Fair Scheduler) period.
+        /// </summary>
+        public virtual long? CpuPeriod { get; internal set; }
+        /// <summary>
+        ///   Limit the CPU CFS (Completely Fair Scheduler) quota.
+        /// </summary>
+        public virtual long? CpuQuota { get; internal set; }
+        /// <summary>
+        ///   CPU shares (relative weight).
+        /// </summary>
+        public virtual long? CpuShares { get; internal set; }
+        /// <summary>
+        ///   CPUs in which to allow execution (<c>0-3</c>, <c>0,1</c>).
+        /// </summary>
+        public virtual string CpusetCpus { get; internal set; }
+        /// <summary>
+        ///   MEMs in which to allow execution (<c>0-3</c>, <c>0,1</c>).
+        /// </summary>
+        public virtual string CpusetMems { get; internal set; }
+        /// <summary>
+        ///   Name of the Dockerfile (Default is <c>PATH/Dockerfile</c>).
+        /// </summary>
+        public virtual string File { get; internal set; }
+        /// <summary>
+        ///   Write the image ID to the file.
+        /// </summary>
+        public virtual string Iidfile { get; internal set; }
+        /// <summary>
+        ///   Container isolation technology.
+        /// </summary>
+        public virtual string Isolation { get; internal set; }
+        /// <summary>
+        ///   Set metadata for an image.
+        /// </summary>
+        public virtual IReadOnlyList<string> Label => LabelInternal.AsReadOnly();
+        internal List<string> LabelInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Shorthand for <c>--output=type=docker</c>
+        /// </summary>
+        public virtual bool? Load { get; internal set; }
+        /// <summary>
+        ///   Memory limit.
+        /// </summary>
+        public virtual long? Memory { get; internal set; }
+        /// <summary>
+        ///   Swap limit equal to memory plus swap: <c>-1</c> to enable unlimited swap.
+        /// </summary>
+        public virtual long? MemorySwap { get; internal set; }
+        /// <summary>
+        ///   Set the networking mode for the <c>RUN</c> instructions during build.
+        /// </summary>
+        public virtual string Network { get; internal set; }
+        /// <summary>
+        ///   Do not use cache when building the image.
+        /// </summary>
+        public virtual bool? NoCache { get; internal set; }
+        /// <summary>
+        ///   Output destination (format: <c>type=local,dest=path</c>).
+        /// </summary>
+        public virtual string Output { get; internal set; }
+        /// <summary>
+        ///   Set platform if server is multi-platform capable.
+        /// </summary>
+        public virtual string Platform { get; internal set; }
+        /// <summary>
+        ///   Set type of progress output (<c>auto</c>, <c>plain</c>, <c>tty</c>). Use plain to show container output.
+        /// </summary>
+        public virtual ProgressType Progress { get; internal set; }
+        /// <summary>
+        ///   Always attempt to pull a newer version of the image.
+        /// </summary>
+        public virtual bool? Pull { get; internal set; }
+        /// <summary>
+        ///   Shorthand for <c>--output=type=registry</c>
+        /// </summary>
+        public virtual bool? Push { get; internal set; }
+        /// <summary>
+        ///   Suppress the build output and print image ID on success.
+        /// </summary>
+        public virtual bool? Quiet { get; internal set; }
+        /// <summary>
+        ///   Remove intermediate containers after a successful build.
+        /// </summary>
+        public virtual bool? Rm { get; internal set; }
+        /// <summary>
+        ///   Secret file to expose to the build (only if BuildKit enabled): <c>id=mysecret,src=/local/secret</c>.
+        /// </summary>
+        public virtual string Secret { get; internal set; }
+        /// <summary>
+        ///   Security options.
+        /// </summary>
+        public virtual IReadOnlyList<string> SecurityOpt => SecurityOptInternal.AsReadOnly();
+        internal List<string> SecurityOptInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Size of <c>/dev/shm</c>.
+        /// </summary>
+        public virtual long? ShmSize { get; internal set; }
+        /// <summary>
+        ///   SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|&lt;id&gt;[=&lt;socket&gt;|&lt;key&gt;[,&lt;key&gt;]]).
+        /// </summary>
+        public virtual string Ssh { get; internal set; }
+        /// <summary>
+        ///   Name and optionally a tag in the <c>name:tag</c> format.
+        /// </summary>
+        public virtual IReadOnlyList<string> Tag => TagInternal.AsReadOnly();
+        internal List<string> TagInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Set the target build stage to build.
+        /// </summary>
+        public virtual string Target { get; internal set; }
+        /// <summary>
+        ///   Ulimit options.
+        /// </summary>
+        public virtual string Ulimit { get; internal set; }
+        /// <summary>
+        ///   Path or url where the build context is located.
+        /// </summary>
+        public virtual string Path { get; internal set; }
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
+        {
+            arguments
+              .Add("buildx build")
+              .Add("--add-host {value}", AddHost)
+              .Add("--allow  {value}", Allow)
+              .Add("--build-arg {value}", BuildArg)
+              .Add("--builder {value}", Builder)
+              .Add("--cache-from {value}", CacheFrom)
+              .Add("--cache-to {value}", CacheTo)
+              .Add("--cgroup-parent {value}", CgroupParent)
+              .Add("--compress", Compress)
+              .Add("--cpu-period {value}", CpuPeriod)
+              .Add("--cpu-quota {value}", CpuQuota)
+              .Add("--cpu-shares {value}", CpuShares)
+              .Add("--cpuset-cpus {value}", CpusetCpus)
+              .Add("--cpuset-mems {value}", CpusetMems)
+              .Add("--file {value}", File)
+              .Add("--iidfile {value}", Iidfile)
+              .Add("--isolation {value}", Isolation)
+              .Add("--label {value}", Label)
+              .Add("--load", Load)
+              .Add("--memory {value}", Memory)
+              .Add("--memory-swap {value}", MemorySwap)
+              .Add("--network {value}", Network)
+              .Add("--no-cache", NoCache)
+              .Add("--output {value}", Output)
+              .Add("--platform {value}", Platform)
+              .Add("--progress {value}", Progress)
+              .Add("--pull", Pull)
+              .Add("--push", Push)
+              .Add("--quiet", Quiet)
+              .Add("--rm", Rm)
+              .Add("--secret {value}", Secret)
+              .Add("--security-opt {value}", SecurityOpt)
+              .Add("--shm-size {value}", ShmSize)
+              .Add("--ssh {value}", Ssh)
+              .Add("--tag {value}", Tag)
+              .Add("--target {value}", Target)
+              .Add("--ulimit {value}", Ulimit)
+              .Add("{value}", Path)
+              .Add("{value}", GetCliSettings(), customValue: true);
+            return base.ConfigureProcessArguments(arguments);
+        }
+    }
+    #endregion
     #region DockerStatsSettings
     /// <summary>
     ///   Used within <see cref="DockerTasks"/>.
@@ -22942,9 +23314,9 @@ namespace Nuke.Common.Tools.Docker
         /// </summary>
         public virtual string Platform { get; internal set; }
         /// <summary>
-        ///   Set type of progress output (auto, plain, tty). Use plain to show container output.
+        ///   Set type of progress output (<c>auto</c>, <c>plain</c>, <c>tty</c>). Use plain to show container output.
         /// </summary>
-        public virtual string Progress { get; internal set; }
+        public virtual ProgressType Progress { get; internal set; }
         /// <summary>
         ///   Always attempt to pull a newer version of the image.
         /// </summary>
@@ -72183,6 +72555,1591 @@ namespace Nuke.Common.Tools.Docker
         #endregion
     }
     #endregion
+    #region DockerBuildxBuildSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="DockerTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DockerBuildxBuildSettingsExtensions
+    {
+        #region AddHost
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.AddHost"/> to a new list</em></p>
+        ///   <p>Add a custom host-to-IP mapping <c>host:ip</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAddHost<T>(this T toolSettings, params string[] addHost) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AddHostInternal = addHost.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.AddHost"/> to a new list</em></p>
+        ///   <p>Add a custom host-to-IP mapping <c>host:ip</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAddHost<T>(this T toolSettings, IEnumerable<string> addHost) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AddHostInternal = addHost.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.AddHost"/></em></p>
+        ///   <p>Add a custom host-to-IP mapping <c>host:ip</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAddHost<T>(this T toolSettings, params string[] addHost) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AddHostInternal.AddRange(addHost);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.AddHost"/></em></p>
+        ///   <p>Add a custom host-to-IP mapping <c>host:ip</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAddHost<T>(this T toolSettings, IEnumerable<string> addHost) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AddHostInternal.AddRange(addHost);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DockerBuildxBuildSettings.AddHost"/></em></p>
+        ///   <p>Add a custom host-to-IP mapping <c>host:ip</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearAddHost<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AddHostInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.AddHost"/></em></p>
+        ///   <p>Add a custom host-to-IP mapping <c>host:ip</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveAddHost<T>(this T toolSettings, params string[] addHost) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(addHost);
+            toolSettings.AddHostInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.AddHost"/></em></p>
+        ///   <p>Add a custom host-to-IP mapping <c>host:ip</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveAddHost<T>(this T toolSettings, IEnumerable<string> addHost) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(addHost);
+            toolSettings.AddHostInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Allow
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Allow"/> to a new list</em></p>
+        ///   <p>Allow extra privileged entitlement, e.g. <c>network.host</c>, <c>security.insecure</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAllow<T>(this T toolSettings, params string[] allow) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowInternal = allow.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Allow"/> to a new list</em></p>
+        ///   <p>Allow extra privileged entitlement, e.g. <c>network.host</c>, <c>security.insecure</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAllow<T>(this T toolSettings, IEnumerable<string> allow) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowInternal = allow.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.Allow"/></em></p>
+        ///   <p>Allow extra privileged entitlement, e.g. <c>network.host</c>, <c>security.insecure</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAllow<T>(this T toolSettings, params string[] allow) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowInternal.AddRange(allow);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.Allow"/></em></p>
+        ///   <p>Allow extra privileged entitlement, e.g. <c>network.host</c>, <c>security.insecure</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAllow<T>(this T toolSettings, IEnumerable<string> allow) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowInternal.AddRange(allow);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DockerBuildxBuildSettings.Allow"/></em></p>
+        ///   <p>Allow extra privileged entitlement, e.g. <c>network.host</c>, <c>security.insecure</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearAllow<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.Allow"/></em></p>
+        ///   <p>Allow extra privileged entitlement, e.g. <c>network.host</c>, <c>security.insecure</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveAllow<T>(this T toolSettings, params string[] allow) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(allow);
+            toolSettings.AllowInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.Allow"/></em></p>
+        ///   <p>Allow extra privileged entitlement, e.g. <c>network.host</c>, <c>security.insecure</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveAllow<T>(this T toolSettings, IEnumerable<string> allow) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(allow);
+            toolSettings.AllowInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region BuildArg
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.BuildArg"/> to a new list</em></p>
+        ///   <p>Set build-time variables.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBuildArg<T>(this T toolSettings, params string[] buildArg) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildArgInternal = buildArg.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.BuildArg"/> to a new list</em></p>
+        ///   <p>Set build-time variables.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBuildArg<T>(this T toolSettings, IEnumerable<string> buildArg) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildArgInternal = buildArg.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.BuildArg"/></em></p>
+        ///   <p>Set build-time variables.</p>
+        /// </summary>
+        [Pure]
+        public static T AddBuildArg<T>(this T toolSettings, params string[] buildArg) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildArgInternal.AddRange(buildArg);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.BuildArg"/></em></p>
+        ///   <p>Set build-time variables.</p>
+        /// </summary>
+        [Pure]
+        public static T AddBuildArg<T>(this T toolSettings, IEnumerable<string> buildArg) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildArgInternal.AddRange(buildArg);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DockerBuildxBuildSettings.BuildArg"/></em></p>
+        ///   <p>Set build-time variables.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearBuildArg<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildArgInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.BuildArg"/></em></p>
+        ///   <p>Set build-time variables.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveBuildArg<T>(this T toolSettings, params string[] buildArg) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(buildArg);
+            toolSettings.BuildArgInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.BuildArg"/></em></p>
+        ///   <p>Set build-time variables.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveBuildArg<T>(this T toolSettings, IEnumerable<string> buildArg) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(buildArg);
+            toolSettings.BuildArgInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Builder
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Builder"/></em></p>
+        ///   <p>Override the configured builder instance.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBuilder<T>(this T toolSettings, string builder) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Builder = builder;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Builder"/></em></p>
+        ///   <p>Override the configured builder instance.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetBuilder<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Builder = null;
+            return toolSettings;
+        }
+        #endregion
+        #region CacheFrom
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.CacheFrom"/> to a new list</em></p>
+        ///   <p>External cache sources (eg. <c>user/app:cache, type=local,src=path/to/dir</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T SetCacheFrom<T>(this T toolSettings, params string[] cacheFrom) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CacheFromInternal = cacheFrom.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.CacheFrom"/> to a new list</em></p>
+        ///   <p>External cache sources (eg. <c>user/app:cache, type=local,src=path/to/dir</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T SetCacheFrom<T>(this T toolSettings, IEnumerable<string> cacheFrom) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CacheFromInternal = cacheFrom.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.CacheFrom"/></em></p>
+        ///   <p>External cache sources (eg. <c>user/app:cache, type=local,src=path/to/dir</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T AddCacheFrom<T>(this T toolSettings, params string[] cacheFrom) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CacheFromInternal.AddRange(cacheFrom);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.CacheFrom"/></em></p>
+        ///   <p>External cache sources (eg. <c>user/app:cache, type=local,src=path/to/dir</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T AddCacheFrom<T>(this T toolSettings, IEnumerable<string> cacheFrom) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CacheFromInternal.AddRange(cacheFrom);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DockerBuildxBuildSettings.CacheFrom"/></em></p>
+        ///   <p>External cache sources (eg. <c>user/app:cache, type=local,src=path/to/dir</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T ClearCacheFrom<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CacheFromInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.CacheFrom"/></em></p>
+        ///   <p>External cache sources (eg. <c>user/app:cache, type=local,src=path/to/dir</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveCacheFrom<T>(this T toolSettings, params string[] cacheFrom) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(cacheFrom);
+            toolSettings.CacheFromInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.CacheFrom"/></em></p>
+        ///   <p>External cache sources (eg. <c>user/app:cache, type=local,src=path/to/dir</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveCacheFrom<T>(this T toolSettings, IEnumerable<string> cacheFrom) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(cacheFrom);
+            toolSettings.CacheFromInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region CacheTo
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.CacheTo"/> to a new list</em></p>
+        ///   <p>Cache export destinations (eg. <c>user/app:cache, type=local,dest=path/to/dir</c>)</p>
+        /// </summary>
+        [Pure]
+        public static T SetCacheTo<T>(this T toolSettings, params string[] cacheTo) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CacheToInternal = cacheTo.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.CacheTo"/> to a new list</em></p>
+        ///   <p>Cache export destinations (eg. <c>user/app:cache, type=local,dest=path/to/dir</c>)</p>
+        /// </summary>
+        [Pure]
+        public static T SetCacheTo<T>(this T toolSettings, IEnumerable<string> cacheTo) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CacheToInternal = cacheTo.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.CacheTo"/></em></p>
+        ///   <p>Cache export destinations (eg. <c>user/app:cache, type=local,dest=path/to/dir</c>)</p>
+        /// </summary>
+        [Pure]
+        public static T AddCacheTo<T>(this T toolSettings, params string[] cacheTo) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CacheToInternal.AddRange(cacheTo);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.CacheTo"/></em></p>
+        ///   <p>Cache export destinations (eg. <c>user/app:cache, type=local,dest=path/to/dir</c>)</p>
+        /// </summary>
+        [Pure]
+        public static T AddCacheTo<T>(this T toolSettings, IEnumerable<string> cacheTo) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CacheToInternal.AddRange(cacheTo);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DockerBuildxBuildSettings.CacheTo"/></em></p>
+        ///   <p>Cache export destinations (eg. <c>user/app:cache, type=local,dest=path/to/dir</c>)</p>
+        /// </summary>
+        [Pure]
+        public static T ClearCacheTo<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CacheToInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.CacheTo"/></em></p>
+        ///   <p>Cache export destinations (eg. <c>user/app:cache, type=local,dest=path/to/dir</c>)</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveCacheTo<T>(this T toolSettings, params string[] cacheTo) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(cacheTo);
+            toolSettings.CacheToInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.CacheTo"/></em></p>
+        ///   <p>Cache export destinations (eg. <c>user/app:cache, type=local,dest=path/to/dir</c>)</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveCacheTo<T>(this T toolSettings, IEnumerable<string> cacheTo) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(cacheTo);
+            toolSettings.CacheToInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region CgroupParent
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.CgroupParent"/></em></p>
+        ///   <p>Optional parent cgroup for the container.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCgroupParent<T>(this T toolSettings, string cgroupParent) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CgroupParent = cgroupParent;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.CgroupParent"/></em></p>
+        ///   <p>Optional parent cgroup for the container.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCgroupParent<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CgroupParent = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Compress
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Compress"/></em></p>
+        ///   <p>Compress the build context using gzip.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCompress<T>(this T toolSettings, bool? compress) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Compress = compress;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Compress"/></em></p>
+        ///   <p>Compress the build context using gzip.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCompress<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Compress = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerBuildxBuildSettings.Compress"/></em></p>
+        ///   <p>Compress the build context using gzip.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableCompress<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Compress = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerBuildxBuildSettings.Compress"/></em></p>
+        ///   <p>Compress the build context using gzip.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableCompress<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Compress = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerBuildxBuildSettings.Compress"/></em></p>
+        ///   <p>Compress the build context using gzip.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleCompress<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Compress = !toolSettings.Compress;
+            return toolSettings;
+        }
+        #endregion
+        #region CpuPeriod
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.CpuPeriod"/></em></p>
+        ///   <p>Limit the CPU CFS (Completely Fair Scheduler) period.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCpuPeriod<T>(this T toolSettings, long? cpuPeriod) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CpuPeriod = cpuPeriod;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.CpuPeriod"/></em></p>
+        ///   <p>Limit the CPU CFS (Completely Fair Scheduler) period.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCpuPeriod<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CpuPeriod = null;
+            return toolSettings;
+        }
+        #endregion
+        #region CpuQuota
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.CpuQuota"/></em></p>
+        ///   <p>Limit the CPU CFS (Completely Fair Scheduler) quota.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCpuQuota<T>(this T toolSettings, long? cpuQuota) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CpuQuota = cpuQuota;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.CpuQuota"/></em></p>
+        ///   <p>Limit the CPU CFS (Completely Fair Scheduler) quota.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCpuQuota<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CpuQuota = null;
+            return toolSettings;
+        }
+        #endregion
+        #region CpuShares
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.CpuShares"/></em></p>
+        ///   <p>CPU shares (relative weight).</p>
+        /// </summary>
+        [Pure]
+        public static T SetCpuShares<T>(this T toolSettings, long? cpuShares) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CpuShares = cpuShares;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.CpuShares"/></em></p>
+        ///   <p>CPU shares (relative weight).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCpuShares<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CpuShares = null;
+            return toolSettings;
+        }
+        #endregion
+        #region CpusetCpus
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.CpusetCpus"/></em></p>
+        ///   <p>CPUs in which to allow execution (<c>0-3</c>, <c>0,1</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T SetCpusetCpus<T>(this T toolSettings, string cpusetCpus) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CpusetCpus = cpusetCpus;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.CpusetCpus"/></em></p>
+        ///   <p>CPUs in which to allow execution (<c>0-3</c>, <c>0,1</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCpusetCpus<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CpusetCpus = null;
+            return toolSettings;
+        }
+        #endregion
+        #region CpusetMems
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.CpusetMems"/></em></p>
+        ///   <p>MEMs in which to allow execution (<c>0-3</c>, <c>0,1</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T SetCpusetMems<T>(this T toolSettings, string cpusetMems) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CpusetMems = cpusetMems;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.CpusetMems"/></em></p>
+        ///   <p>MEMs in which to allow execution (<c>0-3</c>, <c>0,1</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCpusetMems<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CpusetMems = null;
+            return toolSettings;
+        }
+        #endregion
+        #region File
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.File"/></em></p>
+        ///   <p>Name of the Dockerfile (Default is <c>PATH/Dockerfile</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T SetFile<T>(this T toolSettings, string file) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.File = file;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.File"/></em></p>
+        ///   <p>Name of the Dockerfile (Default is <c>PATH/Dockerfile</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetFile<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.File = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Iidfile
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Iidfile"/></em></p>
+        ///   <p>Write the image ID to the file.</p>
+        /// </summary>
+        [Pure]
+        public static T SetIidfile<T>(this T toolSettings, string iidfile) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Iidfile = iidfile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Iidfile"/></em></p>
+        ///   <p>Write the image ID to the file.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetIidfile<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Iidfile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Isolation
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Isolation"/></em></p>
+        ///   <p>Container isolation technology.</p>
+        /// </summary>
+        [Pure]
+        public static T SetIsolation<T>(this T toolSettings, string isolation) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Isolation = isolation;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Isolation"/></em></p>
+        ///   <p>Container isolation technology.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetIsolation<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Isolation = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Label
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Label"/> to a new list</em></p>
+        ///   <p>Set metadata for an image.</p>
+        /// </summary>
+        [Pure]
+        public static T SetLabel<T>(this T toolSettings, params string[] label) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LabelInternal = label.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Label"/> to a new list</em></p>
+        ///   <p>Set metadata for an image.</p>
+        /// </summary>
+        [Pure]
+        public static T SetLabel<T>(this T toolSettings, IEnumerable<string> label) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LabelInternal = label.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.Label"/></em></p>
+        ///   <p>Set metadata for an image.</p>
+        /// </summary>
+        [Pure]
+        public static T AddLabel<T>(this T toolSettings, params string[] label) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LabelInternal.AddRange(label);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.Label"/></em></p>
+        ///   <p>Set metadata for an image.</p>
+        /// </summary>
+        [Pure]
+        public static T AddLabel<T>(this T toolSettings, IEnumerable<string> label) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LabelInternal.AddRange(label);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DockerBuildxBuildSettings.Label"/></em></p>
+        ///   <p>Set metadata for an image.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearLabel<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LabelInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.Label"/></em></p>
+        ///   <p>Set metadata for an image.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveLabel<T>(this T toolSettings, params string[] label) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(label);
+            toolSettings.LabelInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.Label"/></em></p>
+        ///   <p>Set metadata for an image.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveLabel<T>(this T toolSettings, IEnumerable<string> label) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(label);
+            toolSettings.LabelInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Load
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Load"/></em></p>
+        ///   <p>Shorthand for <c>--output=type=docker</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetLoad<T>(this T toolSettings, bool? load) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Load = load;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Load"/></em></p>
+        ///   <p>Shorthand for <c>--output=type=docker</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetLoad<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Load = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerBuildxBuildSettings.Load"/></em></p>
+        ///   <p>Shorthand for <c>--output=type=docker</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnableLoad<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Load = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerBuildxBuildSettings.Load"/></em></p>
+        ///   <p>Shorthand for <c>--output=type=docker</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisableLoad<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Load = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerBuildxBuildSettings.Load"/></em></p>
+        ///   <p>Shorthand for <c>--output=type=docker</c></p>
+        /// </summary>
+        [Pure]
+        public static T ToggleLoad<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Load = !toolSettings.Load;
+            return toolSettings;
+        }
+        #endregion
+        #region Memory
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Memory"/></em></p>
+        ///   <p>Memory limit.</p>
+        /// </summary>
+        [Pure]
+        public static T SetMemory<T>(this T toolSettings, long? memory) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Memory = memory;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Memory"/></em></p>
+        ///   <p>Memory limit.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetMemory<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Memory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region MemorySwap
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.MemorySwap"/></em></p>
+        ///   <p>Swap limit equal to memory plus swap: <c>-1</c> to enable unlimited swap.</p>
+        /// </summary>
+        [Pure]
+        public static T SetMemorySwap<T>(this T toolSettings, long? memorySwap) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MemorySwap = memorySwap;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.MemorySwap"/></em></p>
+        ///   <p>Swap limit equal to memory plus swap: <c>-1</c> to enable unlimited swap.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetMemorySwap<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.MemorySwap = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Network
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Network"/></em></p>
+        ///   <p>Set the networking mode for the <c>RUN</c> instructions during build.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNetwork<T>(this T toolSettings, string network) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Network = network;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Network"/></em></p>
+        ///   <p>Set the networking mode for the <c>RUN</c> instructions during build.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNetwork<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Network = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoCache
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.NoCache"/></em></p>
+        ///   <p>Do not use cache when building the image.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = noCache;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.NoCache"/></em></p>
+        ///   <p>Do not use cache when building the image.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoCache<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerBuildxBuildSettings.NoCache"/></em></p>
+        ///   <p>Do not use cache when building the image.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoCache<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerBuildxBuildSettings.NoCache"/></em></p>
+        ///   <p>Do not use cache when building the image.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoCache<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerBuildxBuildSettings.NoCache"/></em></p>
+        ///   <p>Do not use cache when building the image.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoCache<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoCache = !toolSettings.NoCache;
+            return toolSettings;
+        }
+        #endregion
+        #region Output
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Output"/></em></p>
+        ///   <p>Output destination (format: <c>type=local,dest=path</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T SetOutput<T>(this T toolSettings, string output) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Output = output;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Output"/></em></p>
+        ///   <p>Output destination (format: <c>type=local,dest=path</c>).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOutput<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Output = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Platform
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Platform"/></em></p>
+        ///   <p>Set platform if server is multi-platform capable.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPlatform<T>(this T toolSettings, string platform) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Platform = platform;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Platform"/></em></p>
+        ///   <p>Set platform if server is multi-platform capable.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPlatform<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Platform = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Progress
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Progress"/></em></p>
+        ///   <p>Set type of progress output (<c>auto</c>, <c>plain</c>, <c>tty</c>). Use plain to show container output.</p>
+        /// </summary>
+        [Pure]
+        public static T SetProgress<T>(this T toolSettings, ProgressType progress) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Progress = progress;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Progress"/></em></p>
+        ///   <p>Set type of progress output (<c>auto</c>, <c>plain</c>, <c>tty</c>). Use plain to show container output.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetProgress<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Progress = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Pull
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Pull"/></em></p>
+        ///   <p>Always attempt to pull a newer version of the image.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPull<T>(this T toolSettings, bool? pull) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Pull = pull;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Pull"/></em></p>
+        ///   <p>Always attempt to pull a newer version of the image.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPull<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Pull = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerBuildxBuildSettings.Pull"/></em></p>
+        ///   <p>Always attempt to pull a newer version of the image.</p>
+        /// </summary>
+        [Pure]
+        public static T EnablePull<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Pull = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerBuildxBuildSettings.Pull"/></em></p>
+        ///   <p>Always attempt to pull a newer version of the image.</p>
+        /// </summary>
+        [Pure]
+        public static T DisablePull<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Pull = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerBuildxBuildSettings.Pull"/></em></p>
+        ///   <p>Always attempt to pull a newer version of the image.</p>
+        /// </summary>
+        [Pure]
+        public static T TogglePull<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Pull = !toolSettings.Pull;
+            return toolSettings;
+        }
+        #endregion
+        #region Push
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Push"/></em></p>
+        ///   <p>Shorthand for <c>--output=type=registry</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPush<T>(this T toolSettings, bool? push) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Push = push;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Push"/></em></p>
+        ///   <p>Shorthand for <c>--output=type=registry</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPush<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Push = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerBuildxBuildSettings.Push"/></em></p>
+        ///   <p>Shorthand for <c>--output=type=registry</c></p>
+        /// </summary>
+        [Pure]
+        public static T EnablePush<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Push = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerBuildxBuildSettings.Push"/></em></p>
+        ///   <p>Shorthand for <c>--output=type=registry</c></p>
+        /// </summary>
+        [Pure]
+        public static T DisablePush<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Push = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerBuildxBuildSettings.Push"/></em></p>
+        ///   <p>Shorthand for <c>--output=type=registry</c></p>
+        /// </summary>
+        [Pure]
+        public static T TogglePush<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Push = !toolSettings.Push;
+            return toolSettings;
+        }
+        #endregion
+        #region Quiet
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Quiet"/></em></p>
+        ///   <p>Suppress the build output and print image ID on success.</p>
+        /// </summary>
+        [Pure]
+        public static T SetQuiet<T>(this T toolSettings, bool? quiet) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Quiet = quiet;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Quiet"/></em></p>
+        ///   <p>Suppress the build output and print image ID on success.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetQuiet<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Quiet = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerBuildxBuildSettings.Quiet"/></em></p>
+        ///   <p>Suppress the build output and print image ID on success.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableQuiet<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Quiet = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerBuildxBuildSettings.Quiet"/></em></p>
+        ///   <p>Suppress the build output and print image ID on success.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableQuiet<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Quiet = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerBuildxBuildSettings.Quiet"/></em></p>
+        ///   <p>Suppress the build output and print image ID on success.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleQuiet<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Quiet = !toolSettings.Quiet;
+            return toolSettings;
+        }
+        #endregion
+        #region Rm
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Rm"/></em></p>
+        ///   <p>Remove intermediate containers after a successful build.</p>
+        /// </summary>
+        [Pure]
+        public static T SetRm<T>(this T toolSettings, bool? rm) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Rm = rm;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Rm"/></em></p>
+        ///   <p>Remove intermediate containers after a successful build.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetRm<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Rm = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerBuildxBuildSettings.Rm"/></em></p>
+        ///   <p>Remove intermediate containers after a successful build.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableRm<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Rm = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerBuildxBuildSettings.Rm"/></em></p>
+        ///   <p>Remove intermediate containers after a successful build.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableRm<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Rm = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerBuildxBuildSettings.Rm"/></em></p>
+        ///   <p>Remove intermediate containers after a successful build.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleRm<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Rm = !toolSettings.Rm;
+            return toolSettings;
+        }
+        #endregion
+        #region Secret
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Secret"/></em></p>
+        ///   <p>Secret file to expose to the build (only if BuildKit enabled): <c>id=mysecret,src=/local/secret</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSecret<T>(this T toolSettings, string secret) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Secret = secret;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Secret"/></em></p>
+        ///   <p>Secret file to expose to the build (only if BuildKit enabled): <c>id=mysecret,src=/local/secret</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetSecret<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Secret = null;
+            return toolSettings;
+        }
+        #endregion
+        #region SecurityOpt
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.SecurityOpt"/> to a new list</em></p>
+        ///   <p>Security options.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSecurityOpt<T>(this T toolSettings, params string[] securityOpt) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SecurityOptInternal = securityOpt.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.SecurityOpt"/> to a new list</em></p>
+        ///   <p>Security options.</p>
+        /// </summary>
+        [Pure]
+        public static T SetSecurityOpt<T>(this T toolSettings, IEnumerable<string> securityOpt) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SecurityOptInternal = securityOpt.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.SecurityOpt"/></em></p>
+        ///   <p>Security options.</p>
+        /// </summary>
+        [Pure]
+        public static T AddSecurityOpt<T>(this T toolSettings, params string[] securityOpt) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SecurityOptInternal.AddRange(securityOpt);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.SecurityOpt"/></em></p>
+        ///   <p>Security options.</p>
+        /// </summary>
+        [Pure]
+        public static T AddSecurityOpt<T>(this T toolSettings, IEnumerable<string> securityOpt) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SecurityOptInternal.AddRange(securityOpt);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DockerBuildxBuildSettings.SecurityOpt"/></em></p>
+        ///   <p>Security options.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearSecurityOpt<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SecurityOptInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.SecurityOpt"/></em></p>
+        ///   <p>Security options.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveSecurityOpt<T>(this T toolSettings, params string[] securityOpt) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(securityOpt);
+            toolSettings.SecurityOptInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.SecurityOpt"/></em></p>
+        ///   <p>Security options.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveSecurityOpt<T>(this T toolSettings, IEnumerable<string> securityOpt) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(securityOpt);
+            toolSettings.SecurityOptInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region ShmSize
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.ShmSize"/></em></p>
+        ///   <p>Size of <c>/dev/shm</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetShmSize<T>(this T toolSettings, long? shmSize) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShmSize = shmSize;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.ShmSize"/></em></p>
+        ///   <p>Size of <c>/dev/shm</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetShmSize<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ShmSize = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Ssh
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Ssh"/></em></p>
+        ///   <p>SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|&lt;id&gt;[=&lt;socket&gt;|&lt;key&gt;[,&lt;key&gt;]]).</p>
+        /// </summary>
+        [Pure]
+        public static T SetSsh<T>(this T toolSettings, string ssh) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Ssh = ssh;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Ssh"/></em></p>
+        ///   <p>SSH agent socket or keys to expose to the build (only if BuildKit enabled) (format: default|&lt;id&gt;[=&lt;socket&gt;|&lt;key&gt;[,&lt;key&gt;]]).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetSsh<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Ssh = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Tag
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Tag"/> to a new list</em></p>
+        ///   <p>Name and optionally a tag in the <c>name:tag</c> format.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTag<T>(this T toolSettings, params string[] tag) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TagInternal = tag.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Tag"/> to a new list</em></p>
+        ///   <p>Name and optionally a tag in the <c>name:tag</c> format.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTag<T>(this T toolSettings, IEnumerable<string> tag) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TagInternal = tag.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.Tag"/></em></p>
+        ///   <p>Name and optionally a tag in the <c>name:tag</c> format.</p>
+        /// </summary>
+        [Pure]
+        public static T AddTag<T>(this T toolSettings, params string[] tag) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TagInternal.AddRange(tag);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DockerBuildxBuildSettings.Tag"/></em></p>
+        ///   <p>Name and optionally a tag in the <c>name:tag</c> format.</p>
+        /// </summary>
+        [Pure]
+        public static T AddTag<T>(this T toolSettings, IEnumerable<string> tag) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TagInternal.AddRange(tag);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DockerBuildxBuildSettings.Tag"/></em></p>
+        ///   <p>Name and optionally a tag in the <c>name:tag</c> format.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearTag<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TagInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.Tag"/></em></p>
+        ///   <p>Name and optionally a tag in the <c>name:tag</c> format.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveTag<T>(this T toolSettings, params string[] tag) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(tag);
+            toolSettings.TagInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DockerBuildxBuildSettings.Tag"/></em></p>
+        ///   <p>Name and optionally a tag in the <c>name:tag</c> format.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveTag<T>(this T toolSettings, IEnumerable<string> tag) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(tag);
+            toolSettings.TagInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Target
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Target"/></em></p>
+        ///   <p>Set the target build stage to build.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTarget<T>(this T toolSettings, string target) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Target = target;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Target"/></em></p>
+        ///   <p>Set the target build stage to build.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetTarget<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Target = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Ulimit
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Ulimit"/></em></p>
+        ///   <p>Ulimit options.</p>
+        /// </summary>
+        [Pure]
+        public static T SetUlimit<T>(this T toolSettings, string ulimit) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Ulimit = ulimit;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Ulimit"/></em></p>
+        ///   <p>Ulimit options.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetUlimit<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Ulimit = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Path
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerBuildxBuildSettings.Path"/></em></p>
+        ///   <p>Path or url where the build context is located.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPath<T>(this T toolSettings, string path) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Path = path;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerBuildxBuildSettings.Path"/></em></p>
+        ///   <p>Path or url where the build context is located.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPath<T>(this T toolSettings) where T : DockerBuildxBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Path = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
     #region DockerStatsSettingsExtensions
     /// <summary>
     ///   Used within <see cref="DockerTasks"/>.
@@ -78847,10 +80804,10 @@ namespace Nuke.Common.Tools.Docker
         #region Progress
         /// <summary>
         ///   <p><em>Sets <see cref="DockerBuildSettings.Progress"/></em></p>
-        ///   <p>Set type of progress output (auto, plain, tty). Use plain to show container output.</p>
+        ///   <p>Set type of progress output (<c>auto</c>, <c>plain</c>, <c>tty</c>). Use plain to show container output.</p>
         /// </summary>
         [Pure]
-        public static T SetProgress<T>(this T toolSettings, string progress) where T : DockerBuildSettings
+        public static T SetProgress<T>(this T toolSettings, ProgressType progress) where T : DockerBuildSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Progress = progress;
@@ -78858,7 +80815,7 @@ namespace Nuke.Common.Tools.Docker
         }
         /// <summary>
         ///   <p><em>Resets <see cref="DockerBuildSettings.Progress"/></em></p>
-        ///   <p>Set type of progress output (auto, plain, tty). Use plain to show container output.</p>
+        ///   <p>Set type of progress output (<c>auto</c>, <c>plain</c>, <c>tty</c>). Use plain to show container output.</p>
         /// </summary>
         [Pure]
         public static T ResetProgress<T>(this T toolSettings) where T : DockerBuildSettings
@@ -79476,7 +81433,7 @@ namespace Nuke.Common.Tools.Docker
         public static LogLevel warn = (LogLevel) "warn";
         public static LogLevel error = (LogLevel) "error";
         public static LogLevel fatal = (LogLevel) "fatal";
-        public static explicit operator LogLevel(string value)
+        public static implicit operator LogLevel(string value)
         {
             return new LogLevel { Value = value };
         }
@@ -79495,7 +81452,7 @@ namespace Nuke.Common.Tools.Docker
         public static RestartCondition none = (RestartCondition) "none";
         public static RestartCondition on_failure = (RestartCondition) "on-failure";
         public static RestartCondition any = (RestartCondition) "any";
-        public static explicit operator RestartCondition(string value)
+        public static implicit operator RestartCondition(string value)
         {
             return new RestartCondition { Value = value };
         }
@@ -79513,7 +81470,7 @@ namespace Nuke.Common.Tools.Docker
     {
         public static RollbackFailureAction pause = (RollbackFailureAction) "pause";
         public static RollbackFailureAction continue_ = (RollbackFailureAction) "continue";
-        public static explicit operator RollbackFailureAction(string value)
+        public static implicit operator RollbackFailureAction(string value)
         {
             return new RollbackFailureAction { Value = value };
         }
@@ -79531,7 +81488,7 @@ namespace Nuke.Common.Tools.Docker
     {
         public static RollbackOrder start_first = (RollbackOrder) "start-first";
         public static RollbackOrder stop_first = (RollbackOrder) "stop-first";
-        public static explicit operator RollbackOrder(string value)
+        public static implicit operator RollbackOrder(string value)
         {
             return new RollbackOrder { Value = value };
         }
@@ -79550,7 +81507,7 @@ namespace Nuke.Common.Tools.Docker
         public static UpdateFailureAction pause = (UpdateFailureAction) "pause";
         public static UpdateFailureAction continue_ = (UpdateFailureAction) "continue";
         public static UpdateFailureAction rollback = (UpdateFailureAction) "rollback";
-        public static explicit operator UpdateFailureAction(string value)
+        public static implicit operator UpdateFailureAction(string value)
         {
             return new UpdateFailureAction { Value = value };
         }
@@ -79568,7 +81525,7 @@ namespace Nuke.Common.Tools.Docker
     {
         public static UpdateOrder start_first = (UpdateOrder) "start-first";
         public static UpdateOrder stop_first = (UpdateOrder) "stop-first";
-        public static explicit operator UpdateOrder(string value)
+        public static implicit operator UpdateOrder(string value)
         {
             return new UpdateOrder { Value = value };
         }
@@ -79587,7 +81544,7 @@ namespace Nuke.Common.Tools.Docker
         public static Availability active = (Availability) "active";
         public static Availability pause = (Availability) "pause";
         public static Availability drain = (Availability) "drain";
-        public static explicit operator Availability(string value)
+        public static implicit operator Availability(string value)
         {
             return new Availability { Value = value };
         }
@@ -79605,7 +81562,7 @@ namespace Nuke.Common.Tools.Docker
     {
         public static Role worker = (Role) "worker";
         public static Role manager = (Role) "manager";
-        public static explicit operator Role(string value)
+        public static implicit operator Role(string value)
         {
             return new Role { Value = value };
         }
@@ -79624,9 +81581,28 @@ namespace Nuke.Common.Tools.Docker
         public static ResolveImage always = (ResolveImage) "always";
         public static ResolveImage changed = (ResolveImage) "changed";
         public static ResolveImage never = (ResolveImage) "never";
-        public static explicit operator ResolveImage(string value)
+        public static implicit operator ResolveImage(string value)
         {
             return new ResolveImage { Value = value };
+        }
+    }
+    #endregion
+    #region ProgressType
+    /// <summary>
+    ///   Used within <see cref="DockerTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<ProgressType>))]
+    public partial class ProgressType : Enumeration
+    {
+        public static ProgressType auto = (ProgressType) "auto";
+        public static ProgressType plain = (ProgressType) "plain";
+        public static ProgressType tty = (ProgressType) "tty";
+        public static implicit operator ProgressType(string value)
+        {
+            return new ProgressType { Value = value };
         }
     }
     #endregion

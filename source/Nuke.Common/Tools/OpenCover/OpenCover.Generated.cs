@@ -1606,7 +1606,7 @@ namespace Nuke.Common.Tools.OpenCover
         public static OpenCoverVerbosity Debug = (OpenCoverVerbosity) "Debug";
         public static OpenCoverVerbosity Verbose = (OpenCoverVerbosity) "Verbose";
         public static OpenCoverVerbosity All = (OpenCoverVerbosity) "All";
-        public static explicit operator OpenCoverVerbosity(string value)
+        public static implicit operator OpenCoverVerbosity(string value)
         {
             return new OpenCoverVerbosity { Value = value };
         }
@@ -1626,7 +1626,7 @@ namespace Nuke.Common.Tools.OpenCover
         public static OpenCoverSkipping Filter = (OpenCoverSkipping) "Filter";
         public static OpenCoverSkipping Attribute = (OpenCoverSkipping) "Attribute";
         public static OpenCoverSkipping MissingPdb = (OpenCoverSkipping) "MissingPdb";
-        public static explicit operator OpenCoverSkipping(string value)
+        public static implicit operator OpenCoverSkipping(string value)
         {
             return new OpenCoverSkipping { Value = value };
         }
@@ -1645,7 +1645,7 @@ namespace Nuke.Common.Tools.OpenCover
         public static RegistrationType User = (RegistrationType) "User";
         public static RegistrationType Path32 = (RegistrationType) "Path32";
         public static RegistrationType Path64 = (RegistrationType) "Path64";
-        public static explicit operator RegistrationType(string value)
+        public static implicit operator RegistrationType(string value)
         {
             return new RegistrationType { Value = value };
         }

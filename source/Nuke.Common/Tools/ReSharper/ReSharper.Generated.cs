@@ -3762,7 +3762,7 @@ namespace Nuke.Common.Tools.ReSharper
         public static ReSharperSettingsLayers GlobalPerProduct = (ReSharperSettingsLayers) "GlobalPerProduct";
         public static ReSharperSettingsLayers SolutionShared = (ReSharperSettingsLayers) "SolutionShared";
         public static ReSharperSettingsLayers SolutionPersonal = (ReSharperSettingsLayers) "SolutionPersonal";
-        public static explicit operator ReSharperSettingsLayers(string value)
+        public static implicit operator ReSharperSettingsLayers(string value)
         {
             return new ReSharperSettingsLayers { Value = value };
         }
@@ -3781,7 +3781,7 @@ namespace Nuke.Common.Tools.ReSharper
         public static ReSharperMSBuildToolset _12_0 = (ReSharperMSBuildToolset) "12.0";
         public static ReSharperMSBuildToolset _14_0 = (ReSharperMSBuildToolset) "14.0";
         public static ReSharperMSBuildToolset _15_0 = (ReSharperMSBuildToolset) "15.0";
-        public static explicit operator ReSharperMSBuildToolset(string value)
+        public static implicit operator ReSharperMSBuildToolset(string value)
         {
             return new ReSharperMSBuildToolset { Value = value };
         }
@@ -3800,7 +3800,8 @@ namespace Nuke.Common.Tools.ReSharper
         public static ReSharperFormat Xml = (ReSharperFormat) "Xml";
         public static ReSharperFormat Html = (ReSharperFormat) "Html";
         public static ReSharperFormat Text = (ReSharperFormat) "Text";
-        public static explicit operator ReSharperFormat(string value)
+        public static ReSharperFormat Json = (ReSharperFormat) "Json";
+        public static implicit operator ReSharperFormat(string value)
         {
             return new ReSharperFormat { Value = value };
         }
@@ -3823,7 +3824,7 @@ namespace Nuke.Common.Tools.ReSharper
         public static ReSharperVerbosity INFO = (ReSharperVerbosity) "INFO";
         public static ReSharperVerbosity VERBOSE = (ReSharperVerbosity) "VERBOSE";
         public static ReSharperVerbosity TRACE = (ReSharperVerbosity) "TRACE";
-        public static explicit operator ReSharperVerbosity(string value)
+        public static implicit operator ReSharperVerbosity(string value)
         {
             return new ReSharperVerbosity { Value = value };
         }
@@ -3844,7 +3845,7 @@ namespace Nuke.Common.Tools.ReSharper
         public static ReSharperSeverity SUGGESTION = (ReSharperSeverity) "SUGGESTION";
         public static ReSharperSeverity WARNING = (ReSharperSeverity) "WARNING";
         public static ReSharperSeverity ERROR = (ReSharperSeverity) "ERROR";
-        public static explicit operator ReSharperSeverity(string value)
+        public static implicit operator ReSharperSeverity(string value)
         {
             return new ReSharperSeverity { Value = value };
         }

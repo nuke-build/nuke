@@ -5980,7 +5980,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetVerbosity Normal = (NuGetVerbosity) "Normal";
         public static NuGetVerbosity Quiet = (NuGetVerbosity) "Quiet";
         public static NuGetVerbosity Detailed = (NuGetVerbosity) "Detailed";
-        public static explicit operator NuGetVerbosity(string value)
+        public static implicit operator NuGetVerbosity(string value)
         {
             return new NuGetVerbosity { Value = value };
         }
@@ -5998,7 +5998,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         public static PackageSaveMode Nuspec = (PackageSaveMode) "Nuspec";
         public static PackageSaveMode Nupkg = (PackageSaveMode) "Nupkg";
-        public static explicit operator PackageSaveMode(string value)
+        public static implicit operator PackageSaveMode(string value)
         {
             return new PackageSaveMode { Value = value };
         }
@@ -6017,7 +6017,7 @@ namespace Nuke.Common.Tools.NuGet
         public static NuGetMSBuildVersion _4 = (NuGetMSBuildVersion) "4";
         public static NuGetMSBuildVersion _12 = (NuGetMSBuildVersion) "12";
         public static NuGetMSBuildVersion _14 = (NuGetMSBuildVersion) "14";
-        public static explicit operator NuGetMSBuildVersion(string value)
+        public static implicit operator NuGetMSBuildVersion(string value)
         {
             return new NuGetMSBuildVersion { Value = value };
         }
@@ -6035,7 +6035,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         public static NuGetSymbolPackageFormat symbols_nupkg = (NuGetSymbolPackageFormat) "symbols.nupkg";
         public static NuGetSymbolPackageFormat snupkg = (NuGetSymbolPackageFormat) "snupkg";
-        public static explicit operator NuGetSymbolPackageFormat(string value)
+        public static implicit operator NuGetSymbolPackageFormat(string value)
         {
             return new NuGetSymbolPackageFormat { Value = value };
         }
@@ -6053,7 +6053,7 @@ namespace Nuke.Common.Tools.NuGet
     {
         public static NuGetSourcesListFormat Detailed = (NuGetSourcesListFormat) "Detailed";
         public static NuGetSourcesListFormat Short = (NuGetSourcesListFormat) "Short";
-        public static explicit operator NuGetSourcesListFormat(string value)
+        public static implicit operator NuGetSourcesListFormat(string value)
         {
             return new NuGetSourcesListFormat { Value = value };
         }
@@ -6074,7 +6074,7 @@ namespace Nuke.Common.Tools.NuGet
         public static DependencyVersion HighestMinor = (DependencyVersion) "HighestMinor";
         public static DependencyVersion Highest = (DependencyVersion) "Highest";
         public static DependencyVersion Ignore = (DependencyVersion) "Ignore";
-        public static explicit operator DependencyVersion(string value)
+        public static implicit operator DependencyVersion(string value)
         {
             return new DependencyVersion { Value = value };
         }

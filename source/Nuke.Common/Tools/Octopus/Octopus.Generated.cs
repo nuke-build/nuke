@@ -6138,7 +6138,7 @@ namespace Nuke.Common.Tools.Octopus
     {
         public static OctopusPackFormat NuPkg = (OctopusPackFormat) "NuPkg";
         public static OctopusPackFormat Zip = (OctopusPackFormat) "Zip";
-        public static explicit operator OctopusPackFormat(string value)
+        public static implicit operator OctopusPackFormat(string value)
         {
             return new OctopusPackFormat { Value = value };
         }
@@ -6157,7 +6157,7 @@ namespace Nuke.Common.Tools.Octopus
         public static OctopusOverwriteMode FailIfExists = (OctopusOverwriteMode) "FailIfExists";
         public static OctopusOverwriteMode OverwriteExisting = (OctopusOverwriteMode) "OverwriteExisting";
         public static OctopusOverwriteMode IgnoreIfExists = (OctopusOverwriteMode) "IgnoreIfExists";
-        public static explicit operator OctopusOverwriteMode(string value)
+        public static implicit operator OctopusOverwriteMode(string value)
         {
             return new OctopusOverwriteMode { Value = value };
         }

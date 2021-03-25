@@ -1595,7 +1595,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
     {
         public static NerdbankGitVersioningFormat Text = (NerdbankGitVersioningFormat) "Text";
         public static NerdbankGitVersioningFormat Json = (NerdbankGitVersioningFormat) "Json";
-        public static explicit operator NerdbankGitVersioningFormat(string value)
+        public static implicit operator NerdbankGitVersioningFormat(string value)
         {
             return new NerdbankGitVersioningFormat { Value = value };
         }
@@ -1619,7 +1619,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
         public static NerdbankGitVersioningCISystem Jenkins = (NerdbankGitVersioningCISystem) "Jenkins";
         public static NerdbankGitVersioningCISystem GitLab = (NerdbankGitVersioningCISystem) "GitLab";
         public static NerdbankGitVersioningCISystem Travis = (NerdbankGitVersioningCISystem) "Travis";
-        public static explicit operator NerdbankGitVersioningCISystem(string value)
+        public static implicit operator NerdbankGitVersioningCISystem(string value)
         {
             return new NerdbankGitVersioningCISystem { Value = value };
         }

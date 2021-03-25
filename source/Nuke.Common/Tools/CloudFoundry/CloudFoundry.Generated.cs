@@ -5242,7 +5242,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static HealthCheckType Process = (HealthCheckType) "Process";
         public static HealthCheckType Port = (HealthCheckType) "Port";
         public static HealthCheckType Http = (HealthCheckType) "Http";
-        public static explicit operator HealthCheckType(string value)
+        public static implicit operator HealthCheckType(string value)
         {
             return new HealthCheckType { Value = value };
         }
@@ -5263,7 +5263,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         public static Stack windows = (Stack) "windows";
         public static Stack windows2012R2 = (Stack) "windows2012R2";
         public static Stack windows2016 = (Stack) "windows2016";
-        public static explicit operator Stack(string value)
+        public static implicit operator Stack(string value)
         {
             return new Stack { Value = value };
         }

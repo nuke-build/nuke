@@ -24161,7 +24161,7 @@ namespace Nuke.Common.Tools.Kubernetes
     {
         public static KubernetesApiResourcesOutput wide = (KubernetesApiResourcesOutput) "wide";
         public static KubernetesApiResourcesOutput name = (KubernetesApiResourcesOutput) "name";
-        public static explicit operator KubernetesApiResourcesOutput(string value)
+        public static implicit operator KubernetesApiResourcesOutput(string value)
         {
             return new KubernetesApiResourcesOutput { Value = value };
         }
@@ -24186,7 +24186,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesRunOutput go_template_file = (KubernetesRunOutput) "go-template-file";
         public static KubernetesRunOutput jsonpath = (KubernetesRunOutput) "jsonpath";
         public static KubernetesRunOutput jsonpath_file = (KubernetesRunOutput) "jsonpath-file";
-        public static explicit operator KubernetesRunOutput(string value)
+        public static implicit operator KubernetesRunOutput(string value)
         {
             return new KubernetesRunOutput { Value = value };
         }
@@ -24207,7 +24207,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesGetOutput wide = (KubernetesGetOutput) "wide";
         public static KubernetesGetOutput name = (KubernetesGetOutput) "name";
         public static KubernetesGetOutput custom_columns = (KubernetesGetOutput) "custom-columns";
-        public static explicit operator KubernetesGetOutput(string value)
+        public static implicit operator KubernetesGetOutput(string value)
         {
             return new KubernetesGetOutput { Value = value };
         }
@@ -24232,7 +24232,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesRollingUpdateOutput go_template = (KubernetesRollingUpdateOutput) "go-template";
         public static KubernetesRollingUpdateOutput jsonpath = (KubernetesRollingUpdateOutput) "jsonpath";
         public static KubernetesRollingUpdateOutput jsonpath_file = (KubernetesRollingUpdateOutput) "jsonpath-file";
-        public static explicit operator KubernetesRollingUpdateOutput(string value)
+        public static implicit operator KubernetesRollingUpdateOutput(string value)
         {
             return new KubernetesRollingUpdateOutput { Value = value };
         }
@@ -24257,7 +24257,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesLabelOutput templatefile = (KubernetesLabelOutput) "templatefile";
         public static KubernetesLabelOutput jsonpath = (KubernetesLabelOutput) "jsonpath";
         public static KubernetesLabelOutput jsonpath_file = (KubernetesLabelOutput) "jsonpath-file";
-        public static explicit operator KubernetesLabelOutput(string value)
+        public static implicit operator KubernetesLabelOutput(string value)
         {
             return new KubernetesLabelOutput { Value = value };
         }
@@ -24282,7 +24282,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesAnnotateOutput go_template_file = (KubernetesAnnotateOutput) "go-template-file";
         public static KubernetesAnnotateOutput jsonpath = (KubernetesAnnotateOutput) "jsonpath";
         public static KubernetesAnnotateOutput jsonpath_file = (KubernetesAnnotateOutput) "jsonpath-file";
-        public static explicit operator KubernetesAnnotateOutput(string value)
+        public static implicit operator KubernetesAnnotateOutput(string value)
         {
             return new KubernetesAnnotateOutput { Value = value };
         }
@@ -24307,7 +24307,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesExposeOutput templatefile = (KubernetesExposeOutput) "templatefile";
         public static KubernetesExposeOutput jsonpath = (KubernetesExposeOutput) "jsonpath";
         public static KubernetesExposeOutput jsonpath_file = (KubernetesExposeOutput) "jsonpath-file";
-        public static explicit operator KubernetesExposeOutput(string value)
+        public static implicit operator KubernetesExposeOutput(string value)
         {
             return new KubernetesExposeOutput { Value = value };
         }
@@ -24332,7 +24332,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesPatchOutput templatefile = (KubernetesPatchOutput) "templatefile";
         public static KubernetesPatchOutput jsonpath = (KubernetesPatchOutput) "jsonpath";
         public static KubernetesPatchOutput jsonpath_file = (KubernetesPatchOutput) "jsonpath-file";
-        public static explicit operator KubernetesPatchOutput(string value)
+        public static implicit operator KubernetesPatchOutput(string value)
         {
             return new KubernetesPatchOutput { Value = value };
         }
@@ -24351,7 +24351,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesPatchType json = (KubernetesPatchType) "json";
         public static KubernetesPatchType merge = (KubernetesPatchType) "merge";
         public static KubernetesPatchType strategic = (KubernetesPatchType) "strategic";
-        public static explicit operator KubernetesPatchType(string value)
+        public static implicit operator KubernetesPatchType(string value)
         {
             return new KubernetesPatchType { Value = value };
         }
@@ -24376,7 +24376,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesReplaceOutput templatefile = (KubernetesReplaceOutput) "templatefile";
         public static KubernetesReplaceOutput jsonpath = (KubernetesReplaceOutput) "jsonpath";
         public static KubernetesReplaceOutput jsonpath_file = (KubernetesReplaceOutput) "jsonpath-file";
-        public static explicit operator KubernetesReplaceOutput(string value)
+        public static implicit operator KubernetesReplaceOutput(string value)
         {
             return new KubernetesReplaceOutput { Value = value };
         }
@@ -24401,7 +24401,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesTaintOutput templatefile = (KubernetesTaintOutput) "templatefile";
         public static KubernetesTaintOutput jsonpath = (KubernetesTaintOutput) "jsonpath";
         public static KubernetesTaintOutput jsonpath_file = (KubernetesTaintOutput) "jsonpath-file";
-        public static explicit operator KubernetesTaintOutput(string value)
+        public static implicit operator KubernetesTaintOutput(string value)
         {
             return new KubernetesTaintOutput { Value = value };
         }
@@ -24426,7 +24426,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesApplyOutput templatefile = (KubernetesApplyOutput) "templatefile";
         public static KubernetesApplyOutput jsonpath = (KubernetesApplyOutput) "jsonpath";
         public static KubernetesApplyOutput jsonpath_file = (KubernetesApplyOutput) "jsonpath-file";
-        public static explicit operator KubernetesApplyOutput(string value)
+        public static implicit operator KubernetesApplyOutput(string value)
         {
             return new KubernetesApplyOutput { Value = value };
         }
@@ -24451,7 +24451,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesAutoscaleOutput templatefile = (KubernetesAutoscaleOutput) "templatefile";
         public static KubernetesAutoscaleOutput jsonpath = (KubernetesAutoscaleOutput) "jsonpath";
         public static KubernetesAutoscaleOutput jsonpath_file = (KubernetesAutoscaleOutput) "jsonpath-file";
-        public static explicit operator KubernetesAutoscaleOutput(string value)
+        public static implicit operator KubernetesAutoscaleOutput(string value)
         {
             return new KubernetesAutoscaleOutput { Value = value };
         }
@@ -24476,7 +24476,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesWaitOutput templatefile = (KubernetesWaitOutput) "templatefile";
         public static KubernetesWaitOutput jsonpath = (KubernetesWaitOutput) "jsonpath";
         public static KubernetesWaitOutput jsonpath_file = (KubernetesWaitOutput) "jsonpath-file";
-        public static explicit operator KubernetesWaitOutput(string value)
+        public static implicit operator KubernetesWaitOutput(string value)
         {
             return new KubernetesWaitOutput { Value = value };
         }
@@ -24501,7 +24501,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesConvertOutput template = (KubernetesConvertOutput) "template";
         public static KubernetesConvertOutput jsonpath = (KubernetesConvertOutput) "jsonpath";
         public static KubernetesConvertOutput jsonpath_file = (KubernetesConvertOutput) "jsonpath-file";
-        public static explicit operator KubernetesConvertOutput(string value)
+        public static implicit operator KubernetesConvertOutput(string value)
         {
             return new KubernetesConvertOutput { Value = value };
         }
@@ -24526,7 +24526,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesCreateOutput templatefile = (KubernetesCreateOutput) "templatefile";
         public static KubernetesCreateOutput jsonpath = (KubernetesCreateOutput) "jsonpath";
         public static KubernetesCreateOutput jsonpath_file = (KubernetesCreateOutput) "jsonpath-file";
-        public static explicit operator KubernetesCreateOutput(string value)
+        public static implicit operator KubernetesCreateOutput(string value)
         {
             return new KubernetesCreateOutput { Value = value };
         }
@@ -24551,7 +24551,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesRunContainerOutput templatefile = (KubernetesRunContainerOutput) "templatefile";
         public static KubernetesRunContainerOutput jsonpath = (KubernetesRunContainerOutput) "jsonpath";
         public static KubernetesRunContainerOutput jsonpath_file = (KubernetesRunContainerOutput) "jsonpath-file";
-        public static explicit operator KubernetesRunContainerOutput(string value)
+        public static implicit operator KubernetesRunContainerOutput(string value)
         {
             return new KubernetesRunContainerOutput { Value = value };
         }
@@ -24576,7 +24576,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesEditOutput templatefile = (KubernetesEditOutput) "templatefile";
         public static KubernetesEditOutput jsonpath = (KubernetesEditOutput) "jsonpath";
         public static KubernetesEditOutput jsonpath_file = (KubernetesEditOutput) "jsonpath-file";
-        public static explicit operator KubernetesEditOutput(string value)
+        public static implicit operator KubernetesEditOutput(string value)
         {
             return new KubernetesEditOutput { Value = value };
         }
@@ -24601,7 +24601,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public static KubernetesScaleOutput templatefile = (KubernetesScaleOutput) "templatefile";
         public static KubernetesScaleOutput jsonpath = (KubernetesScaleOutput) "jsonpath";
         public static KubernetesScaleOutput jsonpath_file = (KubernetesScaleOutput) "jsonpath-file";
-        public static explicit operator KubernetesScaleOutput(string value)
+        public static implicit operator KubernetesScaleOutput(string value)
         {
             return new KubernetesScaleOutput { Value = value };
         }

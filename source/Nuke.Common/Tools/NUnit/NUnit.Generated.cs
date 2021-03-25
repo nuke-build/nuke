@@ -2140,7 +2140,7 @@ namespace Nuke.Common.Tools.NUnit
         public static NUnitProcessType Single = (NUnitProcessType) "Single";
         public static NUnitProcessType Separate = (NUnitProcessType) "Separate";
         public static NUnitProcessType Multiple = (NUnitProcessType) "Multiple";
-        public static explicit operator NUnitProcessType(string value)
+        public static implicit operator NUnitProcessType(string value)
         {
             return new NUnitProcessType { Value = value };
         }
@@ -2159,7 +2159,7 @@ namespace Nuke.Common.Tools.NUnit
         public static NUnitPrincipalPolicy UnauthenticatedPrincipal = (NUnitPrincipalPolicy) "UnauthenticatedPrincipal";
         public static NUnitPrincipalPolicy NoPrincipal = (NUnitPrincipalPolicy) "NoPrincipal";
         public static NUnitPrincipalPolicy WindowsPrincipal = (NUnitPrincipalPolicy) "WindowsPrincipal";
-        public static explicit operator NUnitPrincipalPolicy(string value)
+        public static implicit operator NUnitPrincipalPolicy(string value)
         {
             return new NUnitPrincipalPolicy { Value = value };
         }
@@ -2178,7 +2178,7 @@ namespace Nuke.Common.Tools.NUnit
         public static NUnitLabelType Off = (NUnitLabelType) "Off";
         public static NUnitLabelType On = (NUnitLabelType) "On";
         public static NUnitLabelType All = (NUnitLabelType) "All";
-        public static explicit operator NUnitLabelType(string value)
+        public static implicit operator NUnitLabelType(string value)
         {
             return new NUnitLabelType { Value = value };
         }
@@ -2199,7 +2199,7 @@ namespace Nuke.Common.Tools.NUnit
         public static NUnitTraceLevel Warning = (NUnitTraceLevel) "Warning";
         public static NUnitTraceLevel Info = (NUnitTraceLevel) "Info";
         public static NUnitTraceLevel Verbose = (NUnitTraceLevel) "Verbose";
-        public static explicit operator NUnitTraceLevel(string value)
+        public static implicit operator NUnitTraceLevel(string value)
         {
             return new NUnitTraceLevel { Value = value };
         }

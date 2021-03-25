@@ -836,7 +836,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         public static ReportTypes XmlSummary = (ReportTypes) "XmlSummary";
         public static ReportTypes SonarQube = (ReportTypes) "SonarQube";
         public static ReportTypes TeamCitySummary = (ReportTypes) "TeamCitySummary";
-        public static explicit operator ReportTypes(string value)
+        public static implicit operator ReportTypes(string value)
         {
             return new ReportTypes { Value = value };
         }
@@ -857,7 +857,7 @@ namespace Nuke.Common.Tools.ReportGenerator
         public static ReportGeneratorVerbosity Info = (ReportGeneratorVerbosity) "Info";
         public static ReportGeneratorVerbosity Warning = (ReportGeneratorVerbosity) "Warning";
         public static ReportGeneratorVerbosity Error = (ReportGeneratorVerbosity) "Error";
-        public static explicit operator ReportGeneratorVerbosity(string value)
+        public static implicit operator ReportGeneratorVerbosity(string value)
         {
             return new ReportGeneratorVerbosity { Value = value };
         }

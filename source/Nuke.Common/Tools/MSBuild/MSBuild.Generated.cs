@@ -2393,7 +2393,7 @@ namespace Nuke.Common.Tools.MSBuild
         public static MSBuildToolsVersion _12_0 = (MSBuildToolsVersion) "12.0";
         public static MSBuildToolsVersion _14_0 = (MSBuildToolsVersion) "14.0";
         public static MSBuildToolsVersion _15_0 = (MSBuildToolsVersion) "15.0";
-        public static explicit operator MSBuildToolsVersion(string value)
+        public static implicit operator MSBuildToolsVersion(string value)
         {
             return new MSBuildToolsVersion { Value = value };
         }
@@ -2414,7 +2414,7 @@ namespace Nuke.Common.Tools.MSBuild
         public static MSBuildVerbosity Normal = (MSBuildVerbosity) "Normal";
         public static MSBuildVerbosity Detailed = (MSBuildVerbosity) "Detailed";
         public static MSBuildVerbosity Diagnostic = (MSBuildVerbosity) "Diagnostic";
-        public static explicit operator MSBuildVerbosity(string value)
+        public static implicit operator MSBuildVerbosity(string value)
         {
             return new MSBuildVerbosity { Value = value };
         }
@@ -2435,7 +2435,7 @@ namespace Nuke.Common.Tools.MSBuild
         public static MSBuildTargetPlatform x64 = (MSBuildTargetPlatform) "x64";
         public static MSBuildTargetPlatform arm = (MSBuildTargetPlatform) "arm";
         public static MSBuildTargetPlatform Win32 = (MSBuildTargetPlatform) "Win32";
-        public static explicit operator MSBuildTargetPlatform(string value)
+        public static implicit operator MSBuildTargetPlatform(string value)
         {
             return new MSBuildTargetPlatform { Value = value };
         }
@@ -2453,7 +2453,7 @@ namespace Nuke.Common.Tools.MSBuild
     {
         public static MSBuildSymbolPackageFormat symbols_nupkg = (MSBuildSymbolPackageFormat) "symbols.nupkg";
         public static MSBuildSymbolPackageFormat snupkg = (MSBuildSymbolPackageFormat) "snupkg";
-        public static explicit operator MSBuildSymbolPackageFormat(string value)
+        public static implicit operator MSBuildSymbolPackageFormat(string value)
         {
             return new MSBuildSymbolPackageFormat { Value = value };
         }

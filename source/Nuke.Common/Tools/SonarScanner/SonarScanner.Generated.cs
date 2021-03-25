@@ -80,6 +80,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
         ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
         ///     <li><c>/n</c> via <see cref="SonarScannerBeginSettings.Name"/></li>
+        ///     <li><c>/o</c> via <see cref="SonarScannerBeginSettings.Organization"/></li>
         ///     <li><c>/v</c> via <see cref="SonarScannerBeginSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
@@ -127,6 +128,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
         ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
         ///     <li><c>/n</c> via <see cref="SonarScannerBeginSettings.Name"/></li>
+        ///     <li><c>/o</c> via <see cref="SonarScannerBeginSettings.Organization"/></li>
         ///     <li><c>/v</c> via <see cref="SonarScannerBeginSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
@@ -171,6 +173,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
         ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
         ///     <li><c>/n</c> via <see cref="SonarScannerBeginSettings.Name"/></li>
+        ///     <li><c>/o</c> via <see cref="SonarScannerBeginSettings.Organization"/></li>
         ///     <li><c>/v</c> via <see cref="SonarScannerBeginSettings.Version"/></li>
         ///   </ul>
         /// </remarks>
@@ -253,6 +256,10 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   Specifies the version of your project.
         /// </summary>
         public virtual string Version { get; internal set; }
+        /// <summary>
+        ///   Specifies the Organization of your project.
+        /// </summary>
+        public virtual string Organization { get; internal set; }
         /// <summary>
         ///   The project description.
         /// </summary>
@@ -386,6 +393,7 @@ namespace Nuke.Common.Tools.SonarScanner
               .Add("/k:{value}", ProjectKey)
               .Add("/n:{value}", Name)
               .Add("/v:{value}", Version)
+              .Add("/o:{value}", Organization)
               .Add("/d:sonar.projectDescription={value}", Description)
               .Add("/d:sonar.host.url={value}", Server)
               .Add("/d:sonar.login={value}", Login)
@@ -528,6 +536,30 @@ namespace Nuke.Common.Tools.SonarScanner
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Version = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Organization
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.Organization"/></em></p>
+        ///   <p>Specifies the Organization of your project.</p>
+        /// </summary>
+        [Pure]
+        public static T SetOrganization<T>(this T toolSettings, string organization) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Organization = organization;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.Organization"/></em></p>
+        ///   <p>Specifies the Organization of your project.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOrganization<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Organization = null;
             return toolSettings;
         }
         #endregion
