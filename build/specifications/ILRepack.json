@@ -54,7 +54,7 @@
           {
             "name": "Attr",
             "type": "string",
-            "format": "--attr:<path>",
+            "format": "--attr:{value}",
             "help": "Take assembly attributes from the given assembly file."
           },
           {
@@ -162,7 +162,7 @@
           {
             "name": "Output",
             "type": "string",
-            "format": "--out:<path>",
+            "format": "--out:{value}",
             "help": "Target assembly path, <c>symbol/config/doc</c> files will be written here as well."
           },
           {
