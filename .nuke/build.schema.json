@@ -29,10 +29,12 @@
           "description": "Indicates to continue a previously failed build attempt"
         },
         "EnterpriseAccessToken": {
-          "type": "string"
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secret [profile]'"
         },
         "GitHubRegistryApiKey": {
-          "type": "string"
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secret [profile]'"
         },
         "GitHubToken": {
           "type": "string",
@@ -41,6 +43,13 @@
         "GitterAuthToken": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
+        },
+        "GitterRoomId": {
+          "type": "string"
+        },
+        "GlobalSolution": {
+          "type": "string",
+          "description": "Path to a solution file that is automatically loaded. Default is nuke-global.sln"
         },
         "Help": {
           "type": "boolean",
@@ -83,7 +92,8 @@
           }
         },
         "PublicNuGetApiKey": {
-          "type": "string"
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secret [profile]'"
         },
         "Root": {
           "type": "string",
@@ -136,10 +146,6 @@
             ]
           }
         },
-        "SlackAppAccessToken": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
         "SlackUserAccessToken": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
@@ -154,7 +160,7 @@
         },
         "Target": {
           "type": "array",
-          "description": "List of targets to be executed. Default is '{default_target}'",
+          "description": "List of targets to be invoked. Default is '{default_target}'",
           "items": {
             "type": "string",
             "enum": [

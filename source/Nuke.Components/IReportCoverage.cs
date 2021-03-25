@@ -33,7 +33,6 @@ namespace Nuke.Components
 
         Target ReportCoverage => _ => _
             .DependsOn(Test)
-            .TryDependentFor<IPublish>()
             .TryAfter<ITest>()
             .Consumes(Test)
             .Produces(CoverageReportArchive)

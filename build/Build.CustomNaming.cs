@@ -16,6 +16,7 @@ partial class Build
             { nameof(IReportCoverage.ReportCoverage), "📊" },
             { nameof(IReportDuplicates.ReportDuplicates), "🎭" },
             { nameof(IReportIssues.ReportIssues), "💣" },
+            { nameof(ISignPackages.SignPackages), "🔑" },
             { nameof(IPublish.Publish), "🚚" },
             { nameof(Announce), "🗣" }
         };

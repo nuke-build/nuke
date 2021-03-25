@@ -15,9 +15,6 @@ namespace Nuke.Components
     {
         // TODO: assert file exists
         string ChangelogFile => RootDirectory / "CHANGELOG.md";
-
-        string NuGetReleaseNotes => GetNuGetReleaseNotes(
-            ChangelogFile,
-            (this as IHazGitRepository)?.GitRepository);
+        string NuGetReleaseNotes => GetNuGetReleaseNotes(ChangelogFile, (this as IHazGitRepository)?.GitRepository);
     }
 }

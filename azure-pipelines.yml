@@ -36,7 +36,6 @@ stages:
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackAppAccessToken: $(SlackAppAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
@@ -55,7 +54,6 @@ stages:
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackAppAccessToken: $(SlackAppAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
@@ -76,7 +74,6 @@ stages:
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackAppAccessToken: $(SlackAppAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
@@ -103,7 +100,6 @@ stages:
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackAppAccessToken: $(SlackAppAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
@@ -122,7 +118,6 @@ stages:
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackAppAccessToken: $(SlackAppAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
@@ -143,7 +138,6 @@ stages:
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackAppAccessToken: $(SlackAppAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
@@ -170,7 +164,6 @@ stages:
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackAppAccessToken: $(SlackAppAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
@@ -189,7 +182,6 @@ stages:
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackAppAccessToken: $(SlackAppAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
@@ -210,7 +202,6 @@ stages:
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackAppAccessToken: $(SlackAppAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:

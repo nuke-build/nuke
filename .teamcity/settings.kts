@@ -58,17 +58,15 @@ project {
             value = "Release",
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
-        text (
+        password (
             "env.EnterpriseAccessToken",
             label = "EnterpriseAccessToken",
             value = "",
-            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
-        text (
+        password (
             "env.GitHubRegistryApiKey",
             label = "GitHubRegistryApiKey",
             value = "",
-            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         password (
             "env.GitHubToken",
@@ -80,6 +78,12 @@ project {
             label = "GitterAuthToken",
             value = "",
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.GitterRoomId",
+            label = "GitterRoomId",
+            value = "593f3dadd73408ce4f66db89",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         checkbox (
             "env.IgnoreFailedSources",
             label = "IgnoreFailedSources",
@@ -88,11 +92,10 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
-        text (
+        password (
             "env.PublicNuGetApiKey",
             label = "PublicNuGetApiKey",
             value = "",
-            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         password (
             "env.SignPathApiToken",
@@ -102,25 +105,20 @@ project {
         text (
             "env.SignPathOrganizationId",
             label = "SignPathOrganizationId",
-            value = "",
+            value = "0fdaf334-6910-41f4-83d2-e58e4cccb087",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
             "env.SignPathPolicySlug",
             label = "SignPathPolicySlug",
-            value = "",
+            value = "release-signing",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
             "env.SignPathProjectSlug",
             label = "SignPathProjectSlug",
-            value = "",
+            value = "nuke",
             allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.SlackAppAccessToken",
-            label = "SlackAppAccessToken",
-            value = "",
             display = ParameterDisplay.NORMAL)
         password (
             "env.SlackUserAccessToken",

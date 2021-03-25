@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
-using Nuke.Common.ValueInjection;
+using static Nuke.Common.ValueInjection.ValueInjectionUtility;
 
 namespace Nuke.Components
 {
@@ -16,9 +16,9 @@ namespace Nuke.Components
     {
         public const string Twitter = nameof(Twitter);
 
-        [Parameter] [Secret] string ConsumerKey => ValueInjectionUtility.TryGetValue(() => ConsumerKey);
-        [Parameter] [Secret] string ConsumerSecret => ValueInjectionUtility.TryGetValue(() => ConsumerSecret);
-        [Parameter] [Secret] string AccessToken => ValueInjectionUtility.TryGetValue(() => AccessToken);
-        [Parameter] [Secret] string AccessTokenSecret => ValueInjectionUtility.TryGetValue(() => AccessTokenSecret);
+        [Parameter] [Secret] string ConsumerKey => TryGetValue(() => ConsumerKey);
+        [Parameter] [Secret] string ConsumerSecret => TryGetValue(() => ConsumerSecret);
+        [Parameter] [Secret] string AccessToken => TryGetValue(() => AccessToken);
+        [Parameter] [Secret] string AccessTokenSecret => TryGetValue(() => AccessTokenSecret);
     }
 }

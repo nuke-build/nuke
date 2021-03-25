@@ -13,8 +13,7 @@ namespace Nuke.Components
     [PublicAPI]
     public interface IHazConfiguration : INukeBuild
     {
-        [Parameter]
-        Configuration Configuration => TryGetValue(() => Configuration) ??
-                                       (IsLocalBuild ? Configuration.Debug : Configuration.Release);
+        [Parameter] Configuration Configuration => TryGetValue(() => Configuration) ??
+                                                   (IsLocalBuild ? Configuration.Debug : Configuration.Release);
     }
 }

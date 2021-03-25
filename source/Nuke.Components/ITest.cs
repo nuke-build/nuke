@@ -72,11 +72,12 @@ namespace Nuke.Components
             var failedTests = outcomes.Count(x => x == "Failed");
             var skippedTests = outcomes.Count(x => x == "NotExecuted");
 
-            if (failedTests > 0)
-                ReportSummary("Failed", failedTests.ToString());
-            ReportSummary("Passed", passedTests.ToString());
-            if (skippedTests > 0)
-                ReportSummary("Skipped", skippedTests.ToString());
+            ReportSummary(_ => _
+                .When(failedTests > 0, _ => _
+                    .AddPair("Failed", failedTests.ToString()))
+                .AddPair("Passed", passedTests.ToString())
+                .When(skippedTests > 0, _ => _
+                    .AddPair("Skipped", skippedTests.ToString())));
         }
 
         sealed Configure<DotNetTestSettings> TestSettingsBase => _ => _
