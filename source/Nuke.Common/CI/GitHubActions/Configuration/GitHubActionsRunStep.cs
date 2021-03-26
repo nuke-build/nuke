@@ -29,7 +29,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                     writer.WriteLine("env:");
                     using (writer.Indent())
                     {
-                        Imports.ForEach(x => writer.WriteLine($"  {x.Key}: {x.Value}"));
+                        Imports.ForEach(x => writer.WriteLine($"{x.Key}: {x.Value}"));
                     }
                 }
             }

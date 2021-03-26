@@ -41,9 +41,9 @@ jobs:
       - name: Run './build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage'
         run: ./build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage
         env:
-            EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
-            SlackAppAccessToken: ${{ secrets.SLACK_APP_ACCESS_TOKEN }}
-            SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
+          EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
+          SlackAppAccessToken: ${{ secrets.SLACK_APP_ACCESS_TOKEN }}
+          SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
@@ -59,9 +59,9 @@ jobs:
       - name: Run './build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage'
         run: ./build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage
         env:
-            EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
-            SlackAppAccessToken: ${{ secrets.SLACK_APP_ACCESS_TOKEN }}
-            SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
+          EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
+          SlackAppAccessToken: ${{ secrets.SLACK_APP_ACCESS_TOKEN }}
+          SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
   macOS-latest:
     name: macOS-latest
     runs-on: macOS-latest
@@ -77,6 +77,6 @@ jobs:
       - name: Run './build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage'
         run: ./build.cmd Test Pack ReportDuplicates ReportIssues ReportCoverage
         env:
-            EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
-            SlackAppAccessToken: ${{ secrets.SLACK_APP_ACCESS_TOKEN }}
-            SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
+          EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
+          SlackAppAccessToken: ${{ secrets.SLACK_APP_ACCESS_TOKEN }}
+          SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}

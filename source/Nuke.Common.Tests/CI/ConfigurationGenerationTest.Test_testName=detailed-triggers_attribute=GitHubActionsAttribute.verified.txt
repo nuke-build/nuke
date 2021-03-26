@@ -33,6 +33,12 @@ on:
     paths:
       - pull_request_include_path
       - !pull_request_exclude_path
+  workflow_dispatch:
+    inputs:
+      NuGetApiKey:
+        description: "NuGet Api Key"
+      OtherData:
+        description: "Other Data"
   schedule:
     - cron: '* 0 * * *'
 
@@ -51,6 +57,9 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
+        env:
+          NuGetApiKey: ${{ github.event.inputs.NuGetApiKey }}
+          OtherData: ${{ github.event.inputs.OtherData }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
@@ -77,6 +86,9 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
+        env:
+          NuGetApiKey: ${{ github.event.inputs.NuGetApiKey }}
+          OtherData: ${{ github.event.inputs.OtherData }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
@@ -103,6 +115,9 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
+        env:
+          NuGetApiKey: ${{ github.event.inputs.NuGetApiKey }}
+          OtherData: ${{ github.event.inputs.OtherData }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
