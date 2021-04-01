@@ -11,6 +11,17 @@ namespace Nuke.Common.Utilities
     public static partial class StringExtensions
     {
         [Pure]
+        public static string TrimToOne(this string str, string trim)
+        {
+            while (str.Contains(trim + trim))
+            {
+                str = str.Replace(trim + trim, trim);
+            }
+
+            return str;
+        }
+
+        [Pure]
         public static string TrimEnd(this string str, string trim)
         {
             return str.EndsWith(trim) ? str.Substring(startIndex: 0, str.Length - trim.Length) : str;
