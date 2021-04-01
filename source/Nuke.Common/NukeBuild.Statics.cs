@@ -145,7 +145,7 @@ namespace Nuke.Common
                     "   dotnet tool update Nuke.GlobalTool -g",
                     "2. Update your build",
                     "   nuke :update",
-                    "3. Confirm on \"Update configuration file\"",
+                    "3. Confirm on \"Update configuration file\" and \"Update build scripts\"",
                     "   (Others are be optional)"
                 }.JoinNewLine());
 
