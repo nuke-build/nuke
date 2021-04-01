@@ -96,18 +96,17 @@ namespace Nuke.Common.OutputSinks
                 }
             }
 
-            if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName.EqualsOrdinalIgnoreCase("zh"))
-            {
-                WriteNormal();
-                WriteTranslationRequest();
-            }
-            else if (build.IsSuccessful &&
+            if (build.IsSuccessful &&
                 HasHighUsage() &&
                 TryGetValue(() => GitRepository.FromLocalDirectory(NukeBuild.RootDirectory)) is { } repository &&
                 TryGetValue(() => repository.GetDefaultBranch().GetAwaiter().GetResult()) == null)
             {
                 WriteNormal();
-                WriteSponsorshipInfo();
+
+                if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName.EqualsOrdinalIgnoreCase("zh"))
+                    WriteTranslationRequest();
+                else
+                    WriteSponsorshipInfo();
             }
         }
 
