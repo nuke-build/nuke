@@ -71,9 +71,11 @@ namespace Nuke.SourceGenerators
             bool isSolution = false)
         {
             string GetMemberName(string name) => name
-                .Split(new[]{'.', '-'}, StringSplitOptions.RemoveEmptyEntries)
+                .ReplaceRegex(@"(^[\W^\d]|[\W])", _ => "_")
+                .Split('_')
                 .Select(x => x.Capitalize().ReplaceKnownWords())
-                .Join("_");
+                .Join("_")
+                .TrimToOne("_");
 
             string GetSolutionFolderTypeName(string name)
                 => $"_{GetMemberName(name)}";
