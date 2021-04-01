@@ -12,8 +12,10 @@ namespace Nuke.Common.Utilities
         [Pure]
         public static string Capitalize(this string text)
         {
-            return text.Substring(startIndex: 0, length: 1).ToUpper(CultureInfo.InvariantCulture) +
-                   text.Substring(startIndex: 1);
+            return !text.IsNullOrEmpty()
+                ? text.Substring(startIndex: 0, length: 1).ToUpper(CultureInfo.InvariantCulture) +
+                  text.Substring(startIndex: 1)
+                : text;
         }
     }
 }
