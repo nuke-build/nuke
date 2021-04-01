@@ -122,10 +122,9 @@ namespace Nuke.Common.OutputSinks
 
         private void WriteSponsorshipInfo()
         {
-            WriteInformation("If you like NUKE, you'll love what's coming! 🤓");
-            WriteInformation("We're currently looking for more sponsors to release a new version.");
-            WriteInformation("Please check out our tiers: https://github.com/sponsors/matkoch");
-            WriteInformation("With a sponsorship you'll also gain access to various perks. 🚀");
+            WriteInformation("If you like NUKE, please support us! 🤓");
+            WriteInformation("With a sponsorship you'll gain access to various perks. 🚀");
+            WriteInformation("Check out our tiers: https://github.com/sponsors/matkoch");
             WriteNormal();
             WriteInformation("Happy building! 🌟");
         }
