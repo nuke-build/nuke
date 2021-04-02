@@ -192,6 +192,8 @@ namespace Nuke.Common.OutputSinks
                     case ExecutionStatus.Failed:
                         WriteError(line);
                         break;
+                    case ExecutionStatus.Collective:
+                        break;
                     default:
                         throw new NotSupportedException(target.Status.ToString());
                 }
