@@ -19,6 +19,8 @@ namespace Nuke.Common.CI.GitLab
     [ExcludeFromCodeCoverage]
     public class GitLab : Host, IBuildServer
     {
+        public new static GitLab Instance => Host.Instance as GitLab;
+
         internal static bool IsRunningGitLab => !Environment.GetEnvironmentVariable("GITLAB_CI").IsNullOrEmpty();
 
         private const string SectionStartSequence = "\u001b[0K";
