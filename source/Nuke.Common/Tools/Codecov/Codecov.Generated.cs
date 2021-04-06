@@ -964,7 +964,7 @@ namespace Nuke.Common.Tools.Codecov
         ///   <p>Set the private repository token.</p>
         /// </summary>
         [Pure]
-        public static T SetToken<T>(this T toolSettings, string token) where T : CodecovSettings
+        public static T SetToken<T>(this T toolSettings, [Secret] string token) where T : CodecovSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Token = token;

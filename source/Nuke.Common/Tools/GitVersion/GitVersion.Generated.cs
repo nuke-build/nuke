@@ -1003,7 +1003,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Password in case authentication is required.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : GitVersionSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;

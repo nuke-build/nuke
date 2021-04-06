@@ -653,7 +653,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify a password to use when opening the PFX file.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : SignToolSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -782,7 +782,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the SHA1 thumbprint of the signing cert.</p>
         /// </summary>
         [Pure]
-        public static T SetSha1Thumbprint<T>(this T toolSettings, string sha1Thumbprint) where T : SignToolSettings
+        public static T SetSha1Thumbprint<T>(this T toolSettings, [Secret] string sha1Thumbprint) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Sha1Thumbprint = sha1Thumbprint;

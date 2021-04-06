@@ -1585,7 +1585,7 @@ namespace Nuke.Common.Tools.SpecFlow
         ///   <p>The license key you received when you purchased SpecFlow+.</p>
         /// </summary>
         [Pure]
-        public static T SetLicenseKey<T>(this T toolSettings, string licenseKey) where T : SpecFlowRegisterSettings
+        public static T SetLicenseKey<T>(this T toolSettings, [Secret] string licenseKey) where T : SpecFlowRegisterSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.LicenseKey = licenseKey;

@@ -57605,7 +57605,7 @@ namespace Nuke.Common.Tools.Docker
         ///   <p>Password.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : DockerLoginSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : DockerLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;

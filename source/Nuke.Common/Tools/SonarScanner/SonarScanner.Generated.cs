@@ -641,7 +641,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : SonarScannerBeginSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -2071,7 +2071,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : SonarScannerEndSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : SonarScannerEndSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;

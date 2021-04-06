@@ -18927,7 +18927,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The API key for the server.</p>
         /// </summary>
         [Pure]
-        public static T SetApiKey<T>(this T toolSettings, string apiKey) where T : DotNetNuGetPushSettings
+        public static T SetApiKey<T>(this T toolSettings, [Secret] string apiKey) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = apiKey;
@@ -18951,7 +18951,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>The API key for the symbol server.</p>
         /// </summary>
         [Pure]
-        public static T SetSymbolApiKey<T>(this T toolSettings, string symbolApiKey) where T : DotNetNuGetPushSettings
+        public static T SetSymbolApiKey<T>(this T toolSettings, [Secret] string symbolApiKey) where T : DotNetNuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolApiKey = symbolApiKey;
@@ -19342,7 +19342,7 @@ namespace Nuke.Common.Tools.DotNet
         ///   <p>Password to be used when connecting to an authenticated source.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : DotNetNuGetAddSourceSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : DotNetNuGetAddSourceSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;

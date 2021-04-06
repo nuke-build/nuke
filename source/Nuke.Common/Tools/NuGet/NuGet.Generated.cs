@@ -1585,7 +1585,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>The API key for the target repository. If not present, the one specified in <em>%AppData%\NuGet\NuGet.Config</em> is used.</p>
         /// </summary>
         [Pure]
-        public static T SetApiKey<T>(this T toolSettings, string apiKey) where T : NuGetPushSettings
+        public static T SetApiKey<T>(this T toolSettings, [Secret] string apiKey) where T : NuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = apiKey;
@@ -1657,7 +1657,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p><em>(3.5+)</em> Specifies the API key for the URL specified in <c>-SymbolSource</c>.</p>
         /// </summary>
         [Pure]
-        public static T SetSymbolApiKey<T>(this T toolSettings, string symbolApiKey) where T : NuGetPushSettings
+        public static T SetSymbolApiKey<T>(this T toolSettings, [Secret] string symbolApiKey) where T : NuGetPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.SymbolApiKey = symbolApiKey;
@@ -4757,7 +4757,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>Specifies the password for authenticating with the source.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : NuGetSourcesAddSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : NuGetSourcesAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -5082,7 +5082,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   <p>Specifies the password for authenticating with the source.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : NuGetSourcesUpdateSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : NuGetSourcesUpdateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;

@@ -7503,7 +7503,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmFetchSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : HelmFetchSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -11278,7 +11278,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmInspectSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : HelmInspectSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -11675,7 +11675,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmInspectChartSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : HelmInspectChartSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -12421,7 +12421,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmInspectValuesSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : HelmInspectValuesSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -13199,7 +13199,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmInstallSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : HelmInstallSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -16640,7 +16640,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmRepoAddSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : HelmRepoAddSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -20571,7 +20571,7 @@ namespace Nuke.Common.Tools.Helm
         ///   <p>Chart repository password where to locate the requested chart.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : HelmUpgradeSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : HelmUpgradeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;

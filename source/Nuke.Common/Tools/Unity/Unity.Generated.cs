@@ -891,7 +891,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : UnityCreateManualActivationFileSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -915,7 +915,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnityCreateManualActivationFileSettings
+        public static T SetSerial<T>(this T toolSettings, [Secret] string serial) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -1225,7 +1225,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : UnityManualLicenseFileSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1249,7 +1249,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnityManualLicenseFileSettings
+        public static T SetSerial<T>(this T toolSettings, [Secret] string serial) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -2990,7 +2990,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : UnitySettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -3014,7 +3014,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnitySettings
+        public static T SetSerial<T>(this T toolSettings, [Secret] string serial) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -3300,7 +3300,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : UnityReturnLicenseSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -3324,7 +3324,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnityReturnLicenseSettings
+        public static T SetSerial<T>(this T toolSettings, [Secret] string serial) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;

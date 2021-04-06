@@ -3038,7 +3038,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryLoginSettings.Password"/></em></p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : CloudFoundryLoginSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : CloudFoundryLoginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -3217,7 +3217,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p><em>Sets <see cref="CloudFoundryAuthSettings.Password"/></em></p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : CloudFoundryAuthSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : CloudFoundryAuthSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;

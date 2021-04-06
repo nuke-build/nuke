@@ -330,7 +330,7 @@ namespace Nuke.Common.Tools.SignClient
         ///   <p>Client Secret</p>
         /// </summary>
         [Pure]
-        public static T SetSecret<T>(this T toolSettings, string secret) where T : SignClientSignSettings
+        public static T SetSecret<T>(this T toolSettings, [Secret] string secret) where T : SignClientSignSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Secret = secret;
