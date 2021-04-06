@@ -72,7 +72,7 @@ namespace Nuke.Common
     {
     }
 
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
     public class SecretAttribute : Attribute
     {
     }
