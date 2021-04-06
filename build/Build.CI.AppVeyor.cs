@@ -25,6 +25,7 @@ using Nuke.Enterprise.Notifications;
             AppVeyorSecrets.TwitterAccessToken,
             AppVeyorSecrets.TwitterAccessTokenSecret,
             AppVeyorSecrets.GitterAuthToken,
+            AppVeyorSecrets.SlackWebhook,
 #if ENTERPRISE
             AppVeyorSecrets.SlackUserAccessToken
 #endif
@@ -79,6 +80,10 @@ partial class Build
         public const string GitterAuthToken = GitterAuthTokenName + ":" + GitterAuthTokenValue;
         const string GitterAuthTokenName = nameof(Build.GitterAuthToken);
         const string GitterAuthTokenValue = "Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw";
+
+        public const string SlackWebhook = SlackWebhookName + ":" + SlackWebhookValue;
+        const string SlackWebhookName = nameof(Build.SlackWebhook);
+        const string SlackWebhookValue = "xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hkn8u/b12lFivnxtTPuMWjAYkoPLlkJ4v39FLYPcxGYbAxRRMcJiHjrNyPtFfK6ddo=";
 
 #if ENTERPRISE
         public const string SlackUserAccessToken = SlackUserAccessTokenName + ":" + SlackUserAccessTokenValue;

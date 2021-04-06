@@ -50,5 +50,7 @@ environment:
     secure: apNpXzxTpZ5CSrmzVGTCuJTeBUtNlNVgKmQsscXdpS59B5tqZLkUZXMW2XYQIcR6
   GitterAuthToken:
     secure: Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw
+  SlackWebhook:
+    secure: xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hkn8u/b12lFivnxtTPuMWjAYkoPLlkJ4v39FLYPcxGYbAxRRMcJiHjrNyPtFfK6ddo=
   SlackUserAccessToken:
     secure: cMArtN7cGnW6zI9ryMiQZSfcv2y+6Ads8KPvZIN18IQnpTBY6zzBEyCL+1i8v4OF08HW7oY3BDIXWEMT6PdeSQ==
