@@ -301,7 +301,8 @@ namespace Nuke.CodeGeneration.Generators
 
         private static DataClassWriter WriteMethod(this DataClassWriter writer, string name, Property property, string modification)
         {
-            return writer.WriteMethod(name, $"{property.GetNullableType()} {property.Name.ToInstance().EscapeParameter()}", modification);
+            var attributes = property.Secret ?? false ? "[Secret] " : string.Empty;
+            return writer.WriteMethod(name, $"{attributes}{property.GetNullableType()} {property.Name.ToInstance().EscapeParameter()}", modification);
         }
 
         private static DataClassWriter WriteMethod(
