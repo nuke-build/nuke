@@ -5,10 +5,13 @@
 #if ENTERPRISE
 
 using System;
+using System.Linq;
 using Nuke.Common;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using Nuke.Enterprise.Auditing;
 using Nuke.Enterprise.Notifications;
 
@@ -21,7 +24,7 @@ partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazG
 {
     string IHazGitHubAccessToken.AccessToken => GitHubToken;
 
-    public class DeploymentSlackNotificationAttribute : SlackNotificationAttribute
+    public class DeploymentSlackNotificationAttribute : CustomSlackNotificationAttribute
     {
         public override bool ReportBuildAlways => Host is AppVeyor { ProjectSlug: "nuke-deployment" };
 
@@ -33,7 +36,7 @@ partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazG
         };
     }
 
-    public class BuildStatusSlackNotificationAttribute : SlackNotificationAttribute
+    public class BuildStatusSlackNotificationAttribute : CustomSlackNotificationAttribute
     {
         public override bool ReportBuildAlways => true;
         public override string ReceiverId => Host is GitHubActions _ or AppVeyor _ ? "U9S0MU8A3" : null;
@@ -51,6 +54,22 @@ partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazG
         };
 
         public override bool ShouldNotify(NukeBuild build) => ((Build) build).GitRepository.IsOnDevelopBranch();
+    }
+
+    public abstract class CustomSlackNotificationAttribute : SlackNotificationAttribute
+    {
+        protected override string GetMessage(NukeBuild build, (string Sha, string Message, string Author, string Email, string UserId) lastCommitData)
+        {
+            var gitVersion = ((Build) build).GitVersion;
+            if (gitVersion == null)
+                return base.GetMessage(build, lastCommitData);
+
+            var header = new[] { (Text: $"#{gitVersion.FullSemVer}", BuildServer.CommonUrls.First().Url) }
+                .Concat(BuildServer.CommonUrls.Last())
+                .Select(x => $"*<{x.Url}|{x.Text}>*").Join(" | ");
+
+            return $":{GetIcon()}: {header}";
+        }
     }
 }
 #endif
