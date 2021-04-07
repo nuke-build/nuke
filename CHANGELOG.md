@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [5.1.0] / 2021-04-07
 - Removed `:Fix` command from global tool (superseded by `:AddPackage`)
 - Changed `.nuke` configuration file to `.nuke` directory
 - Changed shell-completion to rely on `build.schema.json` file
@@ -754,7 +756,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke.git/compare/5.0.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke.git/compare/5.1.0...HEAD
+[5.1.0]: https://github.com/nuke-build/nuke.git/compare/5.0.2...5.1.0
 [5.0.2]: https://github.com/nuke-build/nuke.git/compare/5.0.1...5.0.2
 [5.0.1]: https://github.com/nuke-build/nuke.git/compare/5.0.0...5.0.1
 [5.0.0]: https://github.com/nuke-build/nuke.git/compare/0.25.0...5.0.0
