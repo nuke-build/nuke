@@ -27,7 +27,6 @@ using Nuke.Components;
         new[]
         {
             nameof(IRestore.Restore),
-            nameof(DownloadFonts),
             nameof(InstallFonts),
             nameof(ReleaseImage)
         },
