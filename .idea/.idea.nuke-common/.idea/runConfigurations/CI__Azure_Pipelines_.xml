@@ -12,9 +12,9 @@
     <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
     <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
     <option name="PROJECT_KIND" value="DotNetCore" />
-    <option name="PROJECT_TFM" value=".NETCoreApp,Version=v3.1" />
+    <option name="PROJECT_TFM" value="net5.0" />
     <method v="2">
-      <option name="Build" enabled="true" />
+      <option name="Build" />
     </method>
   </configuration>
 </component>

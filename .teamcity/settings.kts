@@ -20,7 +20,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 
-version = "2019.2"
+version = "2020.1"
 
 project {
     buildType(Compile)
@@ -28,52 +28,127 @@ project {
     buildType(Test_P1T2)
     buildType(Test_P2T2)
     buildType(Test)
-    buildType(Coverage)
-    buildType(Publish)
-    buildType(Announce)
+    buildType(ReportDuplicates)
+    buildType(ReportIssues)
+    buildType(ReportCoverage)
 
-    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, Coverage, Publish, Announce)
+    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, ReportDuplicates, ReportIssues, ReportCoverage)
 
     params {
-        select (
-            "env.Verbosity",
-            label = "Verbosity",
-            description = "Logging verbosity during build execution. Default is 'Normal'.",
-            value = "Normal",
-            options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.NuGetApiKey",
-            label = "NuGetApiKey",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        select (
-            "env.Configuration",
-            label = "Configuration",
-            description = "Configuration to build - Default is 'Debug' (local) or 'Release' (server)",
-            value = "Release",
-            options = listOf("Debug" to "Debug", "Release" to "Release"),
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.GitHubToken",
-            label = "GitHubToken",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        checkbox (
-            "env.IgnoreFailedSources",
-            label = "IgnoreFailedSources",
-            value = "False",
-            checked = "True",
-            unchecked = "False",
-            display = ParameterDisplay.NORMAL)
         checkbox (
             "env.AutoStash",
             label = "AutoStash",
             value = "True",
             checked = "True",
             unchecked = "False",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.AzurePipelinesAccessToken",
+            label = "AzurePipelinesAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.CodecovToken",
+            label = "CodecovToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        select (
+            "env.Configuration",
+            label = "Configuration",
+            value = "Release",
+            options = listOf("Debug" to "Debug", "Release" to "Release"),
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.EnterpriseAccessToken",
+            label = "EnterpriseAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.GitHubRegistryApiKey",
+            label = "GitHubRegistryApiKey",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.GitHubToken",
+            label = "GitHubToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.GitterAuthToken",
+            label = "GitterAuthToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.GitterRoomId",
+            label = "GitterRoomId",
+            value = "593f3dadd73408ce4f66db89",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        checkbox (
+            "env.IgnoreFailedSources",
+            label = "IgnoreFailedSources",
+            description = "Ignore unreachable sources during Restore",
+            value = "False",
+            checked = "True",
+            unchecked = "False",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.PublicNuGetApiKey",
+            label = "PublicNuGetApiKey",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.SignPathApiToken",
+            label = "SignPathApiToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathOrganizationId",
+            label = "SignPathOrganizationId",
+            value = "0fdaf334-6910-41f4-83d2-e58e4cccb087",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathPolicySlug",
+            label = "SignPathPolicySlug",
+            value = "release-signing",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.SignPathProjectSlug",
+            label = "SignPathProjectSlug",
+            value = "nuke",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.SlackUserAccessToken",
+            label = "SlackUserAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.SlackWebhook",
+            label = "SlackWebhook",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterAccessToken",
+            label = "TwitterAccessToken",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterAccessTokenSecret",
+            label = "TwitterAccessTokenSecret",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterConsumerKey",
+            label = "TwitterConsumerKey",
+            value = "",
+            display = ParameterDisplay.NORMAL)
+        password (
+            "env.TwitterConsumerSecret",
+            label = "TwitterConsumerSecret",
+            value = "",
             display = ParameterDisplay.NORMAL)
         checkbox (
             "env.UseHttps",
@@ -82,33 +157,17 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathApiToken",
-            label = "SignPathApiToken",
-            value = "",
-            allowEmpty = true,
+        select (
+            "env.Verbosity",
+            label = "Verbosity",
+            description = "Logging verbosity during build execution. Default is 'Normal'.",
+            value = "Normal",
+            options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
             display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathOrganizationId",
-            label = "SignPathOrganizationId",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathProjectSlug",
-            label = "SignPathProjectSlug",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathPolicySlug",
-            label = "SignPathPolicySlug",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        param(
+        text(
             "teamcity.runner.commandline.stdstreams.encoding",
-            "UTF-8"
+            "UTF-8",
+            display = ParameterDisplay.HIDDEN
         )
     }
 }
@@ -122,7 +181,20 @@ object Compile : BuildType({
         exec {
             path = "build.cmd"
             arguments = "Restore Compile --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
+        exec {
+            path = "build.sh"
+            arguments = "Restore Compile --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
+        }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Compile",
+            display = ParameterDisplay.HIDDEN
+        )
     }
 })
 object Pack : BuildType({
@@ -136,21 +208,24 @@ object Pack : BuildType({
         exec {
             path = "build.cmd"
             arguments = "Pack --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
+        exec {
+            path = "build.sh"
+            arguments = "Pack --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
+        }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Pack",
+            display = ParameterDisplay.HIDDEN
+        )
     }
     triggers {
         vcs {
             triggerRules = "+:**"
-        }
-        schedule {
-            schedulingPolicy = daily {
-                hour = 3
-            }
-            triggerRules = "+:**"
-            triggerBuild = always()
-            withPendingChangesOnly = false
-            enableQueueOptimization = true
-            param("cronExpression_min", "3")
         }
     }
     dependencies {
@@ -174,6 +249,12 @@ object Test_P1T2 : BuildType({
         exec {
             path = "build.cmd"
             arguments = "Test --skip --test-partition 1"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
+            path = "build.sh"
+            arguments = "Test --skip --test-partition 1"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     dependencies {
@@ -197,6 +278,12 @@ object Test_P2T2 : BuildType({
         exec {
             path = "build.cmd"
             arguments = "Test --skip --test-partition 2"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
+            path = "build.sh"
+            arguments = "Test --skip --test-partition 2"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     dependencies {
@@ -215,28 +302,25 @@ object Test : BuildType({
         showDependenciesChanges = true
     }
     artifactRules = "**/*"
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Test",
+            display = ParameterDisplay.HIDDEN
+        )
+    }
     triggers {
         vcs {
             triggerRules = "+:**"
         }
-        schedule {
-            schedulingPolicy = daily {
-                hour = 3
-            }
-            triggerRules = "+:**"
-            triggerBuild = always()
-            withPendingChangesOnly = false
-            enableQueueOptimization = true
-            param("cronExpression_min", "3")
-        }
     }
     dependencies {
         snapshot(Test_P1T2) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
+            onDependencyFailure = FailureAction.ADD_PROBLEM
             onDependencyCancel = FailureAction.CANCEL
         }
         snapshot(Test_P2T2) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
+            onDependencyFailure = FailureAction.ADD_PROBLEM
             onDependencyCancel = FailureAction.CANCEL
         }
         artifacts(Test_P1T2) {
@@ -247,22 +331,97 @@ object Test : BuildType({
         }
     }
 })
-object Coverage : BuildType({
-    name = "📊 Coverage"
+object ReportDuplicates : BuildType({
+    name = "🎭 ReportDuplicates"
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
     }
-    artifactRules = "output/coverage-report.zip => output"
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Coverage --skip"
+            arguments = "ReportDuplicates --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
+            path = "build.sh"
+            arguments = "ReportDuplicates --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Report Duplicates",
+            display = ParameterDisplay.HIDDEN
+        )
+    }
     triggers {
-        finishBuildTrigger {
-            buildType = "${Test.id}"
+        vcs {
+            triggerRules = "+:**"
+        }
+    }
+})
+object ReportIssues : BuildType({
+    name = "💣 ReportIssues"
+    vcs {
+        root(DslContext.settingsRoot)
+        cleanCheckout = true
+    }
+    steps {
+        exec {
+            path = "build.cmd"
+            arguments = "Restore ReportIssues --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
+            path = "build.sh"
+            arguments = "Restore ReportIssues --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
+        }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Report Issues",
+            display = ParameterDisplay.HIDDEN
+        )
+    }
+    triggers {
+        vcs {
+            triggerRules = "+:**"
+        }
+    }
+})
+object ReportCoverage : BuildType({
+    name = "📊 ReportCoverage"
+    vcs {
+        root(DslContext.settingsRoot)
+        cleanCheckout = true
+    }
+    artifactRules = "output/reports/coverage-report.zip => output/reports"
+    steps {
+        exec {
+            path = "build.cmd"
+            arguments = "ReportCoverage --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
+            path = "build.sh"
+            arguments = "ReportCoverage --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
+        }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Report Coverage",
+            display = ParameterDisplay.HIDDEN
+        )
+    }
+    triggers {
+        vcs {
+            triggerRules = "+:**"
         }
     }
     dependencies {
@@ -275,89 +434,6 @@ object Coverage : BuildType({
                 output/test-results/*.trx => output/test-results
                 output/test-results/*.xml => output/test-results
             """.trimIndent()
-        }
-    }
-})
-object Publish : BuildType({
-    name = "🚚 Publish"
-    type = Type.DEPLOYMENT
-    vcs {
-        root(DslContext.settingsRoot)
-        cleanCheckout = true
-    }
-    steps {
-        exec {
-            path = "build.cmd"
-            arguments = "Publish --skip"
-        }
-    }
-    dependencies {
-        snapshot(Test) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-            onDependencyCancel = FailureAction.CANCEL
-        }
-        snapshot(Pack) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-            onDependencyCancel = FailureAction.CANCEL
-        }
-        artifacts(Pack) {
-            artifactRules = "output/packages/*.nupkg => output/packages"
-        }
-    }
-})
-object Announce : BuildType({
-    name = "🗣 Announce"
-    vcs {
-        root(DslContext.settingsRoot)
-        cleanCheckout = true
-    }
-    steps {
-        exec {
-            path = "build.cmd"
-            arguments = "DownloadFonts InstallFonts ReleaseImage Announce --skip"
-        }
-    }
-    params {
-        text (
-            "env.TwitterConsumerKey",
-            label = "TwitterConsumerKey",
-            value = "",
-            allowEmpty = false,
-            display = ParameterDisplay.PROMPT)
-        text (
-            "env.TwitterConsumerSecret",
-            label = "TwitterConsumerSecret",
-            value = "",
-            allowEmpty = false,
-            display = ParameterDisplay.PROMPT)
-        text (
-            "env.TwitterAccessToken",
-            label = "TwitterAccessToken",
-            value = "",
-            allowEmpty = false,
-            display = ParameterDisplay.PROMPT)
-        text (
-            "env.TwitterAccessTokenSecret",
-            label = "TwitterAccessTokenSecret",
-            value = "",
-            allowEmpty = false,
-            display = ParameterDisplay.PROMPT)
-        text (
-            "env.SlackWebhook",
-            label = "SlackWebhook",
-            value = "",
-            allowEmpty = false,
-            display = ParameterDisplay.PROMPT)
-        text (
-            "env.GitterAuthToken",
-            label = "GitterAuthToken",
-            value = "",
-            allowEmpty = false,
-            display = ParameterDisplay.PROMPT)
-    }
-    triggers {
-        finishBuildTrigger {
-            buildType = "${Publish.id}"
         }
     }
 })

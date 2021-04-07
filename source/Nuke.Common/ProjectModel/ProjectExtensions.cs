@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-using static Nuke.Common.Execution.ReflectionService;
+using static Nuke.Common.Utilities.ReflectionUtility;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -56,18 +56,32 @@ namespace Nuke.Common.ProjectModel
             return project.GetItemMetadata(itemGroupName, metadataName).Select(Convert<T>);
         }
 
+        [CanBeNull]
         public static IReadOnlyCollection<string> GetTargetFrameworks(this Project project)
         {
+            return project.GetSplittedPropertyValue("TargetFramework", "TargetFrameworks");
+        }
+
+        [CanBeNull]
+        public static IReadOnlyCollection<string> GetRuntimeIdentifiers(this Project project)
+        {
+            return project.GetSplittedPropertyValue("RuntimeIdentifier", "RuntimeIdentifiers");
+        }
+
+        [CanBeNull]
+        private static IReadOnlyCollection<string> GetSplittedPropertyValue(
+            this Project project,
+            params string[] names)
+        {
             var msbuildProject = project.GetMSBuildProject();
-            var targetFrameworkProperty = msbuildProject.GetProperty("TargetFramework");
-            if (targetFrameworkProperty != null)
-                return new[] { targetFrameworkProperty.EvaluatedValue };
+            foreach (var name in names)
+            {
+                var property = msbuildProject.GetProperty(name);
+                if (property != null)
+                    return property.EvaluatedValue.Split(';');
+            }
 
-            var targetFrameworksProperty = msbuildProject.GetProperty("TargetFrameworks");
-            if (targetFrameworksProperty != null)
-                return targetFrameworksProperty.EvaluatedValue.Split(';');
-
-            return new string[0];
+            return null;
         }
 
         public static string GetOutputType(this Project project)

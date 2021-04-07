@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
-    <NoWarn>1701;1702;1591</NoWarn>
+    <NoWarn>CS1591;NU5129;NU5118</NoWarn>
     <DefineConstants>$(DefineConstants);JETBRAINS_ANNOTATIONS</DefineConstants>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>portable</DebugType>
@@ -13,7 +13,7 @@
 
   <PropertyGroup>
     <Description>Cross-platform build automation system</Description>
-    <Authors>Matthias Koch, Sebastian Karasek</Authors>
+    <Authors>Matthias Koch, Ulrich Buchgraber, Sebastian Karasek</Authors>
     <Copyright>Copyright $([System.DateTime]::Now.Year) Maintainers of NUKE</Copyright>
     <PackageTags>build automation continuous-integration tools orchestration</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -38,19 +38,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-19367-01" PrivateAssets="All"/>
-  </ItemGroup>
-
-  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-preview.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
-    <PackageReference Include="coverlet.msbuild" Version="2.7.0" />
-    <PackageReference Include="FluentAssertions" Version="5.9.0"/>
+    <PackageReference Include="coverlet.msbuild" Version="3.0.3" />
+    <PackageReference Include="FluentAssertions" Version="5.10.3"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0"/>
-    <PackageReference Include="TeamCity.VSTest.TestAdapter" Version="1.0.15"/>
-    <PackageReference Include="Verify.Xunit" Version="8.4.2" />
+    <PackageReference Include="TeamCity.VSTest.TestAdapter" Version="1.0.25"/>
+    <PackageReference Include="Verify.Xunit" Version="10.9.1" />
+    <PackageReference Include="Verify.DiffPlex" Version="0.1.2" />
     <PackageReference Include="xunit" Version="2.4.1"/>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1"/>
   </ItemGroup>

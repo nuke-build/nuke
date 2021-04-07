@@ -1,0 +1,1112 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://www.pulumi.com/docs/reference/cli/",
+    "https://www.pulumi.com/docs/reference/cli/pulumi_new/",
+    "https://www.pulumi.com/docs/reference/cli/pulumi_stack/",
+    "https://www.pulumi.com/docs/reference/cli/pulumi_config/",
+    "https://www.pulumi.com/docs/reference/cli/pulumi_up/",
+    "https://www.pulumi.com/docs/reference/cli/pulumi_preview/",
+    "https://www.pulumi.com/docs/reference/cli/pulumi_destroy/"
+  ],
+  "name": "Pulumi",
+  "officialUrl": "https://www.pulumi.com/",
+  "help": "Pulumi is an <a href=\"https://github.com/pulumi/pulumi\">open source</a> infrastructure as code tool for creating, deploying and managing cloud infrastructure. Pulumi works with traditional infrastructure like VMs, networks, and databases, in addition to modern architectures, including containers, Kubernetes clusters, and serverless functions. Pulumi supports dozens of public, private, and hybrid cloud service providers.",
+  "pathExecutable": "pulumi",
+  "customLogger": true,
+  "tasks": [
+    {
+      "postfix": "Up",
+      "definiteArgument": "up",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Config",
+            "type": "List<string>",
+            "format": "--config {value}",
+            "help": "Config to use during the update."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--config-file {value}",
+            "help": "Use the configuration values in the specified file rather than detecting the file name."
+          },
+          {
+            "name": "ConfigPath",
+            "type": "bool",
+            "format": "--config-path",
+            "help": "Config keys contain a path to a property in a map or list to set."
+          },
+          {
+            "name": "Debug",
+            "type": "bool",
+            "format": "--debug",
+            "help": "Print detailed debugging output during resource operations."
+          },
+          {
+            "name": "Diff",
+            "type": "bool",
+            "format": "--diff",
+            "help": "Display operation as a rich diff showing the overall change."
+          },
+          {
+            "name": "ExpectNoChanges",
+            "type": "bool",
+            "format": "--expect-no-changes",
+            "help": "Return an error if any changes occur during this update."
+          },
+          {
+            "name": "Message",
+            "type": "string",
+            "format": "--message {value}",
+            "help": "Optional message to associate with the update operation."
+          },
+          {
+            "name": "Parallel",
+            "type": "int",
+            "format": "--parallel {value}",
+            "help": "Allow P resource operations to run in parallel at once (1 for no parallelism). Defaults to unbounded. (default <c>2147483647</c>)."
+          },
+          {
+            "name": "PolicyPack",
+            "type": "List<string>",
+            "format": "--policy-pack {value}",
+            "help": "Run one or more policy packs as part of this update."
+          },
+          {
+            "name": "PolicyPackConfig",
+            "type": "List<string>",
+            "format": "--policy-pack-config {value}",
+            "help": "Path to JSON file containing the config for the policy pack of the corresponding <c>--policy-pack</c> flag."
+          },
+          {
+            "name": "Refresh",
+            "type": "bool",
+            "format": "--refresh",
+            "help": "Refresh the state of the stack's resources before this update."
+          },
+          {
+            "name": "Replace",
+            "type": "List<string>",
+            "format": "--replace {value}",
+            "help": "Specify resources to replace. Multiple resources can be specified using <c>--replace urn1 --replace urn2</c>."
+          },
+          {
+            "name": "SecretsProvider",
+            "type": "PulumiSecretsProvider",
+            "format": "--secrets-provider {value}",
+            "help": "The type of the provider that should be used to encrypt and decrypt secrets (possible choices: <c>default</c>, <c>passphrase</c>, <c>awskms</c>, <c>azurekeyvault</c>, <c>gcpkms</c>, <c>hashivault</c>). Only used when creating a new stack from an existing template (default <c>default</c>)."
+          },
+          {
+            "name": "ShowConfig",
+            "type": "bool",
+            "format": "--show-config",
+            "help": "Show configuration keys and variables."
+          },
+          {
+            "name": "ShowReads",
+            "type": "bool",
+            "format": "--show-reads",
+            "help": "Show resources that are being read in, alongside those being managed directly in the stack."
+          },
+          {
+            "name": "ShowReplacementSteps",
+            "type": "bool",
+            "format": "--show-replacement-steps",
+            "help": "Show detailed resource replacement creates and deletes instead of a single step."
+          },
+          {
+            "name": "ShowSames",
+            "type": "bool",
+            "format": "--show-sames",
+            "help": "Show resources that don't need be updated because they haven't changed, alongside those that do."
+          },
+          {
+            "name": "SkipPreview",
+            "type": "bool",
+            "format": "--skip-preview",
+            "help": "Do not perform a preview before performing the update."
+          },
+          {
+            "name": "Stack",
+            "type": "string",
+            "format": "--stack {value}",
+            "help": "The name of the stack to operate on. Defaults to the current stack."
+          },
+          {
+            "name": "SuppressOutputs",
+            "type": "bool",
+            "format": "--suppress-outputs",
+            "help": "Suppress display of stack outputs (in case they contain sensitive values)."
+          },
+          {
+            "name": "SuppressPermalink",
+            "type": "bool",
+            "format": "--suppress-permalink",
+            "help": "Suppress display of the state permalink."
+          },
+          {
+            "name": "Target",
+            "type": "List<string>",
+            "format": "--target {value}",
+            "help": "Specify a single resource URN to update. Other resources will not be updated. Multiple resources can be specified using <c>--target urn1 --target urn2</c>."
+          },
+          {
+            "name": "TargetDependents",
+            "type": "bool",
+            "format": "--target-dependents",
+            "help": "Allows updating of dependent targets discovered but not specified in <c>--target</c> list."
+          },
+          {
+            "name": "TargetReplace",
+            "type": "List<string>",
+            "format": "--target-replace {value}",
+            "help": "Specify a single resource URN to replace. Other resources will not be updated. Shorthand for <c>--target urn --replace urn</c>."
+          },
+          {
+            "name": "Yes",
+            "type": "bool",
+            "format": "--yes",
+            "help": "Automatically approve and perform the update after previewing it."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Preview",
+      "definiteArgument": "preview",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Config",
+            "type": "List<string>",
+            "format": "--config {value}",
+            "help": "Config to use during the update."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--config-file {value}",
+            "help": "Use the configuration values in the specified file rather than detecting the file name."
+          },
+          {
+            "name": "ConfigPath",
+            "type": "bool",
+            "format": "--config-path",
+            "help": "Config keys contain a path to a property in a map or list to set."
+          },
+          {
+            "name": "Debug",
+            "type": "bool",
+            "format": "--debug",
+            "help": "Print detailed debugging output during resource operations."
+          },
+          {
+            "name": "Diff",
+            "type": "bool",
+            "format": "--diff",
+            "help": "Display operation as a rich diff showing the overall change."
+          },
+          {
+            "name": "ExpectNoChanges",
+            "type": "bool",
+            "format": "--expect-no-changes",
+            "help": "Return an error if any changes occur during this update."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Serialize the preview diffs, operations, and overall output as JSON."
+          },
+          {
+            "name": "Message",
+            "type": "string",
+            "format": "--message {value}",
+            "help": "Optional message to associate with the update operation."
+          },
+          {
+            "name": "Parallel",
+            "type": "int",
+            "format": "--parallel {value}",
+            "help": "Allow P resource operations to run in parallel at once (1 for no parallelism). Defaults to unbounded. (default <c>2147483647</c>)."
+          },
+          {
+            "name": "PolicyPack",
+            "type": "List<string>",
+            "format": "--policy-pack {value}",
+            "help": "Run one or more policy packs as part of this update."
+          },
+          {
+            "name": "PolicyPackConfig",
+            "type": "List<string>",
+            "format": "--policy-pack-config {value}",
+            "help": "Path to JSON file containing the config for the policy pack of the corresponding <c>--policy-pack</c> flag."
+          },
+          {
+            "name": "Refresh",
+            "type": "bool",
+            "format": "--refresh",
+            "help": "Refresh the state of the stack's resources before this update."
+          },
+          {
+            "name": "Replace",
+            "type": "List<string>",
+            "format": "--replace {value}",
+            "help": "Specify resources to replace. Multiple resources can be specified using <c>--replace urn1 --replace urn2</c>."
+          },
+          {
+            "name": "ShowConfig",
+            "type": "bool",
+            "format": "--show-config",
+            "help": "Show configuration keys and variables."
+          },
+          {
+            "name": "ShowReads",
+            "type": "bool",
+            "format": "--show-reads",
+            "help": "Show resources that are being read in, alongside those being managed directly in the stack."
+          },
+          {
+            "name": "ShowReplacementSteps",
+            "type": "bool",
+            "format": "--show-replacement-steps",
+            "help": "Show detailed resource replacement creates and deletes instead of a single step."
+          },
+          {
+            "name": "ShowSames",
+            "type": "bool",
+            "format": "--show-sames",
+            "help": "Show resources that don't need be updated because they haven't changed, alongside those that do."
+          },
+          {
+            "name": "Stack",
+            "type": "string",
+            "format": "--stack {value}",
+            "help": "The name of the stack to operate on. Defaults to the current stack."
+          },
+          {
+            "name": "SuppressOutputs",
+            "type": "bool",
+            "format": "--suppress-outputs",
+            "help": "Suppress display of stack outputs (in case they contain sensitive values)."
+          },
+          {
+            "name": "SuppressPermalink",
+            "type": "bool",
+            "format": "--suppress-permalink",
+            "help": "Suppress display of the state permalink."
+          },
+          {
+            "name": "Target",
+            "type": "List<string>",
+            "format": "--target {value}",
+            "help": "Specify a single resource URN to update. Other resources will not be updated. Multiple resources can be specified using <c>--target urn1 --target urn2</c>."
+          },
+          {
+            "name": "TargetDependents",
+            "type": "bool",
+            "format": "--target-dependents",
+            "help": "Allows updating of dependent targets discovered but not specified in <c>--target</c> list."
+          },
+          {
+            "name": "TargetReplace",
+            "type": "List<string>",
+            "format": "--target-replace {value}",
+            "help": "Specify a single resource URN to replace. Other resources will not be updated. Shorthand for <c>--target urn --replace urn</c>."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Config",
+      "definiteArgument": "config",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--config-file {value}",
+            "help": "Use the configuration values in the specified file rather than detecting the file name."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Serialize the preview diffs, operations, and overall output as JSON."
+          },
+          {
+            "name": "ShowSecrets",
+            "type": "bool",
+            "format": "--show-secrets",
+            "help": "Show secret values when listing config instead of displaying blinded values."
+          },
+          {
+            "name": "Stack",
+            "type": "string",
+            "format": "--stack {value}",
+            "help": "The name of the stack to operate on. Defaults to the current stack."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "ConfigCopy",
+      "definiteArgument": "config cp",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Destination",
+            "type": "string",
+            "format": "--dest {value}",
+            "help": "The name of the new stack to copy the config to."
+          },
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "--path {value}",
+            "help": "The key contains a path to a property in a map or list to set."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "ConfigGet",
+      "definiteArgument": "config get",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Key",
+            "type": "string",
+            "format": "{value}",
+            "help": "The key to the key-value pair in the configuration."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Serialize the preview diffs, operations, and overall output as JSON."
+          },
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "--path {value}",
+            "help": "The key contains a path to a property in a map or list to set."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "ConfigRefresh",
+      "definiteArgument": "config refresh",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Overwrite configuration file, if it exists, without creating a backup."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "ConfigRemove",
+      "definiteArgument": "config rm",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Key",
+            "type": "string",
+            "format": "{value}",
+            "help": "The key to the key-value pair in the configuration."
+          },
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "--path {value}",
+            "help": "The key contains a path to a property in a map or list to set."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "ConfigSet",
+      "definiteArgument": "config set",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Key",
+            "type": "string",
+            "format": "{value}",
+            "help": "The key to the key-value pair in the configuration."
+          },
+          {
+            "name": "Value",
+            "type": "string",
+            "format": "{value}",
+            "help": "The new value for specified configuration key."
+          },
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "--path {value}",
+            "help": "The key contains a path to a property in a map or list to set."
+          },
+          {
+            "name": "Plaintext",
+            "type": "bool",
+            "format": "--plaintext",
+            "help": "Save the value as plaintext (unencrypted)."
+          },
+          {
+            "name": "Secret",
+            "type": "bool",
+            "format": "--secret",
+            "help": "Encrypt the value instead of storing it in plaintext."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Stack",
+      "definiteArgument": "stack",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ShowIds",
+            "type": "bool",
+            "format": "--show-ids",
+            "help": "Display each resource's provider-assigned unique ID."
+          },
+          {
+            "name": "ShowName",
+            "type": "bool",
+            "format": "--show-name",
+            "help": "Display only the stack name."
+          },
+          {
+            "name": "ShowSecrets",
+            "type": "bool",
+            "format": "--show-secrets",
+            "help": "Display stack outputs which are marked as secret in plaintext."
+          },
+          {
+            "name": "ShowUrns",
+            "type": "bool",
+            "format": "--show-urns",
+            "help": "Display each resource's Pulumi-assigned globally unique URN."
+          },
+          {
+            "name": "Stack",
+            "type": "string",
+            "format": "--stack {value}",
+            "help": "The name of the stack to operate on. Defaults to the current stack."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackChangeSecretsProvider",
+      "definiteArgument": "stack change-secrets-provider",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "NewSecretsProvider",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the new secrets provider."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackExport",
+      "definiteArgument": "stack export",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "File",
+            "type": "string",
+            "format": "--file {value}",
+            "help": "A filename to write stack output to."
+          },
+          {
+            "name": "ShowSecrets",
+            "type": "bool",
+            "format": "--show-secrets",
+            "help": "Display stack outputs which are marked as secret in plaintext."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version {value}",
+            "help": "Previous stack version to export. (If unset, will export the latest.)."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackGraph",
+      "definiteArgument": "stack graph",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "File",
+            "type": "string",
+            "format": "{value}",
+            "help": "A file that will have a Graphviz DOT graph written to it."
+          },
+          {
+            "name": "DependencyEdgeColor",
+            "type": "string",
+            "format": "--dependency-edge-color {value}",
+            "help": "Sets the color of dependency edges in the graph (default <c>#246C60</c>)."
+          },
+          {
+            "name": "IgnoreDependencyEdges",
+            "type": "bool",
+            "format": "--ignore-dependency-edges",
+            "help": "Ignores edges introduced by dependency resource relationships."
+          },
+          {
+            "name": "IgnoreParentEdges",
+            "type": "bool",
+            "format": "--ignore-parent-edges",
+            "help": "Ignores edges introduced by parent/child resource relationships."
+          },
+          {
+            "name": "ParentEdgeColor",
+            "type": "string",
+            "format": "--parent-edge-color {value}",
+            "help": "Sets the color of parent edges in the graph (default <c>#AA6639</c>)."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackHistory",
+      "definiteArgument": "stack history",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Serialize the preview diffs, operations, and overall output as JSON."
+          },
+          {
+            "name": "ShowSecrets",
+            "type": "bool",
+            "format": "--show-secrets",
+            "help": "Show secret values when listing config instead of displaying blinded values."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackImport",
+      "definiteArgument": "stack import",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "File",
+            "type": "string",
+            "format": "--file {value}",
+            "help": "A filename to read stack input from."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Force the import to occur, even if apparent errors are discovered beforehand (not recommended)."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackInit",
+      "definiteArgument": "stack init",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "OrganizationAndName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The stack name, optionally preceded by the organization name and a slash: <c>[&lt;org-name&gt;/]&lt;stack-name&gt;</c>"
+          },
+          {
+            "name": "CopyConfigFrom",
+            "type": "string",
+            "format": "--copy-config-from {value}",
+            "help": "The name of the stack to copy existing config from."
+          },
+          {
+            "name": "SecretsProvider",
+            "type": "PulumiSecretsProvider",
+            "format": "--secrets-provider {value}",
+            "help": "The type of the provider that should be used to encrypt and decrypt secrets (possible choices: <c>default</c>, <c>passphrase</c>, <c>awskms</c>, <c>azurekeyvault</c>, <c>gcpkms</c>, <c>hashivault</c>) (default <c>default</c>)."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackList",
+      "definiteArgument": "stack ls",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "All",
+            "type": "bool",
+            "format": "--all",
+            "help": "List all stacks instead of just stacks for the current project."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Emit output as JSON."
+          },
+          {
+            "name": "Organization",
+            "type": "string",
+            "format": "--organization {value}",
+            "help": "Filter returned stacks to those in a specific organization."
+          },
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project {value}",
+            "help": "Filter returned stacks to those with a specific project name."
+          },
+          {
+            "name": "Tag",
+            "type": "string",
+            "format": "--tag {value}",
+            "help": "Filter returned stacks to those in a specific tag (<c>tag-name</c> or <c>tag-name=tag-value</c>)."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackOutput",
+      "definiteArgument": "stack output",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PropertyName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the property whose output value should be listed. This is optional."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Emit output as JSON."
+          },
+          {
+            "name": "ShowSecrets",
+            "type": "bool",
+            "format": "--show-secrets",
+            "help": "Display outputs which are marked as secret in plaintext."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackRename",
+      "definiteArgument": "stack rename",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "NewStackName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The new name for the stack."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackRemove",
+      "definiteArgument": "stack rm",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "StackName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name for the stack to be removed."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Forces deletion of the stack, leaving behind any resources managed by the stack."
+          },
+          {
+            "name": "PreserveConfig",
+            "type": "bool",
+            "format": "--preserve-config",
+            "help": "Do not delete the corresponding Pulumi.&lt;stack-name&gt;.yaml configuration file for the stack."
+          },
+          {
+            "name": "Yes",
+            "type": "bool",
+            "format": "--yes",
+            "help": "Skip confirmation prompts, and proceed with removal anyway."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackSelect",
+      "definiteArgument": "stack select",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "StackName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the stack that should be selected."
+          },
+          {
+            "name": "Create",
+            "type": "bool",
+            "format": "--create",
+            "help": "If selected stack does not exist, create it."
+          },
+          {
+            "name": "SecretsProvider",
+            "type": "PulumiSecretsProvider",
+            "format": "--secrets-provider {value}",
+            "help": "Use with <c>--create</c> flag, The type of the provider that should be used to encrypt and decrypt secrets (possible choices: <c>default</c>, <c>passphrase</c>, <c>awskms</c>, <c>azurekeyvault</c>, <c>gcpkms</c>, <c>hashivault</c>) (default <c>default</c>)."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackTagSet",
+      "definiteArgument": "stack tag set",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the tag to be set."
+          },
+          {
+            "name": "Value",
+            "type": "string",
+            "format": "{value}",
+            "help": "The value of the tag to be set."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackTagGet",
+      "definiteArgument": "stack tag get",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the tag to be set."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackTagRemove",
+      "definiteArgument": "stack tag rm",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the tag to be set."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "StackTagList",
+      "definiteArgument": "stack tag ls",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Emit output as JSON."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "New",
+      "definiteArgument": "new",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "{value}",
+            "help": "The template or URL to base the new stack off of."
+          },
+          {
+            "name": "Config",
+            "type": "List<string>",
+            "format": "--config {value}",
+            "help": "Config to save."
+          },
+          {
+            "name": "ConfigPath",
+            "type": "bool",
+            "format": "--config-path",
+            "help": "Config keys contain a path to a property in a map or list to set."
+          },
+          {
+            "name": "Description",
+            "type": "string",
+            "format": "--description {value}",
+            "help": "The project description; if not specified, a prompt will request it."
+          },
+          {
+            "name": "Directory",
+            "type": "string",
+            "format": "--dir {value}",
+            "help": "The location to place the generated project; if not specified, the current directory is used."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Forces content to be generated even if it would change existing files."
+          },
+          {
+            "name": "GenerateOnly",
+            "type": "bool",
+            "format": "--generate-only",
+            "help": "Generate the project only; do not create a stack, save config, or install dependencies."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name {value}",
+            "help": "The project name; if not specified, a prompt will request it."
+          },
+          {
+            "name": "Offline",
+            "type": "bool",
+            "format": "--offline",
+            "help": "Use locally cached templates without making any network requests."
+          },
+          {
+            "name": "SecretsProvider",
+            "type": "PulumiSecretsProvider",
+            "format": "--secrets-provider {value}",
+            "help": "The type of the provider that should be used to encrypt and decrypt secrets (possible choices: <c>default</c>, <c>passphrase</c>, <c>awskms</c>, <c>azurekeyvault</c>, <c>gcpkms</c>, <c>hashivault</c>) (default <c>default</c>)."
+          },
+          {
+            "name": "Stack",
+            "type": "string",
+            "format": "--stack {value}",
+            "help": "The stack name; either an existing stack or stack to create; if not specified, a prompt will request it."
+          },
+          {
+            "name": "Yes",
+            "type": "bool",
+            "format": "--yes",
+            "help": "Skip prompts and proceed with default values."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Destroy",
+      "definiteArgument": "destroy",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--config-file {value}",
+            "help": "Use the configuration values in the specified file rather than detecting the file name."
+          },
+          {
+            "name": "Debug",
+            "type": "bool",
+            "format": "--debug",
+            "help": "Print detailed debugging output during resource operations."
+          },
+          {
+            "name": "Diff",
+            "type": "bool",
+            "format": "--diff",
+            "help": "Display operation as a rich diff showing the overall change."
+          },
+          {
+            "name": "Message",
+            "type": "string",
+            "format": "--message {value}",
+            "help": "Optional message to associate with the destroy operation."
+          },
+          {
+            "name": "Parallel",
+            "type": "int",
+            "format": "--parallel {value}",
+            "help": "Allow P resource operations to run in parallel at once (1 for no parallelism). Defaults to unbounded. (default <c>2147483647</c>)."
+          },
+          {
+            "name": "Refresh",
+            "type": "bool",
+            "format": "--refresh",
+            "help": "Refresh the state of the stack's resources before this update."
+          },
+          {
+            "name": "ShowConfig",
+            "type": "bool",
+            "format": "--show-config",
+            "help": "Show configuration keys and variables."
+          },
+          {
+            "name": "ShowReplacementSteps",
+            "type": "bool",
+            "format": "--show-replacement-steps",
+            "help": "Show detailed resource replacement creates and deletes instead of a single step."
+          },
+          {
+            "name": "ShowSames",
+            "type": "bool",
+            "format": "--show-sames",
+            "help": "Show resources that don't need to be updated because they haven't changed, alongside those that do."
+          },
+          {
+            "name": "SkipPreview",
+            "type": "bool",
+            "format": "--skip-preview",
+            "help": "Do not perform a preview before performing the destroy."
+          },
+          {
+            "name": "Stack",
+            "type": "string",
+            "format": "--stack {value}",
+            "help": "The stack name; either an existing stack or stack to create; if not specified, a prompt will request it."
+          },
+          {
+            "name": "SuppressOutputs",
+            "type": "bool",
+            "format": "--suppress-outputs",
+            "help": "Suppress display of stack outputs (in case they contain sensitive values)."
+          },
+          {
+            "name": "SuppressPermalink",
+            "type": "bool",
+            "format": "--suppress-permalink",
+            "help": "Suppress display of the state permalink."
+          },
+          {
+            "name": "Target",
+            "type": "List<string>",
+            "format": "--target {value}",
+            "help": "Specify a single resource URN to destroy. All resources necessary to destroy this target will also be destroyed. Multiple resources can be specified using: <c>--target urn1 --target urn2</c>."
+          },
+          {
+            "name": "TargetDependents",
+            "type": "bool",
+            "format": "--target-dependents",
+            "help": "Allows destroying of dependent targets discovered but not specified in <c>--target</c> list."
+          },
+          {
+            "name": "Yes",
+            "type": "bool",
+            "format": "--yes",
+            "help": "Automatically approve and perform the destroy after previewing it."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "Color",
+      "type": "string",
+      "format": "--color {value}",
+      "help": "Colorize output. Choices are: always, never, raw, auto (default <c>auto</c>)."
+    },
+    {
+      "name": "Cwd",
+      "type": "string",
+      "format": "--cwd {value}",
+      "help": "Run pulumi as if it had been started in another directory."
+    },
+    {
+      "name": "DisableIntegrityChecking",
+      "type": "bool",
+      "format": "--disable-integrity-checking",
+      "help": "Disable integrity checking of checkpoint files."
+    },
+    {
+      "name": "Emoji",
+      "type": "bool",
+      "format": "--emoji",
+      "help": "Enable emojis in the output."
+    },
+    {
+      "name": "LogFlow",
+      "type": "bool",
+      "format": "--logflow",
+      "help": "Flow log settings to child processes (like plugins)."
+    },
+    {
+      "name": "LogToStderr",
+      "type": "bool",
+      "format": "--logtostderr",
+      "help": "Log to stderr instead of to files."
+    },
+    {
+      "name": "NonInteractive",
+      "type": "bool",
+      "format": "--non-interactive",
+      "help": "Disable interactive mode for all commands."
+    },
+    {
+      "name": "Profiling",
+      "type": "string",
+      "format": "--profiling {value}",
+      "help": "Emit CPU and memory profiles and an execution trace to <c>[filename].[pid].{cpu,mem,trace}</c>, respectively."
+    },
+    {
+      "name": "Tracing",
+      "type": "string",
+      "format": "--tracing {value}",
+      "help": "Emit tracing to the specified endpoint. Use the file: scheme to write tracing data to a local file."
+    },
+    {
+      "name": "Verbose",
+      "type": "int",
+      "format": "--verbose {value}",
+      "help": "Enable verbose logging (e.g., <c>v=3</c>); anything >3 is very verbose."
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "PulumiSecretsProvider",
+      "values": [
+        "default",
+        "passphrase",
+        "awskms",
+        "azurekeyvault",
+        "gcpkms",
+        "hashivault"
+      ]
+    }
+  ]
+}

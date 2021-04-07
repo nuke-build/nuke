@@ -27,8 +27,8 @@ namespace Nuke.Common.Execution
         public static void Execute(NukeBuild build, [CanBeNull] IReadOnlyCollection<string> skippedTargets)
         {
             MarkSkippedTargets(build, skippedTargets);
-            RequirementService.ValidateRequirements(build, build.ExecutingTargets.ToList());
-            var previouslyExecutedTargets = UpdateInvocationHash();
+            RequirementService.ValidateRequirements(build, build.ScheduledTargets.ToList());
+            var previouslyExecutedTargets = UpdateInvocationHash(build);
 
             BuildManager.CancellationHandler += ExecuteAssuredTargets;
 
@@ -44,14 +44,14 @@ namespace Nuke.Common.Execution
 
             void ExecuteAssuredTargets()
             {
-                var assuredTargets = build.ExecutionPlan.Where(x => x.AssuredAfterFailure && x.Status == ExecutionStatus.NotRun);
-                assuredTargets.ForEach(x => Execute(build, x, previouslyExecutedTargets, failureMode: true));
+                var assuredScheduledTargets = build.ExecutionPlan.Where(x => x.AssuredAfterFailure && x.Status == ExecutionStatus.Scheduled);
+                assuredScheduledTargets.ForEach(x => Execute(build, x, previouslyExecutedTargets, failureMode: true));
             }
         }
 
-        private static IReadOnlyCollection<string> UpdateInvocationHash()
+        private static IReadOnlyCollection<string> UpdateInvocationHash(NukeBuild build)
         {
-            var continueParameterName = ParameterService.GetParameterMemberName(() => NukeBuild.Continue);
+            var continueParameterName = ParameterService.GetParameterMemberName(() => build.Continue);
             var invocation = EnvironmentInfo.CommandLineArguments
                 .Where(x => !x.StartsWith("-") || x.TrimStart("-").EqualsOrdinalIgnoreCase(continueParameterName))
                 .JoinSpace();
@@ -59,7 +59,7 @@ namespace Nuke.Common.Execution
 
             IReadOnlyCollection<string> GetPreviouslyExecutedTargets()
             {
-                if (!NukeBuild.Continue ||
+                if (!build.Continue ||
                     !File.Exists(BuildAttemptFile))
                     return new string[0];
 
@@ -89,7 +89,7 @@ namespace Nuke.Common.Execution
                 HasSkippingCondition(target, target.DynamicConditions))
             {
                 target.Status = ExecutionStatus.Skipped;
-                build.OnTargetSkipped(target.Name);
+                build.ExecuteExtension<IOnTargetSkipped>(x => x.OnTargetSkipped(build, target));
                 AppendToBuildAttemptFile(target.Name);
                 return;
             }
@@ -102,21 +102,27 @@ namespace Nuke.Common.Execution
 
             using (Logger.Block(target.Name))
             {
-                target.Status = ExecutionStatus.Executing;
-                build.OnTargetStart(target.Name);
+                target.Status = ExecutionStatus.Running;
+                build.ExecuteExtension<IOnTargetRunning>(x => x.OnTargetRunning(build, target));
                 var stopwatch = Stopwatch.StartNew();
                 try
                 {
                     target.Actions.ForEach(x => x());
-                    target.Status = ExecutionStatus.Executed;
-                    build.OnTargetExecuted(target.Name);
+                    target.Status = ExecutionStatus.Succeeded;
+                    build.ExecuteExtension<IOnTargetSucceeded>(x => x.OnTargetSucceeded(build, target));
                     AppendToBuildAttemptFile(target.Name);
                 }
                 catch (Exception exception)
                 {
+                    build.ReportSummary(_ =>
+                        target.SummaryInformation.Any()
+                            ? target.SummaryInformation
+                            : _.AddPair(exception.GetType().Name, exception.Message));
+
                     Logger.Error(exception);
                     target.Status = ExecutionStatus.Failed;
-                    build.OnTargetFailed(target.Name);
+
+                    build.ExecuteExtension<IOnTargetFailed>(x => x.OnTargetFailed(build, target));
                     if (!target.ProceedAfterFailure && !failureMode)
                         throw new TargetExecutionException(target.Name, exception);
                 }
@@ -129,40 +135,40 @@ namespace Nuke.Common.Execution
 
         private static void MarkSkippedTargets(NukeBuild build, IReadOnlyCollection<string> skippedTargets)
         {
-            void MarkTargetSkipped(ExecutableTarget target)
+            void MarkTargetSkipped(ExecutableTarget target, string reason = null)
             {
-                if (build.InvokedTargets.Contains(target))
+                if (target.Invoked)
                     return;
 
                 target.Status = ExecutionStatus.Skipped;
+                target.SkipReason ??= reason;
 
                 if (target.DependencyBehavior == DependencyBehavior.Execute)
                     return;
 
                 target.ExecutionDependencies.ForEach(TryMarkTargetSkipped);
                 target.Triggers.ForEach(TryMarkTargetSkipped);
-            }
 
-            void TryMarkTargetSkipped(ExecutableTarget target)
-            {
-                var executingTargets = build.ExecutionPlan.Where(x => x.Status == ExecutionStatus.NotRun);
-                if (executingTargets.Any(x => x.ExecutionDependencies.Contains(target) || x.Triggers.Contains(target)))
-                    return;
+                void TryMarkTargetSkipped(ExecutableTarget dependentTarget)
+                {
+                    var scheduledTargets = build.ExecutionPlan.Where(x => x.Status == ExecutionStatus.Scheduled);
+                    if (scheduledTargets.Any(x => x.ExecutionDependencies.Contains(dependentTarget) || x.Triggers.Contains(dependentTarget)))
+                        return;
 
-                MarkTargetSkipped(target);
+                    MarkTargetSkipped(dependentTarget, reason: $"skipping {target.Name}");
+                }
             }
 
             if (skippedTargets != null)
             {
                 build.ExecutionPlan
                     .Where(x => skippedTargets.Count == 0 || skippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))
-                    .ForEachLazy(x => x.SkipReason = "via --skip parameter")
-                    .ForEach(MarkTargetSkipped);
+                    .ForEach(x => MarkTargetSkipped(x, reason: "via --skip parameter"));
             }
 
             build.ExecutionPlan
                 .Where(x => HasSkippingCondition(x, x.StaticConditions))
-                .ForEach(MarkTargetSkipped);
+                .ForEach(x => MarkTargetSkipped(x));
         }
 
         private static bool HasSkippingCondition(ExecutableTarget target, IEnumerable<Expression<Func<bool>>> conditions)
@@ -176,8 +182,6 @@ namespace Nuke.Common.Execution
                     .Replace("AndAlso", "&&")
                     // TODO: should get actual build type name
                     .Replace("value(Build).", string.Empty);
-
-            target.SkipReason = null; // solely for testing
 
             foreach (var condition in conditions)
             {

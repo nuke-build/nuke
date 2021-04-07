@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -17,22 +18,29 @@ namespace Nuke.Common.CI.AzurePipelines
     /// <a href="https://github.com/Microsoft/azure-pipelines-tasks/blob/master/docs/authoring/commands.md">Azure Pipeline Tasks Documentation</a>
     /// </summary>
     [PublicAPI]
-    [CI]
     [ExcludeFromCodeCoverage]
-    public class AzurePipelines
+    public class AzurePipelines : Host, IBuildServer
     {
-        private static Lazy<AzurePipelines> s_instance = new Lazy<AzurePipelines>(() => new AzurePipelines());
-
-        public static AzurePipelines Instance => NukeBuild.Host == HostType.AzurePipelines ? s_instance.Value : null;
+        public new static AzurePipelines Instance => Host.Instance as AzurePipelines;
 
         internal static bool IsRunningAzurePipelines => !Environment.GetEnvironmentVariable("TF_BUILD").IsNullOrEmpty();
 
         private readonly Action<string> _messageSink;
 
-        internal AzurePipelines(Action<string> messageSink = null)
+        internal AzurePipelines()
+            : this(messageSink: null)
+        {
+        }
+
+        internal AzurePipelines(Action<string> messageSink)
         {
             _messageSink = messageSink ?? Console.WriteLine;
         }
+
+        protected internal override OutputSink OutputSink => new AzurePipelinesOutputSink(this);
+
+        string IBuildServer.Branch => SourceBranchName;
+        string IBuildServer.Commit => SourceVersion;
 
         public string AgentBuildDirectory => EnvironmentInfo.GetVariable<string>("AGENT_BUILDDIRECTORY");
         public string AgentHomeDirectory => EnvironmentInfo.GetVariable<string>("AGENT_HOMEDIRECTORY");
@@ -83,6 +91,9 @@ namespace Nuke.Common.CI.AzurePipelines
         public string TeamFoundationCollectionUri => EnvironmentInfo.GetVariable<string>("SYSTEM_TEAMFOUNDATIONCOLLECTIONURI");
         public string TeamProject => EnvironmentInfo.GetVariable<string>("SYSTEM_TEAMPROJECT");
         public Guid TeamProjectId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_TEAMPROJECTID");
+        public string JobDisplayName => EnvironmentInfo.GetVariable<string>("SYSTEM_JOBDISPLAYNAME");
+        public Guid JobId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_JOBID");
+        public Guid TaskInstanceId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_TASKINSTANCEID");
 
         public void Group(string group)
         {
@@ -102,6 +113,7 @@ namespace Nuke.Common.CI.AzurePipelines
         public void UpdateBuildNumber(string buildNumber)
         {
             WriteCommand("build.updatebuildnumber", buildNumber);
+            EnvironmentInfo.SetVariable("BUILD_BUILDNUMBER", buildNumber);
         }
 
         public void AddBuildTag(string buildTag)
@@ -192,6 +204,16 @@ namespace Nuke.Common.CI.AzurePipelines
                     .AddPairWhenValueNotNull("linenumber", lineNumber)
                     .AddPairWhenValueNotNull("columnnumber", columnNumber)
                     .AddPairWhenValueNotNull("code", code));
+        }
+
+        public void SetVariable(string name, string value, bool? isSecret = null)
+        {
+            WriteCommand(
+                "task.setvariable",
+                value,
+                dictionaryConfigurator: x => x
+                    .AddPair("variable", name)
+                    .AddPairWhenValueNotNull("issecret", isSecret));
         }
 
         private string GetText(AzurePipelinesIssueType type)

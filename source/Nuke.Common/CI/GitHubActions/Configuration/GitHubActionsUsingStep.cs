@@ -4,10 +4,12 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
+    [PublicAPI]
     public class GitHubActionsUsingStep : GitHubActionsStep
     {
         public string Using { get; set; }
@@ -17,6 +19,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
             writer.WriteLine($"- uses: {Using}");
         }
     }
+
     public class GitHubActionsArtifactStep : GitHubActionsStep
     {
         public string Name { get; set; }

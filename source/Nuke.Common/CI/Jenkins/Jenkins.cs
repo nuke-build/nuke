@@ -16,17 +16,16 @@ namespace Nuke.Common.CI.Jenkins
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class Jenkins
+    public class Jenkins : Host, IBuildServer
     {
-        private static Lazy<Jenkins> s_instance = new Lazy<Jenkins>(() => new Jenkins());
-
-        public static Jenkins Instance => NukeBuild.Host == HostType.Jenkins ? s_instance.Value : null;
-
         internal static bool IsRunningJenkins => !Environment.GetEnvironmentVariable("JENKINS_HOME").IsNullOrEmpty();
 
         internal Jenkins()
         {
         }
+
+        string IBuildServer.Branch => GitBranch ?? BranchName;
+        string IBuildServer.Commit => GitCommit;
 
         /// <summary>
         /// Name of the branch for which this Pipeline is executing, for example <em>master</em>.

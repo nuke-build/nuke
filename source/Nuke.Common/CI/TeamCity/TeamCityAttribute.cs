@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,12 +25,7 @@ namespace Nuke.Common.CI.TeamCity
     [PublicAPI]
     public class TeamCityAttribute : ChainedConfigurationAttributeBase
     {
-        public TeamCityAttribute(TeamCityAgentPlatform platform)
-        {
-            Platform = platform;
-        }
-
-        public override HostType HostType => HostType.TeamCity;
+        public override Type HostType => typeof(TeamCity);
         public override string ConfigurationFile => TeamcityDirectory / "settings.kts";
         public override IEnumerable<string> GeneratedFiles => new[] { PomFile, ConfigurationFile };
         private AbsolutePath TeamcityDirectory => NukeBuild.RootDirectory / ".teamcity";
@@ -42,7 +38,6 @@ namespace Nuke.Common.CI.TeamCity
 
         public string Version { get; set; } = "2018.2";
 
-        public TeamCityAgentPlatform Platform { get; }
         public string Description { get; set; }
         public bool CleanCheckoutDirectory { get; set; } = true;
 
@@ -100,15 +95,6 @@ namespace Nuke.Common.CI.TeamCity
                 .Select(x => x.BuildType).ToArray();
 
             var parameters = GetGlobalParameters(build, relevantTargets);
-            if (Platform == TeamCityAgentPlatform.Windows)
-            {
-                parameters = parameters
-                    .Concat(new TeamCityKeyValueParameter
-                            {
-                                Key = "teamcity.runner.commandline.stdstreams.encoding",
-                                Value = "UTF-8"
-                            });
-            }
 
             return new TeamCityProject
                    {
@@ -130,7 +116,7 @@ namespace Nuke.Common.CI.TeamCity
 
             var artifactRules = chainLinkTargets.SelectMany(x =>
                 ArtifactExtensions.ArtifactProducts[x.Definition].Select(GetArtifactRule)).ToArray();
-            var artifactDependencies = chainLinkTargets.SelectMany(x => (
+            var artifactDependencies = chainLinkTargets.SelectMany(x =>
                 from artifactDependency in ArtifactExtensions.ArtifactDependencies[x.Definition]
                 let dependency = relevantTargets.Single(y => y.Factory == artifactDependency.Item1)
                 let rules = (artifactDependency.Item2.Any()
@@ -141,7 +127,7 @@ namespace Nuke.Common.CI.TeamCity
                        {
                            BuildType = buildTypes[dependency].Single(y => y.Partition == null),
                            ArtifactRules = rules
-                       })).ToArray<TeamCityDependency>();
+                       }).ToArray<TeamCityDependency>();
 
             var snapshotDependencies = GetTargetDependencies(executableTarget)
                 .SelectMany(x => buildTypes[x])
@@ -164,7 +150,6 @@ namespace Nuke.Common.CI.TeamCity
                                      Id = $"{executableTarget.Name}_P{partition.Part}T{partition.Total}",
                                      Name = $"{executableTarget.Name} {partition}",
                                      Description = executableTarget.Description,
-                                     Platform = Platform,
                                      BuildCmdPath = BuildCmdPath,
                                      ArtifactRules = artifactRules,
                                      Partition = partition,
@@ -180,7 +165,7 @@ namespace Nuke.Common.CI.TeamCity
                     .Select(x => new TeamCitySnapshotDependency
                                  {
                                      BuildType = x,
-                                     FailureAction = TeamCityDependencyFailureAction.FailToStart,
+                                     FailureAction = TeamCityDependencyFailureAction.AddProblem,
                                      CancelAction = TeamCityDependencyFailureAction.Cancel
                                  }).ToArray<TeamCityDependency>();
                 artifactDependencies = buildTypes[executableTarget]
@@ -193,7 +178,10 @@ namespace Nuke.Common.CI.TeamCity
 
             var parameters = executableTarget.Requirements
                 .Where(x => !(x is Expression<Func<bool>>))
-                .Select(x => GetParameter(x.GetMemberInfo(), build, required: true)).ToArray();
+                .Select(x => GetParameter(x.GetMemberInfo(), build, required: true))
+                .Concat(new TeamCityKeyValueParameter(
+                    "teamcity.ui.runButton.caption",
+                    executableTarget.Name.SplitCamelHumpsWithSeparator(" ", Constants.KnownWords))).ToArray();
             var triggers = GetTriggers(executableTarget, buildTypes).ToArray();
 
             yield return new TeamCityBuildType
@@ -201,7 +189,6 @@ namespace Nuke.Common.CI.TeamCity
                              Id = executableTarget.Name,
                              Name = executableTarget.Name,
                              Description = executableTarget.Description,
-                             Platform = Platform,
                              BuildCmdPath = BuildCmdPath,
                              VcsRoot = new TeamCityBuildTypeVcsRoot
                                        {
@@ -261,19 +248,29 @@ namespace Nuke.Common.CI.TeamCity
         protected virtual IEnumerable<TeamCityParameter> GetGlobalParameters(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
+                // TODO: except build.ExecutableTargets ?
                 .Except(relevantTargets.SelectMany(x => x.Requirements
                     .Where(y => !(y is Expression<Func<bool>>))
                     .Select(y => y.GetMemberInfo())))
                 .Where(x => x.DeclaringType != typeof(NukeBuild) || x.Name == nameof(NukeBuild.Verbosity))
-                .Select(x => GetParameter(x, build, required: false));
+                .Select(x => GetParameter(x, build, required: false))
+                .Concat(GetDefaultParameters());
         }
 
-        protected virtual TeamCityConfigurationParameter GetParameter(MemberInfo member, NukeBuild build, bool required)
+        protected virtual IEnumerable<TeamCityParameter> GetDefaultParameters()
+        {
+            yield return new TeamCityKeyValueParameter("teamcity.runner.commandline.stdstreams.encoding", "UTF-8");
+        }
+
+        protected virtual TeamCityParameter GetParameter(MemberInfo member, NukeBuild build, bool required)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             var valueSet = ParameterService.GetParameterValueSet(member, build);
+            var valueSeparator = attribute.Separator ?? " ";
 
-            var defaultValue = member.GetValue(build);
+            // TODO: Abstract AbsolutePath/Solution/Project etc.
+            var defaultValue = !member.HasCustomAttribute<SecretAttribute>() ? member.GetValue(build) : default(string);
+            // TODO: enumerables of ...
             if (defaultValue != null &&
                 (member.GetMemberType() == typeof(AbsolutePath) ||
                  member.GetMemberType() == typeof(Solution) ||
@@ -282,6 +279,8 @@ namespace Nuke.Common.CI.TeamCity
 
             TeamCityParameterType GetParameterType()
             {
+                if (member.HasCustomAttribute<SecretAttribute>())
+                    return TeamCityParameterType.Password;
                 if (member.GetMemberType() == typeof(bool))
                     return TeamCityParameterType.Checkbox;
                 if (valueSet != null)
@@ -291,14 +290,17 @@ namespace Nuke.Common.CI.TeamCity
 
             return new TeamCityConfigurationParameter
                    {
-                       Name = member.Name,
+                       // TODO: #555 - Should this use ParameterService.GetParameterMemberName(member) ?
+                       Name = ParameterService.GetParameterMemberName(member),
                        Description = attribute.Description,
                        Options = valueSet?.ToDictionary(x => x.Item1, x => x.Item2),
                        Type = GetParameterType(),
-                       DefaultValue = defaultValue?.ToString(),
+                       DefaultValue = member.GetMemberType().IsArray && defaultValue is IEnumerable enumerable
+                           ? enumerable.Cast<object>().Select(x => x.ToString()).Join(valueSeparator)
+                           : defaultValue?.ToString(),
                        Display = required ? TeamCityParameterDisplay.Prompt : TeamCityParameterDisplay.Normal,
-                       AllowMultiple = member.GetMemberType().IsArray,
-                       ValueSeparator = attribute.Separator ?? " "
+                       AllowMultiple = member.GetMemberType().IsArray && valueSet is not null,
+                       ValueSeparator = valueSeparator
                    };
         }
 

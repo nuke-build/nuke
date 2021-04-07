@@ -8,8 +8,8 @@ using System.Reflection;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common;
-using Nuke.Common.Execution;
 using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 partial class Build
@@ -56,7 +56,7 @@ partial class Build
                     .AppendLine();
 
                 var memberInfos = type
-                    .GetMembers(ReflectionService.All | BindingFlags.DeclaredOnly);
+                    .GetMembers(ReflectionUtility.All | BindingFlags.DeclaredOnly);
 
                 bool DefaultFilter(MemberInfo member)
                 {

@@ -1,0 +1,16 @@
+//////////////////////////////////////////////////////////////////////
+// TOOLS
+//////////////////////////////////////////////////////////////////////
+#tool "nuget:?package=GitVersion.CommandLine&version=4.0.0"
+#tool "nuget:?package=TeamCity.Dotnet.Integration"
+#addin "nuget:?package=SharpZipLib&version=1.2.0"
+#addin "nuget:?package=Cake.Compression&version=0.2.4"
+
+using Path = System.IO.Path;
+using IO = System.IO;
+
+//////////////////////////////////////////////////////////////////////
+// ARGUMENTS
+//////////////////////////////////////////////////////////////////////
+var target = Argument("target", "Default");
+var configuration = Argument("configuration", "Release");

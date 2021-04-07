@@ -14,7 +14,7 @@ namespace Nuke.Common
         AbsolutePath INukeBuild.BuildProjectDirectory => BuildProjectDirectory;
         AbsolutePath INukeBuild.BuildProjectFile => BuildProjectFile;
         Verbosity INukeBuild.Verbosity => Verbosity;
-        HostType INukeBuild.Host => Host;
+        Host INukeBuild.Host => Host;
         bool INukeBuild.Plan => Plan;
         bool INukeBuild.Help => Help;
         bool INukeBuild.NoLogo => NoLogo;

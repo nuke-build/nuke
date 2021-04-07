@@ -14,16 +14,17 @@ using Nuke.Components;
 
 partial class Build : ISignPackages
 {
-    public IEnumerable<AbsolutePath> SignPathPackages => PackageFiles
-        .Where(x => Path.GetFileName(x).StartsWithAny(
-            "Nuke.Common",
-            "Nuke.Components",
-            "Nuke.CodeGeneration",
-            "Nuke.GlobalTool"));
+    public IEnumerable<AbsolutePath> SignPathPackages
+        => From<IPack>().PackagesDirectory.GlobFiles("*.nupkg")
+            .Where(x => Path.GetFileNameWithoutExtension(x)
+                .StartsWithAnyOrdinalIgnoreCase(
+                    Solution.Nuke_Common.Name,
+                    Solution.Nuke_Components.Name,
+                    Solution.Nuke_CodeGeneration.Name,
+                    Solution.Nuke_GlobalTool.Name));
 
     public Target SignPackages => _ => _
-        .Inherit<ISignPackages>(x => x.SignPackages)
-        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
-        .OnlyWhenStatic(() => EnvironmentInfo.IsWin)
-        .TriggeredBy(Pack);
+        .Inherit<ISignPackages>()
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch() || GitRepository.IsOnReleaseBranch())
+        .OnlyWhenStatic(() => EnvironmentInfo.IsWin);
 }

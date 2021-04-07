@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
@@ -18,16 +19,17 @@ namespace Nuke.GlobalTool
     {
         private const char CommandPrefix = ':';
 
+        private static string CurrentBuildScriptName => EnvironmentInfo.IsWin ? "build.ps1" : "build.sh";
+
         private static int Main(string[] args)
         {
             try
             {
-                // TODO: parse from --root argument
-                var rootDirectory = Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory());
+                var rootDirectory = TryGetRootDirectory();
 
                 var buildScript = rootDirectory != null
-                    ? new DirectoryInfo(rootDirectory)
-                        .EnumerateFiles($"build.{(EnvironmentInfo.IsWin ? "ps1" : "sh")}", maxDepth: 2)
+                    ? (AbsolutePath) new DirectoryInfo(rootDirectory)
+                        .EnumerateFiles(CurrentBuildScriptName, maxDepth: 2)
                         .FirstOrDefault()?.FullName.DoubleQuoteIfNeeded()
                     : null;
 
@@ -45,18 +47,39 @@ namespace Nuke.GlobalTool
             Logger.Info($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
         }
 
-        private static int Handle(string[] args, [CanBeNull] string rootDirectory, [CanBeNull] string buildScript)
+        [CanBeNull]
+        private static AbsolutePath TryGetRootDirectory()
+        {
+            // TODO: copied in NukeBuild.GetRootDirectory
+            var parameterValue = EnvironmentInfo.GetParameter(() => NukeBuild.RootDirectory);
+            if (parameterValue != null)
+                return parameterValue;
+
+            if (EnvironmentInfo.GetParameter<bool>(() => NukeBuild.RootDirectory))
+                return EnvironmentInfo.WorkingDirectory;
+
+            return Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory());
+        }
+
+        private static int Handle(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             var hasCommand = args.FirstOrDefault()?.StartsWithOrdinalIgnoreCase(CommandPrefix.ToString()) ?? false;
             if (hasCommand)
             {
-                var command = args.First().Trim(CommandPrefix);
+                var command = args.First().Trim(CommandPrefix).Replace("-", string.Empty);
                 if (string.IsNullOrWhiteSpace(command))
                     ControlFlow.Fail($"No command specified. Usage is: nuke {CommandPrefix}<command> [args]");
 
-                var commandHandler = typeof(Program).GetMethods(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                var availableCommands = typeof(Program).GetMethods(BindingFlags.Static | BindingFlags.Public);
+                var commandHandler = availableCommands
                     .SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));
-                ControlFlow.Assert(commandHandler != null, $"Command '{command}' is not supported.");
+                ControlFlow.Assert(commandHandler != null,
+                    new[]
+                        {
+                            $"Command '{command}' is not supported.",
+                            "Available commands are:"
+                        }
+                        .Concat(availableCommands.Select(x => $"  - {x.Name}").OrderBy(x => x)).JoinNewLine());
                 // TODO: add assertions about return type and parameters
 
                 var commandArguments = new object[] { args.Skip(count: 1).ToArray(), rootDirectory, buildScript };
@@ -65,11 +88,11 @@ namespace Nuke.GlobalTool
 
             if (rootDirectory == null || buildScript == null)
             {
-                var missingFile = rootDirectory == null
-                    ? Constants.ConfigurationFileName
-                    : "build.ps1/sh";
+                var missingItem = rootDirectory == null
+                    ? $"{Constants.NukeDirectoryName} directory/file"
+                    : "build.ps1/sh files";
 
-                return UserConfirms($"Could not find {missingFile} file. Do you want to setup a build?")
+                return UserConfirms($"Could not find {missingItem}. Do you want to setup a build?")
                     ? Setup(new string[0], rootDirectory, buildScript: null)
                     : 0;
             }

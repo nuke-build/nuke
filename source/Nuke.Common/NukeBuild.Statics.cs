@@ -7,15 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.CI.AppVeyor;
-using Nuke.Common.CI.AzurePipelines;
-using Nuke.Common.CI.Bamboo;
-using Nuke.Common.CI.Bitrise;
-using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.CI.GitLab;
-using Nuke.Common.CI.Jenkins;
-using Nuke.Common.CI.TeamCity;
-using Nuke.Common.CI.TravisCI;
+using Nuke.Common.CI;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -30,25 +22,20 @@ namespace Nuke.Common
             RootDirectory = GetRootDirectory();
             TemporaryDirectory = GetTemporaryDirectory(RootDirectory);
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
+
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
             BuildProjectFile = GetBuildProjectFile(BuildAssemblyDirectory);
             BuildProjectDirectory = BuildProjectFile?.Parent;
 
             Verbosity = EnvironmentInfo.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
-            Host = EnvironmentInfo.GetParameter<HostType?>(() => Host) ?? GetHostType();
-            Continue = EnvironmentInfo.GetParameter(() => Continue);
-            Plan = EnvironmentInfo.GetParameter(() => Plan);
-            Help = EnvironmentInfo.GetParameter(() => Help);
-            NoLogo = EnvironmentInfo.GetParameter(() => NoLogo);
-
-            // LoadedProfiles = BuildProfileManagementAttributeBase.GetLoadProfiles();
-            // SaveProfile = BuildProfileManagementAttributeBase.GetSaveProfile();
+            Host = EnvironmentInfo.GetParameter(() => Host) ?? Host.Default;
+            LoadedLocalProfiles = EnvironmentInfo.GetParameter(() => LoadedLocalProfiles) ?? new string[0];
         }
 
         /// <summary>
         /// Gets the full path to the root directory.
         /// </summary>
-        [Parameter("Root directory during build execution.", Name = "Root")]
+        [Parameter("Root directory during build execution.", Name = RootDirectoryParameterName)]
         public static AbsolutePath RootDirectory { get; }
 
         /// <summary>
@@ -78,45 +65,29 @@ namespace Nuke.Common
         /// Gets the logging verbosity during build execution. Default is <see cref="Nuke.Common.Verbosity.Normal"/>.
         /// </summary>
         [Parameter("Logging verbosity during build execution. Default is 'Normal'.")]
-        public static Verbosity Verbosity { get; set; }
+        public static Verbosity Verbosity
+        {
+            get => (Verbosity) LogLevel;
+            set => LogLevel = (LogLevel) value;
+        }
 
         /// <summary>
         /// Gets the host for execution. Default is <em>automatic</em>.
         /// </summary>
-        [Parameter("Host for execution. Default is 'automatic'.")]
-        public static HostType Host { get; }
+        [Parameter("Host for execution. Default is 'automatic'.", ValueProviderMember = nameof(HostNames))]
+        public static Host Host { get; }
 
-        /// <summary>
-        /// Gets a value whether to show the execution plan (HTML).
-        /// </summary>
-        [Parameter("Shows the execution plan (HTML).")]
-        public static bool Plan { get; }
+        [Parameter("Defines the profiles to load.", Name = LoadedLocalProfilesParameterName)]
+        public static string[] LoadedLocalProfiles { get; }
 
-        /// <summary>
-        /// Gets a value whether to show the help text for this build assembly.
-        /// </summary>
-        [Parameter("Shows the help text for this build assembly.")]
-        public static bool Help { get; }
+        public static bool IsLocalBuild => !IsServerBuild;
+        public static bool IsServerBuild => Host is IBuildServer;
 
-        /// <summary>
-        /// Gets a value whether to display the NUKE logo.
-        /// </summary>
-        [Parameter("Disables displaying the NUKE logo.")]
-        public static bool NoLogo { get; set; }
-
-        // [Parameter("Defines the profiles to load.", Name = "LoadProfile")]
-        // public static string[] LoadedProfiles { get; }
-        //
-        // [Parameter("Defines the profile to save to.")]
-        // public static string SaveProfile { get; }
-
-        public static bool IsLocalBuild => Host == HostType.Console;
-        public static bool IsServerBuild => Host != HostType.Console;
-
-        public static LogLevel LogLevel => (LogLevel) Verbosity;
-
-        [Parameter("Indicates to continue a previously failed build attempt.")]
-        public static bool Continue { get; internal set; }
+        public static LogLevel LogLevel
+        {
+            get => Logger.LogLevel;
+            set => Logger.LogLevel = value;
+        }
 
         private static AbsolutePath GetRootDirectory()
         {
@@ -125,13 +96,13 @@ namespace Nuke.Common
                 return parameterValue;
 
             if (EnvironmentInfo.GetParameter<bool>(() => RootDirectory))
-                return (AbsolutePath) EnvironmentInfo.WorkingDirectory;
+                return EnvironmentInfo.WorkingDirectory;
 
             return TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory)
                 .NotNull(new[]
                          {
-                             $"Could not locate '{ConfigurationFileName}' file while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
-                             "Either create the file to mark the root directory, or use the --root parameter."
+                             $"Could not locate '{NukeDirectoryName}' directory/file while walking up from '{EnvironmentInfo.WorkingDirectory}'.",
+                             "Either create a directory/file to mark the root directory, or add '--root [path]' to the invocation."
                          }.JoinNewLine());
         }
 
@@ -157,31 +128,6 @@ namespace Nuke.Common
                     .SingleOrDefaultOrError($"Found multiple project files in '{x}'."))
                 .FirstOrDefault(x => x != null)
                 ?.FullName;
-        }
-
-        // ReSharper disable once CognitiveComplexity
-        private static HostType GetHostType()
-        {
-            if (AppVeyor.IsRunningAppVeyor)
-                return HostType.AppVeyor;
-            if (Jenkins.IsRunningJenkins)
-                return HostType.Jenkins;
-            if (TeamCity.IsRunningTeamCity)
-                return HostType.TeamCity;
-            if (Bamboo.IsRunningBamboo)
-                return HostType.Bamboo;
-            if (AzurePipelines.IsRunningAzurePipelines)
-                return HostType.AzurePipelines;
-            if (Bitrise.IsRunningBitrise)
-                return HostType.Bitrise;
-            if (GitLab.IsRunningGitLab)
-                return HostType.GitLab;
-            if (TravisCI.IsRunningTravisCI)
-                return HostType.Travis;
-            if (GitHubActions.IsRunningGitHubActions)
-                return HostType.GitHubActions;
-
-            return HostType.Console;
         }
     }
 }

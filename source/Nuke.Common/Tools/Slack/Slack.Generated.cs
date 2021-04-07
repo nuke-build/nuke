@@ -27,6 +27,10 @@ namespace Nuke.Common.Tools.Slack
     [Serializable]
     public partial class SlackMessage : ISettingsEntity
     {
+        [JsonProperty("ts")]
+        public virtual string Timestamp { get; internal set; }
+        [JsonProperty("thread_ts")]
+        public virtual string ThreadTimestamp { get; internal set; }
         [JsonProperty("channel")]
         public virtual string Channel { get; internal set; }
         [JsonProperty("username")]
@@ -180,6 +184,50 @@ namespace Nuke.Common.Tools.Slack
     [ExcludeFromCodeCoverage]
     public static partial class SlackMessageExtensions
     {
+        #region Timestamp
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessage.Timestamp"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetTimestamp<T>(this T toolSettings, string timestamp) where T : SlackMessage
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timestamp = timestamp;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessage.Timestamp"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetTimestamp<T>(this T toolSettings) where T : SlackMessage
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timestamp = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ThreadTimestamp
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessage.ThreadTimestamp"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T SetThreadTimestamp<T>(this T toolSettings, string threadTimestamp) where T : SlackMessage
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ThreadTimestamp = threadTimestamp;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessage.ThreadTimestamp"/></em></p>
+        /// </summary>
+        [Pure]
+        public static T ResetThreadTimestamp<T>(this T toolSettings) where T : SlackMessage
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ThreadTimestamp = null;
+            return toolSettings;
+        }
+        #endregion
         #region Channel
         /// <summary>
         ///   <p><em>Sets <see cref="SlackMessage.Channel"/></em></p>

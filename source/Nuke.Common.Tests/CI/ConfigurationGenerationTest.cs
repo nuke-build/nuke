@@ -12,7 +12,6 @@ using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
-using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
@@ -56,7 +55,7 @@ namespace Nuke.Common.Tests.CI
                 yield return
                 (
                     null,
-                    new TestTeamCityAttribute(TeamCityAgentPlatform.Unix)
+                    new TestTeamCityAttribute
                     {
                         Description = "description",
                         Version = "1.3.3.7",
@@ -140,6 +139,28 @@ namespace Nuke.Common.Tests.CI
                         OnPullRequestTags = new[] { "pull_request_tag" },
                         OnPullRequestIncludePaths = new[] { "pull_request_include_path" },
                         OnPullRequestExcludePaths = new[] { "pull_request_exclude_path" },
+                        OnWorkflowDispatchInputs = new[] { "NuGetApiKey", "OtherData" }
+                    }
+                );
+
+                yield return
+                (
+                    null,
+                    new TestSpaceAutomationAttribute("Name", "mcr.microsoft.com/dotnet/sdk:5.0")
+                    {
+                        InvokedTargets = new[] { nameof(Test) },
+                        VolumeSize = "10.gb",
+                        ResourcesCpu = "1.cpu",
+                        ResourcesMemory = "2000.mb",
+                        OnPush = true,
+                        OnPushBranchIncludes = new[] { "refs/heads/include" },
+                        OnPushBranchExcludes = new[] { "refs/heads/exclude" },
+                        OnPushBranchRegexIncludes = new[] { @"\binclude\b" },
+                        OnPushBranchRegexExcludes = new[] { @"\bexclude\b" },
+                        OnPushPathIncludes = new[] { "include-path" },
+                        OnPushPathExcludes = new[] { "exclude-path" },
+                        OnCronSchedule = "* 0 * * *",
+                        TimeoutInMinutes = 15
                     }
                 );
             }
@@ -157,12 +178,15 @@ namespace Nuke.Common.Tests.CI
             [Parameter("Configuration for compilation")]
             public readonly Configuration Configuration = Configuration.Debug;
 
+            [Parameter] public readonly string[] StringArray = new[] { "first", "second" };
+            [Parameter] public readonly int[] IntegerArray = new[] { 1, 2 };
+            [Parameter] public readonly Configuration[] ConfigurationArray = new[] { Configuration.Debug, Configuration.Release };
+
             public AbsolutePath OutputDirectory => RootDirectory / "output";
 
             public Target Compile => _ => _
                 .DependsOn(Restore)
                 .Produces(SourceDirectory / "*/bin/**");
-
 
             public AbsolutePath PackageDirectory => OutputDirectory / "packages";
 
@@ -188,13 +212,15 @@ namespace Nuke.Common.Tests.CI
                 .Consumes(Test)
                 .Produces(CoverageReportArchive);
 
-            [Parameter("NuGet Api Key")] public readonly string ApiKey;
+            [Parameter("NuGet Api Key")] [Secret] public readonly string ApiKey;
 
             [Parameter("NuGet Source for Packages")]
             public readonly string Source = "https://api.nuget.org/v3/index.json";
 
             [Parameter("GitHub Token")] public readonly string GitHubToken;
-            [Parameter("Azure Pipelines System Access Token")] public readonly string AzurePipelinesSystemAccessToken;
+
+            [Parameter("Azure Pipelines System Access Token")]
+            public readonly string AzurePipelinesSystemAccessToken;
 
             public Target Publish => _ => _
                 .DependsOn(Clean, Test, Pack)

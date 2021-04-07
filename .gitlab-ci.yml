@@ -1,0 +1,12 @@
+image: mcr.microsoft.com/dotnet/sdk:5.0
+
+variables:
+  GIT_DEPTH: 0
+
+stages:
+  - build
+
+build:
+  stage: build
+  script:
+    - './build.cmd Pack Test'

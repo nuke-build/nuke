@@ -36,12 +36,34 @@ project {
     buildTypesOrder = arrayListOf(Restore, Compile, Test_P1T2, Test_P2T2, Test, Coverage, Pack, Publish, Announce)
 
     params {
+        text (
+            "env.AzurePipelinesSystemAccessToken",
+            label = "AzurePipelinesSystemAccessToken",
+            description = "Azure Pipelines System Access Token",
+            value = "",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         select (
-            "env.Verbosity",
-            label = "Verbosity",
-            description = "Logging verbosity during build execution. Default is 'Normal'.",
-            value = "Normal",
-            options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
+            "env.Configuration",
+            label = "Configuration",
+            description = "Configuration for compilation",
+            value = "Debug",
+            options = listOf("Debug" to "Debug", "Release" to "Release"),
+            display = ParameterDisplay.NORMAL)
+        select (
+            "env.ConfigurationArray",
+            label = "ConfigurationArray",
+            value = "Debug Release",
+            allowMultiple = true,
+            valueSeparator = " ",
+            options = listOf("Debug" to "Debug", "Release" to "Release"),
+            display = ParameterDisplay.NORMAL)
+        text (
+            "env.GitHubToken",
+            label = "GitHubToken",
+            description = "GitHub Token",
+            value = "",
+            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         checkbox (
             "env.IgnoreFailedSources",
@@ -50,12 +72,11 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
-        select (
-            "env.Configuration",
-            label = "Configuration",
-            description = "Configuration for compilation",
-            value = "Debug",
-            options = listOf("Debug" to "Debug", "Release" to "Release"),
+        text (
+            "env.IntegerArray",
+            label = "IntegerArray",
+            value = "1 2",
+            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
             "env.Source",
@@ -65,19 +86,23 @@ project {
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
-            "env.GitHubToken",
-            label = "GitHubToken",
-            description = "GitHub Token",
-            value = "",
+            "env.StringArray",
+            label = "StringArray",
+            value = "first second",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
-        text (
-            "env.AzurePipelinesSystemAccessToken",
-            label = "AzurePipelinesSystemAccessToken",
-            description = "Azure Pipelines System Access Token",
-            value = "",
-            allowEmpty = true,
+        select (
+            "env.Verbosity",
+            label = "Verbosity",
+            description = "Logging verbosity during build execution. Default is 'Normal'.",
+            value = "Normal",
+            options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
             display = ParameterDisplay.NORMAL)
+        text(
+            "teamcity.runner.commandline.stdstreams.encoding",
+            "UTF-8",
+            display = ParameterDisplay.HIDDEN
+        )
     }
 }
 object Restore : BuildType({
@@ -89,9 +114,22 @@ object Restore : BuildType({
     artifactRules = "src/*/obj/** => src"
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Restore --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Restore --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Restore",
+            display = ParameterDisplay.HIDDEN
+        )
     }
 })
 object Compile : BuildType({
@@ -103,9 +141,22 @@ object Compile : BuildType({
     artifactRules = "src/*/bin/** => src"
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Compile --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Compile --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Compile",
+            display = ParameterDisplay.HIDDEN
+        )
     }
     dependencies {
         snapshot(Restore) {
@@ -126,8 +177,14 @@ object Test_P1T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Test --skip --test-partition 1"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Test --skip --test-partition 1"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     dependencies {
@@ -149,8 +206,14 @@ object Test_P2T2 : BuildType({
     """.trimIndent()
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Test --skip --test-partition 2"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Test --skip --test-partition 2"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     dependencies {
@@ -169,6 +232,13 @@ object Test : BuildType({
         showDependenciesChanges = true
     }
     artifactRules = "**/*"
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Test",
+            display = ParameterDisplay.HIDDEN
+        )
+    }
     triggers {
         vcs {
             branchFilter = "vcs_branch_filter"
@@ -177,11 +247,11 @@ object Test : BuildType({
     }
     dependencies {
         snapshot(Test_P1T2) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
+            onDependencyFailure = FailureAction.ADD_PROBLEM
             onDependencyCancel = FailureAction.CANCEL
         }
         snapshot(Test_P2T2) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
+            onDependencyFailure = FailureAction.ADD_PROBLEM
             onDependencyCancel = FailureAction.CANCEL
         }
         artifacts(Test_P1T2) {
@@ -201,9 +271,22 @@ object Coverage : BuildType({
     artifactRules = "output/coverage-report.zip => output"
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Coverage --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Coverage --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Coverage",
+            display = ParameterDisplay.HIDDEN
+        )
     }
     triggers {
         finishBuildTrigger {
@@ -232,9 +315,22 @@ object Pack : BuildType({
     artifactRules = "output/packages/*.nupkg => output/packages"
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Pack --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Pack --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Pack",
+            display = ParameterDisplay.HIDDEN
+        )
     }
     triggers {
         vcs {
@@ -264,18 +360,28 @@ object Publish : BuildType({
     }
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Clean Publish --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Clean Publish --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
     params {
-        text (
+        password (
             "env.ApiKey",
             label = "ApiKey",
             description = "NuGet Api Key",
             value = "",
-            allowEmpty = false,
             display = ParameterDisplay.PROMPT)
+        text(
+            "teamcity.ui.runButton.caption",
+            "Publish",
+            display = ParameterDisplay.HIDDEN
+        )
     }
     triggers {
         schedule {
@@ -312,9 +418,22 @@ object Announce : BuildType({
     }
     steps {
         exec {
+            path = "build.cmd"
+            arguments = "Announce --skip"
+            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
+        }
+        exec {
             path = "build.sh"
             arguments = "Announce --skip"
+            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
+    }
+    params {
+        text(
+            "teamcity.ui.runButton.caption",
+            "Announce",
+            display = ParameterDisplay.HIDDEN
+        )
     }
     triggers {
         finishBuildTrigger {

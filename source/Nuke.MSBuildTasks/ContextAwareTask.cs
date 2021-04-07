@@ -12,7 +12,7 @@ using Microsoft.Build.Utilities;
 using Nuke.Common;
 #if NETCOREAPP
 using System.Runtime.Loader;
-using Nuke.Common.Execution;
+using Nuke.Common.Utilities;
 #endif
 
 namespace Nuke.MSBuildTasks

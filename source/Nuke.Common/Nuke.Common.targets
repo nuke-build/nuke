@@ -23,16 +23,18 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(NukeRootDirectory)' != ''">
-    <None Include="$(NukeRootDirectory)\.nuke" LinkBase="config" />
+    <None Include="$(NukeRootDirectory)\.nuke\parameters.json" LinkBase="config" />
+    <None Include="$(NukeRootDirectory)\.nuke\parameters.*.json" LinkBase="config" />
     <None Include="$(NukeRootDirectory)\global.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\global.json')" />
     <None Include="$(NukeRootDirectory)\nuget.config" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\nuget.config')" />
     <None Include="$(NukeRootDirectory)\GitVersion.yml" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\GitVersion.yml')" />
+    <None Include="$(NukeRootDirectory)\version.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\version.json')" />
 
     <None Include="$(NukeRootDirectory)\.teamcity\settings.kts" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\.teamcity\settings.kts')" />
     <None Include="$(NukeRootDirectory)\.github\workflows\*.yml" LinkBase="ci" />
-    <None Include="$(NukeRootDirectory)\azure-pipelines.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\azure-pipelines.yml')" />
+    <None Include="$(NukeRootDirectory)\azure-pipelines*.yml" LinkBase="ci" />
     <None Include="$(NukeRootDirectory)\Jenkinsfile" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\Jenkinsfile')" />
-    <None Include="$(NukeRootDirectory)\appveyor.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\appveyor.yml')" />
+    <None Include="$(NukeRootDirectory)\appveyor*.yml" LinkBase="ci" />
     <None Include="$(NukeRootDirectory)\.travis.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\.travis.yml')" />
     <None Include="$(NukeRootDirectory)\bamboo-specs\bamboo.yml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\bamboo-specs\bamboo.yml')" />
     <None Include="$(NukeRootDirectory)\bamboo-specs\bamboo.yaml" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\bamboo-specs\bamboo.yaml')" />

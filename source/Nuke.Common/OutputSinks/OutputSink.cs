@@ -77,11 +77,11 @@ namespace Nuke.Common.OutputSinks
                 WriteFailedBuild();
 
             bool HasHighUsage()
-                => // global tool
+                => // interface implementations
                    build.GetType().GetInterfaces().Length > 1 ||
                    // configuration generation
                    build.GetType().GetCustomAttributes<ConfigurationAttributeBase>().Any() ||
-                   // interface implementations
+                   // global tool
                    NukeBuild.BuildProjectFile == null;
 
             T TryGetValue<T>(Func<T> func)
@@ -102,16 +102,29 @@ namespace Nuke.Common.OutputSinks
                 TryGetValue(() => repository.GetDefaultBranch().GetAwaiter().GetResult()) == null)
             {
                 WriteNormal();
-                WriteSponsorshipInfo();
+
+                if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName.EqualsOrdinalIgnoreCase("zh"))
+                    WriteTranslationRequest();
+                else
+                    WriteSponsorshipInfo();
             }
+        }
+
+        private void WriteTranslationRequest()
+        {
+            WriteInformation("We want to make NUKE more accessible by providing");
+            WriteInformation("our documentation in simplified chinese (zh-CN). 🇨🇳");
+            WriteInformation("If you're interested to help, please contact us:");
+            WriteInformation("     📧 ithrowexceptions@gmail.com");
+            WriteNormal();
+            WriteInformation("Happy building! 🌟");
         }
 
         private void WriteSponsorshipInfo()
         {
-            WriteInformation("If you like NUKE, you'll love what's coming! 🤓");
-            WriteInformation("We're currently looking for more sponsors to release a new version.");
-            WriteInformation("Please check out our tiers: https://github.com/sponsors/matkoch");
-            WriteInformation("With a sponsorship you'll also gain access to various perks. 🚀");
+            WriteInformation("If you like NUKE, please support us! 🤓");
+            WriteInformation("With a sponsorship you'll gain access to various perks. 🚀");
+            WriteInformation("Check out our tiers: https://github.com/sponsors/matkoch");
             WriteNormal();
             WriteInformation("Happy building! 🌟");
         }
@@ -134,14 +147,14 @@ namespace Nuke.Common.OutputSinks
             var allColumns = firstColumn + secondColumn + thirdColumn;
             var totalDuration = build.ExecutionPlan.Aggregate(TimeSpan.Zero, (t, x) => t.Add(x.Duration));
 
-            string CreateLine(string target, string executionStatus, string duration, string appendix = null)
+            string CreateLine(string target, string executionStatus, string duration, string information = null)
                 => target.PadRight(firstColumn, paddingChar: ' ')
                    + executionStatus.PadRight(secondColumn, paddingChar: ' ')
                    + duration.PadLeft(thirdColumn, paddingChar: ' ')
-                   + (appendix != null ? $"   // {appendix}" : string.Empty);
+                   + (information != null ? $"   // {information}" : string.Empty);
 
             static string GetDurationOrBlank(ExecutableTarget target)
-                => target.Status == ExecutionStatus.Executed ||
+                => target.Status == ExecutionStatus.Succeeded ||
                    target.Status == ExecutionStatus.Failed ||
                    target.Status == ExecutionStatus.Aborted
                     ? GetDuration(target.Duration)
@@ -150,19 +163,24 @@ namespace Nuke.Common.OutputSinks
             static string GetDuration(TimeSpan duration)
                 => $"{(int) duration.TotalMinutes}:{duration:ss}".Replace("0:00", "< 1sec");
 
+            static string GetInformation(ExecutableTarget target)
+                => target.SummaryInformation.Any()
+                    ? target.SummaryInformation.Select(x => $"{x.Key}: {x.Value}").JoinComma()
+                    : null;
+
             WriteNormal(new string(c: '═', count: allColumns));
             WriteInformation(CreateLine("Target", "Status", "Duration"));
             //WriteInformationInternal($"{{0,-{firstColumn}}}{{1,-{secondColumn}}}{{2,{thirdColumn}}}{{3,1}}", "Target", "Status", "Duration", "Test");
             WriteNormal(new string(c: '─', count: allColumns));
             foreach (var target in build.ExecutionPlan)
             {
-                var line = CreateLine(target.Name, target.Status.ToString(), GetDurationOrBlank(target), target.SkipReason);
+                var line = CreateLine(target.Name, target.Status.ToString(), GetDurationOrBlank(target), GetInformation(target));
                 switch (target.Status)
                 {
                     case ExecutionStatus.Skipped:
                         WriteNormal(line);
                         break;
-                    case ExecutionStatus.Executed:
+                    case ExecutionStatus.Succeeded:
                         WriteSuccess(line);
                         break;
                     case ExecutionStatus.Aborted:
@@ -172,6 +190,10 @@ namespace Nuke.Common.OutputSinks
                     case ExecutionStatus.Failed:
                         WriteError(line);
                         break;
+                    case ExecutionStatus.Collective:
+                        break;
+                    default:
+                        throw new NotSupportedException(target.Status.ToString());
                 }
             }
 

@@ -4,10 +4,8 @@
 
 using System;
 using System.Linq;
-using System.Reflection;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -46,16 +44,6 @@ namespace Nuke.Common.Tools.GitVersion
                 throw new Exception($"{nameof(GitVersion)} exited with code {process.ExitCode}, but cannot parse output as JSON:"
                         .Concat(process.Output.Select(x => x.Text)).JoinNewLine(),
                     exception);
-            }
-        }
-
-        private class AllWritableContractResolver : DefaultContractResolver
-        {
-            protected override JsonProperty CreateProperty([NotNull] MemberInfo member, MemberSerialization memberSerialization)
-            {
-                var property = base.CreateProperty(member, memberSerialization);
-                property.Writable = true;
-                return property;
             }
         }
     }

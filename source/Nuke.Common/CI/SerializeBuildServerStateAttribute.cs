@@ -14,7 +14,8 @@ namespace Nuke.Common.CI
         public void OnBuildFinished(NukeBuild build)
         {
             GetGenerators(build)
-                .FirstOrDefault(x => x.HostType == NukeBuild.Host)
+                // TODO: bool IsRunning
+                .FirstOrDefault(x => x.HostType == NukeBuild.Host.GetType())
                 ?.SerializeState();
         }
     }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
@@ -16,12 +17,14 @@ namespace Nuke.Common.Execution
     {
         private readonly Stack<PropertyInfo> _baseMembers;
 
-        public TargetDefinition(NukeBuild build, Stack<PropertyInfo> baseMembers)
+        public TargetDefinition(PropertyInfo target, NukeBuild build, Stack<PropertyInfo> baseMembers)
         {
+            Target = target;
             Build = build;
             _baseMembers = baseMembers;
         }
 
+        public PropertyInfo Target { get; }
         public NukeBuild Build { get; }
 
         internal string Description { get; set; }
@@ -71,7 +74,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition DependsOn<T>(params Func<T, Target>[] targets)
         {
-            return DependsOn(targets.Select(x => x((T) (object) Build)).ToArray());
+            return DependsOn(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryDependsOn<T>(params Func<T, Target>[] targets)
@@ -87,7 +90,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition DependentFor<T>(params Func<T, Target>[] targets)
         {
-            return DependentFor(targets.Select(x => x((T) (object) Build)).ToArray());
+            return DependentFor(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryDependentFor<T>(params Func<T, Target>[] targets)
@@ -141,7 +144,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Before<T>(params Func<T, Target>[] targets)
         {
-            return Before(targets.Select(x => x((T) (object) Build)).ToArray());
+            return Before(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryBefore<T>(params Func<T, Target>[] targets)
@@ -157,7 +160,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition After<T>(params Func<T, Target>[] targets)
         {
-            return After(targets.Select(x => x((T) (object) Build)).ToArray());
+            return After(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryAfter<T>(params Func<T, Target>[] targets)
@@ -173,7 +176,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Triggers<T>(params Func<T, Target>[] targets)
         {
-            return Triggers(targets.Select(x => x((T) (object) Build)).ToArray());
+            return Triggers(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryTriggers<T>(params Func<T, Target>[] targets)
@@ -189,7 +192,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition TriggeredBy<T>(params Func<T, Target>[] targets)
         {
-            return TriggeredBy(targets.Select(x => x((T) (object) Build)).ToArray());
+            return TriggeredBy(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryTriggeredBy<T>(params Func<T, Target>[] targets)
@@ -217,7 +220,12 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Base()
         {
-            ControlFlow.Assert(_baseMembers.Count > 0, "_baseMembers.Count > 0");
+            ControlFlow.Assert(_baseMembers.Count > 0,
+                new[]
+                {
+                    $"Target '{Target.DeclaringType}.{Target.Name}' does not have any base members.",
+                    "To inherit from a interface default implementation, use Inherit<T>."
+                }.JoinNewLine());
             Inherit(_baseMembers.Pop().GetValueNonVirtual<Target>(Build));
             return this;
         }
@@ -230,8 +238,29 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Inherit<T>(params Expression<Func<T, Target>>[] targets)
         {
-            Inherit(targets.Select(x => x.GetMemberInfo().GetValueNonVirtual<Target>(Build)).ToArray());
+            var properties = targets.Length > 0 ? targets.Select(x => x.GetMemberInfo()) : new[] { GetSingleTargetProperty<T>() };
+            Inherit(properties.Select(x => x.GetValueNonVirtual<Target>(Build)).ToArray());
             return this;
+        }
+
+        private Target[] GetTargetsOrSingleOf<T>(Target[] targets)
+        {
+            return targets.Length > 0 ? targets : new[] { (Target) GetSingleTargetProperty<T>().GetValue(Build) };
+        }
+
+        private PropertyInfo GetSingleTargetProperty<T>()
+        {
+            var interfaceTargets = typeof(T).GetProperties(ReflectionUtility.Instance).Where(x => x.PropertyType == typeof(Target)).ToList();
+            ControlFlow.Assert(interfaceTargets.Count == 1,
+                new[]
+                {
+                    $"Target '{Target.DeclaringType}.{Target.Name}' cannot have a shorthand dependency on component '{typeof(T).Name}'.",
+                    interfaceTargets.Count > 1
+                        ? "Available targets are:"
+                        : "No targets available."
+                }.Concat(interfaceTargets.Select(x => $"  - {x.Name}")).JoinNewLine());
+
+            return interfaceTargets.Single();
         }
     }
 }

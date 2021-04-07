@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,14 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
-using Nuke.Common.ValueInjection;
 using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.SignPath.SignPathTasks;
+using static Nuke.Common.ValueInjection.ValueInjectionUtility;
 
 namespace Nuke.Components
 {
@@ -47,18 +48,22 @@ namespace Nuke.Components
     /// </ul>
     /// </para>
     /// </remarks>
+    [PublicAPI]
+    [ParameterPrefix(SignPath)]
     public interface ISignPackages : INukeBuild
     {
-        [Parameter] string SignPathApiToken => ValueInjectionUtility.TryGetValue(() => SignPathApiToken);
-        [Parameter] string SignPathOrganizationId => ValueInjectionUtility.TryGetValue(() => SignPathOrganizationId);
-        [Parameter] string SignPathProjectSlug => ValueInjectionUtility.TryGetValue(() => SignPathProjectSlug);
-        [Parameter] string SignPathPolicySlug => ValueInjectionUtility.TryGetValue(() => SignPathPolicySlug);
+        public const string SignPath = nameof(SignPath);
+
+        [Parameter] [Secret] string ApiToken => TryGetValue(() => ApiToken);
+        [Parameter] string OrganizationId => TryGetValue(() => OrganizationId);
+        [Parameter] string ProjectSlug => TryGetValue(() => ProjectSlug);
+        [Parameter] string PolicySlug => TryGetValue(() => PolicySlug);
 
         AbsolutePath SignPathTemporaryDirectory => TemporaryDirectory / "signpath";
         AbsolutePath SignPathRequestDirectory => SignPathTemporaryDirectory / "signing-request";
         AbsolutePath SignPathResponseDirectory => SignPathTemporaryDirectory / "signing-response";
         string SignPathRequestArchive => Path.ChangeExtension(SignPathRequestDirectory, ".zip");
-        string SignPathResponseArchive => Path.ChangeExtension(SignPathRequestDirectory, ".zip");
+        string SignPathResponseArchive => Path.ChangeExtension(SignPathResponseDirectory, ".zip");
 
         IEnumerable<AbsolutePath> SignPathPackages { get; }
         bool SignPathReplacePackages => true;
@@ -66,28 +71,41 @@ namespace Nuke.Components
         private AppVeyor AppVeyor => AppVeyor.Instance;
 
         Target SignPackages => _ => _
+            .TryDependsOn<IPack>()
+            .TryDependentFor<IPublish>()
             .OnlyWhenStatic(() => AppVeyor != null)
-            .Requires(() => SignPathApiToken)
-            .Requires(() => SignPathOrganizationId)
-            .Requires(() => SignPathProjectSlug)
-            .Requires(() => SignPathPolicySlug)
+            .Requires(() => ApiToken)
+            .Requires(() => OrganizationId)
+            .Requires(() => ProjectSlug)
+            .Requires(() => PolicySlug)
             .Executes(async () =>
             {
-                EnsureCleanDirectory(SignPathTemporaryDirectory);
+                EnsureCleanDirectory(SignPathRequestDirectory);
                 SignPathPackages.ForEach(x => CopyFileToDirectory(x, SignPathRequestDirectory));
                 CompressZip(SignPathRequestDirectory, SignPathRequestArchive);
 
                 AppVeyor.PushArtifact(SignPathRequestArchive);
 
                 var signingRequestUrl = await GetSigningRequestUrlViaAppVeyor(
-                    SignPathApiToken,
-                    SignPathOrganizationId,
-                    SignPathProjectSlug,
-                    SignPathPolicySlug);
-                await DownloadSignedArtifactFromUrl(
-                    SignPathApiToken,
-                    signingRequestUrl,
-                    SignPathResponseArchive);
+                    ApiToken,
+                    OrganizationId,
+                    ProjectSlug,
+                    PolicySlug);
+
+                ReportSummary(_ => _
+                    .AddPair("Approve/Deny Request", signingRequestUrl.Replace("api/v1", "Web")));
+
+                try
+                {
+                    await DownloadSignedArtifactFromUrl(
+                        ApiToken,
+                        signingRequestUrl,
+                        SignPathResponseArchive);
+                }
+                finally
+                {
+                    ReportSummary(_ => _);
+                }
 
                 UncompressZip(SignPathResponseArchive, SignPathResponseDirectory);
 

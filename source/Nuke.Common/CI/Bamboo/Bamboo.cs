@@ -15,17 +15,16 @@ namespace Nuke.Common.CI.Bamboo
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class Bamboo
+    public class Bamboo : Host, IBuildServer
     {
-        private static Lazy<Bamboo> s_instance = new Lazy<Bamboo>(() => new Bamboo());
-
-        public static Bamboo Instance => NukeBuild.Host == HostType.Bamboo ? s_instance.Value : null;
-
         internal static bool IsRunningBamboo => !Environment.GetEnvironmentVariable("BAMBOO_SERVER").IsNullOrEmpty();
 
         internal Bamboo()
         {
         }
+
+        string IBuildServer.Branch => null;
+        string IBuildServer.Commit => null;
 
         public long AgentId => EnvironmentInfo.GetVariable<long>("bamboo_agentId");
         public string AgentWorkingDirectory => EnvironmentInfo.GetVariable<string>("bamboo_agentWorkingDirectory");

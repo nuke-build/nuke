@@ -34,6 +34,12 @@
             "help": "Specifies the version of your project."
           },
           {
+            "name": "Organization",
+            "type": "string",
+            "format": "/o:{value}",
+            "help": "Specifies the Organization of your project."
+          },
+          {
             "name": "Description",
             "type": "string",
             "format": "/d:sonar.projectDescription={value}",
@@ -119,6 +125,13 @@
             "format": "/d:sonar.coverage.exclusions={value}",
             "separator": ",",
             "help": "Comma separated list of files to exclude from coverage calculations. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
+          },
+          {
+            "name": "GenericCoveragePaths",
+            "type": "List<string>",
+            "format": "/d:sonar.coverageReportPaths={value}",
+            "separator": ",",
+            "help": "Comma separated list of coverage reports in the <a href=\"https://docs.sonarqube.org/latest/analysis/generic-test/\">Generic Test Data</a> format. Supports wildcards (<c>*</c>, <c>**</c>, <c>?</c>)."
           },
           {
             "name": "VisualStudioCoveragePaths",

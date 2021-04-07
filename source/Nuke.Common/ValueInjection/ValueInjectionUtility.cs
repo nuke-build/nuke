@@ -8,24 +8,44 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.Execution;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ValueInjection
 {
     public static class ValueInjectionUtility
     {
+        private static readonly Dictionary<MemberInfo, object> s_valueCache = new Dictionary<MemberInfo, object>();
+
+        [CanBeNull]
         public static T TryGetValue<T>(Expression<Func<T>> parameterExpression)
+            where T : class
         {
-            // TODO: caching?
-            var parameter = parameterExpression.GetMemberInfo();
-            var attribute = parameter.GetCustomAttribute<ValueInjectionAttributeBase>().NotNull();
-            return (T) attribute.TryGetValue(parameter, instance: null);
+            return TryGetValueWithCache<T>(parameterExpression);
+        }
+
+        [CanBeNull]
+        public static T TryGetValue<T>(Expression<Func<object>> parameterExpression)
+        {
+            return TryGetValueWithCache<T>(parameterExpression);
+        }
+
+        private static T TryGetValueWithCache<T>(LambdaExpression lambdaExpression)
+        {
+            var parameter = lambdaExpression.GetMemberInfo();
+
+            object GetValue()
+            {
+                var attribute = parameter.GetCustomAttribute<ValueInjectionAttributeBase>().NotNull();
+                return attribute.TryGetValue(parameter, instance: null);
+            }
+
+            return (T) (s_valueCache[parameter] = s_valueCache.GetValueOrDefault(parameter) ?? GetValue());
         }
 
         public static void InjectValues<T>(T instance = default, Func<ValueInjectionAttributeBase, bool> filter = null)
         {
-            filter ??= x => true;
+            filter ??= _ => true;
             InjectValuesInternal(instance, GetInjectionMembers(instance?.GetType() ?? typeof(T)).Where(x => filter(x.Attribute)));
         }
 
@@ -39,7 +59,15 @@ namespace Nuke.Common.ValueInjection
 
             foreach (var (member, attribute) in tuples)
             {
-                if (member.DeclaringType == typeof(NukeBuild))
+                if (member.DeclaringType == typeof(NukeBuild) &&
+                    !new[]
+                     {
+                         nameof(NukeBuild.Plan),
+                         nameof(NukeBuild.Help),
+                         nameof(NukeBuild.Continue),
+                         nameof(NukeBuild.NoLogo),
+                         nameof(NukeBuild.Verbosity)
+                     }.Contains(member.Name))
                     continue;
 
                 if (member.ReflectedType.NotNull().IsInterface)
@@ -58,18 +86,22 @@ namespace Nuke.Common.ValueInjection
 
         public static IReadOnlyCollection<MemberInfo> GetParameterMembers(Type type, bool includeUnlisted)
         {
+            // TODO: check duplicated names
             return GetInjectionMembers(type)
                 .Where(x => x.Attribute is ParameterAttribute attribute && (includeUnlisted || attribute.List))
-                .Select(x => x.Member).ToList();
+                .Select(x => x.Member)
+                .OrderBy(ParameterService.GetParameterMemberName).ToList();
         }
 
         public static IReadOnlyCollection<(MemberInfo Member, ValueInjectionAttributeBase Attribute)> GetInjectionMembers(Type type)
         {
             return type
-                .GetMembers(ReflectionService.All)
-                .Concat(type.GetInterfaces().SelectMany(x => x.GetMembers(ReflectionService.All)))
-                .Select(x => (Member: x, Attribute: x.GetCustomAttribute<ValueInjectionAttributeBase>()))
-                .Where(x => x.Attribute != null).ToList();
+                .GetAllMembers(
+                    x => x.HasCustomAttribute<ValueInjectionAttributeBase>(),
+                    bindingFlags: ReflectionUtility.All,
+                    allowAmbiguity: true)
+                .OrderBy(x => x.Name)
+                .Select(x => (Member: x, Attribute: x.GetCustomAttribute<ValueInjectionAttributeBase>())).ToList();
         }
     }
 }

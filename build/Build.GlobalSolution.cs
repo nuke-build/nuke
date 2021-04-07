@@ -22,13 +22,16 @@ partial class Build
 {
     [Parameter] readonly bool UseHttps;
 
-    AbsolutePath GlobalSolution => RootDirectory / "nuke-global.sln";
+    [Solution("nuke-global.sln")] readonly Nuke.Common.ProjectModel.Solution GlobalSolution;
+
     AbsolutePath ExternalRepositoriesDirectory => RootDirectory / "external";
     AbsolutePath ExternalRepositoriesFile => ExternalRepositoriesDirectory / "repositories.yml";
-    IEnumerable<Solution> ExternalSolutions => ExternalRepositoriesDirectory.GlobFiles("*/*.sln").Select(x => ParseSolution(x));
 
-    IEnumerable<GitRepository> ExternalRepositories =>
-        YamlDeserializeFromFile<string[]>(ExternalRepositoriesFile).Select(x => GitRepository.FromUrl(x));
+    IEnumerable<Nuke.Common.ProjectModel.Solution> ExternalSolutions
+        => ExternalRepositoriesDirectory.GlobFiles("*/*.sln").Select(x => ParseSolution(x));
+
+    IEnumerable<GitRepository> ExternalRepositories
+        => YamlDeserializeFromFile<string[]>(ExternalRepositoriesFile).Select(x => GitRepository.FromUrl(x));
 
     Target CheckoutExternalRepositories => _ => _
         .Executes(() =>

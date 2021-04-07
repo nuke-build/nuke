@@ -6,6 +6,97 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [5.1.0] / 2021-04-07
+- Removed `:Fix` command from global tool (superseded by `:AddPackage`)
+- Changed `.nuke` configuration file to `.nuke` directory
+- Changed shell-completion to rely on `build.schema.json` file
+- Changed default `DependencyBehavior` to `Skip`
+- Changed `HostType` to `Host` base class
+- Changed `ExecutionStatus` members `Executed` to `Succeeded`, and `Executing` to `Running`
+- Changed `IBuildExtension` instances to be cached
+- Changed `IOnBeforeLogo` and `IOnAfterLogo` extensions to `IOnBuildCreated` and `IOnBuildInitialized`
+- Changed `IsSuccessful` to check for succeeded, skipped and collective targets
+- Changed `ParameterAttribute` to allow external value providers with `ValueProviderType` and `ValueProviderMember`
+- Changed GitHubActions secret names to split on camel-humps
+- Added support for parameter files (profiles)
+- Added source generator for strong-typed solutions
+- Added shorthand dependencies for build components
+- Added `ReportSummary` for summary extension to `NukeBuild` and `INukeBuild`
+- Added exception reporting in summary
+- Added `ParameterPrefixAttribute` for build components
+- Added build extensions for `OnTargetSkipped`, `OnTargetRunning`, `OnTargetSucceeded`, and `OnTargetFailed`
+- Added styling for unlisted targets in execution plan HTML
+- Added `:Secrets` command to global tool and `SecretAttribute` for encryption in parameters files
+- Added `:AddPackage` command to global tool
+- Added `:GetConfiguration` command to global tool
+- Added `:Update` command to global tool
+- Added `:CakeConvert` and `:CakeClean` commands to global tool
+- Added generation of `Directory.Build.props` and `Directory.Build.targets` files
+- Added parameter resolution for root directory in global tool
+- Added shell-navigation aliases `nuke/` and `nuke-`
+- Added `ScheduledTargets`, `RunningTargets`, `AbortedTargets`, `FailedTargets`, `SucceededTargets` collections to `NukeBuild` and `INukeBuild`
+- Added `ArgumentsFromCommitMessageAttribute` and `:Trigger` command to global tool
+- Added `ExitCode` to `INukeBuild`
+- Added `IsFinished` and `IsFailing` to `NukeBuild` and `INukeBuild`
+- Added caching for `ValueInjectionUtility.TryGetValue`
+- Added equality operators and implicit conversion to string for Enumeration
+- Added `GetProject`, `GetSolutionFolder`, `Projects`, and `SolutionFolders` to `SolutionFolder`
+- Added `GetRuntimeIdentifers` to `ProjectExtensions`
+- Added string-escape extension for MSBuild in `DotNetTasks` and `MSBuildTasks`
+- Added `EnsureExistingDirectory` and `EnsureExistingParentDirectory` overloads for `AbsolutePath`
+- Added `XmlPeekElements` to `XmlTasks`
+- Added `GitRepository` properties `RemoteName` and `RemoteBranch`
+- Added support for `NerdbankGitVersioning`
+- Added `NoCache` property to `GitVersionAttribute` with default value `true`
+- Added `SendOrUpdateSlackMessage` to `SlackTasks`
+- Added support for JetBrains SpaceAutomation
+- Added support for GitHub Actions dispatch workflows
+- Added support for GitLab CI
+- Added support for multiple AppVeyor configurations
+- Added support for AppVeyor secrets
+- Added support for platform-independent TeamCity configurations
+- Added TeamCity parameter to replace run-button caption
+- Added `AddTeamCityLogger` for `DotNetTest` task
+- Added `IsPersonalBuild` property to `TeamCity`
+- Added caching for `AzurePipelinesAttribute` and `GitHubActionsAttribute`
+- Added `SetVariable` to `AzurePipelines`
+- Added `CodeMetricsTasks`
+- Added `PulumiTasks`
+- Added `CodecovTasks`
+- Added `CorFlagsTasks`
+- Added `FixieTasks`
+- Added `ILRepackTasks`
+- Fixed skip reason for targets skipped from `--skip` parameter
+- Fixed execution plan legend
+- Fixed execution plan highlighting for multiple default targets
+- Fixed `ConsoleUtility` to allow full deletion of secret
+- Fixed exception reporting for `ExecutableTargetFactory`
+- Fixed handling of value types in `ValueInjectionUtility.TryGetValue`
+- Fixed calculation of value sets for collection parameters
+- Fixed compilation of legacy template
+- Fixed `IsDescendantPath` to split path parts
+- Fixed `MoveDirectory` with additional `deleteRemainingFiles` parameter
+- Fixed `SwitchWorkingDirectory` to respect `allowCreate` parameter
+- Fixed `ResponseArchive` in `ISignPackages` build component
+- Fixed MSBuild path resolution to fallback to using `dotnet --list-sdks`
+- Fixed client usage in `GitHubTasks`
+- Fixed token ordering in `TemplateUtility`
+- Fixed default value for collections in TeamCity configurations
+- Fixed TeamCity composite configurations to propagate failures
+- Fixed `TeamCity` and `AzurePipelines` to update build numbers in environment variables
+- Fixed `TriggerBatch` in AzurePipelines generation
+- Fixed condition in AppVeyor generation
+- Fixed `FileFilters` property in `ReportGeneratorTasks`
+- Fixed logger for `DocFXTasks`
+- Fixed `Severity` property in `ReSharperTasks`
+- Fixed missing `MSBuild` and `ToolRestore` task in `DotNetTasks`
+- Fixed missing `Buildx` task in `DockerTasks`
+- Fixed missing `CoverDotNet` task in `DotCoverTasks`
+- Fixed missing `GenericCoveragePaths` property in `SonarScannerTasks`
+- Fixed missing properties in `ReSharperTasks`
+- Fixed missing properties in `TeamCity`, `GitHubActions`, and `AzurePipelines`
+- Fixed missing `SignToolDigestAlgorithm` enumeration in `SignToolTasks`
+
 ## [5.0.2] / 2020-12-07
 - Fixed `ChangelogTasks` to use HTTPS links in history
 - Fixed `DotNetRun` and `DotNetTest` run settings
@@ -665,7 +756,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke.git/compare/5.0.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke.git/compare/5.1.0...HEAD
+[5.1.0]: https://github.com/nuke-build/nuke.git/compare/5.0.2...5.1.0
 [5.0.2]: https://github.com/nuke-build/nuke.git/compare/5.0.1...5.0.2
 [5.0.1]: https://github.com/nuke-build/nuke.git/compare/5.0.0...5.0.1
 [5.0.0]: https://github.com/nuke-build/nuke.git/compare/0.25.0...5.0.0

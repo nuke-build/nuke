@@ -5,10 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
+    [PublicAPI]
     public class TeamCityConfigurationParameter : TeamCityParameter
     {
         public TeamCityParameterType Type { get; set; }
@@ -50,7 +52,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                     writer.WriteLine($"options = listOf({mappings.JoinComma()}),");
                 }
 
-                if (Options == null && Type != TeamCityParameterType.Checkbox)
+                if (Options == null && Type != TeamCityParameterType.Checkbox && Type != TeamCityParameterType.Password)
                     writer.WriteLine($"allowEmpty = {(Display != TeamCityParameterDisplay.Prompt).ToString().ToLowerInvariant()},");
 
                 writer.WriteLine($"display = ParameterDisplay.{Display.ToString().ToUpperInvariant()})");

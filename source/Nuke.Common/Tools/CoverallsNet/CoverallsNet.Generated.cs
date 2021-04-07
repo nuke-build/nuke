@@ -687,7 +687,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>The coveralls.io repository token.</p>
         /// </summary>
         [Pure]
-        public static T SetRepoToken<T>(this T toolSettings, string repoToken) where T : CoverallsNetSettings
+        public static T SetRepoToken<T>(this T toolSettings, [Secret] string repoToken) where T : CoverallsNetSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.RepoToken = repoToken;

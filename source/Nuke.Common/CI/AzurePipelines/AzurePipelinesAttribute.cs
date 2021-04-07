@@ -24,6 +24,8 @@ namespace Nuke.Common.CI.AzurePipelines
         private readonly string _suffix;
         private readonly AzurePipelinesImage[] _images;
 
+        private bool? _triggerBatch;
+
         public AzurePipelinesAttribute(
             AzurePipelinesImage image,
             params AzurePipelinesImage[] images)
@@ -42,7 +44,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public override string IdPostfix => _suffix;
 
-        public override HostType HostType => HostType.AzurePipelines;
+        public override Type HostType => typeof(AzurePipelines);
         public override string ConfigurationFile => ConfigurationDirectory / ConfigurationFileName;
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
         protected virtual AbsolutePath ConfigurationDirectory => NukeBuild.RootDirectory;
@@ -53,7 +55,13 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] InvokedTargets { get; set; } = new string[0];
 
         public bool TriggerDisabled { get; set; }
-        public bool? TriggerBatch { get; set; }
+
+        public bool TriggerBatch
+        {
+            set => _triggerBatch = value;
+            get => throw new NotSupportedException();
+        }
+
         public string[] TriggerBranchesInclude { get; set; } = new string[0];
         public string[] TriggerBranchesExclude { get; set; } = new string[0];
         public string[] TriggerTagsInclude { get; set; } = new string[0];
@@ -66,6 +74,9 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] PullRequestsBranchesExclude { get; set; } = new string[0];
         public string[] PullRequestsPathsInclude { get; set; } = new string[0];
         public string[] PullRequestsPathsExclude { get; set; } = new string[0];
+
+        public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj" };
+        public string CachePath { get; set; } = "~/.nuget/packages";
 
         public string[] ImportVariableGroups { get; set; } = new string[0];
         public string[] ImportSecrets { get; set; } = new string[0];
@@ -90,7 +101,7 @@ namespace Nuke.Common.CI.AzurePipelines
         protected AzurePipelinesVcsPushTrigger GetVcsPushTrigger()
         {
             if (!TriggerDisabled &&
-                !TriggerBatch.HasValue &&
+                _triggerBatch == null &&
                 TriggerBranchesInclude.Length == 0 &&
                 TriggerBranchesExclude.Length == 0 &&
                 TriggerTagsInclude.Length == 0 &&
@@ -102,7 +113,7 @@ namespace Nuke.Common.CI.AzurePipelines
             return new AzurePipelinesVcsPushTrigger
                    {
                        Disabled = TriggerDisabled,
-                       Batch = TriggerBatch,
+                       Batch = _triggerBatch,
                        BranchesInclude = TriggerBranchesInclude,
                        BranchesExclude = TriggerBranchesExclude,
                        TagsInclude = TriggerTagsInclude,
@@ -137,7 +148,32 @@ namespace Nuke.Common.CI.AzurePipelines
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            var (partitionName, totalPartitions) = ArtifactExtensions.Partitions.GetValueOrDefault(executableTarget.Definition);
+            var (_, totalPartitions) = ArtifactExtensions.Partitions.GetValueOrDefault(executableTarget.Definition);
+            var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
+            return new AzurePipelinesJob
+                   {
+                       Name = executableTarget.Name,
+                       DisplayName = executableTarget.Name,
+                       Dependencies = dependencies,
+                       Parallel = totalPartitions,
+                       Steps = GetSteps(executableTarget, relevantTargets).ToArray(),
+                   };
+        }
+
+        protected virtual IEnumerable<AzurePipelinesStep> GetSteps(
+            ExecutableTarget executableTarget,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        {
+            if (CacheKeyFiles.Any())
+            {
+                yield return new AzurePipelinesCacheStep
+                             {
+                                 KeyFiles = CacheKeyFiles,
+                                 Path = CachePath
+                             };
+            }
+
+            var (partitionName, _) = ArtifactExtensions.Partitions.GetValueOrDefault(executableTarget.Definition);
 
             static string GetArtifactPath(AbsolutePath path)
                 => NukeBuild.RootDirectory.Contains(path)
@@ -164,28 +200,33 @@ namespace Nuke.Common.CI.AzurePipelines
             //            }).ToArray<TeamCityDependency>();
 
             var chainLinkTargets = GetInvokedTargets(executableTarget, relevantTargets).ToArray();
-            var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
-            return new AzurePipelinesJob
-                   {
-                       Name = executableTarget.Name,
-                       DisplayName = executableTarget.Name,
-                       BuildCmdPath = BuildCmdPath,
-                       Dependencies = dependencies,
-                       Parallel = totalPartitions,
-                       PartitionName = partitionName,
-                       Imports = GetImports().ToDictionary(x => x.Key, x => x.Value),
-                       InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
-                       PublishArtifacts = publishedArtifacts
-                   };
+            yield return new AzurePipelinesCmdStep
+                         {
+                             BuildCmdPath = BuildCmdPath,
+                             PartitionName = partitionName,
+                             InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
+                             Imports = GetImports().ToDictionary(x => x.Key, x => x.Value)
+                         };
+
+            foreach (var publishedArtifact in publishedArtifacts)
+            {
+                yield return new AzurePipelinesPublishStep
+                             {
+                                 ArtifactName = publishedArtifact.Split('/').Last(),
+                                 PathToPublish = publishedArtifact
+                             };
+            }
         }
 
         protected virtual IEnumerable<(string Key, string Value)> GetImports()
         {
+            static string GetSecretValue(string secret) => $"$({secret})";
+
             if (ImportSystemAccessTokenAs != null)
-                yield return (ImportSystemAccessTokenAs, "$(System.AccessToken)");
+                yield return (ImportSystemAccessTokenAs, GetSecretValue("System.AccessToken"));
 
             foreach (var secret in ImportSecrets)
-                yield return (secret, $"$({secret})");
+                yield return (secret, GetSecretValue(secret));
         }
 
         protected virtual string GetArtifact(string artifact)

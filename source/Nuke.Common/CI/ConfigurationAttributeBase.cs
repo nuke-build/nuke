@@ -18,12 +18,13 @@ namespace Nuke.Common.CI
     [AttributeUsage(AttributeTargets.Class)]
     public abstract class ConfigurationAttributeBase : Attribute, IConfigurationGenerator
     {
-        public string Name => HostType + (string.IsNullOrEmpty(IdPostfix) ? string.Empty : $" ({IdPostfix})");
-        public string Id => HostType + (string.IsNullOrEmpty(IdPostfix) ? string.Empty : $"_{IdPostfix}");
+        public string DisplayName => HostType.Name + (string.IsNullOrEmpty(IdPostfix) ? string.Empty : $" ({IdPostfix})");
+        public string HostName => HostType.Name;
+        public string Id => HostName + (string.IsNullOrEmpty(IdPostfix) ? string.Empty : $"_{IdPostfix}");
         public virtual string IdPostfix => string.Empty;
 
         public bool AutoGenerate { get; set; } = true;
-        public abstract HostType HostType { get; }
+        public abstract Type HostType { get; }
         public abstract string ConfigurationFile { get; }
         public abstract IEnumerable<string> GeneratedFiles { get; }
 
@@ -59,7 +60,7 @@ namespace Nuke.Common.CI
             writer.WriteComment();
             writer.WriteComment("    - To trigger manual generation invoke:");
             writer.WriteComment();
-            writer.WriteComment($"        nuke --{ConfigurationParameterName} {Id} --host {HostType}");
+            writer.WriteComment($"        nuke --{ConfigurationParameterName} {Id} --host {HostName}");
             writer.WriteComment();
             writer.WriteComment("</auto-generated>");
             writer.WriteComment("------------------------------------------------------------------------------");

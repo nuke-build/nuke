@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.Execution;
+using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tools.AzureKeyVault.Attributes
@@ -115,13 +115,13 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
         private string GetParameter(string memberName, object instance)
         {
             string result = null;
-            var fieldInfo = instance.GetType().GetField(memberName, ReflectionService.Instance);
+            var fieldInfo = instance.GetType().GetField(memberName, ReflectionUtility.Instance);
             if (fieldInfo != null)
             {
                 var parameterAttribute = fieldInfo.GetCustomAttribute<ParameterAttribute>();
                 if (parameterAttribute != null)
                 {
-                    var member = instance.GetType().GetMember(memberName, ReflectionService.Instance).Single();
+                    var member = instance.GetType().GetMember(memberName, ReflectionUtility.Instance).Single();
                     result = (string) parameterAttribute.GetValue(member, instance);
                     if (string.IsNullOrEmpty(result))
                         result = (string) fieldInfo.GetValue(instance);

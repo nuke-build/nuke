@@ -977,7 +977,7 @@ namespace Nuke.Common.Tools.GitLink
     {
         public static GitLinkSourceCodeRetrieval Http = (GitLinkSourceCodeRetrieval) "Http";
         public static GitLinkSourceCodeRetrieval Powershell = (GitLinkSourceCodeRetrieval) "Powershell";
-        public static explicit operator GitLinkSourceCodeRetrieval(string value)
+        public static implicit operator GitLinkSourceCodeRetrieval(string value)
         {
             return new GitLinkSourceCodeRetrieval { Value = value };
         }

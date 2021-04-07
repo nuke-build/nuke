@@ -80,7 +80,7 @@ partial class Build
                 .DrawImage(
                     logo,
                     location: new Point(image.Width / 2 - logo.Width / 2, image.Height / 2 - logo.Height / 2),
-                    opacity: 0.025f)
+                    opacity: 0.05f)
                 .DrawText(
                     text: "New Release".ToUpperInvariant(),
                     font: robotoFont.CreateFont(70),
@@ -89,7 +89,7 @@ partial class Build
                     options: graphicsOptions)
                 .DrawText(
                     text: MajorMinorPatchVersion,
-                    font: robotoFont.CreateFont(150),
+                    font: robotoFont.CreateFont(180),
                     color: Color.WhiteSmoke,
                     location: new PointF(image.Width / 2f, image.Height / 2f),
                     options: graphicsOptions));

@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
@@ -17,7 +16,7 @@ namespace Nuke.Common.Tools.ReSharper
 {
     public partial class ReSharperTasks
     {
-        public const string ReSharperPluginLatest = null;
+        public const string ReSharperPluginLatest = "latest";
 
         private static void PreProcess<T>(ref T toolSettings) where T : ReSharperSettingsBase
         {
@@ -33,10 +32,12 @@ namespace Nuke.Common.Tools.ReSharper
                 DirectoryExistsPolicy.Merge,
                 FileExistsPolicy.OverwriteIfNewer);
 
-            toolSettings.Plugins.ForEach(x => HttpTasks.HttpDownloadFile(
-                $"http://resharper-plugins.jetbrains.com/dotnet/api/v2/curated-feeds/Wave_v{wave}.0/Packages(Id='{x.Key}',Version='{x.Value}')/Download",
-                Path.Combine(shadowDirectory, $"{x.Key}.nupkg")));
-            
+            toolSettings.Plugins
+                .Select(x => (Plugin: x.Key, Version: x.Value == ReSharperPluginLatest ? null : x.Value))
+                .ForEach(x => HttpTasks.HttpDownloadFile(
+                    $"http://resharper-plugins.jetbrains.com/dotnet/api/v2/curated-feeds/Wave_v{wave}.0/Packages(Id='{x.Plugin}',Version='{x.Version}')/Download",
+                    Path.Combine(shadowDirectory, $"{x.Plugin}.nupkg")));
+
             toolSettings = toolSettings.SetProcessToolPath(Path.Combine(shadowDirectory, Path.GetFileName(toolSettings.ProcessToolPath)));
         }
 

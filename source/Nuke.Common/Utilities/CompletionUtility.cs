@@ -13,6 +13,7 @@ namespace Nuke.Common.Utilities
 {
     public static class CompletionUtility
     {
+        // ReSharper disable once CognitiveComplexity
         public static IEnumerable<string> GetRelevantCompletionItems(
             string words,
             IReadOnlyDictionary<string, string[]> completionItems)
@@ -43,7 +44,7 @@ namespace Nuke.Common.Utilities
             {
                 var passedItems = parts
                     .Reverse()
-                    .TakeWhile(x => !ParameterService.IsParameter(x))
+                    .TakeUntil(ParameterService.IsParameter)
                     .Select(ParameterService.GetParameterMemberName);
 
                 var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ??
@@ -63,7 +64,7 @@ namespace Nuke.Common.Utilities
                         suggestedItems.Add(item);
                     else if (item.StartsWithOrdinalIgnoreCase(currentWord))
                     {
-                        var normalizedItem = item.ReplaceRegex(currentWord, x => currentWord, RegexOptions.IgnoreCase);
+                        var normalizedItem = item.ReplaceRegex(currentWord, _ => currentWord, RegexOptions.IgnoreCase);
                         if (normalizedItem != item)
                         {
                             var letters = currentWord.Where(char.IsLetter).ToList();

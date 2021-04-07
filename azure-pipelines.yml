@@ -25,18 +25,36 @@ stages:
         displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
+            env:
+              AzurePipelinesAccessToken: $(System.AccessToken)
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
+              SlackUserAccessToken: $(SlackUserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
           parallel: 2
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+            env:
+              AzurePipelinesAccessToken: $(System.AccessToken)
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
+              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -45,9 +63,18 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
+            env:
+              AzurePipelinesAccessToken: $(System.AccessToken)
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
+              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
@@ -62,18 +89,36 @@ stages:
         displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
+            env:
+              AzurePipelinesAccessToken: $(System.AccessToken)
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
+              SlackUserAccessToken: $(SlackUserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
           parallel: 2
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+            env:
+              AzurePipelinesAccessToken: $(System.AccessToken)
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
+              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -82,9 +127,18 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
+            env:
+              AzurePipelinesAccessToken: $(System.AccessToken)
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
+              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
@@ -99,18 +153,36 @@ stages:
         displayName: '⚙️ Compile'
         dependsOn: [  ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile --skip'
+            env:
+              AzurePipelinesAccessToken: $(System.AccessToken)
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
+              SlackUserAccessToken: $(SlackUserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
         dependsOn: [ Compile ]
         strategy:
           parallel: 2
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+            env:
+              AzurePipelinesAccessToken: $(System.AccessToken)
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
+              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -119,9 +191,18 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [ Compile ]
         steps:
+          - task: Cache@2
+            inputs:
+              key: $(Agent.OS) | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS)
+              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Pack --skip'
+            env:
+              AzurePipelinesAccessToken: $(System.AccessToken)
+              EnterpriseAccessToken: $(EnterpriseAccessToken)
+              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages

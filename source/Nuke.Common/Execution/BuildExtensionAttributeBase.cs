@@ -5,33 +5,69 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.Execution
 {
+    [PublicAPI]
     public interface IBuildExtension
     {
         float Priority { get; }
     }
 
+    [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
     public abstract class BuildExtensionAttributeBase : Attribute, IBuildExtension
     {
         public virtual float Priority { get; set; }
     }
 
-    public interface IOnBeforeLogo : IBuildExtension
+    [PublicAPI]
+    public interface IOnBuildCreated : IBuildExtension
     {
-        void OnBeforeLogo(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets);
+        void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets);
     }
 
-    public interface IOnAfterLogo : IBuildExtension
+    [PublicAPI]
+    public interface IOnBuildInitialized : IBuildExtension
     {
-        void OnAfterLogo(
+        void OnBuildInitialized(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan);
     }
 
+    [PublicAPI]
+    public interface IOnTargetSummaryUpdated : IBuildExtension
+    {
+        void OnTargetSummaryUpdated(NukeBuild build, ExecutableTarget target);
+    }
+
+    [PublicAPI]
+    public interface IOnTargetSkipped : IBuildExtension
+    {
+        void OnTargetSkipped(NukeBuild build, ExecutableTarget target);
+    }
+
+    [PublicAPI]
+    public interface IOnTargetRunning : IBuildExtension
+    {
+        void OnTargetRunning(NukeBuild build, ExecutableTarget target);
+    }
+
+    [PublicAPI]
+    public interface IOnTargetSucceeded : IBuildExtension
+    {
+        void OnTargetSucceeded(NukeBuild build, ExecutableTarget target);
+    }
+
+    [PublicAPI]
+    public interface IOnTargetFailed : IBuildExtension
+    {
+        void OnTargetFailed(NukeBuild build, ExecutableTarget target);
+    }
+
+    [PublicAPI]
     public interface IOnBuildFinished : IBuildExtension
     {
         void OnBuildFinished(NukeBuild build);

@@ -14,7 +14,7 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 ###########################################################################
 
 $BuildProjectFile = "$PSScriptRoot\build\_build.csproj"
-$TempDirectory = "$PSScriptRoot\.tmp"
+$TempDirectory = "$PSScriptRoot\.nuke\temp"
 
 $DotNetGlobalFile = "$PSScriptRoot\global.json"
 $DotNetInstallUrl = "https://dot.net/v1/dotnet-install.ps1"
@@ -35,7 +35,8 @@ function ExecSafe([scriptblock] $cmd) {
 }
 
 # Print environment variables
-Get-Item -Path Env:* | Sort-Object -Property Name | ForEach-Object {"{0}={1}" -f $_.Name,$_.Value}
+# WARNING: Make sure that secrets are actually scrambled in build log
+# Get-Item -Path Env:* | Sort-Object -Property Name | ForEach-Object {"{0}={1}" -f $_.Name,$_.Value}
 
 # Check if any dotnet is installed
 if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue)) {

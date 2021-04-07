@@ -3,12 +3,14 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
+    [PublicAPI]
     public class GitHubActionsConfiguration : ConfigurationEntity
     {
         public string Name { get; set; }

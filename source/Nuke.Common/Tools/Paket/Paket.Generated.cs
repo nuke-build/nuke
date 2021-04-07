@@ -2303,7 +2303,7 @@ namespace Nuke.Common.Tools.Paket
         ///   <p>API key for the URL. Default is the <c>NUGET_KEY</c> environment variable.</p>
         /// </summary>
         [Pure]
-        public static T SetApiKey<T>(this T toolSettings, string apiKey) where T : PaketPushSettings
+        public static T SetApiKey<T>(this T toolSettings, [Secret] string apiKey) where T : PaketPushSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ApiKey = apiKey;

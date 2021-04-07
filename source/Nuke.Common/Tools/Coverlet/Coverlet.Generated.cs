@@ -1038,7 +1038,7 @@ namespace Nuke.Common.Tools.Coverlet
         public static CoverletOutputFormat opencover = (CoverletOutputFormat) "opencover";
         public static CoverletOutputFormat cobertura = (CoverletOutputFormat) "cobertura";
         public static CoverletOutputFormat teamcity = (CoverletOutputFormat) "teamcity";
-        public static explicit operator CoverletOutputFormat(string value)
+        public static implicit operator CoverletOutputFormat(string value)
         {
             return new CoverletOutputFormat { Value = value };
         }
@@ -1057,7 +1057,7 @@ namespace Nuke.Common.Tools.Coverlet
         public static CoverletThresholdType line = (CoverletThresholdType) "line";
         public static CoverletThresholdType branch = (CoverletThresholdType) "branch";
         public static CoverletThresholdType method = (CoverletThresholdType) "method";
-        public static explicit operator CoverletThresholdType(string value)
+        public static implicit operator CoverletThresholdType(string value)
         {
             return new CoverletThresholdType { Value = value };
         }

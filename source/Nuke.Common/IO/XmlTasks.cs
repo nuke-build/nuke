@@ -24,6 +24,13 @@ namespace Nuke.Common.IO
             return elements.Count != 0 ? elements.Select(x => x.Value) : attributes.Select(x => x.Value);
         }
 
+        public static IEnumerable<XElement> XmlPeekElements(string path, string xpath, params (string prefix, string uri)[] namespaces)
+        {
+            var (elements, attributes) = GetObjects(XDocument.Load(path), xpath, namespaces);
+            ControlFlow.Assert(elements.Count == 0 || attributes.Count == 0, "elements.Count == 0 || attributes.Count == 0");
+            return elements;
+        }
+
         [CanBeNull]
         public static string XmlPeekSingle(string path, string xpath, params (string prefix, string uri)[] namespaces)
         {

@@ -8,16 +8,27 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common
 {
     public interface INukeBuild
     {
+        void ReportSummary(Configure<IDictionary<string, string>> configurator = null);
+
         IReadOnlyCollection<ExecutableTarget> InvokedTargets { get; }
         IReadOnlyCollection<ExecutableTarget> SkippedTargets { get; }
-        IReadOnlyCollection<ExecutableTarget> ExecutingTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> ScheduledTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> RunningTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> AbortedTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> FailedTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> SucceededTargets { get; }
+        IReadOnlyCollection<ExecutableTarget> FinishedTargets { get; }
 
         bool IsSuccessful { get; }
+        bool IsFailing { get; }
+        bool IsFinished { get; }
+        int? ExitCode { get; set; }
 
         AbsolutePath RootDirectory { get; }
         AbsolutePath TemporaryDirectory { get; }
@@ -26,7 +37,7 @@ namespace Nuke.Common
         [CanBeNull] AbsolutePath BuildProjectFile { get; }
 
         Verbosity Verbosity { get; }
-        HostType Host { get; }
+        Host Host { get; }
         bool Plan { get; }
         bool Help { get; }
         bool NoLogo { get; }

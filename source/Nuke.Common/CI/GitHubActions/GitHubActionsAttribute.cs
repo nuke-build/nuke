@@ -36,7 +36,7 @@ namespace Nuke.Common.CI.GitHubActions
         }
 
         public override string IdPostfix => _name;
-        public override HostType HostType => HostType.GitHubActions;
+        public override Type HostType => typeof(GitHubActions);
         public override string ConfigurationFile => NukeBuild.RootDirectory / ".github" / "workflows" / $"{_name}.yml";
         public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
 
@@ -54,10 +54,15 @@ namespace Nuke.Common.CI.GitHubActions
         public string[] OnPullRequestTags { get; set; } = new string[0];
         public string[] OnPullRequestIncludePaths { get; set; } = new string[0];
         public string[] OnPullRequestExcludePaths { get; set; } = new string[0];
+        public string[] OnWorkflowDispatchInputs { get; set; } = new string[0];
         public string OnCronSchedule { get; set; }
 
         public string[] ImportSecrets { get; set; } = new string[0];
         public string ImportGitHubTokenAs { get; set; }
+
+        public string[] CacheIncludePatterns { get; set; } = { ".tmp", "~/.nuget/packages" };
+        public string[] CacheExcludePatterns { get; set; } = new string[0];
+        public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj" };
 
         public bool PublishArtifacts { get; set; } = true;
 
@@ -79,8 +84,11 @@ namespace Nuke.Common.CI.GitHubActions
                                     DetailedTriggers = GetTriggers().ToArray(),
                                     Jobs = _images.Select(x => GetJobs(x, relevantTargets)).ToArray()
                                 };
+
             ControlFlow.Assert(configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0,
-                "configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0");
+                $"Workflows can only define either shorthand '{On}' or '{On}*' triggers.");
+            ControlFlow.Assert(configuration.ShortTriggers.Length > 0 || configuration.DetailedTriggers.Length > 0,
+                "Workflows must define either shorthand '{On}' or '{On}*' triggers.");
 
             return configuration;
         }
@@ -101,6 +109,16 @@ namespace Nuke.Common.CI.GitHubActions
                          {
                              Using = "actions/checkout@v1"
                          };
+
+            if (CacheKeyFiles.Any())
+            {
+                yield return new GitHubActionsCacheStep
+                             {
+                                 IncludePatterns = CacheIncludePatterns,
+                                 ExcludePatterns = CacheExcludePatterns,
+                                 KeyFiles = CacheKeyFiles
+                             };
+            }
 
             yield return new GitHubActionsRunStep
                          {
@@ -130,7 +148,11 @@ namespace Nuke.Common.CI.GitHubActions
 
         protected virtual IEnumerable<(string Key, string Value)> GetImports()
         {
-            static string GetSecretValue(string secret) => $"${{{{ secrets.{secret} }}}}";
+            foreach (var input in OnWorkflowDispatchInputs)
+                yield return (input, $"${{{{ github.event.inputs.{input} }}}}");
+
+            static string GetSecretValue(string secret)
+                => $"${{{{ secrets.{secret.SplitCamelHumpsWithSeparator("_", Constants.KnownWords).ToUpperInvariant()} }}}}";
 
             if (ImportGitHubTokenAs != null)
                 yield return (ImportGitHubTokenAs, GetSecretValue("GITHUB_TOKEN"));
@@ -178,6 +200,14 @@ namespace Nuke.Common.CI.GitHubActions
                                  TagsIgnore = new string[0],
                                  IncludePaths = OnPullRequestIncludePaths,
                                  ExcludePaths = OnPullRequestExcludePaths
+                             };
+            }
+
+            if (OnWorkflowDispatchInputs.Length > 0)
+            {
+                yield return new GitHubActionsWorkflowDispatchTrigger
+                             {
+                                 Inputs = OnWorkflowDispatchInputs
                              };
             }
 

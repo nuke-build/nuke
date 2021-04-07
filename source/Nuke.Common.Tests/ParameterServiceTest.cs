@@ -6,14 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
 using FluentAssertions;
-using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
 using Xunit;
+using static Nuke.Common.Utilities.ReflectionUtility;
 
 namespace Nuke.Common.Tests
 {
@@ -183,29 +181,59 @@ namespace Nuke.Common.Tests
             var service = GetService(
                 new[]
                 {
-                    "--root",
+                    "--string",
                     "--set",
                     "1",
                     "2",
-                    "3"
+                    "3",
+                    "--interface-param"
                 });
 
-            service.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(AbsolutePath), service.GetParameter)
+            var build = new TestBuild();
+
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => build.String), typeof(AbsolutePath), service.GetParameter)
                 .Should().BeNull();
 
-            service.GetFromMemberInfo(GetMemberInfo(() => RootDirectory), typeof(bool), service.GetParameter)
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => build.String), typeof(bool), service.GetParameter)
                 .Should().BeOfType<bool>().Subject.Should().BeTrue();
 
-            service.GetFromMemberInfo(GetMemberInfo(() => Set), destinationType: null, service.GetParameter)
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => build.Set), destinationType: null, service.GetParameter)
                 .Should().BeOfType<int[]>().Subject.Should().BeEquivalentTo(1, 2, 3);
+
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => ((ITestComponent) build).Param), destinationType: null, service.GetParameter)
+                .Should().BeOfType<bool>().Subject.Should().BeTrue();
         }
 
-        private MemberInfo GetMemberInfo<T>(Expression<Func<T>> expression)
+        [Fact]
+        public void TestValueSet()
         {
-            return expression.GetMemberInfo();
+            var build = new TestBuild();
+            var verbosities = new[]
+                              {
+                                  (nameof(Verbosity.Minimal), Verbosity.Minimal),
+                                  (nameof(Verbosity.Normal), Verbosity.Normal),
+                                  (nameof(Verbosity.Quiet), Verbosity.Quiet),
+                                  (nameof(Verbosity.Verbose), Verbosity.Verbose),
+                              };
+            ParameterService.GetParameterValueSet(GetMemberInfo(() => NukeBuild.Verbosity), instance: null)
+                .Should().BeEquivalentTo(verbosities);
+            ParameterService.GetParameterValueSet(GetMemberInfo(() => build.Verbosities), instance: null)
+                .Should().BeEquivalentTo(verbosities);
         }
 
-        [Parameter(Name = "root")] private string RootDirectory { get; }
-        [Parameter] private int[] Set { get; }
+#pragma warning disable CS0649
+        private class TestBuild : NukeBuild, ITestComponent
+        {
+            [Parameter] public string String;
+            [Parameter] public int[] Set;
+            [Parameter] public Verbosity[] Verbosities;
+        }
+
+        [ParameterPrefix("Interface")]
+        private interface ITestComponent : INukeBuild
+        {
+            [Parameter] bool Param => ValueInjectionUtility.TryGetValue<bool?>(() => Param) ?? false;
+        }
+#pragma warning restore CS0649
     }
 }

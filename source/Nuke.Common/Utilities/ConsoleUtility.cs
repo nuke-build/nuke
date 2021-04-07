@@ -25,6 +25,7 @@ namespace Nuke.Common.Utilities
 
         private static bool s_interrupted;
 
+        // ReSharper disable once CognitiveComplexity
         [CanBeNull]
         public static string PromptForInput(string question, string defaultValue)
         {
@@ -33,8 +34,8 @@ namespace Nuke.Common.Utilities
 
             Logger.Normal(question);
 
-            ConsoleKeyInfo input;
-            var inputBuilder = new StringBuilder();
+            ConsoleKeyInfo key;
+            var input = new StringBuilder();
             do
             {
                 Console.CursorLeft = 0;
@@ -42,9 +43,9 @@ namespace Nuke.Common.Utilities
                 Console.CursorTop--;
                 Console.CursorLeft = 3;
 
-                if (inputBuilder.Length > 0)
+                if (input.Length > 0)
                 {
-                    Console.Write(inputBuilder.ToString());
+                    Console.Write(input.ToString());
                 }
                 else if (defaultValue != null)
                 {
@@ -52,30 +53,31 @@ namespace Nuke.Common.Utilities
                     Console.CursorLeft = 3;
                 }
 
-                input = Console.ReadKey(intercept: true);
-                if (ConsoleKey.A <= input.Key && input.Key <= ConsoleKey.Z
-                    || ConsoleKey.D0 <= input.Key && input.Key <= ConsoleKey.D9
-                    || new[] { '.', '/', '\\', '_', '-' }.Any(x => x == input.KeyChar))
-                    inputBuilder.Append(input.KeyChar);
-                else if (input.Key == ConsoleKey.Backspace && inputBuilder.Length > 0)
-                    inputBuilder.Remove(inputBuilder.Length - 1, length: 1);
-                else if (input.Key == InterruptKey)
+                key = Console.ReadKey(intercept: true);
+                if (ConsoleKey.A <= key.Key && key.Key <= ConsoleKey.Z
+                    || ConsoleKey.D0 <= key.Key && key.Key <= ConsoleKey.D9
+                    || new[] { '.', '/', '\\', '_', '-' }.Any(x => x == key.KeyChar))
+                    input.Append(key.KeyChar);
+                else if (key.Key == ConsoleKey.Backspace && input.Length > 0)
+                    input.Remove(input.Length - 1, length: 1);
+                else if (key.Key == InterruptKey)
                     s_interrupted = true;
-            } while (!(input.Key == ConfirmationKey || input.Key == InterruptKey));
+            } while (!(key.Key == ConfirmationKey || key.Key == InterruptKey));
 
-            var result = inputBuilder.Length > 0 ? inputBuilder.ToString() : defaultValue;
+            var result = input.Length > 0 ? input.ToString() : defaultValue;
             Console.CursorLeft = 0;
             Console.WriteLine($"{Confirmed}  {result ?? "<null>"}".PadRight(BufferWidth), Color.Lime);
             return result;
         }
 
+        // ReSharper disable once CognitiveComplexity
         public static T PromptForChoice<T>(string question, params (T Value, string Description)[] options)
         {
             if (s_interrupted)
                 return options.First().Value;
 
             var selection = 0;
-            ConsoleKey input;
+            ConsoleKey key;
 
             Logger.Normal(question);
             do
@@ -89,12 +91,12 @@ namespace Nuke.Common.Utilities
                     Console.WriteLine($"{prefix}  {option.Description}", color);
                 }
 
-                input = Console.ReadKey(intercept: true).Key;
-                if (input == ConsoleKey.UpArrow)
+                key = Console.ReadKey(intercept: true).Key;
+                if (key == ConsoleKey.UpArrow)
                     selection--;
-                else if (input == ConsoleKey.DownArrow)
+                else if (key == ConsoleKey.DownArrow)
                     selection++;
-                else if (input == InterruptKey)
+                else if (key == InterruptKey)
                     s_interrupted = true;
                 selection = Math.Max(val1: 0, Math.Min(options.Length - 1, selection));
 
@@ -102,13 +104,14 @@ namespace Nuke.Common.Utilities
                 foreach (var option in options)
                     Console.WriteLine(new string(c: ' ', BufferWidth));
                 Console.CursorTop -= options.Length;
-            } while (!(input == ConfirmationKey || input == InterruptKey));
+            } while (!(key == ConfirmationKey || key == InterruptKey));
 
             Console.WriteLine($"{Confirmed}  {options[selection].Description}", Color.Lime);
 
             return options[selection].Value;
         }
 
+        // ReSharper disable once CognitiveComplexity
         public static string ReadSecret()
         {
             var secret = string.Empty;
@@ -116,20 +119,22 @@ namespace Nuke.Common.Utilities
             do
             {
                 var key = Console.ReadKey(intercept: true);
-                if (key.Key == ConsoleKey.Backspace ||
-                    key.KeyChar == 23 ||
-                    key.KeyChar == 21)
+                if (key.Key == ConsoleKey.Backspace)
                 {
                     if (secret.Length > 0)
                     {
-                        var charsToRemove = (key.Modifiers & ConsoleModifiers.Control) != 0 ? secret.Length : 1;
+                        var charsToRemove =
+                            (key.Modifiers & ConsoleModifiers.Control) != 0 && !EnvironmentInfo.IsOsx ||
+                            (key.Modifiers & ConsoleModifiers.Alt) != 0 && EnvironmentInfo.IsOsx
+                                ? secret.Length
+                                : 1;
                         secret = secret.Substring(startIndex: 0, length: secret.Length - charsToRemove);
                         Console.Write(string.Concat(Enumerable.Repeat("\b \b", charsToRemove)));
                     }
                 }
                 else if (key.Key == ConsoleKey.Enter)
                 {
-                    Console.Write(Environment.NewLine);
+                    Console.WriteLine();
                     break;
                 }
                 else if (!char.IsControl(key.KeyChar))

@@ -20,25 +20,25 @@ namespace Nuke.Common
         public static string NewLine => Environment.NewLine;
         public static string MachineName => Environment.MachineName;
 
-        public static string WorkingDirectory
+        public static AbsolutePath WorkingDirectory
         {
 #if NETCORE
-            get => Directory.GetCurrentDirectory();
+            get => (AbsolutePath) Directory.GetCurrentDirectory();
             set => Directory.SetCurrentDirectory(value);
 #else
-            get => Environment.CurrentDirectory;
+            get => (AbsolutePath) Environment.CurrentDirectory;
             set => Environment.CurrentDirectory = value;
 #endif
         }
 
         public static IDisposable SwitchWorkingDirectory(string workingDirectory, bool allowCreate = true)
         {
-            if (!Directory.Exists(workingDirectory))
+            if (allowCreate)
                 FileSystemTasks.EnsureExistingDirectory(workingDirectory);
 
             var previousWorkingDirectory = WorkingDirectory;
             return DelegateDisposable.CreateBracket(
-                () => WorkingDirectory = workingDirectory,
+                () => WorkingDirectory = (AbsolutePath) workingDirectory,
                 () => WorkingDirectory = previousWorkingDirectory);
         }
 
@@ -46,7 +46,7 @@ namespace Nuke.Common
         {
             string ExpandUnixEnvironmentVariables()
                 => value
-                    .ReplaceRegex("^~", x => Environment.GetEnvironmentVariable("HOME"))
+                    .ReplaceRegex("^~", _ => Environment.GetEnvironmentVariable("HOME"))
                     .ReplaceRegex(@"\$([a-z_][a-z0-9_]*)", x => Environment.GetEnvironmentVariable(x.Groups[1].Value), RegexOptions.IgnoreCase);
 
             return IsWin
@@ -93,7 +93,7 @@ namespace Nuke.Common
             var inSingleQuotes = false;
             var inDoubleQuotes = false;
             var escaped = false;
-            return commandLine.Split((c, i) =>
+            return commandLine.Split((c, _) =>
                     {
                         if (c == '\"' && !inSingleQuotes && !escaped)
                             inDoubleQuotes = !inDoubleQuotes;

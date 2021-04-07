@@ -9,7 +9,6 @@ using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using Nuke.Common;
 using Nuke.Common.Tooling;
 using static Nuke.Common.IO.PathConstruction;
 
@@ -18,13 +17,13 @@ namespace Nuke.MSBuildTasks
     [UsedImplicitly]
     public class PackPackageToolsTask : ContextAwareTask
     {
-        [Microsoft.Build.Framework.Required]
+        [Required]
         public string ProjectAssetsFile { get; set; }
 
-        [Microsoft.Build.Framework.Required]
+        [Required]
         public string NuGetPackageRoot { get; set; }
 
-        [Microsoft.Build.Framework.Required]
+        [Required]
         public string TargetFramework { get; set; }
 
         [Output]

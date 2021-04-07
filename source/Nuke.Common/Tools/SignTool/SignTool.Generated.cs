@@ -279,7 +279,7 @@ namespace Nuke.Common.Tools.SignTool
         /// <summary>
         ///   Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)
         /// </summary>
-        public virtual string FileDigestAlgorithm { get; internal set; }
+        public virtual SignToolDigestAlgorithm FileDigestAlgorithm { get; internal set; }
         /// <summary>
         ///   Specify the Enhanced Key Usage that must be present in the cert.<para/>The parameter may be specified by OID or by string. The default usage is <em>Code Signing</em> (1.3.6.1.5.5.7.3.3).
         /// </summary>
@@ -323,7 +323,7 @@ namespace Nuke.Common.Tools.SignTool
         /// <summary>
         ///   Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.
         /// </summary>
-        public virtual string TimestampServerDigestAlgorithm { get; internal set; }
+        public virtual SignToolDigestAlgorithm TimestampServerDigestAlgorithm { get; internal set; }
         /// <summary>
         ///   Specify an OID and value to be included as an authenticated attribute in the signature. The value will be encoded as an ASN1 UTF8 string. This option may be given multiple times.
         /// </summary>
@@ -653,7 +653,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify a password to use when opening the PFX file.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : SignToolSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -782,7 +782,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specify the SHA1 thumbprint of the signing cert.</p>
         /// </summary>
         [Pure]
-        public static T SetSha1Thumbprint<T>(this T toolSettings, string sha1Thumbprint) where T : SignToolSettings
+        public static T SetSha1Thumbprint<T>(this T toolSettings, [Secret] string sha1Thumbprint) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Sha1Thumbprint = sha1Thumbprint;
@@ -806,7 +806,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Specifies the file digest algorithm to use for creating file signatures. (Default is <c>SHA1</c>)</p>
         /// </summary>
         [Pure]
-        public static T SetFileDigestAlgorithm<T>(this T toolSettings, string fileDigestAlgorithm) where T : SignToolSettings
+        public static T SetFileDigestAlgorithm<T>(this T toolSettings, SignToolDigestAlgorithm fileDigestAlgorithm) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.FileDigestAlgorithm = fileDigestAlgorithm;
@@ -1136,7 +1136,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Used with the <c>/tr</c> or <c>/tseal</c> switch to request a digest algorithm used by the RFC 3161 timestamp server.</p>
         /// </summary>
         [Pure]
-        public static T SetTimestampServerDigestAlgorithm<T>(this T toolSettings, string timestampServerDigestAlgorithm) where T : SignToolSettings
+        public static T SetTimestampServerDigestAlgorithm<T>(this T toolSettings, SignToolDigestAlgorithm timestampServerDigestAlgorithm) where T : SignToolSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.TimestampServerDigestAlgorithm = timestampServerDigestAlgorithm;
@@ -2158,9 +2158,27 @@ namespace Nuke.Common.Tools.SignTool
     {
         public static SignToolContentMethod Embedded = (SignToolContentMethod) "Embedded";
         public static SignToolContentMethod DetachedSignedData = (SignToolContentMethod) "DetachedSignedData";
-        public static explicit operator SignToolContentMethod(string value)
+        public static implicit operator SignToolContentMethod(string value)
         {
             return new SignToolContentMethod { Value = value };
+        }
+    }
+    #endregion
+    #region SignToolDigestAlgorithm
+    /// <summary>
+    ///   Used within <see cref="SignToolTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<SignToolDigestAlgorithm>))]
+    public partial class SignToolDigestAlgorithm : Enumeration
+    {
+        public static SignToolDigestAlgorithm SHA1 = (SignToolDigestAlgorithm) "SHA1";
+        public static SignToolDigestAlgorithm SHA256 = (SignToolDigestAlgorithm) "SHA256";
+        public static implicit operator SignToolDigestAlgorithm(string value)
+        {
+            return new SignToolDigestAlgorithm { Value = value };
         }
     }
     #endregion

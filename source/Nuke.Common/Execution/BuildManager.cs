@@ -32,28 +32,17 @@ namespace Nuke.Common.Execution
         {
             Console.OutputEncoding = Encoding.UTF8;
             Console.InputEncoding = Encoding.UTF8;
-            Console.CancelKeyPress += (s, e) => s_cancellationHandlers.ForEach(x => x());
+            Console.CancelKeyPress += (_, _) => s_cancellationHandlers.ForEach(x => x());
 
             var build = Create<T>();
-            build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
-
-            Logger.LogLevel = NukeBuild.LogLevel;
-
-            void ExecuteExtension<TExtension>(Expression<Action<TExtension>> action)
-                where TExtension : IBuildExtension =>
-                build.GetType()
-                    .GetCustomAttributes()
-                    .OfType<TExtension>()
-                    .OrderByDescending(x => x.Priority)
-                    .ForEachLazy(x => Logger.Trace($"[{action.GetMemberInfo().Name}] {x.GetType().Name.TrimEnd(nameof(Attribute))} ({x.Priority})"))
-                    .ForEach(action.Compile());
 
             try
             {
-                ExecuteExtension<IOnBeforeLogo>(x => x.OnBeforeLogo(build, build.ExecutableTargets));
-                build.OnBuildCreated();
+                build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
 
-                Logger.OutputSink = build.OutputSink;
+                build.ExecuteExtension<IOnBuildCreated>(x => x.OnBuildCreated(build, build.ExecutableTargets));
+
+                Logger.OutputSink = NukeBuild.Host.OutputSink;
 
                 ToolPathResolver.EmbeddedPackagesDirectory = NukeBuild.BuildProjectFile == null
                     ? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
@@ -61,7 +50,7 @@ namespace Nuke.Common.Execution
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
                 ToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
 
-                if (!NukeBuild.NoLogo)
+                if (!build.NoLogo)
                 {
                     Logger.Normal();
                     Logger.OutputSink.WriteLogo();
@@ -75,39 +64,45 @@ namespace Nuke.Common.Execution
                     build.ExecutableTargets,
                     EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
 
-                ExecuteExtension<IOnAfterLogo>(x => x.OnAfterLogo(build, build.ExecutableTargets, build.ExecutionPlan));
-                build.OnBuildInitialized();
+                build.ExecuteExtension<IOnBuildInitialized>(x => x.OnBuildInitialized(build, build.ExecutableTargets, build.ExecutionPlan));
 
                 CancellationHandler += Finish;
                 BuildExecutor.Execute(
                     build,
                     EnvironmentInfo.GetParameter<string[]>(() => build.SkippedTargets));
 
-                return build.ExitCode ?? (build.IsSuccessful ? 0 : ErrorExitCode);
+                return build.ExitCode ??= build.IsSuccessful ? 0 : ErrorExitCode;
             }
             catch (Exception exception)
             {
                 if (!(exception is TargetExecutionException))
                     Logger.Error(exception);
 
-                return build.ExitCode ?? ErrorExitCode;
+                return build.ExitCode ??= ErrorExitCode;
             }
             finally
             {
-                if (build.ExecutionPlan?.Any(x => x.Status != ExecutionStatus.NotRun) ?? false)
-                    Finish();
+                Finish();
             }
 
             void Finish()
             {
-                build.ExecutionPlan
-                    .Where(x => x.Status == ExecutionStatus.Executing)
-                    .ForEach(x => x.Status = ExecutionStatus.Aborted);
+                if (build.ExecutionPlan != null)
+                {
+                    foreach (var target in build.ExecutionPlan)
+                    {
+                        target.Status = target.Status switch
+                        {
+                            ExecutionStatus.Running => ExecutionStatus.Aborted,
+                            ExecutionStatus.Scheduled => ExecutionStatus.NotRun,
+                            _ => target.Status
+                        };
+                    }
 
-                Logger.OutputSink.WriteSummary(build);
+                    Logger.OutputSink.WriteSummary(build);
+                }
 
-                build.OnBuildFinished();
-                ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
+                build.ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
             }
         }
 

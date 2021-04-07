@@ -845,7 +845,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : GitReleaseManagerAddAssetsSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : GitReleaseManagerAddAssetsSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1023,7 +1023,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : GitReleaseManagerCloseSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : GitReleaseManagerCloseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1411,7 +1411,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : GitReleaseManagerCreateSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : GitReleaseManagerCreateSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1613,7 +1613,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : GitReleaseManagerExportSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : GitReleaseManagerExportSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1791,7 +1791,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   <p>The password to access GitHub with.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : GitReleaseManagerPublishSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : GitReleaseManagerPublishSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;

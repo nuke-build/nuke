@@ -12,10 +12,11 @@ namespace Nuke.Common.CI
     public interface IConfigurationGenerator
     {
         string Id { get; }
-        string Name { get; }
+        string DisplayName { get; }
+        string HostName { get; }
 
         bool AutoGenerate { get; }
-        HostType HostType { get; }
+        Type HostType { get; }
         IEnumerable<string> GeneratedFiles { get; }
 
         void Generate(NukeBuild targets, IReadOnlyCollection<ExecutableTarget> executableTargets);

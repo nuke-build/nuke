@@ -36,26 +36,48 @@ namespace Nuke.Common.Tests.Execution
         public void TestDefault()
         {
             ExecuteBuild();
-            AssertExecuted(A, B, C);
+            AssertSucceeded(A, B, C);
         }
 
         [Fact]
-        public void TestUserSkipped()
+        public void TestParameterSkipped_AllWithoutInvoked()
         {
             ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
             AssertSkipped(A, B, C);
+        }
 
-            ExecuteBuild(skippedTargets: new[] { A });
-            AssertExecuted(B, C);
-            AssertSkipped(A);
-
-            ExecuteBuild(skippedTargets: new[] { A, B });
-            AssertExecuted(C);
+        [Fact]
+        public void TestParameterSkipped_AllWithInvoked()
+        {
+            C.Invoked = true;
+            ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
+            AssertSucceeded(C);
             AssertSkipped(A, B);
+        }
 
+        [Fact]
+        public void TestParameterSkipped_Single()
+        {
+            ExecuteBuild(skippedTargets: new[] { A });
+            AssertSucceeded(B, C);
+            AssertSkipped(A);
+            A.SkipReason.Should().Be("via --skip parameter");
+        }
+
+        [Fact]
+        public void TestParameterSkipped_Multiple()
+        {
+            ExecuteBuild(skippedTargets: new[] { A, B });
+            AssertSucceeded(C);
+            AssertSkipped(A, B);
+        }
+
+        [Fact]
+        public void TestParameterSkipped_DependencyBehavior_Skip()
+        {
             B.DependencyBehavior = DependencyBehavior.Skip;
             ExecuteBuild(skippedTargets: new[] { B });
-            AssertExecuted(C);
+            AssertSucceeded(C);
             AssertSkipped(A, B);
         }
 
@@ -64,34 +86,51 @@ namespace Nuke.Common.Tests.Execution
         {
             B.StaticConditions.Add(True);
             ExecuteBuild();
-            AssertExecuted(A, B, C);
-
-            B.StaticConditions.Add(False);
-
-            B.DependencyBehavior = DependencyBehavior.Execute;
-            ExecuteBuild();
-            AssertExecuted(A, C);
-            AssertSkipped(B);
-
-            B.DependencyBehavior = DependencyBehavior.Skip;
-            ExecuteBuild();
-            AssertExecuted(C);
-            AssertSkipped(A, B);
+            AssertSucceeded(A, B, C);
         }
 
         [Fact]
-        public void TestDynamicCondition()
+        public void TestStaticCondition_DependencyBehavior_Execute()
+        {
+            B.StaticConditions.Add(False);
+            B.DependencyBehavior = DependencyBehavior.Execute;
+            ExecuteBuild();
+            AssertSucceeded(A, C);
+            AssertSkipped(B);
+            B.SkipReason.Should().Be("false");
+        }
+
+        [Fact]
+        public void TestStaticCondition_DependencyBehavior_Skip()
+        {
+            B.StaticConditions.Add(False);
+            B.DependencyBehavior = DependencyBehavior.Skip;
+            ExecuteBuild();
+            AssertSucceeded(C);
+            AssertSkipped(A, B);
+            A.SkipReason.Should().Be("skipping B");
+            B.SkipReason.Should().Be("false");
+        }
+
+        [Fact]
+        public void TestDynamicCondition_Unchanged()
         {
             var condition = false;
             B.DynamicConditions.Add(() => condition);
 
             ExecuteBuild();
-            AssertExecuted(A, C);
+            AssertSucceeded(A, C);
             AssertSkipped(B);
+        }
 
+        [Fact]
+        public void TestDynamicCondition_Changed()
+        {
+            var condition = false;
+            B.DynamicConditions.Add(() => condition);
             A.Actions.Add(() => condition = true);
             ExecuteBuild();
-            AssertExecuted(A, B, C);
+            AssertSucceeded(A, B, C);
         }
 
         private void ExecuteBuild(ExecutableTarget[] skippedTargets = null)
@@ -101,18 +140,19 @@ namespace Nuke.Common.Tests.Execution
             var build = new TestBuild();
             build.ExecutableTargets = new[] { A, B, C };
             build.ExecutionPlan = new[] { A, B, C };
-            build.ExecutionPlan.ForEach(x => x.Status = ExecutionStatus.NotRun);
             BuildExecutor.Execute(build, SelectNames(skippedTargets));
         }
 
-        private static void AssertExecuted(params ExecutableTarget[] targets)
+        private static void AssertSucceeded(params ExecutableTarget[] targets)
         {
-            targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.Executed));
+            targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.Succeeded));
+            targets.ForEach(x => x.SkipReason.Should().BeNull());
         }
 
         private static void AssertSkipped(params ExecutableTarget[] targets)
         {
             targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.Skipped));
+            targets.ForEach(x => x.SkipReason.Should().NotBeNull());
         }
 
         private class TestBuild : NukeBuild

@@ -1,0 +1,39 @@
+﻿// Copyright 2020 Maintainers of NUKE.
+// Distributed under the MIT License.
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
+
+using System;
+using System.Linq;
+using JetBrains.Annotations;
+using Nuke.Common;
+using Nuke.Common.Git;
+using Nuke.Common.IO;
+using Nuke.Common.Tools.Git;
+using Nuke.Common.Utilities;
+
+namespace Nuke.GlobalTool
+{
+    partial class Program
+    {
+        [UsedImplicitly]
+        public static int Trigger(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
+        {
+            ControlFlow.Assert(rootDirectory != null, "No root directory found.");
+            var repository = GitRepository.FromLocalDirectory(rootDirectory).NotNull("No Git repository found.");
+            ControlFlow.Assert(repository.Branch != null, "Git repository must not be detached.");
+            ControlFlow.Assert(args.Length > 0, "args.Length > 0");
+
+            try
+            {
+                var messageBody = args.JoinSpace();
+                GitTasks.Git($"commit --allow-empty -m {messageBody.DoubleQuote()}");
+                GitTasks.Git($"push {repository.RemoteName} {repository.Head}:{repository.RemoteBranch}");
+                return 0;
+            }
+            catch
+            {
+                return 1;
+            }
+        }
+    }
+}

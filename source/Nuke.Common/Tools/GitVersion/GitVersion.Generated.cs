@@ -1003,7 +1003,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   <p>Password in case authentication is required.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : GitVersionSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : GitVersionSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1282,7 +1282,7 @@ namespace Nuke.Common.Tools.GitVersion
     {
         public static GitVersionOutput json = (GitVersionOutput) "json";
         public static GitVersionOutput buildserver = (GitVersionOutput) "buildserver";
-        public static explicit operator GitVersionOutput(string value)
+        public static implicit operator GitVersionOutput(string value)
         {
             return new GitVersionOutput { Value = value };
         }
@@ -1303,7 +1303,7 @@ namespace Nuke.Common.Tools.GitVersion
         public static GitVersionVerbosity warn = (GitVersionVerbosity) "warn";
         public static GitVersionVerbosity error = (GitVersionVerbosity) "error";
         public static GitVersionVerbosity none = (GitVersionVerbosity) "none";
-        public static explicit operator GitVersionVerbosity(string value)
+        public static implicit operator GitVersionVerbosity(string value)
         {
             return new GitVersionVerbosity { Value = value };
         }

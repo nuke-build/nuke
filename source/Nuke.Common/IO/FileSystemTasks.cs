@@ -44,9 +44,19 @@ namespace Nuke.Common.IO
             return Directory.Exists(path);
         }
 
+        public static void EnsureExistingParentDirectory(AbsolutePath file)
+        {
+            EnsureExistingParentDirectory((string) file);
+        }
+
         public static void EnsureExistingParentDirectory(string file)
         {
             EnsureExistingDirectory(Path.GetDirectoryName(file).NotNull($"Path.GetDirectoryName({file}) != null"));
+        }
+
+        public static void EnsureExistingDirectory(AbsolutePath directory)
+        {
+            EnsureExistingDirectory((string) directory);
         }
 
         public static void EnsureExistingDirectory(string directory)
@@ -56,6 +66,11 @@ namespace Nuke.Common.IO
 
             Logger.Info($"Creating directory '{directory}'...");
             Directory.CreateDirectory(directory);
+        }
+
+        public static void EnsureCleanDirectory(AbsolutePath directory)
+        {
+            EnsureCleanDirectory((string) directory);
         }
 
         public static void EnsureCleanDirectory(string directory)
@@ -177,7 +192,8 @@ namespace Nuke.Common.IO
             string source,
             string target,
             DirectoryExistsPolicy directoryPolicy = DirectoryExistsPolicy.Fail,
-            FileExistsPolicy filePolicy = FileExistsPolicy.Fail)
+            FileExistsPolicy filePolicy = FileExistsPolicy.Fail,
+            bool deleteRemainingFiles = false)
         {
             ControlFlow.Assert(!Directory.Exists(target) || directoryPolicy != DirectoryExistsPolicy.Fail,
                 $"!Directory.Exists({target}) || policy != DirectoryExistsPolicy.Fail");
@@ -191,7 +207,9 @@ namespace Nuke.Common.IO
             {
                 Directory.GetDirectories(source).ForEach(x => MoveDirectoryToDirectory(x, target, directoryPolicy, filePolicy));
                 Directory.GetFiles(source).ForEach(x => MoveFileToDirectory(x, target, filePolicy));
-                Directory.Delete(source);
+
+                if (!new DirectoryInfo(source).EnumerateFileSystemInfos().Any() || deleteRemainingFiles)
+                    DeleteDirectoryInternal(source);
             }
         }
 

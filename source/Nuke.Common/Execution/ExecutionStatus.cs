@@ -9,11 +9,13 @@ namespace Nuke.Common.Execution
 {
     public enum ExecutionStatus
     {
+        None,
+        Scheduled,
         NotRun,
         Skipped,
-        Executed,
+        Succeeded,
         Failed,
-        Executing,
+        Running,
         Aborted,
         Collective
     }

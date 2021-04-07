@@ -11,11 +11,25 @@ using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Execution
 {
-    internal class HandleShellCompletionAttribute : BuildExtensionAttributeBase, IOnBeforeLogo
+    internal class HandleShellCompletionAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        public void OnBeforeLogo(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        {
+            if (IsLegacy(NukeBuild.RootDirectory))
+            {
+                WriteCompletionFile(build);
+            }
+            else
+            {
+                SchemaUtility.WriteBuildSchemaFile(build);
+                SchemaUtility.WriteDefaultParametersFile();
+            }
+
+            if (EnvironmentInfo.GetParameter<bool>(CompletionParameterName))
+                Environment.Exit(exitCode: 0);
+        }
+
+        private static void WriteCompletionFile(NukeBuild build)
         {
             var completionItems = new SortedDictionary<string, string[]>();
 
@@ -35,9 +49,6 @@ namespace Nuke.Common.Execution
             }
 
             SerializationTasks.YamlSerializeToFile(completionItems, GetCompletionFile(NukeBuild.RootDirectory));
-
-            if (EnvironmentInfo.GetParameter<bool>(CompletionParameterName))
-                Environment.Exit(exitCode: 0);
         }
     }
 }

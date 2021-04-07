@@ -10,7 +10,7 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 ###########################################################################
 
 BUILD_PROJECT_FILE="$SCRIPT_DIR/build/_build.csproj"
-TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
+TEMP_DIRECTORY="$SCRIPT_DIR/.nuke/temp"
 
 DOTNET_GLOBAL_FILE="$SCRIPT_DIR/global.json"
 DOTNET_INSTALL_URL="https://dot.net/v1/dotnet-install.sh"
@@ -30,7 +30,8 @@ function FirstJsonValue {
 }
 
 # Print environment variables
-env | sort
+# WARNING: Make sure that secrets are actually scrambled in build log
+# env | sort
 
 # Check if any dotnet is installed
 if [[ -x "$(command -v dotnet)" ]]; then

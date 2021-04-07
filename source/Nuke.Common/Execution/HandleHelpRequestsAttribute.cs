@@ -8,23 +8,23 @@ using System.Linq;
 
 namespace Nuke.Common.Execution
 {
-    internal class HandleHelpRequestsAttribute : BuildExtensionAttributeBase, IOnAfterLogo
+    internal class HandleHelpRequestsAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
-        public void OnAfterLogo(
+        public void OnBuildInitialized(
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            if (NukeBuild.Help || executionPlan.Count == 0)
+            if (build.Help || executionPlan.Count == 0)
             {
                 Logger.Normal(HelpTextService.GetTargetsText(build.ExecutableTargets));
                 Logger.Normal(HelpTextService.GetParametersText(build));
             }
 
-            if (NukeBuild.Plan)
+            if (build.Plan)
                 ExecutionPlanHtmlService.ShowPlan(build.ExecutableTargets);
 
-            if (NukeBuild.Help || executionPlan.Count == 0 || NukeBuild.Plan)
+            if (build.Help || executionPlan.Count == 0 || build.Plan)
                 Environment.Exit(exitCode: 0);
         }
     }

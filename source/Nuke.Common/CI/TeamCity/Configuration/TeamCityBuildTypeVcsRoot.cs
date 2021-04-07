@@ -4,10 +4,12 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TeamCity.Configuration
 {
+    [PublicAPI]
     public class TeamCityBuildTypeVcsRoot : ConfigurationEntity
     {
         public TeamCityVcsRoot Root { get; set; }

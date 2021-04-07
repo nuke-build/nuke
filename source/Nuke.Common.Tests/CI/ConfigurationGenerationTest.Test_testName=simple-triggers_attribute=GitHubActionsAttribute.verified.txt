@@ -24,11 +24,18 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Cache .tmp, ~/.nuget/packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            .tmp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
         env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-            ApiKey: ${{ secrets.ApiKey }}
+          GitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          ApiKey: ${{ secrets.API_KEY }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
@@ -46,11 +53,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Cache .tmp, ~/.nuget/packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            .tmp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
         env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-            ApiKey: ${{ secrets.ApiKey }}
+          GitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          ApiKey: ${{ secrets.API_KEY }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
@@ -68,11 +82,18 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
+      - name: Cache .tmp, ~/.nuget/packages
+        uses: actions/cache@v2
+        with:
+          path: |
+            .tmp
+            ~/.nuget/packages
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
         env:
-            GitHubToken: ${{ secrets.GITHUB_TOKEN }}
-            ApiKey: ${{ secrets.ApiKey }}
+          GitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          ApiKey: ${{ secrets.API_KEY }}
       - uses: actions/upload-artifact@v1
         with:
           name: src

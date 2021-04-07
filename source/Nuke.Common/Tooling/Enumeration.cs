@@ -9,7 +9,6 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tooling
@@ -44,6 +43,21 @@ namespace Nuke.Common.Tooling
     public abstract class Enumeration
     {
         protected string Value { get; set; }
+
+        public static implicit operator string([CanBeNull] Enumeration value)
+        {
+            return value?.Value;
+        }
+
+        public static bool operator ==(Enumeration a, Enumeration b)
+        {
+            return EqualityComparer<Enumeration>.Default.Equals(a, b);
+        }
+
+        public static bool operator !=(Enumeration a, Enumeration b)
+        {
+            return !EqualityComparer<Enumeration>.Default.Equals(a, b);
+        }
 
         protected bool Equals(Enumeration other)
         {
@@ -84,7 +98,7 @@ namespace Nuke.Common.Tooling
             {
                 if (value is string stringValue)
                 {
-                    var matchingFields = typeof(T).GetFields(ReflectionService.Static)
+                    var matchingFields = typeof(T).GetFields(ReflectionUtility.Static)
                         .Where(x => x.Name.EqualsOrdinalIgnoreCase(stringValue)).ToList();
                     ControlFlow.Assert(matchingFields.Count == 1, "matchingFields.Count == 1");
                     return matchingFields.Single().GetValue(obj: null);

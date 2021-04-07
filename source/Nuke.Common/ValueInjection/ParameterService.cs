@@ -11,24 +11,31 @@ using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.Execution.ReflectionService;
+using static Nuke.Common.Utilities.ReflectionUtility;
 
 namespace Nuke.Common.ValueInjection
 {
     internal class ParameterService
     {
-        private readonly Func<string[]> _commandLineArgumentsProvider;
+        internal static ParameterService Instance = new ParameterService(
+            () => EnvironmentInfo.CommandLineArguments.Skip(count: 1),
+            () => EnvironmentInfo.Variables);
+
+        internal ParameterService ArgumentsFromFilesService;
+        internal ParameterService ArgumentsFromCommitMessageService;
+
+        private readonly Func<IEnumerable<string>> _commandLineArgumentsProvider;
         private readonly Func<IReadOnlyDictionary<string, string>> _environmentVariablesProvider;
 
         public ParameterService(
-            [CanBeNull] Func<string[]> commandLineArgumentsProvider,
+            [CanBeNull] Func<IEnumerable<string>> commandLineArgumentsProvider,
             [CanBeNull] Func<IReadOnlyDictionary<string, string>> environmentVariablesProvider)
         {
             _commandLineArgumentsProvider = commandLineArgumentsProvider;
             _environmentVariablesProvider = environmentVariablesProvider;
         }
 
-        private string[] Arguments => _commandLineArgumentsProvider.Invoke();
+        private string[] Arguments => _commandLineArgumentsProvider.Invoke().ToArray();
         private IReadOnlyDictionary<string, string> Variables => _environmentVariablesProvider.Invoke();
 
         public static bool IsParameter(string value)
@@ -60,7 +67,8 @@ namespace Nuke.Common.ValueInjection
         public static string GetParameterMemberName(MemberInfo member)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            return attribute.Name ?? member.Name;
+            var prefix = member.DeclaringType.NotNull().GetCustomAttribute<ParameterPrefixAttribute>()?.Prefix;
+            return prefix + (attribute.Name ?? member.Name);
         }
 
         [CanBeNull]
@@ -74,16 +82,18 @@ namespace Nuke.Common.ValueInjection
         public static IEnumerable<(string Text, object Object)> GetParameterValueSet(MemberInfo member, object instance)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            var memberType = member.GetMemberType();
+            var memberType = member.GetMemberType().GetScalarType();
 
             IEnumerable<(string Text, object Object)> TryGetFromValueProvider()
             {
-                if (attribute.ValueProvider == null)
+                if (attribute.ValueProviderMember == null)
                     return null;
 
-                var valueProvider = instance.GetType().GetMember(attribute.ValueProvider, All)
+                var valueProviderType = attribute.ValueProviderType ?? instance.GetType();
+                var valueProvider = valueProviderType
+                    .GetMember(attribute.ValueProviderMember, All)
                     .SingleOrDefault()
-                    .NotNull($"No single provider '{attribute.ValueProvider}' found for member '{member.Name}'.");
+                    .NotNull($"No single provider '{valueProviderType.Name}.{member.Name}' found.");
                 ControlFlow.Assert(valueProvider.GetMemberType() == typeof(IEnumerable<string>),
                     $"Value provider '{valueProvider.Name}' must be of type '{typeof(IEnumerable<string>).GetDisplayShortName()}'.");
 
@@ -115,11 +125,11 @@ namespace Nuke.Common.ValueInjection
         }
 
         [CanBeNull]
-        public object GetFromMemberInfo(MemberInfo member, [CanBeNull] Type destinationType, Func<string, Type, char?, object> provider)
+        public static object GetFromMemberInfo(MemberInfo member, [CanBeNull] Type destinationType, Func<string, Type, char?, object> provider)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
             var separator = (attribute.Separator ?? string.Empty).SingleOrDefault();
-            return provider.Invoke(attribute.Name ?? member.Name, destinationType ?? member.GetMemberType(), separator);
+            return provider.Invoke(GetParameterMemberName(member), destinationType ?? member.GetMemberType(), separator);
         }
 
         [CanBeNull]
@@ -138,9 +148,18 @@ namespace Nuke.Common.ValueInjection
             object TryFromEnvironmentVariables() =>
                 GetEnvironmentVariable(parameterName, destinationType, separator);
 
-            return TryFromCommandLineArguments() ??
+            // TODO: nuke <target> ?
+            object TryFromProfileArguments() =>
+                ArgumentsFromFilesService?.GetCommandLineArgument(parameterName, destinationType, separator);
+
+            object TryFromCommitMessageArguments() =>
+                ArgumentsFromCommitMessageService?.GetCommandLineArgument(parameterName, destinationType, separator);
+
+            return TryFromCommitMessageArguments() ??
+                   TryFromCommandLineArguments() ??
                    TryFromCommandLinePositionalArguments() ??
-                   TryFromEnvironmentVariables();
+                   TryFromEnvironmentVariables() ??
+                   TryFromProfileArguments();
         }
 
         [CanBeNull]
@@ -150,14 +169,14 @@ namespace Nuke.Common.ValueInjection
             if (index == -1)
                 return GetDefaultValue(destinationType);
 
-            var values = Arguments.Skip(index + 1).TakeWhile(x => !x.StartsWith("-")).ToArray();
+            var values = Arguments.Skip(index + 1).TakeUntil(IsParameter).ToArray();
             return ConvertCommandLineArguments(argumentName, values, destinationType, Arguments, separator);
         }
 
         [CanBeNull]
         public object GetCommandLineArgument(int position, Type destinationType, char? separator)
         {
-            var positionalParametersCount = Arguments.TakeWhile(x => !x.StartsWith("-")).Count();
+            var positionalParametersCount = Arguments.TakeUntil(IsParameter).Count();
             if (position < 0)
                 position = positionalParametersCount + position % positionalParametersCount;
 
@@ -175,7 +194,7 @@ namespace Nuke.Common.ValueInjection
         [CanBeNull]
         public object GetPositionalCommandLineArguments(Type destinationType, char? separator = null)
         {
-            var positionalArguments = Arguments.TakeWhile(x => !x.StartsWith("-")).ToArray();
+            var positionalArguments = Arguments.TakeUntil(IsParameter).ToArray();
             if (positionalArguments.Length == 0)
                 return GetDefaultValue(destinationType);
 
@@ -224,7 +243,7 @@ namespace Nuke.Common.ValueInjection
         private int GetCommandLineArgumentIndex(string argumentName)
         {
             var index = Array.FindLastIndex(Arguments,
-                x => x.StartsWith("-") && x.Replace("-", string.Empty).EqualsOrdinalIgnoreCase(argumentName.Replace("-", string.Empty)));
+                x => IsParameter(x) && GetParameterMemberName(x).EqualsOrdinalIgnoreCase(GetParameterMemberName(argumentName)));
 
             // if (index == -1 && checkNames)
             // {

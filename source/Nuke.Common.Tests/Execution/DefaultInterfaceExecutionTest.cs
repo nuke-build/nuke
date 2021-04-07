@@ -101,7 +101,7 @@ namespace Nuke.Common.Tests.Execution
             var build = new NonPublicTargetTestBuild();
             var exception = Assert.Throws<Exception>(() => ExecutableTargetFactory.CreateAll(build));
             exception.Message.Should()
-                .StartWith("Assertion failed: Target 'D' must be marked public to override inherited member from:");
+                .StartWith("Assertion failed: Property 'D' must be marked public to override inherited member from:");
         }
 
         [Fact]
@@ -110,7 +110,7 @@ namespace Nuke.Common.Tests.Execution
             var build = new DuplicatedTargetTestBuild();
             var exception = Assert.Throws<Exception>(() => ExecutableTargetFactory.CreateAll(build));
             exception.Message.Should()
-                .StartWith("Assertion failed: Target 'D' must be implemented explicitly because it is inherited from multiple interfaces");
+                .StartWith("Assertion failed: Property 'D' must be implemented explicitly because it is inherited from multiple interfaces");
         }
 
         [Fact]
@@ -123,6 +123,7 @@ namespace Nuke.Common.Tests.Execution
         }
 
         private interface IParameterInterface
+            : INukeBuild
         {
             [Parameter] string StringParameter => ValueInjectionUtility.TryGetValue(() => StringParameter);
 

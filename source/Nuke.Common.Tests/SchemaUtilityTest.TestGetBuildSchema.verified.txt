@@ -1,0 +1,118 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "Build Schema",
+  "$ref": "#/definitions/build",
+  "definitions": {
+    "build": {
+      "type": "object",
+      "properties": {
+        "ComponentParam1": {
+          "type": "string"
+        },
+        "Continue": {
+          "type": "boolean",
+          "description": "Indicates to continue a previously failed build attempt"
+        },
+        "Help": {
+          "type": "boolean",
+          "description": "Shows the help text for this build assembly"
+        },
+        "Host": {
+          "type": "string",
+          "description": "Host for execution. Default is 'automatic'",
+          "enum": [
+            "AppVeyor",
+            "AzurePipelines",
+            "Bamboo",
+            "Bitrise",
+            "GitHubActions",
+            "GitLab",
+            "Jenkins",
+            "SpaceAutomation",
+            "TeamCity",
+            "Terminal",
+            "TravisCI"
+          ]
+        },
+        "NoLogo": {
+          "type": "boolean",
+          "description": "Disables displaying the NUKE logo"
+        },
+        "NullableBool": {
+          "type": "boolean"
+        },
+        "NullableInteger": {
+          "type": "integer"
+        },
+        "Param": {
+          "type": "string"
+        },
+        "Plan": {
+          "type": "boolean",
+          "description": "Shows the execution plan (HTML)"
+        },
+        "Profile": {
+          "type": "array",
+          "description": "Defines the profiles to load",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Root": {
+          "type": "string",
+          "description": "Root directory during build execution"
+        },
+        "Secret": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secret [profile]'"
+        },
+        "Skip": {
+          "type": "array",
+          "description": "List of targets to be skipped. Empty list skips all dependencies",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Bar",
+              "Foo",
+              "Zoo"
+            ]
+          }
+        },
+        "Target": {
+          "type": "array",
+          "description": "List of targets to be invoked. Default is '{default_target}'",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Bar",
+              "Foo",
+              "Zoo"
+            ]
+          }
+        },
+        "Verbosities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Minimal",
+              "Normal",
+              "Quiet",
+              "Verbose"
+            ]
+          }
+        },
+        "Verbosity": {
+          "type": "string",
+          "description": "Logging verbosity during build execution. Default is 'Normal'",
+          "enum": [
+            "Minimal",
+            "Normal",
+            "Quiet",
+            "Verbose"
+          ]
+        }
+      }
+    }
+  }
+}

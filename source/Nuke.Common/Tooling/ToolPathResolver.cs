@@ -43,11 +43,13 @@ namespace Nuke.Common.Tooling
             var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
             var packageExecutablePaths = packageExecutables
 #if NETCORE
-                .SelectMany(x => Directory.GetFiles(packageDirectory, x, new EnumerationOptions
-                {
-                    RecurseSubdirectories = true,
-                    MatchCasing = MatchCasing.CaseInsensitive,
-                }))
+                .SelectMany(x => Directory.GetFiles(packageDirectory,
+                    x,
+                    new EnumerationOptions
+                    {
+                        RecurseSubdirectories = true,
+                        MatchCasing = MatchCasing.CaseInsensitive,
+                    }))
 #else
                 .SelectMany(x => Directory.GetFiles(packageDirectory, x, SearchOption.AllDirectories))
 #endif
@@ -138,13 +140,27 @@ namespace Nuke.Common.Tooling
                 if (!NuGetPackagesConfigFile.EndsWithOrdinalIgnoreCase(".csproj"))
                     throw;
 
-                TextTasks.WriteAllLines(
-                    Constants.GetMissingPackageFile(NukeBuild.RootDirectory),
-                    lines: new[] { NuGetPackagesConfigFile }
-                        .Concat(packageIds.Select(x => $"{x}@{version ?? MissingPackageDefaultVersion}"))
-                        .ToList());
+                var packageCombinations =
+                    from packageId in packageIds
+                    from packageVersion in
+                        new[]
+                        {
+                            NuGetPackageResolver.GetLatestPackageVersion(packageId, includePrereleases: false).GetAwaiter().GetResult(),
+                            NuGetPackageResolver.GetLatestPackageVersion(packageId, includePrereleases: true).GetAwaiter().GetResult(),
+                            NuGetPackageResolver.GetGlobalInstalledPackage(packageId, version: null, packagesConfigFile: null)?.Version.ToString()
+                        }
+                    where packageVersion != null
+                    select (Id: packageId, Version: packageVersion);
 
-                throw new Exception(new[] { exception.Message, "Run 'nuke :fix' to add missing references." }.JoinNewLine(), exception);
+                ControlFlow.Fail(
+                    new[]
+                        {
+                            "Missing package reference/download.",
+                            "Run one of the following commands:"
+                        }.Concat(packageCombinations.Distinct().Select(x => $"  - nuke :add-package {x.Id} {x.Version}"))
+                        .JoinNewLine(),
+                    exception);
+                throw new Exception("Not reachable");
             }
         }
 

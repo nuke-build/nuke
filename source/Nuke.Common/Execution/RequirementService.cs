@@ -17,16 +17,16 @@ namespace Nuke.Common.Execution
     /// </summary>
     internal static class RequirementService
     {
-        public static void ValidateRequirements(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executingTargets)
+        public static void ValidateRequirements(NukeBuild build, IReadOnlyCollection<ExecutableTarget> scheduledTargets)
         {
-            foreach (var target in executingTargets)
+            foreach (var target in scheduledTargets)
             foreach (var requirement in target.Requirements)
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
                     // TODO: same as HasSkippingCondition.GetSkipReason
                     ControlFlow.Assert(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body}'.");
                 else if (IsMemberNull(requirement.GetMemberInfo(), build, target))
-                    ControlFlow.Fail($"Target '{target.Name}' requires member '{requirement.GetMemberInfo().Name}' to be not null.");
+                    ControlFlow.Fail($"Target '{target.Name}' requires member '{GetMemberName(requirement.GetMemberInfo())}' to be not null.");
             }
 
             var requiredMembers = ValueInjectionUtility.GetInjectionMembers(build.GetType())
@@ -35,7 +35,7 @@ namespace Nuke.Common.Execution
             foreach (var member in requiredMembers)
             {
                 if (IsMemberNull(member, build))
-                    ControlFlow.Fail($"Member '{member.Name}' is required to be not null.");
+                    ControlFlow.Fail($"Member '{GetMemberName(member)}' is required to be not null.");
             }
         }
 
@@ -47,9 +47,9 @@ namespace Nuke.Common.Execution
 
             var from = target != null ? $"from target '{target.Name}' " : string.Empty;
             ControlFlow.Assert(member.HasCustomAttribute<ValueInjectionAttributeBase>(),
-                $"Member '{member.Name}' is required {from}but not marked with an injection attribute.");
+                $"Member '{GetMemberName(member)}' is required {from}but not marked with an injection attribute.");
 
-            if (NukeBuild.Host == HostType.Console)
+            if (NukeBuild.Host is Terminal)
                 TryInjectValueInteractive(member, build);
 
             return member.GetValue(build) == null;
@@ -75,8 +75,15 @@ namespace Nuke.Common.Execution
                     ? ConsoleUtility.PromptForInput(text, defaultValue: null)
                     : ConsoleUtility.PromptForChoice(text, valueSet.Select(x => (x.Object, x.Text)).ToArray());
 
-                member.SetValue(build, ReflectionService.Convert(value, memberType));
+                member.SetValue(build, ReflectionUtility.Convert(value, memberType));
             }
+        }
+
+        private static string GetMemberName(MemberInfo member)
+        {
+            return member.HasCustomAttribute<ParameterAttribute>()
+                ? ParameterService.GetParameterMemberName(member)
+                : member.Name;
         }
     }
 }

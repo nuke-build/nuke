@@ -1,0 +1,256 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://github.com/AArnott/Nerdbank.GitVersioning/blob/master/doc/nbgv-cli.md"
+  ],
+  "name": "NerdbankGitVersioning",
+  "officialUrl": "https://github.com/AArnott/Nerdbank.GitVersioning",
+  "packageId": "nbgv",
+  "packageExecutable": "nbgv.dll",
+  "tasks": [
+    {
+      "help": "Prepares a project to have version stamps applied using Nerdbank.GitVersioning.",
+      "postfix": "Install",
+      "definiteArgument": "install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Path",
+            "type": "string",
+            "format": "--path {value}",
+            "help": "The path to the directory that should contain the version.json file. The default is the root of the git repo."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version {value}",
+            "help": "The initial version to set. The default is <c>1.0-beta</c>."
+          },
+          {
+            "name": "Sources",
+            "type": "List<string>",
+            "format": "--source {value}",
+            "separator": " ",
+            "help": "The URI(s) of the NuGet package source(s) used to determine the latest stable version of the Nerdbank.GitVersioning package. This setting overrides all of the sources specified in the NuGet.Config files."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Gets the version information for a project.",
+      "postfix": "GetVersion",
+      "returnType": "NerdbankGitVersioning",
+      "definiteArgument": "get-version",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project {value}",
+            "help": "The path to the project or project directory. The default is the current directory."
+          },
+          {
+            "name": "Metadata",
+            "type": "string",
+            "format": "--metadata {value}",
+            "help": "Adds an identifier to the build metadata part of a semantic version."
+          },
+          {
+            "name": "Format",
+            "type": "NerdbankGitVersioningFormat",
+            "format": "--format {value}",
+            "help": "The format to write the version information. Allowed values are: <c>text</c>, <c>json</c>. The default is <c>text</c>."
+          },
+          {
+            "name": "Variable",
+            "type": "string",
+            "format": "--variable {value}",
+            "help": "The name of just one version property to print to stdout. When specified, the output is always in raw text. Useful in scripts."
+          },
+          {
+            "name": "CommitIsh",
+            "type": "string",
+            "format": "-- {value}",
+            "help": "The commit/ref to get the version information for. The default is <c>HEAD</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Updates the version stamp that is applied to a project.",
+      "postfix": "SetVersion",
+      "definiteArgument": "set-version",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project {value}",
+            "help": "The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "-- {value}",
+            "help": "The version to set."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Creates a git tag to mark a version.",
+      "postfix": "Tag",
+      "definiteArgument": "tag",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project {value}",
+            "help": "The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable."
+          },
+          {
+            "name": "VersionOrRef",
+            "type": "string",
+            "format": "-- {value}",
+            "help": "The <c>a.b.c[.d]</c> version or git ref to be tagged. If not specified, <c>HEAD</c> is used."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Gets the commit(s) that match a given version.",
+      "postfix": "GetCommits",
+      "definiteArgument": "get-commits",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project {value}",
+            "help": "The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable."
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "--quiet",
+            "help": "Use minimal output."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "-- {value}",
+            "help": "The <c>a.b.c[.d]</c> version to find."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Communicates with the ambient cloud build to set the build number and/or other cloud build variables.",
+      "postfix": "Cloud",
+      "definiteArgument": "cloud",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project {value}",
+            "help": "The path to the project or project directory used to calculate the version. The default is the current directory. Ignored if the <c>--version</c> option is specified."
+          },
+          {
+            "name": "Metadata",
+            "type": "string",
+            "format": "--metadata {value}",
+            "help": "Adds an identifier to the build metadata part of a semantic version."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version {value}",
+            "help": "The string to use for the cloud build number. If not specified, the computed version will be used."
+          },
+          {
+            "name": "CISystem",
+            "type": "NerdbankGitVersioningCISystem",
+            "format": "--ci-system {value}",
+            "help": "Force activation for a particular CI system. If not specified, auto-detection will be used."
+          },
+          {
+            "name": "AllVars",
+            "type": "bool",
+            "format": "--all-vars",
+            "help": "Defines ALL version variables as cloud build variables, with a <c>NBGV_</c> prefix."
+          },
+          {
+            "name": "CommonVars",
+            "type": "bool",
+            "format": "--common-vars",
+            "help": "Defines a few common version variables as cloud build variables, with a <c>Git</c> prefix (e.g. <c>GitBuildVersion</c>, <c>GitBuildVersionSimple</c>, <c>GitAssemblyInformationalVersion</c>)"
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string,string>",
+            "format": "--define {value}",
+            "itemFormat": "{key}={value}",
+            "help": "Additional cloud build variables to define."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Prepares a release by creating a release branch for the current version and adjusting the version on the current branch.",
+      "postfix": "PrepareRelease",
+      "definiteArgument": "prepare-release",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "--project {value}",
+            "help": "The path to the project or project directory. The default is the current directory."
+          },
+          {
+            "name": "NextVersion",
+            "type": "string",
+            "format": "--nextVersion {value}",
+            "help": " The version to set for the current branch. If omitted, the next version is determined automatically by incrementing the current version."
+          },
+          {
+            "name": "VersionIncrement",
+            "type": "string",
+            "format": "--versionIncrement {value}",
+            "help": "Overrides the 'versionIncrement' setting set in version.json for determining the next version of the current branch."
+          },
+          {
+            "name": "Tag",
+            "type": "string",
+            "format": "-- {value}",
+            "help": "The prerelease tag to apply on the release branch (if any). If not specified, any existing prerelease tag will be removed. The preceding hyphen may be omitted."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "NerdbankGitVersioningFormat",
+      "values": [
+        "Text",
+        "Json"
+      ]
+    },
+    {
+      "name": "NerdbankGitVersioningCISystem",
+      "values": [
+        "AppVeyor",
+        "VisualStudioTeamServices",
+        "GitHubActions",
+        "TeamCity",
+        "AtlassianBamboo",
+        "Jenkins",
+        "GitLab",
+        "Travis"
+      ]
+    }
+  ]
+}

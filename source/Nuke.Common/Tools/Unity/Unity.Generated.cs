@@ -891,7 +891,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : UnityCreateManualActivationFileSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -915,7 +915,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnityCreateManualActivationFileSettings
+        public static T SetSerial<T>(this T toolSettings, [Secret] string serial) where T : UnityCreateManualActivationFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -1225,7 +1225,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : UnityManualLicenseFileSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -1249,7 +1249,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnityManualLicenseFileSettings
+        public static T SetSerial<T>(this T toolSettings, [Secret] string serial) where T : UnityManualLicenseFileSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -2990,7 +2990,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : UnitySettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -3014,7 +3014,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnitySettings
+        public static T SetSerial<T>(this T toolSettings, [Secret] string serial) where T : UnitySettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -3300,7 +3300,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Enter a password into the log-in form during activation of the Unity Editor.</p>
         /// </summary>
         [Pure]
-        public static T SetPassword<T>(this T toolSettings, string password) where T : UnityReturnLicenseSettings
+        public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = password;
@@ -3324,7 +3324,7 @@ namespace Nuke.Common.Tools.Unity
         ///   <p>Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href="https://docs.unity3d.com/Manual/LogFiles.html">Editor.log</a> for info.</p>
         /// </summary>
         [Pure]
-        public static T SetSerial<T>(this T toolSettings, string serial) where T : UnityReturnLicenseSettings
+        public static T SetSerial<T>(this T toolSettings, [Secret] string serial) where T : UnityReturnLicenseSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Serial = serial;
@@ -3798,7 +3798,7 @@ namespace Nuke.Common.Tools.Unity
         public static UnityBuildTarget N3DS = (UnityBuildTarget) "N3DS";
         public static UnityBuildTarget tvOS = (UnityBuildTarget) "tvOS";
         public static UnityBuildTarget PSM = (UnityBuildTarget) "PSM";
-        public static explicit operator UnityBuildTarget(string value)
+        public static implicit operator UnityBuildTarget(string value)
         {
             return new UnityBuildTarget { Value = value };
         }
@@ -3822,7 +3822,7 @@ namespace Nuke.Common.Tools.Unity
         public static UnityGLCore _43 = (UnityGLCore) "43";
         public static UnityGLCore _44 = (UnityGLCore) "44";
         public static UnityGLCore _45 = (UnityGLCore) "45";
-        public static explicit operator UnityGLCore(string value)
+        public static implicit operator UnityGLCore(string value)
         {
             return new UnityGLCore { Value = value };
         }
@@ -3841,7 +3841,7 @@ namespace Nuke.Common.Tools.Unity
         public static UnityGLES _30 = (UnityGLES) "30";
         public static UnityGLES _31 = (UnityGLES) "31";
         public static UnityGLES _32 = (UnityGLES) "32";
-        public static explicit operator UnityGLES(string value)
+        public static implicit operator UnityGLES(string value)
         {
             return new UnityGLES { Value = value };
         }
@@ -3860,7 +3860,7 @@ namespace Nuke.Common.Tools.Unity
         public static UnityStackTraceLogType None = (UnityStackTraceLogType) "None";
         public static UnityStackTraceLogType Script_Only = (UnityStackTraceLogType) "Script Only";
         public static UnityStackTraceLogType Full = (UnityStackTraceLogType) "Full";
-        public static explicit operator UnityStackTraceLogType(string value)
+        public static implicit operator UnityStackTraceLogType(string value)
         {
             return new UnityStackTraceLogType { Value = value };
         }
@@ -3882,7 +3882,7 @@ namespace Nuke.Common.Tools.Unity
         public static UnityPlatformTextureFormat etc = (UnityPlatformTextureFormat) "etc";
         public static UnityPlatformTextureFormat etc2 = (UnityPlatformTextureFormat) "etc2";
         public static UnityPlatformTextureFormat astc = (UnityPlatformTextureFormat) "astc";
-        public static explicit operator UnityPlatformTextureFormat(string value)
+        public static implicit operator UnityPlatformTextureFormat(string value)
         {
             return new UnityPlatformTextureFormat { Value = value };
         }

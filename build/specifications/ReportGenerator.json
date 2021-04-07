@@ -61,7 +61,7 @@
           {
             "name": "FileFilters",
             "type": "List<string>",
-            "format": "-classfilters:{value}",
+            "format": "-filefilters:{value}",
             "separator": ";",
             "help": "Optional list of files that should be included (+) or excluded (-) in the report. Exclusion filters take precedence over inclusion filters. Wildcards are allowed. Default is +*."
           },

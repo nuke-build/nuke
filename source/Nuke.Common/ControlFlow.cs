@@ -34,18 +34,18 @@ namespace Nuke.Common
         /// Logs a message as failure. Halts execution.
         /// </summary>
         [ContractAnnotation("=> halt")]
-        public static void Fail(object value)
+        public static void Fail(object value, Exception exception = null)
         {
-            Fail(value.ToString());
+            Fail(value.ToString(), exception);
         }
 
         /// <summary>
         /// Logs a message as failure. Halts execution.
         /// </summary>
         [ContractAnnotation("=> halt")]
-        public static void Fail(string text)
+        public static void Fail(string text, Exception exception = null)
         {
-            throw new Exception(text);
+            throw new Exception(text, innerException: exception);
         }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace Nuke.Common
         /// </example>
         [ContractAnnotation("defaultValue: notnull => notnull")]
         [CanBeNull]
-        public static T SuppressErrors<T>(Func<T> action, T defaultValue = default, bool includeStackTrace = false)
+        public static T SuppressErrors<T>(Func<T> action, T defaultValue = default, bool includeStackTrace = false, bool logWarning = true)
         {
-            return (T) SuppressErrorsIf(condition: true, action, defaultValue, includeStackTrace);
+            return (T) SuppressErrorsIf(condition: true, action, defaultValue, includeStackTrace, logWarning);
         }
 
         /// <summary>
@@ -168,7 +168,12 @@ namespace Nuke.Common
         /// </summary>
         [ContractAnnotation("defaultValue: notnull => notnull")]
         [CanBeNull]
-        private static object SuppressErrorsIf(bool condition, Delegate action, object defaultValue = null, bool includeStackTrace = false)
+        private static object SuppressErrorsIf(
+            bool condition,
+            Delegate action,
+            object defaultValue = null,
+            bool includeStackTrace = false,
+            bool logWarning = true)
         {
             if (!condition)
                 return defaultValue;
@@ -179,10 +184,14 @@ namespace Nuke.Common
             }
             catch (Exception exception)
             {
-                var innerException = exception.InnerException.NotNull("innerException != null");
-                Logger.Warn(includeStackTrace
-                    ? new[] { innerException.Message, "StackTrace:", innerException.StackTrace }.JoinNewLine()
-                    : innerException.Message);
+                if (logWarning)
+                {
+                    var innerException = exception.InnerException.NotNull("innerException != null");
+                    Logger.Warn(includeStackTrace
+                        ? new[] { innerException.Message, "StackTrace:", innerException.StackTrace }.JoinNewLine()
+                        : innerException.Message);
+                }
+
                 return defaultValue;
             }
         }
