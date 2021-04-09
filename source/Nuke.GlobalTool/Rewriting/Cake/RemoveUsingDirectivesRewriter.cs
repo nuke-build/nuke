@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Nuke.GlobalTool.Rewriting.Cake
 {
-    internal class RemoveUsingDirectivesRewriter : CSharpSyntaxRewriter
+    internal class RemoveUsingDirectivesRewriter : SafeSyntaxRewriter
     {
         public override SyntaxNode VisitUsingDirective(UsingDirectiveSyntax node)
         {

@@ -18,7 +18,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Nuke.GlobalTool.Rewriting.Cake
 {
-    internal class ToolInvocationRewriter : CSharpSyntaxRewriter
+    internal class ToolInvocationRewriter : SafeSyntaxRewriter
     {
         private static IEnumerable<ReplacementData> Replacements =>
             new ReplacementData[]

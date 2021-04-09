@@ -14,7 +14,7 @@ using Nuke.Common.Tools.MSBuild;
 
 namespace Nuke.GlobalTool.Rewriting.Cake
 {
-    internal class IdentifierNameRewriter : CSharpSyntaxRewriter
+    internal class IdentifierNameRewriter : SafeSyntaxRewriter
     {
         private static Dictionary<string, string> Replacements =>
             new()

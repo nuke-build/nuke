@@ -13,7 +13,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Nuke.GlobalTool.Rewriting.Cake
 {
-    internal class FormattingRewriter : CSharpSyntaxRewriter
+    internal class FormattingRewriter : SafeSyntaxRewriter
     {
         private static readonly SyntaxTrivia[] Indent = { Space, Space, Space, Space };
 
