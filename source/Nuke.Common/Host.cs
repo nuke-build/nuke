@@ -38,7 +38,7 @@ namespace Nuke.Common
             }
         }
 
-        public static Host Instance { get; private set; }
+        public static Host Instance { get; private set; } = Default;
 
         public static Host Default =>
             AvailableTypes
