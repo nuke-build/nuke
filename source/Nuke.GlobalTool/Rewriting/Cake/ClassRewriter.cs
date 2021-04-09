@@ -17,7 +17,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Nuke.GlobalTool.Rewriting.Cake
 {
-    internal class ClassRewriter : CSharpSyntaxRewriter
+    internal class ClassRewriter : SafeSyntaxRewriter
     {
         private static readonly SyntaxTrivia BeginMultilineComment = SyntaxTrivia(SyntaxKind.MultiLineCommentTrivia, "/*");
         private static readonly SyntaxTrivia EndMultilineComment = SyntaxTrivia(SyntaxKind.MultiLineCommentTrivia, "*/");
