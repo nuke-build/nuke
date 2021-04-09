@@ -6,6 +6,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -41,6 +42,11 @@ namespace Nuke.Common.IO
 
         public static void XmlPoke(string path, string xpath, object value, params (string prefix, string uri)[] namespaces)
         {
+            XmlPoke(path, xpath, value, Encoding.UTF8, namespaces);
+        }
+
+        public static void XmlPoke(string path, string xpath, object value, Encoding encoding, params (string prefix, string uri)[] namespaces)
+        {
             var document = XDocument.Load(path, LoadOptions.PreserveWhitespace);
             var (elements, attributes) = GetObjects(document, xpath, namespaces);
 
@@ -50,7 +56,7 @@ namespace Nuke.Common.IO
             elements.SingleOrDefault()?.SetValue(value);
             attributes.SingleOrDefault()?.SetValue(value);
 
-            var writerSettings = new XmlWriterSettings { OmitXmlDeclaration = document.Declaration == null };
+            var writerSettings = new XmlWriterSettings { OmitXmlDeclaration = document.Declaration == null, Encoding = encoding };
             using var xmlWriter = XmlWriter.Create(path, writerSettings);
             document.Save(xmlWriter);
         }
