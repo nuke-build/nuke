@@ -24,11 +24,11 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Cache .tmp, ~/.nuget/packages
+      - name: Cache .nuke/temp, ~/.nuget/packages
         uses: actions/cache@v2
         with:
           path: |
-            .tmp
+            .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
@@ -53,11 +53,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Cache .tmp, ~/.nuget/packages
+      - name: Cache .nuke/temp, ~/.nuget/packages
         uses: actions/cache@v2
         with:
           path: |
-            .tmp
+            .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
@@ -82,11 +82,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Cache .tmp, ~/.nuget/packages
+      - name: Cache .nuke/temp, ~/.nuget/packages
         uses: actions/cache@v2
         with:
           path: |
-            .tmp
+            .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'

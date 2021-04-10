@@ -60,7 +60,7 @@ namespace Nuke.Common.CI.GitHubActions
         public string[] ImportSecrets { get; set; } = new string[0];
         public string ImportGitHubTokenAs { get; set; }
 
-        public string[] CacheIncludePatterns { get; set; } = { ".tmp", "~/.nuget/packages" };
+        public string[] CacheIncludePatterns { get; set; } = { ".nuke/temp", "~/.nuget/packages" };
         public string[] CacheExcludePatterns { get; set; } = new string[0];
         public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj" };
 
