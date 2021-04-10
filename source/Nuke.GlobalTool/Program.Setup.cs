@@ -383,7 +383,7 @@ namespace Nuke.GlobalTool
             if (solutionFile != null)
                 dictionary["Solution"] = rootDirectory.GetUnixRelativePathTo(solutionFile).ToString();
             SerializationTasks.JsonSerializeToFile(dictionary, parametersFile);
-            GitTasks.Git($"add {parametersFile}", logInvocation: false, logOutput: false);
+            GitTasks.Git($"add \"{parametersFile}\"", logInvocation: false, logOutput: false);
         }
     }
 }
