@@ -29,6 +29,9 @@ namespace Nuke.Common.CI
             if (hasConfigurationChanged.All(x => !x))
                 return;
 
+            if (build.Help)
+                return;
+
             Logger.Info("Press any key to continue...");
             Console.ReadKey();
         }
