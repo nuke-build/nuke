@@ -20,7 +20,7 @@ namespace Nuke.Common.Execution
             if (NukeBuild.IsLocalBuild && ShouldNotify)
             {
                 Notify();
-                Logger.Info("Press any key to continue...");
+                Logger.Info("Press any key to continue without update...");
                 Console.ReadKey();
             }
         }
