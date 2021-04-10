@@ -25,6 +25,7 @@ namespace Nuke.Common.Execution
 
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
+            // TODO: probably remove
             if (!Directory.Exists(Constants.GetNukeDirectory(NukeBuild.RootDirectory)))
                 return;
 
@@ -78,11 +79,12 @@ namespace Nuke.Common.Execution
                 }
                 catch (Exception exception)
                 {
-                    throw new Exception($"Failed to parse parameters file '{file}'.", exception);
+                    throw new Exception($"Failed parsing parameters file '{file}'.", exception);
                 }
             }
 
             return new[] { (File: Constants.GetDefaultParametersFile(NukeBuild.RootDirectory), Profile: Constants.DefaultProfileName) }
+                .Where(x => File.Exists(x.File))
                 .Concat(NukeBuild.LoadedLocalProfiles.Select(x => (File: Constants.GetParametersProfileFile(NukeBuild.RootDirectory, x), Profile: x)))
                 .ForEachLazy(x => ControlFlow.Assert(File.Exists(x.File), $"File.Exists({x.File})"))
                 .SelectMany(x => Load(x.File), (x, r) => (x.Profile, r.Name, r.Values));
