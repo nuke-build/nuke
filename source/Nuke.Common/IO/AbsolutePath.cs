@@ -98,6 +98,7 @@ namespace Nuke.Common.IO
 
         public override string ToString()
         {
+            // TODO: DoubleQuoteIfNeeded ?
             return _path;
         }
     }
