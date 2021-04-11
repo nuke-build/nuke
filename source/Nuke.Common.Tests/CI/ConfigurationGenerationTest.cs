@@ -139,7 +139,8 @@ namespace Nuke.Common.Tests.CI
                         OnPullRequestTags = new[] { "pull_request_tag" },
                         OnPullRequestIncludePaths = new[] { "pull_request_include_path" },
                         OnPullRequestExcludePaths = new[] { "pull_request_exclude_path" },
-                        OnWorkflowDispatchInputs = new[] { "NuGetApiKey", "OtherData" }
+                        OnWorkflowDispatchInputs = new[] { "OptionalInput" },
+                        OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" }
                     }
                 );
 

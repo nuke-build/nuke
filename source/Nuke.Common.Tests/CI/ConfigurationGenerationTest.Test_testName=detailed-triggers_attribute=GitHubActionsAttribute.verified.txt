@@ -35,10 +35,12 @@ on:
       - !pull_request_exclude_path
   workflow_dispatch:
     inputs:
-      NuGetApiKey:
-        description: "NuGet Api Key"
-      OtherData:
-        description: "Other Data"
+      OptionalInput:
+        description: "Optional Input"
+        required: false
+      RequiredInput:
+        description: "Required Input"
+        required: true
   schedule:
     - cron: '* 0 * * *'
 
@@ -58,8 +60,8 @@ jobs:
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
         env:
-          NuGetApiKey: ${{ github.event.inputs.NuGetApiKey }}
-          OtherData: ${{ github.event.inputs.OtherData }}
+          OptionalInput: ${{ github.event.inputs.OptionalInput }}
+          RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
@@ -87,8 +89,8 @@ jobs:
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
         env:
-          NuGetApiKey: ${{ github.event.inputs.NuGetApiKey }}
-          OtherData: ${{ github.event.inputs.OtherData }}
+          OptionalInput: ${{ github.event.inputs.OptionalInput }}
+          RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
@@ -116,8 +118,8 @@ jobs:
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
         env:
-          NuGetApiKey: ${{ github.event.inputs.NuGetApiKey }}
-          OtherData: ${{ github.event.inputs.OtherData }}
+          OptionalInput: ${{ github.event.inputs.OptionalInput }}
+          RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - uses: actions/upload-artifact@v1
         with:
           name: src

@@ -55,6 +55,7 @@ namespace Nuke.Common.CI.GitHubActions
         public string[] OnPullRequestIncludePaths { get; set; } = new string[0];
         public string[] OnPullRequestExcludePaths { get; set; } = new string[0];
         public string[] OnWorkflowDispatchInputs { get; set; } = new string[0];
+        public string[] OnWorkflowDispatchRequiredInputs { get; set; } = new string[0];
         public string OnCronSchedule { get; set; }
 
         public string[] ImportSecrets { get; set; } = new string[0];
@@ -148,7 +149,7 @@ namespace Nuke.Common.CI.GitHubActions
 
         protected virtual IEnumerable<(string Key, string Value)> GetImports()
         {
-            foreach (var input in OnWorkflowDispatchInputs)
+            foreach (var input in OnWorkflowDispatchInputs.Concat(OnWorkflowDispatchRequiredInputs))
                 yield return (input, $"${{{{ github.event.inputs.{input} }}}}");
 
             static string GetSecretValue(string secret)
@@ -203,11 +204,13 @@ namespace Nuke.Common.CI.GitHubActions
                              };
             }
 
-            if (OnWorkflowDispatchInputs.Length > 0)
+            if (OnWorkflowDispatchInputs.Length > 0 ||
+                OnWorkflowDispatchRequiredInputs.Length > 0)
             {
                 yield return new GitHubActionsWorkflowDispatchTrigger
                              {
-                                 Inputs = OnWorkflowDispatchInputs
+                                 Inputs = OnWorkflowDispatchInputs,
+                                 RequiredInputs = OnWorkflowDispatchRequiredInputs,
                              };
             }
 
