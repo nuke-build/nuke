@@ -6,13 +6,15 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
     [PublicAPI]
     public class GitHubActionsWorkflowDispatchTrigger : GitHubActionsDetailedTrigger
     {
-        public string[] Inputs { get; set; }
+        public string[] OptionalInputs { get; set; }
+        public string[] RequiredInputs { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
@@ -22,14 +24,18 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                 writer.WriteLine("inputs:");
                 using (writer.Indent())
                 {
-                    foreach (var input in Inputs)
+                    void WriteInput(string input, bool required)
                     {
                         writer.WriteLine($"{input}:");
                         using (writer.Indent())
                         {
                             writer.WriteLine($"description: {input.SplitCamelHumpsWithSeparator(" ", Constants.KnownWords).DoubleQuote()}");
+                            writer.WriteLine($"required: {required.ToString().ToLowerInvariant()}");
                         }
                     }
+
+                    OptionalInputs.ForEach(x => WriteInput(x, required: false));
+                    RequiredInputs.ForEach(x => WriteInput(x, required: true));
                 }
             }
         }
