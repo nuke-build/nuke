@@ -1,0 +1,24 @@
+name: Feature Request
+description: "Requires Sponsorship 💖"
+labels: "enhancement :sparkles:"
+body:
+  - type: markdown
+    attributes:
+      value: "***Important:** To create a bug report, you must be an active supporter of our community, i.e., a sponsor of NUKE on [GitHub](https://github.com/sponsors/matkoch)/[OpenCollective](https://opencollective.com/nuke), a frequent blogger/mentor, or greatly involved in any other recognized OSS project. High-impact bugs may be reported/fixed at any time, feature ideas may be discussed openly on [Slack](https://slofile.com/slack/nukebuildnet). Please don't take offense at this, particularly when an issue is closed with reference to this text. It is simply a time management decision. Also note, that unless being a bronze/silver/gold sponsor, there is no guarantee as of when an issue or pull-request will be acknowledged or resolved.*"
+
+  - type: textarea
+    attributes:
+      label: Description
+      description: What should the new feature do?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Usage Example
+      description: How would the proposed feature be used?
+      render: code
+
+  - type: textarea
+    attributes:
+      label: Alternative
+      description: What is the current alternative?
