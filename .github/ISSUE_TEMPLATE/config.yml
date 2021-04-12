@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Contact us on Slack
+    url: https://slofile.com/slack/nukebuildnet
+    about: Get in touch with the whole community
+  - name: Contact us on Twitter
+    url: https://twitter.com/nukebuildnet
+    about: Make it short in a tweet

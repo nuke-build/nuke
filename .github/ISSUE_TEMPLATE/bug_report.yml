@@ -1,0 +1,40 @@
+name: Bug Report
+description: "Requires Sponsorship 💖"
+labels: "bug :beetle:"
+body:
+  - type: markdown
+    attributes:
+      value: "***Important:** To create a bug report, you must be an active supporter of our community, i.e., a sponsor of NUKE on [GitHub](https://github.com/sponsors/matkoch)/[OpenCollective](https://opencollective.com/nuke), a frequent blogger/mentor, or greatly involved in any other recognized OSS project. High-impact bugs may be reported/fixed at any time, feature ideas may be discussed openly on [Slack](https://slofile.com/slack/nukebuildnet). Please don't take offense at this, particularly when an issue is closed with reference to this text. It is simply a time management decision. Also note, that unless being a bronze/silver/gold sponsor, there is no guarantee as of when an issue or pull-request will be acknowledged or resolved.*"
+
+  - type: input
+    id: execution_engine_version
+    attributes:
+      label: Version
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Relevant Code / Invocations
+      description: What part of your build or build invocation seems relevant?
+      render: code
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: What actually happened?
+      placeholder: You may skip this if a stacktrace is provided in the next field.
+  - type: textarea
+    id: stacktrace
+    attributes:
+      label: Stacktrace
+      render: code
+
+  - type: textarea
+    attributes:
+      label: Anything else we should know?
