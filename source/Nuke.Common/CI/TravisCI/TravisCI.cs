@@ -18,6 +18,8 @@ namespace Nuke.Common.CI.TravisCI
     [ExcludeFromCodeCoverage]
     public class TravisCI : Host, IBuildServer
     {
+        public new static TravisCI Instance => Host.Instance as TravisCI;
+
         internal static bool IsRunningTravisCI => !Environment.GetEnvironmentVariable("TRAVIS").IsNullOrEmpty();
 
         internal TravisCI()
