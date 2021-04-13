@@ -18,6 +18,8 @@ namespace Nuke.Common.CI.Bitrise
     [ExcludeFromCodeCoverage]
     public class Bitrise : Host, IBuildServer
     {
+        public new static Bitrise Instance => Host.Instance as Bitrise;
+
         internal static bool IsRunningBitrise => !Environment.GetEnvironmentVariable("BITRISE_BUILD_URL").IsNullOrEmpty();
 
         private static DateTime ConvertUnixTimestamp(long timestamp)
