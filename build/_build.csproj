@@ -10,6 +10,11 @@
     <NukeRootDirectory>.\..</NukeRootDirectory>
   </PropertyGroup>
 
+  <PropertyGroup Condition="Exists('..\external\enterprise\.gitignore')">
+    <NukeEnterprise>True</NukeEnterprise>
+    <AppendTargetFrameworkToOutputPath>True</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
   <!-- Test properties for MSBuild integration -->
   <PropertyGroup>
     <NukeTasksEnabled Condition="'$(NukeTasksEnabled)' == ''">False</NukeTasksEnabled>
@@ -56,19 +61,10 @@
     <ProjectReference Include="..\source\Nuke.Components\Nuke.Components.csproj" />
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
     <ProjectReference Include="..\source\Nuke.SourceGenerators\Nuke.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
-  </ItemGroup>
-
-  <!-- Import Nuke.Enterprise -->
-  <PropertyGroup Condition="Exists('..\external\enterprise\.gitignore')">
-    <DefineConstants>$(DefineConstants);ENTERPRISE</DefineConstants>
-    <NukeEnterprise>True</NukeEnterprise>
-    <AppendTargetFrameworkToOutputPath>True</AppendTargetFrameworkToOutputPath>
-  </PropertyGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\external\enterprise\Nuke.Enterprise.csproj" Condition="'$(NukeEnterprise)' == 'True'" />
   </ItemGroup>
 
+  <Import Project="..\external\enterprise\Nuke.Enterprise.props" Condition="'$(NukeEnterprise)' == 'True'" />
   <Import Project="..\source\Nuke.Common\Nuke.Common.targets" />
 
 </Project>
