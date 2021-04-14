@@ -17,7 +17,14 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
     OnPushBranchesIgnore = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
     OnPullRequestBranches = new[] { DevelopBranch },
     PublishArtifacts = false,
-    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
+    InvokedTargets = new[]
+                     {
+                         nameof(ITest.Test),
+                         nameof(IPack.Pack),
+#if NUKE_ENTERPRISE
+                         nameof(Enterprise)
+#endif
+                     },
     CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" },
     ImportSecrets = new[]
                     {

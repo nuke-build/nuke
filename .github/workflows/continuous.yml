@@ -38,8 +38,8 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('global.json', 'source/**/*.csproj') }}
-      - name: Run './build.cmd Test Pack'
-        run: ./build.cmd Test Pack
+      - name: Run './build.cmd Test Pack Enterprise'
+        run: ./build.cmd Test Pack Enterprise
         env:
           EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
           SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
@@ -55,8 +55,8 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('global.json', 'source/**/*.csproj') }}
-      - name: Run './build.cmd Test Pack'
-        run: ./build.cmd Test Pack
+      - name: Run './build.cmd Test Pack Enterprise'
+        run: ./build.cmd Test Pack Enterprise
         env:
           EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
           SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
@@ -72,8 +72,8 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('global.json', 'source/**/*.csproj') }}
-      - name: Run './build.cmd Test Pack'
-        run: ./build.cmd Test Pack
+      - name: Run './build.cmd Test Pack Enterprise'
+        run: ./build.cmd Test Pack Enterprise
         env:
           EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
           SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}

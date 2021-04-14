@@ -6,14 +6,20 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
+using Nuke.Common.IO;
+using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Components;
 using Nuke.Enterprise.Auditing;
 using Nuke.Enterprise.Notifications;
+using static Nuke.Common.IO.FileSystemTasks;
+using static Nuke.Common.Tools.DotNet.DotNetTasks;
 
 [AuditBuildMembers(
     DeclaringTypes = new[] { typeof(Build) },
@@ -23,6 +29,23 @@ using Nuke.Enterprise.Notifications;
 partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazGitHubAccessToken
 {
     string IHazGitHubAccessToken.AccessToken => GitHubToken;
+
+    AbsolutePath EnterprisePackageFile => From<IPack>().PackagesDirectory.GlobFiles($"{Solution.Nuke_Enterprise.Name}.*.nupkg").Single();
+
+    [UsedImplicitly]
+    Target Enterprise => _ => _
+        .DependsOn<IPack>()
+        .Before<IPublish>()
+        .OnlyWhenStatic(() => GitHubActions != null && GitHubActions.GitHubJob == "ubuntu-latest")
+        .Executes(() =>
+        {
+            DotNetNuGetPush(_ => _
+                .SetTargetPath(EnterprisePackageFile)
+                .SetSource(GitHubRegistrySource)
+                .SetApiKey(EnterpriseAccessToken));
+
+            DeleteFile(EnterprisePackageFile);
+        });
 
     public class DeploymentSlackNotificationAttribute : CustomSlackNotificationAttribute
     {
