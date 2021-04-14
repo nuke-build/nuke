@@ -36,6 +36,6 @@ artifacts:
 
 environment:
   EnterpriseAccessToken:
-    secure: xN0u4hko5f9nZKV8l87oQpE5awbItu1NaGgw2m2lX+5diHwjcCbJNKyOMP3quZm4
+    secure: NS0OfaCbCEzJFNcG9uYj36hZklejQSHYI3pOGeO3EtWntRiFv/m39AJY3c1MCjRj
   SlackUserAccessToken:
     secure: cMArtN7cGnW6zI9ryMiQZSfcv2y+6Ads8KPvZIN18IQnpTBY6zzBEyCL+1i8v4OF08HW7oY3BDIXWEMT6PdeSQ==
