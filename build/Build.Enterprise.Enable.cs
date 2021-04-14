@@ -14,7 +14,7 @@ using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Utilities;
 
-#if !ENTERPRISE
+#if !NUKE_ENTERPRISE
 [RestartWithEnterprise]
 #endif
 partial class Build

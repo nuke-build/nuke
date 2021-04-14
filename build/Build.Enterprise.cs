@@ -2,7 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-#if ENTERPRISE
+#if NUKE_ENTERPRISE
 
 using System;
 using System.Linq;
