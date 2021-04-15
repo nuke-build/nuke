@@ -39,7 +39,8 @@ namespace Nuke.Common
             Description = description;
         }
 
-        public virtual string Description { get; }
+        [CanBeNull]
+        public virtual string Description { get; set; }
 
         [CanBeNull]
         public string Name { get; set; }
