@@ -82,7 +82,7 @@ namespace Nuke.Components
 
         sealed Configure<DotNetTestSettings> TestSettingsBase => _ => _
             .SetConfiguration(Configuration)
-            .SetNoBuild(InvokedTargets.Contains(Compile))
+            .SetNoBuild(SucceededTargets.Contains(Compile))
             .ResetVerbosity()
             .SetResultsDirectory(TestResultDirectory)
             .When(InvokedTargets.Contains((this as IReportCoverage)?.ReportCoverage) || IsServerBuild, _ => _

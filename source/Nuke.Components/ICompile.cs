@@ -47,7 +47,7 @@ namespace Nuke.Components
             .SetConfiguration(Configuration)
             .When(IsServerBuild, _ => _
                 .EnableContinuousIntegrationBuild())
-            // .SetNoRestore(InvokedTargets.Contains(Restore))
+            .SetNoRestore(SucceededTargets.Contains(Restore))
             .WhenNotNull(this as IHazGitRepository, (_, o) => _
                 .SetRepositoryUrl(o.GitRepository.HttpsUrl))
             .WhenNotNull(this as IHazGitVersion, (_, o) => _
