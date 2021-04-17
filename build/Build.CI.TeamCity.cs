@@ -13,7 +13,7 @@ using Nuke.Common.Utilities.Collections;
 using Nuke.Components;
 
 [TeamCity(
-    Version = "2020.1",
+    Version = "2020.2",
     VcsTriggeredTargets =
         new[]
         {
