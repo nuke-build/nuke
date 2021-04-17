@@ -38,6 +38,8 @@ namespace Nuke.Components
             .SetConfiguration(Configuration)
             .SetNoBuild(SucceededTargets.Contains(Compile))
             .SetOutputDirectory(PackagesDirectory)
+            .WhenNotNull(this as IHazGitRepository, (_, o) => _
+                .SetRepositoryUrl(o.GitRepository.HttpsUrl))
             .WhenNotNull(this as IHazGitVersion, (_, o) => _
                 .SetVersion(o.Versioning.NuGetVersionV2))
             .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _
