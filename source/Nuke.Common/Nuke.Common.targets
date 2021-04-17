@@ -8,6 +8,14 @@
 
   <Import Project="$(NukeTasksDirectory)\Nuke.MSBuildTasks.targets" Condition="'$(NukeTasksEnabled)' != 'False'" />
 
+  <ItemGroup Condition="'$(NukeEnterprise)' != 'True'">
+    <Reference Include="$(NukeTasksDirectory)\Nuke.Enterprise.dll" Condition="Exists('$(NukeTasksDirectory)\Nuke.Enterprise.dll')">
+      <Private>False</Private>
+      <CopyLocal>False</CopyLocal>
+      <ExternallyResolved>True</ExternallyResolved>
+    </Reference>
+  </ItemGroup>
+
   <PropertyGroup>
     <NukeScriptDirectory Condition="'$(NukeScriptDirectory)' == ''">$(NukeRootDirectory)</NukeScriptDirectory>
   </PropertyGroup>
