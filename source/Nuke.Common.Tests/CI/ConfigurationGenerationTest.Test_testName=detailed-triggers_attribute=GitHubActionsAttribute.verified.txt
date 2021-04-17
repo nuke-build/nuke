@@ -21,10 +21,10 @@ on:
     branches:
       - push_branch
     tags:
-      - push_tag
+      - 'push_tag/*'
     paths:
       - push_include_path
-      - !push_exclude_path
+      - '!push_exclude_path'
   pull_request:
     branches:
       - pull_request_branch
@@ -32,7 +32,7 @@ on:
       - pull_request_tag
     paths:
       - pull_request_include_path
-      - !pull_request_exclude_path
+      - '!pull_request_exclude_path/**'
   workflow_dispatch:
     inputs:
       OptionalInput:

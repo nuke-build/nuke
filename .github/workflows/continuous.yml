@@ -20,7 +20,7 @@ on:
   push:
     branches-ignore:
       - master
-      - release/*
+      - 'release/*'
   pull_request:
     branches:
       - develop

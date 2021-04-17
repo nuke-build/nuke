@@ -132,7 +132,7 @@ namespace Nuke.Common.Tests.CI
                         InvokedTargets = new[] { nameof(Test) },
                         OnCronSchedule = "* 0 * * *",
                         OnPushBranches = new[] { "push_branch" },
-                        OnPushTags = new[] { "push_tag" },
+                        OnPushTags = new[] { "push_tag/*" },
                         OnPushIncludePaths = new[] { "push_include_path" },
                         OnPushExcludePaths = new[] { "push_exclude_path" },
                         OnPullRequestBranches = new[] { "pull_request_branch" },
