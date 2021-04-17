@@ -117,7 +117,7 @@ namespace Nuke.Common.Execution
                     build.ReportSummary(_ =>
                         target.SummaryInformation.Any()
                             ? target.SummaryInformation
-                            : _.AddPair(exception.GetType().Name, exception.Message));
+                            : _.AddPair(exception.GetType().Name, exception.Message.SplitLineBreaks().First()));
 
                     Logger.Error(exception);
                     target.Status = ExecutionStatus.Failed;
