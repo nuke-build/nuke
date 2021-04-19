@@ -31,7 +31,7 @@ create(DslContext.projectId, Template({
             publisher = github {
                 githubUrl = "https://api.github.com"
                 authType = personalToken {
-                    token = "credentialsJSON:af125343-b8b3-47e9-8cc4-a978d3f1c953"
+                    token = "credentialsJSON:30bca7f7-b76a-4431-9f84-b4bc1459b918"
                 }
             }
         }
