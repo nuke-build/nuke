@@ -8,12 +8,20 @@
 
   <Import Project="$(NukeTasksDirectory)\Nuke.MSBuildTasks.targets" Condition="'$(NukeTasksEnabled)' != 'False'" />
 
+  <ItemGroup Condition="'$(NukeEnterprise)' != 'True'">
+    <Reference Include="$(NukeTasksDirectory)\Nuke.Enterprise.dll" Condition="Exists('$(NukeTasksDirectory)\Nuke.Enterprise.dll')">
+      <Private>False</Private>
+      <CopyLocal>False</CopyLocal>
+      <ExternallyResolved>True</ExternallyResolved>
+    </Reference>
+  </ItemGroup>
+
   <PropertyGroup>
     <NukeScriptDirectory Condition="'$(NukeScriptDirectory)' == ''">$(NukeRootDirectory)</NukeScriptDirectory>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(NukeDefaultExcludes)' != 'False'">
-    <None Remove="*.csproj.DotSettings;.editorconfig" />
+    <None Remove="*.csproj.DotSettings;.editorconfig;Directory.Build.props;Directory.Build.targets" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(NukeScriptDirectory)' != ''">
@@ -25,6 +33,7 @@
   <ItemGroup Condition="'$(NukeRootDirectory)' != ''">
     <None Include="$(NukeRootDirectory)\.nuke\parameters.json" LinkBase="config" />
     <None Include="$(NukeRootDirectory)\.nuke\parameters.*.json" LinkBase="config" />
+    <None Include="$(NukeRootDirectory)\**\Directory.Build.*" LinkBase="Directory.Build" />
     <None Include="$(NukeRootDirectory)\global.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\global.json')" />
     <None Include="$(NukeRootDirectory)\nuget.config" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\nuget.config')" />
     <None Include="$(NukeRootDirectory)\GitVersion.yml" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\GitVersion.yml')" />

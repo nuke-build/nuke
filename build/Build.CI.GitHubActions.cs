@@ -4,8 +4,7 @@
 
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Components;
-using static Nuke.Components.IHazTwitterCredentials;
-#if ENTERPRISE
+#if NUKE_ENTERPRISE
 using Nuke.Enterprise.Notifications;
 using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #endif
@@ -23,7 +22,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
     ImportSecrets = new[]
                     {
                         nameof(EnterpriseAccessToken),
-#if ENTERPRISE
+#if NUKE_ENTERPRISE
                         Slack + nameof(IHazSlackCredentials.UserAccessToken),
 #endif
                     })]

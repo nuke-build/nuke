@@ -17,6 +17,8 @@ namespace Nuke.Common.CI.Bamboo
     [ExcludeFromCodeCoverage]
     public class Bamboo : Host, IBuildServer
     {
+        public new static Bamboo Instance => Host.Instance as Bamboo;
+
         internal static bool IsRunningBamboo => !Environment.GetEnvironmentVariable("BAMBOO_SERVER").IsNullOrEmpty();
 
         internal Bamboo()

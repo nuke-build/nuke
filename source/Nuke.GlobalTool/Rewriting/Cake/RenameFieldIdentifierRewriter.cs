@@ -14,7 +14,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Nuke.GlobalTool.Rewriting.Cake
 {
-    internal class RenameFieldIdentifierRewriter : CSharpSyntaxRewriter
+    internal class RenameFieldIdentifierRewriter : SafeSyntaxRewriter
     {
         private readonly Dictionary<string, string> _renames = new();
 

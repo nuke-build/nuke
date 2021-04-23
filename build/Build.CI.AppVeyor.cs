@@ -4,7 +4,7 @@
 
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Components;
-#if ENTERPRISE
+#if NUKE_ENTERPRISE
 using Nuke.Enterprise.Notifications;
 #endif
 
@@ -26,7 +26,7 @@ using Nuke.Enterprise.Notifications;
             AppVeyorSecrets.TwitterAccessTokenSecret,
             AppVeyorSecrets.GitterAuthToken,
             AppVeyorSecrets.SlackWebhook,
-#if ENTERPRISE
+#if NUKE_ENTERPRISE
             AppVeyorSecrets.SlackUserAccessToken
 #endif
         })]
@@ -41,7 +41,7 @@ using Nuke.Enterprise.Notifications;
         new string[]
         {
             AppVeyorSecrets.EnterpriseAccessToken,
-#if ENTERPRISE
+#if NUKE_ENTERPRISE
             AppVeyorSecrets.SlackUserAccessToken
 #endif
         })]
@@ -51,7 +51,7 @@ partial class Build
     {
         public const string EnterpriseAccessToken = EnterpriseAccessTokenName + ":" + EnterpriseAccessTokenValue;
         const string EnterpriseAccessTokenName = nameof(Build.EnterpriseAccessToken);
-        const string EnterpriseAccessTokenValue = "xN0u4hko5f9nZKV8l87oQpE5awbItu1NaGgw2m2lX+5diHwjcCbJNKyOMP3quZm4";
+        const string EnterpriseAccessTokenValue = "NS0OfaCbCEzJFNcG9uYj36hZklejQSHYI3pOGeO3EtWntRiFv/m39AJY3c1MCjRj";
 
         public const string NuGetApiKey = NuGetApiKeyName + ":" + NuGetApiKeyValue;
         const string NuGetApiKeyName = nameof(PublicNuGetApiKey);
@@ -85,7 +85,7 @@ partial class Build
         const string SlackWebhookName = nameof(Build.SlackWebhook);
         const string SlackWebhookValue = "xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hkn8u/b12lFivnxtTPuMWjAYkoPLlkJ4v39FLYPcxGYbAxRRMcJiHjrNyPtFfK6ddo=";
 
-#if ENTERPRISE
+#if NUKE_ENTERPRISE
         public const string SlackUserAccessToken = SlackUserAccessTokenName + ":" + SlackUserAccessTokenValue;
         const string SlackUserAccessTokenName = IHazSlackCredentials.Slack + nameof(IHazSlackCredentials.UserAccessToken);
         const string SlackUserAccessTokenValue = "cMArtN7cGnW6zI9ryMiQZSfcv2y+6Ads8KPvZIN18IQnpTBY6zzBEyCL+1i8v4OF08HW7oY3BDIXWEMT6PdeSQ==";

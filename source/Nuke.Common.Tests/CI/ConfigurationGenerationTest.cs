@@ -132,14 +132,15 @@ namespace Nuke.Common.Tests.CI
                         InvokedTargets = new[] { nameof(Test) },
                         OnCronSchedule = "* 0 * * *",
                         OnPushBranches = new[] { "push_branch" },
-                        OnPushTags = new[] { "push_tag" },
+                        OnPushTags = new[] { "push_tag/*" },
                         OnPushIncludePaths = new[] { "push_include_path" },
                         OnPushExcludePaths = new[] { "push_exclude_path" },
                         OnPullRequestBranches = new[] { "pull_request_branch" },
                         OnPullRequestTags = new[] { "pull_request_tag" },
                         OnPullRequestIncludePaths = new[] { "pull_request_include_path" },
-                        OnPullRequestExcludePaths = new[] { "pull_request_exclude_path" },
-                        OnWorkflowDispatchInputs = new[] { "NuGetApiKey", "OtherData" }
+                        OnPullRequestExcludePaths = new[] { "pull_request_exclude_path/**" },
+                        OnWorkflowDispatchOptionalInputs = new[] { "OptionalInput" },
+                        OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" }
                     }
                 );
 

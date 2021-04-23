@@ -123,7 +123,7 @@ namespace Nuke.MSBuildTasks
 
             return method switch
             {
-                "blob" => new[] { ($"https://raw.githubusercontent.com/{identifier}/{method}/{branch}/{path}", string.Empty) },
+                "blob" => new[] { ($"https://raw.githubusercontent.com/{identifier}/{branch}/{path}", string.Empty) },
                 "tree" => GitRepository.FromUrl($"https://github.com/{identifier}").GetGitHubDownloadUrls(path).Result,
                 _ => throw new NotSupportedException($"External URL '{externalFileIdentity}' is not supported.")
             };

@@ -28,7 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.MSBuildTasks", "source
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Components", "source\Nuke.Components\Nuke.Components.csproj", "{E255E1E6-2D8D-47AC-899F-CD6EEFE8CAB5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Enterprise", "external\enterprise\Nuke.Enterprise.csproj", "{5205C6B4-AA9B-45BF-ADFD-F48E631B1935}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Enterprise", "external\enterprise\src\Nuke.Enterprise\Nuke.Enterprise.csproj", "{5205C6B4-AA9B-45BF-ADFD-F48E631B1935}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.SourceGenerators", "source\Nuke.SourceGenerators\Nuke.SourceGenerators.csproj", "{6FA754E7-04F4-4C5E-BA50-0D87028B0963}"
 EndProject

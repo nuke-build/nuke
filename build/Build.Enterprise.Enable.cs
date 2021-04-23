@@ -14,7 +14,7 @@ using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Utilities;
 
-#if !ENTERPRISE
+#if !NUKE_ENTERPRISE
 [RestartWithEnterprise]
 #endif
 partial class Build
@@ -29,9 +29,10 @@ partial class Build
             var enterpriseDirectory = ((Build) build).ExternalRepositoriesDirectory / "enterprise";
             if (accessToken.IsNullOrEmpty())
             {
-                FileSystemTasks.EnsureExistingDirectory(enterpriseDirectory);
+                var enterpriseProjectDirectory = enterpriseDirectory / "src" / "Nuke.Enterprise";
+                FileSystemTasks.EnsureExistingDirectory(enterpriseProjectDirectory);
                 File.WriteAllText(
-                    enterpriseDirectory / "Nuke.Enterprise.csproj",
+                    enterpriseProjectDirectory / "Nuke.Enterprise.csproj",
                     @"
 <Project Sdk=""Microsoft.NET.Sdk"">
 

@@ -36,8 +36,10 @@ namespace Nuke.Components
         sealed Configure<DotNetPackSettings> PackSettingsBase => _ => _
             .SetProject(Solution)
             .SetConfiguration(Configuration)
-            .SetNoBuild(InvokedTargets.Contains(Compile))
+            .SetNoBuild(SucceededTargets.Contains(Compile))
             .SetOutputDirectory(PackagesDirectory)
+            .WhenNotNull(this as IHazGitRepository, (_, o) => _
+                .SetRepositoryUrl(o.GitRepository.HttpsUrl))
             .WhenNotNull(this as IHazGitVersion, (_, o) => _
                 .SetVersion(o.Versioning.NuGetVersionV2))
             .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _

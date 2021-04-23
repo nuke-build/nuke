@@ -11,7 +11,7 @@ using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
 using Nuke.Components;
-#if ENTERPRISE
+#if NUKE_ENTERPRISE
 using Nuke.Enterprise.Notifications;
 using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #endif
@@ -24,11 +24,11 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
     ImportSecrets = new[]
                     {
                         nameof(EnterpriseAccessToken),
-#if ENTERPRISE
+#if NUKE_ENTERPRISE
                         Slack + nameof(IHazSlackCredentials.UserAccessToken),
 #endif
                     },
-#if ENTERPRISE
+#if NUKE_ENTERPRISE
     ImportSystemAccessTokenAs = IHazAzurePipelinesAccessToken.AzurePipelines + nameof(IHazAzurePipelinesAccessToken.AccessToken),
 #endif
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },

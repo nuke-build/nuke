@@ -18,6 +18,8 @@ namespace Nuke.Common.CI.Jenkins
     [ExcludeFromCodeCoverage]
     public class Jenkins : Host, IBuildServer
     {
+        public new static Jenkins Instance => Host.Instance as Jenkins;
+
         internal static bool IsRunningJenkins => !Environment.GetEnvironmentVariable("JENKINS_HOME").IsNullOrEmpty();
 
         internal Jenkins()
