@@ -23,6 +23,12 @@ namespace Nuke.Components
             .WhenSkipped(DependencyBehavior.Skip)
             .Executes(() =>
             {
+                ReportSummary(_ => _
+                    .WhenNotNull(this as IHazGitVersion, (_, o) => _
+                        .AddPair("Version", o.Versioning.FullSemVer))
+                    .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _
+                        .AddPair("Version", o.Versioning.SemVer2)));
+
                 DotNetBuild(_ => _
                     .Apply(CompileSettingsBase)
                     .Apply(CompileSettings));
@@ -34,12 +40,6 @@ namespace Nuke.Components
                             .SetProject(v.Project)
                             .SetFramework(v.Framework)),
                     PublishDegreeOfParallelism);
-
-                ReportSummary(_ => _
-                    .WhenNotNull(this as IHazGitVersion, (_, o) => _
-                        .AddPair("Version", o.Versioning.FullSemVer))
-                    .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _
-                        .AddPair("Version", o.Versioning.SemVer2)));
             });
 
         sealed Configure<DotNetBuildSettings> CompileSettingsBase => _ => _
