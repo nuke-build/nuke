@@ -5,14 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="**\*.flf" />
     <EmbeddedResource Include="CI\TeamCity\Configuration\pom.xml" />
     <!--<None Remove="execution-plan.html" />-->
     <EmbeddedResource Include="Execution\execution-plan.html" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Colorful.Console" Version="1.2.9" />
     <PackageReference Include="Glob" Version="1.1.5" />
     <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.4" />

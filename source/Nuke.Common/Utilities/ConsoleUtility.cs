@@ -7,7 +7,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
-using Console = Colorful.Console;
 
 namespace Nuke.Common.Utilities
 {

@@ -37,9 +37,6 @@
     <Reference Include="AutoMapper, Version=6.0.2.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\AutoMapper.6.0.2\lib\net45\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="Colorful.Console, Version=1.0.7.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>_SOLUTION_DIRECTORY_\packages\Colorful.Console.1.0.7\lib\net461\Colorful.Console.dll</HintPath>
-    </Reference>
     <Reference Include="Glob, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>_SOLUTION_DIRECTORY_\packages\Glob.1.0.4\lib\net46\Glob.dll</HintPath>
     </Reference>
