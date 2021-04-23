@@ -25,23 +25,25 @@ namespace Nuke.GlobalTool
         public static int Update(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             Assert(rootDirectory != null, "rootDirectory != null");
-            Assert(buildScript != null, "buildScript != null");
 
-            if (UserConfirms("Update build scripts?"))
-                UpdateBuildScripts(rootDirectory, buildScript);
-
-            if (UserConfirms("Update build project?"))
+            if (buildScript != null)
             {
-                var configuration = GetConfiguration(buildScript, evaluate: true);
-                var buildProject = ProjectModelTasks.ParseProject(configuration[BUILD_PROJECT_FILE]).NotNull();
+                if (UserConfirms("Update build scripts?"))
+                    UpdateBuildScripts(rootDirectory, buildScript);
 
-                UpdateTargetFramework(buildProject);
-                UpdateNukeCommonPackage(buildProject, out var previousPackageVersion);
+                if (UserConfirms("Update build project?"))
+                {
+                    var configuration = GetConfiguration(buildScript, evaluate: true);
+                    var buildProject = ProjectModelTasks.ParseProject(configuration[BUILD_PROJECT_FILE]).NotNull();
 
-                if (previousPackageVersion.MinVersion >= NuGetVersion.Parse("0.23.5"))
-                    RemoveLegacyFileIncludes(buildProject);
+                    UpdateTargetFramework(buildProject);
+                    UpdateNukeCommonPackage(buildProject, out var previousPackageVersion);
 
-                buildProject.Save();
+                    if (previousPackageVersion.MinVersion >= NuGetVersion.Parse("0.23.5"))
+                        RemoveLegacyFileIncludes(buildProject);
+
+                    buildProject.Save();
+                }
             }
 
             if (UserConfirms("Update configuration file?"))

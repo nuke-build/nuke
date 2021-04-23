@@ -13,7 +13,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Nuke.GlobalTool.Rewriting.Cake
 {
-    internal class TargetDefinitionRewriter : CSharpSyntaxRewriter
+    internal class TargetDefinitionRewriter : SafeSyntaxRewriter
     {
         public override SyntaxNode VisitInvocationExpression(InvocationExpressionSyntax node)
         {

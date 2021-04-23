@@ -13,7 +13,7 @@ using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Nuke.GlobalTool.Rewriting.Cake
 {
-    internal class MemberAccessRewriter : CSharpSyntaxRewriter
+    internal class MemberAccessRewriter : SafeSyntaxRewriter
     {
         private Dictionary<string, string> Replacements =>
             new()

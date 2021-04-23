@@ -26,6 +26,8 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
         {
             writer.WriteLine($"{Kind.GetValue()}:");
 
+            void WriteValue(string value) => writer.WriteLine($"- {value.SingleQuoteIfNeeded('*', '!')}");
+
             using (writer.Indent())
             {
                 if (Branches.Length > 0)
@@ -33,7 +35,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                     writer.WriteLine("branches:");
                     using (writer.Indent())
                     {
-                        Branches.ForEach(x => writer.WriteLine($"- {x}"));
+                        Branches.ForEach(WriteValue);
                     }
                 }
 
@@ -42,7 +44,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                     writer.WriteLine("branches-ignore:");
                     using (writer.Indent())
                     {
-                        BranchesIgnore.ForEach(x => writer.WriteLine($"- {x}"));
+                        BranchesIgnore.ForEach(WriteValue);
                     }
                 }
 
@@ -51,7 +53,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                     writer.WriteLine("tags:");
                     using (writer.Indent())
                     {
-                        Tags.ForEach(x => writer.WriteLine($"- {x}"));
+                        Tags.ForEach(WriteValue);
                     }
                 }
 
@@ -60,7 +62,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                     writer.WriteLine("tags-ignore:");
                     using (writer.Indent())
                     {
-                        TagsIgnore.ForEach(x => writer.WriteLine($"- {x}"));
+                        TagsIgnore.ForEach(WriteValue);
                     }
                 }
 
@@ -69,8 +71,8 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                     writer.WriteLine("paths:");
                     using (writer.Indent())
                     {
-                        IncludePaths.ForEach(x => writer.WriteLine($"- {x}"));
-                        ExcludePaths.ForEach(x => writer.WriteLine($"- !{x}"));
+                        IncludePaths.ForEach(WriteValue);
+                        ExcludePaths.Select(x => $"!{x}").ForEach(WriteValue);
                     }
                 }
             }

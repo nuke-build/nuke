@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [5.1.1] / 2021-04-23
+- Fixed parameter loading with missing default parameters file
+- Fixed visibility of `Directory.Build` files
+- Fixed `ArgumentsFromCommitMessageAttribute` to require manual application
+- Fixed summary reporting for exceptions to only include first line of message
+- Fixed update notification
+- Fixed PowerShell invocation from `build.cmd`
+- Fixed `Update` and `Setup` command to not stage parameters file
+- Fixed `Update` command for absent bootstrapping scripts
+- Fixed skipping unhandled syntax fragments in Cake conversion
+- Fixed missing `Instance` properties for `IBuildServer` implementations
+- Fixed GitHubActions default cache path
+- Fixed missing property for GitHubActions workflow inputs
+- Fixed quoting in GitHubActions for included/excluded paths
+- Fixed `XmlPoke` to allow specifying encoding
+- Fixed `ExternalFilesTask` for single file browse-URL
+- Fixed `ICompile`, `IPack`, `ITest` components to check against `SucceededTargets`
+- Fixed setting `RepositoryUrl` in `IPack` component
+
 ## [5.1.0] / 2021-04-07
 - Removed `:Fix` command from global tool (superseded by `:AddPackage`)
 - Changed `.nuke` configuration file to `.nuke` directory
@@ -756,7 +775,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke.git/compare/5.1.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke.git/compare/5.1.1...HEAD
+[5.1.1]: https://github.com/nuke-build/nuke.git/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/nuke-build/nuke.git/compare/5.0.2...5.1.0
 [5.0.2]: https://github.com/nuke-build/nuke.git/compare/5.0.1...5.0.2
 [5.0.1]: https://github.com/nuke-build/nuke.git/compare/5.0.0...5.0.1

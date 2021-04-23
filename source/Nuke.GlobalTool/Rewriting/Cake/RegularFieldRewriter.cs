@@ -11,7 +11,7 @@ using Nuke.Common;
 
 namespace Nuke.GlobalTool.Rewriting.Cake
 {
-    internal class RegularFieldRewriter : CSharpSyntaxRewriter
+    internal class RegularFieldRewriter : SafeSyntaxRewriter
     {
         public override SyntaxNode VisitFieldDeclaration(FieldDeclarationSyntax node)
         {

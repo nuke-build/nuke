@@ -21,10 +21,10 @@ on:
     branches:
       - push_branch
     tags:
-      - push_tag
+      - 'push_tag/*'
     paths:
       - push_include_path
-      - !push_exclude_path
+      - '!push_exclude_path'
   pull_request:
     branches:
       - pull_request_branch
@@ -32,13 +32,15 @@ on:
       - pull_request_tag
     paths:
       - pull_request_include_path
-      - !pull_request_exclude_path
+      - '!pull_request_exclude_path/**'
   workflow_dispatch:
     inputs:
-      NuGetApiKey:
-        description: "NuGet Api Key"
-      OtherData:
-        description: "Other Data"
+      OptionalInput:
+        description: "Optional Input"
+        required: false
+      RequiredInput:
+        description: "Required Input"
+        required: true
   schedule:
     - cron: '* 0 * * *'
 
@@ -48,18 +50,18 @@ jobs:
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Cache .tmp, ~/.nuget/packages
+      - name: Cache .nuke/temp, ~/.nuget/packages
         uses: actions/cache@v2
         with:
           path: |
-            .tmp
+            .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
         env:
-          NuGetApiKey: ${{ github.event.inputs.NuGetApiKey }}
-          OtherData: ${{ github.event.inputs.OtherData }}
+          OptionalInput: ${{ github.event.inputs.OptionalInput }}
+          RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
@@ -77,18 +79,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Cache .tmp, ~/.nuget/packages
+      - name: Cache .nuke/temp, ~/.nuget/packages
         uses: actions/cache@v2
         with:
           path: |
-            .tmp
+            .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
         env:
-          NuGetApiKey: ${{ github.event.inputs.NuGetApiKey }}
-          OtherData: ${{ github.event.inputs.OtherData }}
+          OptionalInput: ${{ github.event.inputs.OptionalInput }}
+          RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
@@ -106,18 +108,18 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Cache .tmp, ~/.nuget/packages
+      - name: Cache .nuke/temp, ~/.nuget/packages
         uses: actions/cache@v2
         with:
           path: |
-            .tmp
+            .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
       - name: Run './build.cmd Test'
         run: ./build.cmd Test
         env:
-          NuGetApiKey: ${{ github.event.inputs.NuGetApiKey }}
-          OtherData: ${{ github.event.inputs.OtherData }}
+          OptionalInput: ${{ github.event.inputs.OptionalInput }}
+          RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
