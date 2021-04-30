@@ -1,0 +1,78 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://zone.ni.com/reference/en-XX/help/371361R-01/lvhowto/cli_running_operations/"
+  ],
+  "name": "LabVIEWCLI",
+  "officialUrl": "https://www.ni.com",
+  "help": "The NI LabVIEW Command Line Interface (CLI) is a software add-on for LabVIEW. You can use it to automate the build process of LabVIEW applications and run the VIs and custom operations you create in LabVIEW.",
+  "pathExecutable": "LabVIEWCLI",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "OperationName",
+            "type": "string",
+            "format": "-OperationName {value}",
+            "help": "Name of LabVIEWCLI operation (eg: MassCompile, CloseLabVIEW, RunVI, ...)."
+          },
+          {
+            "name": "PortNumber",
+            "type": "bool",
+            "format": "-PortNumber {value}",
+            "help": " Port on which the remote LabVIEW application is listening."
+          },
+          {
+            "name": "LabVIEWPath",
+            "type": "string",
+            "format": "-LabVIEWPath {value}",
+            "help": "Path of the LabVIEW in which the operation will run."
+          },
+          {
+            "name": "LogFilePath",
+            "type": "string",
+            "format": "-LogFilePath {value}",
+            "help": "Path of the LabVIEWCLI log file."
+          },
+          {
+            "name": "LogToConsole",
+            "type": "LoggingEnabled",
+            "format": "-LogToConsole {value}",
+            "help": "If the value is True, the output that gets logged to console and the log file, else output will be logged only to log file. Default is True."
+          },
+          {
+            "name": "Verbosity",
+            "type": "LogVerbosity",
+            "format": "-Verbosity {value}",
+            "help": "This command line argument is used to control the output being logged. Default is \"Default\". Possible values are Minimal, Default, Detailed and Diagnostic."
+          },
+          {
+            "name": "AdditionalOperationDirectory",
+            "type": "string",
+            "format": "-AdditionalOperationDirectory {value}",
+            "help": "Additional directory where LabVIEWCLI will look for additional operation class other than default location."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "LoggingEnabled",
+      "values": [
+        "True",
+        "False"
+      ]
+    },
+    {
+      "name": "LogVerbosity",
+      "values": [
+        "Minimal",
+        "Default",
+        "Detailed",
+        "Diagnostic"
+      ]
+    }
+  ]
+}
