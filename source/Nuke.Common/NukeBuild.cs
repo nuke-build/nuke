@@ -58,7 +58,8 @@ namespace Nuke.Common
     [HandleVisualStudioDebugging]
     [InjectNonParameterValues(Priority = -100)]
     // After finish
-    [UpdateNotification]
+    [ShowSponsorship(Priority = 50)]
+    [UpdateNotification(Priority = 10)]
     [SerializeBuildServerState]
     public abstract partial class NukeBuild : INukeBuild
     {
