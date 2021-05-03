@@ -1,7 +1,8 @@
 {
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
   "references": [
-    "https://zone.ni.com/reference/en-XX/help/371361R-01/lvhowto/cli_running_operations/"
+    "https://zone.ni.com/reference/en-XX/help/371361R-01/lvhowto/cli_running_operations/",
+    "https://zone.ni.com/reference/en-XX/help/371361R-01/lvconcepts/cli_predefined_operations/#ExecuteBuildSpec"
   ],
   "name": "LabVIEWCLI",
   "officialUrl": "https://www.ni.com",
