@@ -28,10 +28,13 @@
             "GitHubActions",
             "GitLab",
             "Jenkins",
+            "Rider",
             "SpaceAutomation",
             "TeamCity",
             "Terminal",
-            "TravisCI"
+            "TravisCI",
+            "VisualStudio",
+            "VSCode"
           ]
         },
         "NoLogo": {
