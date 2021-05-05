@@ -36,9 +36,11 @@ namespace Nuke.SourceGenerators
             var membersWithAttributes = allTypes.SelectMany(x => x.GetMembers())
                 .Where(x => x is IPropertySymbol || x is IFieldSymbol)
                 .Select(x => (Member: x, AttributeData: x.GetAttributeData("global::Nuke.Common.ProjectModel.SolutionAttribute")))
-                .Where(x => x.AttributeData != null);
+                .Where(x => x.AttributeData != null).ToList();
+            if (membersWithAttributes.Count == 0)
+                return;
 
-            var rootDirectory = TryGetRootDirectoryFrom(compilation);
+            var rootDirectory = GetRootDirectoryFrom(compilation);
             var compilationUnit = CompilationUnit()
                 .AddUsings(UsingDirective(IdentifierName("Nuke.Common.ProjectModel")));
 
@@ -114,7 +116,7 @@ namespace Nuke.SourceGenerators
             return Path.Combine(rootDirectory, solutionRelativePath);
         }
 
-        private static AbsolutePath TryGetRootDirectoryFrom(Compilation compilation)
+        private static AbsolutePath GetRootDirectoryFrom(Compilation compilation)
         {
             var syntaxPath = compilation.SyntaxTrees.First().FilePath;
             var startDirectory = Path.GetDirectoryName(File.Exists(syntaxPath)
