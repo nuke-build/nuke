@@ -25,7 +25,7 @@ namespace Nuke.Common.CI
             var hasConfigurationChanged = GetGenerators(build)
                 .Where(x => x.AutoGenerate)
                 .AsParallel()
-                .Select(HasConfigurationChanged).ToList();
+                .Select(x => HasConfigurationChanged(x, build)).ToList();
             if (hasConfigurationChanged.All(x => !x))
                 return;
 
@@ -36,7 +36,7 @@ namespace Nuke.Common.CI
             Console.ReadKey();
         }
 
-        private bool HasConfigurationChanged(IConfigurationGenerator generator)
+        private bool HasConfigurationChanged(IConfigurationGenerator generator, NukeBuild build)
         {
             generator.GeneratedFiles.ForEach(FileSystemTasks.EnsureExistingParentDirectory);
             var previousHashes = generator.GeneratedFiles
@@ -58,6 +58,7 @@ namespace Nuke.Common.CI
             if (changedFiles.Count == 0)
                 return false;
 
+            Telemetry.ConfigurationGenerated(generator.HostType, generator.Id, build);
             Logger.Warn($"{generator.DisplayName} configuration files have changed.");
             changedFiles.ForEach(x => Logger.Trace($"Updated {x}"));
             return true;

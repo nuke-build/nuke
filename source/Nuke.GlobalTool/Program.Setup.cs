@@ -10,9 +10,9 @@ using System.Reflection;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common;
+using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
-using Nuke.Common.Tools.Git;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.Constants;
@@ -58,12 +58,13 @@ namespace Nuke.GlobalTool
         public static int Setup(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             PrintInfo();
+            Telemetry.SetupBuild();
 
             #region Basic
 
-            var nukeLatestReleaseVersion = NuGetPackageResolver.GetLatestPackageVersion("Nuke.Common", includePrereleases: false);
-            var nukeLatestPrereleaseVersion = NuGetPackageResolver.GetLatestPackageVersion("Nuke.Common", includePrereleases: true);
-            var nukeLatestLocalVersion = NuGetPackageResolver.GetGlobalInstalledPackage("Nuke.Common", version: null, packagesConfigFile: null)
+            var nukeLatestReleaseVersion = NuGetPackageResolver.GetLatestPackageVersion(NukeCommonPackageId, includePrereleases: false);
+            var nukeLatestPrereleaseVersion = NuGetPackageResolver.GetLatestPackageVersion(NukeCommonPackageId, includePrereleases: true);
+            var nukeLatestLocalVersion = NuGetPackageResolver.GetGlobalInstalledPackage(NukeCommonPackageId, version: null, packagesConfigFile: null)
                 ?.Version.ToString();
 
             if (rootDirectory == null)
@@ -228,6 +229,7 @@ namespace Nuke.GlobalTool
                                 BuildProjectName = buildProjectName,
                                 BuildProjectGuid = buildProjectGuid,
                                 TargetFramework = targetFramework,
+                                TelemetryVersion = Telemetry.CurrentVersion,
                                 NukeVersion = nukeVersion,
                                 NukeVersionMajorMinor = nukeVersion.Split(".").Take(2).Join(".")
                             }))));
