@@ -13,6 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Glob" Version="1.1.5" />
     <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
+    <PackageReference Include="Microsoft.ApplicationInsights" Version="2.17.0" />
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.4" />
     <PackageReference Include="Microsoft.Build" Version="16.8.0" />
     <PackageReference Include="Microsoft.Build.Framework" Version="16.8.0" />
@@ -38,8 +39,7 @@
     <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\netcoreapp2.1\publish\**\*.*" PackagePath="build\netcore" Pack="true" />
     <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\net472\publish\**\*.*" PackagePath="build\netfx" Pack="true" />
     <None Include="..\Nuke.SourceGenerators\bin\$(Configuration)\netstandard2.0\*.dll" PackagePath="analyzers\dotnet\cs" Pack="true" />
-    <None Include="..\..\external\enterprise\src\Nuke.Enterprise\bin\$(Configuration)\netcoreapp3.1\ref\Nuke.Enterprise.dll" PackagePath="build\netcore" Pack="true"
-          Condition="Exists('..\..\external\enterprise\.gitignore')" />
+    <None Include="..\..\external\enterprise\src\Nuke.Enterprise\bin\$(Configuration)\netcoreapp3.1\ref\Nuke.Enterprise.dll" PackagePath="build\netcore" Pack="true" Condition="Exists('..\..\external\enterprise\.gitignore')" />
   </ItemGroup>
 
 </Project>
