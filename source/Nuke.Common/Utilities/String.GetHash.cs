@@ -17,5 +17,12 @@ namespace Nuke.Common.Utilities
             var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(str));
             return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
+
+        public static string GetSHA256Hash(this string str)
+        {
+            using var algorithm = SHA256.Create();
+            var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(str));
+            return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+        }
     }
 }
