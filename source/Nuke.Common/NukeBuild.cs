@@ -55,6 +55,7 @@ namespace Nuke.Common
     // [LoadBuildProfiles(Priority = 25)]
     // After logo
     [HandleHelpRequests(Priority = 5)]
+    [Telemetry]
     [HandleVisualStudioDebugging]
     [InjectNonParameterValues(Priority = -100)]
     // After finish
