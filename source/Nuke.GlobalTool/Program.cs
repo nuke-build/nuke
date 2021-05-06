@@ -106,7 +106,7 @@ namespace Nuke.GlobalTool
 
         private static Process Build(string buildScript, string arguments)
         {
-            return Process.Start(
+            var startInfo =
                 new ProcessStartInfo
                 {
                     FileName = EnvironmentInfo.IsWin
@@ -115,7 +115,10 @@ namespace Nuke.GlobalTool
                     Arguments = EnvironmentInfo.IsWin
                         ? $"-ExecutionPolicy ByPass -NoProfile -File {buildScript.DoubleQuoteIfNeeded()} {arguments}"
                         : $"{buildScript} {arguments}"
-                }).NotNull();
+                };
+            startInfo.Environment[Constants.GlobalToolVersionEnvironmentKey] = typeof(Program).Assembly.GetVersionText();
+            startInfo.Environment[Constants.GlobalToolStartTimeEnvironmentKey] = DateTime.Now.ToString("O");
+            return Process.Start(startInfo).NotNull();
         }
 
         private static bool UserConfirms(string question)

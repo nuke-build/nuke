@@ -43,6 +43,9 @@ namespace Nuke.Common
         internal const string ParametersFilePrefix = "parameters";
         internal const string DefaultProfileName = "$default";
 
+        internal const string GlobalToolVersionEnvironmentKey = "NUKE_GLOBAL_TOOL_VERSION";
+        internal const string GlobalToolStartTimeEnvironmentKey = "NUKE_GLOBAL_TOOL_START_TIME";
+
         internal static AbsolutePath GlobalTemporaryDirectory => (AbsolutePath) Path.GetTempPath();
         internal static AbsolutePath GlobalNukeDirectory => (AbsolutePath) Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) / ".nuke";
 
