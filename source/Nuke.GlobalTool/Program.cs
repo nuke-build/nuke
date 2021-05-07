@@ -70,16 +70,15 @@ namespace Nuke.GlobalTool
                 if (string.IsNullOrWhiteSpace(command))
                     ControlFlow.Fail($"No command specified. Usage is: nuke {CommandPrefix}<command> [args]");
 
-                var availableCommands = typeof(Program).GetMethods(BindingFlags.Static | BindingFlags.Public);
-                var commandHandler = availableCommands
-                    .SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));
+                var availableCommands = typeof(Program).GetMethods(ReflectionUtility.Static);
+                var commandHandler = availableCommands.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));
                 ControlFlow.Assert(commandHandler != null,
                     new[]
                         {
                             $"Command '{command}' is not supported.",
                             "Available commands are:"
                         }
-                        .Concat(availableCommands.Select(x => $"  - {x.Name}").OrderBy(x => x)).JoinNewLine());
+                        .Concat(availableCommands.Where(x => x.IsPublic).Select(x => $"  - {x.Name}").OrderBy(x => x)).JoinNewLine());
                 // TODO: add assertions about return type and parameters
 
                 var commandArguments = new object[] { args.Skip(count: 1).ToArray(), rootDirectory, buildScript };
