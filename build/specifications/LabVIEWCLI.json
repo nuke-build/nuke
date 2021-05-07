@@ -2,7 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
   "references": [
     "https://zone.ni.com/reference/en-XX/help/371361R-01/lvhowto/cli_running_operations/",
-    "https://zone.ni.com/reference/en-XX/help/371361R-01/lvconcepts/cli_predefined_operations/#ExecuteBuildSpec"
+    "https://zone.ni.com/reference/en-XX/help/371361R-01/lvconcepts/cli_predefined_operations/"
   ],
   "name": "LabVIEWCLI",
   "officialUrl": "https://www.ni.com",
@@ -10,52 +10,81 @@
   "pathExecutable": "LabVIEWCLI",
   "tasks": [
     {
+      "help": "Mass compiles the files in the specified directory.",
+      "postfix": "MassCompile",
+      "definiteArgument": "-MassCompile",
       "settingsClass": {
         "properties": [
           {
-            "name": "OperationName",
+            "name": "DirectoryToCompile",
             "type": "string",
-            "format": "-OperationName {value}",
-            "help": "Name of LabVIEWCLI operation (eg: MassCompile, CloseLabVIEW, RunVI, ...)."
+            "format": "-DirectoryToCompile {value}",
+            "help": "Location of the VIs to compile."
           },
           {
-            "name": "PortNumber",
+            "name": "MassCompileLogFile",
+            "type": "string",
+            "format": "-MassCompileLogFile {value}",
+            "help": "File path of the log results. Default is path to the temporary location."
+          },
+          {
+            "name": "AppendToMassCompileLog",
             "type": "bool",
-            "format": "-PortNumber {value}",
-            "help": " Port on which the remote LabVIEW application is listening."
+            "format": "-AppendToMassCompileLog {value}",
+            "help": "A Boolean that specifies whether to add the results to the log file. Default is false."
           },
           {
-            "name": "LabVIEWPath",
+            "name": "NumOfVIsToCache",
             "type": "string",
-            "format": "-LabVIEWPath {value}",
-            "help": "Path of the LabVIEW in which the operation will run."
+            "format": "-NumOfVIsToCache {value}",
+            "help": "Number of VIs allowed in memory during the mass compile. Default is 0."
           },
           {
-            "name": "LogFilePath",
-            "type": "string",
-            "format": "-LogFilePath {value}",
-            "help": "Path of the LabVIEWCLI log file."
-          },
-          {
-            "name": "LogToConsole",
-            "type": "LoggingEnabled",
-            "format": "-LogToConsole {value}",
-            "help": "If the value is True, the output that gets logged to console and the log file, else output will be logged only to log file. Default is True."
-          },
-          {
-            "name": "Verbosity",
-            "type": "LogVerbosity",
-            "format": "-Verbosity {value}",
-            "help": "This command line argument is used to control the output being logged. Default is \"Default\". Possible values are Minimal, Default, Detailed and Diagnostic."
-          },
-          {
-            "name": "AdditionalOperationDirectory",
-            "type": "string",
-            "format": "-AdditionalOperationDirectory {value}",
-            "help": "Additional directory where LabVIEWCLI will look for additional operation class other than default location."
+            "name": "ReloadLVSBs",
+            "type": "bool",
+            "format": "-ReloadLVSBs {value}",
+            "help": "A Boolean that specifies whether to ignore CINs in VIs and allow the application to search for them. This argument is useful when a large number of CINs have been recompiled and need to be reloaded. Default is false."
           }
         ]
       }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "PortNumber",
+      "type": "bool",
+      "format": "-PortNumber {value}",
+      "help": " Port on which the remote LabVIEW application is listening."
+    },
+    {
+      "name": "LabVIEWPath",
+      "type": "string",
+      "format": "-LabVIEWPath {value}",
+      "help": "Path of the LabVIEW in which the operation will run."
+    },
+    {
+      "name": "LogFilePath",
+      "type": "string",
+      "format": "-LogFilePath {value}",
+      "help": "Path of the LabVIEWCLI log file."
+    },
+    {
+      "name": "LogToConsole",
+      "type": "LoggingEnabled",
+      "format": "-LogToConsole {value}",
+      "help": "If the value is True, the output that gets logged to console and the log file, else output will be logged only to log file. Default is True."
+    },
+    {
+      "name": "Verbosity",
+      "type": "LogVerbosity",
+      "format": "-Verbosity {value}",
+      "help": "This command line argument is used to control the output being logged. Default is \"Default\". Possible values are Minimal, Default, Detailed and Diagnostic."
+    },
+    {
+      "name": "AdditionalOperationDirectory",
+      "type": "string",
+      "format": "-AdditionalOperationDirectory {value}",
+      "help": "Additional directory where LabVIEWCLI will look for additional operation class other than default location."
     }
   ],
   "enumerations": [
@@ -73,6 +102,17 @@
         "Default",
         "Detailed",
         "Diagnostic"
+      ]
+    },
+    {
+      "name": "PredefinedOperations",
+      "values": [
+        "MassCompile",
+        "ExecuteBuildSpec",
+        "RunVI",
+        "CloseLabVIEW",
+        "RunVIAnalyzer",
+        "RunUnitTests"
       ]
     }
   ]
