@@ -30,7 +30,7 @@ namespace Nuke.GlobalTool
                 var buildScript = rootDirectory != null
                     ? (AbsolutePath) new DirectoryInfo(rootDirectory)
                         .EnumerateFiles(CurrentBuildScriptName, maxDepth: 2)
-                        .FirstOrDefault()?.FullName.DoubleQuoteIfNeeded()
+                        .FirstOrDefault()?.FullName
                     : null;
 
                 return Handle(args, rootDirectory, buildScript);
@@ -113,7 +113,7 @@ namespace Nuke.GlobalTool
                         ? ToolPathResolver.GetPathExecutable("powershell")
                         : ToolPathResolver.GetPathExecutable("bash"),
                     Arguments = EnvironmentInfo.IsWin
-                        ? $"-ExecutionPolicy ByPass -NoProfile -File {buildScript} {arguments}"
+                        ? $"-ExecutionPolicy ByPass -NoProfile -File {buildScript.DoubleQuoteIfNeeded()} {arguments}"
                         : $"{buildScript} {arguments}"
                 }).NotNull();
         }
