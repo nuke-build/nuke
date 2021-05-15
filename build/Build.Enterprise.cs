@@ -6,7 +6,6 @@
 
 using System;
 using System.Linq;
-using Nuke.Common;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
@@ -53,20 +52,20 @@ partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazG
             _ => null
         };
 
-        public override bool ShouldNotify(NukeBuild build)
+        public override bool ShouldNotify()
             => Host is
                    GitHubActions { GitHubWorkflow: "continuous" } or
                    AppVeyor { ProjectSlug: "nuke-continuous" } &&
-               ((Build) build).GitRepository.IsOnDevelopBranch();
+               ((Build) Build).GitRepository.IsOnDevelopBranch();
     }
 
     public abstract class CustomSlackNotificationAttribute : SlackNotificationAttribute
     {
-        protected override string GetMessage(NukeBuild build, (string Sha, string Message, string Author, string Email, string UserId) lastCommitData)
+        protected override string GetMessage()
         {
-            var gitVersion = ((Build) build).GitVersion;
+            var gitVersion = ((Build) Build).GitVersion;
             if (gitVersion == null)
-                return base.GetMessage(build, lastCommitData);
+                return base.GetMessage();
 
             var header = new[] { (Text: $"#{gitVersion.FullSemVer}", BuildServer.CommonUrls.First().Url) }
                 .Concat(BuildServer.CommonUrls.Last())
