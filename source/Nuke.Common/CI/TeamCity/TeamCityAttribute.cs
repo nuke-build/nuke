@@ -177,7 +177,7 @@ namespace Nuke.Common.CI.TeamCity
             }
 
             var parameters = executableTarget.Requirements
-                .Where(x => !(x is Expression<Func<bool>>))
+                .Where(x => x is not Expression<Func<bool>>)
                 .Select(x => GetParameter(x.GetMemberInfo(), build, required: true))
                 .Concat(new TeamCityKeyValueParameter(
                     "teamcity.ui.runButton.caption",
@@ -250,7 +250,7 @@ namespace Nuke.Common.CI.TeamCity
             return ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
                 // TODO: except build.ExecutableTargets ?
                 .Except(relevantTargets.SelectMany(x => x.Requirements
-                    .Where(y => !(y is Expression<Func<bool>>))
+                    .Where(y => y is not Expression<Func<bool>>)
                     .Select(y => y.GetMemberInfo())))
                 .Where(x => x.DeclaringType != typeof(NukeBuild) || x.Name == nameof(NukeBuild.Verbosity))
                 .Select(x => GetParameter(x, build, required: false))

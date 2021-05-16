@@ -106,7 +106,7 @@ namespace Nuke.Common.Tooling
                     invocations
                         .Where(x => x.Settings.ProcessLogOutput ?? ProcessTasks.DefaultLogOutput)
                         .SelectMany(x =>
-                            !(x.Exception is ProcessException processException)
+                            x.Exception is not ProcessException processException
                                 ? outputSelector(x.Result)
                                 : processException.Process.Output)
                         .ForEach(x => logger(x.Type, x.Text));

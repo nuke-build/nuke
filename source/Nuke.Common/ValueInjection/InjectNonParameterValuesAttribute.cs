@@ -16,7 +16,7 @@ namespace Nuke.Common.ValueInjection
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            ValueInjectionUtility.InjectValues(build, x => !(x is ParameterAttribute));
+            ValueInjectionUtility.InjectValues(build, x => x is not ParameterAttribute);
         }
     }
 }

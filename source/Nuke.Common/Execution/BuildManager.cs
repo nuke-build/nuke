@@ -75,7 +75,7 @@ namespace Nuke.Common.Execution
             }
             catch (Exception exception)
             {
-                if (!(exception is TargetExecutionException))
+                if (exception is not TargetExecutionException)
                     Logger.Error(exception);
 
                 return build.ExitCode ??= ErrorExitCode;
