@@ -102,14 +102,16 @@ namespace Nuke.Common.Execution
 
             using (Logger.Block(target.Name))
             {
+                target.Stopwatch.Start();
                 target.Status = ExecutionStatus.Running;
                 build.ExecuteExtension<IOnTargetRunning>(x => x.OnTargetRunning(build, target));
-                var stopwatch = Stopwatch.StartNew();
                 try
                 {
                     target.Actions.ForEach(x => x());
+                    target.Stopwatch.Stop();
                     target.Status = ExecutionStatus.Succeeded;
                     build.ExecuteExtension<IOnTargetSucceeded>(x => x.OnTargetSucceeded(build, target));
+
                     AppendToBuildAttemptFile(target.Name);
                 }
                 catch (Exception exception)
@@ -120,15 +122,13 @@ namespace Nuke.Common.Execution
                             : _.AddPair(exception.GetType().Name, exception.Message.SplitLineBreaks().First()));
 
                     Logger.Error(exception);
-                    target.Status = ExecutionStatus.Failed;
 
+                    target.Stopwatch.Stop();
+                    target.Status = ExecutionStatus.Failed;
                     build.ExecuteExtension<IOnTargetFailed>(x => x.OnTargetFailed(build, target));
+
                     if (!target.ProceedAfterFailure && !failureMode)
                         throw new TargetExecutionException(target.Name, exception);
-                }
-                finally
-                {
-                    target.Duration = stopwatch.Elapsed;
                 }
             }
         }

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Nuke.Common.Utilities.Collections;
+// ReSharper disable MissingBaseTypeHighlighting
 
 namespace Nuke.Common.Execution
 {
@@ -16,6 +17,8 @@ namespace Nuke.Common.Execution
     public class ExecutableTarget
     {
         internal TargetDefinition Definition { get; set; }
+        internal Stopwatch Stopwatch { get; } = new Stopwatch();
+
         public MemberInfo Member { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -36,9 +39,9 @@ namespace Nuke.Common.Execution
         public IReadOnlyCollection<ExecutableTarget> AllDependencies
             => ExecutionDependencies.Concat(OrderDependencies).Concat(TriggerDependencies).ToList();
 
+        public TimeSpan Duration => Stopwatch.Elapsed;
         public bool IsDefault { get; set; }
         public ExecutionStatus Status { get; set; }
-        public TimeSpan Duration { get; set; }
         public bool Invoked { get; set; }
         public Dictionary<string, string> SummaryInformation { get; internal set; } = new Dictionary<string, string>();
 
