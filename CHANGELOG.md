@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed target duration to be measured immediately after execution
+- Fixed build script invocation from global tool
+- Fixed `AddPackage` command to allow explicit version parameter
+- Fixed navigation methods to not be included in command list
+- Fixed `StronglyTypedSolutionGenerator` to resolve root directory only on demand
+- Fixed `EnvironmentInfo.Framework` to use entry assembly
+- Fixed parsing of `GitRepository` remote
+- Fixed missing pull-request properties in TeamCity
+- Fixed `RunNumber` and `RunId` in `GitHubActions` to be of type `long`
+- Fixed `GitVersionAttribute` to automatically populate `Git_Branch` on TeamCity
 
 ## [5.1.1] / 2021-04-23
 - Fixed parameter loading with missing default parameters file
