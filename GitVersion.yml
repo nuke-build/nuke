@@ -1,4 +1,4 @@
-mode: ContinuousDelivery
+mode: ContinuousDeployment
 
 assembly-versioning-scheme: MajorMinor
 assembly-file-versioning-scheme: MajorMinorPatch
