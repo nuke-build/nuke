@@ -85,8 +85,8 @@ namespace Nuke.Common.Git
                 .TakeWhile(x => !x.StartsWith("["))
                 .Select(x => x.Split('='))
                 .ToDictionary(x => x.ElementAt(0).Trim(), x => x.ElementAt(1).Trim());
-            return data.Count == 2
-                ? (data["remote"], data["merge"].TrimStart("refs/heads/"))
+            return data.TryGetValue("remote", out var remote) && data.TryGetValue("merge", out var merge)
+                ? (remote, merge.TrimStart("refs/heads/"))
                 : (null, null);
         }
 

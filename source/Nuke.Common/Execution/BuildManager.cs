@@ -91,6 +91,7 @@ namespace Nuke.Common.Execution
                 {
                     foreach (var target in build.ExecutionPlan)
                     {
+                        target.Stopwatch.Stop();
                         target.Status = target.Status switch
                         {
                             ExecutionStatus.Running => ExecutionStatus.Aborted,

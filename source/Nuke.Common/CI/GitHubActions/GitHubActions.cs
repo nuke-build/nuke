@@ -71,8 +71,8 @@ namespace Nuke.Common.CI.GitHubActions
         ///<summary>Only set for forked repositories. The branch of the base repository.</summary>
         public string GitHubBaseRef => EnvironmentInfo.GetVariable<string>("GITHUB_BASE_REF");
 
-        public string GitHubRunNumber => EnvironmentInfo.GetVariable<string>("GITHUB_RUN_NUMBER");
-        public string GitHubRunId => EnvironmentInfo.GetVariable<string>("GITHUB_RUN_ID");
+        public long GitHubRunNumber => EnvironmentInfo.GetVariable<long>("GITHUB_RUN_NUMBER");
+        public long GitHubRunId => EnvironmentInfo.GetVariable<long>("GITHUB_RUN_ID");
         public string GitHubServerUrl => EnvironmentInfo.GetVariable<string>("GITHUB_SERVER_URL");
         public string GitHubJob => EnvironmentInfo.GetVariable<string>("GITHUB_JOB");
 

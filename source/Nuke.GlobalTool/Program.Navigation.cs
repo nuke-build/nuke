@@ -32,7 +32,7 @@ namespace Nuke.GlobalTool
         private static string SessionFile => GlobalTemporaryDirectory / $"nuke-{SessionId}.dat";
 
         [UsedImplicitly]
-        public static int GetNextDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
+        private static int GetNextDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             var content = File.Exists(SessionFile) ? File.ReadAllLines(SessionFile) : null;
             if (content == null || string.IsNullOrWhiteSpace(content[0]))
@@ -49,7 +49,7 @@ namespace Nuke.GlobalTool
         }
 
         [UsedImplicitly]
-        public static int PopDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
+        private static int PopDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             var content = File.Exists(SessionFile) ? File.ReadAllLines(SessionFile).ToList() : null;
             if (content == null || content.Count <= 1)
@@ -65,13 +65,13 @@ namespace Nuke.GlobalTool
         }
 
         [UsedImplicitly]
-        public static int PushWithCurrentRootDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
+        private static int PushWithCurrentRootDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             return PushAndSetNext(() => rootDirectory.NotNull("No root directory found."));
         }
 
         [UsedImplicitly]
-        public static int PushWithParentRootDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
+        private static int PushWithParentRootDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             return PushAndSetNext(() =>
             {
@@ -81,7 +81,7 @@ namespace Nuke.GlobalTool
         }
 
         [UsedImplicitly]
-        public static int PushWithChosenRootDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
+        private static int PushWithChosenRootDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             return PushAndSetNext(() =>
             {

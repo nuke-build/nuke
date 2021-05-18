@@ -48,7 +48,11 @@ namespace Nuke.Common.Tools.GitVersion
                     .SetNoFetch(NoFetch)
                     .SetNoCache(NoCache)
                     .DisableProcessLogOutput()
-                    .SetUpdateAssemblyInfo(UpdateAssemblyInfo))
+                    .SetUpdateAssemblyInfo(UpdateAssemblyInfo)
+                    .When(TeamCity.Instance is { IsPullRequest: true } && !EnvironmentInfo.Variables.ContainsKey("Git_Branch"), _ => _
+                            .AddProcessEnvironmentVariable(
+                                "Git_Branch",
+                                TeamCity.Instance.ConfigurationProperties.Single(x => x.Key.StartsWith("teamcity.build.vcs.branch")).Value)))
                 .Result;
 
             if (UpdateBuildNumber)

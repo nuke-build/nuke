@@ -109,6 +109,11 @@ namespace Nuke.Common.CI.TeamCity
         public string ProjectId => ConfigurationProperties?["teamcity.project.id"];
         public long BuildId => long.Parse(ConfigurationProperties?["teamcity.build.id"] ?? 0.ToString());
         public bool IsBuildPersonal => bool.Parse(SystemProperties?.GetValueOrDefault("build.is.personal") ?? bool.FalseString);
+        public bool IsPullRequest => ConfigurationProperties?.GetValueOrDefault("teamcity.pullRequest.number") != null;
+        [CanBeNull] public long? PullRequestNumber => IsPullRequest ? long.Parse(ConfigurationProperties["teamcity.pullRequest.number"]) : null;
+        [CanBeNull] public string PullRequestSourceBranch => IsPullRequest ? ConfigurationProperties["teamcity.pullRequest.source.branch"] : null;
+        [CanBeNull] public string PullRequestTargetBranch => IsPullRequest ? ConfigurationProperties["teamcity.pullRequest.target.branch"] : null;
+        [CanBeNull] public string PullRequestTitle => IsPullRequest ? ConfigurationProperties["teamcity.pullRequest.title"] : null;
 
         [NoConvert] public string BranchName => ConfigurationProperties?.GetValueOrDefault("teamcity.build.branch")
             .NotNull("Configuration property 'teamcity.build.branch' is null. See https://youtrack.jetbrains.com/issue/TW-62888.");
