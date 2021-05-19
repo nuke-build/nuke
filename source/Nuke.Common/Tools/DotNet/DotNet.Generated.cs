@@ -5165,6 +5165,30 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region PackageVersion
+        /// <summary>
+        ///   <p><em>Sets <c>PackageVersion</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPackageVersion<T>(this T toolSettings, string packageVersion) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageVersion"] = packageVersion;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PackageVersion</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPackageVersion<T>(this T toolSettings) where T : DotNetRunSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageVersion");
+            return toolSettings;
+        }
+        #endregion
         #region Version
         /// <summary>
         ///   <p><em>Sets <c>Version</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
@@ -7219,6 +7243,30 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageId");
+            return toolSettings;
+        }
+        #endregion
+        #region PackageVersion
+        /// <summary>
+        ///   <p><em>Sets <c>PackageVersion</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPackageVersion<T>(this T toolSettings, string packageVersion) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageVersion"] = packageVersion;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PackageVersion</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPackageVersion<T>(this T toolSettings) where T : DotNetRestoreSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageVersion");
             return toolSettings;
         }
         #endregion
@@ -9645,6 +9693,30 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region PackageVersion
+        /// <summary>
+        ///   <p><em>Sets <c>PackageVersion</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPackageVersion<T>(this T toolSettings, string packageVersion) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageVersion"] = packageVersion;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PackageVersion</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPackageVersion<T>(this T toolSettings) where T : DotNetPackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageVersion");
+            return toolSettings;
+        }
+        #endregion
         #region Version
         /// <summary>
         ///   <p><em>Sets <c>Version</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
@@ -12059,6 +12131,30 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region PackageVersion
+        /// <summary>
+        ///   <p><em>Sets <c>PackageVersion</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPackageVersion<T>(this T toolSettings, string packageVersion) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageVersion"] = packageVersion;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PackageVersion</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPackageVersion<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageVersion");
+            return toolSettings;
+        }
+        #endregion
         #region Version
         /// <summary>
         ///   <p><em>Sets <c>Version</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
@@ -14011,6 +14107,30 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
+        #region PackageVersion
+        /// <summary>
+        ///   <p><em>Sets <c>PackageVersion</c> in <see cref="DotNetMSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPackageVersion<T>(this T toolSettings, string packageVersion) where T : DotNetMSBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageVersion"] = packageVersion;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PackageVersion</c> in <see cref="DotNetMSBuildSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPackageVersion<T>(this T toolSettings) where T : DotNetMSBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageVersion");
+            return toolSettings;
+        }
+        #endregion
         #region Version
         /// <summary>
         ///   <p><em>Sets <c>Version</c> in <see cref="DotNetMSBuildSettings.Properties"/></em></p>
@@ -15561,6 +15681,30 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageId");
+            return toolSettings;
+        }
+        #endregion
+        #region PackageVersion
+        /// <summary>
+        ///   <p><em>Sets <c>PackageVersion</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPackageVersion<T>(this T toolSettings, string packageVersion) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageVersion"] = packageVersion;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PackageVersion</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPackageVersion<T>(this T toolSettings) where T : DotNetCleanSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageVersion");
             return toolSettings;
         }
         #endregion
@@ -17918,6 +18062,30 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.PropertiesInternal.Remove("PackageId");
+            return toolSettings;
+        }
+        #endregion
+        #region PackageVersion
+        /// <summary>
+        ///   <p><em>Sets <c>PackageVersion</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetPackageVersion<T>(this T toolSettings, string packageVersion) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal["PackageVersion"] = packageVersion;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <c>PackageVersion</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
+        ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetPackageVersion<T>(this T toolSettings) where T : DotNetPublishSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PropertiesInternal.Remove("PackageVersion");
             return toolSettings;
         }
         #endregion

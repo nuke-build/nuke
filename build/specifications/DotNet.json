@@ -1000,6 +1000,10 @@
           "type": "string"
         },
         {
+          "name": "PackageVersion",
+          "type": "string"
+        },
+        {
           "name": "Version",
           "type": "string"
         },

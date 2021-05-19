@@ -14357,6 +14357,7 @@
 - ResetPackageDirectory(this DotNetBuildSettings toolSettings) : DotNetBuildSettings
 - ResetPackageIconUrl(this DotNetBuildSettings toolSettings) : DotNetBuildSettings
 - ResetPackageId(this DotNetBuildSettings toolSettings) : DotNetBuildSettings
+- ResetPackageVersion(this DotNetBuildSettings toolSettings) : DotNetBuildSettings
 - ResetPackageLicenseUrl(this DotNetBuildSettings toolSettings) : DotNetBuildSettings
 - ResetPackageProjectUrl(this DotNetBuildSettings toolSettings) : DotNetBuildSettings
 - ResetPackageReleaseNotes(this DotNetBuildSettings toolSettings) : DotNetBuildSettings
@@ -14403,6 +14404,7 @@
 - SetPackageDirectory(this DotNetBuildSettings toolSettings, string packageDirectory) : DotNetBuildSettings
 - SetPackageIconUrl(this DotNetBuildSettings toolSettings, string packageIconUrl) : DotNetBuildSettings
 - SetPackageId(this DotNetBuildSettings toolSettings, string packageId) : DotNetBuildSettings
+- SetPackageVersion(this DotNetBuildSettings toolSettings, string packageVersion) : DotNetBuildSettings
 - SetPackageLicenseUrl(this DotNetBuildSettings toolSettings, string packageLicenseUrl) : DotNetBuildSettings
 - SetPackageProjectUrl(this DotNetBuildSettings toolSettings, string packageProjectUrl) : DotNetBuildSettings
 - SetPackageReleaseNotes(this DotNetBuildSettings toolSettings, string packageReleaseNotes) : DotNetBuildSettings
@@ -14499,6 +14501,7 @@
 - ResetOutput(this DotNetCleanSettings toolSettings) : DotNetCleanSettings
 - ResetPackageIconUrl(this DotNetCleanSettings toolSettings) : DotNetCleanSettings
 - ResetPackageId(this DotNetCleanSettings toolSettings) : DotNetCleanSettings
+- ResetPackageVersion(this DotNetCleanSettings toolSettings) : DotNetCleanSettings
 - ResetPackageLicenseUrl(this DotNetCleanSettings toolSettings) : DotNetCleanSettings
 - ResetPackageProjectUrl(this DotNetCleanSettings toolSettings) : DotNetCleanSettings
 - ResetPackageReleaseNotes(this DotNetCleanSettings toolSettings) : DotNetCleanSettings
@@ -14529,6 +14532,7 @@
 - SetOutput(this DotNetCleanSettings toolSettings, string output) : DotNetCleanSettings
 - SetPackageIconUrl(this DotNetCleanSettings toolSettings, string packageIconUrl) : DotNetCleanSettings
 - SetPackageId(this DotNetCleanSettings toolSettings, string packageId) : DotNetCleanSettings
+- SetPackageVersion(this DotNetCleanSettings toolSettings, string packageVersion) : DotNetCleanSettings
 - SetPackageLicenseUrl(this DotNetCleanSettings toolSettings, string packageLicenseUrl) : DotNetCleanSettings
 - SetPackageProjectUrl(this DotNetCleanSettings toolSettings, string packageProjectUrl) : DotNetCleanSettings
 - SetPackageReleaseNotes(this DotNetCleanSettings toolSettings, string packageReleaseNotes) : DotNetCleanSettings
@@ -14715,6 +14719,7 @@
 - ResetPackageDirectory(this DotNetPackSettings toolSettings) : DotNetPackSettings
 - ResetPackageIconUrl(this DotNetPackSettings toolSettings) : DotNetPackSettings
 - ResetPackageId(this DotNetPackSettings toolSettings) : DotNetPackSettings
+- ResetPackageVersion(this DotNetPackSettings toolSettings) : DotNetPackSettings
 - ResetPackageLicenseUrl(this DotNetPackSettings toolSettings) : DotNetPackSettings
 - ResetPackageProjectUrl(this DotNetPackSettings toolSettings) : DotNetPackSettings
 - ResetPackageReleaseNotes(this DotNetPackSettings toolSettings) : DotNetPackSettings
@@ -14760,6 +14765,7 @@
 - SetPackageDirectory(this DotNetPackSettings toolSettings, string packageDirectory) : DotNetPackSettings
 - SetPackageIconUrl(this DotNetPackSettings toolSettings, string packageIconUrl) : DotNetPackSettings
 - SetPackageId(this DotNetPackSettings toolSettings, string packageId) : DotNetPackSettings
+- SetPackageVersion(this DotNetPackSettings toolSettings, string packageVersion) : DotNetPackSettings
 - SetPackageLicenseUrl(this DotNetPackSettings toolSettings, string packageLicenseUrl) : DotNetPackSettings
 - SetPackageProjectUrl(this DotNetPackSettings toolSettings, string packageProjectUrl) : DotNetPackSettings
 - SetPackageReleaseNotes(this DotNetPackSettings toolSettings, string packageReleaseNotes) : DotNetPackSettings
@@ -14914,6 +14920,7 @@
 - ResetPackageDirectory(this DotNetPublishSettings toolSettings) : DotNetPublishSettings
 - ResetPackageIconUrl(this DotNetPublishSettings toolSettings) : DotNetPublishSettings
 - ResetPackageId(this DotNetPublishSettings toolSettings) : DotNetPublishSettings
+- ResetPackageVersion(this DotNetPublishSettings toolSettings) : DotNetPublishSettings
 - ResetPackageLicenseUrl(this DotNetPublishSettings toolSettings) : DotNetPublishSettings
 - ResetPackageProjectUrl(this DotNetPublishSettings toolSettings) : DotNetPublishSettings
 - ResetPackageReleaseNotes(this DotNetPublishSettings toolSettings) : DotNetPublishSettings
@@ -14959,6 +14966,7 @@
 - SetPackageDirectory(this DotNetPublishSettings toolSettings, string packageDirectory) : DotNetPublishSettings
 - SetPackageIconUrl(this DotNetPublishSettings toolSettings, string packageIconUrl) : DotNetPublishSettings
 - SetPackageId(this DotNetPublishSettings toolSettings, string packageId) : DotNetPublishSettings
+- SetPackageVersion(this DotNetPublishSettings toolSettings, string packageVersion) : DotNetPublishSettings
 - SetPackageLicenseUrl(this DotNetPublishSettings toolSettings, string packageLicenseUrl) : DotNetPublishSettings
 - SetPackageProjectUrl(this DotNetPublishSettings toolSettings, string packageProjectUrl) : DotNetPublishSettings
 - SetPackageReleaseNotes(this DotNetPublishSettings toolSettings, string packageReleaseNotes) : DotNetPublishSettings
@@ -15093,6 +15101,7 @@
 - ResetPackageDirectory(this DotNetRestoreSettings toolSettings) : DotNetRestoreSettings
 - ResetPackageIconUrl(this DotNetRestoreSettings toolSettings) : DotNetRestoreSettings
 - ResetPackageId(this DotNetRestoreSettings toolSettings) : DotNetRestoreSettings
+- ResetPackageVersion(this DotNetRestoreSettings toolSettings) : DotNetRestoreSettings
 - ResetPackageLicenseUrl(this DotNetRestoreSettings toolSettings) : DotNetRestoreSettings
 - ResetPackageProjectUrl(this DotNetRestoreSettings toolSettings) : DotNetRestoreSettings
 - ResetPackageReleaseNotes(this DotNetRestoreSettings toolSettings) : DotNetRestoreSettings
@@ -15131,6 +15140,7 @@
 - SetPackageDirectory(this DotNetRestoreSettings toolSettings, string packageDirectory) : DotNetRestoreSettings
 - SetPackageIconUrl(this DotNetRestoreSettings toolSettings, string packageIconUrl) : DotNetRestoreSettings
 - SetPackageId(this DotNetRestoreSettings toolSettings, string packageId) : DotNetRestoreSettings
+- SetPackageVersion(this DotNetRestoreSettings toolSettings, string packageVersion) : DotNetRestoreSettings
 - SetPackageLicenseUrl(this DotNetRestoreSettings toolSettings, string packageLicenseUrl) : DotNetRestoreSettings
 - SetPackageProjectUrl(this DotNetRestoreSettings toolSettings, string packageProjectUrl) : DotNetRestoreSettings
 - SetPackageReleaseNotes(this DotNetRestoreSettings toolSettings, string packageReleaseNotes) : DotNetRestoreSettings
@@ -15277,6 +15287,7 @@
 - ResetPackageDirectory(this DotNetRunSettings toolSettings) : DotNetRunSettings
 - ResetPackageIconUrl(this DotNetRunSettings toolSettings) : DotNetRunSettings
 - ResetPackageId(this DotNetRunSettings toolSettings) : DotNetRunSettings
+- ResetPackageVersion(this DotNetRunSettings toolSettings) : DotNetRunSettings
 - ResetPackageLicenseUrl(this DotNetRunSettings toolSettings) : DotNetRunSettings
 - ResetPackageProjectUrl(this DotNetRunSettings toolSettings) : DotNetRunSettings
 - ResetPackageReleaseNotes(this DotNetRunSettings toolSettings) : DotNetRunSettings
@@ -15320,6 +15331,7 @@
 - SetPackageDirectory(this DotNetRunSettings toolSettings, string packageDirectory) : DotNetRunSettings
 - SetPackageIconUrl(this DotNetRunSettings toolSettings, string packageIconUrl) : DotNetRunSettings
 - SetPackageId(this DotNetRunSettings toolSettings, string packageId) : DotNetRunSettings
+- SetPackageVersion(this DotNetRunSettings toolSettings, string packageVersion) : DotNetRunSettings
 - SetPackageLicenseUrl(this DotNetRunSettings toolSettings, string packageLicenseUrl) : DotNetRunSettings
 - SetPackageProjectUrl(this DotNetRunSettings toolSettings, string packageProjectUrl) : DotNetRunSettings
 - SetPackageReleaseNotes(this DotNetRunSettings toolSettings, string packageReleaseNotes) : DotNetRunSettings
@@ -22334,6 +22346,7 @@
 - ResetOutDir(this MSBuildSettings toolSettings) : MSBuildSettings
 - ResetPackageIconUrl(this MSBuildSettings toolSettings) : MSBuildSettings
 - ResetPackageId(this MSBuildSettings toolSettings) : MSBuildSettings
+- ResetPackageVersion(this MSBuildSettings toolSettings) : MSBuildSettings
 - ResetPackageLicenseUrl(this MSBuildSettings toolSettings) : MSBuildSettings
 - ResetPackageOutputPath(this MSBuildSettings toolSettings) : MSBuildSettings
 - ResetPackageProjectUrl(this MSBuildSettings toolSettings) : MSBuildSettings
@@ -22384,6 +22397,7 @@
 - SetOutDir(this MSBuildSettings toolSettings, string outDir) : MSBuildSettings
 - SetPackageIconUrl(this MSBuildSettings toolSettings, string packageIconUrl) : MSBuildSettings
 - SetPackageId(this MSBuildSettings toolSettings, string packageId) : MSBuildSettings
+- SetPackageVersion(this MSBuildSettings toolSettings, string packageVersion) : MSBuildSettings
 - SetPackageLicenseUrl(this MSBuildSettings toolSettings, string packageLicenseUrl) : MSBuildSettings
 - SetPackageOutputPath(this MSBuildSettings toolSettings, string packageOutputPath) : MSBuildSettings
 - SetPackageProjectUrl(this MSBuildSettings toolSettings, string packageProjectUrl) : MSBuildSettings
