@@ -130,7 +130,7 @@ namespace Nuke.Common.CI.GitHubActions
             if (PublishArtifacts)
             {
                 var artifacts = relevantTargets
-                    .SelectMany(x => ArtifactExtensions.ArtifactProducts[x.Definition])
+                    .SelectMany(x => x.ArtifactProducts)
                     .Select(x => (AbsolutePath) x)
                     // TODO: https://github.com/actions/upload-artifact/issues/11
                     .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))

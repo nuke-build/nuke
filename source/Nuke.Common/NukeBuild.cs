@@ -148,6 +148,9 @@ namespace Nuke.Common
         [Parameter("Indicates to continue a previously failed build attempt.")]
         public bool Continue { get; internal set; }
 
+        [Parameter("Partition to use on CI.", List = false)]
+        public Partition Partition { get; internal set; } = Partition.Single;
+
         [CanBeNull]
         protected internal virtual string NuGetPackagesConfigFile =>
             BuildProjectDirectory != null

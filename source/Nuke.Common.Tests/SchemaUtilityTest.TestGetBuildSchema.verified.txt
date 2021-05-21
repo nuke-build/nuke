@@ -50,6 +50,10 @@
         "Param": {
           "type": "string"
         },
+        "Partition": {
+          "type": "string",
+          "description": "Partition to use on CI"
+        },
         "Plan": {
           "type": "boolean",
           "description": "Shows the execution plan (HTML)"

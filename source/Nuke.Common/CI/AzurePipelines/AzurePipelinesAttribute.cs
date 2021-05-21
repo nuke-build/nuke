@@ -148,7 +148,7 @@ namespace Nuke.Common.CI.AzurePipelines
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            var (_, totalPartitions) = ArtifactExtensions.Partitions.GetValueOrDefault(executableTarget.Definition);
+            var totalPartitions = executableTarget.PartitionSize ?? 0;
             var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
             return new AzurePipelinesJob
                    {
@@ -173,14 +173,12 @@ namespace Nuke.Common.CI.AzurePipelines
                              };
             }
 
-            var (partitionName, _) = ArtifactExtensions.Partitions.GetValueOrDefault(executableTarget.Definition);
-
             static string GetArtifactPath(AbsolutePath path)
                 => NukeBuild.RootDirectory.Contains(path)
                     ? NukeBuild.RootDirectory.GetUnixRelativePathTo(path)
                     : (string) path;
 
-            var publishedArtifacts = ArtifactExtensions.ArtifactProducts[executableTarget.Definition]
+            var publishedArtifacts = executableTarget.ArtifactProducts
                 .Select(x => (AbsolutePath) x)
                 .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
                 .Distinct()
@@ -203,7 +201,7 @@ namespace Nuke.Common.CI.AzurePipelines
             yield return new AzurePipelinesCmdStep
                          {
                              BuildCmdPath = BuildCmdPath,
-                             PartitionName = partitionName,
+                             PartitionSize = executableTarget.PartitionSize,
                              InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                              Imports = GetImports().ToDictionary(x => x.Key, x => x.Value)
                          };

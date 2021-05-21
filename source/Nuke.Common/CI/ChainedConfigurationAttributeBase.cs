@@ -33,6 +33,8 @@ namespace Nuke.Common.CI
                 invokedTargets.AddRange(additionalInvokedTargets);
             } while (additionalInvokedTargets.Count > 0);
 
+            ControlFlow.Assert(invokedTargets.Except(new[] { executableTarget }).Count(x => x.PartitionSize != null) == 0,
+                $"Non-entry targets for {executableTarget.Name} cannot define partitions.");
             return ExecutionPlanner.GetExecutionPlan(invokedTargets, new[] { executableTarget.Name });
         }
 

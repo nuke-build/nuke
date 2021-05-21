@@ -114,7 +114,7 @@ project {
     }
 }
 object Pack : BuildType({
-    name = "📦 Pack"
+    name = "📦 Pack 🧩 "
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -157,12 +157,12 @@ object Test_P1T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Restore Compile Test --skip --test-partition 1"
+            arguments = "Restore Compile Test --skip --partition 1/2"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Restore Compile Test --skip --test-partition 1"
+            arguments = "Restore Compile Test --skip --partition 1/2"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
@@ -180,18 +180,18 @@ object Test_P2T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Restore Compile Test --skip --test-partition 2"
+            arguments = "Restore Compile Test --skip --partition 2/2"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Restore Compile Test --skip --test-partition 2"
+            arguments = "Restore Compile Test --skip --partition 2/2"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
 })
 object Test : BuildType({
-    name = "🚦 Test"
+    name = "🚦 Test 🧩 "
     type = Type.COMPOSITE
     vcs {
         root(DslContext.settingsRoot)
@@ -228,7 +228,7 @@ object Test : BuildType({
     }
 })
 object ReportDuplicates : BuildType({
-    name = "🎭 ReportDuplicates"
+    name = "🎭 ReportDuplicates 🧩 "
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -258,7 +258,7 @@ object ReportDuplicates : BuildType({
     }
 })
 object ReportIssues : BuildType({
-    name = "💣 ReportIssues"
+    name = "💣 ReportIssues 🧩 "
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -288,7 +288,7 @@ object ReportIssues : BuildType({
     }
 })
 object ReportCoverage : BuildType({
-    name = "📊 ReportCoverage"
+    name = "📊 ReportCoverage 🧩 "
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true

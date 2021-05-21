@@ -83,6 +83,10 @@
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
         },
+        "Partition": {
+          "type": "string",
+          "description": "Partition to use on CI"
+        },
         "Plan": {
           "type": "boolean",
           "description": "Shows the execution plan (HTML)"
@@ -192,9 +196,6 @@
               "UpdateContributors"
             ]
           }
-        },
-        "TestPartition": {
-          "type": "string"
         },
         "TwitterAccessToken": {
           "type": "string",

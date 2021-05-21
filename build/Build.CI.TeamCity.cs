@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.CI;
 using Nuke.Common.CI.TeamCity.Configuration;
 using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
@@ -58,7 +59,7 @@ partial class Build
                 .ForEachLazy(x =>
                 {
                     var symbol = CustomNames.GetValueOrDefault(x.InvokedTargets.Last()).NotNull("symbol != null");
-                    x.Name = x.PartitionName == null
+                    x.Name = x.Partition == Partition.Single
                         ? $"{symbol} {x.Name}"
                         : $"{symbol} {x.InvokedTargets.Last()} 🧩 {x.Partition}";
                 });

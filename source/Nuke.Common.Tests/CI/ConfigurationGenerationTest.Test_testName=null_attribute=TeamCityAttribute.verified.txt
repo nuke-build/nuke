@@ -179,12 +179,12 @@ object Test_P1T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Test --skip --test-partition 1"
+            arguments = "Test --skip --partition 1/2"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Test --skip --test-partition 1"
+            arguments = "Test --skip --partition 1/2"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
@@ -208,12 +208,12 @@ object Test_P2T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Test --skip --test-partition 2"
+            arguments = "Test --skip --partition 2/2"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Test --skip --test-partition 2"
+            arguments = "Test --skip --partition 2/2"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }

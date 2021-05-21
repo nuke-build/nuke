@@ -97,7 +97,7 @@ namespace Nuke.Common.CI.AppVeyor
         private IEnumerable<string> GetArtifacts(IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return relevantTargets
-                .Select(x => ArtifactExtensions.ArtifactProducts[x.Definition])
+                .Select(x => x.ArtifactProducts)
                 .SelectMany(x => x)
                 .Select(x => NukeBuild.RootDirectory.GetUnixRelativePathTo(x).ToString());
         }
