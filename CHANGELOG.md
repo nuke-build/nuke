@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed filtering explicitly overridden targets in build components
 
 ## [5.1.2] / 2021-05-18
 - Fixed target duration to be measured immediately after execution
