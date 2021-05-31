@@ -260,6 +260,7 @@ namespace Nuke.Common.CI.TeamCity
         protected virtual IEnumerable<TeamCityParameter> GetDefaultParameters()
         {
             yield return new TeamCityKeyValueParameter("teamcity.runner.commandline.stdstreams.encoding", "UTF-8");
+            yield return new TeamCityKeyValueParameter("teamcity.git.fetchAllHeads", "true");
         }
 
         protected virtual TeamCityParameter GetParameter(MemberInfo member, NukeBuild build, bool required)

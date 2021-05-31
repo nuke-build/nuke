@@ -167,8 +167,11 @@ project {
         text(
             "teamcity.runner.commandline.stdstreams.encoding",
             "UTF-8",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
+        text(
+            "teamcity.git.fetchAllHeads",
+            "true",
+            display = ParameterDisplay.HIDDEN)
     }
 }
 object Compile : BuildType({
@@ -193,8 +196,7 @@ object Compile : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Compile",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
 })
 object Pack : BuildType({
@@ -220,8 +222,7 @@ object Pack : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Pack",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
@@ -306,8 +307,7 @@ object Test : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Test",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
@@ -353,8 +353,7 @@ object ReportDuplicates : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Report Duplicates",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
@@ -384,8 +383,7 @@ object ReportIssues : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Report Issues",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
@@ -416,8 +414,7 @@ object ReportCoverage : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Report Coverage",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
