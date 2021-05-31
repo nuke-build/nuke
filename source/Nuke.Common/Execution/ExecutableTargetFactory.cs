@@ -94,7 +94,8 @@ namespace Nuke.Common.Execution
             return buildType.GetAllMembers(
                 x => x is PropertyInfo property && property.PropertyType == typeof(Target),
                 bindingFlags: ReflectionUtility.Instance,
-                allowAmbiguity: false).Cast<PropertyInfo>();
+                allowAmbiguity: false,
+                filterQuasiOverridden: true).Cast<PropertyInfo>();
         }
     }
 }

@@ -122,6 +122,16 @@ namespace Nuke.Common.Tests.Execution
             targets.Count(x => x.Name == nameof(ITestBuild.D)).Should().Be(1);
         }
 
+        [Fact]
+        public void TestDeclaringAndImplementingComponent()
+        {
+            var build = new TestBuildWithDeclaringAndImplementingComponent();
+            var targets = ExecutableTargetFactory.CreateAll(build);
+
+            targets.Should().HaveCount(1);
+            targets.Single().Member.DeclaringType.Should().Be(typeof(IImplementingComponent));
+        }
+
         private interface IParameterInterface
             : INukeBuild
         {
@@ -214,6 +224,20 @@ namespace Nuke.Common.Tests.Execution
         {
             public Target D => _ => _
                 .Executes(() => { });
+        }
+
+        private class TestBuildWithDeclaringAndImplementingComponent : NukeBuild, IImplementingComponent
+        {
+        }
+
+        private interface IDeclaringComponent : INukeBuild
+        {
+            Target Foo { get; }
+        }
+
+        private interface IImplementingComponent : IDeclaringComponent
+        {
+            Target IDeclaringComponent.Foo => _ => _;
         }
     }
 }
