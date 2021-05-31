@@ -52,6 +52,8 @@ namespace Nuke.Common.CI.TeamCity
 
         public string[] ManuallyTriggeredTargets { get; set; } = new string[0];
 
+        public string[] ImportSecrets { get; set; } = new string[0];
+
         protected override StreamWriter CreateStream()
         {
             TextTasks.WriteAllLines(
@@ -252,6 +254,7 @@ namespace Nuke.Common.CI.TeamCity
                 .Except(relevantTargets.SelectMany(x => x.Requirements
                     .Where(y => y is not Expression<Func<bool>>)
                     .Select(y => y.GetMemberInfo())))
+                .Where(x => !x.HasCustomAttribute<SecretAttribute>() || ImportSecrets.Contains(ParameterService.GetParameterMemberName(x)))
                 .Where(x => x.DeclaringType != typeof(NukeBuild) || x.Name == nameof(NukeBuild.Verbosity))
                 .Select(x => GetParameter(x, build, required: false))
                 .Concat(GetDefaultParameters());

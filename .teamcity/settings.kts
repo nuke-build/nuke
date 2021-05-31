@@ -42,16 +42,6 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
-        password (
-            "env.AzurePipelinesAccessToken",
-            label = "AzurePipelinesAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.CodecovToken",
-            label = "CodecovToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
         select (
             "env.Configuration",
             label = "Configuration",
@@ -61,21 +51,6 @@ project {
         password (
             "env.EnterpriseAccessToken",
             label = "EnterpriseAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.GitHubRegistryApiKey",
-            label = "GitHubRegistryApiKey",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.GitHubToken",
-            label = "GitHubToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.GitterAuthToken",
-            label = "GitterAuthToken",
             value = "",
             display = ParameterDisplay.NORMAL)
         text (
@@ -91,16 +66,6 @@ project {
             value = "False",
             checked = "True",
             unchecked = "False",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.PublicNuGetApiKey",
-            label = "PublicNuGetApiKey",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.SignPathApiToken",
-            label = "SignPathApiToken",
-            value = "",
             display = ParameterDisplay.NORMAL)
         text (
             "env.SignPathOrganizationId",
@@ -123,31 +88,6 @@ project {
         password (
             "env.SlackUserAccessToken",
             label = "SlackUserAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.SlackWebhook",
-            label = "SlackWebhook",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.TwitterAccessToken",
-            label = "TwitterAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.TwitterAccessTokenSecret",
-            label = "TwitterAccessTokenSecret",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.TwitterConsumerKey",
-            label = "TwitterConsumerKey",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.TwitterConsumerSecret",
-            label = "TwitterConsumerSecret",
             value = "",
             display = ParameterDisplay.NORMAL)
         checkbox (

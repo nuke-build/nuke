@@ -11,6 +11,10 @@ using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Components;
+#if NUKE_ENTERPRISE
+using Nuke.Enterprise.Notifications;
+using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
+#endif
 
 [TeamCity(
     Version = "2020.2",
@@ -30,7 +34,14 @@ using Nuke.Components;
             nameof(InstallFonts),
             nameof(ReleaseImage)
         },
-    ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) })]
+    ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) },
+    ImportSecrets = new[]
+                    {
+                        nameof(EnterpriseAccessToken),
+#if NUKE_ENTERPRISE
+                        Slack + nameof(IHazSlackCredentials.UserAccessToken),
+#endif
+                    })]
 partial class Build
 {
     public class TeamCityAttribute : Nuke.Common.CI.TeamCity.TeamCityAttribute
