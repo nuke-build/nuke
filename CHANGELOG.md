@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [5.1.3] / 2021-05-31
+- Fixed filtering explicitly overridden targets in build components
+
 ## [5.1.2] / 2021-05-18
 - Fixed target duration to be measured immediately after execution
 - Fixed build script invocation from global tool
@@ -787,7 +790,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke.git/compare/5.1.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke.git/compare/5.1.3...HEAD
+[5.1.3]: https://github.com/nuke-build/nuke.git/compare/5.1.2...5.1.3
 [5.1.2]: https://github.com/nuke-build/nuke.git/compare/5.1.1...5.1.2
 [5.1.1]: https://github.com/nuke-build/nuke.git/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/nuke-build/nuke.git/compare/5.0.2...5.1.0
