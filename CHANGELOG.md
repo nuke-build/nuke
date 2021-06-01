@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [5.1.4] / 2021-06-01
 - Fixed `StronglyTypedSolutionGenerator` to resolve root directory only on demand
 - Fixed `JetBrains.Annotations` to be packed with source generators
 - Fixed missing SpaceAutomation configuration link
@@ -793,7 +795,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke.git/compare/5.1.3...HEAD
+[vNext]: https://github.com/nuke-build/nuke.git/compare/5.1.4...HEAD
+[5.1.4]: https://github.com/nuke-build/nuke.git/compare/5.1.3...5.1.4
 [5.1.3]: https://github.com/nuke-build/nuke.git/compare/5.1.2...5.1.3
 [5.1.2]: https://github.com/nuke-build/nuke.git/compare/5.1.1...5.1.2
 [5.1.1]: https://github.com/nuke-build/nuke.git/compare/5.1.0...5.1.1
