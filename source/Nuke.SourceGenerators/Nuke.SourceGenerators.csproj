@@ -14,11 +14,12 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.8.0-5.final" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.1" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" PrivateAssets="all" GeneratePathProperty="true" />
-    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
+    <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" GeneratePathProperty="true" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="$(PkgNewtonsoft_Json)\lib\netstandard2.0\*.*" CopyToOutputDirectory="PreserveNewest" Visible="false" />
+    <None Include="$(PkgJetBrains_Annotations)\lib\netstandard2.0\*.*" CopyToOutputDirectory="PreserveNewest" Visible="false" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -28,6 +29,7 @@
   <Target Name="GetDependencyTargetPaths">
     <ItemGroup>
       <TargetPathWithTargetPlatformMoniker Include="$(PkgNewtonsoft_Json)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(PkgJetBrains_Annotations)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
     </ItemGroup>
   </Target>
 

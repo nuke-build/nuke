@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Nuke.Common.ProjectModel;
@@ -19,7 +20,7 @@ namespace Nuke.SourceGenerators.Tests
     public class StronglyTypedSolutionGeneratorTest
     {
         [Fact]
-        public Task TestGlobalSolution()
+        public Task Test()
         {
             var inputCompilation = CreateCompilation(@"
 using Nuke.Common;
@@ -38,6 +39,50 @@ partial class Build : NukeBuild
             if (!result.Diagnostics.IsEmpty)
                 throw new Exception(string.Join(Environment.NewLine, result.Diagnostics.Select(x => x.GetMessage())));
             return Verifier.Verify(result.GeneratedTrees.Single().GetRoot().ToFullString());
+        }
+
+        [Fact]
+        public void TestDisabled()
+        {
+            var inputCompilation = CreateCompilation(@"
+using Nuke.Common;
+using Nuke.Common.ProjectModel;
+
+partial class Build : NukeBuild
+{
+    [Solution(GenerateProjects = false)]
+    readonly Solution Solution;
+}");
+
+            var generator = new StronglyTypedSolutionGenerator();
+            var driver = (GeneratorDriver) CSharpGeneratorDriver.Create(generator);
+            var result = driver.RunGeneratorsAndUpdateCompilation(inputCompilation, out _, out _).GetRunResult();
+
+            if (!result.Diagnostics.IsEmpty)
+                throw new Exception(string.Join(Environment.NewLine, result.Diagnostics.Select(x => x.GetMessage())));
+            result.GeneratedTrees.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void TestUnspecified()
+        {
+            var inputCompilation = CreateCompilation(@"
+using Nuke.Common;
+using Nuke.Common.ProjectModel;
+
+partial class Build : NukeBuild
+{
+    [Solution]
+    readonly Solution Solution;
+}");
+
+            var generator = new StronglyTypedSolutionGenerator();
+            var driver = (GeneratorDriver) CSharpGeneratorDriver.Create(generator);
+            var result = driver.RunGeneratorsAndUpdateCompilation(inputCompilation, out _, out _).GetRunResult();
+
+            if (!result.Diagnostics.IsEmpty)
+                throw new Exception(string.Join(Environment.NewLine, result.Diagnostics.Select(x => x.GetMessage())));
+            result.GeneratedTrees.Should().BeEmpty();
         }
 
         private static Compilation CreateCompilation(string source)
