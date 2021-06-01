@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed `StronglyTypedSolutionGenerator` to resolve root directory only on demand
+- Fixed `JetBrains.Annotations` to be packed with source generators
+- Fixed missing SpaceAutomation configuration link
 
 ## [5.1.3] / 2021-05-31
 - Fixed filtering explicitly overridden targets in build components
