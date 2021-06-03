@@ -23,7 +23,6 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 version = "2020.2"
 
 project {
-    buildType(Compile)
     buildType(Pack)
     buildType(Test_P1T2)
     buildType(Test_P2T2)
@@ -32,7 +31,7 @@ project {
     buildType(ReportIssues)
     buildType(ReportCoverage)
 
-    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, ReportDuplicates, ReportIssues, ReportCoverage)
+    buildTypesOrder = arrayListOf(Pack, Test_P1T2, Test_P2T2, Test, ReportDuplicates, ReportIssues, ReportCoverage)
 
     params {
         checkbox (
@@ -114,31 +113,6 @@ project {
             display = ParameterDisplay.HIDDEN)
     }
 }
-object Compile : BuildType({
-    name = "⚙️ Compile"
-    vcs {
-        root(DslContext.settingsRoot)
-        cleanCheckout = true
-    }
-    steps {
-        exec {
-            path = "build.cmd"
-            arguments = "Restore Compile --skip"
-            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
-        }
-        exec {
-            path = "build.sh"
-            arguments = "Restore Compile --skip"
-            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
-        }
-    }
-    params {
-        text(
-            "teamcity.ui.runButton.caption",
-            "Compile",
-            display = ParameterDisplay.HIDDEN)
-    }
-})
 object Pack : BuildType({
     name = "📦 Pack"
     vcs {
@@ -149,12 +123,12 @@ object Pack : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Pack --skip"
+            arguments = "Restore Compile Pack --skip"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Pack --skip"
+            arguments = "Restore Compile Pack --skip"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
@@ -167,12 +141,6 @@ object Pack : BuildType({
     triggers {
         vcs {
             triggerRules = "+:**"
-        }
-    }
-    dependencies {
-        snapshot(Compile) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-            onDependencyCancel = FailureAction.CANCEL
         }
     }
 })
@@ -189,19 +157,13 @@ object Test_P1T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Test --skip --test-partition 1"
+            arguments = "Restore Compile Test --skip --test-partition 1"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Test --skip --test-partition 1"
+            arguments = "Restore Compile Test --skip --test-partition 1"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
-        }
-    }
-    dependencies {
-        snapshot(Compile) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-            onDependencyCancel = FailureAction.CANCEL
         }
     }
 })
@@ -218,19 +180,13 @@ object Test_P2T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Test --skip --test-partition 2"
+            arguments = "Restore Compile Test --skip --test-partition 2"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Test --skip --test-partition 2"
+            arguments = "Restore Compile Test --skip --test-partition 2"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
-        }
-    }
-    dependencies {
-        snapshot(Compile) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-            onDependencyCancel = FailureAction.CANCEL
         }
     }
 })

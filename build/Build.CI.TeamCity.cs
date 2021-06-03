@@ -31,6 +31,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
         new[]
         {
             nameof(IRestore.Restore),
+            nameof(ICompile.Compile),
             nameof(InstallFonts),
             nameof(ReleaseImage)
         },
