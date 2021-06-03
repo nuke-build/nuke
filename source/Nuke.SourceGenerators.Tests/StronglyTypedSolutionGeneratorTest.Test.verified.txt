@@ -1,3 +1,4 @@
+﻿//HintName: StronglyTypedSolutionGenerator.cs
 using Nuke.Common.ProjectModel;
 
 internal class Solution : Nuke.Common.ProjectModel.Solution
@@ -19,10 +20,7 @@ internal class Solution : Nuke.Common.ProjectModel.Solution
     public _misc misc => new(SolutionFolder.GetSolutionFolder("misc"));
     internal class _misc
     {
-        private SolutionFolder SolutionFolder
-        {
-            get;
-        }
+        private SolutionFolder SolutionFolder { get; }
 
         public _misc(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;
     }
