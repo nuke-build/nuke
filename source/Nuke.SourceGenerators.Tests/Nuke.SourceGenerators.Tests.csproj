@@ -11,6 +11,8 @@
     <ProjectReference Include="..\Nuke.SourceGenerators\Nuke.SourceGenerators.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.9.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.9.0" />
+    <PackageReference Include="Verify.SourceGenerators" Version="0.3.0" />
+    <PackageReference Include="Basic.Reference.Assemblies.NetStandard20" Version="1.1.2" />
   </ItemGroup>
 
 </Project>
