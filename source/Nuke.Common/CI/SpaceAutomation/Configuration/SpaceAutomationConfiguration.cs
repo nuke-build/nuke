@@ -14,6 +14,7 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
     {
         public string Name { get; set; }
         public string VolumeSize { get; set; }
+        public string[] RefSpec { get; set; }
         public SpaceAutomationContainer Container { get; set; }
         public SpaceAutomationTrigger[] Triggers { get; set; }
         public int? TimeoutInMinutes { get; set; }
@@ -31,6 +32,14 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
                 using (writer.WriteBlock("git"))
                 {
                     writer.WriteLine("depth = UNLIMITED_DEPTH");
+
+                    if (RefSpec != null)
+                    {
+                        using (writer.WriteBlock("refSpec"))
+                        {
+                            RefSpec.ForEach(x => writer.WriteLine($"+{x.DoubleQuote()}"));
+                        }
+                    }
                 }
 
                 writer.WriteLine();
