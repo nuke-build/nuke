@@ -51,7 +51,7 @@
   <ItemGroup>
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0008" />
     <PackageDownload Include="Codecov.Tool" Version="[1.12.3]" />
-    <PackageDownload Include="GitVersion.Tool" Version="[5.6.0]" />
+    <PackageDownload Include="GitVersion.Tool" Version="[5.6.10]" />
     <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.3.2]" />
     <PackageDownload Include="ReportGenerator" Version="[4.6.1]" />
     <PackageDownload Include="xunit.runner.console" Version="[2.4.1]" />
