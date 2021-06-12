@@ -27,11 +27,6 @@ stages:
         strategy:
           parallel: 2
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
@@ -47,11 +42,6 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [  ]
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Pack --skip'
@@ -75,11 +65,6 @@ stages:
         strategy:
           parallel: 2
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
@@ -95,11 +80,6 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [  ]
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Pack --skip'
@@ -123,11 +103,6 @@ stages:
         strategy:
           parallel: 2
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
@@ -143,11 +118,6 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [  ]
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Pack --skip'

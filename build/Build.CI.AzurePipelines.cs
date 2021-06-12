@@ -34,7 +34,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(ICompile.Compile), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) },
-    CacheKeyFiles = new[]{ "global.json", "source/**/*.csproj" })]
+    CacheKeyFiles = new string[0])]
 partial class Build
 {
     public class AzurePipelinesAttribute : Nuke.Common.CI.AzurePipelines.AzurePipelinesAttribute
