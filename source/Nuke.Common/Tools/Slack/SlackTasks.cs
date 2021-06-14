@@ -23,6 +23,7 @@ namespace Nuke.Common.Tools.Slack
     [PublicAPI]
     public static class SlackTasks
     {
+#if NETCORE
         public static void SendSlackMessage(Configure<SlackMessage> configurator, string webhook)
         {
             SendSlackMessageAsync(configurator, webhook).Wait();
@@ -57,6 +58,7 @@ namespace Nuke.Common.Tools.Slack
             var responseText = Encoding.UTF8.GetString(response);
             ControlFlow.Assert(responseText == "ok", $"'{responseText}' == 'ok'");
         }
+#endif
 
         public static async Task<string> SendOrUpdateSlackMessage(Configure<SlackMessage> configurator, string accessToken)
         {
