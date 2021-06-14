@@ -17,7 +17,6 @@ using Nuke.Common.OutputSinks;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using Refit;
 
 namespace Nuke.Common.CI.TeamCity
 {
