@@ -69,16 +69,17 @@ namespace Nuke.Common.Execution
                     .AddDictionary(GetRepositoryProperties(EnvironmentInfo.WorkingDirectory)));
         }
 
-        private static void TrackEvent(
-            string eventName,
-            IDictionary<string, string> properties)
+        private static void TrackEvent(string eventName, IDictionary<string, string> properties)
         {
+            if (s_client == null)
+                return;
+
             Logger.Trace($"Sending '{eventName}' telemetry event...");
             var longestPropertyName = properties.Keys.Max(x => x.Length);
             properties.OrderBy(x => x.Key).ForEach(x => Logger.Trace($"  {x.Key.PadRight(longestPropertyName)} = {x.Value ?? "<null>"}"));
 
-            s_client?.TrackEvent(eventName, properties);
-            s_client?.Flush();
+            s_client.TrackEvent(eventName, properties);
+            s_client.Flush();
         }
     }
 }
