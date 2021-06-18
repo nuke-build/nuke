@@ -22,7 +22,6 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         public string BuildCmdPath { get; set; }
         public string[] InvokedTargets { get; set; }
         public Partition Partition { get; set; }
-        public string PartitionName { get; set; }
         public TeamCityParameter[] Parameters { get; set; }
         public string[] ArtifactRules { get; set; }
 
@@ -105,7 +104,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             {
                 var arguments = $"{InvokedTargets.JoinSpace()} --skip";
                 if (Partition != null)
-                    arguments += $" --{ParameterService.GetParameterDashedName(PartitionName)} {Partition.Part}";
+                    arguments += $" --partition {Partition}";
 
                 void WriteConditionalExec(string path, string condition, string platform)
                 {

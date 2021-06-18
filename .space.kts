@@ -17,6 +17,9 @@
 job("continuous") {
     git {
         depth = UNLIMITED_DEPTH
+        refSpec {
+            +"refs/heads/*:refs/heads/*"
+        }
     }
 
     container("mcr.microsoft.com/dotnet/sdk:5.0") {

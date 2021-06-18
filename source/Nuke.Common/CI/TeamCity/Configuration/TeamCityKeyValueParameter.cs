@@ -28,10 +28,8 @@ namespace Nuke.Common.CI.TeamCity.Configuration
             {
                 writer.WriteLine($"{Key.DoubleQuote()},");
                 writer.WriteLine($"{Value.DoubleQuote()},");
-                writer.WriteLine($"display = ParameterDisplay.{TeamCityParameterDisplay.Hidden.ToString().ToUpperInvariant()}");
+                writer.WriteLine($"display = ParameterDisplay.{TeamCityParameterDisplay.Hidden.ToString().ToUpperInvariant()})");
             }
-
-            writer.WriteLine(")");
         }
     }
 }

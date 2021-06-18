@@ -55,7 +55,9 @@ namespace Nuke.Common.Execution
                                  AssuredAfterFailure = definition.IsAssuredAfterFailure,
                                  Requirements = definition.Requirements,
                                  Actions = definition.Actions,
-                                 Listed = !definition.IsInternal
+                                 Listed = !definition.IsInternal,
+                                 PartitionSize = definition.PartitionSize,
+                                 ArtifactProducts = definition.ArtifactProducts
                              };
 
                 executables.Add(target);
@@ -82,6 +84,13 @@ namespace Nuke.Common.Execution
                 executable.OrderDependencies.AddRange(GetDependencies(x => x.AfterTargets, x => x.BeforeTargets));
                 executable.TriggerDependencies.AddRange(GetDependencies(x => x.TriggeredByTargets, x => x.TriggersTargets));
                 executable.Triggers.AddRange(GetDependencies(x => x.TriggersTargets, x => x.TriggeredByTargets));
+
+                foreach (var artifactDependency in executable.Definition.ArtifactDependencies)
+                {
+                    var dependency = executables.Single(x => x.Factory == artifactDependency.Key);
+                    foreach (var artifacts in artifactDependency)
+                        executable.ArtifactDependencies.AddRange(dependency, artifacts.Length > 0 ? artifacts : dependency.ArtifactProducts);
+                }
             }
 
             return executables;

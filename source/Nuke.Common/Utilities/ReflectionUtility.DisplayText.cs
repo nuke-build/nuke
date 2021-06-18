@@ -120,7 +120,7 @@ namespace Nuke.Common.Utilities
                     .Cast<TupleElementNamesAttribute>()
                     .FirstOrDefault()
                 : member.GetCustomAttribute<TupleElementNamesAttribute>();
-            var memberType = !(member is ConstructorInfo)
+            var memberType = member is not ConstructorInfo
                 ? $" : {member.GetMemberType().GetDisplayShortName(tupleNamesAttribute?.TransformNames.ToList())}"
                 : string.Empty;
 

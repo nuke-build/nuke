@@ -29,11 +29,7 @@ partial class Build
             var enterpriseDirectory = ((Build) build).ExternalRepositoriesDirectory / "enterprise";
             if (accessToken.IsNullOrEmpty())
             {
-                var enterpriseProjectDirectory = enterpriseDirectory / "src" / "Nuke.Enterprise";
-                FileSystemTasks.EnsureExistingDirectory(enterpriseProjectDirectory);
-                File.WriteAllText(
-                    enterpriseProjectDirectory / "Nuke.Enterprise.csproj",
-                    @"
+                var projectFileContent = @"
 <Project Sdk=""Microsoft.NET.Sdk"">
 
   <PropertyGroup>
@@ -42,7 +38,17 @@ partial class Build
   </PropertyGroup>
 
 </Project>
-");
+";
+
+                void WriteProjectFileDummy(string file)
+                {
+                    FileSystemTasks.EnsureExistingParentDirectory(file);
+                    File.WriteAllText(file, projectFileContent);
+                }
+
+                WriteProjectFileDummy(enterpriseDirectory / "src" / "Nuke.Enterprise" / "Nuke.Enterprise.csproj");
+                WriteProjectFileDummy(enterpriseDirectory / "src" / "Nuke.Enterprise.Tests" / "Nuke.Enterprise.Tests.csproj");
+
                 return;
             }
 

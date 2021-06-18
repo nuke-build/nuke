@@ -19,9 +19,20 @@ namespace Nuke.Common.Git
     [PublicAPI]
     public static class GitRepositoryExtensions
     {
+        public static bool IsOnMainOrMasterBranch(this GitRepository repository)
+        {
+            return repository.IsOnMainBranch() ||
+                   repository.IsOnMasterBranch();
+        }
+
         public static bool IsOnMasterBranch(this GitRepository repository)
         {
             return repository.Branch?.EqualsOrdinalIgnoreCase("master") ?? false;
+        }
+
+        public static bool IsOnMainBranch(this GitRepository repository)
+        {
+            return repository.Branch?.EqualsOrdinalIgnoreCase("main") ?? false;
         }
 
         public static bool IsOnDevelopBranch(this GitRepository repository)

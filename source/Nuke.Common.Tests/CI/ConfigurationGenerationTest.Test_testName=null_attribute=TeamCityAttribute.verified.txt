@@ -101,8 +101,11 @@ project {
         text(
             "teamcity.runner.commandline.stdstreams.encoding",
             "UTF-8",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
+        text(
+            "teamcity.git.fetchAllHeads",
+            "true",
+            display = ParameterDisplay.HIDDEN)
     }
 }
 object Restore : BuildType({
@@ -128,8 +131,7 @@ object Restore : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Restore",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
 })
 object Compile : BuildType({
@@ -155,8 +157,7 @@ object Compile : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Compile",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     dependencies {
         snapshot(Restore) {
@@ -178,12 +179,12 @@ object Test_P1T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Test --skip --test-partition 1"
+            arguments = "Test --skip --partition 1/2"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Test --skip --test-partition 1"
+            arguments = "Test --skip --partition 1/2"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
@@ -207,12 +208,12 @@ object Test_P2T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Test --skip --test-partition 2"
+            arguments = "Test --skip --partition 2/2"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Test --skip --test-partition 2"
+            arguments = "Test --skip --partition 2/2"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
@@ -236,8 +237,7 @@ object Test : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Test",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
@@ -285,8 +285,7 @@ object Coverage : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Coverage",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         finishBuildTrigger {
@@ -329,8 +328,7 @@ object Pack : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Pack",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
@@ -380,8 +378,7 @@ object Publish : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Publish",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         schedule {
@@ -432,8 +429,7 @@ object Announce : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Announce",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         finishBuildTrigger {

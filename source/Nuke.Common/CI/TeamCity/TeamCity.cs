@@ -17,7 +17,6 @@ using Nuke.Common.OutputSinks;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using Refit;
 
 namespace Nuke.Common.CI.TeamCity
 {
@@ -31,15 +30,6 @@ namespace Nuke.Common.CI.TeamCity
         public new static TeamCity Instance => Host.Instance as TeamCity;
 
         internal static bool IsRunningTeamCity => !Environment.GetEnvironmentVariable("TEAMCITY_VERSION").IsNullOrEmpty();
-
-        public static T CreateRestClient<T>(string serverUrl, string username, string password)
-        {
-            var credentials = new NetworkCredential(username, password);
-            var baseAddress = new Uri($"{serverUrl}/app/rest");
-            var httpClient = new HttpClient(new HttpClientHandler { Credentials = credentials }) { BaseAddress = baseAddress };
-
-            return RestService.For<T>(httpClient);
-        }
 
         [CanBeNull]
         private static IReadOnlyDictionary<string, string> ParseDictionary([CanBeNull] string file)
@@ -76,7 +66,6 @@ namespace Nuke.Common.CI.TeamCity
         private readonly Lazy<IReadOnlyDictionary<string, string>> _configurationProperties;
         private readonly Lazy<IReadOnlyDictionary<string, string>> _runnerProperties;
         private readonly Lazy<IReadOnlyCollection<string>> _recentlyFailedTests;
-        private readonly Lazy<ITeamCityRestClient> _restClient;
 
         internal TeamCity()
             : this(messageSink: null)
@@ -97,13 +86,6 @@ namespace Nuke.Common.CI.TeamCity
                     ? TextTasks.ReadAllLines(file).ToImmutableList() as IReadOnlyCollection<string>
                     : new string[0];
             });
-
-            _restClient = Lazy.Create(() => CreateRestClient<ITeamCityRestClient>());
-        }
-
-        public T CreateRestClient<T>()
-        {
-            return CreateRestClient<T>(ServerUrl, SystemProperties["teamcity.auth.userId"], SystemProperties["teamcity.auth.password"]);
         }
 
         protected internal override OutputSink OutputSink => new TeamCityOutputSink(this);
@@ -115,8 +97,6 @@ namespace Nuke.Common.CI.TeamCity
         public IReadOnlyDictionary<string, string> SystemProperties => _systemProperties.Value;
         public IReadOnlyDictionary<string, string> RunnerProperties => _runnerProperties.Value;
         public IReadOnlyCollection<string> RecentlyFailedTests => _recentlyFailedTests.Value;
-
-        public ITeamCityRestClient RestClient => _restClient.Value;
 
         public string BuildConfiguration => SystemProperties?["teamcity.buildConfName"];
         public string BuildTypeId => SystemProperties?["teamcity.buildType.id"];

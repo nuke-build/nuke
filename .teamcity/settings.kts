@@ -20,10 +20,9 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 
-version = "2020.1"
+version = "2020.2"
 
 project {
-    buildType(Compile)
     buildType(Pack)
     buildType(Test_P1T2)
     buildType(Test_P2T2)
@@ -32,7 +31,7 @@ project {
     buildType(ReportIssues)
     buildType(ReportCoverage)
 
-    buildTypesOrder = arrayListOf(Compile, Pack, Test_P1T2, Test_P2T2, Test, ReportDuplicates, ReportIssues, ReportCoverage)
+    buildTypesOrder = arrayListOf(Pack, Test_P1T2, Test_P2T2, Test, ReportDuplicates, ReportIssues, ReportCoverage)
 
     params {
         checkbox (
@@ -41,16 +40,6 @@ project {
             value = "True",
             checked = "True",
             unchecked = "False",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.AzurePipelinesAccessToken",
-            label = "AzurePipelinesAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.CodecovToken",
-            label = "CodecovToken",
-            value = "",
             display = ParameterDisplay.NORMAL)
         select (
             "env.Configuration",
@@ -61,21 +50,6 @@ project {
         password (
             "env.EnterpriseAccessToken",
             label = "EnterpriseAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.GitHubRegistryApiKey",
-            label = "GitHubRegistryApiKey",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.GitHubToken",
-            label = "GitHubToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.GitterAuthToken",
-            label = "GitterAuthToken",
             value = "",
             display = ParameterDisplay.NORMAL)
         text (
@@ -91,16 +65,6 @@ project {
             value = "False",
             checked = "True",
             unchecked = "False",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.PublicNuGetApiKey",
-            label = "PublicNuGetApiKey",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.SignPathApiToken",
-            label = "SignPathApiToken",
-            value = "",
             display = ParameterDisplay.NORMAL)
         text (
             "env.SignPathOrganizationId",
@@ -125,31 +89,6 @@ project {
             label = "SlackUserAccessToken",
             value = "",
             display = ParameterDisplay.NORMAL)
-        password (
-            "env.SlackWebhook",
-            label = "SlackWebhook",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.TwitterAccessToken",
-            label = "TwitterAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.TwitterAccessTokenSecret",
-            label = "TwitterAccessTokenSecret",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.TwitterConsumerKey",
-            label = "TwitterConsumerKey",
-            value = "",
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.TwitterConsumerSecret",
-            label = "TwitterConsumerSecret",
-            value = "",
-            display = ParameterDisplay.NORMAL)
         checkbox (
             "env.UseHttps",
             label = "UseHttps",
@@ -167,38 +106,15 @@ project {
         text(
             "teamcity.runner.commandline.stdstreams.encoding",
             "UTF-8",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
+        text(
+            "teamcity.git.fetchAllHeads",
+            "true",
+            display = ParameterDisplay.HIDDEN)
     }
 }
-object Compile : BuildType({
-    name = "⚙️ Compile"
-    vcs {
-        root(DslContext.settingsRoot)
-        cleanCheckout = true
-    }
-    steps {
-        exec {
-            path = "build.cmd"
-            arguments = "Restore Compile --skip"
-            conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
-        }
-        exec {
-            path = "build.sh"
-            arguments = "Restore Compile --skip"
-            conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
-        }
-    }
-    params {
-        text(
-            "teamcity.ui.runButton.caption",
-            "Compile",
-            display = ParameterDisplay.HIDDEN
-        )
-    }
-})
 object Pack : BuildType({
-    name = "📦 Pack"
+    name = "📦 Pack 🧩 "
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -207,12 +123,12 @@ object Pack : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Pack --skip"
+            arguments = "Restore Compile Pack --skip"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Pack --skip"
+            arguments = "Restore Compile Pack --skip"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
@@ -220,18 +136,11 @@ object Pack : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Pack",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
             triggerRules = "+:**"
-        }
-    }
-    dependencies {
-        snapshot(Compile) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-            onDependencyCancel = FailureAction.CANCEL
         }
     }
 })
@@ -248,19 +157,13 @@ object Test_P1T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Test --skip --test-partition 1"
+            arguments = "Restore Compile Test --skip --partition 1/2"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Test --skip --test-partition 1"
+            arguments = "Restore Compile Test --skip --partition 1/2"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
-        }
-    }
-    dependencies {
-        snapshot(Compile) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-            onDependencyCancel = FailureAction.CANCEL
         }
     }
 })
@@ -277,24 +180,18 @@ object Test_P2T2 : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Test --skip --test-partition 2"
+            arguments = "Restore Compile Test --skip --partition 2/2"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Test --skip --test-partition 2"
+            arguments = "Restore Compile Test --skip --partition 2/2"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
-        }
-    }
-    dependencies {
-        snapshot(Compile) {
-            onDependencyFailure = FailureAction.FAIL_TO_START
-            onDependencyCancel = FailureAction.CANCEL
         }
     }
 })
 object Test : BuildType({
-    name = "🚦 Test"
+    name = "🚦 Test 🧩 "
     type = Type.COMPOSITE
     vcs {
         root(DslContext.settingsRoot)
@@ -306,8 +203,7 @@ object Test : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Test",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
@@ -332,7 +228,7 @@ object Test : BuildType({
     }
 })
 object ReportDuplicates : BuildType({
-    name = "🎭 ReportDuplicates"
+    name = "🎭 ReportDuplicates 🧩 "
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -353,8 +249,7 @@ object ReportDuplicates : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Report Duplicates",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
@@ -363,7 +258,7 @@ object ReportDuplicates : BuildType({
     }
 })
 object ReportIssues : BuildType({
-    name = "💣 ReportIssues"
+    name = "💣 ReportIssues 🧩 "
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -384,8 +279,7 @@ object ReportIssues : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Report Issues",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {
@@ -394,7 +288,7 @@ object ReportIssues : BuildType({
     }
 })
 object ReportCoverage : BuildType({
-    name = "📊 ReportCoverage"
+    name = "📊 ReportCoverage 🧩 "
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -416,8 +310,7 @@ object ReportCoverage : BuildType({
         text(
             "teamcity.ui.runButton.caption",
             "Report Coverage",
-            display = ParameterDisplay.HIDDEN
-        )
+            display = ParameterDisplay.HIDDEN)
     }
     triggers {
         vcs {

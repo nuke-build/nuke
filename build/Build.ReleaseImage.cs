@@ -30,22 +30,15 @@ partial class Build
 
     AbsolutePath FontDirectory => TemporaryDirectory / "fonts";
     IReadOnlyCollection<AbsolutePath> FontArchives => FontDirectory.GlobFiles("*.*");
+    IReadOnlyCollection<AbsolutePath> FontFiles => FontDirectory.GlobFiles("**/[!\\.]*.ttf");
+    readonly FontCollection FontCollection = new FontCollection();
 
-    Target DownloadFonts => _ => _
-        .OnlyWhenDynamic(() => FontDownloadUrls.Length != FontArchives.Count)
+    Target InstallFonts => _ => _
         .Executes(() =>
         {
             FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last(), requestConfigurator: x => x.Timeout = 120000));
             FontArchives.ForEach(x => Uncompress(x, FontDirectory / Path.GetFileNameWithoutExtension(x)));
-        });
 
-    readonly FontCollection FontCollection = new FontCollection();
-    IReadOnlyCollection<AbsolutePath> FontFiles => FontDirectory.GlobFiles("**/[!\\.]*.ttf");
-
-    Target InstallFonts => _ => _
-        .DependsOn(DownloadFonts)
-        .Executes(() =>
-        {
             FontFiles.ForEach(x => FontCollection.Install(x));
             FontCollection.Families.ForEach(x => Normal($"Installed font {x.Name.SingleQuote()}"));
         });

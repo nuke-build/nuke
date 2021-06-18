@@ -93,7 +93,7 @@ stages:
               path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+              script: './build.cmd Test --skip --partition $(System.JobPositionInPhase)/2'
             env:
               AzurePipelinesSystemAccessToken: $(System.AccessToken)
               GitHubToken: $(GitHubToken)
@@ -177,7 +177,7 @@ stages:
               path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+              script: './build.cmd Test --skip --partition $(System.JobPositionInPhase)/2'
             env:
               AzurePipelinesSystemAccessToken: $(System.AccessToken)
               GitHubToken: $(GitHubToken)

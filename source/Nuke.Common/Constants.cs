@@ -43,16 +43,21 @@ namespace Nuke.Common
         internal const string ParametersFilePrefix = "parameters";
         internal const string DefaultProfileName = "$default";
 
+        internal const string GlobalToolVersionEnvironmentKey = "NUKE_GLOBAL_TOOL_VERSION";
+        internal const string GlobalToolStartTimeEnvironmentKey = "NUKE_GLOBAL_TOOL_START_TIME";
+
         internal static AbsolutePath GlobalTemporaryDirectory => (AbsolutePath) Path.GetTempPath();
+        internal static AbsolutePath GlobalNukeDirectory => (AbsolutePath) Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) / ".nuke";
 
         [CanBeNull]
         internal static AbsolutePath TryGetRootDirectoryFrom(string startDirectory, bool includeLegacy = true)
         {
-            return (AbsolutePath) FileSystemTasks.FindParentDirectory(
+            var rootDirectory = (AbsolutePath) FileSystemTasks.FindParentDirectory(
                 startDirectory,
                 predicate: x =>
                     x.GetDirectories(NukeDirectoryName).Any() ||
                     includeLegacy && x.GetFiles(NukeFileName).Any());
+            return rootDirectory != GlobalNukeDirectory ? rootDirectory : null;
         }
 
         internal static bool IsLegacy(AbsolutePath rootDirectory)

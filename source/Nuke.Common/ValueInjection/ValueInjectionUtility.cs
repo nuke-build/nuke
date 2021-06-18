@@ -66,7 +66,8 @@ namespace Nuke.Common.ValueInjection
                          nameof(NukeBuild.Help),
                          nameof(NukeBuild.Continue),
                          nameof(NukeBuild.NoLogo),
-                         nameof(NukeBuild.Verbosity)
+                         nameof(NukeBuild.Verbosity),
+                         nameof(NukeBuild.Partition)
                      }.Contains(member.Name))
                     continue;
 

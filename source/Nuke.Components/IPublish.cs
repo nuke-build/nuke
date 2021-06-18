@@ -45,7 +45,7 @@ namespace Nuke.Components
         Configure<DotNetNuGetPushSettings> PushSettings => _ => _;
         Configure<DotNetNuGetPushSettings> PackagePushSettings => _ => _;
 
-        IEnumerable<string> PushPackageFiles => PackagesDirectory.GlobFiles("*.nupkg").Select(x => x.ToString());
+        IEnumerable<AbsolutePath> PushPackageFiles => PackagesDirectory.GlobFiles("*.nupkg");
 
         bool PushCompleteOnFailure => true;
         int PushDegreeOfParallelism => 5;

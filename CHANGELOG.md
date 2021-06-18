@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [5.2.0] / 2021-06-18
+- Added telemetry data collection
+- Added unified `NukeBuild.Partition` property
+- Added `Rider`, `VisualStudio`, `VSCode` as `Host` implementations
+- Added `GitRepository.IsOnMainBranch` and `IsOnMainOrMasterBranch`
+- Added `AbsolutePath` equality operators
+- Fixed SpaceAutomation to generate default `refSpec`
+- Changed `Microsoft.CodeAnalysis.CSharp` package version to `3.9.0`
+- Removed `Refit` reference and `ITeamCityRestClient` interface
+- Removed `Colorful.Console` reference and embedded figlet fonts
+
 ## [5.1.4] / 2021-06-01
 - Fixed `StronglyTypedSolutionGenerator` to resolve root directory only on demand
 - Fixed `JetBrains.Annotations` to be packed with source generators
@@ -795,7 +806,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke.git/compare/5.1.4...HEAD
+[vNext]: https://github.com/nuke-build/nuke.git/compare/5.2.0...HEAD
+[5.2.0]: https://github.com/nuke-build/nuke.git/compare/5.1.4...5.2.0
 [5.1.4]: https://github.com/nuke-build/nuke.git/compare/5.1.3...5.1.4
 [5.1.3]: https://github.com/nuke-build/nuke.git/compare/5.1.2...5.1.3
 [5.1.2]: https://github.com/nuke-build/nuke.git/compare/5.1.1...5.1.2

@@ -66,10 +66,13 @@
             "GitHubActions",
             "GitLab",
             "Jenkins",
+            "Rider",
             "SpaceAutomation",
             "TeamCity",
             "Terminal",
-            "TravisCI"
+            "TravisCI",
+            "VisualStudio",
+            "VSCode"
           ]
         },
         "IgnoreFailedSources": {
@@ -79,6 +82,10 @@
         "NoLogo": {
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
+        },
+        "Partition": {
+          "type": "string",
+          "description": "Partition to use on CI"
         },
         "Plan": {
           "type": "boolean",
@@ -123,7 +130,6 @@
               "CheckoutExternalRepositories",
               "Clean",
               "Compile",
-              "DownloadFonts",
               "GenerateGlobalSolution",
               "GeneratePublicApi",
               "GenerateTools",
@@ -169,7 +175,6 @@
               "CheckoutExternalRepositories",
               "Clean",
               "Compile",
-              "DownloadFonts",
               "GenerateGlobalSolution",
               "GeneratePublicApi",
               "GenerateTools",
@@ -191,9 +196,6 @@
               "UpdateContributors"
             ]
           }
-        },
-        "TestPartition": {
-          "type": "string"
         },
         "TwitterAccessToken": {
           "type": "string",

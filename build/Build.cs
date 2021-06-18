@@ -15,6 +15,7 @@ using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities.Collections;
@@ -86,12 +87,14 @@ partial class Build
         from framework in project.GetTargetFrameworks()
         select (project, framework);
 
-    [Partition(2)] readonly Partition TestPartition;
-    IEnumerable<Project> ITest.TestProjects => TestPartition.GetCurrent(Solution.GetProjects("*.Tests"));
+    IEnumerable<Project> ITest.TestProjects => Partition.GetCurrent(Solution.GetProjects("*.Tests"));
+
+    Configure<DotNetTestSettings> ITest.TestSettings => _ => _
+        .AddProcessEnvironmentVariable("NUKE_TELEMETRY_OPTOUT", bool.TrueString);
 
     Target ITest.Test => _ => _
         .Inherit<ITest>()
-        .Partition(() => TestPartition);
+        .Partition(2);
 
     bool IReportCoverage.CreateCoverageHtmlReport => true;
     bool IReportCoverage.ReportToCodecov => false;

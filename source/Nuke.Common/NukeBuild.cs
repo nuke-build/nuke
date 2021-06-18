@@ -55,10 +55,12 @@ namespace Nuke.Common
     // [LoadBuildProfiles(Priority = 25)]
     // After logo
     [HandleHelpRequests(Priority = 5)]
+    [Telemetry]
     [HandleVisualStudioDebugging]
     [InjectNonParameterValues(Priority = -100)]
     // After finish
-    [UpdateNotification]
+    [ShowSponsorship(Priority = 50)]
+    [UpdateNotification(Priority = 10)]
     [SerializeBuildServerState]
     public abstract partial class NukeBuild : INukeBuild
     {
@@ -146,6 +148,9 @@ namespace Nuke.Common
         /// </summary>
         [Parameter("Indicates to continue a previously failed build attempt.")]
         public bool Continue { get; internal set; }
+
+        [Parameter("Partition to use on CI.", List = false)]
+        public Partition Partition { get; internal set; } = Partition.Single;
 
         [CanBeNull]
         protected internal virtual string NuGetPackagesConfigFile =>

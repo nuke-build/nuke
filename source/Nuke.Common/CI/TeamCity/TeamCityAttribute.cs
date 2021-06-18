@@ -52,6 +52,8 @@ namespace Nuke.Common.CI.TeamCity
 
         public string[] ManuallyTriggeredTargets { get; set; } = new string[0];
 
+        public string[] ImportSecrets { get; set; } = new string[0];
+
         protected override StreamWriter CreateStream()
         {
             TextTasks.WriteAllLines(
@@ -112,20 +114,15 @@ namespace Nuke.Common.CI.TeamCity
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var chainLinkTargets = GetInvokedTargets(executableTarget, relevantTargets).ToArray();
-            var isPartitioned = ArtifactExtensions.Partitions.ContainsKey(executableTarget.Definition);
+            var isPartitioned = executableTarget.PartitionSize != null;
 
-            var artifactRules = chainLinkTargets.SelectMany(x =>
-                ArtifactExtensions.ArtifactProducts[x.Definition].Select(GetArtifactRule)).ToArray();
+            var artifactRules = chainLinkTargets.SelectMany(x => x.ArtifactProducts.Select(GetArtifactRule)).ToArray();
             var artifactDependencies = chainLinkTargets.SelectMany(x =>
-                from artifactDependency in ArtifactExtensions.ArtifactDependencies[x.Definition]
-                let dependency = relevantTargets.Single(y => y.Factory == artifactDependency.Item1)
-                let rules = (artifactDependency.Item2.Any()
-                        ? artifactDependency.Item2
-                        : ArtifactExtensions.ArtifactProducts[dependency.Definition])
-                    .Select(GetArtifactRule).ToArray()
+                from dependency in x.ArtifactDependencies
+                let rules = dependency.Select(GetArtifactRule).ToArray()
                 select new TeamCityArtifactDependency
                        {
-                           BuildType = buildTypes[dependency].Single(y => y.Partition == null),
+                           BuildType = buildTypes[dependency.Key].Single(y => y.Partition == null),
                            ArtifactRules = rules
                        }).ToArray<TeamCityDependency>();
 
@@ -141,7 +138,7 @@ namespace Nuke.Common.CI.TeamCity
 
             if (isPartitioned)
             {
-                var (partitionName, totalPartitions) = ArtifactExtensions.Partitions[executableTarget.Definition];
+                var totalPartitions = executableTarget.PartitionSize.Value;
                 for (var i = 0; i < totalPartitions; i++)
                 {
                     var partition = new Partition { Part = i + 1, Total = totalPartitions };
@@ -153,7 +150,6 @@ namespace Nuke.Common.CI.TeamCity
                                      BuildCmdPath = BuildCmdPath,
                                      ArtifactRules = artifactRules,
                                      Partition = partition,
-                                     PartitionName = partitionName,
                                      InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
                                      VcsRoot = new TeamCityBuildTypeVcsRoot { Root = vcsRoot, CleanCheckoutDirectory = CleanCheckoutDirectory },
                                      Dependencies = snapshotDependencies.Concat(artifactDependencies).ToArray()
@@ -177,7 +173,7 @@ namespace Nuke.Common.CI.TeamCity
             }
 
             var parameters = executableTarget.Requirements
-                .Where(x => !(x is Expression<Func<bool>>))
+                .Where(x => x is not Expression<Func<bool>>)
                 .Select(x => GetParameter(x.GetMemberInfo(), build, required: true))
                 .Concat(new TeamCityKeyValueParameter(
                     "teamcity.ui.runButton.caption",
@@ -250,8 +246,9 @@ namespace Nuke.Common.CI.TeamCity
             return ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
                 // TODO: except build.ExecutableTargets ?
                 .Except(relevantTargets.SelectMany(x => x.Requirements
-                    .Where(y => !(y is Expression<Func<bool>>))
+                    .Where(y => y is not Expression<Func<bool>>)
                     .Select(y => y.GetMemberInfo())))
+                .Where(x => !x.HasCustomAttribute<SecretAttribute>() || ImportSecrets.Contains(ParameterService.GetParameterMemberName(x)))
                 .Where(x => x.DeclaringType != typeof(NukeBuild) || x.Name == nameof(NukeBuild.Verbosity))
                 .Select(x => GetParameter(x, build, required: false))
                 .Concat(GetDefaultParameters());
@@ -260,6 +257,7 @@ namespace Nuke.Common.CI.TeamCity
         protected virtual IEnumerable<TeamCityParameter> GetDefaultParameters()
         {
             yield return new TeamCityKeyValueParameter("teamcity.runner.commandline.stdstreams.encoding", "UTF-8");
+            yield return new TeamCityKeyValueParameter("teamcity.git.fetchAllHeads", "true");
         }
 
         protected virtual TeamCityParameter GetParameter(MemberInfo member, NukeBuild build, bool required)

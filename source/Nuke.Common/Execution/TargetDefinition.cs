@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -28,7 +29,6 @@ namespace Nuke.Common.Execution
         public NukeBuild Build { get; }
 
         internal string Description { get; set; }
-        internal ExecutionStatus Status { get; set; }
         internal List<Expression<Func<bool>>> DynamicConditions { get; } = new List<Expression<Func<bool>>>();
         internal List<Expression<Func<bool>>> StaticConditions { get; } = new List<Expression<Func<bool>>>();
         internal List<LambdaExpression> Requirements { get; } = new List<LambdaExpression>();
@@ -43,6 +43,9 @@ namespace Nuke.Common.Execution
         internal List<Target> AfterTargets { get; } = new List<Target>();
         internal List<Target> TriggersTargets { get; } = new List<Target>();
         internal List<Target> TriggeredByTargets { get; } = new List<Target>();
+        internal int? PartitionSize { get; private set; }
+        internal List<string> ArtifactProducts { get; } = new List<string>();
+        internal LookupTable<Target, string[]> ArtifactDependencies { get; } = new LookupTable<Target, string[]>();
 
         ITargetDefinition ITargetDefinition.Description(string description)
         {
@@ -243,7 +246,47 @@ namespace Nuke.Common.Execution
             return this;
         }
 
-        private Target[] GetTargetsOrSingleOf<T>(Target[] targets)
+        public ITargetDefinition Produces(params string[] artifacts)
+        {
+            ArtifactProducts.AddRange(artifacts);
+            return this;
+        }
+
+        public ITargetDefinition Consumes(params Target[] targets)
+        {
+            targets.ForEach(x => Consumes(x));
+            return this;
+        }
+
+        public ITargetDefinition Consumes<T>(params Func<T, Target>[] targets)
+        {
+            return Consumes(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+        }
+
+        public ITargetDefinition Consumes(Target target, params string[] artifacts)
+        {
+            ArtifactDependencies.Add(target, artifacts);
+            return this;
+        }
+
+        public ITargetDefinition Consumes<T>(Func<T, Target> target, params string[] artifacts)
+        {
+            return Consumes(target.Invoke((T) (object) Build), artifacts);
+        }
+
+        public ITargetDefinition Consumes<T>(params string[] artifacts)
+        {
+            return Consumes(GetTargetsOrSingleOf<T>().Single(), artifacts);
+        }
+
+        public ITargetDefinition Partition(int size)
+        {
+            ControlFlow.Assert(size > 1, "size > 1");
+            PartitionSize = size;
+            return this;
+        }
+
+        private Target[] GetTargetsOrSingleOf<T>(params Target[] targets)
         {
             return targets.Length > 0 ? targets : new[] { (Target) GetSingleTargetProperty<T>().GetValue(Build) };
         }

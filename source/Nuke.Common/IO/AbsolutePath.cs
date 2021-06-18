@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -72,6 +73,16 @@ namespace Nuke.Common.IO
         public static AbsolutePath operator /(AbsolutePath left, [CanBeNull] string right)
         {
             return new AbsolutePath(Combine(left.NotNull("left != null"), right));
+        }
+
+        public static bool operator ==(AbsolutePath a, AbsolutePath b)
+        {
+            return EqualityComparer<AbsolutePath>.Default.Equals(a, b);
+        }
+
+        public static bool operator !=(AbsolutePath a, AbsolutePath b)
+        {
+            return !EqualityComparer<AbsolutePath>.Default.Equals(a, b);
         }
 
         protected bool Equals(AbsolutePath other)

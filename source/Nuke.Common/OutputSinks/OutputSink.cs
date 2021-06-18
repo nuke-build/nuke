@@ -75,58 +75,6 @@ namespace Nuke.Common.OutputSinks
                 WriteSuccessfulBuild();
             else
                 WriteFailedBuild();
-
-            bool HasHighUsage()
-                => // interface implementations
-                   build.GetType().GetInterfaces().Length > 1 ||
-                   // configuration generation
-                   build.GetType().GetCustomAttributes<ConfigurationAttributeBase>().Any() ||
-                   // global tool
-                   NukeBuild.BuildProjectFile == null;
-
-            T TryGetValue<T>(Func<T> func)
-            {
-                try
-                {
-                    return func.Invoke();
-                }
-                catch
-                {
-                    return default;
-                }
-            }
-
-            if (build.IsSuccessful &&
-                HasHighUsage() &&
-                TryGetValue(() => GitRepository.FromLocalDirectory(NukeBuild.RootDirectory)) is { } repository &&
-                TryGetValue(() => repository.GetDefaultBranch().GetAwaiter().GetResult()) == null)
-            {
-                WriteNormal();
-
-                if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName.EqualsOrdinalIgnoreCase("zh"))
-                    WriteTranslationRequest();
-                else
-                    WriteSponsorshipInfo();
-            }
-        }
-
-        private void WriteTranslationRequest()
-        {
-            WriteInformation("We want to make NUKE more accessible by providing");
-            WriteInformation("our documentation in simplified chinese (zh-CN). 🇨🇳");
-            WriteInformation("If you're interested to help, please contact us:");
-            WriteInformation("     📧 ithrowexceptions@gmail.com");
-            WriteNormal();
-            WriteInformation("Happy building! 🌟");
-        }
-
-        private void WriteSponsorshipInfo()
-        {
-            WriteInformation("If you like NUKE, please support us! 🤓");
-            WriteInformation("With a sponsorship you'll gain access to various perks. 🚀");
-            WriteInformation("Check out our tiers: https://github.com/sponsors/matkoch");
-            WriteNormal();
-            WriteInformation("Happy building! 🌟");
         }
 
         protected virtual void WriteSuccessfulBuild()
