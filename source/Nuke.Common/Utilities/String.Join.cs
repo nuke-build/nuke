@@ -40,7 +40,7 @@ namespace Nuke.Common.Utilities
         {
             var valuesList = values.ToArray();
             return valuesList.Length >= 2
-                ? valuesList.Reverse().Skip(1).Reverse().JoinComma() + ", or " + valuesList.Last()
+                ? valuesList.Reverse().Skip(1).Reverse().JoinComma() + $"{(valuesList.Length > 2 ? "," : string.Empty)} or " + valuesList.Last()
                 : valuesList.JoinComma();
         }
 
@@ -49,7 +49,7 @@ namespace Nuke.Common.Utilities
         {
             var valuesList = values.ToArray();
             return valuesList.Length >= 2
-                ? valuesList.Reverse().Skip(1).Reverse().JoinComma() + ", and " + valuesList.Last()
+                ? valuesList.Reverse().Skip(1).Reverse().JoinComma() + $"{(valuesList.Length > 2 ? "," : string.Empty)} and " + valuesList.Last()
                 : valuesList.JoinComma();
         }
 

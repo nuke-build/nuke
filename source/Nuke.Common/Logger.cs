@@ -49,7 +49,7 @@ namespace Nuke.Common
 
         internal static OutputSink OutputSink = OutputSink.Default;
 
-        public static LogLevel LogLevel;
+        public static LogLevel LogLevel = LogLevel.Normal;
 
         public static IDisposable Block(string text)
         {
