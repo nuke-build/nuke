@@ -28,10 +28,13 @@
             "GitHubActions",
             "GitLab",
             "Jenkins",
+            "Rider",
             "SpaceAutomation",
             "TeamCity",
             "Terminal",
-            "TravisCI"
+            "TravisCI",
+            "VisualStudio",
+            "VSCode"
           ]
         },
         "NoLogo": {
@@ -46,6 +49,10 @@
         },
         "Param": {
           "type": "string"
+        },
+        "Partition": {
+          "type": "string",
+          "description": "Partition to use on CI"
         },
         "Plan": {
           "type": "boolean",

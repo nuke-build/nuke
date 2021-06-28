@@ -27,7 +27,7 @@ namespace Nuke.Common.Utilities
             if (expression.Body is MethodCallExpression methodCallExpression)
                 return methodCallExpression.Method;
 
-            var memberExpression = !(expression.Body is UnaryExpression unaryExpression)
+            var memberExpression = expression.Body is not UnaryExpression unaryExpression
                 ? (MemberExpression) expression.Body
                 : (MemberExpression) unaryExpression.Operand;
             return memberExpression.Member;

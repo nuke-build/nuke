@@ -63,19 +63,19 @@ partial class Build
 
         public const string TwitterConsumerKey = TwitterConsumerKeyName + ":" + TwitterConsumerKeyValue;
         const string TwitterConsumerKeyName = IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey);
-        const string TwitterConsumerKeyValue = "g9xYsdPVSbFnEXt2QBsZabR624Cfi5E7k76rnL2ujNo=";
+        const string TwitterConsumerKeyValue = "BY+J0NeFwJrIk/IcLlApwCrhwPFYbs17ryopOEU8S80=";
 
         public const string TwitterConsumerSecret = TwitterConsumerSecretName + ":" + TwitterConsumerSecretValue;
         const string TwitterConsumerSecretName = IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerSecret);
-        const string TwitterConsumerSecretValue = "Hl5jVyh3PLXLc12WVdeuDLOM2yPaCGSkrukmvPkg9ZTrWw5GPrMkPWNKByNNxPTiRPJ+8aWZtgotaH9kbT/IkA==";
+        const string TwitterConsumerSecretValue = "LzY8VaBdbjdHtbCIJusREn5foh6wOEKqwBqsmBgpyhulQs21PkgYs2tilSL+SowcJw3p4QH6QKLOEp3uGwTj8g==";
 
         public const string TwitterAccessToken = TwitterAccessTokenName + ":" + TwitterAccessTokenValue;
         const string TwitterAccessTokenName = IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessToken);
-        const string TwitterAccessTokenValue = "nnv1h5nkNm4MS50soQHiYeWM0nW3SDJlE2EOW1IGnqL7i13rfycZ+Mc4tCGFtWLyhwy/8D/A2mudAxNlsaJ8cQ==";
+        const string TwitterAccessTokenValue = "nnv1h5nkNm4MS50soQHiYXVUf0UR+gx54imrggateey6oA+rdCdna0TaUCH1vsDwHEitHDPRdx39xjJMBzwRxA==";
 
         public const string TwitterAccessTokenSecret = TwitterAccessTokenSecretName + ":" + TwitterAccessTokenSecretValue;
         const string TwitterAccessTokenSecretName = IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessTokenSecret);
-        const string TwitterAccessTokenSecretValue = "apNpXzxTpZ5CSrmzVGTCuJTeBUtNlNVgKmQsscXdpS59B5tqZLkUZXMW2XYQIcR6";
+        const string TwitterAccessTokenSecretValue = "OGFEkW5fHl0YJzKnTTWJ3oHhQfjMs9RWGJMjeQ2HMIG+yUwy0NQGVUY4qOCRgrXW";
 
         public const string GitterAuthToken = GitterAuthTokenName + ":" + GitterAuthTokenValue;
         const string GitterAuthTokenName = nameof(Build.GitterAuthToken);

@@ -100,7 +100,7 @@ namespace Nuke.Common.Tests
             else if (property.PropertyType != typeof(string))
                 Nullable.GetUnderlyingType(property.PropertyType).Should().NotBeNull();
 
-            if (!(value is string strValue) || property.GetCustomAttribute<NoConvertAttribute>() != null)
+            if (value is not string strValue || property.GetCustomAttribute<NoConvertAttribute>() != null)
                 return;
 
             bool.TryParse(strValue, out _).Should().BeFalse("boolean");

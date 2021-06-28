@@ -78,7 +78,7 @@ namespace Nuke.CodeGeneration.Generators
 
         private static DataClassWriter WriteProcessToolPath(this DataClassWriter writer)
         {
-            if (!(writer.DataClass is SettingsClass settingsClass))
+            if (writer.DataClass is not SettingsClass settingsClass)
                 return writer;
 
             var tool = settingsClass.Tool.NotNull();

@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using VerifyTests;
 
@@ -17,6 +16,7 @@ namespace Nuke.SourceGenerators.Tests
             Environment.SetEnvironmentVariable("DiffEngine_Disabled", "true");
             VerifierSettings.DisableClipboard();
             VerifyDiffPlex.Initialize();
+            VerifySourceGenerators.Enable();
         }
     }
 }

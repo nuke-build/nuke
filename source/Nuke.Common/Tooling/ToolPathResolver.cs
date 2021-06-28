@@ -157,7 +157,7 @@ namespace Nuke.Common.Tooling
                         {
                             "Missing package reference/download.",
                             "Run one of the following commands:"
-                        }.Concat(packageCombinations.Distinct().Select(x => $"  - nuke :add-package {x.Id} {x.Version}"))
+                        }.Concat(packageCombinations.Distinct().Select(x => $"  - nuke :add-package {x.Id} --version {x.Version}"))
                         .JoinNewLine(),
                     exception);
                 throw new Exception("Not reachable");

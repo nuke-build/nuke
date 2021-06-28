@@ -75,7 +75,7 @@ namespace Nuke.Common.Execution
             }
             catch (Exception exception)
             {
-                if (!(exception is TargetExecutionException))
+                if (exception is not TargetExecutionException)
                     Logger.Error(exception);
 
                 return build.ExitCode ??= ErrorExitCode;
@@ -91,6 +91,7 @@ namespace Nuke.Common.Execution
                 {
                     foreach (var target in build.ExecutionPlan)
                     {
+                        target.Stopwatch.Stop();
                         target.Status = target.Status switch
                         {
                             ExecutionStatus.Running => ExecutionStatus.Aborted,

@@ -39,6 +39,7 @@ namespace Nuke.Common.CI.SpaceAutomation
         public string VolumeSize { get; set; }
         public string ResourcesCpu { get; set; }
         public string ResourcesMemory { get; set; }
+        public string[] RefSpec { get; set; } = { "refs/heads/*:refs/heads/*" };
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
@@ -74,6 +75,7 @@ namespace Nuke.Common.CI.SpaceAutomation
                    {
                        Name = _name,
                        VolumeSize = VolumeSize,
+                       RefSpec = RefSpec,
                        Container = GetContainer(),
                        Triggers = GetTriggers().ToArray(),
                        TimeoutInMinutes = _timeoutInMinutes

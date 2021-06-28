@@ -21,36 +21,15 @@ stages:
     pool:
       vmImage: 'ubuntu-latest'
     jobs:
-      - job: Compile
-        displayName: '⚙️ Compile'
-        dependsOn: [  ]
-        steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd Restore Compile --skip'
-            env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
-        dependsOn: [ Compile ]
+        dependsOn: [  ]
         strategy:
           parallel: 2
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+              script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
@@ -61,16 +40,11 @@ stages:
               pathtoPublish: 'output/test-results'
       - job: Pack
         displayName: '📦 Pack'
-        dependsOn: [ Compile ]
+        dependsOn: [  ]
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Pack --skip'
+              script: './build.cmd Restore Compile Pack --skip'
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
@@ -85,36 +59,15 @@ stages:
     pool:
       vmImage: 'windows-latest'
     jobs:
-      - job: Compile
-        displayName: '⚙️ Compile'
-        dependsOn: [  ]
-        steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd Restore Compile --skip'
-            env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
-        dependsOn: [ Compile ]
+        dependsOn: [  ]
         strategy:
           parallel: 2
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+              script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
@@ -125,16 +78,11 @@ stages:
               pathtoPublish: 'output/test-results'
       - job: Pack
         displayName: '📦 Pack'
-        dependsOn: [ Compile ]
+        dependsOn: [  ]
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Pack --skip'
+              script: './build.cmd Restore Compile Pack --skip'
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
@@ -149,36 +97,15 @@ stages:
     pool:
       vmImage: 'macOS-latest'
     jobs:
-      - job: Compile
-        displayName: '⚙️ Compile'
-        dependsOn: [  ]
-        steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
-          - task: CmdLine@2
-            inputs:
-              script: './build.cmd Restore Compile --skip'
-            env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
       - job: Test
         displayName: '🚦 Test 🧩'
-        dependsOn: [ Compile ]
+        dependsOn: [  ]
         strategy:
           parallel: 2
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Test --skip --test-partition $(System.JobPositionInPhase)'
+              script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
@@ -189,16 +116,11 @@ stages:
               pathtoPublish: 'output/test-results'
       - job: Pack
         displayName: '📦 Pack'
-        dependsOn: [ Compile ]
+        dependsOn: [  ]
         steps:
-          - task: Cache@2
-            inputs:
-              key: $(Agent.OS) | global.json, source/**/*.csproj
-              restoreKeys: $(Agent.OS)
-              path: ~/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Pack --skip'
+              script: './build.cmd Restore Compile Pack --skip'
             env:
               AzurePipelinesAccessToken: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)

@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
+using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
@@ -21,9 +22,12 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int AddPackage(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
+            Telemetry.AddPackage();
+
             var packageId = args.ElementAt(0);
             var packageVersion =
-                (args.ElementAtOrDefault(1) ??
+                (EnvironmentInfo.GetParameter<string>("version") ??
+                 args.ElementAtOrDefault(1) ??
                  NuGetPackageResolver.GetLatestPackageVersion(packageId, includePrereleases: false).GetAwaiter().GetResult() ??
                  NuGetPackageResolver.GetGlobalInstalledPackage(packageId, version: null, packagesConfigFile: null)?.Version.ToString())
                 .NotNull("packageVersion != null");

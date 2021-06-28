@@ -30,7 +30,7 @@ namespace Nuke.GlobalTool
                 var buildScript = rootDirectory != null
                     ? (AbsolutePath) new DirectoryInfo(rootDirectory)
                         .EnumerateFiles(CurrentBuildScriptName, maxDepth: 2)
-                        .FirstOrDefault()?.FullName.DoubleQuoteIfNeeded()
+                        .FirstOrDefault()?.FullName
                     : null;
 
                 return Handle(args, rootDirectory, buildScript);
@@ -70,16 +70,15 @@ namespace Nuke.GlobalTool
                 if (string.IsNullOrWhiteSpace(command))
                     ControlFlow.Fail($"No command specified. Usage is: nuke {CommandPrefix}<command> [args]");
 
-                var availableCommands = typeof(Program).GetMethods(BindingFlags.Static | BindingFlags.Public);
-                var commandHandler = availableCommands
-                    .SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));
+                var availableCommands = typeof(Program).GetMethods(ReflectionUtility.Static);
+                var commandHandler = availableCommands.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));
                 ControlFlow.Assert(commandHandler != null,
                     new[]
                         {
                             $"Command '{command}' is not supported.",
                             "Available commands are:"
                         }
-                        .Concat(availableCommands.Select(x => $"  - {x.Name}").OrderBy(x => x)).JoinNewLine());
+                        .Concat(availableCommands.Where(x => x.IsPublic).Select(x => $"  - {x.Name}").OrderBy(x => x)).JoinNewLine());
                 // TODO: add assertions about return type and parameters
 
                 var commandArguments = new object[] { args.Skip(count: 1).ToArray(), rootDirectory, buildScript };
@@ -107,16 +106,19 @@ namespace Nuke.GlobalTool
 
         private static Process Build(string buildScript, string arguments)
         {
-            return Process.Start(
+            var startInfo =
                 new ProcessStartInfo
                 {
                     FileName = EnvironmentInfo.IsWin
                         ? ToolPathResolver.GetPathExecutable("powershell")
                         : ToolPathResolver.GetPathExecutable("bash"),
                     Arguments = EnvironmentInfo.IsWin
-                        ? $"-ExecutionPolicy ByPass -NoProfile -File {buildScript} {arguments}"
+                        ? $"-ExecutionPolicy ByPass -NoProfile -File {buildScript.DoubleQuoteIfNeeded()} {arguments}"
                         : $"{buildScript} {arguments}"
-                }).NotNull();
+                };
+            startInfo.Environment[Constants.GlobalToolVersionEnvironmentKey] = typeof(Program).Assembly.GetVersionText();
+            startInfo.Environment[Constants.GlobalToolStartTimeEnvironmentKey] = DateTime.Now.ToString("O");
+            return Process.Start(startInfo).NotNull();
         }
 
         private static bool UserConfirms(string question)

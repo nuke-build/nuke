@@ -196,14 +196,13 @@ namespace Nuke.Common.Tests.CI
                 .Consumes(Restore, Compile)
                 .Produces(PackageDirectory / "*.nupkg");
 
-            [Partition(2)] public readonly Partition TestPartition;
             public AbsolutePath TestResultDirectory => OutputDirectory / "test-results";
 
             public Target Test => _ => _
                 .DependsOn(Compile)
                 .Produces(TestResultDirectory / "*.trx")
                 .Produces(TestResultDirectory / "*.xml")
-                .Partition(() => TestPartition);
+                .Partition(2);
 
             public string CoverageReportArchive => OutputDirectory / "coverage-report.zip";
 

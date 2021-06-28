@@ -6,6 +6,41 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [5.2.1] / 2021-06-18
+- Fixed telemetry
+- Fixed humanized string concatenation
+
+## [5.2.0] / 2021-06-18
+- Added telemetry data collection
+- Added unified `NukeBuild.Partition` property
+- Added `Rider`, `VisualStudio`, `VSCode` as `Host` implementations
+- Added `GitRepository.IsOnMainBranch` and `IsOnMainOrMasterBranch`
+- Added `AbsolutePath` equality operators
+- Fixed SpaceAutomation to generate default `refSpec`
+- Changed `Microsoft.CodeAnalysis.CSharp` package version to `3.9.0`
+- Removed `Refit` reference and `ITeamCityRestClient` interface
+- Removed `Colorful.Console` reference and embedded figlet fonts
+
+## [5.1.4] / 2021-06-01
+- Fixed `StronglyTypedSolutionGenerator` to resolve root directory only on demand
+- Fixed `JetBrains.Annotations` to be packed with source generators
+- Fixed missing SpaceAutomation configuration link
+
+## [5.1.3] / 2021-05-31
+- Fixed filtering explicitly overridden targets in build components
+
+## [5.1.2] / 2021-05-18
+- Fixed target duration to be measured immediately after execution
+- Fixed build script invocation from global tool
+- Fixed `AddPackage` command to allow explicit version parameter
+- Fixed navigation methods to not be included in command list
+- Fixed `StronglyTypedSolutionGenerator` to resolve root directory only on demand
+- Fixed `EnvironmentInfo.Framework` to use entry assembly
+- Fixed parsing of `GitRepository` remote
+- Fixed missing pull-request properties in TeamCity
+- Fixed `RunNumber` and `RunId` in `GitHubActions` to be of type `long`
+- Fixed `GitVersionAttribute` to automatically populate `Git_Branch` on TeamCity
+
 ## [5.1.1] / 2021-04-23
 - Fixed parameter loading with missing default parameters file
 - Fixed visibility of `Directory.Build` files
@@ -775,7 +810,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke.git/compare/5.1.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke.git/compare/5.2.1...HEAD
+[5.2.1]: https://github.com/nuke-build/nuke.git/compare/5.2.0...5.2.1
+[5.2.0]: https://github.com/nuke-build/nuke.git/compare/5.1.4...5.2.0
+[5.1.4]: https://github.com/nuke-build/nuke.git/compare/5.1.3...5.1.4
+[5.1.3]: https://github.com/nuke-build/nuke.git/compare/5.1.2...5.1.3
+[5.1.2]: https://github.com/nuke-build/nuke.git/compare/5.1.1...5.1.2
 [5.1.1]: https://github.com/nuke-build/nuke.git/compare/5.1.0...5.1.1
 [5.1.0]: https://github.com/nuke-build/nuke.git/compare/5.0.2...5.1.0
 [5.0.2]: https://github.com/nuke-build/nuke.git/compare/5.0.1...5.0.2

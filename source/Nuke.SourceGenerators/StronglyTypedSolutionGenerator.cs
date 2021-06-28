@@ -33,21 +33,20 @@ namespace Nuke.SourceGenerators
         {
             var compilation = context.Compilation;
             var allTypes = compilation.Assembly.GlobalNamespace.GetAllTypes();
-            var membersWithAttributes = allTypes.SelectMany(x => x.GetMembers())
+            var members = allTypes.SelectMany(x => x.GetMembers())
                 .Where(x => x is IPropertySymbol || x is IFieldSymbol)
                 .Select(x => (Member: x, AttributeData: x.GetAttributeData("global::Nuke.Common.ProjectModel.SolutionAttribute")))
-                .Where(x => x.AttributeData != null);
+                .Where(x => x.AttributeData?.NamedArguments.SingleOrDefault(x => x.Key == "GenerateProjects").Value.Value as bool? ?? false)
+                .Select(x => x.Member).ToList();
+            if (members.Count == 0)
+                return;
 
-            var rootDirectory = TryGetRootDirectoryFrom(compilation);
+            var rootDirectory = GetRootDirectoryFrom(compilation);
             var compilationUnit = CompilationUnit()
                 .AddUsings(UsingDirective(IdentifierName("Nuke.Common.ProjectModel")));
 
-            foreach (var (member, attributeData) in membersWithAttributes)
+            foreach (var member in members)
             {
-                var attributeArguments = attributeData.NamedArguments;
-                if (attributeArguments.SingleOrDefault(x => x.Key == "GenerateProjects").Value.Value as bool? != true)
-                    continue;
-
                 var solutionFile = GetSolutionFileFromParametersFile(rootDirectory, member.Name);
                 var solution = SolutionSerializer.DeserializeFromFile<Solution>(solutionFile);
 
@@ -114,7 +113,7 @@ namespace Nuke.SourceGenerators
             return Path.Combine(rootDirectory, solutionRelativePath);
         }
 
-        private static AbsolutePath TryGetRootDirectoryFrom(Compilation compilation)
+        private static AbsolutePath GetRootDirectoryFrom(Compilation compilation)
         {
             var syntaxPath = compilation.SyntaxTrees.First().FilePath;
             var startDirectory = Path.GetDirectoryName(File.Exists(syntaxPath)

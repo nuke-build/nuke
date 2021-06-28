@@ -40,8 +40,8 @@ namespace Nuke.GlobalTool
             string ReplaceScriptDirectory(string value)
                 => evaluate
                     ? value
-                        .Replace("$SCRIPT_DIR", buildScript.NotNull().Parent)
-                        .Replace("$PSScriptRoot", buildScript.NotNull().Parent)
+                        .Replace("$SCRIPT_DIR", buildScript.Parent)
+                        .Replace("$PSScriptRoot", buildScript.Parent)
                     : value;
 
             return File.ReadAllLines(buildScript)

@@ -37,6 +37,7 @@ namespace Nuke.Common.Tooling
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
+            // TODO: fallback to sh
             return StartProcess(
                 toolPath: ToolPathResolver.GetPathExecutable(EnvironmentInfo.IsWin ? "cmd" : "bash"),
                 arguments: $"{(EnvironmentInfo.IsWin ? "/c" : "-c")} {command.DoubleQuote()}",

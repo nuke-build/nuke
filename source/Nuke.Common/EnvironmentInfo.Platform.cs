@@ -79,7 +79,7 @@ namespace Nuke.Common
         /// Returns the framework the build is running on.
         /// </summary>
         public static FrameworkName Framework
-            => new FrameworkName(typeof(NukeBuild).Assembly.GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName);
+            => new FrameworkName(Assembly.GetEntryAssembly().NotNull().GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName);
 
         /// <summary>
         /// Returns the platform the build is running on.

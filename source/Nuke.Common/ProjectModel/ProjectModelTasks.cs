@@ -73,7 +73,7 @@ namespace Nuke.Common.ProjectModel
 
             string TryFromBasePath()
             {
-                var output = ProcessTasks.StartProcess(dotnet, "--info", logOutput: false).AssertZeroExitCode().Output;
+                var output = ProcessTasks.StartProcess(dotnet, "--info", logInvocation: false, logOutput: false).AssertZeroExitCode().Output;
                 return output
                     .Select(x => x.Text.Trim())
                     .SingleOrDefault(x => x.StartsWith("Base Path:"))
@@ -82,7 +82,7 @@ namespace Nuke.Common.ProjectModel
 
             string TryFromSdkList()
             {
-                var output = ProcessTasks.StartProcess(dotnet, "--list-sdks", logOutput: false).AssertZeroExitCode().Output;
+                var output = ProcessTasks.StartProcess(dotnet, "--list-sdks", logInvocation: false, logOutput: false).AssertZeroExitCode().Output;
                 var latestInstalledSdkParts = output.Last().Text.Split(' ');
                 return (AbsolutePath) latestInstalledSdkParts.ElementAt(1).Trim('[', ']') / latestInstalledSdkParts.ElementAt(0);
             }
