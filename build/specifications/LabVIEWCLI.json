@@ -35,7 +35,7 @@
           },
           {
             "name": "NumOfVIsToCache",
-            "type": "string",
+            "type": "int",
             "format": "-NumOfVIsToCache {value}",
             "help": "Number of VIs allowed in memory during the mass compile. Default is 0."
           },
@@ -47,10 +47,117 @@
           }
         ]
       }
+    },
+    {
+      "help": "Builds an application, a library, or a bitfile using the settings in the specified build specification(s) and returns the path of the output files.",
+      "postfix": "ExecuteBuildSpec",
+      "definiteArgument": "-ExecuteBuildSpec",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ProjectPath",
+            "type": "string",
+            "format": "-ProjectPath {value}",
+            "help": "Path to the LabVIEW project (.lvproj) file that contains the build specification."
+          },
+          {
+            "name": "TargetName",
+            "type": "string",
+            "format": "-TargetName {value}",
+            "help": "Target that contains the build specification. Default is My Computer."
+          },
+          {
+            "name": "BuildSpecName",
+            "type": "string",
+            "format": "-BuildSpecName {value}",
+            "help": "Name of the build specification that appears under Build Specifications in the Project Explorer window. Default is Empty string. In this case the CLI for LabVIEW builds all build specifications under the specified target."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Runs a VI with the following connector pane interface and returns the output or error information.",
+      "postfix": "RunVI",
+      "definiteArgument": "-RunVI",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "VIPath",
+            "type": "string",
+            "format": "-VIPath {value}",
+            "help": "Path to the VI to run in LabVIEW. If the connector pane of the VI does not match the predefined interface, the CLI for LabVIEW returns an error."
+          },
+          {
+            "name": "CommandLineArgumentsForTheVI",
+            "type": "List<string>",
+            "format": "",
+            "help": "Elements of the input array of the VI. Separate elements with spaces."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Closes LabVIEW without any prompts.",
+      "postfix": "CloseLabVIEW",
+      "definiteArgument": "-CloseLabVIEW"
+    },
+    {
+      "help": "Runs the specified VI analyzer task in the LabVIEW VI Analyzer Toolkit and saves the test report to the specified location.",
+      "postfix": "RunVIAnalyzer",
+      "definiteArgument": "-RunVIAnalyzer",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigPath",
+            "type": "string",
+            "format": "-ConfigPath {value}",
+            "help": "Path to the configuration file that contains VI Analyzer task settings to use in the analysis. You can use a configuration file you saved through the VI Analyzer or the VI Analyzer VIs. Alternatively, you can specify a VI, folder, or LLB to analyze. If you specify an item other than a configuration file, the VI runs all VI Analyzer tests on the specified item."
+          },
+          {
+            "name": "ReportPath",
+            "type": "string",
+            "format": "-ReportPath {value}",
+            "help": "Path to the report or results file."
+          },
+          {
+            "name": "ConfigPassword",
+            "type": "string",
+            "format": "-ConfigPassword {value}",
+            "help": "Password of the configuration file, if any. Default is empty string."
+          },
+          {
+            "name": "ReportSaveType",
+            "type": "ReportTypes",
+            "format": "-ReportSaveType {value}",
+            "help": "Format of the report or results file. The value for this argument must be one of the following: ASCII, HTML, RSL. Default is ASCII."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Runs tests on the specified files in the LabVIEW Unit Test Framework Toolkit and saves the JUnit file to the specified location. To run this operation, you must install the UTF Junit Report library using the JKI VI Package Manager (VIPM) software.",
+      "postfix": "RunUnitTests",
+      "definiteArgument": "-RunUnitTests",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ProjectPath",
+            "type": "string",
+            "format": "-ProjectPath {value}",
+            "help": "Path to the project file."
+          },
+          {
+            "name": "JUnitReportPath",
+            "type": "string",
+            "format": "-JUnitReportPath {value}",
+            "help": "Path to the output JUnit file."
+          }
+        ]
+      }
     }
   ],
   "commonTaskProperties": [
-     {
+    {
       "name": "AdditionalOperationDirectory",
       "type": "string",
       "format": "-AdditionalOperationDirectory {value}",
@@ -106,6 +213,14 @@
         "CloseLabVIEW",
         "RunVIAnalyzer",
         "RunUnitTests"
+      ]
+    },
+    {
+      "name": "ReportTypes",
+      "values": [
+        "ASCII",
+        "HTML",
+        "RSL"
       ]
     }
   ]
