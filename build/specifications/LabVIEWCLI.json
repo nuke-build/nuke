@@ -50,51 +50,44 @@
     }
   ],
   "commonTaskProperties": [
-    {
-      "name": "PortNumber",
-      "type": "bool",
-      "format": "-PortNumber {value}",
-      "help": " Port on which the remote LabVIEW application is listening."
+     {
+      "name": "AdditionalOperationDirectory",
+      "type": "string",
+      "format": "-AdditionalOperationDirectory {value}",
+      "help": "Specifies the directory that stores the necessary files for the operation. This argument is required only if you run a custom operation and the necessary files for the operation are not stored in the default directories."
     },
     {
       "name": "LabVIEWPath",
       "type": "string",
       "format": "-LabVIEWPath {value}",
-      "help": "Path of the LabVIEW in which the operation will run."
+      "help": "Specifies the LabVIEW version to use to run the operation. This argument is required on macOS and Linux but optional on Windows. On Windows, the default value is the most recent version of LabVIEW used on the machine."
+    },
+    {
+      "name": "PortNumber",
+      "type": "int",
+      "format": "-PortNumber {value}",
+      "help": "Specifies the port of the VI server. This argument is required if the port number under Tools»Options»VI Server»TCP/IP is not 3363."
     },
     {
       "name": "LogFilePath",
       "type": "string",
       "format": "-LogFilePath {value}",
-      "help": "Path of the LabVIEWCLI log file."
+      "help": "Specifies the path of the CLI for LabVIEW log fle. The default value is the path to the temporary location."
     },
     {
       "name": "LogToConsole",
-      "type": "LoggingEnabled",
+      "type": "bool",
       "format": "-LogToConsole {value}",
-      "help": "If the value is True, the output that gets logged to console and the log file, else output will be logged only to log file. Default is True."
+      "help": "Specifies whether to save the output to both the console and the log file. The default value is true."
     },
     {
       "name": "Verbosity",
       "type": "LogVerbosity",
       "format": "-Verbosity {value}",
-      "help": "This command line argument is used to control the output being logged. Default is \"Default\". Possible values are Minimal, Default, Detailed and Diagnostic."
-    },
-    {
-      "name": "AdditionalOperationDirectory",
-      "type": "string",
-      "format": "-AdditionalOperationDirectory {value}",
-      "help": "Additional directory where LabVIEWCLI will look for additional operation class other than default location."
+      "help": "Specifies the level of details to include in the log file. The default value is Default. Possible values are Minimal, Default, Detailed and Diagnostic."
     }
   ],
   "enumerations": [
-    {
-      "name": "LoggingEnabled",
-      "values": [
-        "True",
-        "False"
-      ]
-    },
     {
       "name": "LogVerbosity",
       "values": [
