@@ -20,6 +20,8 @@ namespace Nuke.Common.Execution
     {
         // https://docs.microsoft.com/en-us/dotnet/core/tools/telemetry
         // https://dotnet.microsoft.com/platform/telemetry
+        // https://docs.microsoft.com/en-us/azure/azure-monitor/app/console
+        // https://docs.microsoft.com/en-us/azure/azure-monitor/app/ip-collection
 
         public const int CurrentVersion = 1;
 
