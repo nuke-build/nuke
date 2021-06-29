@@ -99,7 +99,8 @@
     {
       "help": "Closes LabVIEW without any prompts.",
       "postfix": "CloseLabVIEW",
-      "definiteArgument": "-OperationName CloseLabVIEW"
+      "definiteArgument": "-OperationName CloseLabVIEW",
+      "settingsClass": {}
     },
     {
       "help": "Runs the specified VI analyzer task in the LabVIEW VI Analyzer Toolkit and saves the test report to the specified location.",
