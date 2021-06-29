@@ -12,7 +12,7 @@
     {
       "help": "Mass compiles the files in the specified directory.",
       "postfix": "MassCompile",
-      "definiteArgument": "-MassCompile",
+      "definiteArgument": "-OperationName MassCompile",
       "settingsClass": {
         "properties": [
           {
@@ -51,7 +51,7 @@
     {
       "help": "Builds an application, a library, or a bitfile using the settings in the specified build specification(s) and returns the path of the output files.",
       "postfix": "ExecuteBuildSpec",
-      "definiteArgument": "-ExecuteBuildSpec",
+      "definiteArgument": "-OperationName ExecuteBuildSpec",
       "settingsClass": {
         "properties": [
           {
@@ -78,7 +78,7 @@
     {
       "help": "Runs a VI with the following connector pane interface and returns the output or error information.",
       "postfix": "RunVI",
-      "definiteArgument": "-RunVI",
+      "definiteArgument": "-OperationName RunVI",
       "settingsClass": {
         "properties": [
           {
@@ -99,12 +99,12 @@
     {
       "help": "Closes LabVIEW without any prompts.",
       "postfix": "CloseLabVIEW",
-      "definiteArgument": "-CloseLabVIEW"
+      "definiteArgument": "-OperationName CloseLabVIEW"
     },
     {
       "help": "Runs the specified VI analyzer task in the LabVIEW VI Analyzer Toolkit and saves the test report to the specified location.",
       "postfix": "RunVIAnalyzer",
-      "definiteArgument": "-RunVIAnalyzer",
+      "definiteArgument": "-OperationName RunVIAnalyzer",
       "settingsClass": {
         "properties": [
           {
@@ -137,7 +137,7 @@
     {
       "help": "Runs tests on the specified files in the LabVIEW Unit Test Framework Toolkit and saves the JUnit file to the specified location. To run this operation, you must install the UTF Junit Report library using the JKI VI Package Manager (VIPM) software.",
       "postfix": "RunUnitTests",
-      "definiteArgument": "-RunUnitTests",
+      "definiteArgument": "-OperationName RunUnitTests",
       "settingsClass": {
         "properties": [
           {
