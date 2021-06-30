@@ -39,6 +39,7 @@ namespace Nuke.Common.Execution
             if (optoutParameter == "1" || optoutParameter.EqualsOrdinalIgnoreCase(bool.TrueString))
                 return;
 
+            throw new Exception();
             s_confirmedVersion = SuppressErrors(CheckAwareness, includeStackTrace: true);
             if (s_confirmedVersion == null)
                 return;
