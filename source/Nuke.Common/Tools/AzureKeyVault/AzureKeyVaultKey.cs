@@ -8,9 +8,9 @@ using Azure.Security.KeyVault.Keys;
 
 namespace Nuke.Common.Tools.AzureKeyVault
 {
-    public class KeyVaultKey
+    public class AzureKeyVaultKey
     {
-        public string Secret { get; internal set; }
         public JsonWebKey Key { get; internal set; }
+        public string Secret { get; internal set; }
     }
 }
