@@ -20,9 +20,12 @@ namespace Nuke.Common.Execution
     {
         // https://docs.microsoft.com/en-us/dotnet/core/tools/telemetry
         // https://dotnet.microsoft.com/platform/telemetry
+        // https://docs.microsoft.com/en-us/azure/azure-monitor/app/console
+        // https://docs.microsoft.com/en-us/azure/azure-monitor/app/ip-collection
 
         public const int CurrentVersion = 1;
 
+        // private const string InstrumentationKey = "310c87d7-60e1-48c1-b452-19e8f4801fba";
         private const string InstrumentationKey = "4b987be9-f807-4846-b777-4291f3a5ad8b";
         private const string OptOutEnvironmentKey = "NUKE_TELEMETRY_OPTOUT";
         private const string VersionPropertyName = "NukeTelemetryVersion";
@@ -36,6 +39,7 @@ namespace Nuke.Common.Execution
             if (optoutParameter == "1" || optoutParameter.EqualsOrdinalIgnoreCase(bool.TrueString))
                 return;
 
+            throw new Exception();
             s_confirmedVersion = SuppressErrors(CheckAwareness, includeStackTrace: true);
             if (s_confirmedVersion == null)
                 return;

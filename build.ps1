@@ -24,6 +24,7 @@ $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
 $env:DOTNET_MULTILEVEL_LOOKUP = 0
 $env:DOTNET_ROLL_FORWARD = "Major"
+$env:NUKE_TELEMETRY_OPTOUT = 1
 
 #$env:NUKE_ENTERPRISE_SOURCE = "https://nuget.pkg.github.com/nuke-build/index.json"
 #$env:NUKE_ENTERPRISE_USERNAME = "nuke-bot"
