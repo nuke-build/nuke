@@ -49,7 +49,7 @@
       }
     },
     {
-      "help": "Builds an application, a library, or a bitfile using the settings in the specified build specification(s) and returns the path of the output files.",
+      "help": "Builds an application, a library or a bitfile using the settings in the specified build specification(s) and returns the path of the output files.",
       "postfix": "ExecuteBuildSpec",
       "definiteArgument": "-OperationName ExecuteBuildSpec",
       "settingsClass": {
@@ -203,17 +203,6 @@
         "Default",
         "Detailed",
         "Diagnostic"
-      ]
-    },
-    {
-      "name": "PredefinedOperations",
-      "values": [
-        "MassCompile",
-        "ExecuteBuildSpec",
-        "RunVI",
-        "CloseLabVIEW",
-        "RunVIAnalyzer",
-        "RunUnitTests"
       ]
     },
     {
