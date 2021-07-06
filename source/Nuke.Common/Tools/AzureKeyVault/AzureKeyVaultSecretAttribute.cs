@@ -22,7 +22,8 @@ namespace Nuke.Common.Tools.AzureKeyVault
 
         protected override object GetValue(AzureKeyVaultConfiguration configuration, MemberInfo member)
         {
-            return AzureKeyVaultTasks.GetSecret(configuration, _secretName ?? member.Name);
+            return EnvironmentInfo.GetParameter<string>(member) ??
+                   AzureKeyVaultTasks.GetSecret(configuration, _secretName ?? member.Name);
         }
     }
 }
