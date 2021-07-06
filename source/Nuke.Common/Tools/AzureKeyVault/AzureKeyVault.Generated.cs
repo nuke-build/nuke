@@ -1,4 +1,4 @@
-// Generated from https://github.com/arodus/nuke/blob/master/build/specifications/AzureKeyVault.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/AzureKeyVault.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
