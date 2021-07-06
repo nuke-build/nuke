@@ -1593,8 +1593,8 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
     [TypeConverter(typeof(TypeConverter<NerdbankGitVersioningFormat>))]
     public partial class NerdbankGitVersioningFormat : Enumeration
     {
-        public static NerdbankGitVersioningFormat Text = (NerdbankGitVersioningFormat) "Text";
-        public static NerdbankGitVersioningFormat Json = (NerdbankGitVersioningFormat) "Json";
+        public static NerdbankGitVersioningFormat text = (NerdbankGitVersioningFormat) "text";
+        public static NerdbankGitVersioningFormat json = (NerdbankGitVersioningFormat) "json";
         public static implicit operator NerdbankGitVersioningFormat(string value)
         {
             return new NerdbankGitVersioningFormat { Value = value };
