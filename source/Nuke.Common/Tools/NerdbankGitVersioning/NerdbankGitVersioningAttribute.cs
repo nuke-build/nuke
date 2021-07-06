@@ -26,7 +26,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
         {
             var version = NerdbankGitVersioningTasks.NerdbankGitVersioningGetVersion(s => s
                     .DisableProcessLogOutput()
-                    .SetFormat(NerdbankGitVersioningFormat.Json))
+                    .SetFormat(NerdbankGitVersioningFormat.json))
                 .Result;
 
             if (UpdateBuildNumber)

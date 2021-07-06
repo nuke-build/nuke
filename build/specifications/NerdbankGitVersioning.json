@@ -235,8 +235,8 @@
     {
       "name": "NerdbankGitVersioningFormat",
       "values": [
-        "Text",
-        "Json"
+        "text",
+        "json"
       ]
     },
     {
