@@ -164,7 +164,7 @@ namespace Nuke.Common.Tools.GitHub
             var method = GetMethod(relativePath, itemType, repository);
             ControlFlow.Assert(path == null || method != null, text: "Could not determine item type.");
 
-            return $"https://github.com/{repository.Identifier}/{method}/{branch}/{relativePath}";
+            return $"https://github.com/{repository.Identifier}/{method}/{branch}/{relativePath}".TrimEnd("/");
         }
 
         [CanBeNull]

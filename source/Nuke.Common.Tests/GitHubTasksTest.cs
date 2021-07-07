@@ -38,6 +38,8 @@ namespace Nuke.Common.Tests
 
             repository.GetGitHubBrowseUrl("directory", itemType: GitHubItemType.Directory).Should().Be($"{treeUrl}/directory");
             repository.GetGitHubBrowseUrl("dir/file", itemType: GitHubItemType.File).Should().Be($"{blobUrl}/dir/file");
+
+            repository.GetGitHubBrowseUrl(branch: repository.Branch).Should().Be(treeUrl);
         }
 
         [Fact]
