@@ -198,7 +198,15 @@
           "type": "string"
         },
         {
+          "name": "PreReleaseLabelWithDash",
+          "type": "string"
+        },
+        {
           "name": "PreReleaseNumber",
+          "type": "string"
+        },
+        {
+          "name": "WeightedPreReleaseNumber",
           "type": "string"
         },
         {
@@ -250,7 +258,15 @@
           "type": "string"
         },
         {
+          "name": "EscapedBranchName",
+          "type": "string"
+        },
+        {
           "name": "Sha",
+          "type": "string"
+        },
+        {
+          "name": "ShortSha",
           "type": "string"
         },
         {
@@ -280,6 +296,10 @@
         {
           "name": "CommitsSinceVersionSourcePadded",
           "type": "string"
+        },
+        {
+          "name": "UncommittedChanges",
+          "type": "int"
         },
         {
           "name": "CommitDate",
