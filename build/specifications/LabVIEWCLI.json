@@ -1,0 +1,217 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://zone.ni.com/reference/en-XX/help/371361R-01/lvhowto/cli_running_operations/",
+    "https://zone.ni.com/reference/en-XX/help/371361R-01/lvconcepts/cli_predefined_operations/"
+  ],
+  "name": "LabVIEWCLI",
+  "officialUrl": "https://www.ni.com",
+  "help": "The NI LabVIEW Command Line Interface (CLI) is a software add-on for LabVIEW. You can use it to automate the build process of LabVIEW applications and run the VIs and custom operations you create in LabVIEW.",
+  "pathExecutable": "LabVIEWCLI",
+  "tasks": [
+    {
+      "help": "Mass compiles the files in the specified directory.",
+      "postfix": "MassCompile",
+      "definiteArgument": "-OperationName MassCompile",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "DirectoryToCompile",
+            "type": "string",
+            "format": "-DirectoryToCompile {value}",
+            "help": "Location of the VIs to compile."
+          },
+          {
+            "name": "MassCompileLogFile",
+            "type": "string",
+            "format": "-MassCompileLogFile {value}",
+            "help": "File path of the log results. Default is path to the temporary location."
+          },
+          {
+            "name": "AppendToMassCompileLog",
+            "type": "bool",
+            "format": "-AppendToMassCompileLog {value}",
+            "help": "A Boolean that specifies whether to add the results to the log file. Default is false."
+          },
+          {
+            "name": "NumOfVIsToCache",
+            "type": "int",
+            "format": "-NumOfVIsToCache {value}",
+            "help": "Number of VIs allowed in memory during the mass compile. Default is 0."
+          },
+          {
+            "name": "ReloadLVSBs",
+            "type": "bool",
+            "format": "-ReloadLVSBs {value}",
+            "help": "A Boolean that specifies whether to ignore CINs in VIs and allow the application to search for them. This argument is useful when a large number of CINs have been recompiled and need to be reloaded. Default is false."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Builds an application, a library or a bitfile using the settings in the specified build specification(s) and returns the path of the output files.",
+      "postfix": "ExecuteBuildSpec",
+      "definiteArgument": "-OperationName ExecuteBuildSpec",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ProjectPath",
+            "type": "string",
+            "format": "-ProjectPath {value}",
+            "help": "Path to the LabVIEW project (.lvproj) file that contains the build specification."
+          },
+          {
+            "name": "TargetName",
+            "type": "string",
+            "format": "-TargetName {value}",
+            "help": "Target that contains the build specification. Default is My Computer."
+          },
+          {
+            "name": "BuildSpecName",
+            "type": "string",
+            "format": "-BuildSpecName {value}",
+            "help": "Name of the build specification that appears under Build Specifications in the Project Explorer window. Default is Empty string. In this case the CLI for LabVIEW builds all build specifications under the specified target."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Runs a VI with the following connector pane interface and returns the output or error information.",
+      "postfix": "RunVI",
+      "definiteArgument": "-OperationName RunVI",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "VIPath",
+            "type": "string",
+            "format": "-VIPath {value}",
+            "help": "Path to the VI to run in LabVIEW. If the connector pane of the VI does not match the predefined interface, the CLI for LabVIEW returns an error."
+          },
+          {
+            "name": "CommandLineArgumentsForTheVI",
+            "type": "List<string>",
+            "format": "",
+            "help": "Elements of the input array of the VI. Separate elements with spaces."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Closes LabVIEW without any prompts.",
+      "postfix": "CloseLabVIEW",
+      "definiteArgument": "-OperationName CloseLabVIEW",
+      "settingsClass": {}
+    },
+    {
+      "help": "Runs the specified VI analyzer task in the LabVIEW VI Analyzer Toolkit and saves the test report to the specified location.",
+      "postfix": "RunVIAnalyzer",
+      "definiteArgument": "-OperationName RunVIAnalyzer",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigPath",
+            "type": "string",
+            "format": "-ConfigPath {value}",
+            "help": "Path to the configuration file that contains VI Analyzer task settings to use in the analysis. You can use a configuration file you saved through the VI Analyzer or the VI Analyzer VIs. Alternatively, you can specify a VI, folder, or LLB to analyze. If you specify an item other than a configuration file, the VI runs all VI Analyzer tests on the specified item."
+          },
+          {
+            "name": "ReportPath",
+            "type": "string",
+            "format": "-ReportPath {value}",
+            "help": "Path to the report or results file."
+          },
+          {
+            "name": "ConfigPassword",
+            "type": "string",
+            "format": "-ConfigPassword {value}",
+            "help": "Password of the configuration file, if any. Default is empty string."
+          },
+          {
+            "name": "ReportSaveType",
+            "type": "ReportTypes",
+            "format": "-ReportSaveType {value}",
+            "help": "Format of the report or results file. The value for this argument must be one of the following: ASCII, HTML, RSL. Default is ASCII."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Runs tests on the specified files in the LabVIEW Unit Test Framework Toolkit and saves the JUnit file to the specified location. To run this operation, you must install the UTF Junit Report library using the JKI VI Package Manager (VIPM) software.",
+      "postfix": "RunUnitTests",
+      "definiteArgument": "-OperationName RunUnitTests",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ProjectPath",
+            "type": "string",
+            "format": "-ProjectPath {value}",
+            "help": "Path to the project file."
+          },
+          {
+            "name": "JUnitReportPath",
+            "type": "string",
+            "format": "-JUnitReportPath {value}",
+            "help": "Path to the output JUnit file."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "AdditionalOperationDirectory",
+      "type": "string",
+      "format": "-AdditionalOperationDirectory {value}",
+      "help": "Specifies the directory that stores the necessary files for the operation. This argument is required only if you run a custom operation and the necessary files for the operation are not stored in the default directories."
+    },
+    {
+      "name": "LabVIEWPath",
+      "type": "string",
+      "format": "-LabVIEWPath {value}",
+      "help": "Specifies the LabVIEW version to use to run the operation. This argument is required on macOS and Linux but optional on Windows. On Windows, the default value is the most recent version of LabVIEW used on the machine."
+    },
+    {
+      "name": "PortNumber",
+      "type": "int",
+      "format": "-PortNumber {value}",
+      "help": "Specifies the port of the VI server. This argument is required if the port number under Tools»Options»VI Server»TCP/IP is not 3363."
+    },
+    {
+      "name": "LogFilePath",
+      "type": "string",
+      "format": "-LogFilePath {value}",
+      "help": "Specifies the path of the CLI for LabVIEW log fle. The default value is the path to the temporary location."
+    },
+    {
+      "name": "LogToConsole",
+      "type": "bool",
+      "format": "-LogToConsole {value}",
+      "help": "Specifies whether to save the output to both the console and the log file. The default value is true."
+    },
+    {
+      "name": "Verbosity",
+      "type": "LogVerbosity",
+      "format": "-Verbosity {value}",
+      "help": "Specifies the level of details to include in the log file. The default value is Default. Possible values are Minimal, Default, Detailed and Diagnostic."
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "LogVerbosity",
+      "values": [
+        "Minimal",
+        "Default",
+        "Detailed",
+        "Diagnostic"
+      ]
+    },
+    {
+      "name": "ReportTypes",
+      "values": [
+        "ASCII",
+        "HTML",
+        "RSL"
+      ]
+    }
+  ]
+}
