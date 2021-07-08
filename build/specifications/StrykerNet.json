@@ -1,0 +1,212 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://github.com/stryker-mutator/stryker-net/blob/master/docs/Configuration.md",
+    "https://github.com/stryker-mutator/stryker-net/blob/master/docs/Reporters.md"
+  ],
+  "name": "StrykerNet",
+  "officialUrl": "https://stryker-mutator.io/stryker-net/",
+  "help": "",
+  "packageId": "dotnet-stryker",
+  "packageExecutable": "Stryker.CLI.dll",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "SolutionPath",
+            "type": "string",
+            "format": "--solution-path {value}",
+            "help": "On .NET Framework projects Stryker needs your .sln file path."
+          },
+          {
+            "name": "ProjectFile",
+            "type": "string",
+            "format": "--project-file {value}",
+            "help": "When Stryker finds two or more project references inside your test project, it needs to know which project should be mutated. Pass the name of this project."
+          },
+          {
+            "name": "TestRunner",
+            "type": "StrykerNetTestRunner",
+            "format": "--test-runner {value}",
+            "help": "Stryker supports dotnet test, the commandline testrunner and VsTest, the visual studio testrunner. VsTest is the default because it offers tight integration with all test frameworks (MsTest, xUnit, NUnit etc). Dotnet test can be used if VsTest causes issues for some reason. Please also submit an issue with us if you experience difficulties with VsTest."
+          },
+          {
+            "name": "Timeout",
+            "type": "int",
+            "format": "--timeout-ms {value}",
+            "help": "Some mutations can create endless loops inside your code. To detect and stop these loops, Stryker cancels a unit test run after a set time. Using this parameter you can increase or decrease the time before a test will time out."
+          },
+          {
+            "name": "TestProjects",
+            "type": "List<string>",
+            "format": "--test-projects {value}",
+            "customValue": true,
+            "help": "Stryker can also be run from the directory containing the project under test. If you pass a list of test projects that reference the project under test, the tests of all projects will be run while testing the mutants. When running from a test project directory this option is not required. Default: null"
+          },
+          {
+            "name": "LogLevel",
+            "type": "StrykerNetLogLevel",
+            "format": "--log-level {value}",
+            "help": "To gain more insight in what Stryker does during a mutation testrun you can lower your loglevel."
+          },
+          {
+            "name": "LogFile",
+            "type": "bool",
+            "format": "--log-file",
+            "noArgument": true,
+            "help": "When creating an issue for Stryker.NET on github you can include a logfile. File logging always uses loglevel trace"
+          },
+          {
+            "name": "MaxConcurrentTestRunners",
+            "type": "int",
+            "format": "--max-concurrent-test-runners {value}",
+            "help": "By default Stryker.NET will use as much CPU power as you allow it to use during a mutation testrun. You can lower this setting to lower your CPU usage. This setting can also be used to disable parallel testing. This can be useful if your test project cannot handle parallel testruns. Default: your number of logical processors / 2"
+          },
+          {
+            "name": "ThresholdHigh",
+            "type": "int",
+            "format": "--threshold-high {value}",
+            "help": "Default: 80. If you want to decide on your own mutation score thresholds."
+          },
+          {
+            "name": "ThresholdLow",
+            "type": "int",
+            "format": "--threshold-low {value}",
+            "help": "Default: 60. If you want to decide on your own mutation score thresholds."
+          },
+          {
+            "name": "ThresholdBreak",
+            "type": "int",
+            "format": "--threshold-break {value}",
+            "help": "Default: 0. If you want to decide on your own mutation score thresholds."
+          },
+          {
+            "name": "ExcludedMutations",
+            "type": "List<string>",
+            "format": "--excluded-mutations {value}",
+            "customValue": true,
+            "help": "If you deem some mutations unwanted for your project you can disable mutations."
+          },
+          {
+            "name": "Mutate",
+            "type": "List<string>",
+            "format": "--mutate {value}",
+            "customValue": true,
+            "help": "To specify which files should be mutated you can use file pattern to in- or excluded files or even only parts of a files. By default all files are included."
+          },
+          {
+            "name": "IgnoreMethods",
+            "type": "List<string>",
+            "format": "--ignore-methods {value}",
+            "customValue": true,
+            "help": "If you would like to ignore some mutations that are passed as method parameters, you can do so by specifying which methods to ignore. Ignore methods will only affect mutations in directly passed parameters."
+          },
+          {
+            "name": "ConfigFilePath",
+            "type": "string",
+            "format": "--config-file-path {value}",
+            "help": "Path to configuration file. If you want to integrate these settings in your existing settings json, make sure the section is called stryker-config."
+          },
+          {
+            "name": "CoverageAnalysis",
+            "type": "StrykerNetCoverage",
+            "format": "--coverage-analysis {value}",
+            "help": "Use coverage info to speed up execution."
+          },
+          {
+            "name": "AbortTestOnFail",
+            "type": "bool",
+            "format": "--abort-test-on-fail",
+            "noArgument": true,
+            "help": "Abort unit testrun as soon as any one unit test fails. This can reduce the overall running time."
+          },
+          {
+            "name": "Diff",
+            "type": "bool",
+            "format": "--diff",
+            "noArgument": true,
+            "help": "Enables the diff feature. It makes sure to only mutate changed files. Gets the diff from git by default."
+          },
+          {
+            "name": "GitSource",
+            "type": "string",
+            "format": "--git-source {value}",
+            "help": "Sets the source branch to compare with the current code on file system, used for calculating the difference when --diff is enabled."
+          },
+          {
+            "name": "Reporters",
+            "type": "List<StrykerNetReporter>",
+            "format": "--reporters {value}",
+            "customValue": true,
+            "help": "During a mutation testrun one or more reporters can be enabled. A reporter will produce some kind of output during or after the mutation testrun."
+          },
+          {
+            "name": "DashboardApiKey",
+            "type": "string",
+            "format": "--dashboard-api-key {value}",
+            "secret": true,
+            "help": "Get your api key at stryker dashboard. To keep your api key safe, store it in an encrypted variable in your pipeline."
+          },
+          {
+            "name": "DashboardProject",
+            "type": "string",
+            "format": "--dashboard-project {value}",
+            "help": "The name registered with the dashboard. It is in the form of gitProvider/organization/repository. At the moment the dashboard backend only supports github.com as a git provider, but we will also support gitlab.com/bitbucket.org, etc in the future. It can have an indefinite number of levels. Slashes (/) in this name are not escaped. For example github.com/stryker-mutator/stryker-net."
+          },
+          {
+            "name": "DashboardVersion",
+            "type": "string",
+            "format": "--dashboard-project {value}",
+            "help": "The version of the report. This should be filled with the branch name, git tag or git sha (although no validation is done). You can override a report of a specific version, like docker tags. Slashes in the version should not be encoded. For example, it's valid to use \"feat/logging\"."
+          },
+          {
+            "name": "DashboardModule",
+            "type": "string",
+            "format": "--dashboard-module {value}",
+            "help": "Optional. If you want to store multiple reports for a version, you can use this value to separate them logically. For example, in a mono-repo setup where each package (or project or module) delivers a report."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "StrykerNetTestRunner",
+      "values": [
+        "vstest",
+        "dotnettest"
+      ]
+    },
+    {
+      "name": "StrykerNetReporter",
+      "values": [
+        "html",
+        "progress",
+        "dashboard",
+        "cleartext",
+        "dots",
+        "json"
+      ]
+    },
+    {
+      "name": "StrykerNetCoverage",
+      "values": [
+        "off",
+        "perTest",
+        "all",
+        "perTestInIsolation"
+      ]
+    },
+    {
+      "name": "StrykerNetLogLevel",
+      "values": [
+        "error",
+        "warning",
+        "info",
+        "debug",
+        "trace"
+      ]
+    }
+  ]
+}
