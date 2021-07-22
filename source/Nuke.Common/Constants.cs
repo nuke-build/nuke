@@ -128,9 +128,9 @@ namespace Nuke.Common
             return $"NUKE: {rootDirectory} ({profile ?? DefaultProfileName})";
         }
 
-        internal static string GetProfilePasswordEnvironmentVariableName(string profile)
+        internal static string GetProfilePasswordParameterName(string profile)
         {
-            return $"NUKE_PARAMS_{profile.Replace("?", "_")}";
+            return $"PARAMS_{profile.TrimStart(DefaultProfileName).ToUpperInvariant().Replace(".", "_")}_KEY".Replace("_", string.Empty);
         }
     }
 }
