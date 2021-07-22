@@ -105,7 +105,7 @@ namespace Nuke.Common.Utilities
                         ? process.Output.Single().Text
                         : null;
                 default:
-                    throw new NotSupportedException(EnvironmentInfo.Platform.ToString());
+                    return null;
             }
         }
 
