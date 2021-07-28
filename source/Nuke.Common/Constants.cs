@@ -130,7 +130,7 @@ namespace Nuke.Common
 
         internal static string GetProfilePasswordEnvironmentVariableName(string profile)
         {
-            return $"NUKE_PARAMS_{profile.Replace("?", "_")}";
+            return $"NUKE_PROFILE_{profile.TrimStart(DefaultProfileName).ToUpperInvariant().Replace(".", "_")}_KEY".TrimToOne("_");
         }
     }
 }

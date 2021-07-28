@@ -25,6 +25,7 @@ $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
 $env:DOTNET_MULTILEVEL_LOOKUP = 0
 $env:DOTNET_ROLL_FORWARD = "Major"
 $env:NUKE_TELEMETRY_OPTOUT = 1
+$env:MSBUILDDISABLENODEREUSE = 1
 
 #$env:NUKE_ENTERPRISE_SOURCE = "https://nuget.pkg.github.com/nuke-build/index.json"
 #$env:NUKE_ENTERPRISE_USERNAME = "nuke-bot"
@@ -70,9 +71,9 @@ else {
     # Install by channel or version
     $DotNetDirectory = "$TempDirectory\dotnet-win"
     if (!(Test-Path variable:DotNetVersion)) {
-        ExecSafe { & $DotNetInstallFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
+        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
     } else {
-        ExecSafe { & $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
+        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
     }
     $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
 }

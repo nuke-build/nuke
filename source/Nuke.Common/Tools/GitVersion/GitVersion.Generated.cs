@@ -317,7 +317,9 @@ namespace Nuke.Common.Tools.GitVersion
         public virtual string PreReleaseTag { get; internal set; }
         public virtual string PreReleaseTagWithDash { get; internal set; }
         public virtual string PreReleaseLabel { get; internal set; }
+        public virtual string PreReleaseLabelWithDash { get; internal set; }
         public virtual string PreReleaseNumber { get; internal set; }
+        public virtual string WeightedPreReleaseNumber { get; internal set; }
         public virtual string BuildMetaData { get; internal set; }
         public virtual string BuildMetaDataPadded { get; internal set; }
         public virtual string FullBuildMetaData { get; internal set; }
@@ -330,7 +332,9 @@ namespace Nuke.Common.Tools.GitVersion
         public virtual string FullSemVer { get; internal set; }
         public virtual string InformationalVersion { get; internal set; }
         public virtual string BranchName { get; internal set; }
+        public virtual string EscapedBranchName { get; internal set; }
         public virtual string Sha { get; internal set; }
+        public virtual string ShortSha { get; internal set; }
         public virtual string NuGetVersionV2 { get; internal set; }
         public virtual string NuGetVersion { get; internal set; }
         public virtual string NuGetPreReleaseTagV2 { get; internal set; }
@@ -338,6 +342,7 @@ namespace Nuke.Common.Tools.GitVersion
         public virtual string VersionSourceSha { get; internal set; }
         public virtual string CommitsSinceVersionSource { get; internal set; }
         public virtual string CommitsSinceVersionSourcePadded { get; internal set; }
+        public virtual int? UncommittedChanges { get; internal set; }
         public virtual string CommitDate { get; internal set; }
     }
     #endregion
