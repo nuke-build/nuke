@@ -35,7 +35,7 @@ artifacts:
 
 environment:
   EnterpriseAccessToken:
-    secure: NS0OfaCbCEzJFNcG9uYj36hZklejQSHYI3pOGeO3EtWntRiFv/m39AJY3c1MCjRj
+    secure: JdpPkaveddV2ldvhKsSt4CUrqA8miFIb72dj+PCLdKsk15fBEQ7E5YU1E0FIISR8
   PublicNuGetApiKey:
     secure: eeJb0U4UaZ7VnH8mfrei0NMxm3MPahOI7gLfxzGgoKLRBXKlr+8/2ayCY+uwdg7T
   SignPathApiToken:
