@@ -121,13 +121,12 @@ namespace Nuke.Common.ProjectModel
 
                 if (!typeId.Equals(SolutionFolder.Guid))
                 {
-                    var path = Path.GetFullPath(Path.Combine(solution.Directory.NotNull(), match.Groups["path"].Value));
-
+                    var path = match.Groups["path"].Value;
                     yield return new Project(
                         solution,
                         projectId,
                         name,
-                        path,
+                        () => Path.GetFullPath(Path.Combine(solution.Directory.NotNull(), path)),
                         typeId,
                         configurations.GetValueOrDefault(projectId) ?? new Dictionary<string, string>());
                 }
