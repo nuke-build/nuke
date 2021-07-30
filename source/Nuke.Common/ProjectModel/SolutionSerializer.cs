@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ProjectModel
@@ -31,70 +32,13 @@ namespace Nuke.Common.ProjectModel
                            {
                                Path = (AbsolutePath) solutionFile,
                                Header = content.TakeWhile(x => !x.StartsWith("Project")).ToArray(),
-                               Properties = trimmedContent.GetGlobalSection("SolutionProperties"),
-                               ExtensibilityGlobals = trimmedContent.GetGlobalSection("ExtensibilityGlobals"),
-                               Configurations = trimmedContent.GetGlobalSection("SolutionConfigurationPlatforms")
+                               Properties = trimmedContent.GetGlobalSection("SolutionProperties", solutionFile),
+                               ExtensibilityGlobals = trimmedContent.GetGlobalSection("ExtensibilityGlobals", solutionFile),
+                               Configurations = trimmedContent.GetGlobalSection("SolutionConfigurationPlatforms", solutionFile)
                            };
 
-            var primitiveProjects = GetPrimitiveProjects(solution, trimmedContent).ToList();
-            foreach (var primitiveProject in primitiveProjects)
-                solution.AddPrimitiveProject(primitiveProject);
-
-            var projectToSolutionFolder = GetProjectToSolutionFolder(trimmedContent);
-            if (projectToSolutionFolder != null)
-            {
-                var solutionFolders = primitiveProjects.OfType<SolutionFolder>().ToList();
-                foreach (var (projectGuid, solutionFolderGuid) in projectToSolutionFolder)
-                {
-                    var project = primitiveProjects.SingleOrDefault(x => x.ProjectId == projectGuid)
-                        .NotNull($"Project with guid '{projectGuid}' not found.");
-                    var solutionFolder = solutionFolders.SingleOrDefault(x => x.ProjectId == solutionFolderGuid)
-                        .NotNull($"Solution folder with guid '{solutionFolderGuid}' not found.");
-
-                    solution.SetSolutionFolder(solutionFolder, project);
-                }
-            }
-
-            return solution;
-        }
-
-        [CanBeNull]
-        private static Dictionary<Guid, Guid> GetProjectToSolutionFolder(this string[] lines)
-        {
-            return lines
-                .GetGlobalSection("NestedProjects")
-                ?.ToDictionary(x => Guid.Parse(x.Key.Trim('{', '}')), x => Guid.Parse(x.Value.Trim('{', '}')));
-        }
-
-        [CanBeNull]
-        private static IDictionary<string, string> GetGlobalSection(this string[] lines, string name)
-        {
-            var sectionLines = lines
-                .SkipWhile(x => !Regex.IsMatch(x, $@"^\s*GlobalSection\({name}\) = \w+$"))
-                .Skip(count: 1)
-                .TakeWhile(x => !Regex.IsMatch(x, @"^\s*EndGlobalSection$"))
-                .ToList();
-
-            return sectionLines.Count == 0
-                ? null
-                : sectionLines
-                    .Select(x => x.Split('='))
-                    .ToDictionary(x => x[0].Trim(), x => x[1].Trim());
-        }
-
-        private static IEnumerable<PrimitiveProject> GetPrimitiveProjects(Solution solution, string[] content)
-        {
-            static string GuidPattern(string text)
-                => $@"\{{(?<{Regex.Escape(text)}>[0-9a-fA-F]{{8}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{12}})\}}";
-
-            static string TextPattern(string name)
-                => $@"""(?<{Regex.Escape(name)}>[^""]*)""";
-
-            var projectRegex = new Regex(
-                $@"^Project\(""{GuidPattern("typeId")}""\)\s*=\s*{TextPattern("name")},\s*{TextPattern("path")},\s*""{GuidPattern("projectId")}""$");
-
-            var configurations = (content.GetGlobalSection("ProjectConfigurationPlatforms") ??
-                                  content.GetGlobalSection("ProjectConfiguration") ??
+            var configurations = (content.GetGlobalSection("ProjectConfigurationPlatforms", solutionFile) ??
+                                  content.GetGlobalSection("ProjectConfiguration", solutionFile) ??
                                   new Dictionary<string, string>())
                 .Select(x => new
                              {
@@ -108,6 +52,66 @@ namespace Nuke.Common.ProjectModel
                     x => x.ToDictionary(
                         y => y.ProjectConfiguration,
                         y => y.SolutionConfiguration));
+            var primitiveProjects = GetPrimitiveProjects(solution, trimmedContent, configurations)
+                .ToDictionarySafe(
+                    x => x.ProjectId,
+                    x => x,
+                    duplicationMessage: $"Solution {solutionFile?.SingleQuote()} contains duplicated project ids".TrimToOne(" "));
+            foreach (var primitiveProject in primitiveProjects.Values)
+                solution.AddPrimitiveProject(primitiveProject);
+
+            var projectToSolutionFolder = trimmedContent
+                .GetGlobalSection("NestedProjects", solutionFile)
+                ?.ToDictionary(x => Guid.Parse(x.Key.Trim('{', '}')), x => Guid.Parse(x.Value.Trim('{', '}')));
+            if (projectToSolutionFolder != null)
+            {
+                var solutionFolders = primitiveProjects.Values.OfType<SolutionFolder>().ToList();
+                foreach (var (projectGuid, solutionFolderGuid) in projectToSolutionFolder)
+                {
+                    var project = primitiveProjects.GetValueOrDefault(projectGuid)
+                        .NotNull($"Project with guid '{projectGuid}' not found.");
+                    var solutionFolder = solutionFolders.SingleOrDefault(x => x.ProjectId == solutionFolderGuid)
+                        .NotNull($"Solution folder with guid '{solutionFolderGuid}' not found.");
+
+                    solution.SetSolutionFolder(solutionFolder, project);
+                }
+            }
+
+            return solution;
+        }
+
+        [CanBeNull]
+        private static Dictionary<string, string> GetGlobalSection(this string[] lines, string name, [CanBeNull] string solutionFile)
+        {
+            var sectionLines = lines
+                .SkipWhile(x => !Regex.IsMatch(x, $@"^\s*GlobalSection\({name}\) = \w+$"))
+                .Skip(count: 1)
+                .TakeWhile(x => !Regex.IsMatch(x, @"^\s*EndGlobalSection$"))
+                .ToList();
+
+            return sectionLines.Count == 0
+                ? null
+                : sectionLines
+                    .Select(x => x.Split('='))
+                    .ToDictionarySafe(
+                        x => x[0].Trim(),
+                        x => x[1].Trim(),
+                        duplicationMessage: $"Solution {solutionFile?.SingleQuote()} contains duplicated {name} entries".TrimToOne(" "));
+        }
+
+        private static IEnumerable<PrimitiveProject> GetPrimitiveProjects(
+            Solution solution,
+            string[] content,
+            IReadOnlyDictionary<Guid, Dictionary<string, string>> configurations)
+        {
+            static string GuidPattern(string text)
+                => $@"\{{(?<{Regex.Escape(text)}>[0-9a-fA-F]{{8}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{4}}-[0-9a-fA-F]{{12}})\}}";
+
+            static string TextPattern(string name)
+                => $@"""(?<{Regex.Escape(name)}>[^""]*)""";
+
+            var projectRegex = new Regex(
+                $@"^Project\(""{GuidPattern("typeId")}""\)\s*=\s*{TextPattern("name")},\s*{TextPattern("path")},\s*""{GuidPattern("projectId")}""$");
 
             for (var i = 0; i < content.Length; i++)
             {
