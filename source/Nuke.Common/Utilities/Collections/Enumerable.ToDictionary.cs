@@ -11,7 +11,7 @@ namespace Nuke.Common.Utilities.Collections
 {
     public static partial class EnumerableExtensions
     {
-        public static IDictionary<TKey, TValue> ToDictionary<T, TKey, TValue>(
+        public static Dictionary<TKey, TValue> ToDictionary<T, TKey, TValue>(
             this IEnumerable<T> enumerable,
             [InstantHandle] Func<T, TKey> keySelector,
             [InstantHandle] Func<T, TValue> valueSelector,
@@ -23,19 +23,33 @@ namespace Nuke.Common.Utilities.Collections
 
             foreach (var item in list)
             {
-                var key = keySelector(item);
+                var key = keySelector.Invoke(item);
                 try
                 {
-                    dictionary.Add(key, valueSelector(item));
+                    dictionary.Add(key, valueSelector.Invoke(item));
                 }
-                catch (ArgumentException exception)
+                catch (ArgumentException exception) when (exceptionFactory != null)
                 {
-                    exceptionFactory ??= (ex, _) => ex;
-                    throw exceptionFactory(exception, key);
+                    throw exceptionFactory.Invoke(exception, key);
                 }
             }
 
             return dictionary;
+        }
+
+        public static Dictionary<TKey, TValue> ToDictionarySafe<T, TKey, TValue>(
+            this IEnumerable<T> enumerable,
+            [InstantHandle] Func<T, TKey> keySelector,
+            [InstantHandle] Func<T, TValue> valueSelector,
+            string duplicationMessage)
+        {
+            var groups = enumerable.ToLookup(keySelector.Invoke, valueSelector.Invoke);
+            ControlFlow.Assert(
+                groups.All(x => x.Count() == 1),
+                new[] { $"{duplicationMessage.TrimEnd(":")}:" }
+                    .Concat(groups.Where(x => x.Count() > 1).Select(x => $" - {x.Key}"))
+                    .JoinNewLine());
+            return groups.ToDictionary(x => x.Key, x => x.Single());
         }
     }
 }
