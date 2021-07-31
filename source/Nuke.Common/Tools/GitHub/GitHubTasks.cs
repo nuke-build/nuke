@@ -137,6 +137,34 @@ namespace Nuke.Common.Tools.GitHub
             return repository.Identifier.Split('/')[1];
         }
 
+        public static string GetGitHubCompareCommitsUrl(this GitRepository repository, string startCommitSha, string endCommitSha)
+        {
+            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+
+            return $"https://github.com/{repository.Identifier}/compare/{endCommitSha}^...{startCommitSha}";
+        }
+
+        public static string GetGitHubCompareTagToHeadUrl(this GitRepository repository, string tag)
+        {
+            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+
+            return $"https://github.com/{repository.Identifier}/compare/{tag}...HEAD";
+        }
+
+        public static string GetGitHubCompareTagsUrl(this GitRepository repository, string startTag, string endTag)
+        {
+            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+
+            return $"https://github.com/{repository.Identifier}/compare/{endTag}...{startTag}";
+        }
+
+        public static string GetGitHubCommitUrl(this GitRepository repository, string commitSha)
+        {
+            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+
+            return $"https://github.com/{repository.Identifier}/commit/{commitSha}";
+        }
+
         /// <summary>Url in the form of <c>https://raw.githubusercontent.com/{identifier}/{branch}/{file}</c>.</summary>
         public static string GetGitHubDownloadUrl(this GitRepository repository, string file, string branch = null)
         {
@@ -164,7 +192,7 @@ namespace Nuke.Common.Tools.GitHub
             var method = GetMethod(relativePath, itemType, repository);
             ControlFlow.Assert(path == null || method != null, text: "Could not determine item type.");
 
-            return $"https://github.com/{repository.Identifier}/{method}/{branch}/{relativePath}";
+            return $"https://github.com/{repository.Identifier}/{method}/{branch}/{relativePath}".TrimEnd("/");
         }
 
         [CanBeNull]

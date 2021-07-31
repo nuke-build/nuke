@@ -90,7 +90,7 @@ partial class Build
     IEnumerable<Project> ITest.TestProjects => Partition.GetCurrent(Solution.GetProjects("*.Tests"));
 
     Configure<DotNetTestSettings> ITest.TestSettings => _ => _
-        .AddProcessEnvironmentVariable("NUKE_TELEMETRY_OPTOUT", bool.TrueString);
+        .SetProcessEnvironmentVariable("NUKE_TELEMETRY_OPTOUT", bool.TrueString);
 
     Target ITest.Test => _ => _
         .Inherit<ITest>()

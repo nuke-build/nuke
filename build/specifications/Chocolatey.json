@@ -1,0 +1,575 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://docs.chocolatey.org/en-us/choco/commands/"
+  ],
+  "name": "Chocolatey",
+  "officialUrl": "https://chocolatey.org/",
+  "help": "Chocolatey has the largest online registry of Windows packages. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and/or scripts into a compiled package file.",
+  "pathExecutable": "choco",
+  "tasks": [
+    {
+      "help": "Searches remote or local packages (alias for <c>list</c>).",
+      "postfix": "Search",
+      "commonPropertySets": [
+        "searchAndListAndFindProperties",
+        "authentication"
+      ],
+      "definiteArgument": "search",
+      "officialUrl": "https://docs.chocolatey.org/en-us/choco/commands/search",
+      "settingsClass": {}
+    },
+    {
+      "help": "Lists remote or local packages.",
+      "postfix": "List",
+      "commonPropertySets": [
+        "searchAndListAndFindProperties",
+        "authentication"
+      ],
+      "definiteArgument": "list",
+      "officialUrl": "https://docs.chocolatey.org/en-us/choco/commands/list",
+      "settingsClass": {}
+    },
+    {
+      "help": "Searches remote or local packages (alias for <c>search</c>).",
+      "postfix": "Find",
+      "commonPropertySets": [
+        "searchAndListAndFindProperties",
+        "authentication"
+      ],
+      "definiteArgument": "find",
+      "officialUrl": "https://docs.chocolatey.org/en-us/choco/commands/find",
+      "settingsClass": {}
+    },
+    {
+      "help": "Retrieves packages that are outdated. Similar to <c>upgrade all --noop</c>.",
+      "postfix": "Outdated",
+      "commonPropertySets": [
+        "authentication"
+      ],
+      "definiteArgument": "outdated",
+      "officialUrl": "https://docs.chocolatey.org/en-us/choco/commands/outdated",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source={value}",
+            "help": "The source to find the package(s) to install. Special sources include: ruby, webpi, cygwin, windowsfeatures, and python. To specify more than one source, pass it with a semi-colon separating the values (-e.g. \"'source1;source2'\"). Defaults to default feeds."
+          },
+          {
+            "name": "Prerelease",
+            "type": "bool",
+            "format": "--prerelease",
+            "help": "Include Prereleases? Defaults to false."
+          },
+          {
+            "name": "IgnorePinned",
+            "type": "bool",
+            "format": "--ignore-pinned",
+            "help": "Ignore pinned packages. Defaults to false."
+          },
+          {
+            "name": "IgnoreUnfound",
+            "type": "bool",
+            "format": "--ignore-unfound",
+            "help": "Ignore packages that are not found on the sources used (or the defaults). Overrides the default feature 'ignoreUnfoundPackagesOnUpgradeOutdated' set to 'False'."
+          },
+          {
+            "name": "DisablePackageRepositoryOptimizations",
+            "type": "bool",
+            "format": "--disable-package-repository-optimizations",
+            "help": "Do not use optimizations for reducing bandwidth with repository queries during package install/upgrade/outdated operations. Should not generally be used, unless a repository needs to support older methods of query. When disabled, this makes queries similar to the way they were done in Chocolatey v0.10.11 and before. Overrides the default feature 'usePackageRepositoryOptimizations' set to 'True'."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Packages up a nuspec to a compiled nupkg.",
+      "postfix": "Pack",
+      "definiteArgument": "pack",
+      "officialUrl": "https://docs.chocolatey.org/en-us/create/commands/pack",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PathToNuspec",
+            "type": "string",
+            "format": "{value}",
+            "help": "Path to nuspec"
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version={value}",
+            "help": "The version you would like to insert into the package."
+          },
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "--output-directory={value}",
+            "help": "Specifies the directory for the created Chocolatey package file. If not specified, uses the current directory."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "-- {value}",
+            "itemFormat": "{key}={value}",
+            "separator": " ",
+            "help": "You can pass arbitrary property value pairs through to nuspecs. These will replace variables formatted as <em>$property$</em> with the value passed.",
+            "isTailArgument": true
+          }
+        ]
+      }
+    },
+    {
+      "help": "Pushes a compiled nupkg.",
+      "postfix": "Push",
+      "definiteArgument": "push",
+      "officialUrl": "https://docs.chocolatey.org/en-us/create/commands/push",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PathToNuGetPackage",
+            "type": "string",
+            "format": "{value}",
+            "help": "Path to Nuget package (.nupkg)."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source={value}",
+            "help": "The source we are pushing the package to. Use <a href=\"https://pus-h.chocolatey.org/\">https://pus-h.chocolatey.org/</a> to push to <a href=\"https://comminty.chocolatey.org/packages\">community feed</a>."
+          },
+          {
+            "name": "ApiKey",
+            "type": "string",
+            "format": "--api-key={value}",
+            "secret": true,
+            "help": "The api key for the source. If not specified (and not local file source), does a lookup. If not specified and one is not found for an https source, push will fail."
+          },
+          {
+            "name": "Timeout",
+            "type": "int",
+            "format": "-t={value}",
+            "help": "The time to allow a package push to occur before timing out. Defaults to execution timeout 2700 seconds."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Generates files necessary for a chocolatey package from a template.",
+      "postfix": "New",
+      "definiteArgument": "new",
+      "officialUrl": "https://docs.chocolatey.org/en-us/create/commands/new",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AutomaticPackage",
+            "type": "bool",
+            "format": "--automaticpackage",
+            "help": "Generate automatic package instead of normal. Defaults to false."
+          },
+          {
+            "name": "TemplateName",
+            "type": "string",
+            "format": "--template-name={value}",
+            "help": "Use a named template in <em>C:\\ProgramData\\chocolatey\\templates\\templatename</em> instead of built-in template."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name={value}",
+            "help": "The required name of the package."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version={value}",
+            "help": "The version of the package."
+          },
+          {
+            "name": "Maintainer",
+            "type": "string",
+            "format": "--maintainer={value}",
+            "help": "The name of the maintainer."
+          },
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "--output-directory={value}",
+            "help": "Specifies the directory for the created Chocolatey package file. If not specified, uses the current directory."
+          },
+          {
+            "name": "BuildInTemplate",
+            "type": "bool",
+            "format": "--use-built-in-template",
+            "help": "Use the original built-in template instead of any override."
+          },
+          {
+            "name": "LocationOfBinary",
+            "type": "string",
+            "format": "--file={value}",
+            "help": "In <a href=\"https://chocolatey.org/compare\">Chocolatey for Business</a>, file is used for auto-detection (native installer, zip, patch/upgrade file, or remote url to download first) to completely create a package with proper silent arguments! Can be 32-bit or 64-bit architecture."
+          },
+          {
+            "name": "LocationOfBinary64",
+            "type": "string",
+            "format": "--file64={value}",
+            "help": "Used when specifying both a 32-bit and a 64-bit file. Can be an installer or a zip, or remote url to download."
+          },
+          {
+            "name": "UseOriginalFilesLocation",
+            "type": "bool",
+            "format": "--use-original-files-location",
+            "help": "When using file or url, use the original location in packaging."
+          },
+          {
+            "name": "Checksum",
+            "type": "string",
+            "format": "--checksum={value}",
+            "help": "Checksum to verify File/Url with. Defaults to empty."
+          },
+          {
+            "name": "Checksum64",
+            "type": "string",
+            "format": "--checksum-x64={value}",
+            "help": "Checksum to verify File64/Url64 with. Defaults to empty."
+          },
+          {
+            "name": "ChecksumType",
+            "type": "string",
+            "format": "--checksum-type={value}",
+            "help": "checksum type for File/Url (and optional separate 64-bit files when specifying both). Used in conjunction with Download Checksum and Download Checksum 64-bit. Available values are 'md5', 'sha1', 'sha256' or 'sha512'. Defaults to 'sha256'."
+          },
+          {
+            "name": "PauseOnError",
+            "type": "bool",
+            "format": "--pause-on-error",
+            "help": "Pause when there is an error with creating the package."
+          },
+          {
+            "name": "BuildPackage",
+            "type": "bool",
+            "format": "--build-package",
+            "help": "Attempt to compile the package after creating it."
+          },
+          {
+            "name": "GenerateFromInstalledSoftware",
+            "type": "bool",
+            "format": "--from-programs-and-features",
+            "help": "Generate packages from the installed software on a system (does not handle dependencies)."
+          },
+          {
+            "name": "GenerateForCommunity",
+            "type": "bool",
+            "format": "--generate-for-community",
+            "help": "Generate the package for community use."
+          },
+          {
+            "name": "RemoveArchitectureFromName",
+            "type": "bool",
+            "format": "--remove-architecture-from-name",
+            "help": "Remove x86, x64, 64-bit, etc from the package id. Default setting is to remove architecture."
+          },
+          {
+            "name": "IncludeArchitectureInName",
+            "type": "bool",
+            "format": "--include-architecture-in-name",
+            "help": "Leave x86, x64, 64-bit, etc as part of the package id. Default setting is to remove architecture."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "-- {value}",
+            "itemFormat": "{key}={value}",
+            "separator": " ",
+            "help": "You can pass arbitrary property value pairs through to templates. This really unlocks your ability to create packages automatically!",
+            "isTailArgument": true
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "Debug",
+      "type": "bool",
+      "format": "--debug",
+      "help": "Show debug messaging."
+    },
+    {
+      "name": "Verbose",
+      "type": "bool",
+      "format": "--verbose",
+      "help": "Show verbose messaging. Very verbose messaging, avoid using under normal circumstances."
+    },
+    {
+      "name": "Trace",
+      "type": "bool",
+      "format": "--trace",
+      "help": "Show trace messaging. Very, very verbose trace messaging. Avoid except when needing super low-level .NET Framework debugging. Available in 0.10.4+."
+    },
+    {
+      "name": "NoColor",
+      "type": "bool",
+      "format": "--no-color",
+      "help": "Do not show colorization in logging output. This overrides the feature 'logWithoutColor', set to 'False'. Available in 0.10.9+."
+    },
+    {
+      "name": "AcceptLicense",
+      "type": "bool",
+      "format": "--accept-license",
+      "help": "Accept license dialogs automatically. Reserved for future use."
+    },
+    {
+      "name": "Confirm",
+      "type": "bool",
+      "format": "--confirm",
+      "help": "Chooses affirmative answer instead of prompting. Implies --accept-license"
+    },
+    {
+      "name": "Force",
+      "type": "bool",
+      "format": "--force",
+      "help": "Force the behavior. Do not use force during normal operation - it subverts some of the smart behavior for commands."
+    },
+    {
+      "name": "LimitOutput",
+      "type": "bool",
+      "format": "--limit-output",
+      "help": "Limit the output to essential information"
+    },
+    {
+      "name": "CommandExecutionTimeout",
+      "type": "int",
+      "format": "--execution-timeout={value}",
+      "help": "The time to allow a command to finish before timing out. Overrides the default execution timeout in the configuration of 2700 seconds."
+    },
+    {
+      "name": "CacheLocation",
+      "type": "string",
+      "format": "--cache-location {value}",
+      "help": "Location for download cache, defaults to %TEMP% or value in chocolatey.config file."
+    },
+    {
+      "name": "AllowUnofficialBuild",
+      "type": "bool",
+      "format": "--allow-unofficial-build",
+      "help": "When not using the official build you must set this flag for choco to continue."
+    },
+    {
+      "name": "FailOnStandardError",
+      "type": "bool",
+      "format": "--fail-on-standard-error",
+      "help": "Fail on standard error output (stderr), typically received when running external commands during install providers. This overrides the feature failOnStandardError."
+    },
+    {
+      "name": "UseSystemPowerShell",
+      "type": "bool",
+      "format": "--use-system-powershell",
+      "help": "Execute PowerShell using an external process instead of the built-in PowerShell host. Should only be used when internal host is failing."
+    },
+    {
+      "name": "DoNotShowProgress",
+      "type": "bool",
+      "format": "--no-progress",
+      "help": "Do not show download progress percentages."
+    },
+    {
+      "name": "Proxy",
+      "type": "string",
+      "format": "--proxy={value}",
+      "help": "Explicit proxy location. Overrides the default proxy location of ''."
+    },
+    {
+      "name": "ProxyUserName",
+      "type": "string",
+      "format": "--proxy-user={value}",
+      "help": "Explicit proxy user (optional). Requires explicit proxy (`--proxy` or config setting). Overrides the default proxy user of ''."
+    },
+    {
+      "name": "ProxyPassword",
+      "type": "string",
+      "format": "--proxy-password={value}",
+      "secret": true,
+      "help": "Explicit proxy password (optional) to be used with username. Requires explicit proxy (`--proxy` or config setting) and user name. Overrides the default proxy password (encrypted in settings sif set)."
+    },
+    {
+      "name": "ProxyBypassList",
+      "type": "List<string>",
+      "format": "--proxy-bypass-list={value}",
+      "separator": ",",
+      "help": "Comma separated list of regex locations to bypass on proxy. Requires explicit proxy (`--proxy` or config setting)."
+    },
+    {
+      "name": "ProxyBypassOnLocal",
+      "type": "bool",
+      "format": "--proxy-bypass-on-local",
+      "help": "Bypass proxy for local connections. Requires explicit proxy (`--proxy` or config setting)."
+    },
+    {
+      "name": "LogFile",
+      "type": "string",
+      "format": "--log-file={value}",
+      "help": "Log File to output to in addition to regular loggers."
+    }
+  ],
+  "commonTaskPropertySets": {
+    "authentication": [
+      {
+        "name": "User",
+        "type": "string",
+        "format": "--user={value}",
+        "help": "Used with authenticated feeds. Defaults to empty."
+      },
+      {
+        "name": "Password",
+        "type": "string",
+        "format": "--password={value}",
+        "secret": true,
+        "help": "The user's password to the source. Defaults to empty."
+      },
+      {
+        "name": "ClientCertificate",
+        "type": "string",
+        "format": "--cert={value}",
+        "help": "PFX pathname for an x509 authenticated feeds. Defaults to empty."
+      },
+      {
+        "name": "CertificatePassword",
+        "type": "string",
+        "format": "--certpassword={value}",
+        "secret": true,
+        "help": "The client certificate's password to the source. Defaults to empty."
+      }
+    ],
+    "searchAndListAndFindProperties": [
+      {
+        "name": "Filter",
+        "type": "string",
+        "format": "{value}",
+        "help": "Search filter."
+      },
+      {
+        "name": "Source",
+        "type": "string",
+        "format": "--source={value}",
+        "help": "Source location for install. Can use special 'webpi' or 'windowsfeatures' sources. Defaults to sources."
+      },
+      {
+        "name": "LocalOnly",
+        "type": "bool",
+        "format": "--local-only",
+        "help": "Only search against local machine items."
+      },
+      {
+        "name": "IdOnly",
+        "type": "bool",
+        "format": "--id-only",
+        "help": "Only return Package Ids in the list results."
+      },
+      {
+        "name": "Prerelease",
+        "type": "bool",
+        "format": "--prerelease",
+        "help": "Include Prereleases? Defaults to false."
+      },
+      {
+        "name": "IncludePrograms",
+        "type": "bool",
+        "format": "--include-programs",
+        "help": "Used in conjunction with LocalOnly, filters out apps chocolatey has listed as packages and includes those in the list. Defaults to false."
+      },
+      {
+        "name": "AllVersions",
+        "type": "bool",
+        "format": "--all-versions",
+        "help": "Include results from all versions."
+      },
+      {
+        "name": "Version",
+        "type": "string",
+        "format": "--version={value}",
+        "help": "Specific version of a package to return."
+      },
+      {
+        "name": "Page",
+        "type": "int",
+        "format": "--page={value}",
+        "help": "The 'page' of results to return. Defaults to return all results."
+      },
+      {
+        "name": "PageSize",
+        "type": "int",
+        "format": "--page-size={value}",
+        "help": "The amount of package results to return per page. Defaults to 25."
+      },
+      {
+        "name": "Exact",
+        "type": "bool",
+        "format": "--exact",
+        "help": "Only return packages with this exact name."
+      },
+      {
+        "name": "ByIdOnly",
+        "type": "bool",
+        "format": "--by-id-only",
+        "help": "Only return packages where the id contains the search filter."
+      },
+      {
+        "name": "ByTagOnly",
+        "type": "bool",
+        "format": "--by-tag-only",
+        "help": "Only return packages where the search filter matches on the tags."
+      },
+      {
+        "name": "IdStartsWith",
+        "type": "bool",
+        "format": "--id-starts-with",
+        "help": "Only return packages where the id starts with the search filter."
+      },
+      {
+        "name": "OrderByPopularity",
+        "type": "bool",
+        "format": "--order-by-popularity",
+        "help": "Sort by package results by popularity."
+      },
+      {
+        "name": "ApprovedOnly",
+        "type": "bool",
+        "format": "--approved-only",
+        "help": "Only return approved packages - this option will filter out results not from the <a href=\"https://comminty.chocolatey.org/packages\">community repository</a>."
+      },
+      {
+        "name": "DownloadCacheAvailable",
+        "type": "bool",
+        "format": "--download-cache-only",
+        "help": "Only return packages that have a download cache available - this option will filter out results not from the community repository."
+      },
+      {
+        "name": "NotBroken",
+        "type": "bool",
+        "format": "--not-broken",
+        "help": "Only return packages that are not failing testing - this option only filters out failing results from the <a href=\"https://comminty.chocolatey.org/packages\">community feed</a>. It willnot filter against other sources."
+      },
+      {
+        "name": "Detailed",
+        "type": "bool",
+        "format": "--detailed",
+        "help": "Alias for verbose."
+      },
+      {
+        "name": "DisablePackageRepositoryOptimizations",
+        "type": "bool",
+        "format": "--disable-package-repository-optimizations",
+        "help": "Do not use optimizations for reducing bandwidth with repository queries during package install/upgrade/outdated operations. Should not generally be used, unless a repository needs to support older methods of query. When disabled, this makes queries similar to the way they were done in Chocolatey v0.10.11 and before. Overrides the default feature 'usePackageRepositoryOptimizations' set to 'True'."
+      },
+      {
+        "name": "ShowAuditInformation",
+        "type": "bool",
+        "format": "--show-audit-info",
+        "help": "Display auditing information for a package."
+      }
+    ]
+  }
+}

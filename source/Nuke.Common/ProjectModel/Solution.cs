@@ -101,7 +101,7 @@ namespace Nuke.Common.ProjectModel
             SolutionFolder solutionFolder = null)
         {
             projectId ??= Guid.NewGuid();
-            var project = new Project(this, projectId.Value, name, path, typeId, configurationPlatforms ?? new Dictionary<string, string>());
+            var project = new Project(this, projectId.Value, name, () => path, typeId, configurationPlatforms ?? new Dictionary<string, string>());
             AddPrimitiveProject(project, solutionFolder);
             return project;
         }

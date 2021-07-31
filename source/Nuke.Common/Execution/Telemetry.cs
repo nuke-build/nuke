@@ -20,9 +20,12 @@ namespace Nuke.Common.Execution
     {
         // https://docs.microsoft.com/en-us/dotnet/core/tools/telemetry
         // https://dotnet.microsoft.com/platform/telemetry
+        // https://docs.microsoft.com/en-us/azure/azure-monitor/app/console
+        // https://docs.microsoft.com/en-us/azure/azure-monitor/app/ip-collection
 
         public const int CurrentVersion = 1;
 
+        // private const string InstrumentationKey = "310c87d7-60e1-48c1-b452-19e8f4801fba";
         private const string InstrumentationKey = "4b987be9-f807-4846-b777-4291f3a5ad8b";
         private const string OptOutEnvironmentKey = "NUKE_TELEMETRY_OPTOUT";
         private const string VersionPropertyName = "NukeTelemetryVersion";
@@ -52,13 +55,13 @@ namespace Nuke.Common.Execution
             string GetCookieFile(string name, int version)
                 => Constants.GlobalNukeDirectory / "telemetry-awareness" / $"v{version}" / name;
 
-            if (NukeBuild.BuildProjectFile == null)
+            if (SuppressErrors(() => NukeBuild.BuildProjectFile, logWarning: false) == null)
             {
                 var cookieName = Assembly.GetEntryAssembly().NotNull().GetName().Name;
                 var cookieFile = GetCookieFile(cookieName, CurrentVersion);
                 if (!File.Exists(cookieFile))
                 {
-                    PrintDisclosure($"to create awareness cookie for {cookieName.SingleQuote()}");
+                    PrintDisclosure($"create awareness cookie for {cookieName.SingleQuote()}");
                     FileSystemTasks.Touch(cookieFile);
                 }
 
@@ -69,13 +72,13 @@ namespace Nuke.Common.Execution
             var property = project.Properties.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(VersionPropertyName));
             if (property?.EvaluatedValue != CurrentVersion.ToString())
             {
-                if (NukeBuild.Host is not Terminal)
+                if (NukeBuild.IsServerBuild)
                 {
                     PrintDisclosure(action: null);
                     return null;
                 }
 
-                PrintDisclosure($"to set the {VersionPropertyName.SingleQuote()} property");
+                PrintDisclosure($"set the {VersionPropertyName.SingleQuote()} property");
                 project.SetProperty(VersionPropertyName, CurrentVersion.ToString());
                 project.Save();
             }
@@ -86,7 +89,7 @@ namespace Nuke.Common.Execution
                     return version;
             }
 
-            return CurrentVersion;
+            return NukeBuild.IsServerBuild ? CurrentVersion : null;
         }
 
         private static void PrintDisclosure(string action)
@@ -97,15 +100,14 @@ namespace Nuke.Common.Execution
                     $"Telemetry v{CurrentVersion}",
                     "------------",
                     "NUKE collects anonymous usage data in order to help us improve your experience.",
-                    string.Empty,
-                    "Read more about scope, data points, and opt-out: https://nuke.build/docs/getting-started/telemetry.html",
+                    "Read more about scope, data points, and opt-out: https://nuke.build/telemetry",
                     string.Empty
                 }.JoinNewLine();
 
             if (action != null)
             {
                 Logger.Info(disclosure);
-                Thread.Sleep(3000);
+                Thread.Sleep(2000);
                 Logger.Info($"Press <Enter> to {action}...");
                 WaitForEnter();
             }

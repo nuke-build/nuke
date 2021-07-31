@@ -396,7 +396,7 @@ namespace Nuke.Common.Tools.SonarScanner
               .Add("/o:{value}", Organization)
               .Add("/d:sonar.projectDescription={value}", Description)
               .Add("/d:sonar.host.url={value}", Server)
-              .Add("/d:sonar.login={value}", Login)
+              .Add("/d:sonar.login={value}", Login, secret: true)
               .Add("/d:sonar.password={value}", Password, secret: true)
               .Add("/d:sonar.verbose={value}", Verbose)
               .Add("/d:sonar.cs.vstest.reportsPaths={value}", VSTestReports, separator: ',')
@@ -453,7 +453,7 @@ namespace Nuke.Common.Tools.SonarScanner
         {
             arguments
               .Add("end")
-              .Add("/d:sonar.login={value}", Login)
+              .Add("/d:sonar.login={value}", Login, secret: true)
               .Add("/d:sonar.password={value}", Password, secret: true);
             return base.ConfigureProcessArguments(arguments);
         }
@@ -617,7 +617,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static T SetLogin<T>(this T toolSettings, string login) where T : SonarScannerBeginSettings
+        public static T SetLogin<T>(this T toolSettings, [Secret] string login) where T : SonarScannerBeginSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Login = login;
@@ -2047,7 +2047,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.</p>
         /// </summary>
         [Pure]
-        public static T SetLogin<T>(this T toolSettings, string login) where T : SonarScannerEndSettings
+        public static T SetLogin<T>(this T toolSettings, [Secret] string login) where T : SonarScannerEndSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Login = login;

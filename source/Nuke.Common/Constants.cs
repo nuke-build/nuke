@@ -57,7 +57,7 @@ namespace Nuke.Common
                 predicate: x =>
                     x.GetDirectories(NukeDirectoryName).Any() ||
                     includeLegacy && x.GetFiles(NukeFileName).Any());
-            return rootDirectory != GlobalNukeDirectory ? rootDirectory : null;
+            return rootDirectory != GlobalNukeDirectory.Parent ? rootDirectory : null;
         }
 
         internal static bool IsLegacy(AbsolutePath rootDirectory)
@@ -130,7 +130,7 @@ namespace Nuke.Common
 
         internal static string GetProfilePasswordEnvironmentVariableName(string profile)
         {
-            return $"NUKE_PARAMS_{profile.Replace("?", "_")}";
+            return $"NUKE_PROFILE_{profile.TrimStart(DefaultProfileName).ToUpperInvariant().Replace(".", "_")}_KEY".TrimToOne("_");
         }
     }
 }

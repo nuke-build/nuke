@@ -233,10 +233,10 @@ namespace Nuke.Common.ChangeLog
                 content.RemoveRange(lastSection.EndIndex + 1, content.Count - lastSection.EndIndex - 1);
 
                 content.Add(string.Empty);
-                content.Add($"[{firstSection.Caption}]: {repository.HttpsUrl}/compare/{tag}...HEAD");
+                content.Add($"[{firstSection.Caption}]: {repository.GetGitHubCompareTagToHeadUrl(tag)}");
                 for (var i = 1; i + 1 < sections.Count; i++)
-                    content.Add($"[{sections[i].Caption}]: {repository.HttpsUrl}/compare/{sections[i + 1].Caption}...{sections[i].Caption}");
-                content.Add($"[{lastSection.Caption}]: {repository.HttpsUrl}/tree/{lastSection.Caption}");
+                    content.Add($"[{sections[i].Caption}]: {repository.GetGitHubCompareTagsUrl(sections[i].Caption, sections[i + 1].Caption)}");
+                content.Add($"[{lastSection.Caption}]: {repository.GetGitHubBrowseUrl(lastSection.Caption)}");
             }
         }
 
