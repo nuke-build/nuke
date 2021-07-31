@@ -5,15 +5,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
-- Added telemetry data collection
-- Added unified `NukeBuild.Partition` property
-- Added `Rider`, `VisualStudio`, `VSCode` as `Host` implementations
-- Added `GitRepository.IsOnMainBranch` and `IsOnMainOrMasterBranch`
-- Added `AbsolutePath` equality operators
-- Fixed SpaceAutomation to generate default `refSpec`
-- Changed `Microsoft.CodeAnalysis.CSharp` package version to `3.9.0`
-- Removed `Refit` reference and `ITeamCityRestClient` interface
-- Removed `Colorful.Console` reference and embedded figlet fonts
 
 ## [5.2.1] / 2021-06-18
 - Fixed telemetry
