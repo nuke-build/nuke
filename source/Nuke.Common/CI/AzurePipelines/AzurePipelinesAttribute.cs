@@ -55,6 +55,8 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] InvokedTargets { get; set; } = new string[0];
 
         public bool TriggerDisabled { get; set; }
+        public bool Submodules { get; set; }
+        public bool LargeFileStorage { get; set; }
 
         public bool TriggerBatch
         {
@@ -164,6 +166,15 @@ namespace Nuke.Common.CI.AzurePipelines
             ExecutableTarget executableTarget,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
+            if (Submodules || LargeFileStorage)
+            {
+                yield return new AzurePipelineCheckoutStep
+                             {
+                                 InclueSubmodules = Submodules,
+                                 IncludeLargeFileStorage = LargeFileStorage
+                             };
+            }
+            
             if (CacheKeyFiles.Any())
             {
                 yield return new AzurePipelinesCacheStep

@@ -87,7 +87,9 @@ namespace Nuke.Common.Tests.CI
                         TriggerPathsInclude = new[] { "included_path" },
                         TriggerPathsExclude = new[] { "excluded_path" },
                         TriggerTagsInclude = new[] { "included_tags" },
-                        TriggerTagsExclude = new[] { "excluded_tags" }
+                        TriggerTagsExclude = new[] { "excluded_tags" },
+                        Submodules = true,
+                        LargeFileStorage = true
                     }
                 );
 
