@@ -47,7 +47,7 @@ stages:
         dependsOn: [  ]
         steps:
           - checkout: self
-            lfs: true
+            lfs: false
             submodules: true
           - task: Cache@2
             inputs:
@@ -69,7 +69,7 @@ stages:
         dependsOn: [ Restore ]
         steps:
           - checkout: self
-            lfs: true
+            lfs: false
             submodules: true
           - task: Cache@2
             inputs:
@@ -93,7 +93,7 @@ stages:
           parallel: 2
         steps:
           - checkout: self
-            lfs: true
+            lfs: false
             submodules: true
           - task: Cache@2
             inputs:
@@ -115,7 +115,7 @@ stages:
         dependsOn: [ Test ]
         steps:
           - checkout: self
-            lfs: true
+            lfs: false
             submodules: true
           - task: Cache@2
             inputs:
@@ -143,7 +143,7 @@ stages:
         dependsOn: [  ]
         steps:
           - checkout: self
-            lfs: true
+            lfs: false
             submodules: true
           - task: Cache@2
             inputs:
@@ -165,7 +165,7 @@ stages:
         dependsOn: [ Restore ]
         steps:
           - checkout: self
-            lfs: true
+            lfs: false
             submodules: true
           - task: Cache@2
             inputs:
@@ -189,7 +189,7 @@ stages:
           parallel: 2
         steps:
           - checkout: self
-            lfs: true
+            lfs: false
             submodules: true
           - task: Cache@2
             inputs:
@@ -211,7 +211,7 @@ stages:
         dependsOn: [ Test ]
         steps:
           - checkout: self
-            lfs: true
+            lfs: false
             submodules: true
           - task: Cache@2
             inputs:

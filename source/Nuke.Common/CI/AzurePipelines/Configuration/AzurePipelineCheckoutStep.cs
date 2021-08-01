@@ -11,21 +11,21 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     [PublicAPI]
     public class AzurePipelineCheckoutStep : AzurePipelinesStep
     {
-        public bool InclueSubmodules { get; set; }
-        public bool IncludeLargeFileStorage { get; set; }
+        public bool? InclueSubmodules { get; set; }
+        public bool? IncludeLargeFileStorage { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
             using (writer.WriteBlock("- checkout: self"))
             {
-                if (IncludeLargeFileStorage)
+                if (IncludeLargeFileStorage.HasValue)
                 {
-                    writer.WriteLine($"lfs: true");
+                    writer.WriteLine($"lfs: {IncludeLargeFileStorage.Value}".ToLower());
                 }
 
-                if (InclueSubmodules)
+                if (InclueSubmodules.HasValue)
                 {
-                    writer.WriteLine("submodules: true");
+                    writer.WriteLine($"submodules: {InclueSubmodules.Value}".ToLower());
                 }
             }
         }
