@@ -5,6 +5,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Added LFS and Submodule settings in AzurePipelines configuration
+- Added `OctoVersionTasks` and `OctoVersionAttribute`
+- Added `AzureSignToolTasks`
+- Added `ChocolateyTasks`
+- Fixed invocations for PowerShell bootstrapping script
+- Fixed retrieval of `version_dotnet_sdk` in telemetry
+- Fixed solution serialization to show information about duplicated entries
+- Fixed path construction to be lazy for in-memory solutions that get saved
+- Fixed `GitHubTasks.GetGitHubBrowseUrl` to trim trailing slash
+- Fixed `GitVersionAttribute.Framework` default value to `net5.0`
+- Fixed URLs in `ChangeLogTasks`
+- Fixed `DotNetTestSettings.Loggers` property to accept multiple values
+- Fixed default value emission for `DotCoverTasks`
+- Fixed missing properties for `GitVersionTasks`
+- Fixed missing secret attributes in `SonarScannerTasks`
+- Fixed `NerdbankGitVersioningFormat` enumeration to use lower-case
 
 ## [5.2.1] / 2021-06-18
 - Fixed telemetry
