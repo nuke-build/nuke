@@ -600,11 +600,11 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary>
         ///   Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.
         /// </summary>
-        public virtual bool? InheritConsole { get; internal set; } = true;
+        public virtual bool? InheritConsole { get; internal set; }
         /// <summary>
         ///   Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.
         /// </summary>
-        public virtual bool? AnalyseTargetArguments { get; internal set; } = true;
+        public virtual bool? AnalyseTargetArguments { get; internal set; }
         /// <summary>
         ///   Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).
         /// </summary>
@@ -715,11 +715,11 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary>
         ///   Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.
         /// </summary>
-        public virtual bool? InheritConsole { get; internal set; } = true;
+        public virtual bool? InheritConsole { get; internal set; }
         /// <summary>
         ///   Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.
         /// </summary>
-        public virtual bool? AnalyseTargetArguments { get; internal set; } = true;
+        public virtual bool? AnalyseTargetArguments { get; internal set; }
         /// <summary>
         ///   Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).
         /// </summary>
@@ -825,11 +825,11 @@ namespace Nuke.Common.Tools.DotCover
         /// <summary>
         ///   Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.
         /// </summary>
-        public virtual bool? InheritConsole { get; internal set; } = true;
+        public virtual bool? InheritConsole { get; internal set; }
         /// <summary>
         ///   Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.
         /// </summary>
-        public virtual bool? AnalyseTargetArguments { get; internal set; } = true;
+        public virtual bool? AnalyseTargetArguments { get; internal set; }
         /// <summary>
         ///   Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).
         /// </summary>
