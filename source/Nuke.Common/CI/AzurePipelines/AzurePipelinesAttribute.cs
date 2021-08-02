@@ -25,6 +25,8 @@ namespace Nuke.Common.CI.AzurePipelines
         private readonly AzurePipelinesImage[] _images;
 
         private bool? _triggerBatch;
+        private bool? _submodules;
+        private bool? _largeFileStorage;
 
         public AzurePipelinesAttribute(
             AzurePipelinesImage image,
@@ -55,6 +57,18 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] InvokedTargets { get; set; } = new string[0];
 
         public bool TriggerDisabled { get; set; }
+
+        public bool Submodules
+        {
+            set => _submodules = value;
+            get => throw new NotSupportedException();
+        }
+
+        public bool LargeFileStorage
+        {
+            set => _largeFileStorage = value;
+            get => throw new NotSupportedException();
+        }
 
         public bool TriggerBatch
         {
@@ -164,6 +178,15 @@ namespace Nuke.Common.CI.AzurePipelines
             ExecutableTarget executableTarget,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
+            if (_submodules.HasValue || _largeFileStorage.HasValue)
+            {
+                yield return new AzurePipelineCheckoutStep
+                             {
+                                 InclueSubmodules = _submodules,
+                                 IncludeLargeFileStorage = _largeFileStorage
+                             };
+            }
+            
             if (CacheKeyFiles.Any())
             {
                 yield return new AzurePipelinesCacheStep
