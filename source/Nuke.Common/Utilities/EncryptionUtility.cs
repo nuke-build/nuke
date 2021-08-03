@@ -115,7 +115,7 @@ namespace Nuke.Common.Utilities
         {
             string PromptForPassword()
             {
-                Logger.Info($"Enter password for {profile} parameters:");
+                Logger.Info($"Enter password for {Constants.GetParametersFileName(profile)}:");
                 return ConsoleUtility.ReadSecret();
             }
 
