@@ -13,20 +13,22 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public class Project : PrimitiveProject
     {
+        private readonly Func<string> _pathProvider;
+
         internal Project(
             Solution solution,
             Guid projectId,
             string name,
-            string path,
+            Func<string> pathProvider,
             Guid typeId,
             IDictionary<string, string> configurations)
             : base(solution, projectId, name, typeId)
         {
-            Path = (AbsolutePath) path;
+            _pathProvider = pathProvider;
             Configurations = configurations;
         }
 
-        public AbsolutePath Path { get; }
+        public AbsolutePath Path => (AbsolutePath) _pathProvider.Invoke();
         public AbsolutePath Directory => Path.Parent;
 
         public IDictionary<string, string> Configurations { get; }

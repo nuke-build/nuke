@@ -105,7 +105,7 @@ namespace Nuke.Common.Utilities
                         ? process.Output.Single().Text
                         : null;
                 default:
-                    throw new NotSupportedException(EnvironmentInfo.Platform.ToString());
+                    return null;
             }
         }
 
@@ -115,13 +115,14 @@ namespace Nuke.Common.Utilities
         {
             string PromptForPassword()
             {
-                Logger.Info($"Enter password for {profile} parameters:");
+                Logger.Info($"Enter password for {Constants.GetParametersFileName(profile)}:");
                 return ConsoleUtility.ReadSecret();
             }
 
             var credentialStoreName = Constants.GetCredentialStoreName(NukeBuild.RootDirectory, profile);
+            var passwordParameterName = Constants.GetProfilePasswordParameterName(profile);
             return TryGetPasswordFromCredentialStore(credentialStoreName) ??
-                   EnvironmentInfo.GetParameter<string>(Constants.GetProfilePasswordEnvironmentVariableName(profile)) ??
+                   EnvironmentInfo.GetParameter<string>(passwordParameterName) ??
                    PromptForPassword();
         }
 

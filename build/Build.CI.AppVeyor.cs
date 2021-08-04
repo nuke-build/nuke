@@ -51,7 +51,7 @@ partial class Build
     {
         public const string EnterpriseAccessToken = EnterpriseAccessTokenName + ":" + EnterpriseAccessTokenValue;
         const string EnterpriseAccessTokenName = nameof(Build.EnterpriseAccessToken);
-        const string EnterpriseAccessTokenValue = "NS0OfaCbCEzJFNcG9uYj36hZklejQSHYI3pOGeO3EtWntRiFv/m39AJY3c1MCjRj";
+        const string EnterpriseAccessTokenValue = "JdpPkaveddV2ldvhKsSt4CUrqA8miFIb72dj+PCLdKsk15fBEQ7E5YU1E0FIISR8";
 
         public const string NuGetApiKey = NuGetApiKeyName + ":" + NuGetApiKeyValue;
         const string NuGetApiKeyName = nameof(PublicNuGetApiKey);

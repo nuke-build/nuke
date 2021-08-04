@@ -72,10 +72,10 @@
             "help": "Filters out tests in the current project using the given expression. For more information, see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#filter-option-details\">Filter option details</a> section. For additional information and examples on how to use selective unit test filtering, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests\">Running selective unit tests</a>."
           },
           {
-            "name": "Logger",
-            "type": "string",
+            "name": "Loggers",
+            "type": "List<string>",
             "format": "--logger {value}",
-            "help": "Specifies a logger for test results."
+            "help": "Specifies a logger for test results. Specify the parameter multiple times to enable multiple loggers."
           },
           {
             "name": "NoBuild",

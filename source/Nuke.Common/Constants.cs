@@ -102,7 +102,7 @@ namespace Nuke.Common
 
         internal static AbsolutePath GetDefaultParametersFile(AbsolutePath rootDirectory)
         {
-            return GetNukeDirectory(rootDirectory) / $"{ParametersFilePrefix}.json";
+            return GetNukeDirectory(rootDirectory) / GetParametersFileName(DefaultProfileName);
         }
 
         internal static IEnumerable<AbsolutePath> GetParametersProfileFiles(AbsolutePath rootDirectory)
@@ -110,9 +110,14 @@ namespace Nuke.Common
             return GetNukeDirectory(rootDirectory).GlobFiles($"{ParametersFilePrefix}.*.json");
         }
 
-        internal static AbsolutePath GetParametersProfileFile(AbsolutePath rootDirectory, string name)
+        internal static AbsolutePath GetParametersProfileFile(AbsolutePath rootDirectory, string profile)
         {
-            return GetNukeDirectory(rootDirectory) / $"{ParametersFilePrefix}.{name}.json";
+            return GetNukeDirectory(rootDirectory) / GetParametersFileName(profile);
+        }
+
+        internal static string GetParametersFileName(string profile)
+        {
+            return profile == DefaultProfileName ? $"{ParametersFilePrefix}.json" : $"{ParametersFilePrefix}.{profile}.json";
         }
 
         public static IEnumerable<string> GetProfileNames(AbsolutePath rootDirectory)
@@ -128,9 +133,9 @@ namespace Nuke.Common
             return $"NUKE: {rootDirectory} ({profile ?? DefaultProfileName})";
         }
 
-        internal static string GetProfilePasswordEnvironmentVariableName(string profile)
+        internal static string GetProfilePasswordParameterName(string profile)
         {
-            return $"NUKE_PARAMS_{profile.Replace("?", "_")}";
+            return $"PARAMS_{profile.TrimStart(DefaultProfileName).ToUpperInvariant().Replace(".", "_")}_KEY".Replace("_", string.Empty);
         }
     }
 }

@@ -63,7 +63,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--list-tests</c> via <see cref="DotNetTestSettings.ListTests"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetTestSettings.LockFilePath"/></li>
         ///     <li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li>
-        ///     <li><c>--logger</c> via <see cref="DotNetTestSettings.Logger"/></li>
+        ///     <li><c>--logger</c> via <see cref="DotNetTestSettings.Loggers"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetTestSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetTestSettings.NoDependencies"/></li>
@@ -109,7 +109,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--list-tests</c> via <see cref="DotNetTestSettings.ListTests"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetTestSettings.LockFilePath"/></li>
         ///     <li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li>
-        ///     <li><c>--logger</c> via <see cref="DotNetTestSettings.Logger"/></li>
+        ///     <li><c>--logger</c> via <see cref="DotNetTestSettings.Loggers"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetTestSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetTestSettings.NoDependencies"/></li>
@@ -152,7 +152,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--list-tests</c> via <see cref="DotNetTestSettings.ListTests"/></li>
         ///     <li><c>--lock-file-path</c> via <see cref="DotNetTestSettings.LockFilePath"/></li>
         ///     <li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li>
-        ///     <li><c>--logger</c> via <see cref="DotNetTestSettings.Logger"/></li>
+        ///     <li><c>--logger</c> via <see cref="DotNetTestSettings.Loggers"/></li>
         ///     <li><c>--no-build</c> via <see cref="DotNetTestSettings.NoBuild"/></li>
         ///     <li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetTestSettings.NoDependencies"/></li>
@@ -1285,9 +1285,10 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual string Filter { get; internal set; }
         /// <summary>
-        ///   Specifies a logger for test results.
+        ///   Specifies a logger for test results. Specify the parameter multiple times to enable multiple loggers.
         /// </summary>
-        public virtual string Logger { get; internal set; }
+        public virtual IReadOnlyList<string> Loggers => LoggersInternal.AsReadOnly();
+        internal List<string> LoggersInternal { get; set; } = new List<string>();
         /// <summary>
         ///   Does not build the test project prior to running it.
         /// </summary>
@@ -1387,7 +1388,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--diag {value}", DiagnosticsFile)
               .Add("--framework {value}", Framework)
               .Add("--filter {value}", Filter)
-              .Add("--logger {value}", Logger)
+              .Add("--logger {value}", Loggers)
               .Add("--no-build", NoBuild)
               .Add("--no-restore", NoRestore)
               .Add("--output {value}", Output)
@@ -2765,27 +2766,84 @@ namespace Nuke.Common.Tools.DotNet
             return toolSettings;
         }
         #endregion
-        #region Logger
+        #region Loggers
         /// <summary>
-        ///   <p><em>Sets <see cref="DotNetTestSettings.Logger"/></em></p>
-        ///   <p>Specifies a logger for test results.</p>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.Loggers"/> to a new list</em></p>
+        ///   <p>Specifies a logger for test results. Specify the parameter multiple times to enable multiple loggers.</p>
         /// </summary>
         [Pure]
-        public static T SetLogger<T>(this T toolSettings, string logger) where T : DotNetTestSettings
+        public static T SetLoggers<T>(this T toolSettings, params string[] loggers) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Logger = logger;
+            toolSettings.LoggersInternal = loggers.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Resets <see cref="DotNetTestSettings.Logger"/></em></p>
-        ///   <p>Specifies a logger for test results.</p>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.Loggers"/> to a new list</em></p>
+        ///   <p>Specifies a logger for test results. Specify the parameter multiple times to enable multiple loggers.</p>
         /// </summary>
         [Pure]
-        public static T ResetLogger<T>(this T toolSettings) where T : DotNetTestSettings
+        public static T SetLoggers<T>(this T toolSettings, IEnumerable<string> loggers) where T : DotNetTestSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.Logger = null;
+            toolSettings.LoggersInternal = loggers.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetTestSettings.Loggers"/></em></p>
+        ///   <p>Specifies a logger for test results. Specify the parameter multiple times to enable multiple loggers.</p>
+        /// </summary>
+        [Pure]
+        public static T AddLoggers<T>(this T toolSettings, params string[] loggers) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal.AddRange(loggers);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="DotNetTestSettings.Loggers"/></em></p>
+        ///   <p>Specifies a logger for test results. Specify the parameter multiple times to enable multiple loggers.</p>
+        /// </summary>
+        [Pure]
+        public static T AddLoggers<T>(this T toolSettings, IEnumerable<string> loggers) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal.AddRange(loggers);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="DotNetTestSettings.Loggers"/></em></p>
+        ///   <p>Specifies a logger for test results. Specify the parameter multiple times to enable multiple loggers.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearLoggers<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.LoggersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetTestSettings.Loggers"/></em></p>
+        ///   <p>Specifies a logger for test results. Specify the parameter multiple times to enable multiple loggers.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveLoggers<T>(this T toolSettings, params string[] loggers) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(loggers);
+            toolSettings.LoggersInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="DotNetTestSettings.Loggers"/></em></p>
+        ///   <p>Specifies a logger for test results. Specify the parameter multiple times to enable multiple loggers.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveLoggers<T>(this T toolSettings, IEnumerable<string> loggers) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(loggers);
+            toolSettings.LoggersInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion

@@ -257,14 +257,12 @@
         "name": "InheritConsole",
         "type": "bool",
         "format": "--InheritConsole={value}",
-        "default": "true",
         "help": "Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited."
       },
       {
         "name": "AnalyseTargetArguments",
         "type": "bool",
         "format": "--AnalyseTargetArguments={value}",
-        "default": "true",
         "help": "Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>."
       },
       {

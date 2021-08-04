@@ -1,0 +1,161 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "name": "AzureSignTool",
+  "officialUrl": "https://github.com/vcsjones/AzureSignTool",
+  "help": "Azure Sign Tool is similar to <c>signtool</c> in the Windows SDK, with the major difference being that it uses Azure Key Vault for performing the signing process. The usage is like <c>signtool</c>, except with a limited set of options for signing and options for authenticating to Azure Key Vault.",
+  "packageId": "AzureSignTool",
+  "packageExecutable": "AzureSignTool.dll",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "KeyVaultUrl",
+            "type": "string",
+            "format": "--azure-key-vault-url {value}",
+            "help": "A fully qualified URL of the key vault with the certificate that will be used for signing. An example value might be <c>https://my-vault.vault.azure.net</c>."
+          },
+          {
+            "name": "KeyVaultClientId",
+            "type": "string",
+            "format": "--azure-key-vault-client-id {value}",
+            "help": "This is the client ID used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option. If this parameter is supplied, <c>--azure-key-vault-client-secret</c> and <c>--azure-key-vault-tenant-id</c> must be supplied as well."
+          },
+          {
+            "name": "KeyVaultClientSecret",
+            "type": "string",
+            "format": "--azure-key-vault-client-secret {value}",
+            "secret": true,
+            "help": "This is the client secret used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option or when using managed identities with <c>--azure-key-vault-managed-identity</c>. If this parameter is supplied, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-tenant-id</c> must be supplied as well."
+          },
+          {
+            "name": "KeyVaultTenantId",
+            "type": "string",
+            "format": "--azure-key-vault-tenant-id {value}",
+            "help": "This is the tenant id used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option or when using managed identities with <c>--azure-key-vault-managed-identity</c>. If this parameter is supplied, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> must be supplied as well."
+          },
+          {
+            "name": "KeyVaultCertificateName",
+            "type": "string",
+            "format": "--azure-key-vault-certificate {value}",
+            "help": "The name of the certificate used to perform the signing operation."
+          },
+          {
+            "name": "KeyVaultAccessToken",
+            "type": "string",
+            "format": "--azure-key-vault-accesstoken {value}",
+            "secret": true,
+            "help": "An access token used to authenticate to Azure. This can be used instead of the <c>--azure-key-vault-managed-identity</c>, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> options. This is useful if AzureSignTool is being used as part of another program that is already authenticated and has an access token to Azure."
+          },
+          {
+            "name": "KeyVaultManagedIdentity",
+            "type": "bool",
+            "format": "--azure-key-vault-managed-identity",
+            "help": "Use the ambient Managed Identity to authenticate to Azure. This can be used instead of the <c>--azure-key-vault-accesstoken</c>, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> options. This is useful if AzureSignTool is being used on a VM/service/CLI that is configured for managed identities to Azure."
+          },
+          {
+            "name": "Description",
+            "type": "string",
+            "format": "--description {value}",
+            "help": "A description of the signed content. This parameter serves the same purpose as the <c>/d</c> option in the Windows SDK <c>signtool</c>. If this parameter is not supplied, the signature will not contain a description."
+          },
+          {
+            "name": "DescriptionUrl",
+            "type": "string",
+            "format": "--description-url {value}",
+            "help": "A URL with more information of the signed content. This parameter serves the same purpose as the <c>/du</c> option in the Windows SDK <c>signtool</c>. If this parameter is not supplied, the signature will not contain a URL description."
+          },
+          {
+            "name": "TimestampRfc3161Url",
+            "type": "string",
+            "format": "--timestamp-rfc3161 {value}",
+            "help": "A URL to an RFC3161 compliant timestamping service. This parameter serves the same purpose as the <c>/tr</c> option in the Windows SDK <c>signtool</c>. This parameter should be used in favor of the <c>--timestamp</c> option. Using this parameter will allow using modern, RFC3161 timestamps which also support timestamp digest algorithms other than SHA1."
+          },
+          {
+            "name": "TimestampAuthenticodeUrl",
+            "type": "string",
+            "format": "--timestamp-authenticode {value}",
+            "help": "A URL to a legacy Authenticode timestamping service. This parameter serves the same purpose as the <c>/t</c> option in the Windows SDK <c>signtool</c>. Using a Authenicode timestamping service is deprecated. Instead, use the <c>--timestamp-rfc3161</c> option."
+          },
+          {
+            "name": "TimestampDigest",
+            "type": "AzureSignToolDigestAlgorithm",
+            "format": "--timestamp-digest {value}",
+            "help": "The name of the digest algorithm used for timestamping. This parameter is ignored unless the <c>--timestamp-rfc3161</c> parameter is also supplied. The default value is <c>sha256</c>."
+          },
+          {
+            "name": "FileDigest",
+            "type": "AzureSignToolDigestAlgorithm",
+            "format": "--file-digest {value}",
+            "help": "The name of the digest algorithm used for hashing the file being signed. The default value is <c>sha256</c>."
+          },
+          {
+            "name": "AdditionalCertificates",
+            "type": "List<string>",
+            "format": "--additional-certificates {value}",
+            "help": "A list of paths to additional certificates to aide in building a full chain for the signing certificate. Azure SignTool will build a chain, either as deep as it can or to a trusted root. This will also use the Windows certificate store, in addition to any certificates specified with this option. Specifying this option does not guarantee the inclusion of the certificate, only if it is part of the chain. The files specified must be public certificates only. They cannot be PFX, PKCS12 or PFX files."
+          },
+          {
+            "name": "Verbose",
+            "type": "bool",
+            "format": "--verbose",
+            "help": "Include additional output in the log. This parameter does not accept a value and cannot be combine with the <c>--quiet</c> option."
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "--quiet",
+            "help": "Do not print output to the log. This parameter does not accept a value and cannot be combine with the <c>--verbose</c> option. The exit code of the process can be used to determine success or failure of the sign operation."
+          },
+          {
+            "name": "ContinueOnError",
+            "type": "bool",
+            "format": "--continue-on-error",
+            "help": "If multiple files to sign are specified, this flag will cause the signing process to move on to the next file when signing fails. This flag modifies the exit code of the program. See the <a href=\"https://github.com/vcsjones/AzureSignTool#exit-codes\">Exit Codes section</a> for more information."
+          },
+          {
+            "name": "InputFileList",
+            "type": "string",
+            "format": "--input-file-list {value}",
+            "help": "Specifies a path to a text file which contains a list of files to sign, with one file per-line in the text file. If this parameter is specified, it is combined with files directly specified on the command line. The distinct result of the two options is signed."
+          },
+          {
+            "name": "SkipSigned",
+            "type": "bool",
+            "format": "--skip-signed",
+            "help": "If a file is already signed it will be skipped, rather than replacing the existing signature."
+          },
+          {
+            "name": "PageHashing",
+            "type": "bool",
+            "format": "--page-hashing",
+            "help": "Causes the Authenticode signing process to generate hashes of pages for verifying when the application is paged in to memory. If this flag is omitted, the default configuration for the operating system will be used. This flag will not affect non-PE file formats."
+          },
+          {
+            "name": "NoPageHashing",
+            "type": "bool",
+            "format": "--no-page-hashing",
+            "help": "Causes the Authenticode signing process to exclude hashes of pages for verifying when the application is paged in to memory. If this flag is omitted, the default configuration for the operating system will be used. This flag will not affect non-PE file formats."
+          },
+          {
+            "name": "MaxDegreeOfParallelism",
+            "type": "int",
+            "format": "--max-degree-of-parallelism {value}",
+            "help": "When signing multiple files, specifies the maximum number of concurrent operations. Setting this value does not guarentee that number of concurrent operations will be performed. If this value is unspecified, the system will use the default based on the number of available processor threads. Setting this value to <c>1</c> disable concurrent signing."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "AzureSignToolDigestAlgorithm",
+      "values": [
+        "sha1",
+        "sha256",
+        "sha384",
+        "sha512"
+      ]
+    }
+  ]
+}

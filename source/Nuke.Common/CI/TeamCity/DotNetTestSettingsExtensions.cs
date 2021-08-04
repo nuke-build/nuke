@@ -23,7 +23,7 @@ namespace Nuke.Common.CI.TeamCity
             var loggerPath = teamcityPackage.Directory / "build" / "_common" / "vstest15";
             ControlFlow.Assert(Directory.Exists(loggerPath), $"Directory.Exists({loggerPath})");
             return toolSettings
-                .SetLogger("teamcity")
+                .SetLoggers("teamcity")
                 .SetTestAdapterPath(loggerPath);
         }
     }
