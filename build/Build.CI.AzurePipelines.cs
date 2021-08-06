@@ -34,7 +34,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(ICompile.Compile), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) },
-    CacheKeyFiles = new string[0])]
+    CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" })]
 partial class Build
 {
     public class AzurePipelinesAttribute : Nuke.Common.CI.AzurePipelines.AzurePipelinesAttribute
@@ -50,9 +50,10 @@ partial class Build
         protected override AzurePipelinesJob GetJob(
             ExecutableTarget executableTarget,
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
-            IReadOnlyCollection<ExecutableTarget> relevantTargets)
+            IReadOnlyCollection<ExecutableTarget> relevantTargets,
+            AzurePipelinesImage image)
         {
-            var job = base.GetJob(executableTarget, jobs, relevantTargets);
+            var job = base.GetJob(executableTarget, jobs, relevantTargets, image);
 
             var symbol = CustomNames.GetValueOrDefault(job.Name).NotNull("symbol != null");
             job.DisplayName = job.Parallel == 0

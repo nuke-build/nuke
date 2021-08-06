@@ -90,7 +90,7 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] PullRequestsPathsExclude { get; set; } = new string[0];
 
         public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj" };
-        public string CachePath { get; set; } = "~/.nuget/packages";
+        public string[] CachePaths { get; set; } = { AzurePipelinesCachePaths.Nuke, AzurePipelinesCachePaths.NuGet };
 
         public string[] ImportVariableGroups { get; set; } = new string[0];
         public string[] ImportSecrets { get; set; } = new string[0];
@@ -143,7 +143,7 @@ namespace Nuke.Common.CI.AzurePipelines
         {
             var lookupTable = new LookupTable<ExecutableTarget, AzurePipelinesJob>();
             var jobs = relevantTargets
-                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable, relevantTargets)))
+                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable, relevantTargets, image)))
                 .ForEachLazy(x => lookupTable.Add(x.ExecutableTarget, x.Job))
                 .Select(x => x.Job).ToArray();
 
@@ -160,7 +160,8 @@ namespace Nuke.Common.CI.AzurePipelines
         protected virtual AzurePipelinesJob GetJob(
             ExecutableTarget executableTarget,
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
-            IReadOnlyCollection<ExecutableTarget> relevantTargets)
+            IReadOnlyCollection<ExecutableTarget> relevantTargets,
+            AzurePipelinesImage image)
         {
             var totalPartitions = executableTarget.PartitionSize ?? 0;
             var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
@@ -170,13 +171,14 @@ namespace Nuke.Common.CI.AzurePipelines
                        DisplayName = executableTarget.Name,
                        Dependencies = dependencies,
                        Parallel = totalPartitions,
-                       Steps = GetSteps(executableTarget, relevantTargets).ToArray(),
+                       Steps = GetSteps(executableTarget, relevantTargets, image).ToArray(),
                    };
         }
 
         protected virtual IEnumerable<AzurePipelinesStep> GetSteps(
             ExecutableTarget executableTarget,
-            IReadOnlyCollection<ExecutableTarget> relevantTargets)
+            IReadOnlyCollection<ExecutableTarget> relevantTargets,
+            AzurePipelinesImage image)
         {
             if (_submodules.HasValue || _largeFileStorage.HasValue)
             {
@@ -186,14 +188,18 @@ namespace Nuke.Common.CI.AzurePipelines
                                  IncludeLargeFileStorage = _largeFileStorage
                              };
             }
-            
+
             if (CacheKeyFiles.Any())
             {
-                yield return new AzurePipelinesCacheStep
-                             {
-                                 KeyFiles = CacheKeyFiles,
-                                 Path = CachePath
-                             };
+                foreach (var cachePath in CachePaths.NotNull("CachePaths != null"))
+                {
+                    yield return new AzurePipelinesCacheStep
+                                 {
+                                     Image = image,
+                                     KeyFiles = CacheKeyFiles,
+                                     Path = cachePath
+                                 };
+                }
             }
 
             static string GetArtifactPath(AbsolutePath path)
