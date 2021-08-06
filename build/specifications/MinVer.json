@@ -1,0 +1,117 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://github.com/adamralph/minver/blob/main/minver-cli/Options.cs"
+  ],
+  "name": "MinVer",
+  "officialUrl": "https://github.com/adamralph/minver",
+  "help": "Minimalistic versioning using Git tags.",
+  "packageId": "minver-cli",
+  "packageExecutable": "minver-cli.dll",
+  "tasks": [
+    {
+      "returnType": "MinVer",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AutoIncrement",
+            "type": "MinVerVersionPart",
+            "format": "--auto-increment {value}"
+          },
+          {
+            "name": "BuildMetadata",
+            "type": "string",
+            "format": "--build-metadata {value}"
+          },
+          {
+            "name": "DefaultPreReleasePhase",
+            "type": "string",
+            "format": "--default-pre-release-phase {value}"
+          },
+          {
+            "name": "MinimumMajorMinor",
+            "type": "string",
+            "format": "--minimum-major-minor {value}"
+          },
+          {
+            "name": "TagPrefix",
+            "type": "string",
+            "format": "--tag-prefix {value}"
+          },
+          {
+            "name": "Verbosity",
+            "type": "MinVerVerbosity",
+            "format": "--verbosity"
+          }
+        ]
+      }
+    }
+  ],
+  "dataClasses": [
+    {
+      "name": "MinVer",
+      "properties": [
+        {
+          "name": "MinVerVersion",
+          "type": "string"
+        },
+        {
+          "name": "MinVerMajor",
+          "type": "string"
+        },
+        {
+          "name": "MinVerMinor",
+          "type": "string"
+        },
+        {
+          "name": "MinVerPatch",
+          "type": "string"
+        },
+        {
+          "name": "MinVerPreRelease",
+          "type": "string"
+        },
+        {
+          "name": "MinVerBuildMetadata",
+          "type": "string"
+        },
+        {
+          "name": "AssemblyVersion",
+          "type": "string"
+        },
+        {
+          "name": "FileVersion",
+          "type": "string"
+        },
+        {
+          "name": "PackageVersion",
+          "type": "string"
+        },
+        {
+          "name": "Version",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "MinVerVerbosity",
+      "values": [
+        "Error",
+        "Warn",
+        "Info",
+        "Debug",
+        "Trace"
+      ]
+    },
+    {
+      "name": "MinVerVersionPart",
+      "values": [
+        "Major",
+        "Minor",
+        "Patch"
+      ]
+    }
+  ]
+}
