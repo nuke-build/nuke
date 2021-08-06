@@ -62,6 +62,11 @@ namespace Nuke.Common.Utilities
             return str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
         }
 
+        public static string[] SplitSpace(this string str)
+        {
+            return str.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
         [Pure]
         public static string SplitCamelHumpsWithSeparator(this string str, string separator, params string[] exclusions)
         {
