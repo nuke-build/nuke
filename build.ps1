@@ -42,6 +42,11 @@ function ExecSafe([scriptblock] $cmd) {
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 
+function CheckDotNetVersion([string] $dotNetCommand = "dotnet") {
+    $null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
+        $(dotnet --version) -and $LASTEXITCODE -eq 0
+}
+
 # Print environment variables
 # WARNING: Make sure that secrets are actually scrambled in build log
 # Get-Item -Path Env:* | Sort-Object -Property Name | ForEach-Object {"{0}={1}" -f $_.Name,$_.Value}
@@ -54,10 +59,13 @@ if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue)) {
 }
 
 # If dotnet CLI is installed globally and it matches requested version, use for execution
-if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
-    $(dotnet --version) -and $LASTEXITCODE -eq 0) {
+if (CheckDotNetVersion) {
     Write-Output "NUKE: Using installed dotnet CLI"
     $env:DOTNET_EXE = (Get-Command "dotnet").Path
+}
+elseif(CheckDotNetVersion $PrivateDotNetExe) {
+    Write-Output "NUKE: Using private installed dotnet CLI at \"$PrivateDotNetDirectory\""
+    $env:DOTNET_EXE = "$PrivateDotNetExe"
 }
 else {
     # If global.json exists, load expected version

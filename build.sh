@@ -37,6 +37,15 @@ function FirstJsonValue {
     perl -nle 'print $1 if m{"'"$1"'": "([^"]+)",?}' <<< "${@:2}"
 }
 
+function CheckDotnetVersion {
+    DOTNET_COMMAND="${1:-dotnet}"
+    if [ -x "$(command -v "$DOTNET_COMMAND")" ] && "$DOTNET_COMMAND" --version &>/dev/null; then
+        return 0
+    else
+        return 1
+    fi
+}
+
 # Print environment variables
 # WARNING: Make sure that secrets are actually scrambled in build log
 # env | sort
@@ -49,9 +58,12 @@ else
 fi
 
 # If dotnet CLI is installed globally and it matches requested version, use for execution
-if [ -x "$(command -v dotnet)" ] && dotnet --version &>/dev/null; then
+if CheckDotnetVersion; then
     echo "NUKE: Using installed dotnet CLI"
     export DOTNET_EXE="$(command -v dotnet)"
+elif CheckDotnetVersion "$PRIVATE_DOTNET_EXE"; then
+    echo "NUKE: Using private installed dotnet CLI at \"$PRIVATE_DOTNET_DIRECTORY\""
+    export DOTNET_EXE="$PRIVATE_DOTNET_EXE"
 else
     # If global.json exists, load expected version
     if [[ -f "$DOTNET_GLOBAL_FILE" ]]; then
