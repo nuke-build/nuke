@@ -18,7 +18,10 @@ $TempDirectory = "$PSScriptRoot\.nuke\temp"
 
 $DotNetGlobalFile = "$PSScriptRoot\global.json"
 $DotNetInstallUrl = "https://dot.net/v1/dotnet-install.ps1"
-$DotNetChannel = "Current"
+
+$PrivateDotNetChannel = "Current"
+$PrivateDotNetDirectory = "$TempDirectory\dotnet-win"
+$PrivateDotNetExe = "$PrivateDotNetDirectory\dotnet.exe"
 
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
@@ -69,13 +72,12 @@ else {
     }
 
     # Install by channel or version
-    $DotNetDirectory = "$TempDirectory\dotnet-win"
     if (!(Test-Path variable:DotNetVersion)) {
-        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
+        ExecSafe { & powershell $DotNetInstallFile -InstallDir $PrivateDotNetDirectory -Channel $PrivateDotNetChannel -NoPath }
     } else {
-        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
+        ExecSafe { & powershell $DotNetInstallFile -InstallDir $PrivateDotNetDirectory -Version $DotNetVersion -NoPath }
     }
-    $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
+    $env:DOTNET_EXE = "$PrivateDotNetExe"
 }
 
 Write-Output "Microsoft (R) .NET Core SDK version $(& $env:DOTNET_EXE --version)"

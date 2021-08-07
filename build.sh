@@ -14,7 +14,10 @@ TEMP_DIRECTORY="$SCRIPT_DIR/.nuke/temp"
 
 DOTNET_GLOBAL_FILE="$SCRIPT_DIR/global.json"
 DOTNET_INSTALL_URL="https://dot.net/v1/dotnet-install.sh"
-DOTNET_CHANNEL="Current"
+
+PRIVATE_DOTNET_CHANNEL="Current"
+PRIVATE_DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
+PRIVATE_DOTNET_EXE="$PRIVATE_DOTNET_DIRECTORY/dotnet"
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
@@ -62,13 +65,12 @@ else
     fi
 
     # Install by channel or version
-    DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
     if [[ -z ${DOTNET_VERSION+x} ]]; then
-        "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
+        "$DOTNET_INSTALL_FILE" --install-dir "$PRIVATE_DOTNET_DIRECTORY" --channel "$PRIVATE_DOTNET_CHANNEL" --no-path
     else
-        "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --version "$DOTNET_VERSION" --no-path
+        "$DOTNET_INSTALL_FILE" --install-dir "$PRIVATE_DOTNET_DIRECTORY" --version "$DOTNET_VERSION" --no-path
     fi
-    export DOTNET_EXE="$DOTNET_DIRECTORY/dotnet"
+    export DOTNET_EXE="$PRIVATE_DOTNET_EXE"
 fi
 
 echo "Microsoft (R) .NET Core SDK version $("$DOTNET_EXE" --version)"
