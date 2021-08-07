@@ -44,10 +44,13 @@ function FirstJsonValue {
 # Check if any dotnet is installed
 if [[ -x "$(command -v dotnet)" ]]; then
     dotnet --info
+else
+    echo "NUKE: no dotnet CLI installed"
 fi
 
 # If dotnet CLI is installed globally and it matches requested version, use for execution
 if [ -x "$(command -v dotnet)" ] && dotnet --version &>/dev/null; then
+    echo "NUKE: Using installed dotnet CLI"
     export DOTNET_EXE="$(command -v dotnet)"
 else
     # If global.json exists, load expected version
@@ -65,6 +68,7 @@ else
         PRIVATE_DOTNET_SPEC="--version $DOTNET_VERSION"
     fi
 
+    echo "NUKE: Downloading dotnet CLI ($PRIVATE_DOTNET_SPEC) to \"$PRIVATE_DOTNET_DIRECTORY\""
     # Download install script
     DOTNET_INSTALL_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
     mkdir -p "$TEMP_DIRECTORY"
@@ -73,6 +77,7 @@ else
 
     "$DOTNET_INSTALL_FILE" --install-dir "$PRIVATE_DOTNET_DIRECTORY" $PRIVATE_DOTNET_SPEC --no-path
 
+    echo "NUKE: Using private installed dotnet CLI at \"$PRIVATE_DOTNET_DIRECTORY\""
     export DOTNET_EXE="$PRIVATE_DOTNET_EXE"
 fi
 

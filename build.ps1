@@ -49,11 +49,14 @@ function ExecSafe([scriptblock] $cmd) {
 # Check if any dotnet is installed
 if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue)) {
     ExecSafe { & dotnet --info }
+} else {
+    Write-Output "NUKE: no dotnet CLI installed"
 }
 
 # If dotnet CLI is installed globally and it matches requested version, use for execution
 if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
     $(dotnet --version) -and $LASTEXITCODE -eq 0) {
+    Write-Output "NUKE: Using installed dotnet CLI"
     $env:DOTNET_EXE = (Get-Command "dotnet").Path
 }
 else {
@@ -72,6 +75,7 @@ else {
         $PrivateDotNetSpec = "-Version", $DotNetVersion
     }
 
+    Write-Output "NUKE: Downloading dotnet CLI ($PrivateDotNetSpec) to ""$PrivateDotNetDirectory"""
     # Download install script
     $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
     New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
@@ -80,6 +84,7 @@ else {
 
     ExecSafe { & powershell $DotNetInstallFile -InstallDir $PrivateDotNetDirectory $PrivateDotNetSpec -NoPath }
 
+    Write-Output "NUKE: Using private installed dotnet CLI at \"$PrivateDotNetDirectory\""
     $env:DOTNET_EXE = "$PrivateDotNetExe"
 }
 
