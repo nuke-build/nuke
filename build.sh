@@ -50,12 +50,6 @@ fi
 if [ -x "$(command -v dotnet)" ] && dotnet --version &>/dev/null; then
     export DOTNET_EXE="$(command -v dotnet)"
 else
-    # Download install script
-    DOTNET_INSTALL_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
-    mkdir -p "$TEMP_DIRECTORY"
-    curl -Lsfo "$DOTNET_INSTALL_FILE" "$DOTNET_INSTALL_URL"
-    chmod +x "$DOTNET_INSTALL_FILE"
-
     # If global.json exists, load expected version
     if [[ -f "$DOTNET_GLOBAL_FILE" ]]; then
         DOTNET_VERSION=$(FirstJsonValue "version" "$(cat "$DOTNET_GLOBAL_FILE")")
@@ -66,10 +60,19 @@ else
 
     # Install by channel or version
     if [[ -z ${DOTNET_VERSION+x} ]]; then
-        "$DOTNET_INSTALL_FILE" --install-dir "$PRIVATE_DOTNET_DIRECTORY" --channel "$PRIVATE_DOTNET_CHANNEL" --no-path
+        PRIVATE_DOTNET_SPEC="--channel $PRIVATE_DOTNET_CHANNEL"
     else
-        "$DOTNET_INSTALL_FILE" --install-dir "$PRIVATE_DOTNET_DIRECTORY" --version "$DOTNET_VERSION" --no-path
+        PRIVATE_DOTNET_SPEC="--version $DOTNET_VERSION"
     fi
+
+    # Download install script
+    DOTNET_INSTALL_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
+    mkdir -p "$TEMP_DIRECTORY"
+    curl -Lsfo "$DOTNET_INSTALL_FILE" "$DOTNET_INSTALL_URL"
+    chmod +x "$DOTNET_INSTALL_FILE"
+
+    "$DOTNET_INSTALL_FILE" --install-dir "$PRIVATE_DOTNET_DIRECTORY" $PRIVATE_DOTNET_SPEC --no-path
+
     export DOTNET_EXE="$PRIVATE_DOTNET_EXE"
 fi
 

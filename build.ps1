@@ -57,12 +57,6 @@ if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
     $env:DOTNET_EXE = (Get-Command "dotnet").Path
 }
 else {
-    # Download install script
-    $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
-    New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
-
     # If global.json exists, load expected version
     if (Test-Path $DotNetGlobalFile) {
         $DotNetGlobal = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json)
@@ -73,10 +67,19 @@ else {
 
     # Install by channel or version
     if (!(Test-Path variable:DotNetVersion)) {
-        ExecSafe { & powershell $DotNetInstallFile -InstallDir $PrivateDotNetDirectory -Channel $PrivateDotNetChannel -NoPath }
+        $PrivateDotNetSpec = "-Channel", $PrivateDotNetChannel
     } else {
-        ExecSafe { & powershell $DotNetInstallFile -InstallDir $PrivateDotNetDirectory -Version $DotNetVersion -NoPath }
+        $PrivateDotNetSpec = "-Version", $DotNetVersion
     }
+
+    # Download install script
+    $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
+    New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
+
+    ExecSafe { & powershell $DotNetInstallFile -InstallDir $PrivateDotNetDirectory $PrivateDotNetSpec -NoPath }
+
     $env:DOTNET_EXE = "$PrivateDotNetExe"
 }
 
