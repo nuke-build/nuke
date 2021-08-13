@@ -13,79 +13,98 @@
       "help": "Gets the version information for a project.",
       "postfix": "GetVersion",
       "returnType": "OctoVersionInfo",
+      "commonPropertySets": [
+        "octoVersionSettings"
+      ],
       "definiteArgument": "octoversion",
-      "settingsClass": {
-        "properties": [
-          {
-            "name": "CurrentBranch",
-            "type": "string",
-            "format": "--CurrentBranch {value}",
-            "help": "Pass in the name of the branch. If not set, OctoVersion will attempt to derive it, but this may lead to incorrect values."
-          },
-          {
-            "name": "NonPreReleaseTags",
-            "type": "List<string>",
-            "format": "--NonPreReleaseTags {value}",
-            "separator": " ",
-            "help": "Names of branches that will not get a pre-release suffix. Defaults to 'main' (with legacy support for 'master')."
-          },
-          {
-            "name": "RepositoryPath",
-            "type": "string",
-            "format": "--RepositoryPath {value}",
-            "help": "Path to the Git repository. If not set, assumes that the current working folder is the root of the repository"
-          },
-          {
-            "name": "Major",
-            "type": "int",
-            "format": "--Major {value}",
-            "help": "Override the calculated Major with a specific value."
-          },
-          {
-            "name": "Minor",
-            "type": "int",
-            "format": "--Minor {value}",
-            "help": "Override the calculated Minor with a specific value."
-          },
-          {
-            "name": "Patch",
-            "type": "int",
-            "format": "--Patch {value}",
-            "help": "Override the calculated Patch with a specific value."
-          },
-          {
-            "name": "PreReleaseTag",
-            "type": "string",
-            "format": "--PreReleaseTag {value}",
-            "help": "Override the calculated PreReleaseTag with a specific value."
-          },
-          {
-            "name": "BuildMetadata",
-            "type": "string",
-            "format": "--BuildMetadata {value}",
-            "help": "Override the calculated build metadata with a specific value."
-          },
-          {
-            "name": "FullSemVer",
-            "type": "string",
-            "format": "--FullSemVer {value}",
-            "help": "If set, this version number will override all of the other values and OctoVersion will just adopt it wholesale."
-          },
-          {
-            "name": "OutputFormats",
-            "type": "List<OctoVersionOutputFormatter>",
-            "format": "--OutputFormats {value}",
-            "help": "How to format the output. Defaults to Console."
-          },
-          {
-            "name": "Framework",
-            "type": "string",
-            "noArgument": true
-          }
-        ]
-      }
+      "settingsClass": {}
+    },
+    {
+      "help": "Executes OctoVersion information for a project, without trying to parse the output.",
+      "postfix": "Execute",
+      "commonPropertySets": [
+        "octoVersionSettings"
+      ],
+      "definiteArgument": "octoversion",
+      "settingsClass": {}
     }
   ],
+  "commonTaskPropertySets": {
+    "octoVersionSettings": [
+      {
+        "name": "CurrentBranch",
+        "type": "string",
+        "format": "--CurrentBranch {value}",
+        "help": "Pass in the name of the branch. If not set, OctoVersion will attempt to derive it, but this may lead to incorrect values."
+      },
+      {
+        "name": "NonPreReleaseTags",
+        "type": "List<string>",
+        "format": "--NonPreReleaseTags {value}",
+        "separator": " ",
+        "help": "Names of branches that will not get a pre-release suffix. Defaults to 'main' (with legacy support for 'master')."
+      },
+      {
+        "name": "RepositoryPath",
+        "type": "string",
+        "format": "--RepositoryPath {value}",
+        "help": "Path to the Git repository. If not set, assumes that the current working folder is the root of the repository"
+      },
+      {
+        "name": "Major",
+        "type": "int",
+        "format": "--Major {value}",
+        "help": "Override the calculated Major with a specific value."
+      },
+      {
+        "name": "Minor",
+        "type": "int",
+        "format": "--Minor {value}",
+        "help": "Override the calculated Minor with a specific value."
+      },
+      {
+        "name": "Patch",
+        "type": "int",
+        "format": "--Patch {value}",
+        "help": "Override the calculated Patch with a specific value."
+      },
+      {
+        "name": "PreReleaseTag",
+        "type": "string",
+        "format": "--PreReleaseTag {value}",
+        "help": "Override the calculated PreReleaseTag with a specific value."
+      },
+      {
+        "name": "BuildMetadata",
+        "type": "string",
+        "format": "--BuildMetadata {value}",
+        "help": "Override the calculated build metadata with a specific value."
+      },
+      {
+        "name": "FullSemVer",
+        "type": "string",
+        "format": "--FullSemVer {value}",
+        "help": "If set, this version number will override all of the other values and OctoVersion will just adopt it wholesale."
+      },
+      {
+        "name": "OutputFormats",
+        "type": "List<OctoVersionOutputFormatter>",
+        "format": "--OutputFormats {value}",
+        "help": "How to format the output. Defaults to Console."
+      },
+      {
+        "name": "DetectEnvironment",
+        "type": "bool",
+        "format": "--DetectEnvironment {value}",
+        "help": "Detect the output format from the runtime environment (usually the CI environment)."
+      },
+      {
+        "name": "Framework",
+        "type": "string",
+        "noArgument": true
+      }
+    ]
+  },
   "dataClasses": [
     {
       "name": "OctoVersionInfo",

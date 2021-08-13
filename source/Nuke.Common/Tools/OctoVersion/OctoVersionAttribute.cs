@@ -22,8 +22,22 @@ namespace Nuke.Common.Tools.OctoVersion
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class OctoVersionAttribute : ValueInjectionAttributeBase
     {
+        /// <summary>
+        /// Which framework to use when selecting the OctoVersion library from the package
+        /// </summary>
         public string Framework { get; set; } = "net5.0";
+
+        /// <summary>
+        /// Whether to update the CI build number.
+        /// Supports AzurePipelines, TeamCity and AppVeyor.
+        /// </summary>
         public bool UpdateBuildNumber { get; set; }
+
+        /// <summary>
+        /// Whether to emit the version number attributes to the host (CI) environment.
+        /// Defaults to `true` if running in a CI environment.
+        /// </summary>
+        public bool EmitToHost { get; set; } = NukeBuild.IsServerBuild;
 
         public override object GetValue(MemberInfo member, object instance)
         {
@@ -40,6 +54,18 @@ namespace Nuke.Common.Tools.OctoVersion
                 AzurePipelines.Instance?.UpdateBuildNumber(version.FullSemVer);
                 TeamCity.Instance?.SetBuildNumber(version.FullSemVer);
                 AppVeyor.Instance?.UpdateBuildVersion(version.FullSemVer);
+            }
+
+            if (EmitToHost)
+            {
+                //re-run to get OctoVersion to output the appropriate service messages to the CI system
+                OctoVersionTasks.OctoVersionExecute(s => s
+                    .SetFullSemVer(version.FullSemVer)
+                    .SetFramework(Framework)
+                    .EnableDetectEnvironment()
+                    .When(NukeBuild.IsLocalBuild,
+                        s => s
+                            .SetCurrentBranch(GitTasks.GitCurrentBranch())));
             }
 
             return version;

@@ -19,6 +19,14 @@ namespace Nuke.Common.Tools.OctoVersion
         }
     }
 
+    public partial class OctoVersionExecuteSettings
+    {
+        private string GetProcessToolPath()
+        {
+            return OctoVersionTasks.GetToolPath(Framework);
+        }
+    }
+
     public partial class OctoVersionTasks
     {
         internal static string GetToolPath(string framework = null)
