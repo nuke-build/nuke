@@ -75,6 +75,7 @@ NUKE builds and tests itself on several different CI servers, which helps ensuri
 - [CvsHelper](https://joshclose.github.io/CsvHelper/) <sup><a href="https://github.com/JoshClose/CsvHelper">1</a></sup>
 - [DNN Community](https://dnncommunity.org/) <sup><a href="https://github.com/DNNCommunity/Dnn.ModuleCreator">1</a></sup>
 - [FluentAssertions](https://fluentassertions.com/) <sup><a href="https://github.com/fluentassertions/fluentassertions">1</a></sup>
+- [Intility](https://intility.com/) <sup><a href="https://github.com/Intility/Intility.Logging">1</a></sup>
 - **[JetBrains s.r.o.](https://www.jetbrains.com/)** <sup><a href="https://github.com/JetBrains/space-dotnet-sdk">1</a> <a href="https://github.com/JetBrains/YouTrackSharp">2</a></sup>
 - **[Octopus Deploy Pty. Ltd.](https://www.octopus.com/)** <sup><a href="https://github.com/OctopusDeploy/Time">1</a> <a href="https://github.com/OctopusDeploy/Shellfish">2</a> <a href="https://github.com/OctopusDeploy/Ocl">3</a></sup>
 - [OmniSharp](http://www.omnisharp.net/) <sup><a href="https://github.com/OmniSharp/csharp-language-server-protocol">1</a></sup>
