@@ -60,7 +60,7 @@ namespace Nuke.Common.Tools.OctoVersion
             {
                 //re-run to get OctoVersion to output the appropriate service messages to the CI system
                 OctoVersionTasks.OctoVersionExecute(s => s
-                    .SetFullSemVer(version.FullSemVer)
+                    .SetFullSemVer(version.InformationalVersion)
                     .SetFramework(Framework)
                     .EnableDetectEnvironment()
                     .When(NukeBuild.IsLocalBuild,
