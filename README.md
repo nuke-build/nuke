@@ -78,10 +78,14 @@ NUKE builds and tests itself on several different CI servers, which helps ensuri
 - **[JetBrains s.r.o.](https://www.jetbrains.com/)** <sup><a href="https://github.com/JetBrains/space-dotnet-sdk">1</a> <a href="https://github.com/JetBrains/YouTrackSharp">2</a></sup>
 - **[Octopus Deploy Pty. Ltd.](https://www.octopus.com/)** <sup><a href="https://github.com/OctopusDeploy/Time">1</a> <a href="https://github.com/OctopusDeploy/Shellfish">2</a> <a href="https://github.com/OctopusDeploy/Ocl">3</a></sup>
 - [OmniSharp](http://www.omnisharp.net/) <sup><a href="https://github.com/OmniSharp/csharp-language-server-protocol">1</a></sup>
+- **[VirtoCommerce](https://virtocommerce.com/)** <sup><a href="https://github.com/VirtoCommerce/vc-build/">1</a></sup>
 
 ## Sponsors
 
 Thanks to all companies, organizations, and individuals who are sponsoring the further development of this project. Your support means a lot! 💙
+
+
+[<img height="140px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/virto-commerce.png" alt="Virto Commerce" />](https://virtocommerce.com/)
 
 [<img height="150px" src="https://octopus.com/images/company/OctopusDeploy-logo-RGB.svg" alt="Octopus Deploy" />](https://octopus.com)
 
