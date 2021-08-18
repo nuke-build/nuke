@@ -134,6 +134,42 @@
             "help": "Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash."
           },
           {
+            "name": "BlameCrash",
+            "type": "bool",
+            "format": "--blame-crash",
+            "help": "<p>Runs the tests in blame mode and collects a crash dump when the test host exits unexpectedly. This option depends on the version of .NET used, the type of error, and the operating system.</p><p>For exceptions in managed code, a dump will be automatically collected on .NET 5.0 and later versions. It will generate a dump for testhost or any child process that also ran on .NET 5.0 and crashed. Crashes in native code will not generate a dump. This option works on Windows, macOS, and Linux.</p><p>Crash dumps in native code, or when using .NET Core 3.1 or earlier versions, can only be collected on Windows, by using Procdump. A directory that contains procdump.exe and procdump64.exe must be in the PATH or PROCDUMP_PATH environment variable. <a href=\"https://docs.microsoft.com/en-us/sysinternals/downloads/procdump\">Download the tools</a>. Implies <em>--blame</em>.</p><p>To collect a crash dump from a native application running on .NET 5.0 or later, the usage of Procdump can be forced by setting the <em>VSTEST_DUMP_FORCEPROCDUMP</em> environment variable to <em>1</em>.</p>"
+          },
+          {
+            "name": "BlameCrashDumpType",
+            "type": "string",
+            "format": "--blame-crash-dump-type {value}",
+            "help": "The type of crash dump to be collected. Implies <em>--blame-crash</em>."
+          },
+          {
+            "name": "BlameCrashCollectAlways",
+            "type": "bool",
+            "format": "--blame-crash-collect-always",
+            "help": "Collects a crash dump on expected as well as unexpected test host exit."
+          },
+          {
+            "name": "BlameHang",
+            "type": "bool",
+            "format": "--blame-hang",
+            "help": "Run the tests in blame mode and collects a hang dump when a test exceeds the given timeout."
+          },
+          {
+            "name": "BlameHangDumpType",
+            "type": "string",
+            "format": "--blame-hang-dump-type {value}",
+            "help": "The type of crash dump to be collected. It should be <em>full</em>, <em>mini</em>, or <em>none</em>. When <em>none</em> is specified, test host is terminated on timeout, but no dump is collected. Implies <em>--blame-hang</em>."
+          },
+          {
+            "name": "BlameHangTimeout",
+            "type": "string",
+            "format": "--blame-hang-timeout {value}",
+            "help": "<p>Per-test timeout, after which a hang dump is triggered and the test host process and all of its child processes are dumped and terminated. The timeout value is specified in one of the following formats:</p><p><ul><li>1.5h, 1.5hour, 1.5hours</li><li>90m, 90min, 90minute, 90minutes</li><li>5400s, 5400sec, 5400second, 5400seconds</li><li>5400000ms, 5400000mil, 5400000millisecond, 5400000milliseconds</li></ul></p><p>When no unit is used (for example, 5400000), the value is assumed to be in milliseconds. When used together with data driven tests, the timeout behavior depends on the test adapter used. For xUnit and NUnit the timeout is renewed after every test case. For MSTest, the timeout is used for all test cases. This option is supported on Windows with netcoreapp2.1 and later, on Linux with netcoreapp3.1 and later, and on macOS with net5.0 or later. Implies <em>--blame</em> and <em>--blame-hang</em>.</p>"
+          },
+          {
             "name": "RunSettings",
             "type": "Dictionary<string, object>",
             "format": "-- {value}",
