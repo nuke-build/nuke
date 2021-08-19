@@ -27,6 +27,8 @@ namespace Nuke.Common.CI.AzurePipelines
         private bool? _triggerBatch;
         private bool? _submodules;
         private bool? _largeFileStorage;
+        private int? _fetchDepth;
+        private bool? _clean;
 
         public AzurePipelinesAttribute(
             AzurePipelinesImage image,
@@ -61,6 +63,18 @@ namespace Nuke.Common.CI.AzurePipelines
         public bool Submodules
         {
             set => _submodules = value;
+            get => throw new NotSupportedException();
+        }
+
+        public int FetchDepth
+        {
+            set => _fetchDepth = value;
+            get => throw new NotSupportedException();
+        }
+
+        public bool Clean
+        {
+            set => _clean = value;
             get => throw new NotSupportedException();
         }
 
@@ -180,12 +194,14 @@ namespace Nuke.Common.CI.AzurePipelines
             IReadOnlyCollection<ExecutableTarget> relevantTargets,
             AzurePipelinesImage image)
         {
-            if (_submodules.HasValue || _largeFileStorage.HasValue)
+            if (_submodules.HasValue || _largeFileStorage.HasValue || _fetchDepth.HasValue || _clean.HasValue)
             {
                 yield return new AzurePipelineCheckoutStep
                              {
                                  InclueSubmodules = _submodules,
-                                 IncludeLargeFileStorage = _largeFileStorage
+                                 IncludeLargeFileStorage = _largeFileStorage,
+                                 FetchDepth = _fetchDepth,
+                                 Clean = _clean
                              };
             }
 
