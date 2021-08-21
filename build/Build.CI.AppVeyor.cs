@@ -15,19 +15,19 @@ using Nuke.Enterprise.Notifications;
     SkipTags = true,
     InvokedTargets = new[] { nameof(IPack.Pack), nameof(ITest.Test), nameof(ISignPackages.SignPackages), nameof(IPublish.Publish) },
     Secrets =
-        new string[]
+        new[]
         {
-            AppVeyorSecrets.EnterpriseAccessToken,
-            AppVeyorSecrets.NuGetApiKey,
-            AppVeyorSecrets.SignPathApiToken,
-            AppVeyorSecrets.TwitterConsumerKey,
-            AppVeyorSecrets.TwitterConsumerSecret,
-            AppVeyorSecrets.TwitterAccessToken,
-            AppVeyorSecrets.TwitterAccessTokenSecret,
-            AppVeyorSecrets.GitterAuthToken,
-            AppVeyorSecrets.SlackWebhook,
+            nameof(EnterpriseAccessToken),
+            nameof(PublicNuGetApiKey),
+            ISignPackages.SignPath + nameof(ISignPackages.ApiToken),
+            IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey),
+            IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerSecret),
+            IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessToken),
+            IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessTokenSecret),
+            nameof(GitterAuthToken),
+            nameof(SlackWebhook),
 #if NUKE_ENTERPRISE
-            AppVeyorSecrets.SlackUserAccessToken
+            IHazSlackCredentials.Slack + nameof(IHazSlackCredentials.UserAccessToken)
 #endif
         })]
 [AppVeyor(
@@ -38,57 +38,25 @@ using Nuke.Enterprise.Notifications;
     SkipTags = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     Secrets =
-        new string[]
+        new[]
         {
-            AppVeyorSecrets.EnterpriseAccessToken,
+            nameof(EnterpriseAccessToken),
 #if NUKE_ENTERPRISE
-            AppVeyorSecrets.SlackUserAccessToken
+            IHazSlackCredentials.Slack + nameof(IHazSlackCredentials.UserAccessToken)
 #endif
         })]
+[AppVeyorSecret(nameof(EnterpriseAccessToken), "JdpPkaveddV2ldvhKsSt4CUrqA8miFIb72dj+PCLdKsk15fBEQ7E5YU1E0FIISR8")]
+[AppVeyorSecret(nameof(PublicNuGetApiKey), "eeJb0U4UaZ7VnH8mfrei0NMxm3MPahOI7gLfxzGgoKLRBXKlr+8/2ayCY+uwdg7T")]
+[AppVeyorSecret(ISignPackages.SignPath + nameof(ISignPackages.ApiToken), "uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn")]
+[AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey), "BY+J0NeFwJrIk/IcLlApwCrhwPFYbs17ryopOEU8S80=")]
+[AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerSecret), "LzY8VaBdbjdHtbCIJusREn5foh6wOEKqwBqsmBgpyhulQs21PkgYs2tilSL+SowcJw3p4QH6QKLOEp3uGwTj8g==")]
+[AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessToken), "nnv1h5nkNm4MS50soQHiYXVUf0UR+gx54imrggateey6oA+rdCdna0TaUCH1vsDwHEitHDPRdx39xjJMBzwRxA==")]
+[AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessTokenSecret), "OGFEkW5fHl0YJzKnTTWJ3oHhQfjMs9RWGJMjeQ2HMIG+yUwy0NQGVUY4qOCRgrXW")]
+[AppVeyorSecret(nameof(GitterAuthToken), "Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw")]
+[AppVeyorSecret(nameof(SlackWebhook), "xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hkn8u/b12lFivnxtTPuMWjAYkoPLlkJ4v39FLYPcxGYbAxRRMcJiHjrNyPtFfK6ddo=")]
+#if NUKE_ENTERPRISE
+[AppVeyorSecret(IHazSlackCredentials.Slack + nameof(IHazSlackCredentials.UserAccessToken), "cMArtN7cGnW6zI9ryMiQZSfcv2y+6Ads8KPvZIN18IQnpTBY6zzBEyCL+1i8v4OF08HW7oY3BDIXWEMT6PdeSQ==")]
+#endif
 partial class Build
 {
-    public static class AppVeyorSecrets
-    {
-        public const string EnterpriseAccessToken = EnterpriseAccessTokenName + ":" + EnterpriseAccessTokenValue;
-        const string EnterpriseAccessTokenName = nameof(Build.EnterpriseAccessToken);
-        const string EnterpriseAccessTokenValue = "JdpPkaveddV2ldvhKsSt4CUrqA8miFIb72dj+PCLdKsk15fBEQ7E5YU1E0FIISR8";
-
-        public const string NuGetApiKey = NuGetApiKeyName + ":" + NuGetApiKeyValue;
-        const string NuGetApiKeyName = nameof(PublicNuGetApiKey);
-        const string NuGetApiKeyValue = "eeJb0U4UaZ7VnH8mfrei0NMxm3MPahOI7gLfxzGgoKLRBXKlr+8/2ayCY+uwdg7T";
-
-        public const string SignPathApiToken = SignPathApiTokenName + ":" + SignPathApiTokenValue;
-        const string SignPathApiTokenName = ISignPackages.SignPath + nameof(ISignPackages.ApiToken);
-        const string SignPathApiTokenValue = "uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn";
-
-        public const string TwitterConsumerKey = TwitterConsumerKeyName + ":" + TwitterConsumerKeyValue;
-        const string TwitterConsumerKeyName = IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey);
-        const string TwitterConsumerKeyValue = "BY+J0NeFwJrIk/IcLlApwCrhwPFYbs17ryopOEU8S80=";
-
-        public const string TwitterConsumerSecret = TwitterConsumerSecretName + ":" + TwitterConsumerSecretValue;
-        const string TwitterConsumerSecretName = IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerSecret);
-        const string TwitterConsumerSecretValue = "LzY8VaBdbjdHtbCIJusREn5foh6wOEKqwBqsmBgpyhulQs21PkgYs2tilSL+SowcJw3p4QH6QKLOEp3uGwTj8g==";
-
-        public const string TwitterAccessToken = TwitterAccessTokenName + ":" + TwitterAccessTokenValue;
-        const string TwitterAccessTokenName = IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessToken);
-        const string TwitterAccessTokenValue = "nnv1h5nkNm4MS50soQHiYXVUf0UR+gx54imrggateey6oA+rdCdna0TaUCH1vsDwHEitHDPRdx39xjJMBzwRxA==";
-
-        public const string TwitterAccessTokenSecret = TwitterAccessTokenSecretName + ":" + TwitterAccessTokenSecretValue;
-        const string TwitterAccessTokenSecretName = IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessTokenSecret);
-        const string TwitterAccessTokenSecretValue = "OGFEkW5fHl0YJzKnTTWJ3oHhQfjMs9RWGJMjeQ2HMIG+yUwy0NQGVUY4qOCRgrXW";
-
-        public const string GitterAuthToken = GitterAuthTokenName + ":" + GitterAuthTokenValue;
-        const string GitterAuthTokenName = nameof(Build.GitterAuthToken);
-        const string GitterAuthTokenValue = "Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw";
-
-        public const string SlackWebhook = SlackWebhookName + ":" + SlackWebhookValue;
-        const string SlackWebhookName = nameof(Build.SlackWebhook);
-        const string SlackWebhookValue = "xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hkn8u/b12lFivnxtTPuMWjAYkoPLlkJ4v39FLYPcxGYbAxRRMcJiHjrNyPtFfK6ddo=";
-
-#if NUKE_ENTERPRISE
-        public const string SlackUserAccessToken = SlackUserAccessTokenName + ":" + SlackUserAccessTokenValue;
-        const string SlackUserAccessTokenName = IHazSlackCredentials.Slack + nameof(IHazSlackCredentials.UserAccessToken);
-        const string SlackUserAccessTokenValue = "cMArtN7cGnW6zI9ryMiQZSfcv2y+6Ads8KPvZIN18IQnpTBY6zzBEyCL+1i8v4OF08HW7oY3BDIXWEMT6PdeSQ==";
-#endif
-    }
 }
