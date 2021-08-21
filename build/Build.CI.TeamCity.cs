@@ -18,7 +18,6 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #endif
 
 [TeamCity(
-    Version = "2020.2",
     VcsTriggeredTargets =
         new[]
         {
