@@ -36,7 +36,7 @@ namespace Nuke.Common.CI.TeamCity
             .Concat(NightlyTriggeredTargets)
             .Concat(ManuallyTriggeredTargets);
 
-        public string Version { get; set; } = "2018.2";
+        public string Version { get; set; } = "2021.1";
 
         public string Description { get; set; }
         public bool CleanCheckoutDirectory { get; set; } = true;
