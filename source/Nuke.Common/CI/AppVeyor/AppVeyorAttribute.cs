@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AppVeyor.Configuration;
 using Nuke.Common.Execution;
@@ -63,7 +64,7 @@ namespace Nuke.Common.CI.AppVeyor
         public string SkipCommitsAuthor { get; set; }
         public string[] Init { get; set; } = new string[0];
         public string[] Cache { get; set; } = new string[0];
-        public string[] Secrets { get; set; } = new string[0];
+        public string[] Secrets { get; set; }
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -90,7 +91,7 @@ namespace Nuke.Common.CI.AppVeyor
                        Init = Init,
                        Cache = Cache,
                        Artifacts = GetArtifacts(relevantTargets).ToArray(),
-                       Secrets = GetSecrets()
+                       Secrets = GetSecrets(build)
                    };
         }
 
@@ -114,11 +115,11 @@ namespace Nuke.Common.CI.AppVeyor
                    };
         }
 
-        private Dictionary<string, string> GetSecrets()
+        private Dictionary<string, string> GetSecrets(NukeBuild build)
         {
-            return Secrets
-                .Select(x => x.Split(':'))
-                .ToDictionary(x => x.ElementAt(0).Trim(), x => x.ElementAt(1).Trim());
+            return build.GetType().GetCustomAttributes<AppVeyorSecretAttribute>()
+                .Where(x => Secrets == null || Secrets.Contains(x.Parameter))
+                .ToDictionary(x => x.Parameter, x => x.Value);
         }
     }
 }
