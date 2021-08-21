@@ -44,5 +44,16 @@ namespace Nuke.Common.IO
             var deserializer = builder.Build();
             return deserializer.Deserialize<T>(content);
         }
+
+        public static void YamlUpdateFile<T>(
+            string path,
+            Action<T> update,
+            Configure<DeserializerBuilder> deserializationConfigurator = null,
+            Configure<SerializerBuilder> serializationConfigurator = null)
+        {
+            var obj = YamlDeserializeFromFile<T>(path, deserializationConfigurator);
+            update.Invoke(obj);
+            YamlSerializeToFile(obj, path, serializationConfigurator);
+        }
     }
 }

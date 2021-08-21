@@ -14,15 +14,15 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static partial class SerializationTasks
     {
-        public static void JsonSerializeToFile(object obj, string path)
+        public static void JsonSerializeToFile(object obj, string path, Configure<JsonSerializerSettings> configurator = null)
         {
-            TextTasks.WriteAllText(path, JsonSerialize(obj));
+            TextTasks.WriteAllText(path, JsonSerialize(obj, configurator));
         }
 
         [Pure]
-        public static T JsonDeserializeFromFile<T>(string path)
+        public static T JsonDeserializeFromFile<T>(string path, Configure<JsonSerializerSettings> configurator = null)
         {
-            return JsonDeserialize<T>(File.ReadAllText(path));
+            return JsonDeserialize<T>(File.ReadAllText(path), configurator);
         }
 
         [Pure]
@@ -52,6 +52,13 @@ namespace Nuke.Common.IO
                 });
 
             return JsonConvert.DeserializeObject<T>(content, settings);
+        }
+
+        public static void JsonUpdateFile<T>(string path, Action<T> update, Configure<JsonSerializerSettings> configurator = null)
+        {
+            var obj = JsonDeserializeFromFile<T>(path, configurator);
+            update.Invoke(obj);
+            JsonSerializeToFile(obj, path, configurator);
         }
     }
 }

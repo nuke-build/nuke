@@ -41,5 +41,12 @@ namespace Nuke.Common.IO
             using var memoryStream = new StringReader(content);
             return (T) xmlSerializer.Deserialize(memoryStream);
         }
+
+        public static void XmlUpdateFile<T>(string path, Action<T> update)
+        {
+            var obj = XmlDeserializeFromFile<T>(path);
+            update.Invoke(obj);
+            XmlSerializeToFile(obj, path);
+        }
     }
 }
