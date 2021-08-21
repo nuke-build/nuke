@@ -34,12 +34,17 @@ namespace Nuke.Common.IO
             return directory.Name.StartsWith(".");
         }
 
-        public static bool FileExists(AbsolutePath path)
+        public static bool Exists(this AbsolutePath path)
+        {
+            return path.FileExists() || path.DirectoryExists();
+        }
+
+        public static bool FileExists(this AbsolutePath path)
         {
             return File.Exists(path);
         }
 
-        public static bool DirectoryExists(AbsolutePath path)
+        public static bool DirectoryExists(this AbsolutePath path)
         {
             return Directory.Exists(path);
         }
