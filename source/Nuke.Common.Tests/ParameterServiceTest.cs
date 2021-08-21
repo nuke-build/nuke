@@ -232,7 +232,7 @@ namespace Nuke.Common.Tests
         [ParameterPrefix("Interface")]
         private interface ITestComponent : INukeBuild
         {
-            [Parameter] bool Param => ValueInjectionUtility.TryGetValue<bool?>(() => Param) ?? false;
+            [Parameter] bool Param => TryGetValue<bool?>(() => Param) ?? false;
         }
 #pragma warning restore CS0649
     }

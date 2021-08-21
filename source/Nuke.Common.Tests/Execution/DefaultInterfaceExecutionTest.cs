@@ -135,7 +135,7 @@ namespace Nuke.Common.Tests.Execution
         private interface IParameterInterface
             : INukeBuild
         {
-            [Parameter] string StringParameter => ValueInjectionUtility.TryGetValue(() => StringParameter);
+            [Parameter] string StringParameter => TryGetValue(() => StringParameter);
 
             public Target HelloWorld => _ => _
                 .Requires(() => StringParameter)

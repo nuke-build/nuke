@@ -2,7 +2,10 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
+using System.Linq.Expressions;
 using Nuke.Common.IO;
+using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common
 {
@@ -22,5 +25,15 @@ namespace Nuke.Common
         bool INukeBuild.IsServerBuild => IsServerBuild;
         LogLevel INukeBuild.LogLevel => LogLevel;
         bool INukeBuild.Continue => Continue;
+
+        T INukeBuild.TryGetValue<T>(Expression<Func<T>> parameterExpression)
+        {
+            return ValueInjectionUtility.TryGetValue(parameterExpression);
+        }
+
+        T INukeBuild.TryGetValue<T>(Expression<Func<object>> parameterExpression)
+        {
+            return ValueInjectionUtility.TryGetValue<T>(parameterExpression);
+        }
     }
 }

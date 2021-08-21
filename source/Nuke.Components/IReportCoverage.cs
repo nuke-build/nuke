@@ -26,7 +26,7 @@ namespace Nuke.Components
     {
         bool CreateCoverageHtmlReport { get; }
         bool ReportToCodecov { get; }
-        [Parameter] [Secret] string CodecovToken => ValueInjectionUtility.TryGetValue(() => CodecovToken);
+        [Parameter] [Secret] string CodecovToken => TryGetValue(() => CodecovToken);
 
         string CoverageReportDirectory => ReportDirectory / "coverage-report";
         string CoverageReportArchive => Path.ChangeExtension(CoverageReportDirectory, ".zip");

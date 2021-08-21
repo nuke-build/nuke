@@ -7,12 +7,11 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Tools.NerdbankGitVersioning;
-using static Nuke.Common.ValueInjection.ValueInjectionUtility;
 
 namespace Nuke.Components
 {
     [PublicAPI]
-    public interface IHazNerdbankGitVersioning
+    public interface IHazNerdbankGitVersioning : INukeBuild
     {
         [NerdbankGitVersioning] [Required] NerdbankGitVersioning Versioning => TryGetValue(() => Versioning);
     }

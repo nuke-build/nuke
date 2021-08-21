@@ -90,9 +90,9 @@ namespace Nuke.Common.Tests
         [ParameterPrefix("Component")]
         private interface ITestComponent : INukeBuild
         {
-            [Parameter] string Param1 => ValueInjectionUtility.TryGetValue(() => Param1);
-            [Parameter] string Param2 => ValueInjectionUtility.TryGetValue(() => Param2);
-            [Parameter] string Param3 => ValueInjectionUtility.TryGetValue(() => Param3);
+            [Parameter] string Param1 => TryGetValue(() => Param1);
+            [Parameter] string Param2 => TryGetValue(() => Param2);
+            [Parameter] string Param3 => TryGetValue(() => Param3);
 
             Target Foo => _ => _;
             Target Bar => _ => _;
