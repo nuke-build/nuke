@@ -13,7 +13,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ValueInjection
 {
-    public static class ValueInjectionUtility
+    internal static class ValueInjectionUtility
     {
         private static readonly Dictionary<MemberInfo, object> s_valueCache = new Dictionary<MemberInfo, object>();
 
