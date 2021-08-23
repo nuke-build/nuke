@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Nuke.Common.Tooling;
@@ -35,6 +36,24 @@ namespace Nuke.Common.Tools.OctoVersion
                 packageId: "OctoVersion.Tool",
                 packageExecutable: "OctoVersion.Tool.dll",
                 framework: framework);
+        }
+
+        private static OctoVersionInfo GetResult(IProcess process, OctoVersionGetVersionSettings toolSettings)
+        {
+            ControlFlow.Assert(!string.IsNullOrEmpty(toolSettings.OutputJsonFile), $"{nameof(toolSettings.OutputJsonFile)} must be set");
+
+            var output = "";
+            try
+            {
+                output = File.ReadAllText(toolSettings.OutputJsonFile);
+                var settings = new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() };
+                return JsonConvert.DeserializeObject<OctoVersionInfo>(output, settings);
+            }
+            catch (Exception exception)
+            {
+                throw new Exception($"{nameof(OctoVersion)} exited with code {process.ExitCode}, but cannot parse output file {toolSettings.OutputJsonFile} as JSON: {output}",
+                    exception);
+            }
         }
     }
 }
