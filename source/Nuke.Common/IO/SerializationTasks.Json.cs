@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.IO
@@ -59,6 +60,21 @@ namespace Nuke.Common.IO
             var obj = JsonDeserializeFromFile<T>(path, configurator);
             update.Invoke(obj);
             JsonSerializeToFile(obj, path, configurator);
+        }
+
+        public static JObject JsonDeserializeFromFile(string path, Configure<JsonSerializerSettings> configurator = null)
+        {
+            return JsonDeserializeFromFile<JObject>(path, configurator);
+        }
+
+        public static JObject JsonDeserialize(string content, Configure<JsonSerializerSettings> configurator = null)
+        {
+            return JsonDeserialize<JObject>(content, configurator);
+        }
+
+        public static void JsonUpdateFile(string path, Action<JObject> update, Configure<JsonSerializerSettings> configurator = null)
+        {
+            JsonUpdateFile<JObject>(path, update, configurator);
         }
     }
 }
