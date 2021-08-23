@@ -15,7 +15,7 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static partial class SerializationTasks
     {
-        public static void JsonSerializeToFile(object obj, string path, Configure<JsonSerializerSettings> configurator = null)
+        public static void JsonSerializeToFile<T>(T obj, string path, Configure<JsonSerializerSettings> configurator = null)
         {
             TextTasks.WriteAllText(path, JsonSerialize(obj, configurator));
         }

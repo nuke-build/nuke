@@ -12,7 +12,7 @@ namespace Nuke.Common.IO
 {
     public static partial class SerializationTasks
     {
-        public static void XmlSerializeToFile(object obj, string path)
+        public static void XmlSerializeToFile<T>(T obj, string path)
         {
             TextTasks.WriteAllText(path, XmlSerialize(obj));
         }
