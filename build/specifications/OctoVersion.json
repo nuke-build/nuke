@@ -99,6 +99,12 @@
         "help": "Detect the output format from the runtime environment (usually the CI environment)."
       },
       {
+        "name": "OutputJsonFile",
+        "type": "string",
+        "format": "--OutputJsonFile {value}",
+        "help": "Emit json to the specified file. Ensure that either the `JsonFile` output formatter is added, or that `DetectEnvironment` is `true`."
+      },
+      {
         "name": "Framework",
         "type": "string",
         "noArgument": true

@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/OctoVersion.json
+// Generated from https://github.com/OctopusDeploy/nuke/blob/master/build/specifications/OctoVersion.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -56,6 +56,7 @@ namespace Nuke.Common.Tools.OctoVersion
         ///     <li><c>--Minor</c> via <see cref="OctoVersionGetVersionSettings.Minor"/></li>
         ///     <li><c>--NonPreReleaseTags</c> via <see cref="OctoVersionGetVersionSettings.NonPreReleaseTags"/></li>
         ///     <li><c>--OutputFormats</c> via <see cref="OctoVersionGetVersionSettings.OutputFormats"/></li>
+        ///     <li><c>--OutputJsonFile</c> via <see cref="OctoVersionGetVersionSettings.OutputJsonFile"/></li>
         ///     <li><c>--Patch</c> via <see cref="OctoVersionGetVersionSettings.Patch"/></li>
         ///     <li><c>--PreReleaseTag</c> via <see cref="OctoVersionGetVersionSettings.PreReleaseTag"/></li>
         ///     <li><c>--RepositoryPath</c> via <see cref="OctoVersionGetVersionSettings.RepositoryPath"/></li>
@@ -83,6 +84,7 @@ namespace Nuke.Common.Tools.OctoVersion
         ///     <li><c>--Minor</c> via <see cref="OctoVersionGetVersionSettings.Minor"/></li>
         ///     <li><c>--NonPreReleaseTags</c> via <see cref="OctoVersionGetVersionSettings.NonPreReleaseTags"/></li>
         ///     <li><c>--OutputFormats</c> via <see cref="OctoVersionGetVersionSettings.OutputFormats"/></li>
+        ///     <li><c>--OutputJsonFile</c> via <see cref="OctoVersionGetVersionSettings.OutputJsonFile"/></li>
         ///     <li><c>--Patch</c> via <see cref="OctoVersionGetVersionSettings.Patch"/></li>
         ///     <li><c>--PreReleaseTag</c> via <see cref="OctoVersionGetVersionSettings.PreReleaseTag"/></li>
         ///     <li><c>--RepositoryPath</c> via <see cref="OctoVersionGetVersionSettings.RepositoryPath"/></li>
@@ -107,6 +109,7 @@ namespace Nuke.Common.Tools.OctoVersion
         ///     <li><c>--Minor</c> via <see cref="OctoVersionGetVersionSettings.Minor"/></li>
         ///     <li><c>--NonPreReleaseTags</c> via <see cref="OctoVersionGetVersionSettings.NonPreReleaseTags"/></li>
         ///     <li><c>--OutputFormats</c> via <see cref="OctoVersionGetVersionSettings.OutputFormats"/></li>
+        ///     <li><c>--OutputJsonFile</c> via <see cref="OctoVersionGetVersionSettings.OutputJsonFile"/></li>
         ///     <li><c>--Patch</c> via <see cref="OctoVersionGetVersionSettings.Patch"/></li>
         ///     <li><c>--PreReleaseTag</c> via <see cref="OctoVersionGetVersionSettings.PreReleaseTag"/></li>
         ///     <li><c>--RepositoryPath</c> via <see cref="OctoVersionGetVersionSettings.RepositoryPath"/></li>
@@ -117,7 +120,7 @@ namespace Nuke.Common.Tools.OctoVersion
             return configurator.Invoke(OctoVersionGetVersion, OctoVersionLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary>
-        ///   <p>Executes OctoVersion information for a project, without reading the response.</p>
+        ///   <p>Executes OctoVersion information for a project, without trying to parse the output.</p>
         ///   <p>For more details, visit the <a href="https://github.com/OctopusDeploy/OctoVersion">official website</a>.</p>
         /// </summary>
         /// <remarks>
@@ -131,6 +134,7 @@ namespace Nuke.Common.Tools.OctoVersion
         ///     <li><c>--Minor</c> via <see cref="OctoVersionExecuteSettings.Minor"/></li>
         ///     <li><c>--NonPreReleaseTags</c> via <see cref="OctoVersionExecuteSettings.NonPreReleaseTags"/></li>
         ///     <li><c>--OutputFormats</c> via <see cref="OctoVersionExecuteSettings.OutputFormats"/></li>
+        ///     <li><c>--OutputJsonFile</c> via <see cref="OctoVersionExecuteSettings.OutputJsonFile"/></li>
         ///     <li><c>--Patch</c> via <see cref="OctoVersionExecuteSettings.Patch"/></li>
         ///     <li><c>--PreReleaseTag</c> via <see cref="OctoVersionExecuteSettings.PreReleaseTag"/></li>
         ///     <li><c>--RepositoryPath</c> via <see cref="OctoVersionExecuteSettings.RepositoryPath"/></li>
@@ -144,7 +148,7 @@ namespace Nuke.Common.Tools.OctoVersion
             return process.Output;
         }
         /// <summary>
-        ///   <p>Executes OctoVersion information for a project, without reading the response.</p>
+        ///   <p>Executes OctoVersion information for a project, without trying to parse the output.</p>
         ///   <p>For more details, visit the <a href="https://github.com/OctopusDeploy/OctoVersion">official website</a>.</p>
         /// </summary>
         /// <remarks>
@@ -158,6 +162,7 @@ namespace Nuke.Common.Tools.OctoVersion
         ///     <li><c>--Minor</c> via <see cref="OctoVersionExecuteSettings.Minor"/></li>
         ///     <li><c>--NonPreReleaseTags</c> via <see cref="OctoVersionExecuteSettings.NonPreReleaseTags"/></li>
         ///     <li><c>--OutputFormats</c> via <see cref="OctoVersionExecuteSettings.OutputFormats"/></li>
+        ///     <li><c>--OutputJsonFile</c> via <see cref="OctoVersionExecuteSettings.OutputJsonFile"/></li>
         ///     <li><c>--Patch</c> via <see cref="OctoVersionExecuteSettings.Patch"/></li>
         ///     <li><c>--PreReleaseTag</c> via <see cref="OctoVersionExecuteSettings.PreReleaseTag"/></li>
         ///     <li><c>--RepositoryPath</c> via <see cref="OctoVersionExecuteSettings.RepositoryPath"/></li>
@@ -168,7 +173,7 @@ namespace Nuke.Common.Tools.OctoVersion
             return OctoVersionExecute(configurator(new OctoVersionExecuteSettings()));
         }
         /// <summary>
-        ///   <p>Executes OctoVersion information for a project, without reading the response.</p>
+        ///   <p>Executes OctoVersion information for a project, without trying to parse the output.</p>
         ///   <p>For more details, visit the <a href="https://github.com/OctopusDeploy/OctoVersion">official website</a>.</p>
         /// </summary>
         /// <remarks>
@@ -182,6 +187,7 @@ namespace Nuke.Common.Tools.OctoVersion
         ///     <li><c>--Minor</c> via <see cref="OctoVersionExecuteSettings.Minor"/></li>
         ///     <li><c>--NonPreReleaseTags</c> via <see cref="OctoVersionExecuteSettings.NonPreReleaseTags"/></li>
         ///     <li><c>--OutputFormats</c> via <see cref="OctoVersionExecuteSettings.OutputFormats"/></li>
+        ///     <li><c>--OutputJsonFile</c> via <see cref="OctoVersionExecuteSettings.OutputJsonFile"/></li>
         ///     <li><c>--Patch</c> via <see cref="OctoVersionExecuteSettings.Patch"/></li>
         ///     <li><c>--PreReleaseTag</c> via <see cref="OctoVersionExecuteSettings.PreReleaseTag"/></li>
         ///     <li><c>--RepositoryPath</c> via <see cref="OctoVersionExecuteSettings.RepositoryPath"/></li>
@@ -252,6 +258,10 @@ namespace Nuke.Common.Tools.OctoVersion
         ///   Detect the output format from the runtime environment (usually the CI environment).
         /// </summary>
         public virtual bool? DetectEnvironment { get; internal set; }
+        /// <summary>
+        ///   Emit json to the specified file. Ensure that either the `JsonFile` output formatter is added, or that `DetectEnvironment` is `true`.
+        /// </summary>
+        public virtual string OutputJsonFile { get; internal set; }
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -267,7 +277,8 @@ namespace Nuke.Common.Tools.OctoVersion
               .Add("--BuildMetadata {value}", BuildMetadata)
               .Add("--FullSemVer {value}", FullSemVer)
               .Add("--OutputFormats {value}", OutputFormats)
-              .Add("--DetectEnvironment {value}", DetectEnvironment);
+              .Add("--DetectEnvironment {value}", DetectEnvironment)
+              .Add("--OutputJsonFile {value}", OutputJsonFile);
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -332,6 +343,10 @@ namespace Nuke.Common.Tools.OctoVersion
         ///   Detect the output format from the runtime environment (usually the CI environment).
         /// </summary>
         public virtual bool? DetectEnvironment { get; internal set; }
+        /// <summary>
+        ///   Emit json to the specified file. Ensure that either the `JsonFile` output formatter is added, or that `DetectEnvironment` is `true`.
+        /// </summary>
+        public virtual string OutputJsonFile { get; internal set; }
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -347,7 +362,8 @@ namespace Nuke.Common.Tools.OctoVersion
               .Add("--BuildMetadata {value}", BuildMetadata)
               .Add("--FullSemVer {value}", FullSemVer)
               .Add("--OutputFormats {value}", OutputFormats)
-              .Add("--DetectEnvironment {value}", DetectEnvironment);
+              .Add("--DetectEnvironment {value}", DetectEnvironment)
+              .Add("--OutputJsonFile {value}", OutputJsonFile);
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -794,6 +810,30 @@ namespace Nuke.Common.Tools.OctoVersion
             return toolSettings;
         }
         #endregion
+        #region OutputJsonFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctoVersionGetVersionSettings.OutputJsonFile"/></em></p>
+        ///   <p>Emit json to the specified file. Ensure that either the `JsonFile` output formatter is added, or that `DetectEnvironment` is `true`.</p>
+        /// </summary>
+        [Pure]
+        public static T SetOutputJsonFile<T>(this T toolSettings, string outputJsonFile) where T : OctoVersionGetVersionSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputJsonFile = outputJsonFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctoVersionGetVersionSettings.OutputJsonFile"/></em></p>
+        ///   <p>Emit json to the specified file. Ensure that either the `JsonFile` output formatter is added, or that `DetectEnvironment` is `true`.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOutputJsonFile<T>(this T toolSettings) where T : OctoVersionGetVersionSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputJsonFile = null;
+            return toolSettings;
+        }
+        #endregion
         #region Framework
         /// <summary>
         ///   <p><em>Sets <see cref="OctoVersionGetVersionSettings.Framework"/></em></p>
@@ -1234,6 +1274,30 @@ namespace Nuke.Common.Tools.OctoVersion
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.DetectEnvironment = !toolSettings.DetectEnvironment;
+            return toolSettings;
+        }
+        #endregion
+        #region OutputJsonFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="OctoVersionExecuteSettings.OutputJsonFile"/></em></p>
+        ///   <p>Emit json to the specified file. Ensure that either the `JsonFile` output formatter is added, or that `DetectEnvironment` is `true`.</p>
+        /// </summary>
+        [Pure]
+        public static T SetOutputJsonFile<T>(this T toolSettings, string outputJsonFile) where T : OctoVersionExecuteSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputJsonFile = outputJsonFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="OctoVersionExecuteSettings.OutputJsonFile"/></em></p>
+        ///   <p>Emit json to the specified file. Ensure that either the `JsonFile` output formatter is added, or that `DetectEnvironment` is `true`.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOutputJsonFile<T>(this T toolSettings) where T : OctoVersionExecuteSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OutputJsonFile = null;
             return toolSettings;
         }
         #endregion

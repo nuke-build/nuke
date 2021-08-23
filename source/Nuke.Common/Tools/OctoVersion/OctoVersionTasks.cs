@@ -36,21 +36,5 @@ namespace Nuke.Common.Tools.OctoVersion
                 packageExecutable: "OctoVersion.Tool.dll",
                 framework: framework);
         }
-
-        private static OctoVersionInfo GetResult(IProcess process, OctoVersionGetVersionSettings toolSettings)
-        {
-            try
-            {
-                var output = process.Output.EnsureOnlyStd().Select(x => x.Text).ToList();
-                var settings = new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() };
-                return JsonConvert.DeserializeObject<OctoVersionInfo>(string.Join("\r\n", output), settings);
-            }
-            catch (Exception exception)
-            {
-                throw new Exception($"{nameof(OctoVersion)} exited with code {process.ExitCode}, but cannot parse output as JSON:"
-                        .Concat(process.Output.Select(x => x.Text)).JoinNewLine(),
-                    exception);
-            }
-        }
     }
 }
