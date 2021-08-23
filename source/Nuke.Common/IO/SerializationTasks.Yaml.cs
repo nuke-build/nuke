@@ -14,7 +14,7 @@ namespace Nuke.Common.IO
 {
     public static partial class SerializationTasks
     {
-        public static void YamlSerializeToFile(object obj, string path, Configure<SerializerBuilder> configurator = null)
+        public static void YamlSerializeToFile<T>(T obj, string path, Configure<SerializerBuilder> configurator = null)
         {
             TextTasks.WriteAllText(path, YamlSerialize(obj, configurator));
         }
@@ -26,7 +26,7 @@ namespace Nuke.Common.IO
         }
 
         [Pure]
-        public static string YamlSerialize(object obj, Configure<SerializerBuilder> configurator = null)
+        public static string YamlSerialize<T>(T obj, Configure<SerializerBuilder> configurator = null)
         {
             var builder = configurator.InvokeSafe(new SerializerBuilder()
                 .WithNamingConvention(CamelCaseNamingConvention.Instance));
