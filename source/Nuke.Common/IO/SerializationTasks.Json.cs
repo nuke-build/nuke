@@ -15,6 +15,14 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static partial class SerializationTasks
     {
+        public static JsonSerializerSettings DefaultJsonSerializerSettings =
+            new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                DefaultValueHandling = DefaultValueHandling.Ignore
+            };
+
         public static void JsonSerializeToFile<T>(T obj, string path, Configure<JsonSerializerSettings> configurator = null)
         {
             TextTasks.WriteAllText(path, JsonSerialize(obj, configurator));
@@ -29,30 +37,13 @@ namespace Nuke.Common.IO
         [Pure]
         public static string JsonSerialize<T>(T obj, Configure<JsonSerializerSettings> configurator = null)
         {
-            configurator ??= x => x;
-            var settings = new JsonSerializerSettings
-                           {
-                               Formatting = Formatting.Indented,
-                               NullValueHandling = NullValueHandling.Ignore,
-                               DefaultValueHandling = DefaultValueHandling.Ignore
-                           };
-            configurator(settings);
-
-            return JsonConvert.SerializeObject(obj, settings);
+            return JsonConvert.SerializeObject(obj, configurator.InvokeSafe(DefaultJsonSerializerSettings));
         }
 
         [Pure]
         public static T JsonDeserialize<T>(string content, Configure<JsonSerializerSettings> configurator = null)
         {
-            var settings = configurator.InvokeSafe(
-                new JsonSerializerSettings
-                {
-                    Formatting = Formatting.Indented,
-                    NullValueHandling = NullValueHandling.Ignore,
-                    DefaultValueHandling = DefaultValueHandling.Ignore
-                });
-
-            return JsonConvert.DeserializeObject<T>(content, settings);
+            return JsonConvert.DeserializeObject<T>(content, configurator.InvokeSafe(DefaultJsonSerializerSettings));
         }
 
         public static void JsonUpdateFile<T>(string path, Action<T> update, Configure<JsonSerializerSettings> configurator = null)
