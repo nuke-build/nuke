@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2020 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -29,16 +29,10 @@ namespace Nuke.Common.Tools.OctoVersion
         public string Framework { get; set; } = "net5.0";
 
         /// <summary>
-        /// Whether to update the CI build number.
-        /// Supports AzurePipelines, TeamCity and AppVeyor.
+        /// Whether to update the build number and output octoversion attributes into the CI platform
+        /// Supports AzurePipelines, TeamCity, AppVeyor and GitHubActions
         /// </summary>
-        public bool UpdateBuildNumber { get; set; }
-
-        /// <summary>
-        /// Whether to emit the version number attributes to the host (CI) environment.
-        /// Defaults to `true` if running in a CI environment.
-        /// </summary>
-        public bool EmitToHost { get; set; } = NukeBuild.IsServerBuild;
+        public bool UpdateBuildNumber { get; set; } = NukeBuild.IsServerBuild;
 
         public bool AutoDetectBranch { get; set; } = true;
 
@@ -55,8 +49,8 @@ namespace Nuke.Common.Tools.OctoVersion
             var version = OctoVersionTasks.OctoVersionGetVersion(s => s
                     .SetFramework(Framework)
                     .SetOutputJsonFile(tempOutputFile)
-                    .When(EmitToHost, x => x.EnableDetectEnvironment())
-                    .When(!EmitToHost, x => x.SetOutputFormats("JsonFile", "Console"))
+                    .When(UpdateBuildNumber, x => x.EnableDetectEnvironment())
+                    .When(!UpdateBuildNumber, x => x.SetOutputFormats("JsonFile"))
                     .When(!string.IsNullOrEmpty(Branch), x=> x.SetCurrentBranch(Branch))
                     .When(AutoDetectBranch,
                         x =>
