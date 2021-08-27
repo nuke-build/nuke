@@ -38,7 +38,7 @@ namespace Nuke.Common.Tools.OctoVersion
         /// <summary>
         /// Automatically detect the branch to pass to OctoVersion, based on the git worktree
         /// </summary>
-        public bool AutoDetectBranch { get; set; } = true;
+        public bool AutoDetectBranch { get; set; }
 
         /// <summary>
         /// The branch to pass to OctoVersion
