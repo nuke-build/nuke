@@ -12,6 +12,7 @@ using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tools.OctoVersion
@@ -34,16 +35,42 @@ namespace Nuke.Common.Tools.OctoVersion
         /// </summary>
         public bool UpdateBuildNumber { get; set; } = NukeBuild.IsServerBuild;
 
+        /// <summary>
+        /// Automatically detect the branch to pass to OctoVersion, based on the git worktree
+        /// </summary>
         public bool AutoDetectBranch { get; set; } = true;
 
+        /// <summary>
+        /// The branch to pass to OctoVersion
+        /// </summary>
         [CanBeNull] public string Branch { get; set; }
+        
+        /// <summary>
+        /// The name of a Nuke parameter containing the branch to be passed to OctoVersion
+        /// </summary>
+        [CanBeNull] public string BranchParameter { get; set; }
 
         public override object GetValue(MemberInfo member, object instance)
         {
+            // We support 3 mutually exclusive approaches to determining the branch to pass to OctoVersion
+            // - auto detecting the branch here in Nuke
+            // - pass the branch directly via Branch attribute
+            // - pass the name of a Nuke parameter BranchParameter that contains the branch
             if (AutoDetectBranch)
+            {
                 ControlFlow.Assert(string.IsNullOrEmpty(Branch), $"If {nameof(AutoDetectBranch)} is enabled, then {nameof(Branch)} should not be specified.");
-            if (!AutoDetectBranch)
-                ControlFlow.Assert(!string.IsNullOrEmpty(Branch), $"If {nameof(AutoDetectBranch)} is disabled, then {nameof(Branch)} should be specified.");
+                ControlFlow.Assert(string.IsNullOrEmpty(BranchParameter), $"If {nameof(AutoDetectBranch)} is enabled, then {nameof(BranchParameter)} should not be specified.");
+            }
+            if (string.IsNullOrEmpty(Branch))
+            {
+                ControlFlow.Assert(!AutoDetectBranch, $"If {nameof(Branch)} is specified, then {nameof(AutoDetectBranch)} should not be enabled.");
+                ControlFlow.Assert(string.IsNullOrEmpty(BranchParameter), $"If {nameof(Branch)} is specified, then {nameof(BranchParameter)} should not be specified.");
+            }
+            if (string.IsNullOrEmpty(BranchParameter))
+            {
+                ControlFlow.Assert(!AutoDetectBranch, $"If {nameof(BranchParameter)} is specified, then {nameof(AutoDetectBranch)} should not be enabled.");
+                ControlFlow.Assert(string.IsNullOrEmpty(Branch), $"If {nameof(BranchParameter)} is specified, then {nameof(Branch)} should not be specified.");
+            }
 
             var tempOutputFile = NukeBuild.TemporaryDirectory / $"octoversion.{Guid.NewGuid()}.json";
             var version = OctoVersionTasks.OctoVersionGetVersion(s => s
@@ -52,6 +79,13 @@ namespace Nuke.Common.Tools.OctoVersion
                     .When(UpdateBuildNumber, x => x.EnableDetectEnvironment())
                     .When(!UpdateBuildNumber, x => x.SetOutputFormats("JsonFile"))
                     .When(!string.IsNullOrEmpty(Branch), x=> x.SetCurrentBranch(Branch))
+                    .When(!string.IsNullOrEmpty(BranchParameter), 
+                        x =>
+                        {
+                            var branchValue = instance.GetType().GetMember(BranchParameter).FirstOrDefault()?.GetValue<string>();
+                            ControlFlow.Assert(string.IsNullOrEmpty(branchValue), $"{nameof(BranchParameter)} '{BranchParameter}' was specified but no parameter was provided");
+                            return x.SetCurrentBranch(branchValue);
+                        })
                     .When(AutoDetectBranch,
                         x =>
                         {
@@ -64,7 +98,7 @@ namespace Nuke.Common.Tools.OctoVersion
             if (UpdateBuildNumber)
             {
                 AzurePipelines.Instance?.UpdateBuildNumber(version.FullSemVer);
-                //this also happens inside OctoVersion for TeamCity, when EmitToHost is set
+                //this also happens inside OctoVersion when running in TeamCity and EnableDetectEnvironment was set (based on UpdateBuildNumber)
                 TeamCity.Instance?.SetBuildNumber(version.FullSemVer);
                 AppVeyor.Instance?.UpdateBuildVersion(version.FullSemVer);
             }
