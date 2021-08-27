@@ -61,17 +61,21 @@ namespace Nuke.Common.Tools.OctoVersion
                 ControlFlow.Assert(string.IsNullOrEmpty(Branch), $"If {nameof(AutoDetectBranch)} is enabled, then {nameof(Branch)} should not be specified.");
                 ControlFlow.Assert(string.IsNullOrEmpty(BranchParameter), $"If {nameof(AutoDetectBranch)} is enabled, then {nameof(BranchParameter)} should not be specified.");
             }
-            if (string.IsNullOrEmpty(Branch))
+            else if (!string.IsNullOrEmpty(Branch))
             {
                 ControlFlow.Assert(!AutoDetectBranch, $"If {nameof(Branch)} is specified, then {nameof(AutoDetectBranch)} should not be enabled.");
                 ControlFlow.Assert(string.IsNullOrEmpty(BranchParameter), $"If {nameof(Branch)} is specified, then {nameof(BranchParameter)} should not be specified.");
             }
-            if (string.IsNullOrEmpty(BranchParameter))
+            else if (!string.IsNullOrEmpty(BranchParameter))
             {
                 ControlFlow.Assert(!AutoDetectBranch, $"If {nameof(BranchParameter)} is specified, then {nameof(AutoDetectBranch)} should not be enabled.");
                 ControlFlow.Assert(string.IsNullOrEmpty(Branch), $"If {nameof(BranchParameter)} is specified, then {nameof(Branch)} should not be specified.");
             }
-
+            else
+            {
+                ControlFlow.Fail($"Either {nameof(AutoDetectBranch)} must be enabled, or one of {nameof(Branch)} or {nameof(BranchParameter)} must be specified.");
+            }
+            
             var tempOutputFile = NukeBuild.TemporaryDirectory / $"octoversion.{Guid.NewGuid()}.json";
             var version = OctoVersionTasks.OctoVersionGetVersion(s => s
                     .SetFramework(Framework)
