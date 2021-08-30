@@ -56,20 +56,31 @@ namespace Nuke.Common.Tools.OctoVersion
             // - auto detecting the branch here in Nuke
             // - pass the branch directly via Branch attribute
             // - pass the name of a Nuke parameter BranchParameter that contains the branch
+            var octoversionBranch = "";
             if (AutoDetectBranch)
             {
                 ControlFlow.Assert(string.IsNullOrEmpty(Branch), $"If {nameof(AutoDetectBranch)} is enabled, then {nameof(Branch)} should not be specified.");
                 ControlFlow.Assert(string.IsNullOrEmpty(BranchParameter), $"If {nameof(AutoDetectBranch)} is enabled, then {nameof(BranchParameter)} should not be specified.");
+
+                var gitRepository = GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
+                octoversionBranch = gitRepository.Branch;
             }
             else if (!string.IsNullOrEmpty(Branch))
             {
                 ControlFlow.Assert(!AutoDetectBranch, $"If {nameof(Branch)} is specified, then {nameof(AutoDetectBranch)} should not be enabled.");
                 ControlFlow.Assert(string.IsNullOrEmpty(BranchParameter), $"If {nameof(Branch)} is specified, then {nameof(BranchParameter)} should not be specified.");
+
+                octoversionBranch = Branch;
             }
             else if (!string.IsNullOrEmpty(BranchParameter))
             {
                 ControlFlow.Assert(!AutoDetectBranch, $"If {nameof(BranchParameter)} is specified, then {nameof(AutoDetectBranch)} should not be enabled.");
                 ControlFlow.Assert(string.IsNullOrEmpty(Branch), $"If {nameof(BranchParameter)} is specified, then {nameof(Branch)} should not be specified.");
+
+                var parameterValue = instance.GetType().GetMember(BranchParameter, ReflectionUtility.All).FirstOrDefault()?.GetValue<string>(instance);
+                ControlFlow.Assert(!string.IsNullOrEmpty(parameterValue), $"{nameof(BranchParameter)} '{BranchParameter}' was specified but no parameter value could be read.");
+                
+                octoversionBranch = parameterValue;
             }
             else
             {
@@ -82,20 +93,7 @@ namespace Nuke.Common.Tools.OctoVersion
                     .SetOutputJsonFile(tempOutputFile)
                     .When(UpdateBuildNumber, x => x.EnableDetectEnvironment())
                     .When(!UpdateBuildNumber, x => x.SetOutputFormats("JsonFile"))
-                    .When(!string.IsNullOrEmpty(Branch), x=> x.SetCurrentBranch(Branch))
-                    .When(!string.IsNullOrEmpty(BranchParameter), 
-                        x =>
-                        {
-                            var branchValue = instance.GetType().GetMember(BranchParameter).FirstOrDefault()?.GetValue<string>();
-                            ControlFlow.Assert(string.IsNullOrEmpty(branchValue), $"{nameof(BranchParameter)} '{BranchParameter}' was specified but no parameter was provided");
-                            return x.SetCurrentBranch(branchValue);
-                        })
-                    .When(AutoDetectBranch,
-                        x =>
-                        {
-                            var gitRepository = GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
-                            return x.SetCurrentBranch(gitRepository.Branch);
-                        }))
+                    .When(!string.IsNullOrEmpty(octoversionBranch), x => x.SetCurrentBranch(octoversionBranch)))
                 .Result;
             FileSystemTasks.DeleteFile(tempOutputFile);
 
