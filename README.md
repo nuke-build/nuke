@@ -111,6 +111,7 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Martin Gill](https://avatars.githubusercontent.com/MartinSGill?s=45&v=4)](https://github.com/MartinSGill)
 [![Trey Cook](https://avatars.githubusercontent.com/hfcook3?s=45&v=4)](https://github.com/hfcook3)
 [![Todor Todorov](https://avatars.githubusercontent.com/totollygeek?s=45&v=4)](https://github.com/totollygeek)
+[![Christian Sindberg](https://avatars.githubusercontent.com/chrsin?s=45&v=4)](https://github.com/chrsin)
 
 ## Technology Sponsors
 
