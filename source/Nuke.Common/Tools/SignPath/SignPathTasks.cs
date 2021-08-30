@@ -162,7 +162,7 @@ namespace Nuke.Common.Tools.SignPath
                         _ => throw new Exception(signingRequestStatus)
                     };
                 },
-                waitInSeconds: WaitForCompletionRetryTimeout,
+                delay: TimeSpan.FromSeconds(WaitForCompletionRetryTimeout),
                 retryAttempts: WaitForCompletionRetryAttempts,
                 logAction: Logger.Normal);
 
@@ -201,7 +201,7 @@ namespace Nuke.Common.Tools.SignPath
                     var request = requestFactory.Invoke();
                     response = httpClient.SendAsync(request).GetAwaiter().GetResult().AssertStatusCode(expectedStatusCode);
                 },
-                waitInSeconds: ServiceUnavailableRetryTimeout,
+                delay: TimeSpan.FromSeconds(ServiceUnavailableRetryTimeout),
                 logAction: Logger.Normal);
             return response;
         }
