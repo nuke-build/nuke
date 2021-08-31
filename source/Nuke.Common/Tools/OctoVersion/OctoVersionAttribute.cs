@@ -24,6 +24,12 @@ namespace Nuke.Common.Tools.OctoVersion
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class OctoVersionAttribute : ValueInjectionAttributeBase
     {
+        // Backing fields to support the attribute parameters that need to allow nullable value types
+        private bool? _autoDetectBranch;
+        private int? _major;
+        private int? _minor;
+        private int? _patch;
+
         /// <summary>
         /// Which framework to use when selecting the OctoVersion library from the package
         /// </summary>
@@ -39,7 +45,6 @@ namespace Nuke.Common.Tools.OctoVersion
         /// Automatically detect the branch to explicitly pass to OctoVersion, based on the git worktree
         /// </summary>
         public bool AutoDetectBranch { get { return _autoDetectBranch.GetValueOrDefault(); } set { _autoDetectBranch = value; } }
-        private bool? _autoDetectBranch;
 
         /// <summary>
         /// The name of a Nuke parameter specifying whether to auto detect the branch to explicitly pass to Octoversion, based on the git worktree
@@ -73,7 +78,6 @@ namespace Nuke.Common.Tools.OctoVersion
         /// The Major version number to pass to OctoVersion
         /// </summary>
         [CanBeNull] public int Major { get { return _major.GetValueOrDefault(); } set { _major = value; } }
-        private int? _major;
 
         /// <summary>
         /// The name of a Nuke parameter containing the Major version number to be passed to OctoVersion
@@ -85,7 +89,6 @@ namespace Nuke.Common.Tools.OctoVersion
         /// The Minor version number to pass to OctoVersion
         /// </summary>
         [CanBeNull] public int Minor { get { return _minor.GetValueOrDefault(); } set { _minor = value; } }
-        private int? _minor;
 
         /// <summary>
         /// The name of a Nuke parameter containing the Minor version number to be passed to OctoVersion
@@ -97,7 +100,6 @@ namespace Nuke.Common.Tools.OctoVersion
         /// The Patch version number to pass to OctoVersion
         /// </summary>
         [CanBeNull] public int Patch { get { return _patch.GetValueOrDefault(); } set { _patch = value; } }
-        private int? _patch;
 
         /// <summary>
         /// The name of a Nuke parameter containing the Patch version number to be passed to OctoVersion
