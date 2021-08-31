@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.OctoVersion
         public override object GetValue(MemberInfo member, object instance)
         {
             // Wrap log output in an [OctoVersion] Log Block
-            using (Logger.Block("[OctoVersion] Injection"))
+            using (Logger.Block("[OctoVersion]"))
             {
                 // Gather the OctoVersion tool execution options
 
@@ -126,10 +126,10 @@ namespace Nuke.Common.Tools.OctoVersion
                     // Don't allow auto detect if an expicit Branch was provided via parameter or property
                     ControlFlow.Assert(string.IsNullOrEmpty(octoVersionBranch), $"If {nameof(AutoDetectBranch)} is enabled, then a branch can not be specified via {nameof(Branch)} or {nameof(BranchParameter)}.");
 
-                    Logger.Info($"Detecting current branch from the local git directory.");
+                    Logger.Info($"{nameof(AutoDetectBranch)} is enabled, detecting current branch from the local git directory.");
                     var gitRepository = GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
                     octoVersionBranch = gitRepository.Branch;
-                    Logger.Info($"Current branch is '{octoVersionBranch}'.");
+                    Logger.Info($"Current branch '{octoVersionBranch}' will be explicitly passed to OctoVersion.");
                 }
 
                 var tempOutputFile = NukeBuild.TemporaryDirectory / $"octoversion.{Guid.NewGuid()}.json";
