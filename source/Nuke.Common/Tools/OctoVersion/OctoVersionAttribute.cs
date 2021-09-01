@@ -109,56 +109,52 @@ namespace Nuke.Common.Tools.OctoVersion
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            // Wrap log output in an [OctoVersion] Log Block
-            using (Logger.Block("[OctoVersion]"))
+            // Gather the OctoVersion tool execution options
+
+            // Any named parameter will override those specified via the attribute properties
+            var octoVersionAutoDetectBranch = GetParameterValueFromBuild<bool?>(AutoDetectBranchParameter, instance) ?? _autoDetectBranch;
+            var octoVersionBranch = GetParameterValueFromBuild<string>(BranchParameter, instance) ?? Branch;
+            var octoVersionFullSemVer = GetParameterValueFromBuild<string>(FullSemVerParameter, instance) ?? FullSemVer;
+            var octoVersionMajor = GetParameterValueFromBuild<int?>(MajorParameter, instance) ?? _major;
+            var octoVersionMinor = GetParameterValueFromBuild<int?>(MinorParameter, instance) ?? _minor;
+            var octoVersionPatch = GetParameterValueFromBuild<int?>(PatchParameter, instance) ?? _patch;
+
+            // Auto Detect branch
+            if (octoVersionAutoDetectBranch.HasValue && octoVersionAutoDetectBranch.Value)
             {
-                // Gather the OctoVersion tool execution options
+                // Don't allow auto detect if an expicit Branch was provided via parameter or property
+                ControlFlow.Assert(string.IsNullOrEmpty(octoVersionBranch), $"If {nameof(AutoDetectBranch)} is enabled, then a branch can not be specified via {nameof(Branch)} or {nameof(BranchParameter)}.");
 
-                // Any named parameter will override those specified via the attribute properties
-                var octoVersionAutoDetectBranch = GetParameterValueFromBuild<bool?>(AutoDetectBranchParameter, instance) ?? _autoDetectBranch;
-                var octoVersionBranch = GetParameterValueFromBuild<string>(BranchParameter, instance) ?? Branch;
-                var octoVersionFullSemVer = GetParameterValueFromBuild<string>(FullSemVerParameter, instance) ?? FullSemVer;
-                var octoVersionMajor = GetParameterValueFromBuild<int?>(MajorParameter, instance) ?? _major;
-                var octoVersionMinor = GetParameterValueFromBuild<int?>(MinorParameter, instance) ?? _minor;
-                var octoVersionPatch = GetParameterValueFromBuild<int?>(PatchParameter, instance) ?? _patch;
-
-                // Auto Detect branch
-                if (octoVersionAutoDetectBranch.HasValue && octoVersionAutoDetectBranch.Value)
-                {
-                    // Don't allow auto detect if an expicit Branch was provided via parameter or property
-                    ControlFlow.Assert(string.IsNullOrEmpty(octoVersionBranch), $"If {nameof(AutoDetectBranch)} is enabled, then a branch can not be specified via {nameof(Branch)} or {nameof(BranchParameter)}.");
-
-                    Logger.Info($"{nameof(AutoDetectBranch)} is enabled, detecting current branch from the local git directory.");
-                    var gitRepository = GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
-                    octoVersionBranch = gitRepository.Branch;
-                    Logger.Info($"Current branch '{octoVersionBranch}' will be explicitly passed to OctoVersion.");
-                }
-
-                var tempOutputFile = NukeBuild.TemporaryDirectory / $"octoversion.{Guid.NewGuid()}.json";
-                var version = OctoVersionTasks.OctoVersionGetVersion(s => s
-                        .SetFramework(Framework)
-                        .SetOutputJsonFile(tempOutputFile)
-                        .When(UpdateBuildNumber, x => x.EnableDetectEnvironment())
-                        .When(!UpdateBuildNumber, x => x.SetOutputFormats("JsonFile"))
-                        .When(!string.IsNullOrEmpty(octoVersionBranch), x => x.SetCurrentBranch(octoVersionBranch))
-                        .When(!string.IsNullOrEmpty(octoVersionFullSemVer), x => x.SetFullSemVer(octoVersionFullSemVer))
-                        .When(octoVersionMajor != null, x => x.SetMajor(octoVersionMajor))
-                        .When(octoVersionMinor != null, x => x.SetMinor(octoVersionMinor))
-                        .When(octoVersionPatch != null, x => x.SetPatch(octoVersionPatch)))
-                    .Result;
-                FileSystemTasks.DeleteFile(tempOutputFile);
-
-                if (UpdateBuildNumber)
-                {
-                    Logger.Info("Updating BuildNumber in supported CI systems");
-                    AzurePipelines.Instance?.UpdateBuildNumber(version.FullSemVer);
-                    //this also happens inside OctoVersion when running in TeamCity and EnableDetectEnvironment was set (based on UpdateBuildNumber)
-                    TeamCity.Instance?.SetBuildNumber(version.FullSemVer);
-                    AppVeyor.Instance?.UpdateBuildVersion(version.FullSemVer);
-                }
-
-                return version;
+                Logger.Info($"{nameof(AutoDetectBranch)} is enabled, detecting current branch from the local git directory.");
+                var gitRepository = GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
+                octoVersionBranch = gitRepository.Branch;
+                Logger.Info($"Current branch '{octoVersionBranch}' will be explicitly passed to OctoVersion.");
             }
+
+            var tempOutputFile = NukeBuild.TemporaryDirectory / $"octoversion.{Guid.NewGuid()}.json";
+            var version = OctoVersionTasks.OctoVersionGetVersion(s => s
+                    .SetFramework(Framework)
+                    .SetOutputJsonFile(tempOutputFile)
+                    .When(UpdateBuildNumber, x => x.EnableDetectEnvironment())
+                    .When(!UpdateBuildNumber, x => x.SetOutputFormats("JsonFile"))
+                    .When(!string.IsNullOrEmpty(octoVersionBranch), x => x.SetCurrentBranch(octoVersionBranch))
+                    .When(!string.IsNullOrEmpty(octoVersionFullSemVer), x => x.SetFullSemVer(octoVersionFullSemVer))
+                    .When(octoVersionMajor != null, x => x.SetMajor(octoVersionMajor))
+                    .When(octoVersionMinor != null, x => x.SetMinor(octoVersionMinor))
+                    .When(octoVersionPatch != null, x => x.SetPatch(octoVersionPatch)))
+                .Result;
+            FileSystemTasks.DeleteFile(tempOutputFile);
+
+            if (UpdateBuildNumber)
+            {
+                Logger.Info("Updating BuildNumber in supported CI systems");
+                AzurePipelines.Instance?.UpdateBuildNumber(version.FullSemVer);
+                //this also happens inside OctoVersion when running in TeamCity and EnableDetectEnvironment was set (based on UpdateBuildNumber)
+                TeamCity.Instance?.SetBuildNumber(version.FullSemVer);
+                AppVeyor.Instance?.UpdateBuildVersion(version.FullSemVer);
+            }
+
+            return version;
         }
 
         private static T GetParameterValueFromBuild<T>(string parameterName, object target)
