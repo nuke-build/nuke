@@ -137,11 +137,12 @@ namespace Nuke.Common.Tools.OctoVersion
                     .SetOutputJsonFile(tempOutputFile)
                     .When(UpdateBuildNumber, x => x.EnableDetectEnvironment())
                     .When(!UpdateBuildNumber, x => x.SetOutputFormats("JsonFile"))
-                    .When(!string.IsNullOrEmpty(octoVersionBranch), x => x.SetCurrentBranch(octoVersionBranch))
-                    .When(!string.IsNullOrEmpty(octoVersionFullSemVer), x => x.SetFullSemVer(octoVersionFullSemVer))
-                    .When(octoVersionMajor != null, x => x.SetMajor(octoVersionMajor))
-                    .When(octoVersionMinor != null, x => x.SetMinor(octoVersionMinor))
-                    .When(octoVersionPatch != null, x => x.SetPatch(octoVersionPatch)))
+                    // The following properties wont actually be passed to tool execution if they are null
+                    .SetCurrentBranch(octoVersionBranch)
+                    .SetFullSemVer(octoVersionFullSemVer)
+                    .SetMajor(octoVersionMajor)
+                    .SetMinor(octoVersionMinor)
+                    .SetPatch(octoVersionPatch))
                 .Result;
             FileSystemTasks.DeleteFile(tempOutputFile);
 
