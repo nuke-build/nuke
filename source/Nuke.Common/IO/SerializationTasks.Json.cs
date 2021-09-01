@@ -22,7 +22,13 @@ namespace Nuke.Common.IO
         [Pure]
         public static T JsonDeserializeFromFile<T>(string path)
         {
-            return JsonDeserialize<T>(File.ReadAllText(path));
+            return JsonDeserializeFromFile<T>(path, null);
+        }
+
+        [Pure]
+        public static T JsonDeserializeFromFile<T>(string path, Configure<JsonSerializerSettings> configurator = null)
+        {
+            return JsonDeserialize<T>(File.ReadAllText(path), configurator);
         }
 
         [Pure]

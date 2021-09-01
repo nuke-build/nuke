@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -42,16 +43,17 @@ namespace Nuke.Common.Tools.OctoVersion
         {
             ControlFlow.Assert(!string.IsNullOrEmpty(toolSettings.OutputJsonFile), $"{nameof(toolSettings.OutputJsonFile)} must be set");
 
-            var output = "";
             try
             {
-                output = File.ReadAllText(toolSettings.OutputJsonFile);
-                var settings = new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() };
-                return JsonConvert.DeserializeObject<OctoVersionInfo>(output, settings);
+                return SerializationTasks.JsonDeserializeFromFile<OctoVersionInfo>(toolSettings.OutputJsonFile, settings =>
+                {
+                    settings.ContractResolver = new AllWritableContractResolver();
+                    return settings;
+                });
             }
             catch (Exception exception)
             {
-                throw new Exception($"{nameof(OctoVersion)} exited with code {process.ExitCode}, but cannot parse output file {toolSettings.OutputJsonFile} as JSON: {output}",
+                throw new Exception($"{nameof(OctoVersion)} exited with code {process.ExitCode}, but cannot parse output file {toolSettings.OutputJsonFile} as JSON",
                     exception);
             }
         }
