@@ -1,4 +1,4 @@
-﻿{
+{
   "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
   "references": [
     "https://nsis.sourceforge.io/Docs/Chapter3.html"
@@ -33,7 +33,6 @@
             "name": "LogOutputFile",
             "type": "string",
             "format": "/O{value}",
-            "customValue": true,
             "help": "Tells the compiler to print its log to that file (instead of the screen)"
           },
           {
