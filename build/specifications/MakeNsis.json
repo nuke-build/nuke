@@ -12,12 +12,6 @@
       "settingsClass": {
         "properties": [
           {
-            "name": "ScriptFile",
-            "type": "string",
-            "format": "{value}",
-            "help": "The .nsi script file to compile"
-          },
-          {
             "name": "Verbosity",
             "type": "int",
             "format": "/V{value}",
@@ -85,7 +79,20 @@
             "help": "One or more times will add to symbols to the globally defined list (See !define)."
           },
           {
-            "name": "ExecutionCodes",
+            "name": "PreExecutionCodes",
+            "type": "List<string>",
+            "format": "/X{value}",
+            "secret": false,
+            "help": "One or more times will execute the code you specify following it."
+          },
+          {
+            "name": "ScriptFile",
+            "type": "string",
+            "format": "{value}",
+            "help": "The .nsi script file to compile"
+          },
+          {
+            "name": "PostExecutionCodes",
             "type": "List<string>",
             "format": "/X{value}",
             "secret": false,

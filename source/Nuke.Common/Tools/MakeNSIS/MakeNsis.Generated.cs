@@ -62,7 +62,8 @@ namespace Nuke.Common.Tools.MakeNSIS
         ///     <li><c>/SAFEPPO</c> via <see cref="MakeNSISSettings.OnlyRunSaveVersionPreprocessor"/></li>
         ///     <li><c>/V</c> via <see cref="MakeNSISSettings.Verbosity"/></li>
         ///     <li><c>/WX</c> via <see cref="MakeNSISSettings.TreatWarningsAsErrors"/></li>
-        ///     <li><c>/X</c> via <see cref="MakeNSISSettings.ExecutionCodes"/></li>
+        ///     <li><c>/X</c> via <see cref="MakeNSISSettings.PreExecutionCodes"/></li>
+        ///     <li><c>/X</c> via <see cref="MakeNSISSettings.PostExecutionCodes"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> MakeNSIS(MakeNSISSettings toolSettings = null)
@@ -91,7 +92,8 @@ namespace Nuke.Common.Tools.MakeNSIS
         ///     <li><c>/SAFEPPO</c> via <see cref="MakeNSISSettings.OnlyRunSaveVersionPreprocessor"/></li>
         ///     <li><c>/V</c> via <see cref="MakeNSISSettings.Verbosity"/></li>
         ///     <li><c>/WX</c> via <see cref="MakeNSISSettings.TreatWarningsAsErrors"/></li>
-        ///     <li><c>/X</c> via <see cref="MakeNSISSettings.ExecutionCodes"/></li>
+        ///     <li><c>/X</c> via <see cref="MakeNSISSettings.PreExecutionCodes"/></li>
+        ///     <li><c>/X</c> via <see cref="MakeNSISSettings.PostExecutionCodes"/></li>
         ///   </ul>
         /// </remarks>
         public static IReadOnlyCollection<Output> MakeNSIS(Configure<MakeNSISSettings> configurator)
@@ -117,7 +119,8 @@ namespace Nuke.Common.Tools.MakeNSIS
         ///     <li><c>/SAFEPPO</c> via <see cref="MakeNSISSettings.OnlyRunSaveVersionPreprocessor"/></li>
         ///     <li><c>/V</c> via <see cref="MakeNSISSettings.Verbosity"/></li>
         ///     <li><c>/WX</c> via <see cref="MakeNSISSettings.TreatWarningsAsErrors"/></li>
-        ///     <li><c>/X</c> via <see cref="MakeNSISSettings.ExecutionCodes"/></li>
+        ///     <li><c>/X</c> via <see cref="MakeNSISSettings.PreExecutionCodes"/></li>
+        ///     <li><c>/X</c> via <see cref="MakeNSISSettings.PostExecutionCodes"/></li>
         ///   </ul>
         /// </remarks>
         public static IEnumerable<(MakeNSISSettings Settings, IReadOnlyCollection<Output> Output)> MakeNSIS(CombinatorialConfigure<MakeNSISSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -139,10 +142,6 @@ namespace Nuke.Common.Tools.MakeNSIS
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? MakeNSISTasks.MakeNSISPath;
         public override Action<OutputType, string> ProcessCustomLogger => MakeNSISTasks.MakeNSISLogger;
-        /// <summary>
-        ///   The .nsi script file to compile
-        /// </summary>
-        public virtual string ScriptFile { get; internal set; }
         /// <summary>
         ///   0=no output, 1=errors only, 2=warnings and errors, 3=info, warnings, and errors, 4=all output
         /// </summary>
@@ -191,12 +190,20 @@ namespace Nuke.Common.Tools.MakeNSIS
         /// <summary>
         ///   One or more times will execute the code you specify following it.
         /// </summary>
-        public virtual IReadOnlyList<string> ExecutionCodes => ExecutionCodesInternal.AsReadOnly();
-        internal List<string> ExecutionCodesInternal { get; set; } = new List<string>();
+        public virtual IReadOnlyList<string> PreExecutionCodes => PreExecutionCodesInternal.AsReadOnly();
+        internal List<string> PreExecutionCodesInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   The .nsi script file to compile
+        /// </summary>
+        public virtual string ScriptFile { get; internal set; }
+        /// <summary>
+        ///   One or more times will execute the code you specify following it.
+        /// </summary>
+        public virtual IReadOnlyList<string> PostExecutionCodes => PostExecutionCodesInternal.AsReadOnly();
+        internal List<string> PostExecutionCodesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
-              .Add("{value}", ScriptFile)
               .Add("/V{value}", Verbosity)
               .Add("/P{value}", CompilerPriority)
               .Add("/O{value}", LogOutputFile)
@@ -208,7 +215,9 @@ namespace Nuke.Common.Tools.MakeNSIS
               .Add("/SAFEPPO", OnlyRunSaveVersionPreprocessor)
               .Add("/WX", TreatWarningsAsErrors)
               .Add("/D{value}", DefinedSymbols)
-              .Add("/X{value}", ExecutionCodes);
+              .Add("/X{value}", PreExecutionCodes)
+              .Add("{value}", ScriptFile)
+              .Add("/X{value}", PostExecutionCodes);
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -221,30 +230,6 @@ namespace Nuke.Common.Tools.MakeNSIS
     [ExcludeFromCodeCoverage]
     public static partial class MakeNSISSettingsExtensions
     {
-        #region ScriptFile
-        /// <summary>
-        ///   <p><em>Sets <see cref="MakeNSISSettings.ScriptFile"/></em></p>
-        ///   <p>The .nsi script file to compile</p>
-        /// </summary>
-        [Pure]
-        public static T SetScriptFile<T>(this T toolSettings, string scriptFile) where T : MakeNSISSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ScriptFile = scriptFile;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <see cref="MakeNSISSettings.ScriptFile"/></em></p>
-        ///   <p>The .nsi script file to compile</p>
-        /// </summary>
-        [Pure]
-        public static T ResetScriptFile<T>(this T toolSettings) where T : MakeNSISSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.ScriptFile = null;
-            return toolSettings;
-        }
-        #endregion
         #region Verbosity
         /// <summary>
         ///   <p><em>Sets <see cref="MakeNSISSettings.Verbosity"/></em></p>
@@ -731,84 +716,189 @@ namespace Nuke.Common.Tools.MakeNSIS
             return toolSettings;
         }
         #endregion
-        #region ExecutionCodes
+        #region PreExecutionCodes
         /// <summary>
-        ///   <p><em>Sets <see cref="MakeNSISSettings.ExecutionCodes"/> to a new list</em></p>
+        ///   <p><em>Sets <see cref="MakeNSISSettings.PreExecutionCodes"/> to a new list</em></p>
         ///   <p>One or more times will execute the code you specify following it.</p>
         /// </summary>
         [Pure]
-        public static T SetExecutionCodes<T>(this T toolSettings, params string[] executionCodes) where T : MakeNSISSettings
+        public static T SetPreExecutionCodes<T>(this T toolSettings, params string[] preExecutionCodes) where T : MakeNSISSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExecutionCodesInternal = executionCodes.ToList();
+            toolSettings.PreExecutionCodesInternal = preExecutionCodes.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Sets <see cref="MakeNSISSettings.ExecutionCodes"/> to a new list</em></p>
+        ///   <p><em>Sets <see cref="MakeNSISSettings.PreExecutionCodes"/> to a new list</em></p>
         ///   <p>One or more times will execute the code you specify following it.</p>
         /// </summary>
         [Pure]
-        public static T SetExecutionCodes<T>(this T toolSettings, IEnumerable<string> executionCodes) where T : MakeNSISSettings
+        public static T SetPreExecutionCodes<T>(this T toolSettings, IEnumerable<string> preExecutionCodes) where T : MakeNSISSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExecutionCodesInternal = executionCodes.ToList();
+            toolSettings.PreExecutionCodesInternal = preExecutionCodes.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds values to <see cref="MakeNSISSettings.ExecutionCodes"/></em></p>
+        ///   <p><em>Adds values to <see cref="MakeNSISSettings.PreExecutionCodes"/></em></p>
         ///   <p>One or more times will execute the code you specify following it.</p>
         /// </summary>
         [Pure]
-        public static T AddExecutionCodes<T>(this T toolSettings, params string[] executionCodes) where T : MakeNSISSettings
+        public static T AddPreExecutionCodes<T>(this T toolSettings, params string[] preExecutionCodes) where T : MakeNSISSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExecutionCodesInternal.AddRange(executionCodes);
+            toolSettings.PreExecutionCodesInternal.AddRange(preExecutionCodes);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds values to <see cref="MakeNSISSettings.ExecutionCodes"/></em></p>
+        ///   <p><em>Adds values to <see cref="MakeNSISSettings.PreExecutionCodes"/></em></p>
         ///   <p>One or more times will execute the code you specify following it.</p>
         /// </summary>
         [Pure]
-        public static T AddExecutionCodes<T>(this T toolSettings, IEnumerable<string> executionCodes) where T : MakeNSISSettings
+        public static T AddPreExecutionCodes<T>(this T toolSettings, IEnumerable<string> preExecutionCodes) where T : MakeNSISSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExecutionCodesInternal.AddRange(executionCodes);
+            toolSettings.PreExecutionCodesInternal.AddRange(preExecutionCodes);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Clears <see cref="MakeNSISSettings.ExecutionCodes"/></em></p>
+        ///   <p><em>Clears <see cref="MakeNSISSettings.PreExecutionCodes"/></em></p>
         ///   <p>One or more times will execute the code you specify following it.</p>
         /// </summary>
         [Pure]
-        public static T ClearExecutionCodes<T>(this T toolSettings) where T : MakeNSISSettings
+        public static T ClearPreExecutionCodes<T>(this T toolSettings) where T : MakeNSISSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExecutionCodesInternal.Clear();
+            toolSettings.PreExecutionCodesInternal.Clear();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Removes values from <see cref="MakeNSISSettings.ExecutionCodes"/></em></p>
+        ///   <p><em>Removes values from <see cref="MakeNSISSettings.PreExecutionCodes"/></em></p>
         ///   <p>One or more times will execute the code you specify following it.</p>
         /// </summary>
         [Pure]
-        public static T RemoveExecutionCodes<T>(this T toolSettings, params string[] executionCodes) where T : MakeNSISSettings
+        public static T RemovePreExecutionCodes<T>(this T toolSettings, params string[] preExecutionCodes) where T : MakeNSISSettings
         {
             toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(executionCodes);
-            toolSettings.ExecutionCodesInternal.RemoveAll(x => hashSet.Contains(x));
+            var hashSet = new HashSet<string>(preExecutionCodes);
+            toolSettings.PreExecutionCodesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Removes values from <see cref="MakeNSISSettings.ExecutionCodes"/></em></p>
+        ///   <p><em>Removes values from <see cref="MakeNSISSettings.PreExecutionCodes"/></em></p>
         ///   <p>One or more times will execute the code you specify following it.</p>
         /// </summary>
         [Pure]
-        public static T RemoveExecutionCodes<T>(this T toolSettings, IEnumerable<string> executionCodes) where T : MakeNSISSettings
+        public static T RemovePreExecutionCodes<T>(this T toolSettings, IEnumerable<string> preExecutionCodes) where T : MakeNSISSettings
         {
             toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(executionCodes);
-            toolSettings.ExecutionCodesInternal.RemoveAll(x => hashSet.Contains(x));
+            var hashSet = new HashSet<string>(preExecutionCodes);
+            toolSettings.PreExecutionCodesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region ScriptFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="MakeNSISSettings.ScriptFile"/></em></p>
+        ///   <p>The .nsi script file to compile</p>
+        /// </summary>
+        [Pure]
+        public static T SetScriptFile<T>(this T toolSettings, string scriptFile) where T : MakeNSISSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScriptFile = scriptFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="MakeNSISSettings.ScriptFile"/></em></p>
+        ///   <p>The .nsi script file to compile</p>
+        /// </summary>
+        [Pure]
+        public static T ResetScriptFile<T>(this T toolSettings) where T : MakeNSISSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScriptFile = null;
+            return toolSettings;
+        }
+        #endregion
+        #region PostExecutionCodes
+        /// <summary>
+        ///   <p><em>Sets <see cref="MakeNSISSettings.PostExecutionCodes"/> to a new list</em></p>
+        ///   <p>One or more times will execute the code you specify following it.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPostExecutionCodes<T>(this T toolSettings, params string[] postExecutionCodes) where T : MakeNSISSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PostExecutionCodesInternal = postExecutionCodes.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="MakeNSISSettings.PostExecutionCodes"/> to a new list</em></p>
+        ///   <p>One or more times will execute the code you specify following it.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPostExecutionCodes<T>(this T toolSettings, IEnumerable<string> postExecutionCodes) where T : MakeNSISSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PostExecutionCodesInternal = postExecutionCodes.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MakeNSISSettings.PostExecutionCodes"/></em></p>
+        ///   <p>One or more times will execute the code you specify following it.</p>
+        /// </summary>
+        [Pure]
+        public static T AddPostExecutionCodes<T>(this T toolSettings, params string[] postExecutionCodes) where T : MakeNSISSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PostExecutionCodesInternal.AddRange(postExecutionCodes);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="MakeNSISSettings.PostExecutionCodes"/></em></p>
+        ///   <p>One or more times will execute the code you specify following it.</p>
+        /// </summary>
+        [Pure]
+        public static T AddPostExecutionCodes<T>(this T toolSettings, IEnumerable<string> postExecutionCodes) where T : MakeNSISSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PostExecutionCodesInternal.AddRange(postExecutionCodes);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="MakeNSISSettings.PostExecutionCodes"/></em></p>
+        ///   <p>One or more times will execute the code you specify following it.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearPostExecutionCodes<T>(this T toolSettings) where T : MakeNSISSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PostExecutionCodesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MakeNSISSettings.PostExecutionCodes"/></em></p>
+        ///   <p>One or more times will execute the code you specify following it.</p>
+        /// </summary>
+        [Pure]
+        public static T RemovePostExecutionCodes<T>(this T toolSettings, params string[] postExecutionCodes) where T : MakeNSISSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(postExecutionCodes);
+            toolSettings.PostExecutionCodesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="MakeNSISSettings.PostExecutionCodes"/></em></p>
+        ///   <p>One or more times will execute the code you specify following it.</p>
+        /// </summary>
+        [Pure]
+        public static T RemovePostExecutionCodes<T>(this T toolSettings, IEnumerable<string> postExecutionCodes) where T : MakeNSISSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(postExecutionCodes);
+            toolSettings.PostExecutionCodesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
