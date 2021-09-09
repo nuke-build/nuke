@@ -1,99 +1,99 @@
 ﻿{
-    "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
-    "references": [
-        "https://nsis.sourceforge.io/Docs/Chapter3.html"
-    ],
-    "name": "MakeNSIS",
-    "officialUrl": "https://nsis.sourceforge.io/Docs/Contents.html",
-    "help": "NSIS creates installers that are capable of installing, uninstalling, setting system settings, extracting files, etc. Because it's based on script files you can fully control every part of your installer.",
-    "pathExecutable": "makensis",
-    "tasks": [
-        {
-            "settingsClass": {
-                "properties": [
-                    {
-                        "name": "ScriptFile",
-                        "type": "string",
-                        "format": "{value}",
-                        "help": "The .nsi script file to compile"
-                    },
-                    {
-                        "name": "Verbosity",
-                        "type": "int",
-                        "format": "/V{value}",
-                        "help": "0=no output, 1=errors only, 2=warnings and errors, 3=info, warnings, and errors, 4=all output"
-                    },
-                    {
-                        "name": "CompilerPriority",
-                        "type": "int",
-                        "format": "/P{value}",
-                        "help": "set the priority of the compiler process accordingly. 0=idle, 1=below normal, 2=normal (default), 3=above normal, 4=high, 5=realtime."
-                    },
-                    {
-                        "name": "LogOutputFile",
-                        "type": "string",
-                        "format": "/O{value}",
-                        "customValue": true,
-                        "help": "Tells the compiler to print its log to that file (instead of the screen)"
-                    },
-                    {
-                        "name": "NoConfig",
-                        "type": "bool",
-                        "format": "/NOCONFIG",
-                        "help": "disables inclusion of nsisconf.nsh. Without this parameter, installer defaults are set from nsisconf.nsh."
-                    },
-                    {
-                        "name": "NoCurrentDirectoryChange",
-                        "type": "bool",
-                        "format": "/NOCD",
-                        "help": "disables the current directory change to that of the .nsi file."
-                    },
-                    {
-                        "name": "InputCharset",
-                        "type": "string",
-                        "format": "/INPUTCHARSET{value}",
-                        "help": "allows you to specify a specific codepage for files without a BOM. (ACP|OEM|CP#|UTF8|UTF16<LE|BE>)"
-                    },
-                    {
-                        "name": "OutputCharset",
-                        "type": "string",
-                        "format": "/OUTPUTCHARSET{value}",
-                        "help": "allows you to specify the codepage used by stdout when the output is redirected. (ACP|OEM|CP#|UTF8[SIG]|UTF16<LE|BE>[BOM])"
-                    },
-                    {
-                        "name": "OnlyRunPreprocessor",
-                        "type": "bool",
-                        "format": "/PPO",
-                        "help": "will only run the preprocessor and print the result to stdout."
-                    },
-                    {
-                        "name": "OnlyRunSaveVersionPreprocessor",
-                        "type": "bool",
-                        "format": "/SAFEPPO",
-                        "help": "will only run the preprocessor and print the result to stdout. The safe version will not execute instructions like !appendfile or !system. !packhdr and !finalize are never executed."
-                    },
-                    {
-                        "name": "TreatWarningsAsErrors",
-                        "type": "bool",
-                        "format": "/WX",
-                        "help": "Treats warnings as errors"
-                    },
-                    {
-                        "name": "DefinedSymbols",
-                        "type": "List<string>",
-                        "format": "/D{value}",
-                        "secret": false,
-                        "help": "One or more times will add to symbols to the globally defined list (See !define)."
-                    },
-                    {
-                        "name": "ExecutionCodes",
-                        "type": "List<string>",
-                        "format": "/X{value}",
-                        "secret": false,
-                        "help": "One or more times will execute the code you specify following it."
-                    }
-                ]
-            }
-        }
-    ]
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://nsis.sourceforge.io/Docs/Chapter3.html"
+  ],
+  "name": "MakeNSIS",
+  "officialUrl": "https://nsis.sourceforge.io/Docs/Contents.html",
+  "help": "NSIS creates installers that are capable of installing, uninstalling, setting system settings, extracting files, etc. Because it's based on script files you can fully control every part of your installer.",
+  "pathExecutable": "makensis",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ScriptFile",
+            "type": "string",
+            "format": "{value}",
+            "help": "The .nsi script file to compile"
+          },
+          {
+            "name": "Verbosity",
+            "type": "int",
+            "format": "/V{value}",
+            "help": "0=no output, 1=errors only, 2=warnings and errors, 3=info, warnings, and errors, 4=all output"
+          },
+          {
+            "name": "CompilerPriority",
+            "type": "int",
+            "format": "/P{value}",
+            "help": "set the priority of the compiler process accordingly. 0=idle, 1=below normal, 2=normal (default), 3=above normal, 4=high, 5=realtime."
+          },
+          {
+            "name": "LogOutputFile",
+            "type": "string",
+            "format": "/O{value}",
+            "customValue": true,
+            "help": "Tells the compiler to print its log to that file (instead of the screen)"
+          },
+          {
+            "name": "NoConfig",
+            "type": "bool",
+            "format": "/NOCONFIG",
+            "help": "disables inclusion of nsisconf.nsh. Without this parameter, installer defaults are set from nsisconf.nsh."
+          },
+          {
+            "name": "NoCurrentDirectoryChange",
+            "type": "bool",
+            "format": "/NOCD",
+            "help": "disables the current directory change to that of the .nsi file."
+          },
+          {
+            "name": "InputCharset",
+            "type": "string",
+            "format": "/INPUTCHARSET{value}",
+            "help": "allows you to specify a specific codepage for files without a BOM. (ACP|OEM|CP#|UTF8|UTF16<LE|BE>)"
+          },
+          {
+            "name": "OutputCharset",
+            "type": "string",
+            "format": "/OUTPUTCHARSET{value}",
+            "help": "allows you to specify the codepage used by stdout when the output is redirected. (ACP|OEM|CP#|UTF8[SIG]|UTF16<LE|BE>[BOM])"
+          },
+          {
+            "name": "OnlyRunPreprocessor",
+            "type": "bool",
+            "format": "/PPO",
+            "help": "will only run the preprocessor and print the result to stdout."
+          },
+          {
+            "name": "OnlyRunSaveVersionPreprocessor",
+            "type": "bool",
+            "format": "/SAFEPPO",
+            "help": "will only run the preprocessor and print the result to stdout. The safe version will not execute instructions like !appendfile or !system. !packhdr and !finalize are never executed."
+          },
+          {
+            "name": "TreatWarningsAsErrors",
+            "type": "bool",
+            "format": "/WX",
+            "help": "Treats warnings as errors"
+          },
+          {
+            "name": "DefinedSymbols",
+            "type": "List<string>",
+            "format": "/D{value}",
+            "secret": false,
+            "help": "One or more times will add to symbols to the globally defined list (See !define)."
+          },
+          {
+            "name": "ExecutionCodes",
+            "type": "List<string>",
+            "format": "/X{value}",
+            "secret": false,
+            "help": "One or more times will execute the code you specify following it."
+          }
+        ]
+      }
+    }
+  ]
 }

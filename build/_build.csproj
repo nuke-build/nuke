@@ -50,14 +50,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="specifications\MakeNsis.json" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="specifications\MakeNsis.json" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0008" />
     <PackageDownload Include="Codecov.Tool" Version="[1.12.3]" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.6.10]" />
