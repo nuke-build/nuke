@@ -50,6 +50,9 @@ namespace Nuke.Common.Tools.PowerShell
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
+        ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
+        ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueArguments"/></li>
         ///     <li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li>
         ///     <li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li>
         ///     <li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li>
@@ -82,6 +85,9 @@ namespace Nuke.Common.Tools.PowerShell
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
+        ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
+        ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueArguments"/></li>
         ///     <li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li>
         ///     <li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li>
         ///     <li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li>
@@ -111,6 +117,9 @@ namespace Nuke.Common.Tools.PowerShell
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
+        ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
+        ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueArguments"/></li>
         ///     <li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li>
         ///     <li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li>
         ///     <li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li>
@@ -201,6 +210,10 @@ namespace Nuke.Common.Tools.PowerShell
         /// </summary>
         public virtual string ConfigurationName { get; internal set; }
         /// <summary>
+        ///   Sets the default execution policy for the current session and saves it in the $env:PSExecutionPolicyPreference environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see about_Execution_Policies(https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-5.1).
+        /// </summary>
+        public virtual string ExecutionPolicy { get; internal set; }
+        /// <summary>
         ///   If the value of File is "-", the command text is read from standard input. Running powershell -File - without redirected standard input starts a regular session. This is the same as not specifying the File parameter at all. 
 ///If the value of File is a file path, the script runs in the local scope ("dot-sourced"), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. File must be the last parameter in the command. All values typed after the File parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: powershell.exe -File .\test.ps1 -TestParam %windir%. 
 /// In contrast, running powershell.exe -File .\test.ps1 -TestParam $env:windir in cmd.exe results in the script receiving the literal string $env:windir because it has no special meaning to the current cmd.exe shell. The $env:windir style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code. 
@@ -212,9 +225,20 @@ namespace Nuke.Common.Tools.PowerShell
         /// </summary>
         public virtual string File { get; internal set; }
         /// <summary>
-        ///   Sets the default execution policy for the current session and saves it in the $env:PSExecutionPolicyPreference environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see about_Execution_Policies(https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-5.1).
+        ///   Arguments passed in when using the -File option
         /// </summary>
-        public virtual string ExecutionPolicy { get; internal set; }
+        public virtual IReadOnlyList<string> FileArguments => FileArgumentsInternal.AsReadOnly();
+        internal List<string> FileArgumentsInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Arguments passed in when using the -File option
+        /// </summary>
+        public virtual IReadOnlyList<string> FileArguments => FileArgumentsInternal.AsReadOnly();
+        internal List<string> FileArgumentsInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Pass in arguments by parameter name Ex. -Name "Test"</c>
+        /// </summary>
+        public virtual IReadOnlyDictionary<string, string> FileKeyValueArguments => FileKeyValueArgumentsInternal.AsReadOnly();
+        internal Dictionary<string, string> FileKeyValueArgumentsInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the NoExit parameter is specified. 
 ///The value of Command can be -, a script block, or a string. If the value of Command is -, the command text is read from standard input. 
@@ -237,8 +261,11 @@ namespace Nuke.Common.Tools.PowerShell
               .Add("-WindowStyle {value}", WindowStyle)
               .Add("-EncodedCommand {value}", EncodedCommand)
               .Add("-ConfigurationName {value}", ConfigurationName)
-              .Add("-File  {value}", File)
               .Add("-ExecutionPolicy {value}", ExecutionPolicy)
+              .Add("-File  {value}", File)
+              .Add("{value}", FileArguments)
+              .Add("{value}", FileArguments)
+              .Add("-{value}", FileKeyValueArguments, "{key} {value}")
               .Add("-Command {value}", Command);
             return base.ConfigureProcessArguments(arguments);
         }
@@ -762,6 +789,30 @@ namespace Nuke.Common.Tools.PowerShell
             return toolSettings;
         }
         #endregion
+        #region ExecutionPolicy
+        /// <summary>
+        ///   <p><em>Sets <see cref="PowerShellSettings.ExecutionPolicy"/></em></p>
+        ///   <p>Sets the default execution policy for the current session and saves it in the $env:PSExecutionPolicyPreference environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see about_Execution_Policies(https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-5.1).</p>
+        /// </summary>
+        [Pure]
+        public static T SetExecutionPolicy<T>(this T toolSettings, string executionPolicy) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExecutionPolicy = executionPolicy;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="PowerShellSettings.ExecutionPolicy"/></em></p>
+        ///   <p>Sets the default execution policy for the current session and saves it in the $env:PSExecutionPolicyPreference environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see about_Execution_Policies(https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-5.1).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetExecutionPolicy<T>(this T toolSettings) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExecutionPolicy = null;
+            return toolSettings;
+        }
+        #endregion
         #region File
         /// <summary>
         ///   <p><em>Sets <see cref="PowerShellSettings.File"/></em></p>
@@ -800,27 +851,222 @@ namespace Nuke.Common.Tools.PowerShell
             return toolSettings;
         }
         #endregion
-        #region ExecutionPolicy
+        #region FileArguments
         /// <summary>
-        ///   <p><em>Sets <see cref="PowerShellSettings.ExecutionPolicy"/></em></p>
-        ///   <p>Sets the default execution policy for the current session and saves it in the $env:PSExecutionPolicyPreference environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see about_Execution_Policies(https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-5.1).</p>
+        ///   <p><em>Sets <see cref="PowerShellSettings.FileArguments"/> to a new list</em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
         /// </summary>
         [Pure]
-        public static T SetExecutionPolicy<T>(this T toolSettings, string executionPolicy) where T : PowerShellSettings
+        public static T SetFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExecutionPolicy = executionPolicy;
+            toolSettings.FileArgumentsInternal = fileArguments.ToList();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Resets <see cref="PowerShellSettings.ExecutionPolicy"/></em></p>
-        ///   <p>Sets the default execution policy for the current session and saves it in the $env:PSExecutionPolicyPreference environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see about_Execution_Policies(https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-5.1).</p>
+        ///   <p><em>Sets <see cref="PowerShellSettings.FileArguments"/> to a new list</em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
         /// </summary>
         [Pure]
-        public static T ResetExecutionPolicy<T>(this T toolSettings) where T : PowerShellSettings
+        public static T SetFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.ExecutionPolicy = null;
+            toolSettings.FileArgumentsInternal = fileArguments.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="PowerShellSettings.FileArguments"/></em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T AddFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileArgumentsInternal.AddRange(fileArguments);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="PowerShellSettings.FileArguments"/></em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T AddFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileArgumentsInternal.AddRange(fileArguments);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="PowerShellSettings.FileArguments"/></em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T ClearFileArguments<T>(this T toolSettings) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileArgumentsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="PowerShellSettings.FileArguments"/></em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(fileArguments);
+            toolSettings.FileArgumentsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="PowerShellSettings.FileArguments"/></em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(fileArguments);
+            toolSettings.FileArgumentsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region FileArguments
+        /// <summary>
+        ///   <p><em>Sets <see cref="PowerShellSettings.FileArguments"/> to a new list</em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T SetFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileArgumentsInternal = fileArguments.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="PowerShellSettings.FileArguments"/> to a new list</em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T SetFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileArgumentsInternal = fileArguments.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="PowerShellSettings.FileArguments"/></em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T AddFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileArgumentsInternal.AddRange(fileArguments);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="PowerShellSettings.FileArguments"/></em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T AddFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileArgumentsInternal.AddRange(fileArguments);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="PowerShellSettings.FileArguments"/></em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T ClearFileArguments<T>(this T toolSettings) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileArgumentsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="PowerShellSettings.FileArguments"/></em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(fileArguments);
+            toolSettings.FileArgumentsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="PowerShellSettings.FileArguments"/></em></p>
+        ///   <p>Arguments passed in when using the -File option</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(fileArguments);
+            toolSettings.FileArgumentsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region FileKeyValueArguments
+        /// <summary>
+        ///   <p><em>Sets <see cref="PowerShellSettings.FileKeyValueArguments"/> to a new dictionary</em></p>
+        ///   <p>Pass in arguments by parameter name Ex. -Name "Test"</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetFileKeyValueArguments<T>(this T toolSettings, IDictionary<string, string> fileKeyValueArguments) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileKeyValueArgumentsInternal = fileKeyValueArguments.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="PowerShellSettings.FileKeyValueArguments"/></em></p>
+        ///   <p>Pass in arguments by parameter name Ex. -Name "Test"</c></p>
+        /// </summary>
+        [Pure]
+        public static T ClearFileKeyValueArguments<T>(this T toolSettings) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileKeyValueArgumentsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds a new key-value-pair <see cref="PowerShellSettings.FileKeyValueArguments"/></em></p>
+        ///   <p>Pass in arguments by parameter name Ex. -Name "Test"</c></p>
+        /// </summary>
+        [Pure]
+        public static T AddFileKeyValueArgument<T>(this T toolSettings, string fileKeyValueArgumentKey, string fileKeyValueArgumentValue) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileKeyValueArgumentsInternal.Add(fileKeyValueArgumentKey, fileKeyValueArgumentValue);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes a key-value-pair from <see cref="PowerShellSettings.FileKeyValueArguments"/></em></p>
+        ///   <p>Pass in arguments by parameter name Ex. -Name "Test"</c></p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFileKeyValueArgument<T>(this T toolSettings, string fileKeyValueArgumentKey) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileKeyValueArgumentsInternal.Remove(fileKeyValueArgumentKey);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets a key-value-pair in <see cref="PowerShellSettings.FileKeyValueArguments"/></em></p>
+        ///   <p>Pass in arguments by parameter name Ex. -Name "Test"</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetFileKeyValueArgument<T>(this T toolSettings, string fileKeyValueArgumentKey, string fileKeyValueArgumentValue) where T : PowerShellSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FileKeyValueArgumentsInternal[fileKeyValueArgumentKey] = fileKeyValueArgumentValue;
             return toolSettings;
         }
         #endregion
