@@ -201,14 +201,14 @@ namespace Nuke.Common.Tools.PowerShell
         /// </summary>
         public virtual string ConfigurationName { get; internal set; }
         /// <summary>
-        ///   If the value of File is "-", the command text is read from standard input. Running powershell -File - without redirected standard input starts a regular session. This is the same as not specifying the File parameter at all.
-If the value of File is a file path, the script runs in the local scope ("dot-sourced"), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. File must be the last parameter in the command. All values typed after the File parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: powershell.exe -File .\test.ps1 -TestParam %windir%.
- In contrast, running powershell.exe -File .\test.ps1 -TestParam $env:windir in cmd.exe results in the script receiving the literal string $env:windir because it has no special meaning to the current cmd.exe shell. The $env:windir style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code.
-Similarly, if you want to execute the same command from a Batch script, you would use %~dp0 instead of .\ or $PSScriptRoot to represent the current execution directory: powershell.exe -File %~dp0test.ps1 -TestParam %windir%. If you instead used .\test.ps1, PowerShell would throw an error because it cannot find the literal path .\test.ps1
-When the value of File is a file path, File must be the last parameter in the command because any characters typed after the File parameter name are interpreted as the script file path followed by the script parameters.
-You can include the script parameters and values in the value of the File parameter. For example: -File .\Get-Script.ps1 -Domain Central
-Typically, the switch parameters of a script are either included or omitted. For example, the following command uses the All parameter of the Get-Script.ps1 script file: -File .\Get-Script.ps1 -All
-In rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (pwsh.exe).
+        ///   If the value of File is "-", the command text is read from standard input. Running powershell -File - without redirected standard input starts a regular session. This is the same as not specifying the File parameter at all. 
+///If the value of File is a file path, the script runs in the local scope ("dot-sourced"), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. File must be the last parameter in the command. All values typed after the File parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: powershell.exe -File .\test.ps1 -TestParam %windir%. 
+/// In contrast, running powershell.exe -File .\test.ps1 -TestParam $env:windir in cmd.exe results in the script receiving the literal string $env:windir because it has no special meaning to the current cmd.exe shell. The $env:windir style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code. 
+///Similarly, if you want to execute the same command from a Batch script, you would use %~dp0 instead of .\ or $PSScriptRoot to represent the current execution directory: powershell.exe -File %~dp0test.ps1 -TestParam %windir%. If you instead used .\test.ps1, PowerShell would throw an error because it cannot find the literal path .\test.ps1 
+///When the value of File is a file path, File must be the last parameter in the command because any characters typed after the File parameter name are interpreted as the script file path followed by the script parameters. 
+///You can include the script parameters and values in the value of the File parameter. For example: -File .\Get-Script.ps1 -Domain Central 
+///Typically, the switch parameters of a script are either included or omitted. For example, the following command uses the All parameter of the Get-Script.ps1 script file: -File .\Get-Script.ps1 -All 
+///In rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (pwsh.exe).
         /// </summary>
         public virtual string File { get; internal set; }
         /// <summary>
@@ -216,9 +216,9 @@ In rare cases, you might need to provide a Boolean value for a parameter. It is 
         /// </summary>
         public virtual string ExecutionPolicy { get; internal set; }
         /// <summary>
-        ///   Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the NoExit parameter is specified.
-The value of Command can be -, a script block, or a string. If the value of Command is -, the command text is read from standard input.
-The Command parameter only accepts a script block for execution when it can recognize the value passed to Command as a ScriptBlock type. This is only possible when running powershell.exe from another PowerShell host. The ScriptBlock type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces ({}), before being passed to powershell.exe.
+        ///   Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the NoExit parameter is specified. 
+///The value of Command can be -, a script block, or a string. If the value of Command is -, the command text is read from standard input. 
+///The Command parameter only accepts a script block for execution when it can recognize the value passed to Command as a ScriptBlock type. This is only possible when running powershell.exe from another PowerShell host. The ScriptBlock type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces ({}), before being passed to powershell.exe.
         /// </summary>
         public virtual string Command { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -765,14 +765,14 @@ The Command parameter only accepts a script block for execution when it can reco
         #region File
         /// <summary>
         ///   <p><em>Sets <see cref="PowerShellSettings.File"/></em></p>
-        ///   <p>If the value of File is "-", the command text is read from standard input. Running powershell -File - without redirected standard input starts a regular session. This is the same as not specifying the File parameter at all.
-If the value of File is a file path, the script runs in the local scope ("dot-sourced"), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. File must be the last parameter in the command. All values typed after the File parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: powershell.exe -File .\test.ps1 -TestParam %windir%.
- In contrast, running powershell.exe -File .\test.ps1 -TestParam $env:windir in cmd.exe results in the script receiving the literal string $env:windir because it has no special meaning to the current cmd.exe shell. The $env:windir style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code.
-Similarly, if you want to execute the same command from a Batch script, you would use %~dp0 instead of .\ or $PSScriptRoot to represent the current execution directory: powershell.exe -File %~dp0test.ps1 -TestParam %windir%. If you instead used .\test.ps1, PowerShell would throw an error because it cannot find the literal path .\test.ps1
-When the value of File is a file path, File must be the last parameter in the command because any characters typed after the File parameter name are interpreted as the script file path followed by the script parameters.
-You can include the script parameters and values in the value of the File parameter. For example: -File .\Get-Script.ps1 -Domain Central
-Typically, the switch parameters of a script are either included or omitted. For example, the following command uses the All parameter of the Get-Script.ps1 script file: -File .\Get-Script.ps1 -All
-In rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (pwsh.exe).</p>
+        ///   <p>If the value of File is "-", the command text is read from standard input. Running powershell -File - without redirected standard input starts a regular session. This is the same as not specifying the File parameter at all. 
+///If the value of File is a file path, the script runs in the local scope ("dot-sourced"), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. File must be the last parameter in the command. All values typed after the File parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: powershell.exe -File .\test.ps1 -TestParam %windir%. 
+/// In contrast, running powershell.exe -File .\test.ps1 -TestParam $env:windir in cmd.exe results in the script receiving the literal string $env:windir because it has no special meaning to the current cmd.exe shell. The $env:windir style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code. 
+///Similarly, if you want to execute the same command from a Batch script, you would use %~dp0 instead of .\ or $PSScriptRoot to represent the current execution directory: powershell.exe -File %~dp0test.ps1 -TestParam %windir%. If you instead used .\test.ps1, PowerShell would throw an error because it cannot find the literal path .\test.ps1 
+///When the value of File is a file path, File must be the last parameter in the command because any characters typed after the File parameter name are interpreted as the script file path followed by the script parameters. 
+///You can include the script parameters and values in the value of the File parameter. For example: -File .\Get-Script.ps1 -Domain Central 
+///Typically, the switch parameters of a script are either included or omitted. For example, the following command uses the All parameter of the Get-Script.ps1 script file: -File .\Get-Script.ps1 -All 
+///In rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (pwsh.exe).</p>
         /// </summary>
         [Pure]
         public static T SetFile<T>(this T toolSettings, string file) where T : PowerShellSettings
@@ -783,14 +783,14 @@ In rare cases, you might need to provide a Boolean value for a parameter. It is 
         }
         /// <summary>
         ///   <p><em>Resets <see cref="PowerShellSettings.File"/></em></p>
-        ///   <p>If the value of File is "-", the command text is read from standard input. Running powershell -File - without redirected standard input starts a regular session. This is the same as not specifying the File parameter at all.
-If the value of File is a file path, the script runs in the local scope ("dot-sourced"), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. File must be the last parameter in the command. All values typed after the File parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: powershell.exe -File .\test.ps1 -TestParam %windir%.
- In contrast, running powershell.exe -File .\test.ps1 -TestParam $env:windir in cmd.exe results in the script receiving the literal string $env:windir because it has no special meaning to the current cmd.exe shell. The $env:windir style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code.
-Similarly, if you want to execute the same command from a Batch script, you would use %~dp0 instead of .\ or $PSScriptRoot to represent the current execution directory: powershell.exe -File %~dp0test.ps1 -TestParam %windir%. If you instead used .\test.ps1, PowerShell would throw an error because it cannot find the literal path .\test.ps1
-When the value of File is a file path, File must be the last parameter in the command because any characters typed after the File parameter name are interpreted as the script file path followed by the script parameters.
-You can include the script parameters and values in the value of the File parameter. For example: -File .\Get-Script.ps1 -Domain Central
-Typically, the switch parameters of a script are either included or omitted. For example, the following command uses the All parameter of the Get-Script.ps1 script file: -File .\Get-Script.ps1 -All
-In rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (pwsh.exe).</p>
+        ///   <p>If the value of File is "-", the command text is read from standard input. Running powershell -File - without redirected standard input starts a regular session. This is the same as not specifying the File parameter at all. 
+///If the value of File is a file path, the script runs in the local scope ("dot-sourced"), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. File must be the last parameter in the command. All values typed after the File parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: powershell.exe -File .\test.ps1 -TestParam %windir%. 
+/// In contrast, running powershell.exe -File .\test.ps1 -TestParam $env:windir in cmd.exe results in the script receiving the literal string $env:windir because it has no special meaning to the current cmd.exe shell. The $env:windir style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code. 
+///Similarly, if you want to execute the same command from a Batch script, you would use %~dp0 instead of .\ or $PSScriptRoot to represent the current execution directory: powershell.exe -File %~dp0test.ps1 -TestParam %windir%. If you instead used .\test.ps1, PowerShell would throw an error because it cannot find the literal path .\test.ps1 
+///When the value of File is a file path, File must be the last parameter in the command because any characters typed after the File parameter name are interpreted as the script file path followed by the script parameters. 
+///You can include the script parameters and values in the value of the File parameter. For example: -File .\Get-Script.ps1 -Domain Central 
+///Typically, the switch parameters of a script are either included or omitted. For example, the following command uses the All parameter of the Get-Script.ps1 script file: -File .\Get-Script.ps1 -All 
+///In rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (pwsh.exe).</p>
         /// </summary>
         [Pure]
         public static T ResetFile<T>(this T toolSettings) where T : PowerShellSettings
@@ -827,9 +827,9 @@ In rare cases, you might need to provide a Boolean value for a parameter. It is 
         #region Command
         /// <summary>
         ///   <p><em>Sets <see cref="PowerShellSettings.Command"/></em></p>
-        ///   <p>Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the NoExit parameter is specified.
-The value of Command can be -, a script block, or a string. If the value of Command is -, the command text is read from standard input.
-The Command parameter only accepts a script block for execution when it can recognize the value passed to Command as a ScriptBlock type. This is only possible when running powershell.exe from another PowerShell host. The ScriptBlock type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces ({}), before being passed to powershell.exe.</p>
+        ///   <p>Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the NoExit parameter is specified. 
+///The value of Command can be -, a script block, or a string. If the value of Command is -, the command text is read from standard input. 
+///The Command parameter only accepts a script block for execution when it can recognize the value passed to Command as a ScriptBlock type. This is only possible when running powershell.exe from another PowerShell host. The ScriptBlock type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces ({}), before being passed to powershell.exe.</p>
         /// </summary>
         [Pure]
         public static T SetCommand<T>(this T toolSettings, string command) where T : PowerShellSettings
@@ -840,9 +840,9 @@ The Command parameter only accepts a script block for execution when it can reco
         }
         /// <summary>
         ///   <p><em>Resets <see cref="PowerShellSettings.Command"/></em></p>
-        ///   <p>Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the NoExit parameter is specified.
-The value of Command can be -, a script block, or a string. If the value of Command is -, the command text is read from standard input.
-The Command parameter only accepts a script block for execution when it can recognize the value passed to Command as a ScriptBlock type. This is only possible when running powershell.exe from another PowerShell host. The ScriptBlock type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces ({}), before being passed to powershell.exe.</p>
+        ///   <p>Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the NoExit parameter is specified. 
+///The value of Command can be -, a script block, or a string. If the value of Command is -, the command text is read from standard input. 
+///The Command parameter only accepts a script block for execution when it can recognize the value passed to Command as a ScriptBlock type. This is only possible when running powershell.exe from another PowerShell host. The ScriptBlock type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces ({}), before being passed to powershell.exe.</p>
         /// </summary>
         [Pure]
         public static T ResetCommand<T>(this T toolSettings) where T : PowerShellSettings
