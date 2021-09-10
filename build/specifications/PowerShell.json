@@ -1,114 +1,114 @@
 {
-    "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
-    "references": [
-        "https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_exe?view=powershell-5.1"
-    ],
-    "name": "PowerShell",
-    "officialUrl": "https://docs.microsoft.com/en-us/powershell/",
-    "help": "PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.",
-    "pathExecutable": "powershell",
-    "tasks": [
-        {
-            "settingsClass": {
-                "properties": [
-                    {
-                        "name": "PowerShellConsoleFile",
-                        "type": "string",
-                        "format": "-PSConsoleFile {value}",
-                        "help": "Loads the specified PowerShell console file. Enter the path and name of the console file. To create a console file, use the Export-Console cmdlet in PowerShell."
-                    },
-                    {
-                        "name": "PowerShellVersion",
-                        "type": "string",
-                        "format": "-Version {value}",
-                        "help": "Starts the specified version of PowerShell. Valid values are 2.0 and 3.0. The version that you specify must be installed on the system. If Windows PowerShell 3.0 is installed on the computer, \"3.0\" is the default version."
-                    },
-                    {
-                        "name": "NoLogo",
-                        "type": "bool",
-                        "format": "-NoLogo",
-                        "help": "Hides the copyright banner at startup."
-                    },
-                    {
-                        "name": "NoExit",
-                        "type": "bool",
-                        "format": "-NoExit",
-                        "help": "Does not exit after running startup commands."
-                    },
-                    {
-                        "name": "StartUsingASingleThreadedApartment",
-                        "type": "bool",
-                        "format": "-Sta",
-                        "help": "Starts PowerShell using a single-threaded apartment. In Windows PowerShell 2.0, multi-threaded apartment (MTA) is the default. In Windows PowerShell 3.0, single-threaded apartment (STA) is the default."
-                    },
-                    {
-                        "name": "StartUsingAMultiThreadedApartment",
-                        "type": "bool",
-                        "format": "-Mta",
-                        "help": "Starts PowerShell using a multi-threaded apartment. This parameter is introduced in PowerShell 3.0. In PowerShell 2.0, multi-threaded apartment (MTA) is the default. In PowerShell 3.0, single-threaded apartment (STA) is the default."
-                    },
-                    {
-                        "name": "NoProfile",
-                        "type": "bool",
-                        "format": "-NoProfile",
-                        "help": "Does not load the PowerShell profile."
-                    },
-                    {
-                        "name": "NonInteractive",
-                        "type": "bool",
-                        "format": "-NonInteractive",
-                        "help": "Does not present an interactive prompt to the user."
-                    },
-                    {
-                        "name": "InputFormat",
-                        "type": "string",
-                        "format": "-InputFormat {value}",
-                        "help": "Describes the format of data sent to PowerShell. Valid values are \"Text\" (text strings) or \"XML\" (serialized CLIXML format)."
-                    },
-                    {
-                        "name": "OutputFormat",
-                        "type": "string",
-                        "format": "-OutputFormat {value}",
-                        "help": "Determines how output from PowerShell is formatted. Valid values are \"Text\" (text strings) or \"XML\" (serialized CLIXML format)."
-                    },
-                    {
-                        "name": "WindowStyle",
-                        "type": "string",
-                        "format": "-WindowStyle {value}",
-                        "help": "Sets the window style for the session. Valid values are Normal, Minimized, Maximized and Hidden."
-                    },
-                    {
-                        "name": "EncodedCommand",
-                        "type": "string",
-                        "format": "-EncodedCommand {value}",
-                        "help": "Accepts a base-64-encoded string version of a command. Use this parameter to submit commands to PowerShell that require complex quotation marks or curly braces. The string must be formatted using UTF-16LE character encoding."
-                    },
-                    {
-                        "name": "ConfigurationName",
-                        "type": "string",
-                        "format": "-ConfigurationName {value}",
-                        "help": "Specifies a configuration endpoint in which PowerShell is run. This can be any endpoint registered on the local machine including the default PowerShell remoting endpoints or a custom endpoint having specific user role capabilities."
-                    },
-                    {
-                        "name": "File",
-                        "type": "string",
-                        "format": "-File  {value}",
-                        "help": "If the value of File is \"-\", the command text is read from standard input. Running powershell -File - without redirected standard input starts a regular session. This is the same as not specifying the File parameter at all.\nIf the value of File is a file path, the script runs in the local scope (\"dot-sourced\"), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. File must be the last parameter in the command. All values typed after the File parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: powershell.exe -File .\\test.ps1 -TestParam %windir%.\n In contrast, running powershell.exe -File .\\test.ps1 -TestParam $env:windir in cmd.exe results in the script receiving the literal string $env:windir because it has no special meaning to the current cmd.exe shell. The $env:windir style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code.\nSimilarly, if you want to execute the same command from a Batch script, you would use %~dp0 instead of .\\ or $PSScriptRoot to represent the current execution directory: powershell.exe -File %~dp0test.ps1 -TestParam %windir%. If you instead used .\\test.ps1, PowerShell would throw an error because it cannot find the literal path .\\test.ps1\nWhen the value of File is a file path, File must be the last parameter in the command because any characters typed after the File parameter name are interpreted as the script file path followed by the script parameters.\nYou can include the script parameters and values in the value of the File parameter. For example: -File .\\Get-Script.ps1 -Domain Central\nTypically, the switch parameters of a script are either included or omitted. For example, the following command uses the All parameter of the Get-Script.ps1 script file: -File .\\Get-Script.ps1 -All\nIn rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (pwsh.exe)."
-                    },
-                    {
-                        "name": "ExecutionPolicy",
-                        "type": "string",
-                        "format": "-ExecutionPolicy {value}",
-                        "help": "Sets the default execution policy for the current session and saves it in the $env:PSExecutionPolicyPreference environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see about_Execution_Policies(https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-5.1)."
-                    },
-                    {
-                        "name": "Command",
-                        "type": "string",
-                        "format": "-Command {value}",
-                        "help": "Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the NoExit parameter is specified.\nThe value of Command can be -, a script block, or a string. If the value of Command is -, the command text is read from standard input.\nThe Command parameter only accepts a script block for execution when it can recognize the value passed to Command as a ScriptBlock type. This is only possible when running powershell.exe from another PowerShell host. The ScriptBlock type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces ({}), before being passed to powershell.exe."
-                    }
-                ]
-            }
-        }
-    ]
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_powershell_exe?view=powershell-5.1"
+  ],
+  "name": "PowerShell",
+  "officialUrl": "https://docs.microsoft.com/en-us/powershell/",
+  "help": "PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.",
+  "pathExecutable": "powershell",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PowerShellConsoleFile",
+            "type": "string",
+            "format": "-PSConsoleFile {value}",
+            "help": "Loads the specified PowerShell console file. Enter the path and name of the console file. To create a console file, use the Export-Console cmdlet in PowerShell."
+          },
+          {
+            "name": "PowerShellVersion",
+            "type": "string",
+            "format": "-Version {value}",
+            "help": "Starts the specified version of PowerShell. Valid values are 2.0 and 3.0. The version that you specify must be installed on the system. If Windows PowerShell 3.0 is installed on the computer, \"3.0\" is the default version."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "-NoLogo",
+            "help": "Hides the copyright banner at startup."
+          },
+          {
+            "name": "NoExit",
+            "type": "bool",
+            "format": "-NoExit",
+            "help": "Does not exit after running startup commands."
+          },
+          {
+            "name": "StartUsingASingleThreadedApartment",
+            "type": "bool",
+            "format": "-Sta",
+            "help": "Starts PowerShell using a single-threaded apartment. In Windows PowerShell 2.0, multi-threaded apartment (MTA) is the default. In Windows PowerShell 3.0, single-threaded apartment (STA) is the default."
+          },
+          {
+            "name": "StartUsingAMultiThreadedApartment",
+            "type": "bool",
+            "format": "-Mta",
+            "help": "Starts PowerShell using a multi-threaded apartment. This parameter is introduced in PowerShell 3.0. In PowerShell 2.0, multi-threaded apartment (MTA) is the default. In PowerShell 3.0, single-threaded apartment (STA) is the default."
+          },
+          {
+            "name": "NoProfile",
+            "type": "bool",
+            "format": "-NoProfile",
+            "help": "Does not load the PowerShell profile."
+          },
+          {
+            "name": "NonInteractive",
+            "type": "bool",
+            "format": "-NonInteractive",
+            "help": "Does not present an interactive prompt to the user."
+          },
+          {
+            "name": "InputFormat",
+            "type": "string",
+            "format": "-InputFormat {value}",
+            "help": "Describes the format of data sent to PowerShell. Valid values are \"Text\" (text strings) or \"XML\" (serialized CLIXML format)."
+          },
+          {
+            "name": "OutputFormat",
+            "type": "string",
+            "format": "-OutputFormat {value}",
+            "help": "Determines how output from PowerShell is formatted. Valid values are \"Text\" (text strings) or \"XML\" (serialized CLIXML format)."
+          },
+          {
+            "name": "WindowStyle",
+            "type": "string",
+            "format": "-WindowStyle {value}",
+            "help": "Sets the window style for the session. Valid values are Normal, Minimized, Maximized and Hidden."
+          },
+          {
+            "name": "EncodedCommand",
+            "type": "string",
+            "format": "-EncodedCommand {value}",
+            "help": "Accepts a base-64-encoded string version of a command. Use this parameter to submit commands to PowerShell that require complex quotation marks or curly braces. The string must be formatted using UTF-16LE character encoding."
+          },
+          {
+            "name": "ConfigurationName",
+            "type": "string",
+            "format": "-ConfigurationName {value}",
+            "help": "Specifies a configuration endpoint in which PowerShell is run. This can be any endpoint registered on the local machine including the default PowerShell remoting endpoints or a custom endpoint having specific user role capabilities."
+          },
+          {
+            "name": "File",
+            "type": "string",
+            "format": "-File  {value}",
+            "help": "If the value of File is \"-\", the command text is read from standard input. Running powershell -File - without redirected standard input starts a regular session. This is the same as not specifying the File parameter at all.\nIf the value of File is a file path, the script runs in the local scope (\"dot-sourced\"), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. File must be the last parameter in the command. All values typed after the File parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: powershell.exe -File .\\test.ps1 -TestParam %windir%.\n In contrast, running powershell.exe -File .\\test.ps1 -TestParam $env:windir in cmd.exe results in the script receiving the literal string $env:windir because it has no special meaning to the current cmd.exe shell. The $env:windir style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code.\nSimilarly, if you want to execute the same command from a Batch script, you would use %~dp0 instead of .\\ or $PSScriptRoot to represent the current execution directory: powershell.exe -File %~dp0test.ps1 -TestParam %windir%. If you instead used .\\test.ps1, PowerShell would throw an error because it cannot find the literal path .\\test.ps1\nWhen the value of File is a file path, File must be the last parameter in the command because any characters typed after the File parameter name are interpreted as the script file path followed by the script parameters.\nYou can include the script parameters and values in the value of the File parameter. For example: -File .\\Get-Script.ps1 -Domain Central\nTypically, the switch parameters of a script are either included or omitted. For example, the following command uses the All parameter of the Get-Script.ps1 script file: -File .\\Get-Script.ps1 -All\nIn rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (pwsh.exe)."
+          },
+          {
+            "name": "ExecutionPolicy",
+            "type": "string",
+            "format": "-ExecutionPolicy {value}",
+            "help": "Sets the default execution policy for the current session and saves it in the $env:PSExecutionPolicyPreference environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see about_Execution_Policies(https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies?view=powershell-5.1)."
+          },
+          {
+            "name": "Command",
+            "type": "string",
+            "format": "-Command {value}",
+            "help": "Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the NoExit parameter is specified.\nThe value of Command can be -, a script block, or a string. If the value of Command is -, the command text is read from standard input.\nThe Command parameter only accepts a script block for execution when it can recognize the value passed to Command as a ScriptBlock type. This is only possible when running powershell.exe from another PowerShell host. The ScriptBlock type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces ({}), before being passed to powershell.exe."
+          }
+        ]
+      }
+    }
+  ]
 }
