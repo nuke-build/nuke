@@ -51,8 +51,7 @@ namespace Nuke.Common.Tools.PowerShell
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
-        ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
-        ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueArguments"/></li>
+        ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueParameters"/></li>
         ///     <li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li>
         ///     <li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li>
         ///     <li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li>
@@ -86,8 +85,7 @@ namespace Nuke.Common.Tools.PowerShell
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
-        ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
-        ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueArguments"/></li>
+        ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueParameters"/></li>
         ///     <li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li>
         ///     <li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li>
         ///     <li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li>
@@ -118,8 +116,7 @@ namespace Nuke.Common.Tools.PowerShell
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
         ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
-        ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
-        ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueArguments"/></li>
+        ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueParameters"/></li>
         ///     <li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li>
         ///     <li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li>
         ///     <li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li>
@@ -230,15 +227,10 @@ namespace Nuke.Common.Tools.PowerShell
         public virtual IReadOnlyList<string> FileArguments => FileArgumentsInternal.AsReadOnly();
         internal List<string> FileArgumentsInternal { get; set; } = new List<string>();
         /// <summary>
-        ///   Arguments passed in when using the -File option
+        ///   Pass in parameters by parameter name Ex. -Name "Test"</c>
         /// </summary>
-        public virtual IReadOnlyList<string> FileArguments => FileArgumentsInternal.AsReadOnly();
-        internal List<string> FileArgumentsInternal { get; set; } = new List<string>();
-        /// <summary>
-        ///   Pass in arguments by parameter name Ex. -Name "Test"</c>
-        /// </summary>
-        public virtual IReadOnlyDictionary<string, string> FileKeyValueArguments => FileKeyValueArgumentsInternal.AsReadOnly();
-        internal Dictionary<string, string> FileKeyValueArgumentsInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        public virtual IReadOnlyDictionary<string, string> FileKeyValueParameters => FileKeyValueParametersInternal.AsReadOnly();
+        internal Dictionary<string, string> FileKeyValueParametersInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         /// <summary>
         ///   Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the NoExit parameter is specified. 
 ///The value of Command can be -, a script block, or a string. If the value of Command is -, the command text is read from standard input. 
@@ -264,8 +256,7 @@ namespace Nuke.Common.Tools.PowerShell
               .Add("-ExecutionPolicy {value}", ExecutionPolicy)
               .Add("-File  {value}", File)
               .Add("{value}", FileArguments)
-              .Add("{value}", FileArguments)
-              .Add("-{value}", FileKeyValueArguments, "{key} {value}")
+              .Add("-{value}", FileKeyValueParameters, "{key} {value}")
               .Add("-Command {value}", Command);
             return base.ConfigureProcessArguments(arguments);
         }
@@ -932,141 +923,60 @@ namespace Nuke.Common.Tools.PowerShell
             return toolSettings;
         }
         #endregion
-        #region FileArguments
+        #region FileKeyValueParameters
         /// <summary>
-        ///   <p><em>Sets <see cref="PowerShellSettings.FileArguments"/> to a new list</em></p>
-        ///   <p>Arguments passed in when using the -File option</p>
+        ///   <p><em>Sets <see cref="PowerShellSettings.FileKeyValueParameters"/> to a new dictionary</em></p>
+        ///   <p>Pass in parameters by parameter name Ex. -Name "Test"</c></p>
         /// </summary>
         [Pure]
-        public static T SetFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
+        public static T SetFileKeyValueParameters<T>(this T toolSettings, IDictionary<string, string> fileKeyValueParameters) where T : PowerShellSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FileArgumentsInternal = fileArguments.ToList();
+            toolSettings.FileKeyValueParametersInternal = fileKeyValueParameters.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Sets <see cref="PowerShellSettings.FileArguments"/> to a new list</em></p>
-        ///   <p>Arguments passed in when using the -File option</p>
+        ///   <p><em>Clears <see cref="PowerShellSettings.FileKeyValueParameters"/></em></p>
+        ///   <p>Pass in parameters by parameter name Ex. -Name "Test"</c></p>
         /// </summary>
         [Pure]
-        public static T SetFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
+        public static T ClearFileKeyValueParameters<T>(this T toolSettings) where T : PowerShellSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FileArgumentsInternal = fileArguments.ToList();
+            toolSettings.FileKeyValueParametersInternal.Clear();
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds values to <see cref="PowerShellSettings.FileArguments"/></em></p>
-        ///   <p>Arguments passed in when using the -File option</p>
+        ///   <p><em>Adds a new key-value-pair <see cref="PowerShellSettings.FileKeyValueParameters"/></em></p>
+        ///   <p>Pass in parameters by parameter name Ex. -Name "Test"</c></p>
         /// </summary>
         [Pure]
-        public static T AddFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
+        public static T AddFileKeyValueParameter<T>(this T toolSettings, string fileKeyValueParameterKey, string fileKeyValueParameterValue) where T : PowerShellSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FileArgumentsInternal.AddRange(fileArguments);
+            toolSettings.FileKeyValueParametersInternal.Add(fileKeyValueParameterKey, fileKeyValueParameterValue);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Adds values to <see cref="PowerShellSettings.FileArguments"/></em></p>
-        ///   <p>Arguments passed in when using the -File option</p>
+        ///   <p><em>Removes a key-value-pair from <see cref="PowerShellSettings.FileKeyValueParameters"/></em></p>
+        ///   <p>Pass in parameters by parameter name Ex. -Name "Test"</c></p>
         /// </summary>
         [Pure]
-        public static T AddFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
+        public static T RemoveFileKeyValueParameter<T>(this T toolSettings, string fileKeyValueParameterKey) where T : PowerShellSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FileArgumentsInternal.AddRange(fileArguments);
+            toolSettings.FileKeyValueParametersInternal.Remove(fileKeyValueParameterKey);
             return toolSettings;
         }
         /// <summary>
-        ///   <p><em>Clears <see cref="PowerShellSettings.FileArguments"/></em></p>
-        ///   <p>Arguments passed in when using the -File option</p>
+        ///   <p><em>Sets a key-value-pair in <see cref="PowerShellSettings.FileKeyValueParameters"/></em></p>
+        ///   <p>Pass in parameters by parameter name Ex. -Name "Test"</c></p>
         /// </summary>
         [Pure]
-        public static T ClearFileArguments<T>(this T toolSettings) where T : PowerShellSettings
+        public static T SetFileKeyValueParameter<T>(this T toolSettings, string fileKeyValueParameterKey, string fileKeyValueParameterValue) where T : PowerShellSettings
         {
             toolSettings = toolSettings.NewInstance();
-            toolSettings.FileArgumentsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <see cref="PowerShellSettings.FileArguments"/></em></p>
-        ///   <p>Arguments passed in when using the -File option</p>
-        /// </summary>
-        [Pure]
-        public static T RemoveFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(fileArguments);
-            toolSettings.FileArgumentsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes values from <see cref="PowerShellSettings.FileArguments"/></em></p>
-        ///   <p>Arguments passed in when using the -File option</p>
-        /// </summary>
-        [Pure]
-        public static T RemoveFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            var hashSet = new HashSet<string>(fileArguments);
-            toolSettings.FileArgumentsInternal.RemoveAll(x => hashSet.Contains(x));
-            return toolSettings;
-        }
-        #endregion
-        #region FileKeyValueArguments
-        /// <summary>
-        ///   <p><em>Sets <see cref="PowerShellSettings.FileKeyValueArguments"/> to a new dictionary</em></p>
-        ///   <p>Pass in arguments by parameter name Ex. -Name "Test"</c></p>
-        /// </summary>
-        [Pure]
-        public static T SetFileKeyValueArguments<T>(this T toolSettings, IDictionary<string, string> fileKeyValueArguments) where T : PowerShellSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.FileKeyValueArgumentsInternal = fileKeyValueArguments.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Clears <see cref="PowerShellSettings.FileKeyValueArguments"/></em></p>
-        ///   <p>Pass in arguments by parameter name Ex. -Name "Test"</c></p>
-        /// </summary>
-        [Pure]
-        public static T ClearFileKeyValueArguments<T>(this T toolSettings) where T : PowerShellSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.FileKeyValueArgumentsInternal.Clear();
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Adds a new key-value-pair <see cref="PowerShellSettings.FileKeyValueArguments"/></em></p>
-        ///   <p>Pass in arguments by parameter name Ex. -Name "Test"</c></p>
-        /// </summary>
-        [Pure]
-        public static T AddFileKeyValueArgument<T>(this T toolSettings, string fileKeyValueArgumentKey, string fileKeyValueArgumentValue) where T : PowerShellSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.FileKeyValueArgumentsInternal.Add(fileKeyValueArgumentKey, fileKeyValueArgumentValue);
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Removes a key-value-pair from <see cref="PowerShellSettings.FileKeyValueArguments"/></em></p>
-        ///   <p>Pass in arguments by parameter name Ex. -Name "Test"</c></p>
-        /// </summary>
-        [Pure]
-        public static T RemoveFileKeyValueArgument<T>(this T toolSettings, string fileKeyValueArgumentKey) where T : PowerShellSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.FileKeyValueArgumentsInternal.Remove(fileKeyValueArgumentKey);
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Sets a key-value-pair in <see cref="PowerShellSettings.FileKeyValueArguments"/></em></p>
-        ///   <p>Pass in arguments by parameter name Ex. -Name "Test"</c></p>
-        /// </summary>
-        [Pure]
-        public static T SetFileKeyValueArgument<T>(this T toolSettings, string fileKeyValueArgumentKey, string fileKeyValueArgumentValue) where T : PowerShellSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.FileKeyValueArgumentsInternal[fileKeyValueArgumentKey] = fileKeyValueArgumentValue;
+            toolSettings.FileKeyValueParametersInternal[fileKeyValueParameterKey] = fileKeyValueParameterValue;
             return toolSettings;
         }
         #endregion

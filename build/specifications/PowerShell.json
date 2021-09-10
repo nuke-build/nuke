@@ -108,18 +108,12 @@
             "help": "Arguments passed in when using the -File option"
           },
           {
-            "name": "FileArguments",
-            "type": "List<string>",
-            "format": "{value}",
-            "help": "Arguments passed in when using the -File option"
-          },
-          {
-            "name": "FileKeyValueArguments",
+            "name": "FileKeyValueParameters",
             "type": "Dictionary<string, string>",
             "format": "-{value}",
             "itemFormat": "{key} {value}",
             "secret": false,
-            "help": "Pass in arguments by parameter name Ex. -Name \"Test\"</c>"
+            "help": "Pass in parameters by parameter name Ex. -Name \"Test\"</c>"
           },
           {
             "name": "Command",
