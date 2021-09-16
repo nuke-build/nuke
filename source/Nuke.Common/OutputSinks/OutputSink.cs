@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2019 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -207,10 +207,10 @@ namespace Nuke.Common.OutputSinks
             WriteNormal(string.Empty);
         }
 
-        internal abstract void WriteNormal(string text);
-        internal abstract void WriteSuccess(string text);
-        internal abstract void WriteTrace(string text);
-        internal abstract void WriteInformation(string text);
+        protected internal abstract void WriteNormal(string text);
+        protected internal abstract void WriteSuccess(string text);
+        protected internal abstract void WriteTrace(string text);
+        protected internal abstract void WriteInformation(string text);
 
         protected abstract void WriteWarning(string text, string details = null);
         protected abstract void WriteError(string text, string details = null);
