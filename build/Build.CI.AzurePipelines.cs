@@ -21,6 +21,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
     AzurePipelinesImage.UbuntuLatest,
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.MacOsLatest,
+    PullRequestsDisabled = true,
     ImportSecrets = new[]
                     {
                         nameof(EnterpriseAccessToken),
