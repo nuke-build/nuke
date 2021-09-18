@@ -16,6 +16,9 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
         [CanBeNull]
         public AzurePipelinesVcsPushTrigger VcsPushTrigger { get; set; }
 
+        [CanBeNull]
+        public AzurePipelinesVcsPushTrigger VcsPullRequestTrigger { get; set; }
+
         public AzurePipelinesStage[] Stages { get; set; }
 
         public override void Write(CustomFileWriter writer)
@@ -34,6 +37,15 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                 using (writer.WriteBlock("trigger:"))
                 {
                     VcsPushTrigger.Write(writer);
+                    writer.WriteLine();
+                }
+            }
+
+            if (VcsPullRequestTrigger != null)
+            {
+                using (writer.WriteBlock("pr:"))
+                {
+                    VcsPullRequestTrigger.Write(writer);
                     writer.WriteLine();
                 }
             }
