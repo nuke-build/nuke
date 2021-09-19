@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -77,7 +78,7 @@ namespace Nuke.Common.Tools.Slack
             var httpHandler = new GitterTasks.AuthenticatedHttpClientHandler(accessToken);
             using var client = new HttpClient(httpHandler);
 
-            var payload = JsonConvert.SerializeObject(message);
+            var payload = JsonConvert.SerializeObject(message, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             var response = await client.PostAsync(url, new StringContent(payload, Encoding.UTF8, "application/json"));
             var responseContent = await response.Content.ReadAsStringAsync();
             ControlFlow.Assert(response.StatusCode == HttpStatusCode.OK, responseContent);
@@ -87,5 +88,14 @@ namespace Nuke.Common.Tools.Slack
             ControlFlow.Assert(error == null, error);
             return jobject;
         }
+    }
+
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public class SlackMessageActionButton : SlackMessageAction
+    {
+        [JsonProperty("type")]
+        public string Type => "button";
     }
 }
