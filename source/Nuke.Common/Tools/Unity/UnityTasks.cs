@@ -21,7 +21,6 @@ namespace Nuke.Common.Tools.Unity
         [ThreadStatic]
         private static LogParser s_logParser;
 
-        [ThreadStatic]
         private static bool s_minimalOutput;
 
         public static string GetToolPath(string hubVersion = null)
