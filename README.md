@@ -112,6 +112,8 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Trey Cook](https://avatars.githubusercontent.com/hfcook3?s=45&v=4)](https://github.com/hfcook3)
 [![Todor Todorov](https://avatars.githubusercontent.com/totollygeek?s=45&v=4)](https://github.com/totollygeek)
 [![Christian Sindberg](https://avatars.githubusercontent.com/chrsin?s=45&v=4)](https://github.com/chrsin)
+[![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
+[![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=45&v=4)](https://github.com/stevenkuhn)
 
 ## Technology Sponsors
 
