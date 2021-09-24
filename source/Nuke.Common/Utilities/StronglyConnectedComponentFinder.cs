@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.Utilities
 {
     internal class StronglyConnectedComponentFinder<T>
     {

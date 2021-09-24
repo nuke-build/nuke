@@ -9,7 +9,6 @@ using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.TeamCity.Configuration;
 using Nuke.Common.Execution;
-using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Components;
 #if NUKE_ENTERPRISE

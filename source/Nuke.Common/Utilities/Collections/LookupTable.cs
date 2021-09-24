@@ -7,11 +7,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
-#if NETFRAMEWORK
-using Nuke.Common.Utilities.Collections;
-#endif
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Utilities.Collections
 {
     [PublicAPI]
     [Serializable]
@@ -30,7 +27,7 @@ namespace Nuke.Common.Tooling
         }
 
         public LookupTable(ILookup<TKey, TValue> lookupTable, IEqualityComparer<TKey> comparer = null)
-            : this(lookupTable.ToDictionary(x => x.Key, x => x.ToList(), comparer))
+            : this(Enumerable.ToDictionary(lookupTable, x => x.Key, x => x.ToList(), comparer))
         {
         }
 
@@ -89,27 +86,10 @@ namespace Nuke.Common.Tooling
         {
             return _dictionary.ContainsKey(key);
         }
-    }
 
-    [PublicAPI]
-    public static class LookupTableExtensions
-    {
-        public static ILookup<TKey, TValue> AsReadOnly<TKey, TValue>(this LookupTable<TKey, TValue> lookupTable)
+        public ILookup<TKey, TValue> AsReadOnly()
         {
-            return lookupTable;
-        }
-
-        public static LookupTable<TKey, TValue> ToLookupTable<TKey, TValue>(this ILookup<TKey, TValue> lookup, IEqualityComparer<TKey> comparer)
-        {
-            return new LookupTable<TKey, TValue>(lookup, comparer);
-        }
-
-        public static LookupTable<TKey, TValue> ToLookupTable<TItem, TKey, TValue>(
-            this IEnumerable<TItem> enumerable,
-            Func<TItem, TKey> keySelector,
-            Func<TItem, TValue> valueSelector)
-        {
-            return new LookupTable<TKey, TValue>(enumerable.ToLookup(keySelector, valueSelector));
+            return this;
         }
     }
 }

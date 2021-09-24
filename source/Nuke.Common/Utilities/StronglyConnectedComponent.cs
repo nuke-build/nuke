@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.Utilities
 {
     internal class StronglyConnectedComponent<T> : IEnumerable<Vertex<T>>
     {
