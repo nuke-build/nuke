@@ -79,9 +79,9 @@ namespace Nuke.Common.Tools.Twitter
                     .OrderBy(x => x)
                     .Join("&")))
                 .Join("&");
-            var cryptoKey = new ASCIIEncoding().GetBytes(new[] { consumerSecret, tokenSecret }.Join("&"));
+            var cryptoKey = Encoding.ASCII.GetBytes(new[] { consumerSecret, tokenSecret }.Join("&"));
             var cryptoTransform = new HMACSHA1(cryptoKey);
-            return Convert.ToBase64String(cryptoTransform.ComputeHash(new ASCIIEncoding().GetBytes(signature)));
+            return Convert.ToBase64String(cryptoTransform.ComputeHash(Encoding.ASCII.GetBytes(signature)));
         }
 
         private static string GetOAuthHeader(Dictionary<string, string> data)

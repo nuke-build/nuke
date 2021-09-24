@@ -9,7 +9,7 @@ using Nuke.Common;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
-using Nuke.Common.Tooling;
+using Nuke.Common.Utilities.Collections;
 using Nuke.Components;
 #if NUKE_ENTERPRISE
 using Nuke.Enterprise.Notifications;
