@@ -65,7 +65,7 @@ namespace Nuke.Common
         private static string[] GetSurrogateArguments()
         {
             var entryAssemblyLocation = Assembly.GetEntryAssembly()?.Location;
-            if (entryAssemblyLocation == null)
+            if (entryAssemblyLocation.IsNullOrEmpty())
                 return null;
 
             var assemblyDirectory = Path.GetDirectoryName(entryAssemblyLocation).NotNull();
