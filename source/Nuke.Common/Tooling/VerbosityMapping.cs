@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tooling
 {
