@@ -50,8 +50,7 @@ namespace Nuke.GlobalTool
             var password = TryGetPasswordFromCredentialStore(credentialStoreName);
             var fromCredentialStore = password != null;
             password ??= CreateNewPassword(out generatedPassword);
-            var passwordBytes = Encoding.UTF8.GetBytes(password);
-            var existingSecrets = LoadSecrets(secretParameters, passwordBytes, parametersFile);
+            var existingSecrets = LoadSecrets(secretParameters, password, parametersFile);
 
             if (EnvironmentInfo.IsOsx && existingSecrets.Count == 0 && !fromCredentialStore)
             {
@@ -78,7 +77,7 @@ namespace Nuke.GlobalTool
                 else
                 {
                     if (choice == SaveAndExit)
-                        SaveSecrets(addedSecrets, passwordBytes, parametersFile);
+                        SaveSecrets(addedSecrets, password, parametersFile);
 
                     if (choice == DeletePasswordAndExit)
                         DeletePasswordFromCredentialStore(credentialStoreName);
@@ -88,7 +87,7 @@ namespace Nuke.GlobalTool
             }
         }
 
-        private static Dictionary<string, string> LoadSecrets(IReadOnlyCollection<string> secretParameters, byte[] password, string parametersFile)
+        private static Dictionary<string, string> LoadSecrets(IReadOnlyCollection<string> secretParameters, string password, string parametersFile)
         {
             var jobject = SerializationTasks.JsonDeserializeFromFile<JObject>(parametersFile);
             return jobject.Properties()
@@ -96,7 +95,7 @@ namespace Nuke.GlobalTool
                 .ToDictionary(x => x.Name, x => Decrypt(x.Value.Value<string>(), password, x.Name));
         }
 
-        private static void SaveSecrets(Dictionary<string, string> secrets, byte[] password, string parametersFile)
+        private static void SaveSecrets(Dictionary<string, string> secrets, string password, string parametersFile)
         {
             var jobject = SerializationTasks.JsonDeserializeFromFile<JObject>(parametersFile);
             foreach (var (name, secret) in secrets)
