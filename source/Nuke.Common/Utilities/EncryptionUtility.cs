@@ -12,18 +12,19 @@ namespace Nuke.Common.Utilities
 {
     public static partial class EncryptionUtility
     {
-        public static string Decrypt(string cipherText, byte[] password, string name)
+        public static string Decrypt(string cipherText, string password, string name)
         {
             try
             {
                 var cipherBytes = Convert.FromBase64String(cipherText.Remove(startIndex: 0, count: 3));
+                var passwordBytes = Encoding.UTF8.GetBytes(password);
 
-                using var ms = new MemoryStream();
-                using var cs = GetCryptoStream(ms, password, x => x.CreateDecryptor());
-                cs.Write(cipherBytes, offset: 0, cipherBytes.Length);
-                cs.Close();
+                using var memoryStream = new MemoryStream();
+                using var cryptoStream = GetCryptoStream(memoryStream, passwordBytes, x => x.CreateDecryptor());
+                cryptoStream.Write(cipherBytes, offset: 0, cipherBytes.Length);
+                cryptoStream.Close();
 
-                return Encoding.UTF8.GetString(ms.ToArray());
+                return Encoding.UTF8.GetString(memoryStream.ToArray());
             }
             catch
             {
@@ -32,16 +33,17 @@ namespace Nuke.Common.Utilities
             }
         }
 
-        public static string Encrypt(string clearText, byte[] password)
+        public static string Encrypt(string clearText, string password)
         {
             var clearBytes = Encoding.UTF8.GetBytes(clearText);
+            var passwordBytes = Encoding.UTF8.GetBytes(password);
 
-            using var ms = new MemoryStream();
-            using var cs = GetCryptoStream(ms, password, x => x.CreateEncryptor());
-            cs.Write(clearBytes, offset: 0, clearBytes.Length);
-            cs.Close();
+            using var memoryStream = new MemoryStream();
+            using var cryptoStream = GetCryptoStream(memoryStream, passwordBytes, x => x.CreateEncryptor());
+            cryptoStream.Write(clearBytes, offset: 0, clearBytes.Length);
+            cryptoStream.Close();
 
-            return $"v1:{Convert.ToBase64String(ms.ToArray())}";
+            return $"v1:{Convert.ToBase64String(memoryStream.ToArray())}";
         }
 
         private static Stream GetCryptoStream(Stream stream, byte[] password, Func<SymmetricAlgorithm, ICryptoTransform> transformSelector)
@@ -55,10 +57,10 @@ namespace Nuke.Common.Utilities
             return new CryptoStream(stream, transformSelector(symmetricAlgorithm), CryptoStreamMode.Write);
         }
 
-        public static string GetGeneratedPassword()
+        public static string GetGeneratedPassword(int bits)
         {
             var randomNumberGenerator = RandomNumberGenerator.Create();
-            var password = new byte[256];
+            var password = new byte[bits / 8];
             randomNumberGenerator.GetBytes(password);
             return Convert.ToBase64String(password);
         }
