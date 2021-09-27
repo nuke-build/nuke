@@ -13,6 +13,8 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     {
         public bool? InclueSubmodules { get; set; }
         public bool? IncludeLargeFileStorage { get; set; }
+        public int? FetchDepth { get; set; }
+        public bool? Clean { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
@@ -26,6 +28,16 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                 if (InclueSubmodules.HasValue)
                 {
                     writer.WriteLine($"submodules: {InclueSubmodules.Value}".ToLower());
+                }
+
+                if (FetchDepth.HasValue)
+                {
+                    writer.WriteLine($"fetchDepth: {FetchDepth.Value}");
+                }
+
+                if (Clean.HasValue)
+                {
+                    writer.WriteLine($"clean: {Clean.Value}".ToLower());
                 }
             }
         }
