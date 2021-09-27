@@ -23,7 +23,8 @@ namespace Nuke.Common.Tooling
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this IProcess process)
         {
-            ControlFlow.Assert(process != null && process.WaitForExit(), "process != null && process.WaitForExit()");
+            ControlFlow.Assert(process != null , "process != null");
+            ControlFlow.Assert(process.WaitForExit(), "process.WaitForExit()");
             return process;
         }
 
