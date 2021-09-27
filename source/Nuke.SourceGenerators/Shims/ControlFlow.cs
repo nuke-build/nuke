@@ -38,5 +38,10 @@ namespace Nuke.Common
             if (!condition)
                 throw new Exception(message);
         }
+
+        public static void Fail(string message)
+        {
+            throw new Exception(message);
+        }
     }
 }

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "name": "MauiCheck",
+  "officialUrl": "https://github.com/Redth/dotnet-maui-check",
+  "help": "A dotnet tool for helping set up your .NET MAUI environment.",
+  "packageId": "Redth.Net.Maui.Check",
+  "packageExecutable": "MauiCheck.dll",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Manifest",
+            "type": "string",
+            "format": "--manifest {value}",
+            "help": "Manifest files are currently used by the doctor to fetch the latest versions and requirements. The manifest is hosted by default at: <a href=\"https://aka.ms/dotnet-maui-check-manifest\">https://aka.ms/dotnet-maui-check-manifest</a>. Use this option to specify an alternative file path or URL to use."
+          },
+          {
+            "name": "Fix",
+            "type": "bool",
+            "format": "--fix",
+            "help": "You can try using the <c>--fix</c> argument to automatically enable solutions to run without being prompted."
+          },
+          {
+            "name": "NonInteractive",
+            "type": "bool",
+            "format": "--non-interactive",
+            "help": "If you're running on CI you may want to run without any required input with the <c>--non-interactive</c> argument. You can combine this with <c>--fix</c> to automatically fix without prompting."
+          },
+          {
+            "name": "Preview",
+            "type": "bool",
+            "format": "--preview",
+            "help": "This uses a more frequently updated manifest with newer versions of things more often. The manifest is hosted by default at: <a href=\"https://aka.ms/dotnet-maui-check-manifest-dev\">https://aka.ms/dotnet-maui-check-manifest-dev</a>"
+          },
+          {
+            "name": "Ci",
+            "type": "bool",
+            "format": "--ci",
+            "help": "Uses the <c>dotnet-install</c> powershell / bash scripts for installing the dotnet SDK version from the manifest instead of the global installer."
+          },
+          {
+            "name": "Skip",
+            "type": "List<MauiCheckCheckup>",
+            "format": "--skip {value}",
+            "help": "Skips a checkup by name or id as listed in maui-check list. NOTE: If there are any other checkups which depend on a skipped checkup, they will be skipped too."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Config",
+      "definiteArgument": "config",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "DotNetVersion",
+            "type": "bool",
+            "format": "--dotnet-version",
+            "help": "Use the SDK version in the manifest in <em>global.json</em>."
+          },
+          {
+            "name": "DotNetPrerelease",
+            "type": "bool",
+            "format": "--dotnet-pre {value}",
+            "help": "Change the <c>allowPrerelease</c> value in the <em>global.json</em>."
+          },
+          {
+            "name": "DotNetRollForward",
+            "type": "MauiCheckDotNetRollForward",
+            "format": "--dotnet-rollForward {value}",
+            "help": "Change the <c>rollForward</c> value in <em>global.json</em> to one of the allowed values specified."
+          },
+          {
+            "name": "NuGetSources",
+            "type": "bool",
+            "format": "--nuget-sources",
+            "help": "Adds the nuget sources specified in the manifest to the <em>NuGet.config</em> and creates the file if needed."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "MauiCheckDotNetRollForward",
+      "values": [
+        "disable",
+        "major",
+        "minor",
+        "feature",
+        "patch",
+        "latestMajor",
+        "latestMinor",
+        "latestFeature",
+        "latestPatch"
+      ]
+    },
+    {
+      "name": "MauiCheckCheckup",
+      "values": [
+        "OpenJdkCheckup",
+        "VisualStudioMacCheckup",
+        "AndroidSdkPackagesCheckup",
+        "AndroidEmulatorCheckup",
+        "XCodeCheckup",
+        "DotNetCheckup",
+        "DotNetWorkloadDuplicatesCheckup",
+        "DotNetSentinelCheckup",
+        "DotNetWorkloadsCheckup"
+      ]
+    }
+  ]
+}

@@ -36,7 +36,7 @@ partial class Build
     Target InstallFonts => _ => _
         .Executes(() =>
         {
-            FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last(), requestConfigurator: x => x.Timeout = 120000));
+            FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last()));
             FontArchives.ForEach(x => Uncompress(x, FontDirectory / Path.GetFileNameWithoutExtension(x)));
 
             FontFiles.ForEach(x => FontCollection.Install(x));

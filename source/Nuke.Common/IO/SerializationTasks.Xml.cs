@@ -12,7 +12,7 @@ namespace Nuke.Common.IO
 {
     public static partial class SerializationTasks
     {
-        public static void XmlSerializeToFile(object obj, string path)
+        public static void XmlSerializeToFile<T>(T obj, string path)
         {
             TextTasks.WriteAllText(path, XmlSerialize(obj));
         }
@@ -40,6 +40,13 @@ namespace Nuke.Common.IO
 
             using var memoryStream = new StringReader(content);
             return (T) xmlSerializer.Deserialize(memoryStream);
+        }
+
+        public static void XmlUpdateFile<T>(string path, Action<T> update)
+        {
+            var obj = XmlDeserializeFromFile<T>(path);
+            update.Invoke(obj);
+            XmlSerializeToFile(obj, path);
         }
     }
 }

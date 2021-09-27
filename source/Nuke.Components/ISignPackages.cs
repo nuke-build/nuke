@@ -14,7 +14,6 @@ using Nuke.Common.Utilities.Collections;
 using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.SignPath.SignPathTasks;
-using static Nuke.Common.ValueInjection.ValueInjectionUtility;
 
 namespace Nuke.Components
 {

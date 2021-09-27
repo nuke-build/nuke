@@ -128,7 +128,7 @@ namespace Nuke.GlobalTool
                     var packageId = match.Groups["packageId"].Value;
                     var packageVersion = match.Groups["version"].Value;
                     if (packageVersion.IsNullOrEmpty())
-                        packageVersion = GetLatestPackageVersion(packageId, includePrereleases: false, timeout: 10_000).GetAwaiter().GetResult();
+                        packageVersion = GetLatestPackageVersion(packageId, includePrereleases: false).GetAwaiter().GetResult();
                     yield return new(packageType, packageId, packageVersion);
                 }
             }

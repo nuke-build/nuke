@@ -14,6 +14,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     {
         public bool Disabled { get; set; }
         public bool? Batch { get; set; }
+        public bool? AutoCancel { get; set; }
         public string[] BranchesInclude { get; set; }
         public string[] BranchesExclude { get; set; }
         public string[] TagsInclude { get; set; }
@@ -31,6 +32,9 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
 
             if (Batch.HasValue)
                 writer.WriteLine($"batch: {Batch.ToString().ToLowerInvariant()}");
+
+            if (AutoCancel.HasValue)
+                writer.WriteLine($"autoCancel: {AutoCancel.ToString().ToLowerInvariant()}");
 
             if (BranchesInclude.Length > 0 || BranchesExclude.Length > 0)
             {

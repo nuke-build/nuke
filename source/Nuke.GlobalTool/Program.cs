@@ -70,7 +70,7 @@ namespace Nuke.GlobalTool
                 if (string.IsNullOrWhiteSpace(command))
                     ControlFlow.Fail($"No command specified. Usage is: nuke {CommandPrefix}<command> [args]");
 
-                var availableCommands = typeof(Program).GetMethods(ReflectionUtility.Static);
+                var availableCommands = typeof(Program).GetMethods(ReflectionUtility.Static).Where(x => x.ReturnType == typeof(int));
                 var commandHandler = availableCommands.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));
                 ControlFlow.Assert(commandHandler != null,
                     new[]

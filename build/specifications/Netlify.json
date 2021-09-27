@@ -1,0 +1,175 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "name": "Netlify",
+  "officialUrl": "https://docs.netlify.com/cli/get-started/",
+  "help": "Netlify’s command line interface (CLI) lets you configure <a href=\"https://docs.netlify.com/cli/get-started/#continuous-deployment\">continuous deployment</a> straight from the command line. You can use Netlify CLI to <a href=\"https://docs.netlify.com/cli/get-started/#run-a-local-development-environment\">run a local development server</a> that you can share with others, <a href=\"https://docs.netlify.com/cli/get-started/#run-builds-locally\">run a local build and plugins</a>, and <a href=\"https://docs.netlify.com/cli/get-started/#manual-deploys\">deploy your site</a>.",
+  "pathExecutable": "npx",
+  "tasks": [
+    {
+      "postfix": "Deploy",
+      "definiteArgument": "netlify deploy",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Directory",
+            "type": "string",
+            "format": "--dir {value}",
+            "help": "Specify a folder to deploy."
+          },
+          {
+            "name": "Functions",
+            "type": "string",
+            "format": "--functions {value}",
+            "help": "Specify a functions folder to deploy."
+          },
+          {
+            "name": "Production",
+            "type": "bool",
+            "format": "--prod",
+            "help": "Deploy to production."
+          },
+          {
+            "name": "ProductionIfUnlocked",
+            "type": "bool",
+            "format": "--prodIfUnlocked",
+            "help": "Deploy to production if unlocked, create a draft otherwise."
+          },
+          {
+            "name": "Alias",
+            "type": "string",
+            "format": "--alias {value}",
+            "help": "Specifies the alias for deployment, the string at the beginning of the deploy subdomain. Useful for creating predictable deployment URLs. Avoid setting an alias string to the same value as a deployed branch. <code>alias doesn’t</code> create a branch deploy and can’t be used in conjunction with the branch subdomain feature. Maximum 37 characters."
+          },
+          {
+            "name": "Branch",
+            "type": "string",
+            "format": "--branch {value}",
+            "help": "Serves the same functionality as --alias. Deprecated and will be removed in future versions."
+          },
+          {
+            "name": "Open",
+            "type": "bool",
+            "format": "--open",
+            "help": "Open site after deploy."
+          },
+          {
+            "name": "Message",
+            "type": "string",
+            "format": "--message {value}",
+            "help": "A short message to include in the deploy log."
+          },
+          {
+            "name": "Auth",
+            "type": "string",
+            "format": "--auth {value}",
+            "secret": true,
+            "help": "Netlify auth token to deploy with."
+          },
+          {
+            "name": "Site",
+            "type": "string",
+            "format": "--site {value}",
+            "help": "Netlify auth token to deploy with."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Output deployment data as JSON."
+          },
+          {
+            "name": "Timeout",
+            "type": "string",
+            "format": "--timeout {value}",
+            "help": "Timeout to wait for deployment to finish."
+          },
+          {
+            "name": "Trigger",
+            "type": "bool",
+            "format": "--trigger",
+            "help": "Trigger a new build of your site on Netlify without uploading local files."
+          },
+          {
+            "name": "Build",
+            "type": "bool",
+            "format": "--build",
+            "help": "Run build command before deploying."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "SitesCreate",
+      "returnType": "string",
+      "definiteArgument": "netlify sites:create",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name {value}",
+            "help": "Name of site."
+          },
+          {
+            "name": "AccountSlug",
+            "type": "string",
+            "format": "--account-slug {value}",
+            "help": "Account slug to create the site under."
+          },
+          {
+            "name": "WithCI",
+            "type": "bool",
+            "format": "--with-ci",
+            "help": "Initialize CI hooks during site creation."
+          },
+          {
+            "name": "Manual",
+            "type": "bool",
+            "format": "--manual",
+            "help": "Force manual CI setup. Used <code>--with-ci</code> flag."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "SitesDelete",
+      "definiteArgument": "netlify sites:delete",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "SiteId",
+            "type": "string",
+            "format": "{value}",
+            "help": "Site ID to delete."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Delete without prompting (useful for CI)."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "Debug",
+      "type": "bool",
+      "format": "--debug",
+      "help": "Print debugging information."
+    },
+    {
+      "name": "HttpProxy",
+      "type": "string",
+      "format": "--httpProxy {value}",
+      "help": "Proxy server address to route requests through."
+    },
+    {
+      "name": "HttpProxyCertificateFileName",
+      "type": "string",
+      "format": "--httpProxyCertificateFilename {value}",
+      "help": "Certificate file to use when connecting using a proxy server."
+    }
+  ]
+}

@@ -21,7 +21,7 @@
 
 [<img align="right" width="130px" src="https://github.com/nuke-build/nuke/raw/develop/images/icon.png" />](https://nuke.build/)
 
-**NUKE** is the best open-source build automation system for C#/.NET that runs cross-platform on .NET Core, .NET Framework, and Mono. While builds are bootstrapped with conventional Bash or PowerShell scripts, their actual implementation resides in simple [C# console applications](https://www.nuke.build/docs/authoring-builds/fundamentals.html). This approach unleashes the power of the type system and natively provides IDE features like code-completion, refactorings, and debugging. A custom [global tool](https://www.nuke.build/docs/running-builds/global-tool.html) and several [IDE extensions](https://www.nuke.build/docs/running-builds/from-ides.html) further improve how build projects are setup, authored and executed. A revolutionary code-generation approach ensures scalable [integration of third-party tools](https://www.nuke.build/docs/authoring-builds/cli-tools.html) like MSBuild or dotnet CLI.
+**NUKE** is the most intuitive and productive build automation system for C#/.NET that runs cross-platform on .NET Core, .NET Framework, and Mono. While builds are bootstrapped with conventional Bash or PowerShell scripts, their actual implementation resides in simple [C# console applications](https://www.nuke.build/docs/authoring-builds/fundamentals.html). This approach unleashes the power of the type system and natively provides IDE features like code-completion, refactorings, and debugging. A custom [global tool](https://www.nuke.build/docs/running-builds/global-tool.html) and several [IDE extensions](https://www.nuke.build/docs/running-builds/from-ides.html) further improve how build projects are setup, authored and executed. A revolutionary code-generation approach ensures scalable [integration of third-party tools](https://www.nuke.build/docs/authoring-builds/cli-tools.html) like MSBuild or dotnet CLI.
 
 For more information checkout the [resources](http://www.nuke.build/docs/getting-started/resources.html) and [FAQ](http://www.nuke.build/docs/getting-started/faq.html) sections.
 
@@ -78,10 +78,14 @@ NUKE builds and tests itself on several different CI servers, which helps ensuri
 - **[JetBrains s.r.o.](https://www.jetbrains.com/)** <sup><a href="https://github.com/JetBrains/space-dotnet-sdk">1</a> <a href="https://github.com/JetBrains/YouTrackSharp">2</a></sup>
 - **[Octopus Deploy Pty. Ltd.](https://www.octopus.com/)** <sup><a href="https://github.com/OctopusDeploy/Time">1</a> <a href="https://github.com/OctopusDeploy/Shellfish">2</a> <a href="https://github.com/OctopusDeploy/Ocl">3</a></sup>
 - [OmniSharp](http://www.omnisharp.net/) <sup><a href="https://github.com/OmniSharp/csharp-language-server-protocol">1</a></sup>
+- **[VirtoCommerce](https://virtocommerce.com/)** <sup><a href="https://github.com/VirtoCommerce/vc-build/">1</a></sup>
 
 ## Sponsors
 
 Thanks to all companies, organizations, and individuals who are sponsoring the further development of this project. Your support means a lot! 💙
+
+
+[<img height="140px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/virto-commerce.png" alt="Virto Commerce" />](https://virtocommerce.com/)
 
 [<img height="150px" src="https://octopus.com/images/company/OctopusDeploy-logo-RGB.svg" alt="Octopus Deploy" />](https://octopus.com)
 
@@ -93,11 +97,11 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Vova Lantsov](https://avatars.githubusercontent.com/vova-lantsov-dev?s=60&v=4)](https://github.com/vova-lantsov-dev)
 [![Daniel Valadas](https://avatars.githubusercontent.com/valadas?s=60&v=4)](https://github.com/valadas)
 [![Anton Wieslander](https://avatars.githubusercontent.com/T0shik?s=60&v=4)](https://github.com/T0shik)
+[![Chase Florell](https://avatars.githubusercontent.com/ChaseFlorell?s=60&v=4)](https://github.com/ChaseFlorell)
 
 [![Stephan Müller](https://avatars.githubusercontent.com/chaquotay?s=45&v=4)](https://github.com/chaquotay)
 [![Bitbonk](https://avatars.githubusercontent.com/bitbonk?s=45&v=4)](https://github.com/bitbonk)
 [![Marat Gumerov](https://avatars.githubusercontent.com/Marat-Gumerov?s=45&v=4)](https://github.com/Marat-Gumerov)
-[![Chase Florell](https://avatars.githubusercontent.com/ChaseFlorell?s=45&v=4)](https://github.com/ChaseFlorell)
 [![Thomas Unger](https://avatars.githubusercontent.com/tunger?s=45&v=4)](https://github.com/tunger)
 [![Matt Brailsford](https://avatars.githubusercontent.com/mattbrailsford?s=45&v=4)](https://github.com/mattbrailsford)
 [![David Driscoll](https://avatars.githubusercontent.com/david-driscoll?s=45&v=4)](https://github.com/david-driscoll)
@@ -107,6 +111,9 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Martin Gill](https://avatars.githubusercontent.com/MartinSGill?s=45&v=4)](https://github.com/MartinSGill)
 [![Trey Cook](https://avatars.githubusercontent.com/hfcook3?s=45&v=4)](https://github.com/hfcook3)
 [![Todor Todorov](https://avatars.githubusercontent.com/totollygeek?s=45&v=4)](https://github.com/totollygeek)
+[![Christian Sindberg](https://avatars.githubusercontent.com/chrsin?s=45&v=4)](https://github.com/chrsin)
+[![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
+[![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=45&v=4)](https://github.com/stevenkuhn)
 
 ## Technology Sponsors
 

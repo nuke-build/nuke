@@ -30,7 +30,7 @@ namespace Nuke.Common.Execution
                 return;
 
             var parameterMembers = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true);
-            var passwords = new Dictionary<string, byte[]>();
+            var passwords = new Dictionary<string, string>();
 
             IEnumerable<string> ConvertToArguments(string profile, string name, string[] values)
             {
@@ -46,7 +46,7 @@ namespace Nuke.Common.Execution
             string DecryptValue(string profile, string name, string value)
                 => EncryptionUtility.Decrypt(
                     value,
-                    passwords[profile] = passwords.GetValueOrDefault(profile) ?? Encoding.UTF8.GetBytes(EncryptionUtility.GetPassword(profile)),
+                    passwords[profile] = passwords.GetValueOrDefault(profile) ?? EncryptionUtility.GetPassword(profile),
                     name);
 
             // TODO: Abstract AbsolutePath/Solution/Project etc.

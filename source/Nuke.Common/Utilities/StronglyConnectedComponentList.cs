@@ -7,7 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.Utilities
 {
     internal class StronglyConnectedComponentList<T> : IEnumerable<StronglyConnectedComponent<T>>
     {

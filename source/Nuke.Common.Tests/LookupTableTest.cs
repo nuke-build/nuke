@@ -5,7 +5,7 @@
 using System;
 using System.Linq;
 using FluentAssertions;
-using Nuke.Common.Tooling;
+using Nuke.Common.Utilities.Collections;
 using Xunit;
 
 // ReSharper disable ArgumentsStyleLiteral

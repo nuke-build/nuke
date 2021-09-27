@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
+using Newtonsoft.Json.Linq;
+using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tooling
 {
@@ -20,7 +23,8 @@ namespace Nuke.Common.Tooling
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this IProcess process)
         {
-            ControlFlow.Assert(process != null && process.WaitForExit(), "process != null && process.WaitForExit()");
+            ControlFlow.Assert(process != null , "process != null");
+            ControlFlow.Assert(process.WaitForExit(), "process.WaitForExit()");
             return process;
         }
 
@@ -43,6 +47,23 @@ namespace Nuke.Common.Tooling
                 ControlFlow.Assert(o.Type == OutputType.Std, "o.Type == OutputType.Std");
 
             return output;
+        }
+
+        public static string StdToText(this IEnumerable<Output> output)
+        {
+            return output.Where(x => x.Type == OutputType.Std)
+                .Select(x => x.Text)
+                .JoinNewLine();
+        }
+
+        public static T StdToJson<T>(this IEnumerable<Output> output)
+        {
+            return SerializationTasks.JsonDeserialize<T>(output.StdToText());
+        }
+
+        public static JObject StdToJson(this IEnumerable<Output> output)
+        {
+            return output.StdToJson<JObject>();
         }
     }
 }

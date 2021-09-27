@@ -7,25 +7,24 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using JetBrains.Annotations;
-using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Utilities
 {
-    public static class EncryptionUtility
+    public static partial class EncryptionUtility
     {
-        public static string Decrypt(string cipherText, byte[] password, string name)
+        public static string Decrypt(string cipherText, string password, string name)
         {
             try
             {
                 var cipherBytes = Convert.FromBase64String(cipherText.Remove(startIndex: 0, count: 3));
+                var passwordBytes = Encoding.UTF8.GetBytes(password);
 
-                using var ms = new MemoryStream();
-                using var cs = GetCryptoStream(ms, password, x => x.CreateDecryptor());
-                cs.Write(cipherBytes, offset: 0, cipherBytes.Length);
-                cs.Close();
+                using var memoryStream = new MemoryStream();
+                using var cryptoStream = GetCryptoStream(memoryStream, passwordBytes, x => x.CreateDecryptor());
+                cryptoStream.Write(cipherBytes, offset: 0, cipherBytes.Length);
+                cryptoStream.Close();
 
-                return Encoding.UTF8.GetString(ms.ToArray());
+                return Encoding.UTF8.GetString(memoryStream.ToArray());
             }
             catch
             {
@@ -34,16 +33,17 @@ namespace Nuke.Common.Utilities
             }
         }
 
-        public static string Encrypt(string clearText, byte[] password)
+        public static string Encrypt(string clearText, string password)
         {
             var clearBytes = Encoding.UTF8.GetBytes(clearText);
+            var passwordBytes = Encoding.UTF8.GetBytes(password);
 
-            using var ms = new MemoryStream();
-            using var cs = GetCryptoStream(ms, password, x => x.CreateEncryptor());
-            cs.Write(clearBytes, offset: 0, clearBytes.Length);
-            cs.Close();
+            using var memoryStream = new MemoryStream();
+            using var cryptoStream = GetCryptoStream(memoryStream, passwordBytes, x => x.CreateEncryptor());
+            cryptoStream.Write(clearBytes, offset: 0, clearBytes.Length);
+            cryptoStream.Close();
 
-            return $"v1:{Convert.ToBase64String(ms.ToArray())}";
+            return $"v1:{Convert.ToBase64String(memoryStream.ToArray())}";
         }
 
         private static Stream GetCryptoStream(Stream stream, byte[] password, Func<SymmetricAlgorithm, ICryptoTransform> transformSelector)
@@ -57,103 +57,10 @@ namespace Nuke.Common.Utilities
             return new CryptoStream(stream, transformSelector(symmetricAlgorithm), CryptoStreamMode.Write);
         }
 
-        public static void DeletePasswordFromCredentialStore(string name)
-        {
-            switch (EnvironmentInfo.Platform)
-            {
-                case PlatformFamily.OSX:
-                    ProcessTasks.StartProcess(
-                        Security,
-                        $"delete-generic-password -a {EnvironmentInfo.Variables["LOGNAME"]} -s {name.DoubleQuoteIfNeeded()}",
-                        logInvocation: false,
-                        logOutput: false).AssertZeroExitCode();
-                    break;
-                default:
-                    throw new NotSupportedException(EnvironmentInfo.Platform.ToString());
-            }
-        }
-
-        public static void SavePasswordToCredentialStore(string name, string password)
-        {
-            switch (EnvironmentInfo.Platform)
-            {
-                case PlatformFamily.OSX:
-                    ProcessTasks.StartProcess(
-                        Security,
-                        $"add-generic-password -T \"\" -a {EnvironmentInfo.Variables["LOGNAME"]} -s {name.DoubleQuoteIfNeeded()} -w {password}",
-                        logInvocation: false,
-                        logOutput: false).AssertZeroExitCode();
-                    break;
-                default:
-                    throw new NotSupportedException(EnvironmentInfo.Platform.ToString());
-            }
-        }
-
-        [CanBeNull]
-        public static string TryGetPasswordFromCredentialStore(string name)
-        {
-            switch (EnvironmentInfo.Platform)
-            {
-                case PlatformFamily.OSX:
-                    var process = ProcessTasks.StartProcess(
-                        Security,
-                        $"find-generic-password -w -a {EnvironmentInfo.Variables["LOGNAME"]} -s {name.DoubleQuoteIfNeeded()}",
-                        logInvocation: false,
-                        logOutput: false);
-                    process.WaitForExit();
-                    return process.ExitCode == 0
-                        ? process.Output.Single().Text
-                        : null;
-                default:
-                    return null;
-            }
-        }
-
-        private static string Security => ToolPathResolver.GetPathExecutable("security");
-
-        public static string GetPassword(string profile)
-        {
-            string PromptForPassword()
-            {
-                Logger.Info($"Enter password for {Constants.GetParametersFileName(profile)}:");
-                return ConsoleUtility.ReadSecret();
-            }
-
-            var credentialStoreName = Constants.GetCredentialStoreName(NukeBuild.RootDirectory, profile);
-            var passwordParameterName = Constants.GetProfilePasswordParameterName(profile);
-            return TryGetPasswordFromCredentialStore(credentialStoreName) ??
-                   EnvironmentInfo.GetParameter<string>(passwordParameterName) ??
-                   PromptForPassword();
-        }
-
-        public static string CreateNewPassword(out bool generated)
-        {
-            while (true)
-            {
-                Logger.Info(
-                    EnvironmentInfo.IsOsx
-                        ? "Enter a minimum 10 character password (leave empty for auto-generated stored in macOS keychain):"
-                        : "Enter a minimum 10 character password:");
-
-                var password = ConsoleUtility.ReadSecret();
-                if (password.IsNullOrEmpty() && EnvironmentInfo.IsOsx)
-                {
-                    generated = true;
-                    return GetGeneratedPassword();
-                }
-
-                if (!password.IsNullOrEmpty() && password.Length >= 10)
-                {
-                    generated = false;
-                    return password;
-                }
-            }
-        }
-
-        private static string GetGeneratedPassword()
+        public static string GetGeneratedPassword(int bits)
         {
             var randomNumberGenerator = RandomNumberGenerator.Create();
-            var password = new byte[256];
+            var password = new byte[bits / 8];
             randomNumberGenerator.GetBytes(password);
             return Convert.ToBase64String(password);
         }

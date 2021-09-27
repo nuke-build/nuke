@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Nuke.Common.Utilities
 {
-    public static class JsonExtensions
+    public static partial class JObjectExtensions
     {
         [CanBeNull]
         public static T GetPropertyValueOrNull<T>(this JObject jobject, string name)
@@ -33,17 +33,6 @@ namespace Nuke.Common.Utilities
         public static string GetPropertyStringValue(this JObject jobject, string name)
         {
             return jobject.GetPropertyValue<string>(name);
-        }
-
-        public static JEnumerable<T> GetChildren<T>(this JObject jobject, string name)
-            where T : JToken
-        {
-            return jobject.GetPropertyValue<JArray>(name).Children<T>();
-        }
-
-        public static JEnumerable<JObject> GetChildren(this JObject jobject, string name)
-        {
-            return jobject.GetChildren<JObject>(name);
         }
     }
 }
