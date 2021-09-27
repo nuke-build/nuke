@@ -50,6 +50,7 @@ namespace Nuke.Common.Tools.AzureSignTool
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;files&gt;</c> via <see cref="AzureSignToolSettings.Files"/></li>
         ///     <li><c>--additional-certificates</c> via <see cref="AzureSignToolSettings.AdditionalCertificates"/></li>
         ///     <li><c>--azure-key-vault-accesstoken</c> via <see cref="AzureSignToolSettings.KeyVaultAccessToken"/></li>
         ///     <li><c>--azure-key-vault-certificate</c> via <see cref="AzureSignToolSettings.KeyVaultCertificateName"/></li>
@@ -88,6 +89,7 @@ namespace Nuke.Common.Tools.AzureSignTool
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;files&gt;</c> via <see cref="AzureSignToolSettings.Files"/></li>
         ///     <li><c>--additional-certificates</c> via <see cref="AzureSignToolSettings.AdditionalCertificates"/></li>
         ///     <li><c>--azure-key-vault-accesstoken</c> via <see cref="AzureSignToolSettings.KeyVaultAccessToken"/></li>
         ///     <li><c>--azure-key-vault-certificate</c> via <see cref="AzureSignToolSettings.KeyVaultCertificateName"/></li>
@@ -123,6 +125,7 @@ namespace Nuke.Common.Tools.AzureSignTool
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;files&gt;</c> via <see cref="AzureSignToolSettings.Files"/></li>
         ///     <li><c>--additional-certificates</c> via <see cref="AzureSignToolSettings.AdditionalCertificates"/></li>
         ///     <li><c>--azure-key-vault-accesstoken</c> via <see cref="AzureSignToolSettings.KeyVaultAccessToken"/></li>
         ///     <li><c>--azure-key-vault-certificate</c> via <see cref="AzureSignToolSettings.KeyVaultCertificateName"/></li>
@@ -255,9 +258,15 @@ namespace Nuke.Common.Tools.AzureSignTool
         ///   When signing multiple files, specifies the maximum number of concurrent operations. Setting this value does not guarentee that number of concurrent operations will be performed. If this value is unspecified, the system will use the default based on the number of available processor threads. Setting this value to <c>1</c> disable concurrent signing.
         /// </summary>
         public virtual int? MaxDegreeOfParallelism { get; internal set; }
+        /// <summary>
+        ///   Files to sign.
+        /// </summary>
+        public virtual IReadOnlyList<string> Files => FilesInternal.AsReadOnly();
+        internal List<string> FilesInternal { get; set; } = new List<string>();
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
+              .Add("sign")
               .Add("--azure-key-vault-url {value}", KeyVaultUrl)
               .Add("--azure-key-vault-client-id {value}", KeyVaultClientId)
               .Add("--azure-key-vault-client-secret {value}", KeyVaultClientSecret, secret: true)
@@ -279,7 +288,8 @@ namespace Nuke.Common.Tools.AzureSignTool
               .Add("--skip-signed", SkipSigned)
               .Add("--page-hashing", PageHashing)
               .Add("--no-page-hashing", NoPageHashing)
-              .Add("--max-degree-of-parallelism {value}", MaxDegreeOfParallelism);
+              .Add("--max-degree-of-parallelism {value}", MaxDegreeOfParallelism)
+              .Add("{value}", Files);
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -1105,6 +1115,87 @@ namespace Nuke.Common.Tools.AzureSignTool
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.MaxDegreeOfParallelism = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Files
+        /// <summary>
+        ///   <p><em>Sets <see cref="AzureSignToolSettings.Files"/> to a new list</em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFiles<T>(this T toolSettings, params string[] files) where T : AzureSignToolSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FilesInternal = files.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="AzureSignToolSettings.Files"/> to a new list</em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFiles<T>(this T toolSettings, IEnumerable<string> files) where T : AzureSignToolSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FilesInternal = files.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="AzureSignToolSettings.Files"/></em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
+        [Pure]
+        public static T AddFiles<T>(this T toolSettings, params string[] files) where T : AzureSignToolSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FilesInternal.AddRange(files);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="AzureSignToolSettings.Files"/></em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
+        [Pure]
+        public static T AddFiles<T>(this T toolSettings, IEnumerable<string> files) where T : AzureSignToolSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FilesInternal.AddRange(files);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="AzureSignToolSettings.Files"/></em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearFiles<T>(this T toolSettings) where T : AzureSignToolSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FilesInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="AzureSignToolSettings.Files"/></em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFiles<T>(this T toolSettings, params string[] files) where T : AzureSignToolSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(files);
+            toolSettings.FilesInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="AzureSignToolSettings.Files"/></em></p>
+        ///   <p>Files to sign.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFiles<T>(this T toolSettings, IEnumerable<string> files) where T : AzureSignToolSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(files);
+            toolSettings.FilesInternal.RemoveAll(x => hashSet.Contains(x));
             return toolSettings;
         }
         #endregion
