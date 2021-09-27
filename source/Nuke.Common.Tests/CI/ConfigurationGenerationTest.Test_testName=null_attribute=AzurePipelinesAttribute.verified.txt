@@ -49,6 +49,8 @@ stages:
           - checkout: self
             lfs: false
             submodules: true
+            fetchDepth: 1
+            clean: true
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -78,6 +80,8 @@ stages:
           - checkout: self
             lfs: false
             submodules: true
+            fetchDepth: 1
+            clean: true
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -109,6 +113,8 @@ stages:
           - checkout: self
             lfs: false
             submodules: true
+            fetchDepth: 1
+            clean: true
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -138,6 +144,8 @@ stages:
           - checkout: self
             lfs: false
             submodules: true
+            fetchDepth: 1
+            clean: true
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -173,6 +181,8 @@ stages:
           - checkout: self
             lfs: false
             submodules: true
+            fetchDepth: 1
+            clean: true
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -202,6 +212,8 @@ stages:
           - checkout: self
             lfs: false
             submodules: true
+            fetchDepth: 1
+            clean: true
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -233,6 +245,8 @@ stages:
           - checkout: self
             lfs: false
             submodules: true
+            fetchDepth: 1
+            clean: true
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
@@ -262,6 +276,8 @@ stages:
           - checkout: self
             lfs: false
             submodules: true
+            fetchDepth: 1
+            clean: true
           - task: Cache@2
             displayName: Cache (nuke-temp)
             inputs:
