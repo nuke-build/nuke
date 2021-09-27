@@ -89,7 +89,9 @@ namespace Nuke.Common.Tests.CI
                         TriggerTagsInclude = new[] { "included_tags" },
                         TriggerTagsExclude = new[] { "excluded_tags" },
                         Submodules = true,
-                        LargeFileStorage = false
+                        LargeFileStorage = false,
+                        Clean = true,
+                        FetchDepth = 1
                     }
                 );
 
