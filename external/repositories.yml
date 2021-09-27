@@ -5,6 +5,11 @@
 - https://github.com/nuke-build/presentation.git
 - https://github.com/nuke-build/resharper.git
 - https://github.com/nuke-build/roslyn.git
+- https://github.com/nuke-build/samples-azure-functions.git
+- https://github.com/nuke-build/samples-azure-keyvault.git
+- https://github.com/nuke-build/samples-azure-swa.git
+- https://github.com/nuke-build/samples-blazor-swa.git
+- https://github.com/nuke-build/samples-maui.git
 - https://github.com/nuke-build/template.git
 - https://github.com/nuke-build/tweets.git
 - https://github.com/nuke-build/visualstudio.git
