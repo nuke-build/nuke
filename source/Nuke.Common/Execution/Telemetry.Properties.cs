@@ -51,7 +51,8 @@ namespace Nuke.Common.Execution
                     (() => repository.Endpoint.ContainsOrdinalIgnoreCase("github.com"), "GitHub"),
                     (() => repository.Endpoint.ContainsOrdinalIgnoreCase("gitlab.com"), "GitLab"),
                     (() => repository.Endpoint.ContainsOrdinalIgnoreCase("bitbucket.org"), "Bitbucket"),
-                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("jetbrains.space"), "JetBrains")
+                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("jetbrains.space"), "JetBrains"),
+                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("visualstudio.com"), "Azure")
                 };
 
             var branches =
