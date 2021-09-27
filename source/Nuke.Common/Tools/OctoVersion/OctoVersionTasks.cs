@@ -5,6 +5,7 @@
 using System;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.OctoVersion
 {
@@ -36,7 +37,7 @@ namespace Nuke.Common.Tools.OctoVersion
 
         private static OctoVersionInfo GetResult(IProcess process, OctoVersionGetVersionSettings toolSettings)
         {
-            ControlFlow.Assert(!string.IsNullOrEmpty(toolSettings.OutputJsonFile), $"{nameof(toolSettings.OutputJsonFile)} must be set");
+            ControlFlow.Assert(toolSettings.OutputJsonFile != null, "toolSettings.OutputJsonFile != null");
 
             try
             {
@@ -48,8 +49,7 @@ namespace Nuke.Common.Tools.OctoVersion
             }
             catch (Exception exception)
             {
-                throw new Exception($"{nameof(OctoVersion)} exited with code {process.ExitCode}, but cannot parse output file {toolSettings.OutputJsonFile} as JSON",
-                    exception);
+                throw new Exception($"Cannot parse {nameof(OctoVersion)} output from {toolSettings.OutputJsonFile.SingleQuote()}.", exception);
             }
         }
     }
