@@ -35,11 +35,11 @@ namespace Nuke.Common.Tools.SignPath
         }
 
         public static string SignPathApiUrl => "https://app.signpath.io/api/v1";
-        public static int ServiceUnavailableRetryTimeoutInSeconds = 3;
-        public static int WaitForCompletionRetryTimeoutInSeconds = 5;
-        public static int WaitForCompletionRetryAttempts = 100;
+        public static TimeSpan ServiceUnavailableRetryTimeoutInSeconds = TimeSpan.FromSeconds(3);
         public static TimeSpan DefaultHttpClientTimeout = TimeSpan.FromSeconds(15);
         public static TimeSpan UploadAndDownloadRequestTimeout = TimeSpan.FromSeconds(15);
+        public static TimeSpan WaitForCompletionRetryTimeout = TimeSpan.FromSeconds(5);
+        public static int WaitForCompletionRetryAttempts = 100;
 
         public static string GetSigningRequestUrl(string organizationId, string signingRequestId)
         {
@@ -161,7 +161,7 @@ namespace Nuke.Common.Tools.SignPath
                         _ => throw new Exception(signingRequestStatus)
                     };
                 },
-                waitInSeconds: WaitForCompletionRetryTimeout,
+                delay: WaitForCompletionRetryTimeout,
                 retryAttempts: WaitForCompletionRetryAttempts,
                 logAction: Logger.Normal);
 
@@ -200,7 +200,7 @@ namespace Nuke.Common.Tools.SignPath
                     var request = requestFactory.Invoke();
                     response = httpClient.SendAsync(request).GetAwaiter().GetResult().AssertStatusCode(expectedStatusCode);
                 },
-                waitInSeconds: ServiceUnavailableRetryTimeout,
+                delay: ServiceUnavailableRetryTimeoutInSeconds,
                 logAction: Logger.Normal);
             return response;
         }
