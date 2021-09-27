@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -23,12 +23,6 @@ namespace Nuke.Common.Tools.SignPath
     [PublicAPI]
     public static class SignPathTasks
     {
-        private const int ServiceUnavailableRetryTimeout = 3;
-        private const int WaitForCompletionRetryTimeout = 5;
-        private const int WaitForCompletionRetryAttempts = 100;
-        private const int DefaultHttpClientTimeout = 15;
-        private const int UploadAndDownloadRequestTimeout = 15;
-
         private class SigningRequestStatus
         {
             public const string Completed = nameof(Completed);
@@ -41,6 +35,11 @@ namespace Nuke.Common.Tools.SignPath
         }
 
         public static string SignPathApiUrl => "https://app.signpath.io/api/v1";
+        public static TimeSpan ServiceUnavailableRetryTimeoutInSeconds = TimeSpan.FromSeconds(3);
+        public static TimeSpan DefaultHttpClientTimeout = TimeSpan.FromSeconds(15);
+        public static TimeSpan UploadAndDownloadRequestTimeout = TimeSpan.FromSeconds(15);
+        public static TimeSpan WaitForCompletionRetryTimeout = TimeSpan.FromSeconds(5);
+        public static int WaitForCompletionRetryAttempts = 100;
 
         public static string GetSigningRequestUrl(string organizationId, string signingRequestId)
         {
@@ -162,7 +161,7 @@ namespace Nuke.Common.Tools.SignPath
                         _ => throw new Exception(signingRequestStatus)
                     };
                 },
-                delay: TimeSpan.FromSeconds(WaitForCompletionRetryTimeout),
+                delay: WaitForCompletionRetryTimeout,
                 retryAttempts: WaitForCompletionRetryAttempts,
                 logAction: Logger.Normal);
 
@@ -177,11 +176,11 @@ namespace Nuke.Common.Tools.SignPath
                 () => ServicePointManager.SecurityProtocol = previousProtocol);
         }
 
-        private static HttpClient CreateAuthorizedHttpClient(string apiToken, int timeout)
+        private static HttpClient CreateAuthorizedHttpClient(string apiToken, TimeSpan timeout)
         {
             return new HttpClient
                    {
-                       Timeout = TimeSpan.FromSeconds(timeout),
+                       Timeout = timeout,
                        DefaultRequestHeaders =
                        {
                            Authorization = new AuthenticationHeaderValue("Bearer", apiToken)
@@ -201,7 +200,7 @@ namespace Nuke.Common.Tools.SignPath
                     var request = requestFactory.Invoke();
                     response = httpClient.SendAsync(request).GetAwaiter().GetResult().AssertStatusCode(expectedStatusCode);
                 },
-                delay: TimeSpan.FromSeconds(ServiceUnavailableRetryTimeout),
+                delay: ServiceUnavailableRetryTimeoutInSeconds,
                 logAction: Logger.Normal);
             return response;
         }
@@ -255,7 +254,7 @@ namespace Nuke.Common.Tools.SignPath
             return response.Headers.Location.AbsoluteUri;
         }
 
-        private static HttpResponseMessage  AssertStatusCode(this HttpResponseMessage response, HttpStatusCode statusCode)
+        private static HttpResponseMessage AssertStatusCode(this HttpResponseMessage response, HttpStatusCode statusCode)
         {
             if (response.StatusCode != statusCode)
             {
