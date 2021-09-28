@@ -8,5 +8,7 @@ stages:
 
 build:
   stage: build
+  variables:
+    EnterpriseAccessToken: $ENTERPRISE_ACCESS_TOKEN
   script:
     - './build.cmd Pack Test'
