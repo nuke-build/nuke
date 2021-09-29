@@ -17,8 +17,8 @@ using Nuke.Enterprise.Notifications;
 [AuditBuildMembers(
     DeclaringTypes = new[] { typeof(Build) },
     Members = new[] { nameof(RootDirectory), nameof(Host), nameof(Verbosity) })]
-[DeploymentSlackNotification]
-[ContinuousBuildSlackNotification]
+// [DeploymentSlackNotification]
+// [ContinuousBuildSlackNotification]
 partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazGitHubAccessToken
 {
     string IHazGitHubAccessToken.AccessToken => GitHubToken;
