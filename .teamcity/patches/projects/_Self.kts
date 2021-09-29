@@ -15,7 +15,7 @@ changeProject(DslContext.projectId) {
             password("env.EnterpriseAccessToken", "", label = "EnterpriseAccessToken")
         }
         update {
-            password("env.EnterpriseAccessToken", "credentialsJSON:02c23844-4f9a-49c2-95a6-320497f8abc3", label = "EnterpriseAccessToken")
+            password("env.EnterpriseAccessToken", "credentialsJSON:02c23844-4f9a-49c2-95a6-320497f8abc3", label = "EnterpriseAccessToken", readOnly = true)
         }
         expect {
             password("env.SlackUserAccessToken", "", label = "SlackUserAccessToken")
