@@ -56,10 +56,10 @@ partial class Build
         {
             var job = base.GetJob(executableTarget, jobs, relevantTargets, image);
 
-            var symbol = CustomNames.GetValueOrDefault(job.Name).NotNull("symbol != null");
-            job.DisplayName = job.Parallel == 0
+            var symbol = CustomNames.GetValueOrDefault(job.Name);
+            job.DisplayName = (job.Parallel == 0
                 ? $"{symbol} {job.DisplayName}"
-                : $"{symbol} {job.DisplayName} 🧩";
+                : $"{symbol} {job.DisplayName} 🧩").Trim();
             return job;
         }
     }
