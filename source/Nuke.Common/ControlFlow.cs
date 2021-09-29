@@ -185,12 +185,7 @@ namespace Nuke.Common
             catch (Exception exception)
             {
                 if (logWarning)
-                {
-                    var innerException = exception.InnerException.NotNull("innerException != null");
-                    Logger.Warn(includeStackTrace
-                        ? new[] { innerException.Message, "StackTrace:", innerException.StackTrace }.JoinNewLine()
-                        : innerException.Message);
-                }
+                    Logger.Warn(exception);
 
                 return defaultValue;
             }
