@@ -329,7 +329,7 @@
         {
           "name": "LogFile",
           "type": "string",
-          "format": "-logFile {value}",
+          "format": "-logFile \"{value}\"",
           "customValue": true,
           "help": "Specify where the Editor or Windows/Linux/OSX standalone log file are written."
         },
