@@ -56,10 +56,10 @@ partial class Build
             return base.GetBuildTypes(build, executableTarget, vcsRoot, buildTypes, relevantTargets)
                 .ForEachLazy(x =>
                 {
-                    var symbol = CustomNames.GetValueOrDefault(x.InvokedTargets.Last()).NotNull("symbol != null");
-                    x.Name = x.Partition == Partition.Single
+                    var symbol = CustomNames.GetValueOrDefault(x.InvokedTargets.Last());
+                    x.Name = (x.Partition == null
                         ? $"{symbol} {x.Name}"
-                        : $"{symbol} {x.InvokedTargets.Last()} 🧩 {x.Partition}";
+                        : $"{symbol} {x.InvokedTargets.Last()} 🧩 {x.Partition}").Trim();
                 });
         }
     }
