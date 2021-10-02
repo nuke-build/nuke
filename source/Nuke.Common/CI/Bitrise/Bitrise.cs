@@ -6,7 +6,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.Bitrise
@@ -32,8 +31,6 @@ namespace Nuke.Common.CI.Bitrise
         internal Bitrise()
         {
         }
-
-        protected internal override OutputSink OutputSink => new BitriseOutputSink();
 
         string IBuildServer.Branch => GitBranch;
         string IBuildServer.Commit => GitCommit;

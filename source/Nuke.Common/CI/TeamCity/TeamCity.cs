@@ -8,12 +8,9 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -25,7 +22,7 @@ namespace Nuke.Common.CI.TeamCity
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public class TeamCity : Host, IBuildServer
+    public partial class TeamCity : Host, IBuildServer
     {
         public new static TeamCity Instance => Host.Instance as TeamCity;
 
@@ -87,8 +84,6 @@ namespace Nuke.Common.CI.TeamCity
                     : new string[0];
             });
         }
-
-        protected internal override OutputSink OutputSink => new TeamCityOutputSink(this);
 
         string IBuildServer.Branch => BranchName;
         string IBuildServer.Commit => BuildVcsNumber;

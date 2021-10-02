@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -19,7 +18,7 @@ namespace Nuke.Common.CI.AzurePipelines
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public class AzurePipelines : Host, IBuildServer
+    public partial class AzurePipelines : Host, IBuildServer
     {
         public new static AzurePipelines Instance => Host.Instance as AzurePipelines;
 
@@ -36,8 +35,6 @@ namespace Nuke.Common.CI.AzurePipelines
         {
             _messageSink = messageSink ?? Console.WriteLine;
         }
-
-        protected internal override OutputSink OutputSink => new AzurePipelinesOutputSink(this);
 
         string IBuildServer.Branch => SourceBranchName;
         string IBuildServer.Commit => SourceVersion;

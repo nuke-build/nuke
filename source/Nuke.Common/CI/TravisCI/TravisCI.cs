@@ -6,7 +6,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.TravisCI
@@ -16,7 +15,7 @@ namespace Nuke.Common.CI.TravisCI
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public class TravisCI : Host, IBuildServer
+    public partial class TravisCI : Host, IBuildServer
     {
         public new static TravisCI Instance => Host.Instance as TravisCI;
 
@@ -25,8 +24,6 @@ namespace Nuke.Common.CI.TravisCI
         internal TravisCI()
         {
         }
-
-        protected internal override OutputSink OutputSink => new TravisCIOutputSink();
 
         string IBuildServer.Branch => Branch;
         string IBuildServer.Commit => Commit;

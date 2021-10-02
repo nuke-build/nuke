@@ -23,7 +23,6 @@ namespace Nuke.Common
         bool INukeBuild.NoLogo => NoLogo;
         bool INukeBuild.IsLocalBuild => IsLocalBuild;
         bool INukeBuild.IsServerBuild => IsServerBuild;
-        LogLevel INukeBuild.LogLevel => LogLevel;
         bool INukeBuild.Continue => Continue;
 
         T INukeBuild.TryGetValue<T>(Expression<Func<T>> parameterExpression)

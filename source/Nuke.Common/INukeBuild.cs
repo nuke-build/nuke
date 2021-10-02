@@ -45,7 +45,6 @@ namespace Nuke.Common
         bool NoLogo { get; }
         bool IsLocalBuild {get;}
         bool IsServerBuild {get;}
-        LogLevel LogLevel {get;}
         bool Continue { get; }
         Partition Partition { get; }
 

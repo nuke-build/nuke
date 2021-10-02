@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitHubActions
@@ -17,7 +16,7 @@ namespace Nuke.Common.CI.GitHubActions
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public class GitHubActions : Host, IBuildServer
+    public partial class GitHubActions : Host, IBuildServer
     {
         internal static bool IsRunningGitHubActions => EnvironmentInfo.GetVariable<bool>("GITHUB_ACTIONS");
 
@@ -26,8 +25,6 @@ namespace Nuke.Common.CI.GitHubActions
         internal GitHubActions()
         {
         }
-
-        protected internal override OutputSink OutputSink => new GitHubActionsOutputSink(this);
 
         string IBuildServer.Branch => GitHubRef;
         string IBuildServer.Commit => GitHubSha;

@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -18,66 +17,9 @@ namespace Nuke.Common
     [DebuggerStepThrough]
     public static class Logger
     {
-        public static void WriteTest()
-        {
-            Console.WriteLine("╔═╗");
-            Console.WriteLine("║ ║");
-            Console.WriteLine("╚═╝");
-
-            Warn("Warn");
-            Error("Error");
-            Normal("Normal");
-            Info("Info");
-            Trace("Trace");
-            Success("Success");
-
-            const string Esc = "\u001b[";
-            const string Reset = "\u001b[0m";
-
-            for (var i = 0; i < 200; i++)
-            {
-                Console.Write($"{Esc}{i}m{i}{Reset}  ");
-                Console.Write($"{Esc}{i};1m{i};1{Reset}  ");
-                Console.Write($"{Esc}{i};2m{i};1{Reset}  ");
-                Console.Write($"{Esc}{i};3m{i};1{Reset}  ");
-                Console.Write($"{Esc}{i};4m{i};1{Reset}  ");
-                Console.Write($"{Esc}{i};5m{i};1{Reset}  ");
-                if (i % 10 == 0)
-                    Console.WriteLine();
-            }
-        }
-
-        internal static OutputSink OutputSink = OutputSink.Default;
-
         public static LogLevel LogLevel = LogLevel.Normal;
 
-        public static IDisposable Block(string text)
-        {
-            return OutputSink.WriteBlock(text);
-        }
-
-        #region Log
-
-        /// <summary>
-        /// Logs a message with <paramref name="level"/> severity if it is lower or equal to <see cref="NukeBuild.LogLevel"/>.
-        /// </summary>
-        [StringFormatMethod("format")]
-        public static void Log(LogLevel level, string format, params object[] args)
-        {
-            Log(level, string.Format(format, args));
-        }
-
-        /// <summary>
-        /// Logs a message with <paramref name="level"/> severity if it is lower or equal to <see cref="NukeBuild.LogLevel"/>.
-        /// </summary>
-        public static void Log(LogLevel level, object value)
-        {
-            Log(level, value?.ToString());
-        }
-
-        /// <summary>
-        /// Logs a message with <paramref name="level"/> severity if it is lower or equal to <see cref="NukeBuild.LogLevel"/>.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Write instead")]
         public static void Log(LogLevel level, string text = null)
         {
             switch (level)
@@ -99,230 +41,142 @@ namespace Nuke.Common
             }
         }
 
-        #endregion
+        [Obsolete]
+        public static IDisposable Block(string text)
+        {
+            return NukeBuild.Host.WriteBlock(text);
+        }
 
-        #region Normal
+        [Obsolete("Use Serilog.Log.Write instead")]
+        public static void Log(LogLevel level, string format, params object[] args)
+        {
+            throw new NotSupportedException();
+        }
 
-        /// <summary>
-        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
-        /// </summary>
-        [StringFormatMethod("format")]
+        [Obsolete("Use Serilog.Log.Write instead")]
+        public static void Log(LogLevel level, object value)
+        {
+            throw new NotSupportedException();
+        }
+
+        [Obsolete("Use Serilog.Log.Debug instead")]
         public static void Normal(string format, params object[] args)
         {
-            Normal(string.Format(format, args));
+            Serilog.Log.Debug(format, args);
         }
 
-        /// <summary>
-        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Debug instead")]
         public static void Normal(object value)
         {
-            Normal(value?.ToString());
+            Serilog.Log.Debug("{Object}", value);
         }
 
-        /// <summary>
-        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Debug instead")]
         public static void Normal(string text = null)
         {
-            if (LogLevel <= LogLevel.Normal)
-                OutputSink.WriteNormal(text ?? string.Empty);
+            Serilog.Log.Debug(text);
         }
 
-        #endregion
-
-        #region Success
-
-        /// <summary>
-        /// Logs a message as Success.
-        /// </summary>
-        [StringFormatMethod("format")]
+        [Obsolete("Removed")]
         public static void Success(string format, params object[] args)
         {
-            Success(string.Format(format, args));
+            throw new NotSupportedException();
         }
 
-        /// <summary>
-        /// Logs a message as Success.
-        /// </summary>
+        [Obsolete("Removed")]
         public static void Success(object value)
         {
-            Success(value?.ToString());
+            throw new NotSupportedException();
         }
 
-        /// <summary>
-        /// Logs a message as Success.
-        /// </summary>
+        [Obsolete("Removed")]
         public static void Success(string text = null)
         {
-            OutputSink.WriteSuccess(text ?? string.Empty);
+            throw new NotSupportedException();
         }
 
-        #endregion
-
-        #region Trace
-
-        /// <summary>
-        /// Logs a message as trace if <see cref="LogLevel"/> is equal to <see cref="Nuke.Common.LogLevel.Trace"/>.
-        /// </summary>
-        [StringFormatMethod("format")]
+        [Obsolete("Use Serilog.Log.Verbose instead")]
         public static void Trace(string format, params object[] args)
         {
-            Trace(string.Format(format, args));
+            Serilog.Log.Verbose(format, args);
         }
 
-        /// <summary>
-        /// Logs a message as trace if <see cref="LogLevel"/> is equal to <see cref="Nuke.Common.LogLevel.Trace"/>.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Verbose instead")]
         public static void Trace(object value)
         {
-            Trace(value?.ToString());
+            Serilog.Log.Verbose("{Object}", value);
         }
 
-        /// <summary>
-        /// Logs a message as trace if <see cref="LogLevel"/> is equal to <see cref="Nuke.Common.LogLevel.Trace"/>.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Verbose instead")]
         public static void Trace(string text = null)
         {
-            if (LogLevel <= LogLevel.Trace)
-                OutputSink.WriteTrace(text ?? string.Empty);
+            Serilog.Log.Verbose(text);
         }
 
-        #endregion
-
-        #region Info
-
-        /// <summary>
-        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
-        /// </summary>
-        [StringFormatMethod("format")]
+        [Obsolete("Use Serilog.Log.Information instead")]
         public static void Info(string format, params object[] args)
         {
-            Info(string.Format(format, args));
+            Serilog.Log.Information(format, args);
         }
 
-        /// <summary>
-        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Information instead")]
         public static void Info(object value)
         {
-            Info(value?.ToString());
+            Serilog.Log.Information("{Object}", value);
         }
 
-        /// <summary>
-        /// Logs a message as information if <see cref="LogLevel"/> is lower or equal to <see cref="Common.LogLevel.Normal"/>.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Information instead")]
         public static void Info(string text = null)
         {
-            if (LogLevel <= LogLevel.Normal)
-                OutputSink.WriteInformation(text ?? string.Empty);
+            Serilog.Log.Information(text);
         }
 
-        #endregion
-
-        #region Warn
-
-        /// <summary>
-        /// Logs a message as warning if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Warning"/>.
-        /// </summary>
-        [StringFormatMethod("format")]
+        [Obsolete("Use Serilog.Log.Warning instead")]
         public static void Warn(string format, params object[] args)
         {
-            Warn(string.Format(format, args));
+            Serilog.Log.Warning(format, args);
         }
 
-        /// <summary>
-        /// Logs a message as warning if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Warning"/>.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Warning instead")]
         public static void Warn(object value)
         {
-            Warn(value?.ToString());
+            Serilog.Log.Warning("{Object}", value);
         }
 
-        /// <summary>
-        /// Logs a message as warning if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Warning"/>.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Warning instead")]
         public static void Warn(string text = null)
         {
-            if (LogLevel <= LogLevel.Warning)
-                OutputSink.WriteAndReportWarning(text ?? string.Empty);
+            Serilog.Log.Warning(text);
         }
 
-        /// <summary>
-        /// Logs an exception as warning if <see cref="LogLevel"/> is lower or equal to <see cref="Nuke.Common.LogLevel.Warning"/>.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Warning instead")]
         public static void Warn(Exception exception)
         {
-            if (LogLevel <= LogLevel.Warning)
-                HandleException(exception, OutputSink.WriteAndReportWarning);
+            Serilog.Log.Warning(exception, exception.Message);
         }
 
-        #endregion
-
-        #region Error
-
-        /// <summary>
-        /// Logs a message as error.
-        /// </summary>
-        [StringFormatMethod("format")]
+        [Obsolete("Use Serilog.Log.Error instead")]
         public static void Error(string format, params object[] args)
         {
-            Error(string.Format(format, args));
+            Serilog.Log.Error(format, args);
         }
 
-        /// <summary>
-        /// Logs a message as error.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Error instead")]
         public static void Error(object value)
         {
-            Error(value?.ToString());
+            Serilog.Log.Error("{Object}", value);
         }
 
-        /// <summary>
-        /// Logs a message as error.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Error instead")]
         public static void Error(string text = null)
         {
-            if (LogLevel <= LogLevel.Error)
-                OutputSink.WriteAndReportError(text ?? string.Empty);
+            Serilog.Log.Error(text);
         }
 
-        /// <summary>
-        /// Logs an exception as error.
-        /// </summary>
+        [Obsolete("Use Serilog.Log.Error instead")]
         public static void Error(Exception exception)
         {
-            if (LogLevel <= LogLevel.Error)
-                HandleException(exception, OutputSink.WriteAndReportError);
-        }
-
-        #endregion
-
-        private static void HandleException(Exception exception, Action<string, string> exceptionOutput, string prefix = null)
-        {
-            static string GetTrimmedStackTrace(Exception exception)
-                => exception.StackTrace.SplitLineBreaks()
-                    .Where(x => !x.TrimStart().StartsWith($"at {typeof(ControlFlow).FullName}"))
-                    .JoinNewLine();
-
-            switch (exception)
-            {
-                case AggregateException ex:
-                    var exceptions = ex.Flatten().InnerExceptions;
-                    exceptions.ForEach((x, i) => HandleException(x, exceptionOutput, $"[{i + 1}/{exceptions.Count}] "));
-                    break;
-                case TargetInvocationException ex:
-                    HandleException(ex.InnerException, exceptionOutput);
-                    break;
-                case TypeInitializationException ex:
-                    HandleException(ex.InnerException, exceptionOutput);
-                    break;
-                default:
-                    exceptionOutput.Invoke(
-                        $"{prefix}{exception.GetType().Name}: ".TrimStart("Exception: ") + exception.Message,
-                        GetTrimmedStackTrace(exception) + EnvironmentInfo.NewLine);
-                    break;
-            }
+            Serilog.Log.Error(exception, exception.Message);
         }
     }
 }

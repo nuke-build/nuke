@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
+using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -67,8 +68,8 @@ namespace Nuke.Common
         [Parameter("Logging verbosity during build execution. Default is 'Normal'.")]
         public static Verbosity Verbosity
         {
-            get => (Verbosity) LogLevel;
-            set => LogLevel = (LogLevel) value;
+            get => (Verbosity) Logging.Level;
+            set => Logging.Level = (LogLevel) value;
         }
 
         /// <summary>
@@ -82,12 +83,6 @@ namespace Nuke.Common
 
         public static bool IsLocalBuild => !IsServerBuild;
         public static bool IsServerBuild => Host is IBuildServer;
-
-        public static LogLevel LogLevel
-        {
-            get => Logger.LogLevel;
-            set => Logger.LogLevel = value;
-        }
 
         private static AbsolutePath GetRootDirectory()
         {
