@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 using static Nuke.Common.Utilities.ReflectionUtility;
 
 namespace Nuke.Common.ValueInjection
@@ -352,7 +353,7 @@ namespace Nuke.Common.ValueInjection
                 var levenshteinDistance = (float) GetLevenshteinDistance(name, candidate);
                 if (levenshteinDistance / name.Length < similarityThreshold)
                 {
-                    Logger.Warn($"Requested parameter '{name}' was not found. Is there a typo with '{candidate}' which was passed?");
+                    Log.Warning("Requested parameter {Name} was not found. Is there a typo with {candidate} which was passed?", name, candidate);
                     return;
                 }
             }

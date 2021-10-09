@@ -12,6 +12,7 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities;
+using Serilog;
 
 // ReSharper disable ArgumentsStyleLiteral
 namespace Nuke.Common.ChangeLog
@@ -96,7 +97,7 @@ namespace Nuke.Common.ChangeLog
         /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
         public static void FinalizeChangelog(ChangeLog changelogFile, NuGetVersion tag, [CanBeNull] GitRepository repository = null)
         {
-            Logger.Info($"Finalizing {PathConstruction.GetRelativePath(NukeBuild.RootDirectory, changelogFile.Path)} for '{tag}'...");
+            Log.Information("Finalizing {File} for {Tag} ...", PathConstruction.GetRelativePath(NukeBuild.RootDirectory, changelogFile.Path), tag);
 
             var unreleasedNotes = changelogFile.Unreleased;
             var releaseNotes = changelogFile.ReleaseNotes;
@@ -131,7 +132,7 @@ namespace Nuke.Common.ChangeLog
         /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
         public static void FinalizeChangelog(string changelogFile, string tag, [CanBeNull] GitRepository repository = null)
         {
-            Logger.Info($"Finalizing {PathConstruction.GetRelativePath(NukeBuild.RootDirectory, changelogFile)} for '{tag}'...");
+            Log.Information("Finalizing {File} for {Tag} ...", PathConstruction.GetRelativePath(NukeBuild.RootDirectory, changelogFile), tag);
 
             var content = TextTasks.ReadAllLines(changelogFile).ToList();
             var sections = GetReleaseSections(content).ToList();
@@ -216,7 +217,7 @@ namespace Nuke.Common.ChangeLog
                     };
 
                 yield return releaseData;
-                Logger.Trace($"Found section '{caption}' [{index}-{releaseData.EndIndex}].");
+                Log.Verbose("Found section '{Caption}' [{Start}-{End}]", caption, index, releaseData.EndIndex);
 
                 index = releaseData.EndIndex + 1;
             }

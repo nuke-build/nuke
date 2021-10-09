@@ -10,6 +10,7 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -17,7 +18,6 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.IO.HttpTasks;
-using static Nuke.Common.Logger;
 
 partial class Build
 {
@@ -40,7 +40,7 @@ partial class Build
             FontArchives.ForEach(x => Uncompress(x, FontDirectory / Path.GetFileNameWithoutExtension(x)));
 
             FontFiles.ForEach(x => FontCollection.Install(x));
-            FontCollection.Families.ForEach(x => Normal($"Installed font {x.Name.SingleQuote()}"));
+            FontCollection.Families.ForEach(x => Log.Information($"Installed font {x.Name.SingleQuote()}"));
         });
 
     AbsolutePath WatermarkImageFile => RootDirectory / "images" / "logo-watermark.png";

@@ -9,6 +9,7 @@ using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
 using Nuke.Common;
 using Nuke.Common.Utilities;
+using Serilog;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
@@ -60,7 +61,7 @@ namespace Nuke.CodeGeneration.Generators
             if (new[] { "int", "bool" }.Contains(property.Type))
                 return;
 
-            Logger.Warn($"Property {property.DataClass.Name}.{property.Name} doesn't contain '{{value}}'.");
+            Log.Warning("Property {ClassName}.{PropertyName} doesn't contain '{{value}}'", property.DataClass.Name, property.Name);
         }
 
         private static void CheckMissingSecret(Property property)
@@ -73,7 +74,7 @@ namespace Nuke.CodeGeneration.Generators
                 !property.Name.ContainsOrdinalIgnoreCase("token"))
                 return;
 
-            Logger.Warn($"Property {property.DataClass.Name}.{property.Name} should have explicit secret definition.");
+            Log.Warning("Property {ClassName}.{PropertyName} should have explicit secret definition", property.DataClass.Name, property.Name);
         }
 
         private static DataClassWriter WriteProcessToolPath(this DataClassWriter writer)

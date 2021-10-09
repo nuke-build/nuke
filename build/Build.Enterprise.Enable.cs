@@ -13,6 +13,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Utilities;
+using Serilog;
 
 #if !NUKE_ENTERPRISE
 [RestartWithEnterprise]
@@ -55,7 +56,7 @@ partial class Build
             var url = $"https://{accessToken}@github.com/nuke-build/enterprise";
             GitTasks.Git($"clone {url} {enterpriseDirectory}", logOutput: false, logInvocation: false);
 
-            Logger.Info("Restarting with Nuke.Enterprise integration...");
+            Log.Information("Restarting with Nuke.Enterprise integration ...");
             var arguments = Environment.CommandLine.Split(' ').Skip(1).JoinSpace();
             var process = Process.Start(DotNetTasks.DotNetPath, $"run --project {BuildProjectFile} -- {arguments}");
             process.NotNull().WaitForExit();

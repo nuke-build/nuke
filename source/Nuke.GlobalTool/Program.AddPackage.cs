@@ -34,7 +34,7 @@ namespace Nuke.GlobalTool
 
             var configuration = GetConfiguration(buildScript, evaluate: true);
             var buildProjectFile = configuration[BUILD_PROJECT_FILE];
-            Logger.Info($"Installing {packageId}/{packageVersion} to {buildProjectFile} ...");
+            Host.Information($"Installing {packageId}/{packageVersion} to {buildProjectFile} ...");
             AddOrReplacePackage(packageId, packageVersion, PACKAGE_TYPE_DOWNLOAD, buildProjectFile);
             DotNetTasks.DotNet($"restore {buildProjectFile}");
 
@@ -44,7 +44,7 @@ namespace Nuke.GlobalTool
             if (!hasToolsDirectory)
                 AddOrReplacePackage(packageId, packageVersion, PACKAGE_TYPE_REFERENCE, buildProjectFile);
 
-            Logger.Info($"Done installing {packageId}/{packageVersion} to {buildProjectFile}.");
+            Host.Information($"Done installing {packageId}/{packageVersion} to {buildProjectFile}");
             return 0;
         }
 

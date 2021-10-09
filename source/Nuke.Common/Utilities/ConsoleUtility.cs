@@ -31,7 +31,7 @@ namespace Nuke.Common.Utilities
             if (s_interrupted)
                 return defaultValue;
 
-            Logger.Normal(question);
+            Host.Information(question);
 
             ConsoleKeyInfo key;
             var input = new StringBuilder();
@@ -78,7 +78,7 @@ namespace Nuke.Common.Utilities
             var selection = 0;
             ConsoleKey key;
 
-            Logger.Normal(question);
+            Host.Information(question);
             do
             {
                 for (var i = 0; i < options.Length; i++)

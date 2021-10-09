@@ -10,6 +10,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
+using Serilog;
 
 // ReSharper disable CompareNonConstrainedGenericWithNull
 
@@ -55,7 +56,7 @@ namespace Nuke.Common
         public static void AssertWarn(bool condition, string text)
         {
             if (!condition)
-                Logger.Warn($"Check failed: {text}");
+                Log.Warning("Check failed: {Assertion}", text);
         }
 
         /// <summary>
@@ -97,7 +98,7 @@ namespace Nuke.Common
         public static T NotNullWarn<T>([CanBeNull] this T obj, string text = null)
         {
             if (obj == null)
-                Logger.Warn($"Check failed: {text ?? $"{typeof(T).FullName} != null"}");
+                Log.Warning("Check failed: {Assertion}", text ?? $"{typeof(T).FullName} != null");
             return obj;
         }
 
@@ -185,7 +186,7 @@ namespace Nuke.Common
             catch (Exception exception)
             {
                 if (logWarning)
-                    Logger.Warn(exception);
+                    Log.Warning(exception, exception.Message);
 
                 return defaultValue;
             }
@@ -208,7 +209,7 @@ namespace Nuke.Common
         {
             Assert(retryAttempts > 0, "retryAttempts > 0");
 
-            logAction ??= Logger.Warn;
+            logAction ??= Log.Warning;
             Exception lastException = null;
 
             for (var attempt = 0; attempt < retryAttempts; attempt++)

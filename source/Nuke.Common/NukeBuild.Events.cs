@@ -10,6 +10,7 @@ using System.Reflection;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common
 {
@@ -31,7 +32,7 @@ namespace Nuke.Common
         {
             BuildExtensions
                 .OfType<TExtension>()
-                .ForEachLazy(x => Logger.Trace($"[{action.GetMemberInfo().Name}] {x.GetType().Name.TrimEnd(nameof(Attribute))} ({x.Priority})"))
+                .ForEachLazy(x => Log.Verbose("{Type}.{Method} ({Priority})", x.GetType().Name.TrimEnd(nameof(Attribute)), action.GetMemberInfo().Name, x.Priority))
                 .ForEach(action.Compile());
         }
 

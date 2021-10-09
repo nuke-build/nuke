@@ -29,7 +29,7 @@ namespace Nuke.GlobalTool
             ControlFlow.Assert(buildScript != null, "buildScript != null");
             var configuration = GetConfiguration(buildScript, evaluate: false);
 
-            Logger.Info($"Configuration from {buildScript}:");
+            Host.Information($"Configuration from {buildScript}:");
             configuration.ForEach(x => Console.WriteLine($"{x.Key} = {x.Value}"));
 
             return 0;

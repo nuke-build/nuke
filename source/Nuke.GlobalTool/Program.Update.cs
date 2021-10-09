@@ -98,10 +98,10 @@ namespace Nuke.GlobalTool
             File.Delete(configurationFile);
 
             WriteConfigurationFile(rootDirectory, solutionFile);
-            Logger.Warn("The previous .nuke file was transformed to a .nuke directory.");
-            Logger.Warn("The .tmp directory can be cleared, as it is moved to .nuke/temp as well.");
+            Host.Warning("The previous .nuke file was transformed to a .nuke directory.");
+            Host.Warning("The .tmp directory can be cleared, as it is moved to .nuke/temp as well.");
             if (solutionFile != null)
-                Logger.Warn($"Verify the property referencing the solution has the same name as the member with the {nameof(SolutionAttribute)}.");
+                Host.Warning($"Verify the property referencing the solution has the same name as the member with the {nameof(SolutionAttribute)}.");
         }
 
         private static void RemoveLegacyFileIncludes(Microsoft.Build.Evaluation.Project buildProject)

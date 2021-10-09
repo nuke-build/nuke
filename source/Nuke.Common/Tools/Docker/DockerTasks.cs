@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using Nuke.Common.Tooling;
+using Serilog;
 
 namespace Nuke.Common.Tools.Docker
 {
@@ -15,14 +16,14 @@ namespace Nuke.Common.Tools.Docker
             switch (type)
             {
                 case OutputType.Std:
-                    Logger.Normal(output);
+                    Log.Debug(output);
                     break;
                 case OutputType.Err:
                 {
                     if (output.StartsWith("WARNING!"))
-                        Logger.Warn(output);
+                        Log.Warning(output);
                     else
-                        Logger.Error(output);
+                        Log.Error(output);
 
                     break;
                 }

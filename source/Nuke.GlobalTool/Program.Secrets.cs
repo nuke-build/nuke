@@ -36,7 +36,7 @@ namespace Nuke.GlobalTool
             var secretParameters = GetSecretParameters(rootDirectory).ToList();
             if (secretParameters.Count == 0)
             {
-                Logger.Info("There are no parameters marked with SecretAttribute.");
+                Host.Information($"There are no parameters marked with {nameof(SecretAttribute)}.");
                 return 0;
             }
 
@@ -71,7 +71,7 @@ namespace Nuke.GlobalTool
 
                 if (!choice.EqualsAnyOrdinalIgnoreCase(SaveAndExit, DiscardAndExit, DeletePasswordAndExit))
                 {
-                    Logger.Info($"Enter secret for {choice}:");
+                    Host.Information($"Enter secret for {choice}:");
                     addedSecrets[choice] = ConsoleUtility.ReadSecret();
                 }
                 else

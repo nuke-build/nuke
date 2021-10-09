@@ -15,6 +15,7 @@ using Newtonsoft.Json.Linq;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using Serilog;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.SerializationTasks;
 
@@ -75,7 +76,7 @@ namespace Nuke.Common.Tools.SignPath
                     new StringContent(JsonSerialize(content), Encoding.UTF8, contentType));
                 response.AssertStatusCode(HttpStatusCode.Created);
 
-                Logger.Info($"Signing request created: {response.Headers.Location.AbsoluteUri.Replace("api/v1", "Web")}");
+                Log.Information("Signing request created: {Url}", response.Headers.Location.AbsoluteUri.Replace("api/v1", "Web"));
                 return response.Headers.Location.AbsoluteUri;
             }
         }
@@ -128,7 +129,7 @@ namespace Nuke.Common.Tools.SignPath
             {
                 var defaultHttpClient = CreateAuthorizedHttpClient(apiToken, DefaultHttpClientTimeout);
                 var downloadUrl = GetSignedArtifactUrl(defaultHttpClient, signingRequestUrl);
-                Logger.Info($"Signed artifact is available: {downloadUrl}");
+                Log.Information("Signed artifact is available: {DownloadUrl}", downloadUrl);
 
                 var downloadHttpClient = CreateAuthorizedHttpClient(apiToken, UploadAndDownloadRequestTimeout);
                 using var response = SendGetRequestWithRetry(downloadHttpClient, downloadUrl);
@@ -137,7 +138,7 @@ namespace Nuke.Common.Tools.SignPath
                 FileSystemTasks.EnsureExistingParentDirectory(outputPath);
                 using var fileStream = File.Open(outputPath, FileMode.Create);
                 await downloadStream.CopyToAsync(fileStream);
-                Logger.Info($"Signed artifact downloaded to: {outputPath}");
+                Log.Information("Signed artifact downloaded to: {OutputPath}", outputPath);
             }
         }
 
@@ -163,7 +164,7 @@ namespace Nuke.Common.Tools.SignPath
                 },
                 delay: WaitForCompletionRetryTimeout,
                 retryAttempts: WaitForCompletionRetryAttempts,
-                logAction: Logger.Normal);
+                logAction: Log.Debug);
 
             return signedArtifactUrl.NotNull($"Signing Request {signingRequestStatus}");
         }
@@ -201,7 +202,7 @@ namespace Nuke.Common.Tools.SignPath
                     response = httpClient.SendAsync(request).GetAwaiter().GetResult().AssertStatusCode(expectedStatusCode);
                 },
                 delay: ServiceUnavailableRetryTimeoutInSeconds,
-                logAction: Logger.Normal);
+                logAction: Log.Debug);
             return response;
         }
 

@@ -11,6 +11,7 @@ using Newtonsoft.Json.Schema.Generation;
 using Newtonsoft.Json.Serialization;
 using Nuke.Common;
 using Nuke.Common.IO;
+using Serilog;
 
 namespace Nuke.CodeGeneration
 {
@@ -19,7 +20,7 @@ namespace Nuke.CodeGeneration
     {
         public static void GenerateSchema<T>(string output, string id, string title)
         {
-            Logger.Info($"Generating schema for '{typeof(T).Name}' to '{output}'...");
+            Log.Information("Generating schema for {TypeName} to {Output} ...", typeof(T).Name, output);
 
             var schemaGenerator = new JSchemaGenerator
                                   {

@@ -141,7 +141,6 @@ namespace Nuke.Common.Tests.Execution
                 .Requires(() => StringParameter)
                 .Executes(() =>
                 {
-                    Logger.Info(StringParameter);
                 });
         }
 

@@ -42,7 +42,7 @@ namespace Nuke.Common.Execution
                 TryGetValue(() => GitRepository.FromLocalDirectory(NukeBuild.RootDirectory)) is { } repository &&
                 TryGetValue(() => repository.GetDefaultBranch().GetAwaiter().GetResult()) == null)
             {
-                Logger.Normal();
+                Host.Debug();
 
                 if (CultureInfo.CurrentCulture.TwoLetterISOLanguageName.EqualsOrdinalIgnoreCase("zh"))
                     WriteTranslationRequest();
@@ -53,21 +53,21 @@ namespace Nuke.Common.Execution
 
         private void WriteTranslationRequest()
         {
-            Logger.Info("We want to make NUKE more accessible by providing");
-            Logger.Info("our documentation in simplified chinese (zh-CN). 🇨🇳");
-            Logger.Info("If you're interested to help, please contact us:");
-            Logger.Info("     📧 ithrowexceptions@gmail.com");
-            Logger.Normal();
-            Logger.Info("Happy building! 🌟");
+            Host.Information("We want to make NUKE more accessible by providing");
+            Host.Information("our documentation in simplified chinese (zh-CN). 🇨🇳");
+            Host.Information("If you're interested to help, please contact us:");
+            Host.Information("     📧 ithrowexceptions@gmail.com");
+            Host.Information();
+            Host.Information("Happy building! 🌟");
         }
 
         private void WriteSponsorshipInfo()
         {
-            Logger.Info("If you like NUKE, please support us! 🤓");
-            Logger.Info("With a sponsorship you'll gain access to various perks. 🚀");
-            Logger.Info("Check out our tiers: https://github.com/sponsors/matkoch");
-            Logger.Normal();
-            Logger.Info("Happy building! 🌟");
+            Host.Information("If you like NUKE, please support us! 🤓");
+            Host.Information("With a sponsorship you'll gain access to various perks. 🚀");
+            Host.Information("Check out our tiers: https://github.com/sponsors/matkoch");
+            Host.Information();
+            Host.Information("Happy building! 🌟");
         }
     }
 }

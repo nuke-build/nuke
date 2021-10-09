@@ -11,6 +11,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -123,8 +124,8 @@ namespace Nuke.Common.ProjectModel
                     projectCollection.UnloadProject(msbuildProject);
                     targetFramework = targetFrameworks.First();
 
-                    Logger.Warn($"Project '{projectFile}' has multiple target frameworks ({targetFrameworks.JoinComma()}).");
-                    Logger.Warn($"Evaluating using '{targetFramework}'...");
+                    Log.Warning("Project {Project} has multiple target frameworks {TargetFrameworks}", projectFile, targetFrameworks.JoinComma());
+                    Log.Warning("Evaluating using {TargetFramework} ...", targetFramework);
 
                     msbuildProject = new Microsoft.Build.Evaluation.Project(
                         projectFile,

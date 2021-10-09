@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.IO;
@@ -14,6 +13,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
+using Serilog;
 using static Nuke.Common.CI.BuildServerConfigurationGenerationAttributeBase;
 
 namespace Nuke.Common.Execution
@@ -39,7 +39,7 @@ namespace Nuke.Common.Execution
                 var mustDecrypt = (member?.HasCustomAttribute<SecretAttribute>() ?? false) && !GenerationMode;
                 var decryptedValues = values.Select(x => mustDecrypt ? DecryptValue(profile, name, x) : x);
                 var convertedValues = decryptedValues.Select(x => ConvertValue(scalarType, x));
-                Logger.Trace($"Passing argument for '{name}'{(member != null ? $" on '{member.DeclaringType.NotNull().Name}'" : string.Empty)}.");
+                Log.Verbose("Passing {PropertyName} for member {MemberName} ...", name, member?.GetDisplayText());
                 return new[] { $"--{ParameterService.GetParameterDashedName(name)}" }.Concat(convertedValues);
             }
 

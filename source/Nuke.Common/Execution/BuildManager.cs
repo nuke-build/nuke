@@ -12,6 +12,7 @@ using System.Text;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.Execution
 {
@@ -52,8 +53,8 @@ namespace Nuke.Common.Execution
                 if (!build.NoLogo)
                     NukeBuild.Host.WriteLogo();
 
-                Logger.Info($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
-                Logger.Normal();
+                Host.Information($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
+                Host.Information();
 
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,
@@ -71,7 +72,7 @@ namespace Nuke.Common.Execution
             catch (Exception exception)
             {
                 if (exception is not TargetExecutionException)
-                    Logger.Error(exception);
+                    Log.Error(exception, "Unhandled exception: {Message}", exception.Message);
 
                 return build.ExitCode ??= ErrorExitCode;
             }

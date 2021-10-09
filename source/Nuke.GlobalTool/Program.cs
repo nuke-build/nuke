@@ -37,14 +37,14 @@ namespace Nuke.GlobalTool
             }
             catch (Exception exception)
             {
-                Logger.Error(exception);
+                Host.Error(exception.Message);
                 return 1;
             }
         }
 
         private static void PrintInfo()
         {
-            Logger.Info($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
+            Host.Information($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
         }
 
         [CanBeNull]
@@ -126,7 +126,7 @@ namespace Nuke.GlobalTool
             ConsoleKey response;
             do
             {
-                Logger.Normal($"{question} [y/n]");
+                Host.Debug($"{question} [y/n]");
                 response = Console.ReadKey(intercept: true).Key;
             } while (response != ConsoleKey.Y && response != ConsoleKey.N);
 

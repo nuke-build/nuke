@@ -8,6 +8,7 @@ using System.Linq;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
 using Nuke.Common;
+using Serilog;
 
 namespace Nuke.CodeGeneration.Generators
 {
@@ -73,7 +74,7 @@ namespace Nuke.CodeGeneration.Generators
                         ? property.Format.Substring(startIndex: 0, valueIndex).TrimEnd(':', '=', ' ')
                         : $"&lt;{property.Name.ToInstance()}&gt;";
                 if (!argument.Any(char.IsLetter))
-                    Logger.Warn($"Format for property {property.Name} in {property.DataClass.Tool.Name} is all non-letters.");
+                    Log.Warning("Format for property {ClassName}{PropertyName} is all non-letters", property.DataClass.Tool.Name, property.Name);
                 return argument;
             }
 

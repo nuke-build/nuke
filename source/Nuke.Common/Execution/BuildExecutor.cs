@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -13,6 +12,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
+using Serilog;
 
 namespace Nuke.Common.Execution
 {
@@ -66,7 +66,7 @@ namespace Nuke.Common.Execution
                 var previousBuild = File.ReadAllLines(BuildAttemptFile);
                 if (previousBuild.FirstOrDefault() != invocationHash)
                 {
-                    Logger.Warn("Build invocation changed. Starting over...");
+                    Log.Warning("Build invocation changed. Restarting ...");
                     return new string[0];
                 }
 
@@ -122,7 +122,7 @@ namespace Nuke.Common.Execution
                             ? target.SummaryInformation
                             : _.AddPair(exception.GetType().Name, exception.Message.SplitLineBreaks().First()));
 
-                    Logger.Error(exception);
+                    Log.Error(exception, "Target {TargetName} failed", target.Name);
 
                     target.Stopwatch.Stop();
                     target.Status = ExecutionStatus.Failed;

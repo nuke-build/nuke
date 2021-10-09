@@ -77,7 +77,7 @@ namespace Nuke.GlobalTool
 
             if (rootDirectory == null)
             {
-                Logger.Warn("Could not find root directory. Falling back to working directory.");
+                Host.Warning("Could not find root directory. Falling back to working directory ...");
                 rootDirectory = WorkingDirectory;
             }
 

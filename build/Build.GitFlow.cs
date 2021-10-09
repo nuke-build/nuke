@@ -12,6 +12,7 @@ using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Components;
 using Octokit;
+using Serilog;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Tools.Git.GitTasks;
@@ -45,7 +46,7 @@ partial class Build
         {
             var changelogFile = From<IHazChangelog>().ChangelogFile;
             FinalizeChangelog(changelogFile, MajorMinorPatchVersion, GitRepository);
-            Logger.Info("Please review CHANGELOG.md and press any key to continue...");
+            Log.Information("Please review CHANGELOG.md and press any key to continue ...");
             System.Console.ReadKey();
 
             Git($"add {changelogFile}");

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using JetBrains.Annotations;
+using Serilog;
 
 namespace Nuke.Common.IO
 {
@@ -18,7 +19,7 @@ namespace Nuke.Common.IO
 
         public static void FtpUploadDirectoryRecursively(string directory, string hostRoot)
         {
-            Logger.Info($"Uploading directory '{directory}' to '{hostRoot}'...");
+            Log.Information("Uploading directory {Directory} to {HostRoot} ...", directory, hostRoot);
 
             var files = PathConstruction.GlobFiles(directory, "**/*").ToList();
             for (var index = 0; index < files.Count; index++)
@@ -38,7 +39,7 @@ namespace Nuke.Common.IO
 
         private static void FtpUploadFileInternal(string file, string hostDestination, string prefix = null)
         {
-            Logger.Info($"{prefix}Uploading to '{hostDestination}'...");
+            Log.Debug($"{prefix}Uploading to {{HostDestination}} ...", hostDestination);
 
             ControlFlow.ExecuteWithRetry(() =>
             {

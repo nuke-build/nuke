@@ -69,7 +69,7 @@ namespace Nuke.Common.Utilities
         {
             string PromptForPassword()
             {
-                Logger.Info($"Enter password for {Constants.GetParametersFileName(profile)}:");
+                Host.Information($"Enter password for {Constants.GetParametersFileName(profile)}:");
                 return ConsoleUtility.ReadSecret();
             }
 
@@ -84,7 +84,7 @@ namespace Nuke.Common.Utilities
         {
             while (true)
             {
-                Logger.Info(
+                Host.Information(
                     EnvironmentInfo.IsOsx
                         ? "Enter a minimum 10 character password (leave empty for auto-generated stored in macOS keychain):"
                         : "Enter a minimum 10 character password:");

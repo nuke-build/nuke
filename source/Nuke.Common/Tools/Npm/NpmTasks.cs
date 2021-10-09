@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using Nuke.Common.Tooling;
+using Serilog;
 
 namespace Nuke.Common.Tools.Npm
 {
@@ -13,14 +14,14 @@ namespace Nuke.Common.Tools.Npm
             switch (type)
             {
                 case OutputType.Std:
-                    Logger.Normal(output);
+                    Log.Debug(output);
                     break;
                 case OutputType.Err:
                 {
                     if (output.StartsWith("npmWARN") || output.StartsWith("npm WARN"))
-                        Logger.Warn(output);
+                        Log.Warning(output);
                     else
-                        Logger.Error(output);
+                        Log.Error(output);
 
                     break;
                 }

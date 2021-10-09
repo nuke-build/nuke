@@ -12,6 +12,7 @@ using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common
 {
@@ -80,7 +81,7 @@ namespace Nuke.Common
             File.Delete(argumentsFile);
             if (lastWriteTime.AddMinutes(value: 1) < DateTime.Now)
             {
-                Logger.Warn($"Last write time of '{c_nukeTmpFileName}' was '{lastWriteTime}'. Skipping...");
+                Log.Warning("Last write time of {File} was {LastWriteTime}. Skipping ...", c_nukeTmpFileName, lastWriteTime);
                 return null;
             }
 

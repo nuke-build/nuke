@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Unity.Logging;
 using Nuke.Common.Utilities;
+using Serilog;
 
 namespace Nuke.Common.Tools.Unity
 {
@@ -112,7 +113,7 @@ namespace Nuke.Common.Tools.Unity
                 .ToString();
 
             if (settings.StableExitCodes.Any(x => x == process.ExitCode))
-                Logger.Warn(message);
+                Log.Warning(message);
             else
                 ControlFlow.Fail(message);
         }
@@ -123,14 +124,14 @@ namespace Nuke.Common.Tools.Unity
             {
                 case Logging.LogLevel.Normal:
                     if (!s_minimalOutput)
-                        Logger.Info(message);
+                        Log.Debug(message);
                     break;
                 case Logging.LogLevel.Warning:
-                    Logger.Warn(message);
+                    Log.Warning(message);
                     break;
                 case Logging.LogLevel.Error:
                 case Logging.LogLevel.Failure:
-                    Logger.Error(message);
+                    Log.Error(message);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, message: null);
@@ -139,12 +140,12 @@ namespace Nuke.Common.Tools.Unity
 
         private static void LogBlockEnd(MatchedBlock block)
         {
-            Logger.Normal("End: " + block.Name.TrimEnd('\r', '\n'));
+            Log.Debug("End: {Block}", block.Name.TrimEnd('\r', '\n'));
         }
 
         private static void LogBlockStart(MatchedBlock block)
         {
-            Logger.Normal("Start: " + block.Name.TrimEnd('\r', '\n'));
+            Log.Debug("Start: {Block}", block.Name.TrimEnd('\r', '\n'));
         }
     }
 }

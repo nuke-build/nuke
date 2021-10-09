@@ -4,6 +4,7 @@
 
 using System.Text.RegularExpressions;
 using Nuke.Common.Tooling;
+using Serilog;
 
 namespace Nuke.Common.Tools.DocFX
 {
@@ -20,18 +21,18 @@ namespace Nuke.Common.Tools.DocFX
             if (type == OutputType.Err ||
                 ErrorRegex.IsMatch(output))
             {
-                Logger.Error(output);
+                Log.Error(output);
                 return;
             }
 
             if (WarningRegex.IsMatch(output) ||
                 MetadataNoFilesFoundRegex.IsMatch(output))
             {
-                Logger.Warn(output);
+                Log.Warning(output);
                 return;
             }
 
-            Logger.Normal(output);
+            Log.Debug(output);
         }
     }
 }

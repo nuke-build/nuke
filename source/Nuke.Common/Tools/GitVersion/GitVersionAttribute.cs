@@ -12,6 +12,7 @@ using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.ValueInjection;
+using Serilog;
 using static Nuke.Common.ControlFlow;
 
 namespace Nuke.Common.Tools.GitVersion
@@ -35,7 +36,7 @@ namespace Nuke.Common.Tools.GitVersion
             // TODO: https://github.com/GitTools/GitVersion/issues/1097
             if (EnvironmentInfo.IsUnix && DisableOnUnix)
             {
-                Logger.Warn($"{nameof(GitVersion)} is disabled on UNIX environment.");
+                Log.Warning("{Tool} is disabled on UNIX environment", nameof(GitVersion));
                 return null;
             }
 

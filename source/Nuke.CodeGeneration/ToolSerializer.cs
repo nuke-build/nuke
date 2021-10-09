@@ -13,6 +13,7 @@ using Newtonsoft.Json.Serialization;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common;
 using Nuke.Common.Utilities;
+using Serilog;
 
 namespace Nuke.CodeGeneration
 {
@@ -28,8 +29,7 @@ namespace Nuke.CodeGeneration
             catch (Exception exception)
             {
                 // TODO: update metadata -> specification
-                Logger.Error($"Couldn't load metadata file '{Path.GetFileName(file)}'.");
-                Logger.Error(exception.Message);
+                Log.Error(exception, "Couldn't load metadata file {File}", Path.GetFileName(file));
                 throw;
             }
         }

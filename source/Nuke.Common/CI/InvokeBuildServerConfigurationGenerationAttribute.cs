@@ -11,6 +11,7 @@ using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.CI
 {
@@ -32,7 +33,7 @@ namespace Nuke.Common.CI
             if (build.Help)
                 return;
 
-            Logger.Info("Press any key to continue...");
+            Host.Information("Press any key to continue ...");
             Console.ReadKey();
         }
 
@@ -48,7 +49,7 @@ namespace Nuke.Common.CI
                     assembly.Location,
                     $"--{ConfigurationParameterName} {generator.Id} --host {generator.HostName}",
                     logInvocation: false,
-                    logOutput: true)
+                    logOutput: false)
                 .AssertZeroExitCode();
 
             var changedFiles = generator.GeneratedFiles
@@ -59,8 +60,9 @@ namespace Nuke.Common.CI
                 return false;
 
             Telemetry.ConfigurationGenerated(generator.HostType, generator.Id, build);
-            Logger.Warn($"{generator.DisplayName} configuration files have changed.");
-            changedFiles.ForEach(x => Logger.Trace($"Updated {x}"));
+            // TODO: multi-line logging
+            Log.Warning("Configuration files for {Configuration} have changed.", generator.DisplayName);
+            changedFiles.ForEach(x => Log.Verbose("Updated {File}", x));
             return true;
         }
     }

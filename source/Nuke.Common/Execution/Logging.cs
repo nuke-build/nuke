@@ -48,9 +48,9 @@ namespace Nuke.Common.Execution
                 DeleteOldLogFiles();
 
             Log.Logger = new LoggerConfiguration()
-                // .Enrich.With<TargetEnricher>()
-                .ConfigureConsole(build)
+                .Enrich.With<TargetLogEventEnricher>()
                 .ConfigureHost(build)
+                .ConfigureConsole(build)
                 .ConfigureInMemory(build)
                 .ConfigureFiles(build)
                 .ConfigureLevel()
@@ -115,7 +115,6 @@ namespace Nuke.Common.Execution
             var buildLogFile = NukeBuild.TemporaryDirectory / "build.log";
             var targetPadding = build.TargetNames.Max(x => x.Length);
             return configuration
-                .Enrich.With<TargetLogEventEnricher>()
                 .WriteTo.File(
                     path: buildLogFile,
                     outputTemplate: $"{{Timestamp:HH:mm:ss.fff}} | {{Level:u1}} | {{Target,{targetPadding}}} | {{Message:l}}{{NewLine}}{{Exception}}")

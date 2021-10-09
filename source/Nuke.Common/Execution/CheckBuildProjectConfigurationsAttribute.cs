@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.Execution
 {
@@ -37,7 +38,7 @@ namespace Nuke.Common.Execution
                     .SelectMany(x => x.Projects)
                     .Where(x => x.Directory.Equals(NukeBuild.BuildProjectDirectory))
                     .Where(x => x.Configurations.Any(y => y.Key.Contains("Build")))
-                    .ForEach(x => Logger.Warn($"Solution {x.Solution} has an active build configuration for {x}."));
+                    .ForEach(x => Log.Warning("Solution {Solution} has an active build configuration for {Project}", x.Solution, x));
 
                 return Task.CompletedTask;
             }

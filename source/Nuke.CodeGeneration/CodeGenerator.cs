@@ -12,6 +12,7 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.CodeGeneration
 {
@@ -58,7 +59,7 @@ namespace Nuke.CodeGeneration
                 ToolGenerator.Run(tool, streamWriter);
             }
 
-            Logger.Info($"Generated code for {tool.Name} from {Path.GetFileName(tool.SpecificationFile) ?? "<in-memory>"}.");
+            Log.Information("Generated code for {ToolName} from {File}", tool.Name, Path.GetFileName(tool.SpecificationFile) ?? "<in-memory>");
         }
 
         // ReSharper disable once CognitiveComplexity
