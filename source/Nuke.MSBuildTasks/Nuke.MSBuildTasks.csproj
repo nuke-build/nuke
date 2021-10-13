@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <TargetFrameworks>netcoreapp2.1;net472</TargetFrameworks>
+    <TargetFrameworks>net6.0;netcoreapp2.1;net472</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
