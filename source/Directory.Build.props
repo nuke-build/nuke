@@ -42,12 +42,12 @@
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
-    <PackageReference Include="coverlet.msbuild" Version="3.0.3" />
-    <PackageReference Include="FluentAssertions" Version="5.10.3"/>
+    <PackageReference Include="coverlet.msbuild" Version="3.1.0" />
+    <PackageReference Include="FluentAssertions" Version="6.1.0"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0"/>
-    <PackageReference Include="TeamCity.VSTest.TestAdapter" Version="1.0.25"/>
-    <PackageReference Include="Verify.Xunit" Version="11.18.1" />
-    <PackageReference Include="Verify.DiffPlex" Version="0.2.0" />
+    <PackageReference Include="TeamCity.VSTest.TestAdapter" Version="1.0.27"/>
+    <PackageReference Include="Verify.Xunit" Version="13.2.2" />
+    <PackageReference Include="Verify.DiffPlex" Version="1.0.0" />
     <PackageReference Include="xunit" Version="2.4.1"/>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3"/>
     <PackageReference Include="GitHubActionsTestLogger" Version="1.2.0"/>

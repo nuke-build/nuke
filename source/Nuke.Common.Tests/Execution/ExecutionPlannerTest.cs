@@ -20,7 +20,7 @@ namespace Nuke.Common.Tests.Execution
         [Fact]
         public void TestDefault()
         {
-            GetPlan().Should().BeEquivalentTo(A);
+            GetPlan().Should().BeEquivalentTo(new[] { A });
         }
 
         [Fact]
@@ -31,7 +31,7 @@ namespace Nuke.Common.Tests.Execution
             B.Invoked.Should().BeTrue();
             C.Invoked.Should().BeFalse();
 
-            GetPlan(invokedTargets: new[] { A, B }).Should().BeEquivalentTo(A, B);
+            GetPlan(invokedTargets: new[] { A, B }).Should().BeEquivalentTo(new[] { A, B });
             A.Invoked.Should().BeTrue();
             B.Invoked.Should().BeTrue();
             C.Invoked.Should().BeFalse();

@@ -53,7 +53,7 @@ namespace Nuke.Common.Tests
 
             project.GetTargetFrameworks().Should().HaveCount(2).And.Contain("netcoreapp2.1");
             project.HasPackageReference("Glob").Should().BeTrue();
-            project.GetPackageReferenceVersion("YamlDotNet").Should().Be("8.0.0");
+            project.GetPackageReferenceVersion("YamlDotNet").Should().Be("11.2.1");
         }
 
         [Fact]
