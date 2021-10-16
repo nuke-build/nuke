@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitHubActions
@@ -103,38 +104,33 @@ namespace Nuke.Common.CI.GitHubActions
         public void WriteCommand(
             string command,
             string message = null,
-            Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator = null)
+            Configure<IDictionary<string, object>> dictionaryConfigurator = null)
         {
-            var escapedTokens = new[] { command };
-            if (dictionaryConfigurator != null)
-            {
-                escapedTokens = escapedTokens.Concat(dictionaryConfigurator
-                    .Invoke(new Dictionary<string, object>())
-                    .Select(x => $"{x.Key}={Escape(x.Value.ToString())}")).ToArray();
-            }
+            var parameters = dictionaryConfigurator.InvokeSafe(new Dictionary<string, object>())
+                .Select(x => $"{x.Key}={EscapeProperty(x.Value.ToString())}")
+                .JoinComma();
 
-            Write(escapedTokens, message);
+            Console.WriteLine(parameters.IsNullOrEmpty()
+                ? $"::{command}::{EscapeData(message)}"
+                : $"::{command} {parameters}::{EscapeData(message)}");
         }
 
-        private void Write(string[] escapedTokens, [CanBeNull] string message)
-        {
-            Console.WriteLine($"##[{escapedTokens.JoinSpace()}]{EscapeMessage(message)}");
-        }
-
-        private string EscapeMessage([CanBeNull] string data)
+        private string EscapeData([CanBeNull] string data)
         {
             return data?
+                .Replace("%", "%25")
                 .Replace("\r", "%0D")
                 .Replace("\n", "%0A");
         }
 
-        private string Escape(string value)
+        private string EscapeProperty(string value)
         {
             return value
+                .Replace("%", "%25")
                 .Replace("\r", "%0D")
                 .Replace("\n", "%0A")
-                .Replace("]", "%5D")
-                .Replace(";", "%3B");
+                .Replace(":", "%3A")
+                .Replace(",", "%2C");
         }
     }
 }

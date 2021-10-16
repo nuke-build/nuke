@@ -31,7 +31,7 @@ namespace Nuke.Common.CI.GitHubActions
 
         protected internal override bool FilterMessage(string message)
         {
-            if (!message.StartsWith("::"))
+            if (!message.StartsWith("::") && !message.StartsWith("##["))
                 return false;
 
             Console.WriteLine(message);
