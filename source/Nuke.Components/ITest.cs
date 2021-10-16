@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AzurePipelines;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
@@ -96,6 +97,9 @@ namespace Nuke.Components
 
         sealed Configure<DotNetTestSettings, Project> TestProjectSettingsBase => (_, v) => _
             .SetProjectFile(v)
+            // https://github.com/Tyrrrz/GitHubActionsTestLogger
+            .When(GitHubActions.Instance is not null && v.HasPackageReference("GitHubActionsTestLogger"), _ => _
+                .AddLoggers("GitHubActions;report-warnings=false"))
             .AddLoggers($"trx;LogFileName={v.Name}.trx")
             .When(InvokedTargets.Contains((this as IReportCoverage)?.ReportCoverage) || IsServerBuild, _ => _
                 .SetCoverletOutput(TestResultDirectory / $"{v.Name}.xml"));
