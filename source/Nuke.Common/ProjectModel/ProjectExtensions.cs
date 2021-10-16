@@ -57,6 +57,29 @@ namespace Nuke.Common.ProjectModel
         }
 
         [CanBeNull]
+        public static string GetItemMetadataSingleOrDefault(this Project project, string itemGroupName, string includeName, string metadataName)
+        {
+            var items = project.GetMSBuildProject().GetItems(itemGroupName);
+            return items.SingleOrDefault(x => x.EvaluatedInclude == includeName)?.GetMetadataValue(metadataName);
+        }
+
+        [CanBeNull]
+        public static T GetItemMetadataSingleOrDefault<T>(this Project project, string itemGroupName, string includeName, string metadataName)
+        {
+            return Convert<T>(project.GetItemMetadataSingleOrDefault(itemGroupName, includeName, metadataName));
+        }
+
+        public static bool HasPackageReference(this Project project, string packageId)
+        {
+            return project.GetItems("PackageReference").Contains(packageId);
+        }
+
+        public static string GetPackageReferenceVersion(this Project project, string packageId)
+        {
+            return project.GetItemMetadataSingleOrDefault("PackageReference", packageId, "Version");
+        }
+
+        [CanBeNull]
         public static IReadOnlyCollection<string> GetTargetFrameworks(this Project project)
         {
             return project.GetSplittedPropertyValue("TargetFramework", "TargetFrameworks");
