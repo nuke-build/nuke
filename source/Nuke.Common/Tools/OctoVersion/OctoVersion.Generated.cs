@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.OctoVersion
         /// <summary>
         ///   <p>For more details, visit the <a href="https://github.com/OctopusDeploy/OctoVersion">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> OctoVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> OctoVersion(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(OctoVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, OctoVersionLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(OctoVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, OctoVersionLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

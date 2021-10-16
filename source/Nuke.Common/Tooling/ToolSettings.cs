@@ -31,8 +31,6 @@ namespace Nuke.Common.Tooling
         public int? ProcessExecutionTimeout { get; internal set; }
         public bool? ProcessLogOutput { get; internal set; }
         public bool? ProcessLogInvocation { get; internal set; }
-        public bool? ProcessLogTimestamp { get; internal set; }
-        public string ProcessLogFile { get; internal set; }
 
         public abstract Action<OutputType, string> ProcessCustomLogger { get; }
 

@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   <p>For more details, visit the <a href="https://kubernetes.io/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Kubernetes(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Kubernetes(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(KubernetesPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, KubernetesLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(KubernetesPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, KubernetesLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
