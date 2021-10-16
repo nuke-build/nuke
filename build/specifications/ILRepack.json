@@ -35,19 +35,19 @@
           },
           {
             "name": "Union",
-            "type": "string",
+            "type": "bool",
             "format": "--union",
             "help": "Merges types with identical names into one."
           },
           {
             "name": "NoDebug",
-            "type": "string",
+            "type": "bool",
             "format": "--ndebug",
             "help": "Disables symbol file generation."
           },
           {
             "name": "CopyAttributes",
-            "type": "string",
+            "type": "bool",
             "format": "--copyattrs",
             "help": "Copy assembly attributes (by default only the primary assembly attributes are copied)."
           },
@@ -59,7 +59,7 @@
           },
           {
             "name": "AllowMultiple",
-            "type": "string",
+            "type": "bool",
             "format": "--allowMultiple",
             "help": "When <c>--copyattrs</c> is specified, allows multiple attributes (if type allows)."
           },
