@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.AzureSignTool
         ///   <p>Azure Sign Tool is similar to <c>signtool</c> in the Windows SDK, with the major difference being that it uses Azure Key Vault for performing the signing process. The usage is like <c>signtool</c>, except with a limited set of options for signing and options for authenticating to Azure Key Vault.</p>
         ///   <p>For more details, visit the <a href="https://github.com/vcsjones/AzureSignTool">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> AzureSignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> AzureSignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(AzureSignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, AzureSignToolLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(AzureSignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, AzureSignToolLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.MinVer
         ///   <p>Minimalistic versioning using Git tags.</p>
         ///   <p>For more details, visit the <a href="https://github.com/adamralph/minver">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> MinVer(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> MinVer(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(MinVerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, MinVerLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(MinVerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, MinVerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

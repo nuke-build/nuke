@@ -21,7 +21,6 @@ namespace Nuke.Common.Tooling
     {
         public static bool DefaultLogOutput = true;
         public static bool DefaultLogInvocation = true;
-        public static bool DefaultLogTimestamp = false;
         public static bool LogWorkingDirectory = true;
 
         private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
@@ -33,8 +32,6 @@ namespace Nuke.Common.Tooling
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
-            bool? logTimestamp = null,
-            string logFile = null,
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
@@ -47,8 +44,6 @@ namespace Nuke.Common.Tooling
                 timeout,
                 logOutput,
                 logInvocation,
-                logTimestamp,
-                logFile,
                 customLogger,
                 outputFilter);
         }
@@ -65,8 +60,6 @@ namespace Nuke.Common.Tooling
                 toolSettings.ProcessExecutionTimeout,
                 toolSettings.ProcessLogOutput,
                 toolSettings.ProcessLogInvocation,
-                toolSettings.ProcessLogTimestamp,
-                toolSettings.ProcessLogFile,
                 toolSettings.ProcessCustomLogger,
                 arguments.FilterSecrets);
         }
@@ -79,8 +72,6 @@ namespace Nuke.Common.Tooling
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
-            bool? logTimestamp = null,
-            string logFile = null,
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
@@ -110,8 +101,6 @@ namespace Nuke.Common.Tooling
                 workingDirectory,
                 environmentVariables,
                 timeout,
-                logTimestamp ?? DefaultLogTimestamp,
-                logFile,
                 logOutput ?? DefaultLogOutput
                     ? customLogger ?? DefaultLogger
                     : null,
@@ -145,8 +134,6 @@ namespace Nuke.Common.Tooling
             [CanBeNull] string workingDirectory,
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
             int? timeout,
-            bool logTimestamp,
-            [CanBeNull] string logFile,
             [CanBeNull] Action<OutputType, string> logger,
             Func<string, string> outputFilter)
         {
@@ -172,9 +159,8 @@ namespace Nuke.Common.Tooling
             if (process == null)
                 return null;
 
-            var logStream = logFile != null ? new StreamWriter(File.Open(logFile, FileMode.Create)) : null;
-            var output = GetOutputCollection(process, logTimestamp, logger, logStream, outputFilter);
-            return new Process2(process, outputFilter, timeout, logStream, output);
+            var output = GetOutputCollection(process, logger, outputFilter);
+            return new Process2(process, outputFilter, timeout, output);
         }
 
         private static void ApplyEnvironmentVariables(
@@ -192,17 +178,10 @@ namespace Nuke.Common.Tooling
 
         private static BlockingCollection<Output> GetOutputCollection(
             Process process,
-            bool logTimestamp,
             [CanBeNull] Action<OutputType, string> logger,
-            [CanBeNull] StreamWriter logFile,
             Func<string, string> outputFilter)
         {
             var output = new BlockingCollection<Output>();
-
-            string GetProcessedOutput(string data)
-                => logTimestamp
-                    ? $"{DateTime.Now.ToLongTimeString()} {outputFilter.Invoke(data)}"
-                    : outputFilter.Invoke(data);
 
             process.OutputDataReceived += (_, e) =>
             {
@@ -211,9 +190,8 @@ namespace Nuke.Common.Tooling
 
                 output.Add(new Output { Text = e.Data, Type = OutputType.Std });
 
-                var processedOutput = GetProcessedOutput(e.Data);
-                logFile?.WriteLine($"[STD] {processedOutput}");
-                logger?.Invoke(OutputType.Std, processedOutput);
+                var filteredOutput = outputFilter(e.Data);
+                logger?.Invoke(OutputType.Std, filteredOutput);
             };
             process.ErrorDataReceived += (_, e) =>
             {
@@ -222,9 +200,8 @@ namespace Nuke.Common.Tooling
 
                 output.Add(new Output { Text = e.Data, Type = OutputType.Err });
 
-                var processedOutput = GetProcessedOutput(e.Data);
-                logFile?.WriteLine($"[ERR] {processedOutput}");
-                logger?.Invoke(OutputType.Err, processedOutput);
+                var filteredOutput = outputFilter(e.Data);
+                logger?.Invoke(OutputType.Err, filteredOutput);
             };
 
             process.BeginOutputReadLine();
