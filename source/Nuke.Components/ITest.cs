@@ -96,7 +96,7 @@ namespace Nuke.Components
 
         sealed Configure<DotNetTestSettings, Project> TestProjectSettingsBase => (_, v) => _
             .SetProjectFile(v)
-            .SetLoggers($"trx;LogFileName={v.Name}.trx")
+            .AddLoggers($"trx;LogFileName={v.Name}.trx")
             .When(InvokedTargets.Contains((this as IReportCoverage)?.ReportCoverage) || IsServerBuild, _ => _
                 .SetCoverletOutput(TestResultDirectory / $"{v.Name}.xml"));
 
