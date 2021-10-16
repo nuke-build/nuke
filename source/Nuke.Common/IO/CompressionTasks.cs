@@ -149,7 +149,7 @@ namespace Nuke.Common.IO
 
             using var fileStream = File.OpenRead(archiveFile);
             using var inputStream = inputStreamFactory(fileStream);
-            using var tarArchive = TarArchive.CreateInputTarArchive(inputStream);
+            using var tarArchive = TarArchive.CreateInputTarArchive(inputStream, nameEncoding: null);
 
             FileSystemTasks.EnsureExistingDirectory(directory);
 
