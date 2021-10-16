@@ -29,5 +29,14 @@ namespace Nuke.Common.CI.TeamCity
         {
             WriteError(text, details);
         }
+
+        protected internal override bool FilterMessage(string message)
+        {
+            if (!message.ContainsOrdinalIgnoreCase("##teamcity["))
+                return false;
+
+            Console.WriteLine(message);
+            return true;
+        }
     }
 }

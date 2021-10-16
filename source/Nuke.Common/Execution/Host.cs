@@ -72,6 +72,11 @@ namespace Nuke.Common
         {
         }
 
+        protected internal virtual bool FilterMessage(string message)
+        {
+            return false;
+        }
+
         internal virtual void WriteSummary(NukeBuild build)
         {
             WriteSevereLogEvents(Logging.InMemorySink.Instance.LogEvents);

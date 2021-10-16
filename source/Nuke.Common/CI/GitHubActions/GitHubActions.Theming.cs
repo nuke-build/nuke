@@ -28,5 +28,14 @@ namespace Nuke.Common.CI.GitHubActions
         {
             WriteError(text);
         }
+
+        protected internal override bool FilterMessage(string message)
+        {
+            if (!message.StartsWith("::"))
+                return false;
+
+            Console.WriteLine(message);
+            return true;
+        }
     }
 }

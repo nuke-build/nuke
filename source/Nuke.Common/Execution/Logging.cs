@@ -54,6 +54,7 @@ namespace Nuke.Common.Execution
                 .ConfigureInMemory(build)
                 .ConfigureFiles(build)
                 .ConfigureLevel()
+                .Filter.ByExcluding(x => NukeBuild.Host.FilterMessage(x.MessageTemplate.Text))
                 .CreateLogger();
         }
 
