@@ -1,14 +1,11 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common
 {
