@@ -37,7 +37,7 @@ namespace Nuke.Common.Utilities
         [Pure]
         public static string ReplaceKnownWords(this string str)
         {
-            return Constants.KnownWords.Aggregate(str, (s, r) => s.ReplaceRegex(r, _ => r, RegexOptions.IgnoreCase));
+            return KnownWords.Aggregate(str, (s, r) => s.ReplaceRegex(r, _ => r, RegexOptions.IgnoreCase));
         }
     }
 }

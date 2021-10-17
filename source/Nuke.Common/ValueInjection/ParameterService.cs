@@ -51,7 +51,7 @@ namespace Nuke.Common.ValueInjection
 
         public static string GetParameterDashedName(string name)
         {
-            return name.SplitCamelHumpsWithSeparator("-", Constants.KnownWords).ToLowerInvariant();
+            return name.SplitCamelHumpsWithKnownWords().Join("-").ToLowerInvariant();
         }
 
         public static string GetParameterMemberName(string name)

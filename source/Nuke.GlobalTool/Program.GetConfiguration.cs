@@ -50,7 +50,7 @@ namespace Nuke.GlobalTool
                 .Select(ReplaceScriptDirectory)
                 .Select(x => x.Split("="))
                 .ToDictionary(
-                    x => x.ElementAt(0).TrimStart("$").Trim().SplitCamelHumpsWithSeparator("_", Constants.KnownWords).ToUpperInvariant(),
+                    x => x.ElementAt(0).TrimStart("$").Trim().SplitCamelHumpsWithKnownWords().Join("_").ToUpperInvariant(),
                     x => x.ElementAt(1).Trim().TrimMatchingDoubleQuotes());
         }
     }
