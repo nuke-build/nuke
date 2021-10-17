@@ -120,7 +120,7 @@ namespace Nuke.Common.Tooling
                             .Concat(
                                 new[]
                                 {
-                                    NukeBuild.BuildProjectDirectory == null
+                                    EmbeddedPackagesDirectory == null
                                         ? $"Embedded packages directory at '{EmbeddedPackagesDirectory}'"
                                         : null,
                                     NuGetAssetsConfigFile != null
