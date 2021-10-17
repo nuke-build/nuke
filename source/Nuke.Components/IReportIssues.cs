@@ -130,7 +130,7 @@ namespace Nuke.Components
                 InspectCodeFailOnWarning && warningCount > 0 ||
                 issues.Any(x => InspectCodeFailOnIssues.Contains(x.TypeId)) ||
                 issues.Any(x => InspectCodeFailOnCategories.Contains(x.CategoryId)))
-                ControlFlow.Fail(summaryMessage);
+                Assert.Fail(summaryMessage);
             else if (errorCount > 0 || warningCount > 0)
                 Log.Warning(summaryMessage);
 

@@ -32,8 +32,8 @@ namespace Nuke.Common
         private static bool IsRunning(Type hostType)
         {
             var propertyName = $"IsRunning{hostType.Name}";
-            var member = hostType.GetProperty(propertyName, ReflectionUtility.Static);
-            ControlFlow.Assert(member != null, $"Host type '{hostType.Name}' does not define a property '{propertyName}'.");
+            var member = hostType.GetProperty(propertyName, ReflectionUtility.Static)
+                .NotNull($"Host type '{hostType.Name}' defines no property '{propertyName}'");
             return member.GetValue<bool>();
         }
 
@@ -53,10 +53,8 @@ namespace Nuke.Common
             {
                 if (value is string stringValue)
                 {
-                    var matchingHosts = AvailableTypes
-                        .Where(x => x.FullName.EndsWithOrdinalIgnoreCase(stringValue)).ToList();
-                    ControlFlow.Assert(matchingHosts.Count == 1, "matchingHost.Count == 1");
-
+                    var matchingHosts = AvailableTypes.Where(x => x.FullName.EndsWithOrdinalIgnoreCase(stringValue)).ToList();
+                    Assert.HasSingleItem(matchingHosts);
                     return CreateHost(matchingHosts.Single());
                 }
 

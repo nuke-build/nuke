@@ -106,8 +106,8 @@ namespace Nuke.Common.Execution
             where T : NukeBuild
         {
             var constructors = typeof(T).GetConstructors();
-            ControlFlow.Assert(constructors.Length == 1 && constructors.Single().GetParameters().Length == 0,
-                $"Type '{typeof(T).Name}' must declare a single parameterless constructor.");
+            Assert.True(constructors.Length == 1 && constructors.Single().GetParameters().Length == 0,
+                $"Type '{typeof(T).Name}' must declare a single parameterless constructor");
 
             return Activator.CreateInstance<T>();
         }

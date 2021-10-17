@@ -8,7 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
-using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -223,12 +222,9 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Base()
         {
-            ControlFlow.Assert(_baseMembers.Count > 0,
-                new[]
-                {
-                    $"Target '{Target.DeclaringType}.{Target.Name}' does not have any base members.",
-                    "To inherit from a interface default implementation, use Inherit<T>."
-                }.JoinNewLine());
+            Assert.True(_baseMembers.Count > 0,
+                $"Target '{Target.DeclaringType}.{Target.Name}' does not have any base members,"
+                + $" to inherit from a interface default implementation, use {nameof(Inherit)}");
             Inherit(_baseMembers.Pop().GetValueNonVirtual<Target>(Build));
             return this;
         }
@@ -281,7 +277,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Partition(int size)
         {
-            ControlFlow.Assert(size > 1, "size > 1");
+            Assert.True(size > 1);
             PartitionSize = size;
             return this;
         }
@@ -294,7 +290,7 @@ namespace Nuke.Common.Execution
         private PropertyInfo GetSingleTargetProperty<T>()
         {
             var interfaceTargets = typeof(T).GetProperties(ReflectionUtility.Instance).Where(x => x.PropertyType == typeof(Target)).ToList();
-            ControlFlow.Assert(interfaceTargets.Count == 1,
+            Assert.HasSingleItem(interfaceTargets,
                 new[]
                 {
                     $"Target '{Target.DeclaringType}.{Target.Name}' cannot have a shorthand dependency on component '{typeof(T).Name}'.",

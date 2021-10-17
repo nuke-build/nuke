@@ -24,9 +24,9 @@ namespace Nuke.Common.Execution
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
                     // TODO: same as HasSkippingCondition.GetSkipReason
-                    ControlFlow.Assert(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body}'.");
+                    Assert.True(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body}'");
                 else if (IsMemberNull(requirement.GetMemberInfo(), build, target))
-                    ControlFlow.Fail($"Target '{target.Name}' requires member '{GetMemberName(requirement.GetMemberInfo())}' to be not null.");
+                    Assert.Fail($"Target '{target.Name}' requires member '{GetMemberName(requirement.GetMemberInfo())}' to be not null");
             }
 
             var requiredMembers = ValueInjectionUtility.GetInjectionMembers(build.GetType())
@@ -35,7 +35,7 @@ namespace Nuke.Common.Execution
             foreach (var member in requiredMembers)
             {
                 if (IsMemberNull(member, build))
-                    ControlFlow.Fail($"Member '{GetMemberName(member)}' is required to be not null.");
+                    Assert.Fail($"Member '{GetMemberName(member)}' is required to be not null");
             }
         }
 
@@ -46,7 +46,7 @@ namespace Nuke.Common.Execution
                 : member;
 
             var from = target != null ? $"from target '{target.Name}' " : string.Empty;
-            ControlFlow.Assert(member.HasCustomAttribute<ValueInjectionAttributeBase>(),
+            Assert.True(member.HasCustomAttribute<ValueInjectionAttributeBase>(),
                 $"Member '{GetMemberName(member)}' is required {from}but not marked with an injection attribute.");
 
             if (NukeBuild.Host is Terminal)

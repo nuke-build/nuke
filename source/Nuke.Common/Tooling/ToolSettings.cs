@@ -57,7 +57,7 @@ namespace Nuke.Common.Tooling
         {
             try
             {
-                ControlFlow.Assert(File.Exists(ProcessToolPath), "File.Exists(ProcessToolPath)");
+                Assert.FileExists(ProcessToolPath);
                 return true;
             }
             catch

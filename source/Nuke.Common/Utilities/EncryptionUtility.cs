@@ -28,7 +28,7 @@ namespace Nuke.Common.Utilities
             }
             catch
             {
-                ControlFlow.Fail($"Could not decrypt '{name}' with provided password.");
+                Assert.Fail($"Could not decrypt '{name}' with provided password");
                 return null;
             }
         }

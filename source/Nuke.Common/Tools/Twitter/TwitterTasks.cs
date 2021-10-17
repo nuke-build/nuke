@@ -68,7 +68,7 @@ namespace Nuke.Common.Tools.Twitter
             var response = await client.PostAsync(Url, formData);
             var responseBody = await response.Content.ReadAsStringAsync();
 
-            ControlFlow.Assert(response.StatusCode == HttpStatusCode.OK, $"StatusCode != 200 - '{GetErrorFromBody(responseBody)}'");
+            Assert.True(response.StatusCode == HttpStatusCode.OK, $"StatusCode != 200 - '{GetErrorFromBody(responseBody)}'");
         }
 
         private static string GetOAuthSignature(Dictionary<string, string> data, string url, string consumerSecret, string tokenSecret)
@@ -97,12 +97,13 @@ namespace Nuke.Common.Tools.Twitter
             try
             {
                 var jResponse = JObject.Parse(response);
-                var message = (string) jResponse["errors"][0]["message"];
+                var message = (string) jResponse["errors"].NotNull()[0].NotNull()["message"];
                 if (!string.IsNullOrEmpty(message))
                     return message;
             }
             catch
             {
+                // ignored
             }
 
             return response;

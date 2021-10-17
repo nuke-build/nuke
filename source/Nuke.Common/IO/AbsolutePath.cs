@@ -55,7 +55,7 @@ namespace Nuke.Common.IO
             if (path is null)
                 return null;
 
-            ControlFlow.Assert(HasPathRoot(path), $"Path '{path}' must be rooted.");
+            Assert.True(HasPathRoot(path), $"Path '{path}' must be rooted");
             return new AbsolutePath(path);
         }
 

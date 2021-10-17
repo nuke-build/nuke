@@ -18,10 +18,9 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int Trigger(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
-            ControlFlow.Assert(rootDirectory != null, "No root directory found.");
-            var repository = GitRepository.FromLocalDirectory(rootDirectory).NotNull("No Git repository found.");
-            ControlFlow.Assert(repository.Branch != null, "Git repository must not be detached.");
-            ControlFlow.Assert(args.Length > 0, "args.Length > 0");
+            var repository = GitRepository.FromLocalDirectory(rootDirectory.NotNull()).NotNull("No Git repository");
+            Assert.NotNull(repository.Branch, "Git repository must not be detached");
+            Assert.NotEmpty(args);
 
             try
             {

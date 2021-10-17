@@ -261,7 +261,7 @@ namespace Nuke.Common.Tools.SignPath
             {
                 var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 var jobject = JsonDeserialize<JObject>(content);
-                Fail($"[{response.StatusCode}] {jobject.GetChildren<JValue>("").Select(x => x.Value<string>()).JoinNewLine()}");
+                Assert.Fail($"[{response.StatusCode}] {jobject.GetChildren<JValue>("").Select(x => x.Value<string>()).JoinNewLine()}");
             }
 
             return response;

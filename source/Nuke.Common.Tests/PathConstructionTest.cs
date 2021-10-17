@@ -115,15 +115,16 @@ namespace Nuke.Common.Tests
 
         [Theory]
         // TODO: Add tests for combining two roots
-        [InlineData("C:", "foo", '/', "For Windows-rooted paths the separator must be '\\'.")]
-        [InlineData("\\\\server", "foo", '/', "For UNC-rooted paths the separator must be '\\'.")]
-        [InlineData("/", "foo", '\\', "For Unix-rooted paths the separator must be '/'.")]
-        [InlineData("C:\\", "C:\\", '\\', "Second path must not be rooted.")]
-        [InlineData("\\\\server", "\\\\server\\", '\\', "Second path must not be rooted.")]
-        [InlineData("/", "/", '/', "Second path must not be rooted.")]
+        [InlineData("C:", "foo", '/', "For Windows-rooted paths the separator must be '\\'")]
+        [InlineData("\\\\server", "foo", '/', "For UNC-rooted paths the separator must be '\\'")]
+        [InlineData("/", "foo", '\\', "For Unix-rooted paths the separator must be '/'")]
+        [InlineData("C:\\", "C:\\", '\\', "Second path must not be rooted")]
+        [InlineData("\\\\server", "\\\\server\\", '\\', "Second path must not be rooted")]
+        [InlineData("/", "/", '/', "Second path must not be rooted")]
         public void TestCombine_Throws(string path1, string path2, char? separator, string expected)
         {
-            Assert.Throws<Exception>(() => Combine(path1, path2, separator)).Message.Should().Be($"Assertion failed: {expected}");
+            Action action = () => Combine(path1, path2, separator);
+            action.Should().Throw<Exception>().WithMessage(expected);
         }
 
         [Theory]
@@ -147,15 +148,16 @@ namespace Nuke.Common.Tests
         }
 
         [Theory]
-        [InlineData("C:\\..", null, "Cannot normalize 'C:\\..' beyond path root.")]
-        [InlineData("\\\\server\\..", null, "Cannot normalize '\\\\server\\..' beyond path root.")]
-        [InlineData("/bin/../..", null, "Cannot normalize '/bin/../..' beyond path root.")]
-        [InlineData("C:\\foo", '/', "For Windows-rooted paths the separator must be '\\'.")]
-        [InlineData("\\\\server\\foo", '/', "For UNC-rooted paths the separator must be '\\'.")]
-        [InlineData("/bin/foo/bar", '\\', "For Unix-rooted paths the separator must be '/'.")]
+        [InlineData("C:\\..", null, "Cannot normalize 'C:\\..' beyond path root")]
+        [InlineData("\\\\server\\..", null, "Cannot normalize '\\\\server\\..' beyond path root")]
+        [InlineData("/bin/../..", null, "Cannot normalize '/bin/../..' beyond path root")]
+        [InlineData("C:\\foo", '/', "For Windows-rooted paths the separator must be '\\'")]
+        [InlineData("\\\\server\\foo", '/', "For UNC-rooted paths the separator must be '\\'")]
+        [InlineData("/bin/foo/bar", '\\', "For Unix-rooted paths the separator must be '/'")]
         public void TestNormalizePath_Throws(string input, char? separator, string message)
         {
-            Assert.Throws<Exception>(() => NormalizePath(input, separator)).Message.Should().Be($"Assertion failed: {message}");
+            Action action = () => NormalizePath(input, separator);
+            action.Should().Throw<Exception>().WithMessage(message);
         }
 
         [Theory]
@@ -189,13 +191,14 @@ namespace Nuke.Common.Tests
         }
 
         [Theory]
-        [InlineData(new object[] { "C:", "", "..", "bar" }, "Cannot normalize 'C:\\..' beyond path root.")]
-        [InlineData(new object[] { "/", "", "..", "bar" }, "Cannot normalize '/..' beyond path root.")]
-        [InlineData(new object[] { "\\\\server", "", "..", "bar" }, "Cannot normalize '\\\\server\\..' beyond path root.")]
-        [InlineData(new object[] { "foo", "bar" }, "Path 'foo' must be rooted.")]
+        [InlineData(new object[] { "C:", "", "..", "bar" }, "Cannot normalize 'C:\\..' beyond path root")]
+        [InlineData(new object[] { "/", "", "..", "bar" }, "Cannot normalize '/..' beyond path root")]
+        [InlineData(new object[] { "\\\\server", "", "..", "bar" }, "Cannot normalize '\\\\server\\..' beyond path root")]
+        [InlineData(new object[] { "foo", "bar" }, "Path 'foo' must be rooted")]
         public void AbsolutePath_Throws(object[] parts, string expected)
         {
-            Assert.Throws<Exception>(() => ParseAbsolutePath(parts)).Message.Should().Be($"Assertion failed: {expected}");
+            Action action = () => ParseAbsolutePath(parts);
+            action.Should().Throw<Exception>().WithMessage(expected);
         }
 
         [Fact]

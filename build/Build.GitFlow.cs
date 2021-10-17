@@ -14,7 +14,6 @@ using Nuke.Components;
 using Octokit;
 using Serilog;
 using static Nuke.Common.ChangeLog.ChangelogTasks;
-using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 
@@ -33,9 +32,9 @@ partial class Build
             if (milestone == null)
                 return;
 
-            Assert(milestone.OpenIssues == 0, "milestone.OpenIssues == 0");
-            Assert(milestone.ClosedIssues != 0, "milestone.ClosedIssues != 0");
-            Assert(milestone.State == ItemState.Closed, "milestone.State == ItemState.Closed");
+            Assert.True(milestone.OpenIssues == 0);
+            Assert.True(milestone.ClosedIssues != 0);
+            Assert.True(milestone.State == ItemState.Closed);
         });
 
     Target Changelog => _ => _

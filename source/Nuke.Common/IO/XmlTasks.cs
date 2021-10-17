@@ -58,9 +58,7 @@ namespace Nuke.Common.IO
         {
             var document = XDocument.Load(path, LoadOptions.PreserveWhitespace);
             var (elements, attributes) = GetObjects(document, xpath, namespaces);
-
-            ControlFlow.Assert((elements.Count == 1 || attributes.Count == 1) && !(elements.Count == 0 && attributes.Count == 0),
-                "(elements.Count == 1 || attributes.Count == 1) && !(elements.Count == 0 && attributes.Count == 0)");
+            Assert.True((elements.Count == 1 || attributes.Count == 1) && !(elements.Count == 0 && attributes.Count == 0));
 
             elements.SingleOrDefault()?.SetValue(value);
             attributes.SingleOrDefault()?.SetValue(value);
@@ -73,21 +71,21 @@ namespace Nuke.Common.IO
         private static IEnumerable<string> XmlPeek(XDocument document, string xpath, (string prefix, string uri)[] namespaces)
         {
             var (elements, attributes) = GetObjects(document, xpath, namespaces);
-            ControlFlow.Assert(elements.Count == 0 || attributes.Count == 0, "elements.Count == 0 || attributes.Count == 0");
+            Assert.True(elements.Count == 0 || attributes.Count == 0);
             return elements.Count != 0 ? elements.Select(x => x.Value) : attributes.Select(x => x.Value);
         }
 
         private static IEnumerable<XElement> XmlPeekElements(XDocument document, string xpath, (string prefix, string uri)[] namespaces)
         {
             var (elements, attributes) = GetObjects(document, xpath, namespaces);
-            ControlFlow.Assert(elements.Count == 0 || attributes.Count == 0, "elements.Count == 0 || attributes.Count == 0");
+            Assert.True(elements.Count == 0 || attributes.Count == 0);
             return elements;
         }
 
         private static string XmlPeekSingle(Func<IEnumerable<string>> selector)
         {
             var values = selector.Invoke().ToList();
-            ControlFlow.Assert(values.Count <= 1, "values.Count <= 1");
+            Assert.True(values.Count <= 1);
             return values.SingleOrDefault();
         }
 

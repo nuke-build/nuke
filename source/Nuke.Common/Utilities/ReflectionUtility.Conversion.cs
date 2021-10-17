@@ -30,7 +30,7 @@ namespace Nuke.Common.Utilities
             }
             catch
             {
-                ControlFlow.Fail($"Value '{value}' could not be converted to '{GetDisplayShortName(destinationType)}'.");
+                Assert.Fail($"Value '{value}' could not be converted to '{GetDisplayShortName(destinationType)}'");
                 // ReSharper disable once HeuristicUnreachableCode
                 return null;
             }

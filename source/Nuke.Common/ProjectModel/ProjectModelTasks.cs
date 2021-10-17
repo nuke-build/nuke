@@ -29,7 +29,7 @@ namespace Nuke.Common.ProjectModel
             Func<Solution, string> folderNameProvider = null,
             bool randomizeProjectIds = true)
         {
-            ControlFlow.Assert(folderNameProvider != null || solutions != null, "folderNameProvider != null || solutions!= null");
+            Assert.True(folderNameProvider != null || solutions != null);
 
             var solution = SolutionSerializer.DeserializeFromContent<Solution>(
                 new[]

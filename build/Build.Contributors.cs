@@ -9,7 +9,6 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.TextTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 
@@ -31,7 +30,7 @@ partial class Build
                 .Select(x => x.Text)
                 .Distinct().ToList()
                 .Select(x => x.Split('|'))
-                .ForEachLazy(x => Assert(x.Length == 2, "x.Length == 2"))
+                .ForEachLazy(x => Assert.Count(x, length: 2))
                 .Select(x => new { Name = x[0], Email = x[1] }).ToList();
 
             var newContributors = contributors.Where(x => !previousContributors.Contains(x.Email));

@@ -53,7 +53,7 @@ namespace Nuke.Common.ChangeLog
             : this(notes, startIndex, endIndex)
         {
             Version = version;
-            ControlFlow.Assert(notes.Count > 0, "Release Notes should not be empty");
+            Assert.True(notes.Count > 0, "Release Notes should not be empty");
         }
 
         /// <summary>

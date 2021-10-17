@@ -92,25 +92,26 @@ namespace Nuke.Common.Tests.Execution
         public void TestInvalidDependencyType()
         {
             var build = new InvalidDependencyTypeTestBuild();
-            Assert.Throws<InvalidCastException>(() => ExecutableTargetFactory.CreateAll(build, x => x.E));
+            Action action = () => ExecutableTargetFactory.CreateAll(build, x => x.E);
+            action.Should().Throw<InvalidCastException>();
         }
 
         [Fact]
         public void TestNonPublicTarget()
         {
             var build = new NonPublicTargetTestBuild();
-            var exception = Assert.Throws<Exception>(() => ExecutableTargetFactory.CreateAll(build));
-            exception.Message.Should()
-                .StartWith("Assertion failed: Property 'D' must be marked public to override inherited member from:");
+            Action action = () => ExecutableTargetFactory.CreateAll(build);
+            action.Should().Throw<Exception>().And.Message.Should()
+                .StartWith("Property 'D' must be marked public to override inherited member from:");
         }
 
         [Fact]
         public void TestDuplicatedTarget()
         {
             var build = new DuplicatedTargetTestBuild();
-            var exception = Assert.Throws<Exception>(() => ExecutableTargetFactory.CreateAll(build));
-            exception.Message.Should()
-                .StartWith("Assertion failed: Property 'D' must be implemented explicitly because it is inherited from multiple interfaces");
+            Action action = () => ExecutableTargetFactory.CreateAll(build);
+            action.Should().Throw<Exception>().And.Message.Should()
+                .StartWith("Property 'D' must be implemented explicitly because it is inherited from multiple interfaces");
         }
 
         [Fact]

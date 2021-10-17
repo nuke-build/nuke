@@ -32,9 +32,9 @@ namespace Nuke.Common.ValueInjection
         {
             var type = instance.GetType();
             var member = type.GetMember(memberName, ReflectionUtility.All)
-                .SingleOrDefaultOrError($"Found multiple members with the name '{memberName}' in '{type.Name}'.")
-                .NotNull($"No member '{memberName}' found in '{type.Name}'.");
-            ControlFlow.Assert(typeof(T).IsAssignableFrom(member.GetMemberType()), $"Member '{type.Name}.{member.Name} must be of type {typeof(T).Name}");
+                .SingleOrDefaultOrError($"Found multiple members with the name '{memberName}' in '{type.Name}'")
+                .NotNull($"No member '{memberName}' found in '{type.Name}'");
+            Assert.True(typeof(T).IsAssignableFrom(member.GetMemberType()), $"Member '{type.Name}.{member.Name}' must be of type '{typeof(T).Name}'");
             return member.GetValue<T>(instance);
         }
 

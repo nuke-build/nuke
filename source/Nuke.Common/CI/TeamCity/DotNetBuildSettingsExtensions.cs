@@ -16,12 +16,12 @@ namespace Nuke.Common.CI.TeamCity
     {
         public static DotNetBuildSettings AddTeamCityLogger(this DotNetBuildSettings toolSettings)
         {
-            ControlFlow.Assert(TeamCity.Instance != null, "TeamCity.Instance != null");
+            Assert.True(TeamCity.Instance != null);
             var teamcityPackage = NuGetPackageResolver
                 .GetLocalInstalledPackage("TeamCity.Dotnet.Integration", ToolPathResolver.NuGetPackagesConfigFile)
                 .NotNull("teamcityPackage != null");
             var loggerAssembly = teamcityPackage.Directory / "build" / "_common" / "msbuild15" / "TeamCity.MSBuild.Logger.dll";
-            ControlFlow.Assert(File.Exists(loggerAssembly), $"File.Exists({loggerAssembly})");
+            Assert.FileExists(loggerAssembly);
             return toolSettings
                 .AddLoggers($"TeamCity.MSBuild.Logger.TeamCityMSBuildLogger,{loggerAssembly};teamcity")
                 .EnableNoConsoleLogger();

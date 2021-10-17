@@ -26,8 +26,7 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int GetConfiguration(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
-            ControlFlow.Assert(buildScript != null, "buildScript != null");
-            var configuration = GetConfiguration(buildScript, evaluate: false);
+            var configuration = GetConfiguration(buildScript.NotNull(), evaluate: false);
 
             Host.Information($"Configuration from {buildScript}:");
             configuration.ForEach(x => Console.WriteLine($"{x.Key} = {x.Value}"));

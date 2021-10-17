@@ -77,7 +77,7 @@ namespace Nuke.Common
             var argumentLines = File.ReadAllLines(argumentsFile);
             var lastWriteTime = File.GetLastWriteTime(argumentsFile);
 
-            ControlFlow.Assert(argumentLines.Length == 1, $"{c_nukeTmpFileName} must have only one single line");
+            Assert.HasSingleItem(argumentLines, $"{c_nukeTmpFileName} must have only one single line");
             File.Delete(argumentsFile);
             if (lastWriteTime.AddMinutes(value: 1) < DateTime.Now)
             {

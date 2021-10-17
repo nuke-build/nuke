@@ -41,8 +41,8 @@ namespace Nuke.Common.Tools.GitVersion
             }
 
             var repository = SuppressErrors(() => GitRepository.FromLocalDirectory(NukeBuild.RootDirectory));
-            AssertWarn(repository == null || repository.Protocol != GitProtocol.Ssh || NoFetch,
-                $"{nameof(GitVersion)} does not support fetching SSH endpoints. Enable {nameof(NoFetch)} to skip fetching.");
+            if (repository is { Protocol: GitProtocol.Ssh } && !NoFetch)
+                Log.Warning($"{nameof(GitVersion)} does not support fetching SSH endpoints, enable {nameof(NoFetch)} to skip fetching");
 
             var gitVersion = GitVersionTasks.GitVersion(s => s
                     .SetFramework(Framework)

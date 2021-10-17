@@ -57,7 +57,7 @@ namespace Nuke.Common.Tools.Slack
 
             var response = await client.UploadDataTaskAsync(webhook, "POST", bytes);
             var responseText = Encoding.UTF8.GetString(response);
-            ControlFlow.Assert(responseText == "ok", $"'{responseText}' == 'ok'");
+            Assert.True(responseText == "ok");
         }
 #endif
 
@@ -81,11 +81,11 @@ namespace Nuke.Common.Tools.Slack
             var payload = JsonConvert.SerializeObject(message, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             var response = await client.PostAsync(url, new StringContent(payload, Encoding.UTF8, "application/json"));
             var responseContent = await response.Content.ReadAsStringAsync();
-            ControlFlow.Assert(response.StatusCode == HttpStatusCode.OK, responseContent);
+            Assert.True(response.StatusCode == HttpStatusCode.OK, responseContent);
 
             var jobject = SerializationTasks.JsonDeserialize<JObject>(responseContent);
             var error = jobject.GetPropertyValueOrNull<string>("error");
-            ControlFlow.Assert(error == null, error);
+            Assert.True(error == null, error);
             return jobject;
         }
     }

@@ -34,6 +34,8 @@
   </Target>
 
   <ItemGroup>
+    <Compile Include="..\Nuke.Common\Assert.cs" LinkBase=".\Linked" />
+    <Compile Include="..\Nuke.Common\CallerArgumentExpressionAttribute.cs" LinkBase=".\Linked" />
     <Compile Include="..\Nuke.Common\Constants.cs" LinkBase=".\Linked" />
     <Compile Include="..\Nuke.Common\EnvironmentInfo.Platform.cs" LinkBase=".\Linked" />
     <Compile Include="..\Nuke.Common\IO\AbsolutePath.cs" LinkBase=".\Linked\IO" />

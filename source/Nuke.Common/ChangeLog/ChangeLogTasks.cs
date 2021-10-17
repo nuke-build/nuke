@@ -49,7 +49,7 @@ namespace Nuke.Common.ChangeLog
             var lines = TextTasks.ReadAllLines(changelogFile).ToList();
             var releaseSections = GetReleaseSections(lines).ToList();
 
-            ControlFlow.Assert(releaseSections.Any(), "Changelog should have at least one release note section");
+            Assert.True(releaseSections.Any(), "Changelog should have at least one release note section");
             return releaseSections.Select(Parse).ToList().AsReadOnly();
 
             ReleaseNotes Parse(ReleaseSection section)
@@ -79,11 +79,11 @@ namespace Nuke.Common.ChangeLog
 
             if (unreleased.Length > 0)
             {
-                ControlFlow.Assert(unreleased.Length == 1, "Changelog should have only one draft section.");
+                Assert.True(unreleased.Length == 1, "Changelog should have only one draft section");
                 return new ChangeLog(changelogFile, unreleased.First(), releaseNotes);
             }
 
-            ControlFlow.Assert(releaseNotes.Count(x => !x.Unreleased) >= 1, "Changelog should have at lease one released version section.");
+            Assert.True(releaseNotes.Count(x => !x.Unreleased) >= 1, "Changelog should have at lease one released version section");
             return new ChangeLog(changelogFile, releaseNotes);
         }
 
@@ -103,10 +103,10 @@ namespace Nuke.Common.ChangeLog
             var releaseNotes = changelogFile.ReleaseNotes;
             var lastReleased = changelogFile.LatestVersion;
 
-            ControlFlow.Assert(unreleasedNotes != null, "Changelog should have draft section.");
-            ControlFlow.Assert(releaseNotes.Any(x => x.Version != null && x.Version.Equals(tag)), $"Tag '{tag}' already exists.");
-            ControlFlow.Assert(lastReleased != null && tag.CompareTo(lastReleased.Version) > 0,
-                $"Tag '{tag}' is not greater compared to last tag '{lastReleased.NotNull().Version}'.");
+            Assert.True(unreleasedNotes != null, "Changelog should have draft section");
+            Assert.True(releaseNotes.Any(x => x.Version != null && x.Version.Equals(tag)), $"Tag '{tag}' already exists");
+            Assert.True(lastReleased != null && tag.CompareTo(lastReleased.Version) > 0,
+                $"Tag '{tag}' is not greater compared to last tag '{lastReleased.NotNull().Version}'");
 
             var path = changelogFile.Path;
 
@@ -139,12 +139,11 @@ namespace Nuke.Common.ChangeLog
             var firstSection = sections.First();
             var secondSection = sections.Skip(1).FirstOrDefault();
 
-            ControlFlow.Assert(firstSection.Caption.All(char.IsLetter), "Cannot find a draft section.");
-            ControlFlow.Assert(sections.All(x => !x.Caption.EqualsOrdinalIgnoreCase(tag)), $"Tag '{tag}' already exists.");
-            ControlFlow.Assert(firstSection.EndIndex > firstSection.StartIndex,
-                $"Draft section '{firstSection.Caption}' does not contain any information.");
-            ControlFlow.Assert(secondSection == null || NuGetVersion.Parse(tag).CompareTo(NuGetVersion.Parse(secondSection.Caption)) > 0,
-                $"Tag '{tag}' is not greater compared to last tag '{secondSection?.Caption}'.");
+            Assert.True(firstSection.Caption.All(char.IsLetter), "Cannot find a draft section");
+            Assert.True(sections.All(x => !x.Caption.EqualsOrdinalIgnoreCase(tag)), $"Tag '{tag}' already exists");
+            Assert.True(firstSection.EndIndex > firstSection.StartIndex, $"Draft section '{firstSection.Caption}' does not contain any information");
+            Assert.True(secondSection == null || NuGetVersion.Parse(tag).CompareTo(NuGetVersion.Parse(secondSection.Caption)) > 0,
+                $"Tag '{tag}' is not greater compared to last tag '{secondSection?.Caption}'");
 
             content.Insert(firstSection.StartIndex + 1, string.Empty);
             content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
