@@ -32,7 +32,7 @@ namespace Nuke.Common.Tools.Teams
 
             var response = await client.UploadDataTaskAsync(webhook, "POST", Encoding.UTF8.GetBytes(messageJson) );
             var responseText = Encoding.UTF8.GetString(response);
-            ControlFlow.Assert(responseText == "1", $"'{responseText}' == '1'");
+            Assert.True(responseText == "1", $"'{responseText}' == '1'");
         }
     }
 }

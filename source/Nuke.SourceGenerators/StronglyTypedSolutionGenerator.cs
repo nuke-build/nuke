@@ -107,10 +107,10 @@ namespace Nuke.SourceGenerators
         private static string GetSolutionFileFromParametersFile(AbsolutePath rootDirectory, string memberName)
         {
             var parametersFile = Constants.GetDefaultParametersFile(rootDirectory);
-            ControlFlow.Assert(File.Exists(parametersFile), $"File.Exists({parametersFile})");
+            Assert.FileExists(parametersFile);
             var jobject = JObject.Parse(File.ReadAllText(parametersFile));
             var solutionRelativePath = jobject[memberName].NotNull($"Property '{memberName}' does not exist in '{parametersFile}'.").Value<string>();
-            return Path.Combine(rootDirectory, solutionRelativePath);
+            return Path.Combine(rootDirectory, solutionRelativePath.NotNull());
         }
 
         private static AbsolutePath GetRootDirectoryFrom(Compilation compilation)

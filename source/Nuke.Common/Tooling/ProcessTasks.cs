@@ -75,7 +75,7 @@ namespace Nuke.Common.Tooling
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
-            ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
+            Assert.True(toolPath != null);
             if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
                 toolPath = ToolPathResolver.GetPathExecutable(toolPath);
 
@@ -87,7 +87,7 @@ namespace Nuke.Common.Tooling
             }
 
             outputFilter ??= x => x;
-            ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
+            Assert.FileExists(toolPath);
             if (logInvocation ?? DefaultLogInvocation)
             {
                 // TODO: logging additional
@@ -137,8 +137,7 @@ namespace Nuke.Common.Tooling
             [CanBeNull] Action<OutputType, string> logger,
             Func<string, string> outputFilter)
         {
-            ControlFlow.Assert(workingDirectory == null || Directory.Exists(workingDirectory),
-                $"WorkingDirectory '{workingDirectory}' does not exist.");
+            Assert.True(workingDirectory == null || Directory.Exists(workingDirectory), $"WorkingDirectory '{workingDirectory}' does not exist");
 
             var startInfo = new ProcessStartInfo
                             {

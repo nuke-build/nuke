@@ -62,10 +62,9 @@ namespace Nuke.Common.Tools.Unity
 
         private static void PreProcess(ref UnitySettings unitySettings)
         {
-            ControlFlow.AssertWarn(
-                unitySettings.ProjectPath != null,
-                "ProjectPath is not set in UnitySettings. This will cause Unity to build the last " +
-                "opened/built project. Use .SetProjectPath() to override this behavior.");
+            if (unitySettings.ProjectPath == null)
+                Log.Warning("ProjectPath is not set, using last opened/built project");
+
             PreProcess<UnitySettings>(ref unitySettings);
         }
 
@@ -115,7 +114,7 @@ namespace Nuke.Common.Tools.Unity
             if (settings.StableExitCodes.Any(x => x == process.ExitCode))
                 Log.Warning(message);
             else
-                ControlFlow.Fail(message);
+                Assert.Fail(message);
         }
 
         private static void LogLine(string message, Logging.LogLevel logLevel)

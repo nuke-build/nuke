@@ -31,8 +31,7 @@ namespace Nuke.Common.Tools.AzureKeyVault
             var authenticationContext = new AuthenticationContext(authority);
             var credential = new ClientCredential(_clientId, _clientSecret);
             var result = await authenticationContext.AcquireTokenAsync(resource, credential);
-            ControlFlow.Assert(result != null, "Failed to obtain Azure KeyVault JWT token");
-            return result.AccessToken;
+            return result.NotNull("Could not obtain Azure KeyVault JWT token").AccessToken;
         }
 
         public async Task<KeyVaultCertificate> GetCertificate (string certificateName, bool includeKey = true)

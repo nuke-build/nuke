@@ -140,7 +140,7 @@ namespace Nuke.Common.Utilities
 
         public static MemberInfo GetImplementedOrInterfaceMember(this MemberInfo member, Type classType)
         {
-            ControlFlow.Assert(classType.IsClass, "classType.IsClass");
+            Assert.True(classType.IsClass);
             return member.DeclaringType != classType
                 ? classType.GetMember(member.Name).SingleOrDefault() ??
                   classType.GetMember(member.GetPossibleExplicitName(), Instance).SingleOrDefault() ??
@@ -185,12 +185,12 @@ namespace Nuke.Common.Utilities
                     }
                 }
 
-                ControlFlow.Assert(allowAmbiguity || interfaceMembers.Count() == 1 || classMember != null,
+                Assert.True(allowAmbiguity || interfaceMembers.Count() == 1 || classMember != null,
                     new[] { $"{memberType} '{memberName}' must be implemented explicitly because it is inherited from multiple interfaces:" }
                         .Concat(interfaceMembers.Select(x => $" - {x.DeclaringType.NotNull().Name}"))
                         .JoinNewLine());
 
-                ControlFlow.Assert(allowAmbiguity || classMember == null || classMember.IsPublic(),
+                Assert.True(allowAmbiguity || classMember == null || classMember.IsPublic(),
                     new[] { $"{memberType} '{memberName}' must be marked public to override inherited member from:" }
                         .Concat(interfaceMembers.Select(x => $" - {x.DeclaringType.NotNull().Name}"))
                         .JoinNewLine());

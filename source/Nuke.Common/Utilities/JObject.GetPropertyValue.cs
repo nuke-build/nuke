@@ -22,7 +22,8 @@ namespace Nuke.Common.Utilities
 
         public static T GetPropertyValue<T>(this JObject jobject, string name)
         {
-            return jobject.GetPropertyValueOrNull<T>(name).NotNull(name);
+            var property = jobject.Property(name).NotNull($"Property '{name}' not found");
+            return property.Value.Value<T>();
         }
 
         public static JObject GetPropertyValue(this JObject jobject, string name)

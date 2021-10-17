@@ -101,7 +101,7 @@ namespace Nuke.Common.Tooling
 
             argumentFormat = argumentFormat.Replace("{value}", "{0}");
             var keyValueSeparator = itemFormat.Replace("{key}", string.Empty).Replace("{value}", string.Empty);
-            ControlFlow.Assert(keyValueSeparator.Length == 1, "keyValueSeparator.Length == 1");
+            Assert.True(keyValueSeparator.Length == 1);
 
             string Format(object value) => value.ToString().DoubleQuoteIfNeeded(separator, keyValueSeparator.Single(), disallowed, Space);
 
@@ -110,7 +110,7 @@ namespace Nuke.Common.Tooling
                     .Replace("{key}", Format(pair.Key))
                     .Replace("{value}", Format(pair.Value));
 
-            var pairs = dictionary.Where(x => x.Value.NotNullWarn($"Value for '{x.Key}' is 'null', omitting...") != null).ToList();
+            var pairs = dictionary.Where(x => !ReferenceEquals(x.Value, objB: null)).ToList();
 
             AddInternal(
                 argumentFormat,
@@ -134,7 +134,7 @@ namespace Nuke.Common.Tooling
 
             argumentFormat = argumentFormat.Replace("{value}", "{0}");
             var listSeparator = itemFormat.Replace("{key}", string.Empty).Replace("{value}", string.Empty);
-            ControlFlow.Assert(listSeparator.Length == 1, "listSeparator.Length == 1");
+            Assert.True(listSeparator.Length == 1);
 
             string Format(object value) => value?.ToString().DoubleQuoteIfNeeded(separator, listSeparator.Single(), disallowed, Space);
 

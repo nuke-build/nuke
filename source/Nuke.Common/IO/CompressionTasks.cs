@@ -29,7 +29,7 @@ namespace Nuke.Common.IO
             else if (archiveFile.EndsWithAny(".tar.bz2", ".tbz2", ".tbz"))
                 CompressTarBZip2(directory, archiveFile, filter);
             else
-                ControlFlow.Fail($"Unknown archive extension for archive '{Path.GetFileName(archiveFile)}'");
+                Assert.Fail($"Unknown archive extension for archive '{Path.GetFileName(archiveFile)}'");
         }
 
         public static void Uncompress(string archiveFile, string directory)
@@ -41,7 +41,7 @@ namespace Nuke.Common.IO
             else if (archiveFile.EndsWithAny(".tar.bz2", ".tbz2", ".tbz"))
                 UncompressTarBZip2(archiveFile, directory);
             else
-                ControlFlow.Fail($"Unknown archive extension for archive '{Path.GetFileName(archiveFile)}'");
+                Assert.Fail($"Unknown archive extension for archive '{Path.GetFileName(archiveFile)}'");
         }
 
         public static void CompressZip(

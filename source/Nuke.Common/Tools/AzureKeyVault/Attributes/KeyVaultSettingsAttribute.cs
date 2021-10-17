@@ -84,7 +84,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
         public override object GetValue(MemberInfo member, object instance)
         {
             var memberType = member.GetMemberType();
-            ControlFlow.Assert(memberType == typeof(KeyVaultSettings), "memberType == typeof(KeyVaultConfiguration)");
+            Assert.True(memberType == typeof(KeyVaultSettings));
             AssertIsValid();
 
             return new KeyVaultSettings
@@ -109,7 +109,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
                 error += EnvironmentInfo.NewLine + $"Either '{nameof(ClientId)}' or '{nameof(ClientIdParameterName)}' must be defined";
             if (string.IsNullOrWhiteSpace(ClientSecretParameterName))
                 error += EnvironmentInfo.NewLine + $"'{nameof(ClientSecretParameterName)}' must be defined";
-            ControlFlow.Assert(error == string.Empty, error);
+            Assert.True(error == string.Empty, error);
         }
 
         private string GetParameter(string memberName, object instance)

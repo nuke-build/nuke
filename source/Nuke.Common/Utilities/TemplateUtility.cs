@@ -157,7 +157,7 @@ namespace Nuke.Common.Utilities
             var requiredTokens = requiredTokensText.Split(new[] { "||", "&&" }, StringSplitOptions.RemoveEmptyEntries);
             var orConjunction = requiredTokensText.Contains("||");
             var andConjunction = requiredTokensText.Contains("&&");
-            ControlFlow.Assert(!orConjunction || !andConjunction, "Conjunctions AND and OR can only be used mutually exclusively.");
+            Assert.False(orConjunction && andConjunction, "Conjunctions AND and OR can only be used mutually exclusively");
 
             return andConjunction && requiredTokens.All(tokens.ContainsKey) ||
                    !andConjunction && requiredTokens.Any(tokens.ContainsKey);

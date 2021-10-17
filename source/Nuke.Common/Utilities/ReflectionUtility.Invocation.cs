@@ -35,7 +35,7 @@ namespace Nuke.Common.Utilities
 
         public static TResult GetValueNonVirtual<TResult>(this MemberInfo member, object obj, params object[] arguments)
         {
-            ControlFlow.Assert(member is PropertyInfo || member is MethodInfo, "member is PropertyInfo || member is MethodInfo");
+            Assert.True(member is PropertyInfo or MethodInfo);
             var method = member is PropertyInfo property
                 ? property.GetMethod
                 : (MethodInfo) member;
@@ -86,7 +86,7 @@ namespace Nuke.Common.Utilities
                 }
                 else
                 {
-                    ControlFlow.Assert(property.SetMethod != null, $"Property '{member.Name}' is not settable.");
+                    Assert.True(property.SetMethod != null, $"Property '{member.Name}' is not settable");
                     property.SetValue(property.GetMethod.IsStatic ? null : instance, value);
                 }
             }

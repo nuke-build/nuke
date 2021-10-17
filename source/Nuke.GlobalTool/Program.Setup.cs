@@ -283,7 +283,7 @@ namespace Nuke.GlobalTool
                 return;
 
             var globalIndex = content.IndexOf("Global");
-            ControlFlow.Assert(globalIndex != -1, "Could not find a 'Global' section in solution file.");
+            Assert.True(globalIndex != -1, "Could not find a 'Global' section in solution file");
 
             var projectConfigurationIndex = content.FindIndex(x => x.Contains("GlobalSection(ProjectConfigurationPlatforms)"));
             if (projectConfigurationIndex == -1)

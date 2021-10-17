@@ -19,7 +19,7 @@ namespace Nuke.Common.CI
             if (configurationId == null)
                 return;
 
-            ControlFlow.Assert(NukeBuild.RootDirectory != null, "NukeBuild.RootDirectory != null");
+            Assert.NotNull(NukeBuild.RootDirectory);
 
             var generator = GetGenerators(build)
                 .Where(x => x.Id == configurationId)

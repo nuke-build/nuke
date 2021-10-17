@@ -86,10 +86,10 @@ namespace Nuke.Common.CI.GitHubActions
                                     Jobs = _images.Select(x => GetJobs(x, relevantTargets)).ToArray()
                                 };
 
-            ControlFlow.Assert(configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0,
-                $"Workflows can only define either shorthand '{On}' or '{On}*' triggers.");
-            ControlFlow.Assert(configuration.ShortTriggers.Length > 0 || configuration.DetailedTriggers.Length > 0,
-                "Workflows must define either shorthand '{On}' or '{On}*' triggers.");
+            Assert.True(configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0,
+                $"Workflows can only define either shorthand '{On}' or '{On}*' triggers");
+            Assert.True(configuration.ShortTriggers.Length > 0 || configuration.DetailedTriggers.Length > 0,
+                "Workflows must define either shorthand '{On}' or '{On}*' triggers");
 
             return configuration;
         }
@@ -171,7 +171,7 @@ namespace Nuke.Common.CI.GitHubActions
                 OnPushIncludePaths.Length > 0 ||
                 OnPushExcludePaths.Length > 0)
             {
-                ControlFlow.Assert(
+                Assert.True(
                     OnPushBranches.Length == 0 && OnPushTags.Length == 0 || OnPushBranchesIgnore.Length == 0 && OnPushTagsIgnore.Length == 0,
                     $"Cannot use {nameof(OnPushBranches)}/{nameof(OnPushTags)} and {nameof(OnPushBranchesIgnore)}/{nameof(OnPushTagsIgnore)} in combination");
 

@@ -34,7 +34,7 @@ namespace Nuke.Common.Tooling
             var toolPath = PathConstruction.HasPathRoot(absoluteOrRelativePath)
                 ? absoluteOrRelativePath
                 : Path.Combine(NukeBuild.RootDirectory, absoluteOrRelativePath);
-            ControlFlow.Assert(File.Exists(toolPath), $"File.Exists({toolPath})");
+            Assert.FileExists(toolPath);
             return new ToolExecutor(toolPath).Execute;
         }
 

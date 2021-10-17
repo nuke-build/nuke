@@ -28,7 +28,7 @@ namespace Nuke.GlobalTool
                 var rootDirectory = TryGetRootDirectory();
 
                 var buildScript = rootDirectory != null
-                    ? (AbsolutePath) new DirectoryInfo(rootDirectory)
+                    ? (AbsolutePath)new DirectoryInfo(rootDirectory)
                         .EnumerateFiles(CurrentBuildScriptName, maxDepth: 2)
                         .FirstOrDefault()?.FullName
                     : null;
@@ -68,21 +68,17 @@ namespace Nuke.GlobalTool
             {
                 var command = args.First().Trim(CommandPrefix).Replace("-", string.Empty);
                 if (string.IsNullOrWhiteSpace(command))
-                    ControlFlow.Fail($"No command specified. Usage is: nuke {CommandPrefix}<command> [args]");
+                    Assert.Fail($"No command specified. Usage is: nuke {CommandPrefix}<command> [args]");
 
-                var availableCommands = typeof(Program).GetMethods(ReflectionUtility.Static).Where(x => x.ReturnType == typeof(int));
+                var availableCommands = typeof(Program).GetMethods(ReflectionUtility.Static).Where(x => x.ReturnType == typeof(int)).ToList();
                 var commandHandler = availableCommands.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));
-                ControlFlow.Assert(commandHandler != null,
-                    new[]
-                        {
-                            $"Command '{command}' is not supported.",
-                            "Available commands are:"
-                        }
+                Assert.NotNull(commandHandler,
+                    new[] { $"Command '{command}' is not supported, available commands are:" }
                         .Concat(availableCommands.Where(x => x.IsPublic).Select(x => $"  - {x.Name}").OrderBy(x => x)).JoinNewLine());
                 // TODO: add assertions about return type and parameters
 
                 var commandArguments = new object[] { args.Skip(count: 1).ToArray(), rootDirectory, buildScript };
-                return (int) commandHandler.Invoke(obj: null, commandArguments);
+                return (int)commandHandler.Invoke(obj: null, commandArguments);
             }
 
             if (rootDirectory == null || buildScript == null)

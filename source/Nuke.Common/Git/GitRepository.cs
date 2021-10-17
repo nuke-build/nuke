@@ -48,8 +48,7 @@ namespace Nuke.Common.Git
         public static GitRepository FromLocalDirectory(string directory)
         {
             var rootDirectory = FileSystemTasks.FindParentDirectory(directory, x => x.GetDirectories(".git").Any());
-            ControlFlow.Assert(rootDirectory != null, $"Could not find git directory for '{directory}'.");
-            var gitDirectory = Path.Combine(rootDirectory, ".git");
+            var gitDirectory = Path.Combine(rootDirectory.NotNull($"No parent Git directory for '{directory}'"), ".git");
 
             var head = GetHead(gitDirectory);
             var branch = ((Host.Instance as IBuildServer)?.Branch ?? GetHeadIfAttached(head))?.TrimStart("refs/heads/").TrimStart("origin/");
@@ -101,14 +100,14 @@ namespace Nuke.Common.Git
                 return head;
 
             var headRefFile = Path.Combine(gitDirectory, head);
-            ControlFlow.Assert(File.Exists(headRefFile), $"File.Exists({headRefFile})");
+            Assert.FileExists(headRefFile);
             return File.ReadAllLines(headRefFile).First();
         }
 
         private static string GetHead(string gitDirectory)
         {
             var headFile = Path.Combine(gitDirectory, "HEAD");
-            ControlFlow.Assert(File.Exists(headFile), $"File.Exists({headFile})");
+            Assert.FileExists(headFile);
             return File.ReadAllText(headFile).TrimStart("ref: ").Trim();
         }
 
@@ -154,7 +153,7 @@ namespace Nuke.Common.Git
                 @"^(?'protocol'\w+)?(\:\/\/)?(?>(?'user'.*)@)?(?'endpoint'[^\/:]+)(?>\:(?'port'\d+))?[\/:](?'identifier'.*?)\/?(?>\.git)?$");
             var match = regex.Match(url.NotNull("url != null").Trim());
 
-            ControlFlow.Assert(match.Success, $"Url '{url}' could not be parsed.");
+            Assert.True(match.Success, $"Url '{url}' could not be parsed.");
             var protocol = match.Groups["protocol"].Value.EqualsOrdinalIgnoreCase(GitProtocol.Https.ToString())
                 ? GitProtocol.Https
                 : GitProtocol.Ssh;

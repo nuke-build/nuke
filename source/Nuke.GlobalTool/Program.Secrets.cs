@@ -31,12 +31,10 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int Secrets(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
-            ControlFlow.Assert(rootDirectory != null, "No root directory found.");
-
-            var secretParameters = GetSecretParameters(rootDirectory).ToList();
+            var secretParameters = GetSecretParameters(rootDirectory.NotNull("No root directory")).ToList();
             if (secretParameters.Count == 0)
             {
-                Host.Information($"There are no parameters marked with {nameof(SecretAttribute)}.");
+                Host.Information($"There are no parameters marked with {nameof(SecretAttribute)}");
                 return 0;
             }
 

@@ -20,8 +20,7 @@ namespace Nuke.Common.CI
             // TODO: allow with conversion?
             var memberType = member.GetMemberType();
             var instanceProperty = memberType.GetProperty(nameof(Host.Instance), ReflectionUtility.Static);
-            ControlFlow.Assert(instanceProperty != null,
-                $"Type '{memberType}' is not compatible for injection via '{nameof(CIAttribute)}'.");
+            Assert.True(instanceProperty != null, $"Type '{memberType}' is not compatible for injection via '{nameof(CIAttribute)}'");
             return instanceProperty.GetValue(obj: null);
         }
     }

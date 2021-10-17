@@ -14,6 +14,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.CI.TeamCity
 {
@@ -130,18 +131,17 @@ namespace Nuke.Common.CI.TeamCity
             bool? parseOutOfDate = null,
             TeamCityNoDataPublishedAction? action = null)
         {
-            ControlFlow.Assert(
+            Assert.True(
                 type != TeamCityImportType.dotNetCoverage || tool != null,
-                $"Importing data of type '{type}' requires to specify the tool.");
-            ControlFlow.AssertWarn(
-                !(tool == TeamCityImportTool.dotcover &&
-                  ConfigurationProperties["teamcity.dotCover.home"].EndsWithOrdinalIgnoreCase("bundled")),
-                new[]
-                {
-                    "Configuration parameter 'teamcity.dotCover.home' is set to the bundled version.",
-                    $"Adding the '{nameof(TeamCitySetDotCoverHomePathAttribute)}' will automatically set " +
-                    $"it to '{nameof(DotCoverTasks)}.{nameof(DotCoverTasks.DotCoverPath)}'."
-                }.JoinNewLine());
+                $"Importing data of type '{type}' requires to specify the tool");
+            if (tool == TeamCityImportTool.dotcover &&
+                ConfigurationProperties["teamcity.dotCover.home"].EndsWithOrdinalIgnoreCase("bundled"))
+            {
+                Log.Warning("Configuration parameter 'teamcity.dotCover.home' is set to the bundled version." +
+                            "Adding the {AttributeName} will automatically set " +
+                            $"it to '{nameof(DotCoverTasks)}.{nameof(DotCoverTasks.DotCoverPath)}'",
+                    nameof(TeamCitySetDotCoverHomePathAttribute));
+            }
 
             Write("importData",
                 x => x

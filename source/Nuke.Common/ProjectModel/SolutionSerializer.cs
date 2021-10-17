@@ -160,7 +160,7 @@ namespace Nuke.Common.ProjectModel
 
         public static void Serialize(Solution solution, Stream stream)
         {
-            ControlFlow.Assert(solution.Path != null, "solution.Path != null");
+            Assert.NotNull(solution.Path);
 
             using var writer = new StreamWriter(stream, Encoding.UTF8);
 

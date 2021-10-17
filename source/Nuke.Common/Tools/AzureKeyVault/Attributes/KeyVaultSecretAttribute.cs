@@ -16,23 +16,23 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
     [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
     public class KeyVaultSecretAttribute : ParameterAttribute
     {
-        protected static KeyVaultTaskSettings CreateSettings (string secretName, KeyVaultSettings keyVaultSettings)
+        protected static KeyVaultTaskSettings CreateSettings(string secretName, KeyVaultSettings keyVaultSettings)
         {
             return new KeyVaultTaskSettings()
-                    .SetClientId(keyVaultSettings.ClientId)
-                    .SetVaultBaseUrl(keyVaultSettings.BaseUrl)
-                    .SetClientSecret(keyVaultSettings.Secret)
-                    .SetSecretName(secretName);
+                .SetClientId(keyVaultSettings.ClientId)
+                .SetVaultBaseUrl(keyVaultSettings.BaseUrl)
+                .SetClientSecret(keyVaultSettings.Secret)
+                .SetSecretName(secretName);
         }
 
         /// <summary>Obtain the secret with the given name from the KeyVault defined by <see cref="KeyVaultSettingsAttribute"/></summary>
-        public KeyVaultSecretAttribute ()
+        public KeyVaultSecretAttribute()
         {
         }
 
         /// <summary>Obtain the secret with the given name from the KeyVault defined by <see cref="KeyVaultSettingsAttribute"/></summary>
         /// <param name="secretName">The name of the secret to obtain. If the name is null the name of the property is used.</param>
-        public KeyVaultSecretAttribute (string secretName)
+        public KeyVaultSecretAttribute(string secretName)
         {
             SecretName = secretName;
         }
@@ -45,7 +45,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
         public string SettingFieldName { get; set; }
 
         [CanBeNull]
-        public override object GetValue (MemberInfo member, object instance)
+        public override object GetValue(MemberInfo member, object instance)
         {
             var settings = GetSettings(instance);
             if (!settings.IsValid(out _))
@@ -70,24 +70,24 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
             throw new NotSupportedException();
         }
 
-        protected KeyVaultSettings GetSettings (object instance)
+        protected KeyVaultSettings GetSettings(object instance)
         {
             var fieldsWithAttributes = instance.GetType().GetFields(ReflectionUtility.Instance)
-                    .Select(x => new { Field = x, Attribute = x.GetCustomAttribute<KeyVaultSettingsAttribute>() })
-                    .Where(x => x.Attribute != null)
-                    .ToArray();
+                .Select(x => new { Field = x, Attribute = x.GetCustomAttribute<KeyVaultSettingsAttribute>() })
+                .Where(x => x.Attribute != null)
+                .ToArray();
 
-            ControlFlow.Assert(fieldsWithAttributes.Length > 0,
-                "A field of the type `KeyVaultSettings` with the 'KeyVaultSettingsAttribute' has to be defined in the build class when using Azure KeyVault.");
-            ControlFlow.Assert(fieldsWithAttributes.Length == 1 || SettingFieldName != null,
-                "There is more then one KeyVaultSettings field defined. Please specify which one to use by setting 'SettingFieldName'");
+            Assert.NotEmpty(fieldsWithAttributes,
+                "A field of the type KeyVaultSettings with the KeyVaultSettingsAttribute has to be defined in the build class when using Azure KeyVault");
+            Assert.True(fieldsWithAttributes.Length == 1 || SettingFieldName != null,
+                $"More than one KeyVaultSettings field defined. Specify explicitly via SettingFieldName");
 
             var fieldWithAttribute = fieldsWithAttributes.Length == 1
                 ? fieldsWithAttributes.Single()
                 : fieldsWithAttributes.SingleOrDefault(x => x.Field.Name == SettingFieldName)
-                    .NotNull($"No field with the name '{SettingFieldName}' exists.");
+                    .NotNull($"No field with the name '{SettingFieldName}' exists");
 
-            return (KeyVaultSettings) fieldWithAttribute.Attribute.GetValue(fieldWithAttribute.Field, instance);
+            return (KeyVaultSettings)fieldWithAttribute.Attribute.GetValue(fieldWithAttribute.Field, instance);
         }
     }
 }

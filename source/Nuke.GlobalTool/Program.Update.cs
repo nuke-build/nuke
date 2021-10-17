@@ -14,7 +14,6 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities;
 using static Nuke.Common.Constants;
-using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Tooling.NuGetPackageResolver;
 
 namespace Nuke.GlobalTool
@@ -24,7 +23,7 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int Update(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
-            Assert(rootDirectory != null, "rootDirectory != null");
+            Assert.NotNull(rootDirectory);
 
             if (buildScript != null)
             {
@@ -78,8 +77,7 @@ namespace Nuke.GlobalTool
         private static void UpdateNukeCommonPackage(Microsoft.Build.Evaluation.Project buildProject, out FloatRange previousPackageVersion)
         {
             var packageItem = buildProject.Items.SingleOrDefault(x => x.EvaluatedInclude == NukeCommonPackageId);
-            Assert(packageItem != null, "packageItem != null");
-            previousPackageVersion = FloatRange.Parse(packageItem.GetMetadataValue("Version"));
+            previousPackageVersion = FloatRange.Parse(packageItem.NotNull().GetMetadataValue("Version"));
 
             var latestPackageVersion = GetLatestPackageVersion(NukeCommonPackageId, includePrereleases: false).GetAwaiter().GetResult();
             if (previousPackageVersion.Satisfies(NuGetVersion.Parse(latestPackageVersion)))

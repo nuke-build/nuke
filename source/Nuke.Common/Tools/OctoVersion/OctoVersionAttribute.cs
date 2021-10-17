@@ -131,10 +131,10 @@ namespace Nuke.Common.Tools.OctoVersion
             var minorVersion = GetMemberValueOrNull<int?>(MinorParameter, instance) ?? _minor;
             var patchVersion = GetMemberValueOrNull<int?>(PatchParameter, instance) ?? _patch;
 
-            ControlFlow.Assert(!autoDetectBranch.HasValue || !autoDetectBranch.Value || branch.IsNullOrEmpty(),
-                $"Branch cannot be specified via {nameof(Branch)} or {nameof(BranchParameter)} properties when {nameof(AutoDetectBranch)} is enabled.");
-            ControlFlow.Assert(autoDetectBranch.HasValue && autoDetectBranch.Value || !branch.IsNullOrEmpty(),
-                $"Branch must either be provided via {nameof(Branch)} or {nameof(BranchParameter)} properties, or {nameof(AutoDetectBranch)} must be enabled.");
+            Assert.False(autoDetectBranch.HasValue && autoDetectBranch.Value && !branch.IsNullOrEmpty(),
+                $"Branch cannot be specified via {nameof(Branch)} or {nameof(BranchParameter)} properties when {nameof(AutoDetectBranch)} is enabled");
+            Assert.True(autoDetectBranch.HasValue && autoDetectBranch.Value || !branch.IsNullOrEmpty(),
+                $"Branch must either be provided via {nameof(Branch)} or {nameof(BranchParameter)} properties, or {nameof(AutoDetectBranch)} must be enabled");
             branch ??= GitRepository.FromLocalDirectory(NukeBuild.RootDirectory).Branch;
 
             var outputFile = NukeBuild.TemporaryDirectory / $"octoversion.{Guid.NewGuid()}.json";

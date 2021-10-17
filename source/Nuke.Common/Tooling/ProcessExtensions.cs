@@ -23,8 +23,8 @@ namespace Nuke.Common.Tooling
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this IProcess process)
         {
-            ControlFlow.Assert(process != null , "process != null");
-            ControlFlow.Assert(process.WaitForExit(), "process.WaitForExit()");
+            Assert.True(process != null);
+            Assert.True(process.WaitForExit());
             return process;
         }
 
@@ -44,7 +44,7 @@ namespace Nuke.Common.Tooling
         public static IReadOnlyCollection<Output> EnsureOnlyStd(this IReadOnlyCollection<Output> output)
         {
             foreach (var o in output)
-                ControlFlow.Assert(o.Type == OutputType.Std, "o.Type == OutputType.Std");
+                Assert.True(o.Type == OutputType.Std);
 
             return output;
         }

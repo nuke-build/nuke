@@ -24,8 +24,8 @@ namespace Nuke.Common.Execution
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            ControlFlow.AssertWarn(Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds),
-                $"Could not complete checking build configurations within {TimeoutInMilliseconds} milliseconds.");
+            if (!Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds))
+                Log.Warning("Could not complete checking build configurations within {Timeout} milliseconds", TimeoutInMilliseconds);
 
             static Task CheckConfiguration()
             {

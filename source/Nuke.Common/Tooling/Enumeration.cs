@@ -100,7 +100,7 @@ namespace Nuke.Common.Tooling
                 {
                     var matchingFields = typeof(T).GetFields(ReflectionUtility.Static)
                         .Where(x => x.Name.EqualsOrdinalIgnoreCase(stringValue)).ToList();
-                    ControlFlow.Assert(matchingFields.Count == 1, "matchingFields.Count == 1");
+                    Assert.HasSingleItem(matchingFields);
                     return matchingFields.Single().GetValue(obj: null);
                 }
 

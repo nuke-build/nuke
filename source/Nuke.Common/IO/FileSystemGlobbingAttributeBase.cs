@@ -50,8 +50,8 @@ namespace Nuke.Common.IO
         public override object GetValue(MemberInfo member, object instance)
         {
             var memberType = member.GetMemberType();
-            ControlFlow.Assert(memberType == typeof(AbsolutePath) || memberType == typeof(AbsolutePath[]),
-                $"Member '{member.Name}' attributed with {GetType().Name} must be of type AbsolutePath or AbsolutePath[].");
+            Assert.True(memberType == typeof(AbsolutePath) || memberType == typeof(AbsolutePath[]),
+                $"Member '{member.Name}' attributed with {GetType().Name} must be of type AbsolutePath or AbsolutePath[]");
 
             var globbedElements = GetGlobbedElements(member);
 
@@ -59,10 +59,10 @@ namespace Nuke.Common.IO
             if (parameterValue != null)
             {
                 parameterValue.ForEach(x =>
-                    ControlFlow.Assert(
+                    Assert.True(
                         globbedElements.Contains(x),
-                        $"Value '{x}' for member '{member.Name}' is not contained any pattern '{_patterns.JoinComma()}'."));
-                ControlFlow.Assert(parameterValue.Length == 1 || memberType == typeof(AbsolutePath[]),
+                        $"Value '{x}' for member '{member.Name}' is not contained any pattern '{_patterns.JoinComma()}'"));
+                Assert.True(parameterValue.Length == 1 || memberType == typeof(AbsolutePath[]),
                     $"Member '{member.Name}' can only accept a single value but got:"
                         .Concat(parameterValue.Select(x => x.ToString()))
                         .JoinNewLine());
@@ -86,7 +86,7 @@ namespace Nuke.Common.IO
 
         private AbsolutePath[] GetGlobbedElements(MemberInfo member)
         {
-            ControlFlow.Assert(_patterns.Length > 0, $"Member '{member.Name}' has no globbing patterns defined.");
+            Assert.NotEmpty(_patterns, $"Member '{member.Name}' has no globbing patterns defined");
             return _globber(NukeBuild.RootDirectory, _patterns).ToArray();
         }
     }

@@ -37,8 +37,7 @@ namespace Nuke.Common.Tools.OctoVersion
 
         private static OctoVersionInfo GetResult(IProcess process, OctoVersionGetVersionSettings toolSettings)
         {
-            ControlFlow.Assert(toolSettings.OutputJsonFile != null, "toolSettings.OutputJsonFile != null");
-
+            Assert.FileExists(toolSettings.OutputJsonFile);
             try
             {
                 return SerializationTasks.JsonDeserializeFromFile<OctoVersionInfo>(toolSettings.OutputJsonFile, settings =>

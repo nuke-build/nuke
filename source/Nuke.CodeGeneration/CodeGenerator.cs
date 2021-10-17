@@ -78,14 +78,15 @@ namespace Nuke.CodeGeneration
                 bool NotExistent(Property property)
                 {
                     var nonExistent = task.SettingsClass.Properties.All(x => x.Name != property.Name);
-                    ControlFlow.AssertWarn(nonExistent, $"Property '{property.Name}' for task '{task.GetTaskMethodName()}' already exists.");
+                    if (!nonExistent)
+                        Log.Warning("Property {PropertyName} for task {TaskName} already exists", property.Name, task.GetTaskMethodName());
                     return nonExistent;
                 }
 
                 foreach (var commonPropertySet in task.CommonPropertySets)
                 {
-                    ControlFlow.Assert(tool.CommonTaskPropertySets.TryGetValue(commonPropertySet, out var properties),
-                        $"commonPropertySets[{commonPropertySet}] != null");
+                    Assert.True(tool.CommonTaskPropertySets.TryGetValue(commonPropertySet, out var properties),
+                        $"No common property set {commonPropertySet}");
                     properties.Where(NotExistent).ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
                 }
 

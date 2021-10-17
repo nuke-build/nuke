@@ -70,8 +70,7 @@ namespace Nuke.CodeGeneration
             var document = new HtmlDocument();
             document.Load(tempFile, Encoding.UTF8);
             var selectedNode = document.DocumentNode.SelectSingleNode(referenceValues[1]);
-            ControlFlow.Assert(selectedNode != null, "selectedNode != null");
-            return selectedNode.InnerText;
+            return selectedNode.NotNull().InnerText;
         }
 
         private class AutomaticDecompressingWebClient : WebClient

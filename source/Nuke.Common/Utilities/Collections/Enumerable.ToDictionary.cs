@@ -44,7 +44,7 @@ namespace Nuke.Common.Utilities.Collections
             string duplicationMessage)
         {
             var groups = enumerable.ToLookup(keySelector.Invoke, valueSelector.Invoke);
-            ControlFlow.Assert(
+            Assert.True(
                 groups.All(x => x.Count() == 1),
                 new[] { $"{duplicationMessage.TrimEnd(":")}:" }
                     .Concat(groups.Where(x => x.Count() > 1).Select(x => $" - {x.Key}"))
