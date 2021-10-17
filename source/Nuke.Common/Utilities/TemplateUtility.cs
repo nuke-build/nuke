@@ -55,7 +55,7 @@ namespace Nuke.Common.Utilities
 
         public static string GetTokenName(string name)
         {
-            return name.SplitCamelHumpsWithKnownWords().Join("_").ToUpper();
+            return name.SplitCamelHumpsWithKnownWords().JoinUnderscore().ToUpper();
         }
 
         public static void FillTemplateDirectoryRecursively(

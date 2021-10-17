@@ -108,7 +108,7 @@ namespace Nuke.Common.CI.GitHubActions
         {
             var parameters = dictionaryConfigurator.InvokeSafe(new Dictionary<string, object>())
                 .Select(x => $"{x.Key}={EscapeProperty(x.Value.ToString())}")
-                .JoinComma();
+                .JoinCommaSpace();
 
             Console.WriteLine(parameters.IsNullOrEmpty()
                 ? $"::{command}::{EscapeData(message)}"

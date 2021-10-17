@@ -25,7 +25,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
             using (writer.WriteBlock($"- stage: {Name}"))
             {
                 writer.WriteLine($"displayName: {DisplayName.SingleQuote()}");
-                writer.WriteLine($"dependsOn: [ {Dependencies.Select(x => x.Name).JoinComma()} ]");
+                writer.WriteLine($"dependsOn: [ {Dependencies.Select(x => x.Name).JoinCommaSpace()} ]");
 
                 if (Image != null)
                 {

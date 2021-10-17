@@ -61,7 +61,7 @@ namespace Nuke.Common.IO
                 parameterValue.ForEach(x =>
                     Assert.True(
                         globbedElements.Contains(x),
-                        $"Value '{x}' for member '{member.Name}' is not contained any pattern '{_patterns.JoinComma()}'"));
+                        $"Value '{x}' for member '{member.Name}' is not contained any pattern '{_patterns.JoinCommaSpace()}'"));
                 Assert.True(parameterValue.Length == 1 || memberType == typeof(AbsolutePath[]),
                     $"Member '{member.Name}' can only accept a single value but got:"
                         .Concat(parameterValue.Select(x => x.ToString()))

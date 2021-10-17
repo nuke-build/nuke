@@ -153,7 +153,7 @@ namespace Nuke.Common.CI.GitHubActions
                 yield return (input, $"${{{{ github.event.inputs.{input} }}}}");
 
             static string GetSecretValue(string secret)
-                => $"${{{{ secrets.{secret.SplitCamelHumpsWithKnownWords().Join("_").ToUpperInvariant()} }}}}";
+                => $"${{{{ secrets.{secret.SplitCamelHumpsWithKnownWords().JoinUnderscore().ToUpperInvariant()} }}}}";
 
             if (ImportGitHubTokenAs != null)
                 yield return (ImportGitHubTokenAs, GetSecretValue("GITHUB_TOKEN"));

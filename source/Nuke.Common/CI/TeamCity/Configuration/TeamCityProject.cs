@@ -28,7 +28,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                     writer.WriteLine($"buildType({buildType.Id})");
                 writer.WriteLine();
 
-                writer.WriteLine($"buildTypesOrder = arrayListOf({BuildTypes.Select(x => x.Id).JoinComma()})");
+                writer.WriteLine($"buildTypesOrder = arrayListOf({BuildTypes.Select(x => x.Id).JoinCommaSpace()})");
                 writer.WriteLine();
 
                 if (Parameters.Any())

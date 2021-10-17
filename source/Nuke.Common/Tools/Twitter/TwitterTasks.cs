@@ -77,9 +77,9 @@ namespace Nuke.Common.Tools.Twitter
                 .Concat(Uri.EscapeDataString(data
                     .Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value)}")
                     .OrderBy(x => x)
-                    .Join("&")))
-                .Join("&");
-            var cryptoKey = Encoding.ASCII.GetBytes(new[] { consumerSecret, tokenSecret }.Join("&"));
+                    .JoinAmpersand()))
+                .JoinAmpersand();
+            var cryptoKey = Encoding.ASCII.GetBytes(new[] { consumerSecret, tokenSecret }.JoinAmpersand());
             var cryptoTransform = new HMACSHA1(cryptoKey);
             return Convert.ToBase64String(cryptoTransform.ComputeHash(Encoding.ASCII.GetBytes(signature)));
         }
@@ -89,7 +89,7 @@ namespace Nuke.Common.Tools.Twitter
             return string.Format("OAuth {0}",
                 data.Where(x => x.Key.StartsWith("oauth_"))
                     .Select(x => $"{Uri.EscapeDataString(x.Key)}={Uri.EscapeDataString(x.Value).DoubleQuote()}")
-                    .JoinComma());
+                    .JoinCommaSpace());
         }
 
         private static string GetErrorFromBody(string response)

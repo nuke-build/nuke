@@ -68,9 +68,9 @@ namespace Nuke.CodeGeneration.Generators
             writer
                 .WriteSummary(tool)
                 .WriteObsoleteAttributeWhenObsolete(tool)
-                .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinComma()})")
+                .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinCommaSpace()})")
                 .WriteBlock(w => w
-                    .WriteLine($"using var process = ProcessTasks.StartProcess({arguments.JoinComma()});")
+                    .WriteLine($"using var process = ProcessTasks.StartProcess({arguments.JoinCommaSpace()});")
                     .WriteLine("process.AssertZeroExitCode();")
                     .WriteLine("return process.Output;"));
         }
@@ -127,7 +127,7 @@ namespace Nuke.CodeGeneration.Generators
                                  $"CombinatorialConfigure<{task.SettingsClass.Name}> configurator",
                                  "int degreeOfParallelism = 1",
                                  "bool completeOnFailure = false"
-                             }.JoinComma();
+                             }.JoinCommaSpace();
 
             return writer
                 .WriteSummary(task)

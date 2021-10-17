@@ -124,7 +124,7 @@ namespace Nuke.Common.ProjectModel
                     projectCollection.UnloadProject(msbuildProject);
                     targetFramework = targetFrameworks.First();
 
-                    Log.Warning("Project {Project} has multiple target frameworks {TargetFrameworks}", projectFile, targetFrameworks.JoinComma());
+                    Log.Warning("Project {Project} has multiple target frameworks {TargetFrameworks}", projectFile, targetFrameworks.JoinCommaSpace());
                     Log.Warning("Evaluating using {TargetFramework} ...", targetFramework);
 
                     msbuildProject = new Microsoft.Build.Evaluation.Project(

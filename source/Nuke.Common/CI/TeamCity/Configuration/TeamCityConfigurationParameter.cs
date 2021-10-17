@@ -49,7 +49,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                 if (Options != null)
                 {
                     var mappings = Options.Select(x => $"{x.Key.DoubleQuote()} to {x.Value.ToString().DoubleQuote()}");
-                    writer.WriteLine($"options = listOf({mappings.JoinComma()}),");
+                    writer.WriteLine($"options = listOf({mappings.JoinCommaSpace()}),");
                 }
 
                 if (Options == null && Type != TeamCityParameterType.Checkbox && Type != TeamCityParameterType.Password)
