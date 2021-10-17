@@ -40,7 +40,7 @@ partial class Build
             FontArchives.ForEach(x => Uncompress(x, FontDirectory / Path.GetFileNameWithoutExtension(x)));
 
             FontFiles.ForEach(x => FontCollection.Install(x));
-            FontCollection.Families.ForEach(x => Log.Information($"Installed font {x.Name.SingleQuote()}"));
+            FontCollection.Families.ForEach(x => Log.Information("Installed font {Font}", x.Name));
         });
 
     AbsolutePath WatermarkImageFile => RootDirectory / "images" / "logo-watermark.png";
@@ -56,7 +56,7 @@ partial class Build
 
             var robotoFont = FontCollection.Families.Single(x => x.Name == "Roboto Black");
             var graphicsOptions =
-                new TextGraphicsOptions
+                new DrawingOptions
                 {
                     TextOptions = new TextOptions
                                   {
