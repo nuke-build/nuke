@@ -51,7 +51,7 @@ namespace Nuke.Common.ValueInjection
 
         public static string GetParameterDashedName(string name)
         {
-            return name.SplitCamelHumpsWithKnownWords().Join("-").ToLowerInvariant();
+            return name.SplitCamelHumpsWithKnownWords().JoinDash().ToLowerInvariant();
         }
 
         public static string GetParameterMemberName(string name)
@@ -216,7 +216,7 @@ namespace Nuke.Common.ValueInjection
             char? separator = null)
         {
             Assert.True(values.Length == 1 || !separator.HasValue || values.All(x => !x.Contains(separator.Value)),
-                $"Command-line argument '{argumentName}' with value [ {values.JoinComma()} ] cannot be split with separator '{separator}'");
+                $"Command-line argument '{argumentName}' with value [ {values.JoinCommaSpace()} ] cannot be split with separator '{separator}'");
             values = separator.HasValue && values.Any(x => x.Contains(separator.Value))
                 ? values.SingleOrDefault()?.Split(separator.Value) ?? new string[0]
                 : values;
@@ -331,7 +331,7 @@ namespace Nuke.Common.ValueInjection
             if (!destinationType.IsArray)
             {
                 Assert.HasSingleItem(convertedValues,
-                    $"Value [ {values.JoinComma()} ] cannot be assigned to '{destinationType.GetDisplayShortName()}'");
+                    $"Value [ {values.JoinCommaSpace()} ] cannot be assigned to '{destinationType.GetDisplayShortName()}'");
                 return convertedValues.Single();
             }
 

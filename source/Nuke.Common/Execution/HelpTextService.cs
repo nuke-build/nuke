@@ -25,7 +25,7 @@ namespace Nuke.Common.Execution
             foreach (var target in executableTargets.Where(x => x.Listed))
             {
                 var dependencies = target.ExecutionDependencies.Count > 0
-                    ? $" -> {target.ExecutionDependencies.Select(x => x.Name).JoinComma()}"
+                    ? $" -> {target.ExecutionDependencies.Select(x => x.Name).JoinCommaSpace()}"
                     : string.Empty;
                 var targetEntry = target.Name + (target.IsDefault ? " (default)" : string.Empty);
                 builder.AppendLine($"  {targetEntry.PadRight(padRightTargets)}{dependencies}");

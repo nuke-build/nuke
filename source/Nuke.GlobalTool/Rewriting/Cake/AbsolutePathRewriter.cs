@@ -113,7 +113,7 @@ namespace Nuke.GlobalTool.Rewriting.Cake
                         SyntaxKind.SimpleMemberAccessExpression,
                         SyntaxFactory.ParenthesizedExpression(absolutePathExpression),
                         SyntaxFactory.IdentifierName(GetGlobbingMethod(node))))
-                .WithArguments(wildcardParts.Join("/").ToLiteralExpression());
+                .WithArguments(wildcardParts.JoinSlash().ToLiteralExpression());
         }
 
         private string GetGlobbingMethod(SyntaxNode node, IEnumerable<string> wildcardparts = null)

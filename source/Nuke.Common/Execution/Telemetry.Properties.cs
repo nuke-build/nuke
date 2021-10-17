@@ -93,9 +93,9 @@ namespace Nuke.Common.Execution
                        ["num_secrets"] = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true)
                            .Count(x => x.HasCustomAttribute<SecretAttribute>()).ToString(),
                        ["config_generators"] = build.GetType().GetCustomAttributes<ConfigurationAttributeBase>()
-                           .Select(GetTypeName).Distinct().OrderBy(x => x).JoinComma(),
+                           .Select(GetTypeName).Distinct().OrderBy(x => x).JoinCommaSpace(),
                        ["build_components"] = build.GetType().GetInterfaces().Where(x => IsCommonType(x) && x != typeof(INukeBuild))
-                           .Select(GetTypeName).Distinct().OrderBy(x => x).JoinComma()
+                           .Select(GetTypeName).Distinct().OrderBy(x => x).JoinCommaSpace()
                    };
         }
 

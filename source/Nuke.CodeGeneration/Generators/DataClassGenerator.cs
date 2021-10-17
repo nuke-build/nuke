@@ -226,7 +226,7 @@ namespace Nuke.CodeGeneration.Generators
             if (property.Secret ?? false)
                 arguments.Add("secret: true");
 
-            return $"  .Add({arguments.JoinComma()})";
+            return $"  .Add({arguments.JoinCommaSpace()})";
         }
     }
 }

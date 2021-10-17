@@ -134,7 +134,7 @@ namespace Nuke.Common
 
             static string GetInformation(ExecutableTarget target)
                 => target.SummaryInformation.Any()
-                    ? target.SummaryInformation.Select(x => $"{x.Key}: {x.Value}").JoinComma()
+                    ? target.SummaryInformation.Select(x => $"{x.Key}: {x.Value}").JoinCommaSpace()
                     : null;
 
             Debug();

@@ -51,7 +51,7 @@ namespace Nuke.Common.Utilities
                             new string[0];
 
                 if (parameter.EqualsOrdinalIgnoreCase(Constants.InvokedTargetsParameterName))
-                    items = items.Select(x => x.SplitCamelHumpsWithKnownWords().Join("-"));
+                    items = items.Select(x => x.SplitCamelHumpsWithKnownWords().JoinDash());
 
                 AddItems(items);
             }

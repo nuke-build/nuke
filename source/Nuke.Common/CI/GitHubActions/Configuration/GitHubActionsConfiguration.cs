@@ -25,7 +25,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
             writer.WriteLine();
 
             if (ShortTriggers.Length > 0)
-                writer.WriteLine($"on: [{ShortTriggers.Select(x => x.GetValue().ToLowerInvariant()).JoinComma()}]");
+                writer.WriteLine($"on: [{ShortTriggers.Select(x => x.GetValue().ToLowerInvariant()).JoinCommaSpace()}]");
             else
             {
                 writer.WriteLine("on:");

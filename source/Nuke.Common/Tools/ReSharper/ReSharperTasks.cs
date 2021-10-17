@@ -66,7 +66,7 @@ namespace Nuke.Common.Tools.ReSharper
 
         private static string GetShadowDirectory(ReSharperSettingsBase toolSettings, string wave)
         {
-            var hashCode = toolSettings.ProcessToolPath.Concat(toolSettings.Plugins.Select(x => x.Key + x.Value)).OrderBy(x => x).JoinComma().GetMD5Hash();
+            var hashCode = toolSettings.ProcessToolPath.Concat(toolSettings.Plugins.Select(x => x.Key + x.Value)).OrderBy(x => x).JoinCommaSpace().GetMD5Hash();
             return Path.Combine(NukeBuild.TemporaryDirectory, $"ReSharper-{wave}-{hashCode.Substring(startIndex: 0, length: 4)}");
         }
     }

@@ -56,7 +56,7 @@ namespace Nuke.Common.Execution
             {
                 // TODO: logging additional
                 Log.Error("Circular dependencies between targets:"
-                    .Concat(cycles.Select(x => $" - {x.Select(y => y.Value.Name).JoinComma()}"))
+                    .Concat(cycles.Select(x => $" - {x.Select(y => y.Value.Name).JoinCommaSpace()}"))
                     .JoinNewLine());
                 Environment.Exit(exitCode: -1);
             }

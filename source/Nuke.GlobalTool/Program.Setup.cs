@@ -231,7 +231,7 @@ namespace Nuke.GlobalTool
                                 TargetFramework = targetFramework,
                                 TelemetryVersion = Telemetry.CurrentVersion,
                                 NukeVersion = nukeVersion,
-                                NukeVersionMajorMinor = nukeVersion.Split(".").Take(2).Join(".")
+                                NukeVersionMajorMinor = nukeVersion.Split(".").Take(2).JoinDot()
                             }))));
 
             if (projectFormat == FORMAT_LEGACY)

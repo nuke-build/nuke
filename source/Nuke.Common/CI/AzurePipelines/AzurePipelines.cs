@@ -160,7 +160,7 @@ namespace Nuke.Common.CI.AzurePipelines
                     .AddPair("codeCoverageTool", coverageTool)
                     .AddPair("summaryFile", summaryFile)
                     .AddPair("reportDirectory", reportDirectory)
-                    .AddPair("additionalCodeCoverageFiles", additionalCodeCoverageFiles.Join(",")));
+                    .AddPair("additionalCodeCoverageFiles", additionalCodeCoverageFiles.JoinComma()));
         }
 
         public void PublishTestResults(
@@ -176,7 +176,7 @@ namespace Nuke.Common.CI.AzurePipelines
                 "results.publish",
                 dictionaryConfigurator: x => x
                     .AddPair("type", type)
-                    .AddPair("resultFiles", files.Join(","))
+                    .AddPair("resultFiles", files.JoinComma())
                     .AddPairWhenValueNotNull("mergeResults", mergeResults)
                     .AddPairWhenValueNotNull("platform", platform)
                     .AddPairWhenValueNotNull("config", configuration)
@@ -240,7 +240,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
         private void Write(string command, string[] escapedTokens, [CanBeNull] string message)
         {
-            _messageSink.Invoke($"##vso[{command} {escapedTokens.Join(";")}]{EscapeMessage(message)}");
+            _messageSink.Invoke($"##vso[{command} {escapedTokens.JoinSemicolon()}]{EscapeMessage(message)}");
         }
 
         private string EscapeMessage([CanBeNull] string data)
