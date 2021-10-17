@@ -176,7 +176,7 @@ namespace Nuke.Common.CI.TeamCity
                 .Select(x => GetParameter(x.GetMemberInfo(), build, required: true))
                 .Concat(new TeamCityKeyValueParameter(
                     "teamcity.ui.runButton.caption",
-                    executableTarget.Name.SplitCamelHumpsWithSeparator(" ", Constants.KnownWords))).ToArray();
+                    executableTarget.Name.SplitCamelHumpsWithKnownWords().JoinSpace())).ToArray();
             var triggers = GetTriggers(executableTarget, buildTypes).ToArray();
 
             yield return new TeamCityBuildType

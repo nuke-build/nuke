@@ -68,9 +68,9 @@ namespace Nuke.Common.Utilities
         }
 
         [Pure]
-        public static string SplitCamelHumpsWithSeparator(this string str, string separator, params string[] exclusions)
+        public static IEnumerable<string> SplitCamelHumpsWithKnownWords(this string str)
         {
-            return str.SplitCamelHumps(exclusions).Join(separator);
+            return str.SplitCamelHumps(KnownWords);
         }
     }
 }

@@ -23,9 +23,7 @@ namespace Nuke.GlobalTool.Rewriting.Cake
                 return node;
 
             string CreateRename(string name)
-                => _renames[name] = Constants.KnownWords.Aggregate(
-                    name.Capitalize(),
-                    (s, r) => s.Replace(r, r, StringComparison.OrdinalIgnoreCase));
+                => _renames[name] = name.Capitalize().ReplaceKnownWords();
 
             var renamedVariables = node.Declaration.Variables
                 .Select(x => x.WithIdentifier(Identifier(CreateRename(x.Identifier.Text))));

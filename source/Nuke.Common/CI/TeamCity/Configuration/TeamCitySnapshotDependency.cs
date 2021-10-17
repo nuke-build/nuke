@@ -20,7 +20,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         {
             static string FormatAction(TeamCityDependencyFailureAction action)
                 => "FailureAction." +
-                   action.ToString().SplitCamelHumpsWithSeparator("_").ToUpperInvariant();
+                   action.ToString().SplitCamelHumps().Join("_").ToUpperInvariant();
 
             using (writer.WriteBlock($"snapshot({BuildType.Id})"))
             {
