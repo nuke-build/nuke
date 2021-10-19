@@ -49,7 +49,7 @@ partial class Build
     ///   - JetBrains Rider            https://nuke.build/rider
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
-    public static int Main() => Execute<Build>(x => ((IPack) x).Pack);
+    public static int Main() => Execute<Build>(x => ((IPack)x).Pack);
 
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
@@ -81,6 +81,14 @@ partial class Build
             SourceDirectory.GlobDirectories("*/bin", "*/obj").ForEach(DeleteDirectory);
             EnsureCleanDirectory(OutputDirectory);
         });
+
+    Configure<DotNetBuildSettings> ICompile.CompileSettings => _ => _
+        .When(!ScheduledTargets.Contains(((IPublish)this).Publish), _ => _
+            .ClearProperties());
+
+    Configure<DotNetPublishSettings> ICompile.PublishSettings => _ => _
+        .When(!ScheduledTargets.Contains(((IPublish)this).Publish), _ => _
+            .ClearProperties());
 
     IEnumerable<(Project Project, string Framework)> ICompile.PublishConfigurations =>
         from project in new[] { Solution.Nuke_GlobalTool, Solution.Nuke_MSBuildTasks }
@@ -140,5 +148,5 @@ partial class Build
 
     T From<T>()
         where T : INukeBuild
-        => (T) (object) this;
+        => (T)(object)this;
 }
