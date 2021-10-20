@@ -6,17 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NuGet.Packaging;
 using NuGet.Versioning;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using Nuke.Common.Utilities.Net;
 
 namespace Nuke.Common.Tooling
 {
@@ -28,18 +26,16 @@ namespace Nuke.Common.Tooling
         {
             try
             {
-                using var httpClient = new HttpClient();
-                var response = await httpClient.CreateRequest(HttpMethod.Get,
-                        includeUnlisted
-                            ? $"https://api.nuget.org/v3/flatcontainer/{packageId.ToLowerInvariant()}/index.json"
-                            : $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}")
-                    .GetResponseAsync();
-                var jobject = await response.GetBodyAsJson();
+                var url = includeUnlisted
+                    ? $"https://api.nuget.org/v3/flatcontainer/{packageId.ToLowerInvariant()}/index.json"
+                    : $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
+                var jsonString = await HttpTasks.HttpDownloadStringAsync(url);
+                var jsonObject = JsonConvert.DeserializeObject<JObject>(jsonString);
                 return includeUnlisted
-                    ? jobject.First.NotNull().First.NotNull().Children()
+                    ? jsonObject.First.NotNull().First.NotNull().Children()
                         .Select(x => x.Value<string>())
                         .Last(x => includePrereleases || !x.Contains("-"))
-                    : jobject["data"].NotNull().Single()["version"].NotNull().ToString();
+                    : jsonObject["data"].NotNull().Single()["version"].NotNull().ToString();
             }
             catch
             {
@@ -78,7 +74,7 @@ namespace Nuke.Common.Tooling
             string packagesConfigFile,
             bool resolveDependencies = true)
         {
-            var assetsObject = JObject.Parse(File.ReadAllText(packagesConfigFile));
+            var assetsObject = SerializationTasks.JsonDeserializeFromFile<JObject>(packagesConfigFile);
 
             // ReSharper disable HeapView.BoxingAllocation
             var directPackageReferences =
@@ -133,8 +129,8 @@ namespace Nuke.Common.Tooling
             string packagesConfigFile,
             bool resolveDependencies = true)
         {
-            var xdocument = XDocument.Load(packagesConfigFile);
-            var packageIds = xdocument.XPathSelectAttributeValues(
+            var packageIds = XmlTasks.XmlPeek(
+                    packagesConfigFile,
                     IsLegacyFile(packagesConfigFile)
                         ? ".//package/@id"
                         : ".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload']/@Include")
@@ -145,7 +141,8 @@ namespace Nuke.Common.Tooling
             {
                 // TODO: use xml namespaces
                 // TODO: version as tag
-                var versions = xdocument.XPathSelectAttributeValues(
+                var versions = XmlTasks.XmlPeek(
+                        packagesConfigFile,
                         IsLegacyFile(packagesConfigFile)
                             ? $".//package[@id='{packageId}']/@version"
                             : $".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload'][@Include='{packageId}']/@Version")
@@ -261,12 +258,11 @@ namespace Nuke.Common.Tooling
 
             string TryGetGlobalDirectoryFromConfig()
                 => GetConfigFiles(packagesConfigFile)
-                    .Select(x =>
-                        new
-                        {
-                            File = x,
-                            Setting = XDocument.Load(x).XPathSelectAttributeValues(".//add[@key='globalPackagesFolder']/@value").SingleOrDefault()
-                        })
+                    .Select(x => new
+                                 {
+                                     File = x,
+                                     Setting = XmlTasks.XmlPeekSingle(x, ".//add[@key='globalPackagesFolder']/@value")
+                                 })
                     .Where(x => x.Setting != null)
                     .Select(x => Path.IsPathRooted(x.Setting)
                         ? x.Setting
@@ -400,7 +396,7 @@ namespace Nuke.Common.Tooling
             }
 
             public string FileName { get; }
-            public AbsolutePath Directory => (AbsolutePath)Path.GetDirectoryName(FileName).NotNull();
+            public AbsolutePath Directory => (AbsolutePath) Path.GetDirectoryName(FileName).NotNull();
             public NuspecReader Metadata { get; }
             public string Id => Metadata.GetIdentity().Id;
             public NuGetVersion Version => Metadata.GetIdentity().Version;
