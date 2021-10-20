@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.Unity
 {
@@ -19,8 +20,7 @@ namespace Nuke.Common.Tools.Unity
 
         public string GetLogFile()
         {
-            // TODO SK
-            return LogFile ?? NukeBuild.RootDirectory / "unity.log";
+            return (LogFile ?? NukeBuild.RootDirectory / "unity.log").DoubleQuoteIfNeeded();
         }
     }
 }
