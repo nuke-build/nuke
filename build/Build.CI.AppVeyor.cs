@@ -33,7 +33,8 @@ using Nuke.Enterprise.Notifications;
 [AppVeyor(
     suffix: "continuous",
     AppVeyorImage.VisualStudio2019,
-    AppVeyorImage.Ubuntu1804,
+    AppVeyorImage.UbuntuLatest,
+    AppVeyorImage.MacOsLatest,
     BranchesExcept = new[] { MasterBranch, "/" + ReleaseBranchPrefix + "\\/*/" },
     SkipTags = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },

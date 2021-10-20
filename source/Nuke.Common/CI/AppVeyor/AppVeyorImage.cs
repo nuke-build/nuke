@@ -22,6 +22,8 @@ namespace Nuke.Common.CI.AppVeyor
         [EnumValue("Visual Studio 2019")] VisualStudioLatest,
         [EnumValue("Ubuntu1604")] Ubuntu1604,
         [EnumValue("Ubuntu1804")] Ubuntu1804,
-        [EnumValue("Ubuntu1804")] UbuntuLatest
+        [EnumValue("Ubuntu")] UbuntuLatest,
+        [EnumValue("MacOs-Mojave")] MacOsMojave,
+        [EnumValue("MacOs")] MacOsLatest
     }
 }
