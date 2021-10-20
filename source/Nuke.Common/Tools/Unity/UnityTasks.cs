@@ -3,10 +3,12 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Unity.Logging;
 using Nuke.Common.Utilities;
@@ -55,9 +57,9 @@ namespace Nuke.Common.Tools.Unity
         private static string GetProgramFiles()
         {
             return EnvironmentInfo.SpecialFolder(
-                    EnvironmentInfo.Is32Bit
-                        ? SpecialFolders.ProgramFilesX86
-                        : SpecialFolders.ProgramFiles);
+                EnvironmentInfo.Is32Bit
+                    ? SpecialFolders.ProgramFilesX86
+                    : SpecialFolders.ProgramFiles);
         }
 
         private static void PreProcess(ref UnitySettings unitySettings)
@@ -65,7 +67,33 @@ namespace Nuke.Common.Tools.Unity
             if (unitySettings.ProjectPath == null)
                 Log.Warning("ProjectPath is not set, using last opened/built project");
 
+            DetectUnityVersion(ref unitySettings);
             PreProcess<UnitySettings>(ref unitySettings);
+        }
+
+        private static void DetectUnityVersion(ref UnitySettings unitySettings)
+        {
+            if (unitySettings.HubVersion != null ||
+                unitySettings.ProjectPath == null)
+                return;
+
+            var editorVersion = ReadUnityEditorVersion(unitySettings.ProjectPath);
+            var hubToolPath = (AbsolutePath)GetToolPathViaHubVersion(editorVersion);
+            if (hubToolPath.Exists())
+            {
+                unitySettings.HubVersion = editorVersion;
+                return;
+            }
+
+            var manualInstallationToolPath = (AbsolutePath)GetToolPathViaManualInstallation();
+            Assert.FileExists(manualInstallationToolPath, $"Required Unity Hub installation for version '{editorVersion}' was not found");
+        }
+
+        private static string ReadUnityEditorVersion(string projectPath)
+        {
+            var projectVersionPath = Path.Combine(projectPath, "ProjectSettings", "ProjectVersion.txt");
+            var properties = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string>>(projectVersionPath);
+            return properties["m_EditorVersion"];
         }
 
         private static void PreProcess<T>(ref T unitySettings)
