@@ -36,7 +36,7 @@ namespace Nuke.GlobalTool
             }
             catch (Exception exception)
             {
-                Host.Error(exception.Message);
+                Host.Error(exception.Unwrap().Message);
                 return 1;
             }
         }

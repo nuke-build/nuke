@@ -12,6 +12,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GlobalTool.Rewriting.Cake;
@@ -29,6 +30,8 @@ namespace Nuke.GlobalTool
         public static int CakeConvert(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             Telemetry.ConvertCake();
+            ProjectModelTasks.Initialize();
+
             Host.Warning(
                 new[]
                 {

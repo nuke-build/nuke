@@ -23,6 +23,7 @@ namespace Nuke.GlobalTool
         public static int AddPackage(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             Telemetry.AddPackage();
+            ProjectModelTasks.Initialize();
 
             var packageId = args.ElementAt(0);
             var packageVersion =
