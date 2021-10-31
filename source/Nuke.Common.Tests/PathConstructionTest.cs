@@ -124,7 +124,7 @@ namespace Nuke.Common.Tests
         public void TestCombine_Throws(string path1, string path2, char? separator, string expected)
         {
             Action action = () => Combine(path1, path2, separator);
-            action.Should().Throw<Exception>().WithMessage(expected);
+            action.Should().Throw<Exception>().Which.Message.Should().StartWith(expected);
         }
 
         [Theory]
@@ -157,7 +157,7 @@ namespace Nuke.Common.Tests
         public void TestNormalizePath_Throws(string input, char? separator, string message)
         {
             Action action = () => NormalizePath(input, separator);
-            action.Should().Throw<Exception>().WithMessage(message);
+            action.Should().Throw<Exception>().Which.Message.Should().StartWith(message);
         }
 
         [Theory]
@@ -198,7 +198,7 @@ namespace Nuke.Common.Tests
         public void AbsolutePath_Throws(object[] parts, string expected)
         {
             Action action = () => ParseAbsolutePath(parts);
-            action.Should().Throw<Exception>().WithMessage(expected);
+            action.Should().Throw<Exception>().Which.Message.Should().StartWith(expected);
         }
 
         [Fact]
