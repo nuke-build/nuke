@@ -6,11 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
-using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common
 {
@@ -61,7 +58,7 @@ namespace Nuke.Common
             if (obj == null)
             {
                 throw new ArgumentException(
-                    message ?? $"Expected object of type {typeof(T).FullName.SingleQuote()} to be not null",
+                    message ?? $"Expected object of type '{typeof(T).FullName}' to be not null",
                     argumentExpression);
             }
 
@@ -80,7 +77,7 @@ namespace Nuke.Common
             if (obj == null)
             {
                 throw new ArgumentException(
-                    message ?? $"Expected object of type {typeof(T).FullName.SingleQuote()} to be not null",
+                    message ?? $"Expected object of type '{typeof(T).FullName}' to be not null",
                     argumentExpression);
             }
 
@@ -94,7 +91,7 @@ namespace Nuke.Common
             string message = null,
             [CallerArgumentExpression("str")] string argumentExpression = null)
         {
-            if (str.IsNullOrEmpty())
+            if (string.IsNullOrEmpty(str))
                 throw new ArgumentException(message ?? "Expected string to be not null or empty", argumentExpression);
             return str;
         }
@@ -106,7 +103,7 @@ namespace Nuke.Common
             string message = null,
             [CallerArgumentExpression("str")] string argumentExpression = null)
         {
-            if (str.IsNullOrWhiteSpace())
+            if (string.IsNullOrWhiteSpace(str))
                 throw new ArgumentException(message ?? "Expected string to be not null or whitespace", argumentExpression);
             return str;
         }
@@ -119,7 +116,7 @@ namespace Nuke.Common
             [CallerArgumentExpression("collection")]
             string argumentExpression = null)
         {
-            if (collection.NotNull(argumentExpression: argumentExpression).IsEmpty())
+            if (collection.NotNull(argumentExpression: argumentExpression).Count == 0)
                 throw new ArgumentException(message ?? "Expected collection to be not empty", argumentExpression);
         }
 
@@ -131,7 +128,7 @@ namespace Nuke.Common
             [CallerArgumentExpression("collection")]
             string argumentExpression = null)
         {
-            if (!collection.NotNull(argumentExpression: argumentExpression).IsEmpty())
+            if (collection.NotNull(argumentExpression: argumentExpression).Count > 0)
                 throw new ArgumentException(message ?? "Expected collection to be empty", argumentExpression);
         }
 
