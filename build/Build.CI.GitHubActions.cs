@@ -19,6 +19,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
     PublishArtifacts = false,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" },
+    EnableGitHubContext = true,
     ImportSecrets = new[]
                     {
                         nameof(EnterpriseAccessToken),

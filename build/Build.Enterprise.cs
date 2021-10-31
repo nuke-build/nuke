@@ -19,10 +19,8 @@ using Nuke.Enterprise.Notifications;
     Members = new[] { nameof(RootDirectory), nameof(Host), nameof(Verbosity) })]
 // [DeploymentSlackNotification]
 // [ContinuousBuildSlackNotification]
-partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazGitHubAccessToken
+partial class Build : IHazSlackCredentials
 {
-    string IHazGitHubAccessToken.AccessToken => GitHubToken;
-
     public class DeploymentSlackNotificationAttribute : CustomSlackNotificationAttribute
     {
         public override bool ReportBuildAlways => true;

@@ -22,7 +22,6 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 
 partial class Build
 {
-    [Parameter] [Secret] readonly string GitHubToken;
     [Parameter] [Secret] readonly string GitterAuthToken;
     [Parameter] [Secret] readonly string SlackWebhook;
     [Parameter] readonly string GitterRoomId;

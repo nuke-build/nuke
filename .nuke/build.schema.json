@@ -36,10 +36,6 @@
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
         },
-        "GitHubToken": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
         "GitterAuthToken": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"

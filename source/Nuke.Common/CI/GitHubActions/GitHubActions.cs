@@ -5,8 +5,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
@@ -23,8 +26,21 @@ namespace Nuke.Common.CI.GitHubActions
 
         public new static GitHubActions Instance => Host.Instance as GitHubActions;
 
+        private readonly Lazy<JObject> _eventContext;
+        private readonly Lazy<JObject> _githubContext;
+
         internal GitHubActions()
         {
+            _eventContext = Lazy.Create(() =>
+            {
+                var content = File.ReadAllText(GitHubEventPath);
+                return JsonConvert.DeserializeObject<JObject>(content);
+            });
+            _githubContext = Lazy.Create(() =>
+            {
+                var content = EnvironmentInfo.GetVariable<string>("GITHUB_CONTEXT");
+                return content != null ? JsonConvert.DeserializeObject<JObject>(content) : null;
+            });
         }
 
         string IBuildServer.Branch => GitHubRef;
@@ -75,6 +91,14 @@ namespace Nuke.Common.CI.GitHubActions
         public string GitHubJob => EnvironmentInfo.GetVariable<string>("GITHUB_JOB");
 
         // https://github.com/actions/toolkit/tree/master/packages/core/src
+
+        public JObject GitHubContext => _githubContext.Value;
+        public string GitHubToken => GitHubContext.GetPropertyStringValue("token");
+
+        public JObject GitHubEvent => _eventContext.Value;
+        public bool GitHubIsPullRequest => GitHubEventName == "pull_request";
+        public int? GitHubPullRequestNumber => GitHubEvent.GetPropertyValue<int>("number");
+        public string GitHubPullRequestAction => GitHubEvent.GetPropertyStringValue("action");
 
         public void Group(string group)
         {

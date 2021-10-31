@@ -43,6 +43,7 @@ jobs:
         env:
           EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
           SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
@@ -60,6 +61,7 @@ jobs:
         env:
           EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
           SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
   macOS-latest:
     name: macOS-latest
     runs-on: macOS-latest
@@ -77,3 +79,4 @@ jobs:
         env:
           EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
           SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
+          GITHUB_CONTEXT: ${{ toJSON(github) }}
