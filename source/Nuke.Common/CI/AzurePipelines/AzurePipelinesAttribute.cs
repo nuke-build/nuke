@@ -116,7 +116,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public string[] ImportVariableGroups { get; set; } = new string[0];
         public string[] ImportSecrets { get; set; } = new string[0];
-        public string ImportSystemAccessTokenAs { get; set; }
+        public bool EnableAccessToken { get; set; }
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -298,8 +298,8 @@ namespace Nuke.Common.CI.AzurePipelines
         {
             static string GetSecretValue(string secret) => $"$({secret})";
 
-            if (ImportSystemAccessTokenAs != null)
-                yield return (ImportSystemAccessTokenAs, GetSecretValue("System.AccessToken"));
+            if (EnableAccessToken)
+                yield return ("SYSTEM_ACCESSTOKEN", GetSecretValue("System.AccessToken"));
 
             foreach (var secret in ImportSecrets)
                 yield return (secret, GetSecretValue(secret));

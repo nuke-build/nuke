@@ -36,13 +36,6 @@ project {
     buildTypesOrder = arrayListOf(Restore, Compile, Test_P1T2, Test_P2T2, Test, Coverage, Pack, Publish, Announce)
 
     params {
-        text (
-            "env.AzurePipelinesSystemAccessToken",
-            label = "AzurePipelinesSystemAccessToken",
-            description = "Azure Pipelines System Access Token",
-            value = "",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
         select (
             "env.Configuration",
             label = "Configuration",
@@ -57,13 +50,6 @@ project {
             allowMultiple = true,
             valueSeparator = " ",
             options = listOf("Debug" to "Debug", "Release" to "Release"),
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.GitHubToken",
-            label = "GitHubToken",
-            description = "GitHub Token",
-            value = "",
-            allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         checkbox (
             "env.IgnoreFailedSources",

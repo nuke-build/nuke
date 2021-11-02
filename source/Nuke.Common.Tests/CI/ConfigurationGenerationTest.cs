@@ -77,9 +77,9 @@ namespace Nuke.Common.Tests.CI
                         NonEntryTargets = new[] { nameof(Clean) },
                         InvokedTargets = new[] { nameof(Test) },
                         ExcludedTargets = new[] { nameof(Pack) },
-                        ImportSystemAccessTokenAs = nameof(AzurePipelinesSystemAccessToken),
+                        EnableAccessToken = true,
                         ImportVariableGroups = new[] { "variable-group-1" },
-                        ImportSecrets = new[] { nameof(GitHubToken) },
+                        ImportSecrets = new[] { nameof(ApiKey) },
                         TriggerBatch = true,
                         TriggerBranchesInclude = new[] { "included_branch" },
                         TriggerBranchesExclude = new[] { "excluded_branch" },
@@ -219,11 +219,6 @@ namespace Nuke.Common.Tests.CI
 
             [Parameter("NuGet Source for Packages")]
             public readonly string Source = "https://api.nuget.org/v3/index.json";
-
-            [Parameter("GitHub Token")] public readonly string GitHubToken;
-
-            [Parameter("Azure Pipelines System Access Token")]
-            public readonly string AzurePipelinesSystemAccessToken;
 
             public Target Publish => _ => _
                 .DependsOn(Clean, Test, Pack)

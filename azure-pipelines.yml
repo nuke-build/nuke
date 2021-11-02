@@ -46,7 +46,7 @@ stages:
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
             env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
@@ -73,7 +73,7 @@ stages:
             inputs:
               script: './build.cmd Restore Compile Pack --skip'
             env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
@@ -108,7 +108,7 @@ stages:
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
             env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
@@ -135,7 +135,7 @@ stages:
             inputs:
               script: './build.cmd Restore Compile Pack --skip'
             env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
@@ -170,7 +170,7 @@ stages:
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
             env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
@@ -197,7 +197,7 @@ stages:
             inputs:
               script: './build.cmd Restore Compile Pack --skip'
             env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               EnterpriseAccessToken: $(EnterpriseAccessToken)
               SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1

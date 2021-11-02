@@ -9,10 +9,6 @@
         "AutoStash": {
           "type": "boolean"
         },
-        "AzurePipelinesAccessToken": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
         "CodecovToken": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"

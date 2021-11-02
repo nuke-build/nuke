@@ -29,7 +29,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #endif
                     },
 #if NUKE_ENTERPRISE
-    ImportSystemAccessTokenAs = IHazAzurePipelinesAccessToken.AzurePipelines + nameof(IHazAzurePipelinesAccessToken.AccessToken),
+    EnableAccessToken = true,
 #endif
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(ICompile.Compile), nameof(InstallFonts), nameof(ReleaseImage) },
