@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -28,6 +31,8 @@ namespace Nuke.Common.CI.GitHubActions
 
         private readonly Lazy<JObject> _eventContext;
         private readonly Lazy<JObject> _githubContext;
+        private readonly Lazy<HttpClient> _httpClient;
+        private readonly Lazy<long> _jobId;
 
         internal GitHubActions()
         {
@@ -41,6 +46,16 @@ namespace Nuke.Common.CI.GitHubActions
                 var content = EnvironmentInfo.GetVariable<string>("GITHUB_CONTEXT");
                 return content != null ? JsonConvert.DeserializeObject<JObject>(content) : null;
             });
+            _httpClient = Lazy.Create(() =>
+            {
+                var client = new HttpClient();
+                client.BaseAddress = new Uri("https://api.github.com");
+                client.DefaultRequestHeaders.UserAgent.ParseAdd("nuke-build");
+                client.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($":{GitHubToken}")));
+                return client;
+            });
+            _jobId = Lazy.Create(GetJobId);
         }
 
         string IBuildServer.Branch => GitHubRef;
@@ -94,6 +109,7 @@ namespace Nuke.Common.CI.GitHubActions
 
         public JObject GitHubContext => _githubContext.Value;
         public string GitHubToken => GitHubContext.GetPropertyStringValue("token");
+        public long GitHubJobId => _jobId.Value;
 
         public JObject GitHubEvent => _eventContext.Value;
         public bool GitHubIsPullRequest => GitHubEventName == "pull_request";
