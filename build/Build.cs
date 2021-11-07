@@ -121,7 +121,7 @@ partial class Build
     string PublicNuGetSource => "https://api.nuget.org/v3/index.json";
 
     string GitHubRegistrySource => GitHubActions != null
-        ? $"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json"
+        ? $"https://nuget.pkg.github.com/{GitHubActions.RepositoryOwner}/index.json"
         : null;
 
     [Parameter] [Secret] readonly string PublicNuGetApiKey;

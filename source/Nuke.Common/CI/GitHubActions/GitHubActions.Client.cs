@@ -16,7 +16,7 @@ namespace Nuke.Common.CI.GitHubActions
         public async Task CreateComment(int issue, string text)
         {
             await _httpClient.Value
-                .CreateRequest(HttpMethod.Post, $"repos/{GitHubRepository}/issues/{issue}/comments")
+                .CreateRequest(HttpMethod.Post, $"repos/{Repository}/issues/{issue}/comments")
                 .WithJsonContent(new { body = text })
                 .GetResponseAsync();
         }
@@ -24,17 +24,17 @@ namespace Nuke.Common.CI.GitHubActions
         private JObject GetJobDetails(long runId)
         {
             var response = _httpClient.Value
-                .CreateRequest(HttpMethod.Get, $"repos/{GitHubRepository}/actions/runs/{runId}/jobs")
+                .CreateRequest(HttpMethod.Get, $"repos/{Repository}/actions/runs/{runId}/jobs")
                 .GetResponse();
 
             return response.GetBodyAsJson().GetAwaiter().GetResult()
                 .GetChildren("jobs")
-                .Single(x => x.GetPropertyStringValue("name") == GitHubJob);
+                .Single(x => x.GetPropertyStringValue("name") == Job);
         }
 
         private long GetJobId()
         {
-            return GetJobDetails(GitHubRunId).GetPropertyValue<long>("id");
+            return GetJobDetails(RunId).GetPropertyValue<long>("id");
         }
     }
 }

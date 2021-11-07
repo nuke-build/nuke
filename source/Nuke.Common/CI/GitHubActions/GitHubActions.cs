@@ -38,7 +38,7 @@ namespace Nuke.Common.CI.GitHubActions
         {
             _eventContext = Lazy.Create(() =>
             {
-                var content = File.ReadAllText(GitHubEventPath);
+                var content = File.ReadAllText(EventPath);
                 return JsonConvert.DeserializeObject<JObject>(content);
             });
             _githubContext = Lazy.Create(() =>
@@ -52,69 +52,69 @@ namespace Nuke.Common.CI.GitHubActions
                 client.BaseAddress = new Uri("https://api.github.com");
                 client.DefaultRequestHeaders.UserAgent.ParseAdd("nuke-build");
                 client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($":{GitHubToken}")));
+                    new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($":{Token}")));
                 return client;
             });
             _jobId = Lazy.Create(GetJobId);
         }
 
-        string IBuildServer.Branch => GitHubRef;
-        string IBuildServer.Commit => GitHubSha;
+        string IBuildServer.Branch => Ref;
+        string IBuildServer.Commit => Sha;
 
         ///<summary>The path to the GitHub home directory used to store user data. For example, <code>/github/home</code>.</summary>
         public string Home => EnvironmentInfo.GetVariable<string>("HOME");
 
         ///<summary>The name of the workflow.</summary>
-        public string GitHubWorkflow => EnvironmentInfo.GetVariable<string>("GITHUB_WORKFLOW");
+        public string Workflow => EnvironmentInfo.GetVariable<string>("GITHUB_WORKFLOW");
 
         ///<summary>The name of the action.</summary>
-        public string GitHubAction => EnvironmentInfo.GetVariable<string>("GITHUB_ACTION");
+        public string Action => EnvironmentInfo.GetVariable<string>("GITHUB_ACTION");
 
         ///<summary>The name of the person or app that initiated the workflow. For example, <code>octocat</code>.</summary>
-        public string GitHubActor => EnvironmentInfo.GetVariable<string>("GITHUB_ACTOR");
+        public string Actor => EnvironmentInfo.GetVariable<string>("GITHUB_ACTOR");
 
         ///<summary>The owner and repository name. For example, <code>octocat/Hello-World</code>.</summary>
-        public string GitHubRepository => EnvironmentInfo.GetVariable<string>("GITHUB_REPOSITORY");
+        public string Repository => EnvironmentInfo.GetVariable<string>("GITHUB_REPOSITORY");
 
         ///<summary>The owner name. For example, <code>octocat</code>.</summary>
-        public string GitHubRepositoryOwner => EnvironmentInfo.GetVariable<string>("GITHUB_REPOSITORY_OWNER");
+        public string RepositoryOwner => EnvironmentInfo.GetVariable<string>("GITHUB_REPOSITORY_OWNER");
 
         ///<summary>The name of the webhook event that triggered the workflow.</summary>
-        public string GitHubEventName => EnvironmentInfo.GetVariable<string>("GITHUB_EVENT_NAME");
+        public string EventName => EnvironmentInfo.GetVariable<string>("GITHUB_EVENT_NAME");
 
         ///<summary>The path of the file with the complete webhook event payload. For example, <code>/github/workflow/event.json</code>.</summary>
-        public string GitHubEventPath => EnvironmentInfo.GetVariable<string>("GITHUB_EVENT_PATH");
+        public string EventPath => EnvironmentInfo.GetVariable<string>("GITHUB_EVENT_PATH");
 
         ///<summary>The GitHub workspace directory path. The workspace directory contains a subdirectory with a copy of your repository if your workflow uses the <code>actions/checkout</code> action. If you don't use the <code>actions/checkout</code> action, the directory will be empty. For example, <code>/home/runner/work/my-repo-name/my-repo-name</code>.</summary>
-        public string GitHubWorkspace => EnvironmentInfo.GetVariable<string>("GITHUB_WORKSPACE");
+        public string Workspace => EnvironmentInfo.GetVariable<string>("GITHUB_WORKSPACE");
 
         ///<summary>The commit SHA that triggered the workflow. For example, <code>ffac537e6cbbf934b08745a378932722df287a53</code>.</summary>
-        public string GitHubSha => EnvironmentInfo.GetVariable<string>("GITHUB_SHA");
+        public string Sha => EnvironmentInfo.GetVariable<string>("GITHUB_SHA");
 
         ///<summary>The branch or tag ref that triggered the workflow. For example, <code>refs/heads/feature-branch-1</code>. If neither a branch or tag is available for the event type, the variable will not exist.</summary>
-        public string GitHubRef => EnvironmentInfo.GetVariable<string>("GITHUB_REF");
+        public string Ref => EnvironmentInfo.GetVariable<string>("GITHUB_REF");
 
         ///<summary>Only set for forked repositories. The branch of the head repository.</summary>
-        public string GitHubHeadRef => EnvironmentInfo.GetVariable<string>("GITHUB_HEAD_REF");
+        public string HeadRef => EnvironmentInfo.GetVariable<string>("GITHUB_HEAD_REF");
 
         ///<summary>Only set for forked repositories. The branch of the base repository.</summary>
-        public string GitHubBaseRef => EnvironmentInfo.GetVariable<string>("GITHUB_BASE_REF");
+        public string BaseRef => EnvironmentInfo.GetVariable<string>("GITHUB_BASE_REF");
 
-        public long GitHubRunNumber => EnvironmentInfo.GetVariable<long>("GITHUB_RUN_NUMBER");
-        public long GitHubRunId => EnvironmentInfo.GetVariable<long>("GITHUB_RUN_ID");
-        public string GitHubServerUrl => EnvironmentInfo.GetVariable<string>("GITHUB_SERVER_URL");
-        public string GitHubJob => EnvironmentInfo.GetVariable<string>("GITHUB_JOB");
+        public long RunNumber => EnvironmentInfo.GetVariable<long>("GITHUB_RUN_NUMBER");
+        public long RunId => EnvironmentInfo.GetVariable<long>("GITHUB_RUN_ID");
+        public string ServerUrl => EnvironmentInfo.GetVariable<string>("GITHUB_SERVER_URL");
+        public string Job => EnvironmentInfo.GetVariable<string>("GITHUB_JOB");
 
         // https://github.com/actions/toolkit/tree/master/packages/core/src
 
         public JObject GitHubContext => _githubContext.Value;
-        public string GitHubToken => GitHubContext.GetPropertyStringValue("token");
-        public long GitHubJobId => _jobId.Value;
+        public string Token => GitHubContext.GetPropertyStringValue("token");
+        public long JobId => _jobId.Value;
 
         public JObject GitHubEvent => _eventContext.Value;
-        public bool GitHubIsPullRequest => GitHubEventName == "pull_request";
-        public int? GitHubPullRequestNumber => GitHubEvent.GetPropertyValue<int>("number");
-        public string GitHubPullRequestAction => GitHubEvent.GetPropertyStringValue("action");
+        public bool IsPullRequest => EventName == "pull_request";
+        public int? PullRequestNumber => GitHubEvent.GetPropertyValue<int>("number");
+        public string PullRequestAction => GitHubEvent.GetPropertyStringValue("action");
 
         public void Group(string group)
         {
