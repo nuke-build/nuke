@@ -11,7 +11,7 @@ using Nuke.Enterprise.Notifications;
 [AppVeyor(
     suffix: null,
     AppVeyorImage.VisualStudio2019,
-    BranchesOnly = new[] { MasterBranch, "/" + ReleaseBranchPrefix + "\\/*/" },
+    BranchesOnly = new[] { MasterBranch, $"/{ReleaseBranchPrefix}\\/*/" },
     SkipTags = true,
     InvokedTargets = new[] { nameof(IPack.Pack), nameof(ITest.Test), nameof(ISignPackages.SignPackages), nameof(IPublish.Publish) },
     Secrets =
@@ -19,15 +19,15 @@ using Nuke.Enterprise.Notifications;
         {
             nameof(EnterpriseAccessToken),
             nameof(PublicNuGetApiKey),
-            ISignPackages.SignPath + nameof(ISignPackages.ApiToken),
-            IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey),
-            IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerSecret),
-            IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessToken),
-            IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessTokenSecret),
+            $"{ISignPackages.SignPath}{nameof(ISignPackages.ApiToken)}",
+            $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.ConsumerKey)}",
+            $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.ConsumerSecret)}",
+            $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.AccessToken)}",
+            $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.AccessTokenSecret)}",
             nameof(GitterAuthToken),
             nameof(SlackWebhook),
 #if NUKE_ENTERPRISE
-            IHazSlackCredentials.Slack + nameof(IHazSlackCredentials.UserAccessToken)
+            $"{IHazSlackCredentials.Slack}{nameof(IHazSlackCredentials.UserAccessToken)}"
 #endif
         })]
 [AppVeyor(
@@ -35,7 +35,7 @@ using Nuke.Enterprise.Notifications;
     AppVeyorImage.VisualStudio2019,
     AppVeyorImage.UbuntuLatest,
     AppVeyorImage.MacOsLatest,
-    BranchesExcept = new[] { MasterBranch, "/" + ReleaseBranchPrefix + "\\/*/" },
+    BranchesExcept = new[] { MasterBranch, $"/{ReleaseBranchPrefix}\\/*/" },
     SkipTags = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     Secrets =
@@ -43,7 +43,7 @@ using Nuke.Enterprise.Notifications;
         {
             nameof(EnterpriseAccessToken),
 #if NUKE_ENTERPRISE
-            IHazSlackCredentials.Slack + nameof(IHazSlackCredentials.UserAccessToken)
+            $"{IHazSlackCredentials.Slack}{nameof(IHazSlackCredentials.UserAccessToken)}"
 #endif
         })]
 [AppVeyorSecret(nameof(EnterpriseAccessToken), "JdpPkaveddV2ldvhKsSt4CUrqA8miFIb72dj+PCLdKsk15fBEQ7E5YU1E0FIISR8")]

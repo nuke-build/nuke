@@ -25,7 +25,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
                     {
                         nameof(EnterpriseAccessToken),
 #if NUKE_ENTERPRISE
-                        Slack + nameof(IHazSlackCredentials.UserAccessToken),
+                       $"{Slack}{nameof(IHazSlackCredentials.UserAccessToken)}",
 #endif
                     },
 #if NUKE_ENTERPRISE
