@@ -60,6 +60,11 @@ namespace Nuke.Common
 
                 return base.ConvertFrom(context, culture, value);
             }
+
+            public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+            {
+                return false;
+            }
         }
     }
 }
