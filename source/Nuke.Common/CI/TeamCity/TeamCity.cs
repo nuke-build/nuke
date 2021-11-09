@@ -101,6 +101,8 @@ namespace Nuke.Common.CI.TeamCity
         public string Version => SystemProperties?["teamcity.version"];
         public string ProjectName => SystemProperties?["teamcity.projectName"];
         public string ServerUrl => ConfigurationProperties?["teamcity.serverUrl"];
+        public string AuthUserId => SystemProperties["teamcity.auth.userId"];
+        public string AuthPassword => SystemProperties["teamcity.auth.password"];
         public string ProjectId => ConfigurationProperties?["teamcity.project.id"];
         public long BuildId => long.Parse(ConfigurationProperties?["teamcity.build.id"] ?? 0.ToString());
         public bool IsBuildPersonal => bool.Parse(SystemProperties?.GetValueOrDefault("build.is.personal") ?? bool.FalseString);
