@@ -27,7 +27,8 @@ namespace Nuke.Common.CI.GitHubActions
         private readonly GitHubActionsImage[] _images;
         private string _gitHubSubmodules;
         private string _gitHubDotNetVersion;
-        private bool _gitHubIncludeDotNetPreRelease;
+        private bool? _gitHubIncludeDotNetPreRelease;
+        private uint? _gitHubFetchDepth;
 
         public GitHubActionsAttribute(
             string name,
@@ -84,9 +85,15 @@ namespace Nuke.Common.CI.GitHubActions
             get => throw new NotSupportedException();
         }
 
-        public bool IncludeDotNetPreRelease
+        public bool? IncludeDotNetPreRelease
         {
             set => _gitHubIncludeDotNetPreRelease = value;
+            get => throw new NotSupportedException();
+        }
+
+        public uint? FetchDepth
+        {
+            set => _gitHubFetchDepth = value;
             get => throw new NotSupportedException();
         }
 
@@ -129,17 +136,22 @@ namespace Nuke.Common.CI.GitHubActions
         {
             var checkoutStep = new GitHubActionsUsingStep
                                {
-                                   Using = "actions/checkout@v1"
+                                   Using = "actions/checkout@v2"
                                };
 
             if (!string.IsNullOrWhiteSpace(_gitHubSubmodules))
             {
                 checkoutStep.With.Add("submodules", _gitHubSubmodules);
             }
-            
+
+            if (_gitHubFetchDepth.HasValue)
+            {
+                checkoutStep.With.Add("fetch-depth", $"{_gitHubFetchDepth.Value}");
+            }
+
             yield return checkoutStep;
 
-            if (!string.IsNullOrWhiteSpace(_gitHubDotNetVersion) || _gitHubIncludeDotNetPreRelease)
+            if (!string.IsNullOrWhiteSpace(_gitHubDotNetVersion) || _gitHubIncludeDotNetPreRelease.HasValue)
             {
                 var setupDotNet = new GitHubActionsUsingStep
                                   {
@@ -147,11 +159,14 @@ namespace Nuke.Common.CI.GitHubActions
                                   };
 
                 setupDotNet.With.Add("dotnet-version", _gitHubDotNetVersion);
-                setupDotNet.With.Add("include-prerelease", $"{_gitHubIncludeDotNetPreRelease}".ToLower());
+                if (_gitHubIncludeDotNetPreRelease.HasValue)
+                {
+                    setupDotNet.With.Add("include-prerelease", $"{_gitHubIncludeDotNetPreRelease.Value}".ToLower());
+                }
 
                 yield return setupDotNet;
             }
-            
+
             if (CacheKeyFiles.Any())
             {
                 yield return new GitHubActionsCacheStep

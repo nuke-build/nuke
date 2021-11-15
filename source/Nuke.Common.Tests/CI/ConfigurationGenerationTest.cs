@@ -146,7 +146,8 @@ namespace Nuke.Common.Tests.CI
                         OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" },
                         DotNetVersion = "6.0.x",
                         Submodules = GitHubSubmodules.Recursive,
-                        IncludeDotNetPreRelease = true
+                        IncludeDotNetPreRelease = true,
+                        FetchDepth = 2
                     }
                 );
 

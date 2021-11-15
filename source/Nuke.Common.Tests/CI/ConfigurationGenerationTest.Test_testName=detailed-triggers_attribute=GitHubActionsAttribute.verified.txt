@@ -49,9 +49,10 @@ jobs:
     name: macOS-latest
     runs-on: macOS-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
+          fetch-depth: 2
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
@@ -84,9 +85,10 @@ jobs:
     name: ubuntu-latest
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
+          fetch-depth: 2
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
@@ -119,9 +121,10 @@ jobs:
     name: windows-latest
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
         with:
           submodules: recursive
+          fetch-depth: 2
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
