@@ -25,6 +25,9 @@ namespace Nuke.Common.CI.GitHubActions
     {
         private readonly string _name;
         private readonly GitHubActionsImage[] _images;
+        private string _gitHubSubmodules;
+        private string _gitHubDotNetVersion;
+        private bool _gitHubIncludeDotNetPreRelease;
 
         public GitHubActionsAttribute(
             string name,
@@ -69,6 +72,24 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
+        public string Submodules
+        {
+            set => _gitHubSubmodules = value;
+            get => throw new NotSupportedException();
+        }
+
+        public string DotNetVersion
+        {
+            set => _gitHubDotNetVersion = value;
+            get => throw new NotSupportedException();
+        }
+
+        public bool IncludeDotNetPreRelease
+        {
+            set => _gitHubIncludeDotNetPreRelease = value;
+            get => throw new NotSupportedException();
+        }
+
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
             return new CustomFileWriter(streamWriter, indentationFactor: 2, commentPrefix: "#");
@@ -106,11 +127,31 @@ namespace Nuke.Common.CI.GitHubActions
 
         private IEnumerable<GitHubActionsStep> GetSteps(GitHubActionsImage image, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            yield return new GitHubActionsUsingStep
-                         {
-                             Using = "actions/checkout@v1"
-                         };
+            var checkoutStep = new GitHubActionsUsingStep
+                               {
+                                   Using = "actions/checkout@v1"
+                               };
 
+            if (!string.IsNullOrWhiteSpace(_gitHubSubmodules))
+            {
+                checkoutStep.With.Add("submodules", _gitHubSubmodules);
+            }
+            
+            yield return checkoutStep;
+
+            if (!string.IsNullOrWhiteSpace(_gitHubDotNetVersion) || _gitHubIncludeDotNetPreRelease)
+            {
+                var setupDotNet = new GitHubActionsUsingStep
+                                  {
+                                      Using = "actions/setup-dotnet@v1"
+                                  };
+
+                setupDotNet.With.Add("dotnet-version", _gitHubDotNetVersion);
+                setupDotNet.With.Add("include-prerelease", $"{_gitHubIncludeDotNetPreRelease}".ToLower());
+
+                yield return setupDotNet;
+            }
+            
             if (CacheKeyFiles.Any())
             {
                 yield return new GitHubActionsCacheStep
@@ -131,7 +172,7 @@ namespace Nuke.Common.CI.GitHubActions
             {
                 var artifacts = relevantTargets
                     .SelectMany(x => x.ArtifactProducts)
-                    .Select(x => (AbsolutePath) x)
+                    .Select(x => (AbsolutePath)x)
                     // TODO: https://github.com/actions/upload-artifact/issues/11
                     .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
                     .Distinct().ToList();

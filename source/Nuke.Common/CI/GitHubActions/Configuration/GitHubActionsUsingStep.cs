@@ -3,9 +3,11 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
@@ -17,7 +19,20 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
         public override void Write(CustomFileWriter writer)
         {
             writer.WriteLine($"- uses: {Using}");
+
+            if (With.Count > 0)
+            {
+                using var _ = writer.Indent();
+                writer.WriteLine("with:");
+                using var __ = writer.Indent();
+                foreach (var (with, value) in With)
+                {
+                    writer.WriteLine($"{with}: {value}");
+                }
+            }
         }
+
+        public Dictionary<string, string> With { get; } = new();
     }
 
     public class GitHubActionsArtifactStep : GitHubActionsStep
