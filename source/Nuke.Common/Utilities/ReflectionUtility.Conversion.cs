@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -30,7 +30,7 @@ namespace Nuke.Common.Utilities
             }
             catch
             {
-                ControlFlow.Fail($"Value '{value}' could not be converted to '{GetDisplayShortName(destinationType)}'.");
+                Assert.Fail($"Value '{value}' could not be converted to '{GetDisplayShortName(destinationType)}'");
                 // ReSharper disable once HeuristicUnreachableCode
                 return null;
             }

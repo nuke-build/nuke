@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -20,7 +20,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
         {
             static string FormatAction(TeamCityDependencyFailureAction action)
                 => "FailureAction." +
-                   action.ToString().SplitCamelHumpsWithSeparator("_").ToUpperInvariant();
+                   action.ToString().SplitCamelHumps().JoinUnderscore().ToUpperInvariant();
 
             using (writer.WriteBlock($"snapshot({BuildType.Id})"))
             {

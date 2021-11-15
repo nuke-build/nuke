@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -30,14 +29,14 @@ namespace Nuke.Common.Tooling
             if (environmentExecutablePath == null)
                 return null;
 
-            ControlFlow.Assert(File.Exists(environmentExecutablePath),
-                $"Path '{environmentExecutablePath}' from environment variable '{environmentExecutable}' does not exist.");
+            Assert.FileExists(environmentExecutablePath,
+                $"Path '{environmentExecutablePath}' from environment variable '{environmentExecutable}' does not exist");
             return environmentExecutablePath;
         }
 
         public static string GetPackageExecutable(string packageId, string packageExecutable, string version = null, string framework = null)
         {
-            ControlFlow.Assert(packageId != null && packageExecutable != null, "packageId != null && packageExecutable != null");
+            Assert.True(packageId != null && packageExecutable != null);
 
             var packageDirectory = GetPackageDirectory(packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries), version);
             var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
@@ -55,8 +54,8 @@ namespace Nuke.Common.Tooling
 #endif
                 .ToList();
 
-            ControlFlow.Assert(packageExecutablePaths.Count > 0,
-                $"Could not find {packageExecutables.Select(x => x.SingleQuote()).JoinCommaOr()} inside '{packageDirectory}'.");
+            Assert.NotEmpty(packageExecutablePaths,
+                $"Could not find {packageExecutables.Select(x => x.SingleQuote()).JoinCommaOr()} inside '{packageDirectory}'");
             if (packageExecutablePaths.Count == 1 && framework == null)
                 return packageExecutablePaths.Single();
 
@@ -78,11 +77,11 @@ namespace Nuke.Common.Tooling
                     .ThenByDescending(x => EnvironmentInfo.IsUnix && x.EndsWithOrdinalIgnoreCase(".sh")).ToList()
                     .First();
 
-            ControlFlow.Assert(frameworks.Count > 0, "frameworks.Count > 0");
+            Assert.True(frameworks.Count > 0);
             if (frameworks.Count == 1)
                 return GetPackageExecutable(frameworks.Single());
 
-            ControlFlow.Assert(framework != null && frameworks.Contains(framework),
+            Assert.True(framework != null && frameworks.Contains(framework),
                 $"Package executable {packageExecutables.JoinCommaOr()} [{packageId}] requires a framework:"
                     .Concat(frameworks.Select(x => $" - {x.Key}")).JoinNewLine());
             return GetPackageExecutable(frameworks[framework]);
@@ -121,7 +120,7 @@ namespace Nuke.Common.Tooling
                             .Concat(
                                 new[]
                                 {
-                                    NukeBuild.BuildProjectDirectory == null
+                                    EmbeddedPackagesDirectory == null
                                         ? $"Embedded packages directory at '{EmbeddedPackagesDirectory}'"
                                         : null,
                                     NuGetAssetsConfigFile != null
@@ -152,7 +151,7 @@ namespace Nuke.Common.Tooling
                     where packageVersion != null
                     select (Id: packageId, Version: packageVersion);
 
-                ControlFlow.Fail(
+                Assert.Fail(
                     new[]
                         {
                             "Missing package reference/download.",

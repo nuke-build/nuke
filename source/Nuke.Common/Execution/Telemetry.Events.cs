@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.Execution
 {
@@ -74,9 +75,10 @@ namespace Nuke.Common.Execution
             if (s_client == null)
                 return;
 
-            Logger.Trace($"Sending '{eventName}' telemetry event...");
+            // TODO: logging additional
+            Log.Verbose("Sending {EventName} telemetry event ...", eventName);
             var longestPropertyName = properties.Keys.Max(x => x.Length);
-            properties.OrderBy(x => x.Key).ForEach(x => Logger.Trace($"  {x.Key.PadRight(longestPropertyName)} = {x.Value ?? "<null>"}"));
+            properties.OrderBy(x => x.Key).ForEach(x => Log.Verbose("  {Key} = {Value}", x.Key.PadRight(longestPropertyName), x.Value ?? "<null>"));
 
             s_client.TrackEvent(eventName, properties);
             s_client.Flush();

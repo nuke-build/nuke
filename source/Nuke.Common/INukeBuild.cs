@@ -1,10 +1,11 @@
-// Copyright 2020 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.Execution;
@@ -44,8 +45,13 @@ namespace Nuke.Common
         bool NoLogo { get; }
         bool IsLocalBuild {get;}
         bool IsServerBuild {get;}
-        LogLevel LogLevel {get;}
         bool Continue { get; }
         Partition Partition { get; }
+
+        [CanBeNull]
+        public T TryGetValue<T>(Expression<Func<T>> parameterExpression) where T : class;
+
+        [CanBeNull]
+        public T TryGetValue<T>(Expression<Func<object>> parameterExpression);
     }
 }

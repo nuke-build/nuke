@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -77,7 +77,7 @@ namespace Nuke.GlobalTool
 
             if (rootDirectory == null)
             {
-                Logger.Warn("Could not find root directory. Falling back to working directory.");
+                Host.Warning("Could not find root directory. Falling back to working directory ...");
                 rootDirectory = WorkingDirectory;
             }
 
@@ -231,7 +231,7 @@ namespace Nuke.GlobalTool
                                 TargetFramework = targetFramework,
                                 TelemetryVersion = Telemetry.CurrentVersion,
                                 NukeVersion = nukeVersion,
-                                NukeVersionMajorMinor = nukeVersion.Split(".").Take(2).Join(".")
+                                NukeVersionMajorMinor = nukeVersion.Split(".").Take(2).JoinDot()
                             }))));
 
             if (projectFormat == FORMAT_LEGACY)
@@ -283,7 +283,7 @@ namespace Nuke.GlobalTool
                 return;
 
             var globalIndex = content.IndexOf("Global");
-            ControlFlow.Assert(globalIndex != -1, "Could not find a 'Global' section in solution file.");
+            Assert.True(globalIndex != -1, "Could not find a 'Global' section in solution file");
 
             var projectConfigurationIndex = content.FindIndex(x => x.Contains("GlobalSection(ProjectConfigurationPlatforms)"));
             if (projectConfigurationIndex == -1)

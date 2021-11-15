@@ -1,6 +1,6 @@
-﻿// Copyright Sebastian Karasek, Matthias Koch 2018.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
-// https://github.com/nuke-build/azure-keyvault/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System.Threading.Tasks;
 using JetBrains.Annotations;
@@ -31,8 +31,7 @@ namespace Nuke.Common.Tools.AzureKeyVault
             var authenticationContext = new AuthenticationContext(authority);
             var credential = new ClientCredential(_clientId, _clientSecret);
             var result = await authenticationContext.AcquireTokenAsync(resource, credential);
-            ControlFlow.Assert(result != null, "Failed to obtain Azure KeyVault JWT token");
-            return result.AccessToken;
+            return result.NotNull("Could not obtain Azure KeyVault JWT token").AccessToken;
         }
 
         public async Task<KeyVaultCertificate> GetCertificate (string certificateName, bool includeKey = true)

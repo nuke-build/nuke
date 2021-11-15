@@ -143,6 +143,12 @@
             "type": "int",
             "format": "--max-degree-of-parallelism {value}",
             "help": "When signing multiple files, specifies the maximum number of concurrent operations. Setting this value does not guarentee that number of concurrent operations will be performed. If this value is unspecified, the system will use the default based on the number of available processor threads. Setting this value to <c>1</c> disable concurrent signing."
+          },
+          {
+            "name": "Files",
+            "type": "List<string>",
+            "format": "{value}",
+            "help": "Files to sign."
           }
         ]
       }

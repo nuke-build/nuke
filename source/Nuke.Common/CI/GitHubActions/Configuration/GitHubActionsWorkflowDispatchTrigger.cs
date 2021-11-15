@@ -29,7 +29,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                         writer.WriteLine($"{input}:");
                         using (writer.Indent())
                         {
-                            writer.WriteLine($"description: {input.SplitCamelHumpsWithSeparator(" ", Constants.KnownWords).DoubleQuote()}");
+                            writer.WriteLine($"description: {input.SplitCamelHumpsWithKnownWords().JoinSpace().DoubleQuote()}");
                             writer.WriteLine($"required: {required.ToString().ToLowerInvariant()}");
                         }
                     }

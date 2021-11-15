@@ -106,14 +106,14 @@ namespace Nuke.Common.Execution
 
             if (action != null)
             {
-                Logger.Info(disclosure);
+                Host.Information(disclosure);
                 Thread.Sleep(2000);
-                Logger.Info($"Press <Enter> to {action}...");
+                Host.Information($"Press <Enter> to {action} ...");
                 WaitForEnter();
             }
             else
             {
-                Logger.Warn(disclosure);
+                Host.Warning(disclosure);
             }
         }
 

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -41,19 +41,19 @@ namespace Nuke.Common.IO
 
         public static string ReadAllText(string path, Encoding encoding = null)
         {
-            ControlFlow.Assert(File.Exists(path), $"File.Exists({path})");
+            Assert.FileExists(path);
             return File.ReadAllText(path, encoding ?? Encoding.UTF8);
         }
 
         public static string[] ReadAllLines(string path, Encoding encoding = null)
         {
-            ControlFlow.Assert(File.Exists(path), $"File.Exists({path})");
+            Assert.FileExists(path);
             return File.ReadAllLines(path, encoding ?? Encoding.UTF8);
         }
 
         public static byte[] ReadAllBytes(string path)
         {
-            ControlFlow.Assert(File.Exists(path), $"File.Exists({path})");
+            Assert.FileExists(path);
             return File.ReadAllBytes(path);
         }
     }

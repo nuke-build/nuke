@@ -1,8 +1,9 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using Nuke.Common.Tooling;
+using Serilog;
 
 namespace Nuke.Common.Tools.Pulumi
 {
@@ -14,14 +15,14 @@ namespace Nuke.Common.Tools.Pulumi
 
             if (type == OutputType.Std)
             {
-                Logger.Normal(output);
+                Log.Debug(output);
                 return;
             }
 
             if (output.StartsWith("warning:"))
-                Logger.Warn(output);
+                Log.Warning(output);
             else
-                Logger.Error(output);
+                Log.Error(output);
         }
     }
 }

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,8 +17,8 @@ namespace Nuke.Common.Execution
         {
             if (build.Help || executionPlan.Count == 0)
             {
-                Logger.Normal(HelpTextService.GetTargetsText(build.ExecutableTargets));
-                Logger.Normal(HelpTextService.GetParametersText(build));
+                Host.Information(HelpTextService.GetTargetsText(build.ExecutableTargets));
+                Host.Information(HelpTextService.GetParametersText(build));
             }
 
             if (build.Plan)

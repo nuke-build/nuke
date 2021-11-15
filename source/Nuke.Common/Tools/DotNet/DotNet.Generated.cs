@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.DotNet
         /// <summary>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> DotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, DotNetLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(DotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DotNetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -51,6 +51,12 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
         ///     <li><c>--</c> via <see cref="DotNetTestSettings.RunSettings"/></li>
         ///     <li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li>
+        ///     <li><c>--blame-crash</c> via <see cref="DotNetTestSettings.BlameCrash"/></li>
+        ///     <li><c>--blame-crash-collect-always</c> via <see cref="DotNetTestSettings.BlameCrashCollectAlways"/></li>
+        ///     <li><c>--blame-crash-dump-type</c> via <see cref="DotNetTestSettings.BlameCrashDumpType"/></li>
+        ///     <li><c>--blame-hang</c> via <see cref="DotNetTestSettings.BlameHang"/></li>
+        ///     <li><c>--blame-hang-dump-type</c> via <see cref="DotNetTestSettings.BlameHangDumpType"/></li>
+        ///     <li><c>--blame-hang-timeout</c> via <see cref="DotNetTestSettings.BlameHangTimeout"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
         ///     <li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li>
@@ -97,6 +103,12 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
         ///     <li><c>--</c> via <see cref="DotNetTestSettings.RunSettings"/></li>
         ///     <li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li>
+        ///     <li><c>--blame-crash</c> via <see cref="DotNetTestSettings.BlameCrash"/></li>
+        ///     <li><c>--blame-crash-collect-always</c> via <see cref="DotNetTestSettings.BlameCrashCollectAlways"/></li>
+        ///     <li><c>--blame-crash-dump-type</c> via <see cref="DotNetTestSettings.BlameCrashDumpType"/></li>
+        ///     <li><c>--blame-hang</c> via <see cref="DotNetTestSettings.BlameHang"/></li>
+        ///     <li><c>--blame-hang-dump-type</c> via <see cref="DotNetTestSettings.BlameHangDumpType"/></li>
+        ///     <li><c>--blame-hang-timeout</c> via <see cref="DotNetTestSettings.BlameHangTimeout"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
         ///     <li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li>
@@ -140,6 +152,12 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li>
         ///     <li><c>--</c> via <see cref="DotNetTestSettings.RunSettings"/></li>
         ///     <li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li>
+        ///     <li><c>--blame-crash</c> via <see cref="DotNetTestSettings.BlameCrash"/></li>
+        ///     <li><c>--blame-crash-collect-always</c> via <see cref="DotNetTestSettings.BlameCrashCollectAlways"/></li>
+        ///     <li><c>--blame-crash-dump-type</c> via <see cref="DotNetTestSettings.BlameCrashDumpType"/></li>
+        ///     <li><c>--blame-hang</c> via <see cref="DotNetTestSettings.BlameHang"/></li>
+        ///     <li><c>--blame-hang-dump-type</c> via <see cref="DotNetTestSettings.BlameHangDumpType"/></li>
+        ///     <li><c>--blame-hang-timeout</c> via <see cref="DotNetTestSettings.BlameHangTimeout"/></li>
         ///     <li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li>
         ///     <li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li>
         ///     <li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li>
@@ -1327,6 +1345,30 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual bool? BlameMode { get; internal set; }
         /// <summary>
+        ///   <p>Runs the tests in blame mode and collects a crash dump when the test host exits unexpectedly. This option depends on the version of .NET used, the type of error, and the operating system.</p><p>For exceptions in managed code, a dump will be automatically collected on .NET 5.0 and later versions. It will generate a dump for testhost or any child process that also ran on .NET 5.0 and crashed. Crashes in native code will not generate a dump. This option works on Windows, macOS, and Linux.</p><p>Crash dumps in native code, or when using .NET Core 3.1 or earlier versions, can only be collected on Windows, by using Procdump. A directory that contains procdump.exe and procdump64.exe must be in the PATH or PROCDUMP_PATH environment variable. <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procdump">Download the tools</a>. Implies <em>--blame</em>.</p><p>To collect a crash dump from a native application running on .NET 5.0 or later, the usage of Procdump can be forced by setting the <em>VSTEST_DUMP_FORCEPROCDUMP</em> environment variable to <em>1</em>.</p>
+        /// </summary>
+        public virtual bool? BlameCrash { get; internal set; }
+        /// <summary>
+        ///   The type of crash dump to be collected. Implies <em>--blame-crash</em>.
+        /// </summary>
+        public virtual string BlameCrashDumpType { get; internal set; }
+        /// <summary>
+        ///   Collects a crash dump on expected as well as unexpected test host exit.
+        /// </summary>
+        public virtual bool? BlameCrashCollectAlways { get; internal set; }
+        /// <summary>
+        ///   Run the tests in blame mode and collects a hang dump when a test exceeds the given timeout.
+        /// </summary>
+        public virtual bool? BlameHang { get; internal set; }
+        /// <summary>
+        ///   The type of crash dump to be collected. It should be <em>full</em>, <em>mini</em>, or <em>none</em>. When <em>none</em> is specified, test host is terminated on timeout, but no dump is collected. Implies <em>--blame-hang</em>.
+        /// </summary>
+        public virtual string BlameHangDumpType { get; internal set; }
+        /// <summary>
+        ///   <p>Per-test timeout, after which a hang dump is triggered and the test host process and all of its child processes are dumped and terminated. The timeout value is specified in one of the following formats:</p><p><ul><li>1.5h, 1.5hour, 1.5hours</li><li>90m, 90min, 90minute, 90minutes</li><li>5400s, 5400sec, 5400second, 5400seconds</li><li>5400000ms, 5400000mil, 5400000millisecond, 5400000milliseconds</li></ul></p><p>When no unit is used (for example, 5400000), the value is assumed to be in milliseconds. When used together with data driven tests, the timeout behavior depends on the test adapter used. For xUnit and NUnit the timeout is renewed after every test case. For MSTest, the timeout is used for all test cases. This option is supported on Windows with netcoreapp2.1 and later, on Linux with netcoreapp3.1 and later, and on macOS with net5.0 or later. Implies <em>--blame</em> and <em>--blame-hang</em>.</p>
+        /// </summary>
+        public virtual string BlameHangTimeout { get; internal set; }
+        /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
         public virtual bool? DisableParallel { get; internal set; }
@@ -1398,6 +1440,12 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--verbosity {value}", Verbosity)
               .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';')
               .Add("--blame", BlameMode)
+              .Add("--blame-crash", BlameCrash)
+              .Add("--blame-crash-dump-type {value}", BlameCrashDumpType)
+              .Add("--blame-crash-collect-always", BlameCrashCollectAlways)
+              .Add("--blame-hang", BlameHang)
+              .Add("--blame-hang-dump-type {value}", BlameHangDumpType)
+              .Add("--blame-hang-timeout {value}", BlameHangTimeout)
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -3225,6 +3273,249 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BlameMode = !toolSettings.BlameMode;
+            return toolSettings;
+        }
+        #endregion
+        #region BlameCrash
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.BlameCrash"/></em></p>
+        ///   <p>Runs the tests in blame mode and collects a crash dump when the test host exits unexpectedly. This option depends on the version of .NET used, the type of error, and the operating system.</p><p>For exceptions in managed code, a dump will be automatically collected on .NET 5.0 and later versions. It will generate a dump for testhost or any child process that also ran on .NET 5.0 and crashed. Crashes in native code will not generate a dump. This option works on Windows, macOS, and Linux.</p><p>Crash dumps in native code, or when using .NET Core 3.1 or earlier versions, can only be collected on Windows, by using Procdump. A directory that contains procdump.exe and procdump64.exe must be in the PATH or PROCDUMP_PATH environment variable. <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procdump">Download the tools</a>. Implies <em>--blame</em>.</p><p>To collect a crash dump from a native application running on .NET 5.0 or later, the usage of Procdump can be forced by setting the <em>VSTEST_DUMP_FORCEPROCDUMP</em> environment variable to <em>1</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBlameCrash<T>(this T toolSettings, bool? blameCrash) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrash = blameCrash;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetTestSettings.BlameCrash"/></em></p>
+        ///   <p>Runs the tests in blame mode and collects a crash dump when the test host exits unexpectedly. This option depends on the version of .NET used, the type of error, and the operating system.</p><p>For exceptions in managed code, a dump will be automatically collected on .NET 5.0 and later versions. It will generate a dump for testhost or any child process that also ran on .NET 5.0 and crashed. Crashes in native code will not generate a dump. This option works on Windows, macOS, and Linux.</p><p>Crash dumps in native code, or when using .NET Core 3.1 or earlier versions, can only be collected on Windows, by using Procdump. A directory that contains procdump.exe and procdump64.exe must be in the PATH or PROCDUMP_PATH environment variable. <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procdump">Download the tools</a>. Implies <em>--blame</em>.</p><p>To collect a crash dump from a native application running on .NET 5.0 or later, the usage of Procdump can be forced by setting the <em>VSTEST_DUMP_FORCEPROCDUMP</em> environment variable to <em>1</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetBlameCrash<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrash = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetTestSettings.BlameCrash"/></em></p>
+        ///   <p>Runs the tests in blame mode and collects a crash dump when the test host exits unexpectedly. This option depends on the version of .NET used, the type of error, and the operating system.</p><p>For exceptions in managed code, a dump will be automatically collected on .NET 5.0 and later versions. It will generate a dump for testhost or any child process that also ran on .NET 5.0 and crashed. Crashes in native code will not generate a dump. This option works on Windows, macOS, and Linux.</p><p>Crash dumps in native code, or when using .NET Core 3.1 or earlier versions, can only be collected on Windows, by using Procdump. A directory that contains procdump.exe and procdump64.exe must be in the PATH or PROCDUMP_PATH environment variable. <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procdump">Download the tools</a>. Implies <em>--blame</em>.</p><p>To collect a crash dump from a native application running on .NET 5.0 or later, the usage of Procdump can be forced by setting the <em>VSTEST_DUMP_FORCEPROCDUMP</em> environment variable to <em>1</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableBlameCrash<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrash = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetTestSettings.BlameCrash"/></em></p>
+        ///   <p>Runs the tests in blame mode and collects a crash dump when the test host exits unexpectedly. This option depends on the version of .NET used, the type of error, and the operating system.</p><p>For exceptions in managed code, a dump will be automatically collected on .NET 5.0 and later versions. It will generate a dump for testhost or any child process that also ran on .NET 5.0 and crashed. Crashes in native code will not generate a dump. This option works on Windows, macOS, and Linux.</p><p>Crash dumps in native code, or when using .NET Core 3.1 or earlier versions, can only be collected on Windows, by using Procdump. A directory that contains procdump.exe and procdump64.exe must be in the PATH or PROCDUMP_PATH environment variable. <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procdump">Download the tools</a>. Implies <em>--blame</em>.</p><p>To collect a crash dump from a native application running on .NET 5.0 or later, the usage of Procdump can be forced by setting the <em>VSTEST_DUMP_FORCEPROCDUMP</em> environment variable to <em>1</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableBlameCrash<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrash = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetTestSettings.BlameCrash"/></em></p>
+        ///   <p>Runs the tests in blame mode and collects a crash dump when the test host exits unexpectedly. This option depends on the version of .NET used, the type of error, and the operating system.</p><p>For exceptions in managed code, a dump will be automatically collected on .NET 5.0 and later versions. It will generate a dump for testhost or any child process that also ran on .NET 5.0 and crashed. Crashes in native code will not generate a dump. This option works on Windows, macOS, and Linux.</p><p>Crash dumps in native code, or when using .NET Core 3.1 or earlier versions, can only be collected on Windows, by using Procdump. A directory that contains procdump.exe and procdump64.exe must be in the PATH or PROCDUMP_PATH environment variable. <a href="https://docs.microsoft.com/en-us/sysinternals/downloads/procdump">Download the tools</a>. Implies <em>--blame</em>.</p><p>To collect a crash dump from a native application running on .NET 5.0 or later, the usage of Procdump can be forced by setting the <em>VSTEST_DUMP_FORCEPROCDUMP</em> environment variable to <em>1</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleBlameCrash<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrash = !toolSettings.BlameCrash;
+            return toolSettings;
+        }
+        #endregion
+        #region BlameCrashDumpType
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.BlameCrashDumpType"/></em></p>
+        ///   <p>The type of crash dump to be collected. Implies <em>--blame-crash</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBlameCrashDumpType<T>(this T toolSettings, string blameCrashDumpType) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrashDumpType = blameCrashDumpType;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetTestSettings.BlameCrashDumpType"/></em></p>
+        ///   <p>The type of crash dump to be collected. Implies <em>--blame-crash</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetBlameCrashDumpType<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrashDumpType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region BlameCrashCollectAlways
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.BlameCrashCollectAlways"/></em></p>
+        ///   <p>Collects a crash dump on expected as well as unexpected test host exit.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBlameCrashCollectAlways<T>(this T toolSettings, bool? blameCrashCollectAlways) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrashCollectAlways = blameCrashCollectAlways;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetTestSettings.BlameCrashCollectAlways"/></em></p>
+        ///   <p>Collects a crash dump on expected as well as unexpected test host exit.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetBlameCrashCollectAlways<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrashCollectAlways = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetTestSettings.BlameCrashCollectAlways"/></em></p>
+        ///   <p>Collects a crash dump on expected as well as unexpected test host exit.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableBlameCrashCollectAlways<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrashCollectAlways = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetTestSettings.BlameCrashCollectAlways"/></em></p>
+        ///   <p>Collects a crash dump on expected as well as unexpected test host exit.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableBlameCrashCollectAlways<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrashCollectAlways = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetTestSettings.BlameCrashCollectAlways"/></em></p>
+        ///   <p>Collects a crash dump on expected as well as unexpected test host exit.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleBlameCrashCollectAlways<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameCrashCollectAlways = !toolSettings.BlameCrashCollectAlways;
+            return toolSettings;
+        }
+        #endregion
+        #region BlameHang
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.BlameHang"/></em></p>
+        ///   <p>Run the tests in blame mode and collects a hang dump when a test exceeds the given timeout.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBlameHang<T>(this T toolSettings, bool? blameHang) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameHang = blameHang;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetTestSettings.BlameHang"/></em></p>
+        ///   <p>Run the tests in blame mode and collects a hang dump when a test exceeds the given timeout.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetBlameHang<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameHang = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetTestSettings.BlameHang"/></em></p>
+        ///   <p>Run the tests in blame mode and collects a hang dump when a test exceeds the given timeout.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableBlameHang<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameHang = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetTestSettings.BlameHang"/></em></p>
+        ///   <p>Run the tests in blame mode and collects a hang dump when a test exceeds the given timeout.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableBlameHang<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameHang = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetTestSettings.BlameHang"/></em></p>
+        ///   <p>Run the tests in blame mode and collects a hang dump when a test exceeds the given timeout.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleBlameHang<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameHang = !toolSettings.BlameHang;
+            return toolSettings;
+        }
+        #endregion
+        #region BlameHangDumpType
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.BlameHangDumpType"/></em></p>
+        ///   <p>The type of crash dump to be collected. It should be <em>full</em>, <em>mini</em>, or <em>none</em>. When <em>none</em> is specified, test host is terminated on timeout, but no dump is collected. Implies <em>--blame-hang</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBlameHangDumpType<T>(this T toolSettings, string blameHangDumpType) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameHangDumpType = blameHangDumpType;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetTestSettings.BlameHangDumpType"/></em></p>
+        ///   <p>The type of crash dump to be collected. It should be <em>full</em>, <em>mini</em>, or <em>none</em>. When <em>none</em> is specified, test host is terminated on timeout, but no dump is collected. Implies <em>--blame-hang</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetBlameHangDumpType<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameHangDumpType = null;
+            return toolSettings;
+        }
+        #endregion
+        #region BlameHangTimeout
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.BlameHangTimeout"/></em></p>
+        ///   <p>Per-test timeout, after which a hang dump is triggered and the test host process and all of its child processes are dumped and terminated. The timeout value is specified in one of the following formats:</p><p><ul><li>1.5h, 1.5hour, 1.5hours</li><li>90m, 90min, 90minute, 90minutes</li><li>5400s, 5400sec, 5400second, 5400seconds</li><li>5400000ms, 5400000mil, 5400000millisecond, 5400000milliseconds</li></ul></p><p>When no unit is used (for example, 5400000), the value is assumed to be in milliseconds. When used together with data driven tests, the timeout behavior depends on the test adapter used. For xUnit and NUnit the timeout is renewed after every test case. For MSTest, the timeout is used for all test cases. This option is supported on Windows with netcoreapp2.1 and later, on Linux with netcoreapp3.1 and later, and on macOS with net5.0 or later. Implies <em>--blame</em> and <em>--blame-hang</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBlameHangTimeout<T>(this T toolSettings, string blameHangTimeout) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameHangTimeout = blameHangTimeout;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetTestSettings.BlameHangTimeout"/></em></p>
+        ///   <p>Per-test timeout, after which a hang dump is triggered and the test host process and all of its child processes are dumped and terminated. The timeout value is specified in one of the following formats:</p><p><ul><li>1.5h, 1.5hour, 1.5hours</li><li>90m, 90min, 90minute, 90minutes</li><li>5400s, 5400sec, 5400second, 5400seconds</li><li>5400000ms, 5400000mil, 5400000millisecond, 5400000milliseconds</li></ul></p><p>When no unit is used (for example, 5400000), the value is assumed to be in milliseconds. When used together with data driven tests, the timeout behavior depends on the test adapter used. For xUnit and NUnit the timeout is renewed after every test case. For MSTest, the timeout is used for all test cases. This option is supported on Windows with netcoreapp2.1 and later, on Linux with netcoreapp3.1 and later, and on macOS with net5.0 or later. Implies <em>--blame</em> and <em>--blame-hang</em>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetBlameHangTimeout<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BlameHangTimeout = null;
             return toolSettings;
         }
         #endregion

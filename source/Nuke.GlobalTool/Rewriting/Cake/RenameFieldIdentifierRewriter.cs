@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Nuke.Common;
 using Nuke.Common.Utilities;
@@ -24,9 +23,7 @@ namespace Nuke.GlobalTool.Rewriting.Cake
                 return node;
 
             string CreateRename(string name)
-                => _renames[name] = Constants.KnownWords.Aggregate(
-                    name.Capitalize(),
-                    (s, r) => s.Replace(r, r, StringComparison.OrdinalIgnoreCase));
+                => _renames[name] = name.Capitalize().ReplaceKnownWords();
 
             var renamedVariables = node.Declaration.Variables
                 .Select(x => x.WithIdentifier(Identifier(CreateRename(x.Identifier.Text))));

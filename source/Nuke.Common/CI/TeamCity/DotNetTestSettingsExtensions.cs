@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
@@ -16,12 +15,12 @@ namespace Nuke.Common.CI.TeamCity
     {
         public static DotNetTestSettings AddTeamCityLogger(this DotNetTestSettings toolSettings)
         {
-            ControlFlow.Assert(TeamCity.Instance != null, "TeamCity.Instance != null");
+            Assert.True(TeamCity.Instance != null);
             var teamcityPackage = NuGetPackageResolver
                 .GetLocalInstalledPackage("TeamCity.Dotnet.Integration", ToolPathResolver.NuGetPackagesConfigFile)
                 .NotNull("teamcityPackage != null");
             var loggerPath = teamcityPackage.Directory / "build" / "_common" / "vstest15";
-            ControlFlow.Assert(Directory.Exists(loggerPath), $"Directory.Exists({loggerPath})");
+            Assert.DirectoryExists(loggerPath);
             return toolSettings
                 .SetLoggers("teamcity")
                 .SetTestAdapterPath(loggerPath);

@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -109,8 +109,8 @@ namespace Nuke.Common.ProjectModel
         internal void AddPrimitiveProject(PrimitiveProject primitiveProject, SolutionFolder solutionFolder = null)
         {
             var otherProject = PrimitiveProjects.FirstOrDefault(x => x.ProjectId.Equals(primitiveProject.ProjectId));
-            ControlFlow.Assert(otherProject == null,
-                $"Cannot add '{primitiveProject.Name}' because its id '{primitiveProject.ProjectId}' is already taken by '{otherProject?.Name}'.");
+            Assert.True(otherProject == null,
+                $"Cannot add '{primitiveProject.Name}' because its id '{primitiveProject.ProjectId}' is already taken by '{otherProject?.Name}'");
 
             PrimitiveProjects.Add(primitiveProject);
             PrimitiveProjectParents.Add(primitiveProject, solutionFolder);
@@ -146,8 +146,8 @@ namespace Nuke.Common.ProjectModel
 
         internal void SetSolutionFolder([CanBeNull] SolutionFolder solutionFolder, PrimitiveProject primitiveProject)
         {
-            ControlFlow.Assert(solutionFolder == null || solutionFolder.Solution == primitiveProject.Solution,
-                "Project and solution folder must belong to the same solution.");
+            Assert.True(solutionFolder == null || solutionFolder.Solution == primitiveProject.Solution,
+                "Project and solution folder must belong to the same solution");
 
             PrimitiveProjectParents[primitiveProject] = solutionFolder;
         }

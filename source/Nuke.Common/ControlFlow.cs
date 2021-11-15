@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,10 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
+using Serilog;
+#pragma warning disable CS0618
 
 // ReSharper disable CompareNonConstrainedGenericWithNull
 
@@ -20,106 +21,39 @@ namespace Nuke.Common
     [DebuggerStepThrough]
     public static class ControlFlow
     {
-        /// <summary>
-        /// Logs a message as failure. Halts execution.
-        /// </summary>
-        [StringFormatMethod("format")]
-        [ContractAnnotation("=> halt")]
+        [Obsolete("Use " + nameof(Common.Assert) + "." + nameof(Common.Assert.Fail))]
         public static void Fail(string format, params object[] args)
         {
             Fail(string.Format(format, args));
         }
 
-        /// <summary>
-        /// Logs a message as failure. Halts execution.
-        /// </summary>
-        [ContractAnnotation("=> halt")]
+        [Obsolete("Use " + nameof(Common.Assert) + "." + nameof(Common.Assert.Fail))]
         public static void Fail(object value, Exception exception = null)
         {
             Fail(value.ToString(), exception);
         }
 
-        /// <summary>
-        /// Logs a message as failure. Halts execution.
-        /// </summary>
-        [ContractAnnotation("=> halt")]
+        [Obsolete("Use " + nameof(Common.Assert) + "." + nameof(Common.Assert.Fail))]
         public static void Fail(string text, Exception exception = null)
         {
-            throw new Exception(text, innerException: exception);
+            Common.Assert.Fail(text, exception);
         }
 
-        /// <summary>
-        /// Asserts a condition to be true, calling <see cref="Logger.Warn(string)"/> otherwise.
-        /// </summary>
-        [AssertionMethod]
-        public static void AssertWarn(bool condition, string text)
-        {
-            if (!condition)
-                Logger.Warn($"Check failed: {text}");
-        }
-
-        /// <summary>
-        /// Asserts a condition to be true, halts otherwise.
-        /// </summary>
-        [AssertionMethod]
-        [ContractAnnotation("condition: false => halt")]
+        [Obsolete("Use " + nameof(Common.Assert) + "." + nameof(Common.Assert.True) +
+                  " or " + nameof(Common.Assert) + "." + nameof(Common.Assert.False))]
         public static void Assert(
             [AssertionCondition(AssertionConditionType.IS_TRUE)]
             bool condition,
             string text)
         {
-            if (!condition)
-                Fail($"Assertion failed: {text}");
+            Common.Assert.True(condition, text);
         }
 
-        /// <summary>
-        /// Asserts an object to be not null, halts otherwise.
-        /// </summary>
-        [AssertionMethod]
-        [ContractAnnotation("obj: null => void; => notnull")]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T NotNull<T>(
-            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
-            this T obj,
-            string text = null)
-        {
-            if (obj == null)
-                Fail($"Assertion failed: {text ?? $"{typeof(T).FullName} != null"}");
-            return obj;
-        }
-
-        /// <summary>
-        /// Checks an object to be not null, calling <see cref="Logger.Warn(string)"/> otherwise.
-        /// </summary>
-        [CanBeNull]
-        [ContractAnnotation("obj: null => void; => notnull")]
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static T NotNullWarn<T>([CanBeNull] this T obj, string text = null)
-        {
-            if (obj == null)
-                Logger.Warn($"Check failed: {text ?? $"{typeof(T).FullName} != null"}");
-            return obj;
-        }
-
-        /// <summary>
-        /// Asserts a collection to be not empty, halts otherwise.
-        /// </summary>
-        [ContractAnnotation("enumerable: null => halt")]
+        [Obsolete("Use " + nameof(Common.Assert) + "." + nameof(Common.Assert.NotNullOrEmpty))]
         public static IReadOnlyCollection<T> NotEmpty<T>([CanBeNull] this IEnumerable<T> enumerable, string message = null)
         {
-            var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
-            Assert(collection.Count > 0, message ?? $"IEnumerable<{typeof(T).FullName}>.Count > 0");
-            return collection;
-        }
-
-        /// <summary>
-        /// Asserts a collection to contain only <em>non-null</em> elements, halts otherwise.
-        /// </summary>
-        [ContractAnnotation("enumerable: null => halt")]
-        public static IReadOnlyCollection<T> NoNullItems<T>([CanBeNull] this IEnumerable<T> enumerable)
-        {
-            var collection = enumerable.NotNull("enumerable != null").ToList().AsReadOnly();
-            Assert(collection.All(x => x != null), $"IEnumerable<{typeof(T).FullName}>.All(x => x != null)");
+            var collection = enumerable.NotNull().ToList().AsReadOnly();
+            Common.Assert.NotEmpty(collection);
             return collection;
         }
 
@@ -143,7 +77,7 @@ namespace Nuke.Common
         [CanBeNull]
         public static T SuppressErrors<T>(Func<T> action, T defaultValue = default, bool includeStackTrace = false, bool logWarning = true)
         {
-            return (T) SuppressErrorsIf(condition: true, action, defaultValue, includeStackTrace, logWarning);
+            return (T)SuppressErrorsIf(condition: true, action, defaultValue, includeStackTrace, logWarning);
         }
 
         /// <summary>
@@ -185,12 +119,7 @@ namespace Nuke.Common
             catch (Exception exception)
             {
                 if (logWarning)
-                {
-                    var innerException = exception.InnerException.NotNull("innerException != null");
-                    Logger.Warn(includeStackTrace
-                        ? new[] { innerException.Message, "StackTrace:", innerException.StackTrace }.JoinNewLine()
-                        : innerException.Message);
-                }
+                    Log.Warning(exception, exception.Message);
 
                 return defaultValue;
             }
@@ -208,12 +137,12 @@ namespace Nuke.Common
             [InstantHandle] Action action,
             [InstantHandle] Action cleanup = null,
             int retryAttempts = 3,
-            int waitInSeconds = 0,
+            TimeSpan? delay = null,
             Action<string> logAction = null)
         {
             Assert(retryAttempts > 0, "retryAttempts > 0");
 
-            logAction ??= Logger.Warn;
+            logAction ??= Log.Warning;
             Exception lastException = null;
 
             for (var attempt = 0; attempt < retryAttempts; attempt++)
@@ -226,13 +155,16 @@ namespace Nuke.Common
                 catch (Exception exception)
                 {
                     lastException = exception;
+
+                    if (attempt + 1 >= retryAttempts)
+                        break;
+
                     logAction($"Attempt #{attempt + 1} failed with: {exception.Message}");
-
-                    if (waitInSeconds <= 0 || attempt + 1 >= retryAttempts)
-                        continue;
-
-                    logAction($"Waiting {waitInSeconds} seconds before next attempt...");
-                    Task.Delay(TimeSpan.FromSeconds(waitInSeconds)).Wait();
+                    if (delay != null)
+                    {
+                        logAction($"Waiting {delay} before next attempt...");
+                        Task.Delay(delay.Value).Wait();
+                    }
                 }
                 finally
                 {
@@ -242,7 +174,7 @@ namespace Nuke.Common
 
             Fail(new[]
                  {
-                     $"Executing failed permanently after {retryAttempts} attempts.",
+                     $"Execution failed permanently after {retryAttempts} attempts.",
                      $"Last attempt failed with: {lastException!.Message}"
                  }.JoinNewLine());
         }

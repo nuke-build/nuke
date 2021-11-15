@@ -1,9 +1,8 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
@@ -16,12 +15,12 @@ namespace Nuke.Common.CI.TeamCity
     {
         public static DotNetBuildSettings AddTeamCityLogger(this DotNetBuildSettings toolSettings)
         {
-            ControlFlow.Assert(TeamCity.Instance != null, "TeamCity.Instance != null");
+            Assert.True(TeamCity.Instance != null);
             var teamcityPackage = NuGetPackageResolver
                 .GetLocalInstalledPackage("TeamCity.Dotnet.Integration", ToolPathResolver.NuGetPackagesConfigFile)
                 .NotNull("teamcityPackage != null");
             var loggerAssembly = teamcityPackage.Directory / "build" / "_common" / "msbuild15" / "TeamCity.MSBuild.Logger.dll";
-            ControlFlow.Assert(File.Exists(loggerAssembly), $"File.Exists({loggerAssembly})");
+            Assert.FileExists(loggerAssembly);
             return toolSettings
                 .AddLoggers($"TeamCity.MSBuild.Logger.TeamCityMSBuildLogger,{loggerAssembly};teamcity")
                 .EnableNoConsoleLogger();

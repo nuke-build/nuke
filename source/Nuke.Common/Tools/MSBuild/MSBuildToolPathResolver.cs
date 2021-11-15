@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -23,11 +23,11 @@ namespace Nuke.Common.Tools.MSBuild
 
         private static IEnumerable<string> ResolveInternal(MSBuildVersion? msBuildVersion = null, MSBuildPlatform? msBuildPlatform = null)
         {
+            Assert.True(!EnvironmentInfo.IsUnix || msBuildVersion == null);
+            Assert.True(!EnvironmentInfo.IsUnix || msBuildPlatform == null);
+
             if (EnvironmentInfo.IsUnix)
             {
-                ControlFlow.Assert(msBuildVersion == null, "MSBuildVersion cannot be specified on UNIX systems.");
-                ControlFlow.Assert(msBuildPlatform == null, "MSBuildPlatform cannot be specified on UNIX systems.");
-
                 return new[]
                        {
                            "/usr/bin/msbuild",

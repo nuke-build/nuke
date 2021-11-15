@@ -4,10 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -17,7 +15,6 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Nuke.SourceGenerators
@@ -107,10 +104,10 @@ namespace Nuke.SourceGenerators
         private static string GetSolutionFileFromParametersFile(AbsolutePath rootDirectory, string memberName)
         {
             var parametersFile = Constants.GetDefaultParametersFile(rootDirectory);
-            ControlFlow.Assert(File.Exists(parametersFile), $"File.Exists({parametersFile})");
+            Assert.FileExists(parametersFile);
             var jobject = JObject.Parse(File.ReadAllText(parametersFile));
             var solutionRelativePath = jobject[memberName].NotNull($"Property '{memberName}' does not exist in '{parametersFile}'.").Value<string>();
-            return Path.Combine(rootDirectory, solutionRelativePath);
+            return Path.Combine(rootDirectory, solutionRelativePath.NotNull());
         }
 
         private static AbsolutePath GetRootDirectoryFrom(Compilation compilation)

@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,15 +8,13 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Tools.DotCover;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.CI.TeamCity
 {
@@ -25,7 +23,7 @@ namespace Nuke.Common.CI.TeamCity
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public class TeamCity : Host, IBuildServer
+    public partial class TeamCity : Host, IBuildServer
     {
         public new static TeamCity Instance => Host.Instance as TeamCity;
 
@@ -88,8 +86,6 @@ namespace Nuke.Common.CI.TeamCity
             });
         }
 
-        protected internal override OutputSink OutputSink => new TeamCityOutputSink(this);
-
         string IBuildServer.Branch => BranchName;
         string IBuildServer.Commit => BuildVcsNumber;
 
@@ -105,6 +101,8 @@ namespace Nuke.Common.CI.TeamCity
         public string Version => SystemProperties?["teamcity.version"];
         public string ProjectName => SystemProperties?["teamcity.projectName"];
         public string ServerUrl => ConfigurationProperties?["teamcity.serverUrl"];
+        public string AuthUserId => SystemProperties["teamcity.auth.userId"];
+        public string AuthPassword => SystemProperties["teamcity.auth.password"];
         public string ProjectId => ConfigurationProperties?["teamcity.project.id"];
         public long BuildId => long.Parse(ConfigurationProperties?["teamcity.build.id"] ?? 0.ToString());
         public bool IsBuildPersonal => bool.Parse(SystemProperties?.GetValueOrDefault("build.is.personal") ?? bool.FalseString);
@@ -135,18 +133,17 @@ namespace Nuke.Common.CI.TeamCity
             bool? parseOutOfDate = null,
             TeamCityNoDataPublishedAction? action = null)
         {
-            ControlFlow.Assert(
+            Assert.True(
                 type != TeamCityImportType.dotNetCoverage || tool != null,
-                $"Importing data of type '{type}' requires to specify the tool.");
-            ControlFlow.AssertWarn(
-                !(tool == TeamCityImportTool.dotcover &&
-                  ConfigurationProperties["teamcity.dotCover.home"].EndsWithOrdinalIgnoreCase("bundled")),
-                new[]
-                {
-                    "Configuration parameter 'teamcity.dotCover.home' is set to the bundled version.",
-                    $"Adding the '{nameof(TeamCitySetDotCoverHomePathAttribute)}' will automatically set " +
-                    $"it to '{nameof(DotCoverTasks)}.{nameof(DotCoverTasks.DotCoverPath)}'."
-                }.JoinNewLine());
+                $"Importing data of type '{type}' requires to specify the tool");
+            if (tool == TeamCityImportTool.dotcover &&
+                ConfigurationProperties["teamcity.dotCover.home"].EndsWithOrdinalIgnoreCase("bundled"))
+            {
+                Log.Warning("Configuration parameter 'teamcity.dotCover.home' is set to the bundled version." +
+                            "Adding the {AttributeName} will automatically set " +
+                            $"it to '{nameof(DotCoverTasks)}.{nameof(DotCoverTasks.DotCoverPath)}'",
+                    nameof(TeamCitySetDotCoverHomePathAttribute));
+            }
 
             Write("importData",
                 x => x

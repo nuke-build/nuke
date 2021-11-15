@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,8 +8,8 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
-using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.Utilities
 {
@@ -55,7 +55,7 @@ namespace Nuke.Common.Utilities
 
         public static string GetTokenName(string name)
         {
-            return name.SplitCamelHumpsWithSeparator("_", exclusions: Constants.KnownWords).ToUpper();
+            return name.SplitCamelHumpsWithKnownWords().JoinUnderscore().ToUpper();
         }
 
         public static void FillTemplateDirectoryRecursively(
@@ -64,7 +64,7 @@ namespace Nuke.Common.Utilities
             Func<DirectoryInfo, bool> excludeDirectory = null,
             Func<FileInfo, bool> excludeFile = null)
         {
-            Logger.Info($"Recursively filling out template directory '{directory}'...");
+            Log.Information("Recursively filling out template directory {Directory} ...", directory);
             FillTemplateDirectoryRecursivelyInternal(new DirectoryInfo(directory), tokens, excludeDirectory, excludeFile);
         }
 
@@ -156,7 +156,7 @@ namespace Nuke.Common.Utilities
             var requiredTokens = requiredTokensText.Split(new[] { "||", "&&" }, StringSplitOptions.RemoveEmptyEntries);
             var orConjunction = requiredTokensText.Contains("||");
             var andConjunction = requiredTokensText.Contains("&&");
-            ControlFlow.Assert(!orConjunction || !andConjunction, "Conjunctions AND and OR can only be used mutually exclusively.");
+            Assert.False(orConjunction && andConjunction, "Conjunctions AND and OR can only be used mutually exclusively");
 
             return andConjunction && requiredTokens.All(tokens.ContainsKey) ||
                    !andConjunction && requiredTokens.Any(tokens.ContainsKey);

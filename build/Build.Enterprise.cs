@@ -17,12 +17,10 @@ using Nuke.Enterprise.Notifications;
 [AuditBuildMembers(
     DeclaringTypes = new[] { typeof(Build) },
     Members = new[] { nameof(RootDirectory), nameof(Host), nameof(Verbosity) })]
-[DeploymentSlackNotification]
-[ContinuousBuildSlackNotification]
-partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazGitHubAccessToken
+// [DeploymentSlackNotification]
+// [ContinuousBuildSlackNotification]
+partial class Build : IHazSlackCredentials
 {
-    string IHazGitHubAccessToken.AccessToken => GitHubToken;
-
     public class DeploymentSlackNotificationAttribute : CustomSlackNotificationAttribute
     {
         public override bool ReportBuildAlways => true;
@@ -46,15 +44,15 @@ partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken, IHazG
         {
             AppVeyor { ProjectSlug: "nuke-continuous", JobName: "Image: Visual Studio 2019" } => "1617073137.006600",
             AppVeyor { ProjectSlug: "nuke-continuous", JobName: "Image: Ubuntu1804" } => "1617073148.007000",
-            GitHubActions { GitHubJob: "windows-latest" } => "1617073157.007100",
-            GitHubActions { GitHubJob: "macOS-latest" } => "1617073163.007200",
-            GitHubActions { GitHubJob: "ubuntu-latest" } => "1617073169.007300",
+            GitHubActions { Job: "windows-latest" } => "1617073157.007100",
+            GitHubActions { Job: "macOS-latest" } => "1617073163.007200",
+            GitHubActions { Job: "ubuntu-latest" } => "1617073169.007300",
             _ => null
         };
 
         public override bool ShouldNotify()
             => Host is
-                   GitHubActions { GitHubWorkflow: "continuous" } or
+                   GitHubActions { Workflow: "continuous" } or
                    AppVeyor { ProjectSlug: "nuke-continuous" } &&
                ((Build) Build).GitRepository.IsOnDevelopBranch();
     }

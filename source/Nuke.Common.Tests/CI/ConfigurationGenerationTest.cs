@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,7 +16,6 @@ using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using VerifyXunit;
-using VerifyTests;
 using Xunit;
 
 namespace Nuke.Common.Tests.CI
@@ -78,9 +77,9 @@ namespace Nuke.Common.Tests.CI
                         NonEntryTargets = new[] { nameof(Clean) },
                         InvokedTargets = new[] { nameof(Test) },
                         ExcludedTargets = new[] { nameof(Pack) },
-                        ImportSystemAccessTokenAs = nameof(AzurePipelinesSystemAccessToken),
+                        EnableAccessToken = true,
                         ImportVariableGroups = new[] { "variable-group-1" },
-                        ImportSecrets = new[] { nameof(GitHubToken) },
+                        ImportSecrets = new[] { nameof(ApiKey) },
                         TriggerBatch = true,
                         TriggerBranchesInclude = new[] { "included_branch" },
                         TriggerBranchesExclude = new[] { "excluded_branch" },
@@ -121,7 +120,7 @@ namespace Nuke.Common.Tests.CI
                         On = new[] { GitHubActionsTrigger.Push, GitHubActionsTrigger.PullRequest },
                         InvokedTargets = new[] { nameof(Test) },
                         ImportSecrets = new[] { nameof(ApiKey) },
-                        ImportGitHubTokenAs = nameof(GitHubToken),
+                        EnableGitHubContext = true
                     }
                 );
 
@@ -220,11 +219,6 @@ namespace Nuke.Common.Tests.CI
 
             [Parameter("NuGet Source for Packages")]
             public readonly string Source = "https://api.nuget.org/v3/index.json";
-
-            [Parameter("GitHub Token")] public readonly string GitHubToken;
-
-            [Parameter("Azure Pipelines System Access Token")]
-            public readonly string AzurePipelinesSystemAccessToken;
 
             public Target Publish => _ => _
                 .DependsOn(Clean, Test, Pack)

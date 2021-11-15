@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 using static Nuke.Common.Utilities.ReflectionUtility;
 
 namespace Nuke.Common.ValueInjection
@@ -50,7 +51,7 @@ namespace Nuke.Common.ValueInjection
 
         public static string GetParameterDashedName(string name)
         {
-            return name.SplitCamelHumpsWithSeparator("-", Constants.KnownWords).ToLowerInvariant();
+            return name.SplitCamelHumpsWithKnownWords().JoinDash().ToLowerInvariant();
         }
 
         public static string GetParameterMemberName(string name)
@@ -93,9 +94,9 @@ namespace Nuke.Common.ValueInjection
                 var valueProvider = valueProviderType
                     .GetMember(attribute.ValueProviderMember, All)
                     .SingleOrDefault()
-                    .NotNull($"No single provider '{valueProviderType.Name}.{member.Name}' found.");
-                ControlFlow.Assert(valueProvider.GetMemberType() == typeof(IEnumerable<string>),
-                    $"Value provider '{valueProvider.Name}' must be of type '{typeof(IEnumerable<string>).GetDisplayShortName()}'.");
+                    .NotNull($"No single provider '{valueProviderType.Name}.{member.Name}' found");
+                Assert.True(valueProvider.GetMemberType() == typeof(IEnumerable<string>),
+                    $"Value provider '{valueProvider.Name}' must be of type '{typeof(IEnumerable<string>).GetDisplayShortName()}'");
 
                 return valueProvider.GetValue<IEnumerable<string>>(instance).Select(x => (x, (object) x));
             }
@@ -214,8 +215,8 @@ namespace Nuke.Common.ValueInjection
             string[] commandLineArguments,
             char? separator = null)
         {
-            ControlFlow.Assert(values.Length == 1 || !separator.HasValue || values.All(x => !x.Contains(separator.Value)),
-                $"Command-line argument '{argumentName}' with value [ {values.JoinComma()} ] cannot be split with separator '{separator}'.");
+            Assert.True(values.Length == 1 || !separator.HasValue || values.All(x => !x.Contains(separator.Value)),
+                $"Command-line argument '{argumentName}' with value [ {values.JoinCommaSpace()} ] cannot be split with separator '{separator}'");
             values = separator.HasValue && values.Any(x => x.Contains(separator.Value))
                 ? values.SingleOrDefault()?.Split(separator.Value) ?? new string[0]
                 : values;
@@ -226,7 +227,7 @@ namespace Nuke.Common.ValueInjection
             }
             catch (Exception ex)
             {
-                ControlFlow.Fail(
+                Assert.Fail(
                     new[] { ex.Message, "Command-line arguments were:" }
                         .Concat(commandLineArguments.Select((x, i) => $"  [{i}] = {x}"))
                         .JoinNewLine());
@@ -266,9 +267,9 @@ namespace Nuke.Common.ValueInjection
                 var alternativeValues = Variables
                     .Where(x => GetTrimmedName(x.Key).EqualsOrdinalIgnoreCase(trimmedVariableName) ||
                                 GetTrimmedName(x.Key).EqualsOrdinalIgnoreCase($"NUKE{trimmedVariableName}")).ToList();
-                ControlFlow.AssertWarn(alternativeValues.Count <= 1,
-                    $"Could not resolve '{variableName}' since multiple possible sources exist:"
-                        .Concat(alternativeValues.Select(x => $" - {x.Key} = {x.Value}")).JoinNewLine());
+                if (alternativeValues.Count > 1)
+                    Log.Warning("Could not resolve {VariableName} since multiple values are provided", variableName);
+
                 if (alternativeValues.Count == 1)
                     value = alternativeValues.Single().Value;
                 else
@@ -281,7 +282,7 @@ namespace Nuke.Common.ValueInjection
             }
             catch (Exception ex)
             {
-                ControlFlow.Fail(new[] { ex.Message, "Environment variable was:", value }.JoinNewLine());
+                Assert.Fail(new[] { ex.Message, "Environment variable was:", value }.JoinNewLine());
                 // ReSharper disable once HeuristicUnreachableCode
                 return null;
             }
@@ -302,7 +303,7 @@ namespace Nuke.Common.ValueInjection
             }
             catch (Exception ex)
             {
-                ControlFlow.Fail(new[] { $"Resolving parameter '{parameterName}' failed.", ex.Message }.JoinNewLine());
+                Assert.Fail(new[] { $"Resolving parameter '{parameterName}' failed.", ex.Message }.JoinNewLine());
                 // ReSharper disable once HeuristicUnreachableCode
                 return null;
             }
@@ -311,9 +312,9 @@ namespace Nuke.Common.ValueInjection
         [CanBeNull]
         private object ConvertValues(IReadOnlyCollection<string> values, Type destinationType)
         {
-            ControlFlow.Assert(!destinationType.IsArray || destinationType.GetArrayRank() == 1, "Arrays must have a rank of 1.");
+            Assert.True(!destinationType.IsArray || destinationType.GetArrayRank() == 1, "Arrays must have a rank of 1");
             var elementType = (destinationType.IsArray ? destinationType.GetElementType() : destinationType).NotNull();
-            ControlFlow.Assert(values.Count < 2 || elementType != null, "values.Count < 2 || elementType != null");
+            Assert.True(values.Count < 2 || elementType != null, "values.Count < 2 || elementType != null");
 
             if (values.Count == 0)
             {
@@ -329,14 +330,14 @@ namespace Nuke.Common.ValueInjection
             var convertedValues = values.Select(x => Convert(x, elementType)).ToList();
             if (!destinationType.IsArray)
             {
-                ControlFlow.Assert(convertedValues.Count == 1,
-                    $"Value [ {values.JoinComma()} ] cannot be assigned to '{destinationType.GetDisplayShortName()}'.");
+                Assert.HasSingleItem(convertedValues,
+                    $"Value [ {values.JoinCommaSpace()} ] cannot be assigned to '{destinationType.GetDisplayShortName()}'");
                 return convertedValues.Single();
             }
 
             var array = Array.CreateInstance(elementType, convertedValues.Count);
             convertedValues.ForEach((x, i) => array.SetValue(x, i));
-            ControlFlow.Assert(destinationType.IsInstanceOfType(array),
+            Assert.True(destinationType.IsInstanceOfType(array),
                 $"Type '{array.GetType().GetDisplayShortName()}' is not an instance of '{destinationType.GetDisplayShortName()}'.");
 
             return array;
@@ -352,7 +353,7 @@ namespace Nuke.Common.ValueInjection
                 var levenshteinDistance = (float) GetLevenshteinDistance(name, candidate);
                 if (levenshteinDistance / name.Length < similarityThreshold)
                 {
-                    Logger.Warn($"Requested parameter '{name}' was not found. Is there a typo with '{candidate}' which was passed?");
+                    Log.Warning("Requested parameter {Name} was not found. Is there a typo with {candidate} which was passed?", name, candidate);
                     return;
                 }
             }

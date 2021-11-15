@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -334,7 +334,7 @@ namespace Nuke.CodeGeneration.Generators
             var parameters = new[] { "this T toolSettings" }.Concat(additionalParameters);
             return writer
                 .WriteLine("[Pure]")
-                .WriteLine($"public static T {name}<T>({parameters.JoinComma()}) where T : {writer.DataClass.Name}")
+                .WriteLine($"public static T {name}<T>({parameters.JoinCommaSpace()}) where T : {writer.DataClass.Name}")
                 .WriteBlock(w => w
                     .WriteLine("toolSettings = toolSettings.NewInstance();")
                     .ForEachWriteLine(modifications)

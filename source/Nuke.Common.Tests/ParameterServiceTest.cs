@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -126,7 +126,7 @@ namespace Nuke.Common.Tests
                 });
 
             service.GetParameter("datetime", destinationType: typeof(DateTime), separator: null)
-                .Should().BeOfType<DateTime>().Subject.Should().BeCloseTo(dateTime, precision: 1000);
+                .Should().BeOfType<DateTime>().Subject.Should().BeCloseTo(dateTime, TimeSpan.FromSeconds(1));
 
             service.GetParameter("guid", destinationType: typeof(Guid), separator: null)
                 .Should().BeOfType<Guid>().Subject.Should().Be(guid);
@@ -198,9 +198,9 @@ namespace Nuke.Common.Tests
                 .Should().BeOfType<bool>().Subject.Should().BeTrue();
 
             ParameterService.GetFromMemberInfo(GetMemberInfo(() => build.Set), destinationType: null, service.GetParameter)
-                .Should().BeOfType<int[]>().Subject.Should().BeEquivalentTo(1, 2, 3);
+                .Should().BeOfType<int[]>().Subject.Should().BeEquivalentTo(new[] { 1, 2, 3 });
 
-            ParameterService.GetFromMemberInfo(GetMemberInfo(() => ((ITestComponent) build).Param), destinationType: null, service.GetParameter)
+            ParameterService.GetFromMemberInfo(GetMemberInfo(() => ((ITestComponent)build).Param), destinationType: null, service.GetParameter)
                 .Should().BeOfType<bool>().Subject.Should().BeTrue();
         }
 
@@ -232,7 +232,7 @@ namespace Nuke.Common.Tests
         [ParameterPrefix("Interface")]
         private interface ITestComponent : INukeBuild
         {
-            [Parameter] bool Param => ValueInjectionUtility.TryGetValue<bool?>(() => Param) ?? false;
+            [Parameter] bool Param => TryGetValue<bool?>(() => Param) ?? false;
         }
 #pragma warning restore CS0649
     }

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -28,9 +28,8 @@ namespace Nuke.Common.Tools.GitHub
             string directory = null,
             string branch = null)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), "repository.IsGitHubRepository()");
-            ControlFlow.Assert(!HasPathRoot(directory) || repository.LocalDirectory != null,
-                "!HasPathRoot(directory) || repository.LocalDirectory != null");
+            Assert.True(repository.IsGitHubRepository());
+            Assert.True(!HasPathRoot(directory) || repository.LocalDirectory != null);
 
             var relativeDirectory = HasPathRoot(directory)
                 ? GetRelativePath(repository.LocalDirectory, directory)
@@ -51,7 +50,7 @@ namespace Nuke.Common.Tools.GitHub
 
         public static async Task<string> GetDefaultBranch(this GitRepository repository)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+            Assert.True(repository.IsGitHubRepository());
 
             var repo = await Client.Repository.Get(repository.GetGitHubOwner(), repository.GetGitHubName());
             return repo.DefaultBranch;
@@ -59,8 +58,7 @@ namespace Nuke.Common.Tools.GitHub
 
         public static async Task<string> GetLatestRelease(this GitRepository repository, bool includePrerelease = false, bool trimPrefix = false)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
-
+            Assert.True(repository.IsGitHubRepository());
             var releases = await Client.Repository.Release.GetAll(repository.GetGitHubOwner(), repository.GetGitHubName());
             return releases.First(x => !x.Prerelease || includePrerelease).TagName.TrimStart(trimPrefix ? "v" : string.Empty);
         }
@@ -68,8 +66,7 @@ namespace Nuke.Common.Tools.GitHub
         [ItemCanBeNull]
         public static async Task<Milestone> GetGitHubMilestone(this GitRepository repository, string name)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
-
+            Assert.True(repository.IsGitHubRepository());
             var milestones = await Client.Issue.Milestone.GetAllForRepository(
                 repository.GetGitHubOwner(),
                 repository.GetGitHubName(),
@@ -91,8 +88,7 @@ namespace Nuke.Common.Tools.GitHub
 
         public static async Task CreateGitHubMilestone(this GitRepository repository, string title)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
-
+            Assert.True(repository.IsGitHubRepository());
             await Client.Issue.Milestone.Create(
                 repository.GetGitHubOwner(),
                 repository.GetGitHubName(),
@@ -101,14 +97,13 @@ namespace Nuke.Common.Tools.GitHub
 
         public static async Task CloseGitHubMilestone(this GitRepository repository, string title, bool enableIssueChecks = true)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
-
+            Assert.True(repository.IsGitHubRepository());
             var milestone = (await repository.GetGitHubMilestone(title)).NotNull("milestone != null");
 
             if (enableIssueChecks)
             {
-                ControlFlow.Assert(milestone.OpenIssues == 0, "milestone.OpenIssues == 0");
-                ControlFlow.Assert(milestone.ClosedIssues != 0, "milestone.ClosedIssues != 0");
+                Assert.True(milestone.OpenIssues == 0);
+                Assert.True(milestone.ClosedIssues != 0);
             }
 
             await Client.Issue.Milestone.Update(
@@ -125,50 +120,44 @@ namespace Nuke.Common.Tools.GitHub
 
         public static string GetGitHubOwner(this GitRepository repository)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
-
+            Assert.True(repository.IsGitHubRepository());
             return repository.Identifier.Split('/')[0];
         }
 
         public static string GetGitHubName(this GitRepository repository)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
-
+            Assert.True(repository.IsGitHubRepository());
             return repository.Identifier.Split('/')[1];
         }
 
         public static string GetGitHubCompareCommitsUrl(this GitRepository repository, string startCommitSha, string endCommitSha)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
-
+            Assert.True(repository.IsGitHubRepository());
             return $"https://github.com/{repository.Identifier}/compare/{endCommitSha}^...{startCommitSha}";
         }
 
         public static string GetGitHubCompareTagToHeadUrl(this GitRepository repository, string tag)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
-
+            Assert.True(repository.IsGitHubRepository());
             return $"https://github.com/{repository.Identifier}/compare/{tag}...HEAD";
         }
 
         public static string GetGitHubCompareTagsUrl(this GitRepository repository, string startTag, string endTag)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
-
+            Assert.True(repository.IsGitHubRepository());
             return $"https://github.com/{repository.Identifier}/compare/{endTag}...{startTag}";
         }
 
         public static string GetGitHubCommitUrl(this GitRepository repository, string commitSha)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
-
+            Assert.True(repository.IsGitHubRepository());
             return $"https://github.com/{repository.Identifier}/commit/{commitSha}";
         }
 
         /// <summary>Url in the form of <c>https://raw.githubusercontent.com/{identifier}/{branch}/{file}</c>.</summary>
         public static string GetGitHubDownloadUrl(this GitRepository repository, string file, string branch = null)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+            Assert.True(repository.IsGitHubRepository());
 
             branch ??= repository.Branch.NotNull("repository.Branch != null");
             var relativePath = GetRepositoryRelativePath(file, repository);
@@ -185,12 +174,12 @@ namespace Nuke.Common.Tools.GitHub
             string branch = null,
             GitHubItemType itemType = GitHubItemType.Automatic)
         {
-            ControlFlow.Assert(repository.IsGitHubRepository(), text: "repository.IsGitHubRepository()");
+            Assert.True(repository.IsGitHubRepository());
 
-            branch ??= repository.Branch.NotNull("repository.Branch != null");
+            branch ??= repository.Branch.NotNull();
             var relativePath = GetRepositoryRelativePath(path, repository);
             var method = GetMethod(relativePath, itemType, repository);
-            ControlFlow.Assert(path == null || method != null, text: "Could not determine item type.");
+            Assert.True(path == null || method != null, "Could not determine item type");
 
             return $"https://github.com/{repository.Identifier}/{method}/{branch}/{relativePath}".TrimEnd("/");
         }
@@ -220,9 +209,9 @@ namespace Nuke.Common.Tools.GitHub
             if (!Path.IsPathRooted(path))
                 return path;
 
-            ControlFlow.Assert(IsDescendantPath(repository.LocalDirectory.NotNull("repository.LocalDirectory != null"), path),
-                $"PathConstruction.IsDescendantPath({repository.LocalDirectory}, {path})");
-            return GetRelativePath(repository.LocalDirectory, path).Replace(oldChar: '\\', newChar: '/');
+            var localDirectory = repository.LocalDirectory.NotNull();
+            Assert.True(IsDescendantPath(localDirectory, path), $"Path {path.SingleQuote()} must be descendant of {localDirectory.SingleQuote()}");
+            return GetRelativePath(localDirectory, path).Replace(oldChar: '\\', newChar: '/');
         }
     }
 }

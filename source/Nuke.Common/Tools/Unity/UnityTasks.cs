@@ -1,15 +1,18 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Unity.Logging;
 using Nuke.Common.Utilities;
+using Serilog;
 
 namespace Nuke.Common.Tools.Unity
 {
@@ -54,18 +57,43 @@ namespace Nuke.Common.Tools.Unity
         private static string GetProgramFiles()
         {
             return EnvironmentInfo.SpecialFolder(
-                    EnvironmentInfo.Is32Bit
-                        ? SpecialFolders.ProgramFilesX86
-                        : SpecialFolders.ProgramFiles);
+                EnvironmentInfo.Is32Bit
+                    ? SpecialFolders.ProgramFilesX86
+                    : SpecialFolders.ProgramFiles);
         }
 
         private static void PreProcess(ref UnitySettings unitySettings)
         {
-            ControlFlow.AssertWarn(
-                unitySettings.ProjectPath != null,
-                "ProjectPath is not set in UnitySettings. This will cause Unity to build the last " +
-                "opened/built project. Use .SetProjectPath() to override this behavior.");
+            if (unitySettings.ProjectPath == null)
+                Log.Warning("ProjectPath is not set, using last opened/built project");
+
+            DetectUnityVersion(ref unitySettings);
             PreProcess<UnitySettings>(ref unitySettings);
+        }
+
+        private static void DetectUnityVersion(ref UnitySettings unitySettings)
+        {
+            if (unitySettings.HubVersion != null ||
+                unitySettings.ProjectPath == null)
+                return;
+
+            var editorVersion = ReadUnityEditorVersion(unitySettings.ProjectPath);
+            var hubToolPath = (AbsolutePath)GetToolPathViaHubVersion(editorVersion);
+            if (hubToolPath.Exists())
+            {
+                unitySettings.HubVersion = editorVersion;
+                return;
+            }
+
+            var manualInstallationToolPath = (AbsolutePath)GetToolPathViaManualInstallation();
+            Assert.FileExists(manualInstallationToolPath, $"Required Unity Hub installation for version '{editorVersion}' was not found");
+        }
+
+        private static string ReadUnityEditorVersion(string projectPath)
+        {
+            var projectVersionPath = Path.Combine(projectPath, "ProjectSettings", "ProjectVersion.txt");
+            var properties = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string>>(projectVersionPath);
+            return properties["m_EditorVersion"];
         }
 
         private static void PreProcess<T>(ref T unitySettings)
@@ -112,9 +140,9 @@ namespace Nuke.Common.Tools.Unity
                 .ToString();
 
             if (settings.StableExitCodes.Any(x => x == process.ExitCode))
-                Logger.Warn(message);
+                Log.Warning(message);
             else
-                ControlFlow.Fail(message);
+                Assert.Fail(message);
         }
 
         private static void LogLine(string message, Logging.LogLevel logLevel)
@@ -123,14 +151,14 @@ namespace Nuke.Common.Tools.Unity
             {
                 case Logging.LogLevel.Normal:
                     if (!s_minimalOutput)
-                        Logger.Info(message);
+                        Log.Debug(message);
                     break;
                 case Logging.LogLevel.Warning:
-                    Logger.Warn(message);
+                    Log.Warning(message);
                     break;
                 case Logging.LogLevel.Error:
                 case Logging.LogLevel.Failure:
-                    Logger.Error(message);
+                    Log.Error(message);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(logLevel), logLevel, message: null);
@@ -139,12 +167,12 @@ namespace Nuke.Common.Tools.Unity
 
         private static void LogBlockEnd(MatchedBlock block)
         {
-            Logger.Normal("End: " + block.Name.TrimEnd('\r', '\n'));
+            Log.Debug("End: {Block}", block.Name.TrimEnd('\r', '\n'));
         }
 
         private static void LogBlockStart(MatchedBlock block)
         {
-            Logger.Normal("Start: " + block.Name.TrimEnd('\r', '\n'));
+            Log.Debug("Start: {Block}", block.Name.TrimEnd('\r', '\n'));
         }
     }
 }

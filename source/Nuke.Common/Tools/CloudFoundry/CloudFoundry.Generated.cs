@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   <p>Cloud Foundry CLI is the official command line client for Cloud Foundry</p>
         ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> CloudFoundry(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> CloudFoundry(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(CloudFoundryPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, CloudFoundryLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(CloudFoundryPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, CloudFoundryLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

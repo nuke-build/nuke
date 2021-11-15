@@ -1,6 +1,6 @@
-﻿// Copyright Sebastian Karasek, Matthias Koch 2018.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
-// https://github.com/nuke-build/azure-keyvault/blob/master/LICENSE
+// https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
@@ -16,8 +16,6 @@ namespace Nuke.Common.Tools.AzureKeyVault
         public static KeyVault LoadVault (KeyVaultTaskSettings settings)
         {
             AssertTaskSettings(settings);
-            ControlFlow.Assert(settings.VaultBaseUrl != null, "settings.VaultBaseUrl != null");
-
             return CreateVault(settings);
         }
 
@@ -50,10 +48,10 @@ namespace Nuke.Common.Tools.AzureKeyVault
         [AssertionMethod]
         private static void AssertTaskSettings (KeyVaultTaskSettings settings)
         {
-            ControlFlow.Assert(settings.VaultBaseUrl != null && settings.SecretName != null,
-                    "settings.VaultBaseUrl != null && settings.SecretName != null");
-            ControlFlow.Assert(settings.ClientSecret != null, "settings.ClientSecret != null");
-            ControlFlow.Assert(settings.ClientId != null, "settings.ClientId != null");
+            Assert.NotNull(settings.VaultBaseUrl);
+            Assert.NotNull(settings.SecretName);
+            Assert.NotNull(settings.ClientSecret);
+            Assert.NotNull(settings.ClientId);
         }
 
         private static T GetTaskResult<T> ([NotNull] Task<T> task)
@@ -64,7 +62,7 @@ namespace Nuke.Common.Tools.AzureKeyVault
             }
             catch (Exception ex)
             {
-                ControlFlow.Fail($"Could not retrieve KeyVault value. {ex.Message}");
+                Assert.Fail($"Could not retrieve KeyVault value: {ex.Message}");
             }
 
             return task.Result;

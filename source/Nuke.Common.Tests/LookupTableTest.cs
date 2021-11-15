@@ -1,11 +1,11 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
 using FluentAssertions;
-using Nuke.Common.Tooling;
+using Nuke.Common.Utilities.Collections;
 using Xunit;
 
 // ReSharper disable ArgumentsStyleLiteral
@@ -28,11 +28,11 @@ namespace Nuke.Common.Tests
             lookupTable.Add("second", value: 5);
             lookupTable.Should().HaveCount(2);
             lookupTable["first"].Should().HaveCount(3);
-            lookupTable["first"].Should().BeEquivalentTo(2, 3, 4);
+            lookupTable["first"].Should().BeEquivalentTo(new[] { 2, 3, 4 });
 
             lookupTable.Remove("first", value: 3);
             lookupTable["first"].Should().HaveCount(2);
-            lookupTable["first"].Should().BeEquivalentTo(2, 4);
+            lookupTable["first"].Should().BeEquivalentTo(new[] { 2, 4 });
 
             lookupTable.Remove("first");
             lookupTable["first"].Should().BeEmpty();

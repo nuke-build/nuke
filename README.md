@@ -97,11 +97,12 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Vova Lantsov](https://avatars.githubusercontent.com/vova-lantsov-dev?s=60&v=4)](https://github.com/vova-lantsov-dev)
 [![Daniel Valadas](https://avatars.githubusercontent.com/valadas?s=60&v=4)](https://github.com/valadas)
 [![Anton Wieslander](https://avatars.githubusercontent.com/T0shik?s=60&v=4)](https://github.com/T0shik)
+[![Chase Florell](https://avatars.githubusercontent.com/ChaseFlorell?s=60&v=4)](https://github.com/ChaseFlorell)
+[![business//acts](https://avatars.githubusercontent.com/BusinessActs?s=60&v=4)](https://github.com/BusinessActs)
 
 [![Stephan Müller](https://avatars.githubusercontent.com/chaquotay?s=45&v=4)](https://github.com/chaquotay)
 [![Bitbonk](https://avatars.githubusercontent.com/bitbonk?s=45&v=4)](https://github.com/bitbonk)
 [![Marat Gumerov](https://avatars.githubusercontent.com/Marat-Gumerov?s=45&v=4)](https://github.com/Marat-Gumerov)
-[![Chase Florell](https://avatars.githubusercontent.com/ChaseFlorell?s=45&v=4)](https://github.com/ChaseFlorell)
 [![Thomas Unger](https://avatars.githubusercontent.com/tunger?s=45&v=4)](https://github.com/tunger)
 [![Matt Brailsford](https://avatars.githubusercontent.com/mattbrailsford?s=45&v=4)](https://github.com/mattbrailsford)
 [![David Driscoll](https://avatars.githubusercontent.com/david-driscoll?s=45&v=4)](https://github.com/david-driscoll)
@@ -111,6 +112,9 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Martin Gill](https://avatars.githubusercontent.com/MartinSGill?s=45&v=4)](https://github.com/MartinSGill)
 [![Trey Cook](https://avatars.githubusercontent.com/hfcook3?s=45&v=4)](https://github.com/hfcook3)
 [![Todor Todorov](https://avatars.githubusercontent.com/totollygeek?s=45&v=4)](https://github.com/totollygeek)
+[![Christian Sindberg](https://avatars.githubusercontent.com/chrsin?s=45&v=4)](https://github.com/chrsin)
+[![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
+[![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=45&v=4)](https://github.com/stevenkuhn)
 
 ## Technology Sponsors
 

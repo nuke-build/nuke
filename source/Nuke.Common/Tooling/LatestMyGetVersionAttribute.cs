@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,9 +26,8 @@ namespace Nuke.Common.Tooling
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            var rssFile = NukeBuild.TemporaryDirectory / $"{_feed}.xml";
-            HttpTasks.HttpDownloadFile($"https://www.myget.org/RSS/{_feed}", rssFile);
-            return XmlTasks.XmlPeek(rssFile, ".//title")
+            var content = HttpTasks.HttpDownloadString($"https://www.myget.org/RSS/{_feed}");
+            return XmlTasks.XmlPeekFromString(content, ".//title")
                 // TODO: regex?
                 .First(x => x.Contains($"/{_package} "))
                 .Split('(').Last()

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -31,27 +31,27 @@ namespace Nuke.CodeGeneration.Generators
 
         public static string GetListValueType(this Property property)
         {
-            ControlFlow.Assert(property.IsList(), "property.IsList()");
+            Assert.True(property.IsList());
             return GetGenerics(property).Single();
         }
 
         public static (string, string) GetDictionaryKeyValueTypes(this Property property)
         {
-            ControlFlow.Assert(property.IsDictionary(), "property.IsDictionary()");
+            Assert.True(property.IsDictionary());
             var generics = GetGenerics(property);
             return (generics[0], generics[1]);
         }
 
         public static (string, string) GetLookupTableKeyValueTypes(this Property property)
         {
-            ControlFlow.Assert(property.IsLookupTable(), "property.IsLookupTable()");
+            Assert.True(property.IsLookupTable());
             var generics = GetGenerics(property);
             return (generics[0], generics[1]);
         }
 
         public static string GetKeyComparer(this Property property)
         {
-            ControlFlow.Assert(property.IsDictionary() || property.IsLookupTable(), "property.IsDictionary() || property.IsLookupTable()");
+            Assert.True(property.IsDictionary() || property.IsLookupTable());
             var keyType = GetGenerics(property).First();
 
             return keyType.EqualsOrdinalIgnoreCase("string")

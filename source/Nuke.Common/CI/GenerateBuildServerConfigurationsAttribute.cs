@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,7 +19,7 @@ namespace Nuke.Common.CI
             if (configurationId == null)
                 return;
 
-            ControlFlow.Assert(NukeBuild.RootDirectory != null, "NukeBuild.RootDirectory != null");
+            Assert.NotNull(NukeBuild.RootDirectory);
 
             var generator = GetGenerators(build)
                 .Where(x => x.Id == configurationId)

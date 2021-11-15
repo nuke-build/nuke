@@ -1,11 +1,10 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using Nuke.Common;
@@ -31,12 +30,10 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int Secrets(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
-            ControlFlow.Assert(rootDirectory != null, "No root directory found.");
-
-            var secretParameters = GetSecretParameters(rootDirectory).ToList();
+            var secretParameters = GetSecretParameters(rootDirectory.NotNull("No root directory")).ToList();
             if (secretParameters.Count == 0)
             {
-                Logger.Info("There are no parameters marked with SecretAttribute.");
+                Host.Information($"There are no parameters marked with {nameof(SecretAttribute)}");
                 return 0;
             }
 
@@ -50,10 +47,9 @@ namespace Nuke.GlobalTool
             var password = TryGetPasswordFromCredentialStore(credentialStoreName);
             var fromCredentialStore = password != null;
             password ??= CreateNewPassword(out generatedPassword);
-            var passwordBytes = Encoding.UTF8.GetBytes(password);
-            var secrets = LoadSecrets(secretParameters, passwordBytes, parametersFile);
+            var existingSecrets = LoadSecrets(secretParameters, password, parametersFile);
 
-            if (EnvironmentInfo.IsOsx && secrets.Count == 0 && !fromCredentialStore)
+            if (EnvironmentInfo.IsOsx && existingSecrets.Count == 0 && !fromCredentialStore)
             {
                 if (generatedPassword || UserConfirms($"Save password to keychain? (associated with '{rootDirectory}')"))
                     SavePasswordToCredentialStore(credentialStoreName, password);
@@ -63,21 +59,22 @@ namespace Nuke.GlobalTool
                 .Concat(SaveAndExit, DiscardAndExit)
                 .Concat(fromCredentialStore ? DeletePasswordAndExit : null).WhereNotNull().ToList();
 
+            var addedSecrets = new Dictionary<string, string>();
             while (true)
             {
                 var choice = ConsoleUtility.PromptForChoice(
                     "Choose secret parameter to enter value:",
-                    options.Select(x => (x, secrets.ContainsKey(x) ? $"* {x}" : x)).ToArray());
+                    options.Select(x => (x, addedSecrets.ContainsKey(x) || existingSecrets.ContainsKey(x) ? $"* {x}" : x)).ToArray());
 
                 if (!choice.EqualsAnyOrdinalIgnoreCase(SaveAndExit, DiscardAndExit, DeletePasswordAndExit))
                 {
-                    Logger.Info($"Enter secret for {choice}:");
-                    secrets[choice] = ConsoleUtility.ReadSecret();
+                    Host.Information($"Enter secret for {choice}:");
+                    addedSecrets[choice] = ConsoleUtility.ReadSecret();
                 }
                 else
                 {
                     if (choice == SaveAndExit)
-                        SaveSecrets(secrets, passwordBytes, parametersFile);
+                        SaveSecrets(addedSecrets, password, parametersFile);
 
                     if (choice == DeletePasswordAndExit)
                         DeletePasswordFromCredentialStore(credentialStoreName);
@@ -87,7 +84,7 @@ namespace Nuke.GlobalTool
             }
         }
 
-        private static Dictionary<string, string> LoadSecrets(IReadOnlyCollection<string> secretParameters, byte[] password, string parametersFile)
+        private static Dictionary<string, string> LoadSecrets(IReadOnlyCollection<string> secretParameters, string password, string parametersFile)
         {
             var jobject = SerializationTasks.JsonDeserializeFromFile<JObject>(parametersFile);
             return jobject.Properties()
@@ -95,7 +92,7 @@ namespace Nuke.GlobalTool
                 .ToDictionary(x => x.Name, x => Decrypt(x.Value.Value<string>(), password, x.Name));
         }
 
-        private static void SaveSecrets(Dictionary<string, string> secrets, byte[] password, string parametersFile)
+        private static void SaveSecrets(Dictionary<string, string> secrets, string password, string parametersFile)
         {
             var jobject = SerializationTasks.JsonDeserializeFromFile<JObject>(parametersFile);
             foreach (var (name, secret) in secrets)

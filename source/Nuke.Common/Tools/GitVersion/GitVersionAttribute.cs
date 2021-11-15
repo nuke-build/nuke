@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,6 +12,7 @@ using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.ValueInjection;
+using Serilog;
 using static Nuke.Common.ControlFlow;
 
 namespace Nuke.Common.Tools.GitVersion
@@ -35,13 +36,13 @@ namespace Nuke.Common.Tools.GitVersion
             // TODO: https://github.com/GitTools/GitVersion/issues/1097
             if (EnvironmentInfo.IsUnix && DisableOnUnix)
             {
-                Logger.Warn($"{nameof(GitVersion)} is disabled on UNIX environment.");
+                Log.Warning("{Tool} is disabled on UNIX environment", nameof(GitVersion));
                 return null;
             }
 
             var repository = SuppressErrors(() => GitRepository.FromLocalDirectory(NukeBuild.RootDirectory));
-            AssertWarn(repository == null || repository.Protocol != GitProtocol.Ssh || NoFetch,
-                $"{nameof(GitVersion)} does not support fetching SSH endpoints. Enable {nameof(NoFetch)} to skip fetching.");
+            if (repository is { Protocol: GitProtocol.Ssh } && !NoFetch)
+                Log.Warning($"{nameof(GitVersion)} does not support fetching SSH endpoints, enable {nameof(NoFetch)} to skip fetching");
 
             var gitVersion = GitVersionTasks.GitVersion(s => s
                     .SetFramework(Framework)

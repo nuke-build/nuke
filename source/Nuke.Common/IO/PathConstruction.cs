@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -103,8 +103,8 @@ namespace Nuke.Common.IO
             destinationPath = NormalizePath(destinationPath);
 
             var separator = GetSeparator(basePath);
-            ControlFlow.Assert(separator == GetSeparator(destinationPath), "Separators do not match.");
-            ControlFlow.Assert(!IsWinRoot(basePath) || Path.GetPathRoot(basePath) == Path.GetPathRoot(destinationPath), "Root must be same.");
+            Assert.True(separator == GetSeparator(destinationPath), "Separators do not match");
+            Assert.True(!IsWinRoot(basePath) || Path.GetPathRoot(basePath) == Path.GetPathRoot(destinationPath), "Root must be same");
 
             var baseParts = basePath.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
             var destinationParts = destinationPath.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
@@ -225,7 +225,7 @@ namespace Nuke.Common.IO
             left = Trim(left);
             right = Trim(right);
 
-            ControlFlow.Assert(!HasPathRoot(right), "Second path must not be rooted.");
+            Assert.False(HasPathRoot(right), "Second path must not be rooted");
 
             if (string.IsNullOrWhiteSpace(left))
                 return right;
@@ -263,7 +263,7 @@ namespace Nuke.Common.IO
                 {
                     if (tailParts.Take(i).All(IsUpwardsDirectory))
                     {
-                        ControlFlow.Assert(i > 0 || root == null, $"Cannot normalize '{path}' beyond path root.");
+                        Assert.True(i > 0 || root == null, $"Cannot normalize '{path}' beyond path root");
                         i++;
                         continue;
                     }
@@ -313,9 +313,9 @@ namespace Nuke.Common.IO
             if (root == null)
                 return;
 
-            ControlFlow.Assert(!IsWinRoot(root) || separator == WinSeparator, $"For Windows-rooted paths the separator must be '{WinSeparator}'.");
-            ControlFlow.Assert(!IsUncRoot(root) || separator == UncSeparator, $"For UNC-rooted paths the separator must be '{UncSeparator}'.");
-            ControlFlow.Assert(!IsUnixRoot(root) || separator == UnixSeparator, $"For Unix-rooted paths the separator must be '{UnixSeparator}'.");
+            Assert.True(!IsWinRoot(root) || separator == WinSeparator, $"For Windows-rooted paths the separator must be '{WinSeparator}'");
+            Assert.True(!IsUncRoot(root) || separator == UncSeparator, $"For UNC-rooted paths the separator must be '{UncSeparator}'");
+            Assert.True(!IsUnixRoot(root) || separator == UnixSeparator, $"For Unix-rooted paths the separator must be '{UnixSeparator}'");
         }
 
         [ContractAnnotation("null => null; notnull => notnull")]

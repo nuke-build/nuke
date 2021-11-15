@@ -20,7 +20,7 @@ namespace Nuke.GlobalTool.Rewriting.Cake
             }
             catch (Exception)
             {
-                Logger.Warn($"Could not handle fragment '{node.ToFullString().Trim()}', skipping...");
+                Host.Warning($"Could not handle fragment '{node.ToFullString().Trim()}', skipping ...");
                 return node;
             }
         }

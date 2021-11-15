@@ -36,7 +36,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                 writer.WriteLine($"displayName: Cache ({Identifier})");
                 using (writer.WriteBlock("inputs:"))
                 {
-                    writer.WriteLine($"key: $(Agent.OS) | {Identifier} | {KeyFiles.JoinComma()}");
+                    writer.WriteLine($"key: $(Agent.OS) | {Identifier} | {KeyFiles.JoinCommaSpace()}");
                     writer.WriteLine($"restoreKeys: $(Agent.OS) | {Identifier}");
                     writer.WriteLine($"path: {AdjustedPath}");
                 }

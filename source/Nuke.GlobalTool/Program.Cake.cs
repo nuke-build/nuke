@@ -12,6 +12,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
+using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GlobalTool.Rewriting.Cake;
@@ -29,7 +30,9 @@ namespace Nuke.GlobalTool
         public static int CakeConvert(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             Telemetry.ConvertCake();
-            Logger.Warn(
+            ProjectModelTasks.Initialize();
+
+            Host.Warning(
                 new[]
                 {
                     "Converting .cake files is a best effort approach using syntax rewriting.",
@@ -43,10 +46,10 @@ namespace Nuke.GlobalTool
                     "  - Addin and tool references",
                 }.JoinNewLine());
 
-            Logger.Normal();
+            Host.Debug();
             if (!UserConfirms("Continue?"))
                 return 0;
-            Logger.Normal();
+            Host.Debug();
 
             if (buildScript == null &&
                 UserConfirms("Should a NUKE project be created for better results?"))
@@ -80,8 +83,8 @@ namespace Nuke.GlobalTool
         public static int CakeClean(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             var cakeFiles = GetCakeFiles().ToList();
-            Logger.Info("Found .cake files:");
-            cakeFiles.ForEach(x => Logger.Normal($"  - {x}"));
+            Host.Information("Found .cake files:");
+            cakeFiles.ForEach(x => Host.Debug($"  - {x}"));
 
             if (UserConfirms("Delete?"))
                 cakeFiles.ForEach(FileSystemTasks.DeleteFile);

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.Execution
 {
@@ -23,8 +24,8 @@ namespace Nuke.Common.Execution
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            ControlFlow.AssertWarn(Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds),
-                $"Could not complete checking build configurations within {TimeoutInMilliseconds} milliseconds.");
+            if (!Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds))
+                Log.Warning("Could not complete checking build configurations within {Timeout} milliseconds", TimeoutInMilliseconds);
 
             static Task CheckConfiguration()
             {
@@ -37,7 +38,7 @@ namespace Nuke.Common.Execution
                     .SelectMany(x => x.Projects)
                     .Where(x => x.Directory.Equals(NukeBuild.BuildProjectDirectory))
                     .Where(x => x.Configurations.Any(y => y.Key.Contains("Build")))
-                    .ForEach(x => Logger.Warn($"Solution {x.Solution} has an active build configuration for {x}."));
+                    .ForEach(x => Log.Warning("Solution {Solution} has an active build configuration for {Project}", x.Solution, x));
 
                 return Task.CompletedTask;
             }

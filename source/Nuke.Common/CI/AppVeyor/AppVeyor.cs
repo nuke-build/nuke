@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,7 +7,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
@@ -35,19 +34,20 @@ namespace Nuke.Common.CI.AppVeyor
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public class AppVeyor : Host, IBuildServer
+    public partial class AppVeyor : Host, IBuildServer
     {
         public new static AppVeyor Instance => Host.Instance as AppVeyor;
+
+        public static int MessageLimit = 500;
 
         internal static bool IsRunningAppVeyor => !Environment.GetEnvironmentVariable("APPVEYOR").IsNullOrEmpty();
 
         private readonly Lazy<Tool> _cli = Lazy.Create(() => IsRunningAppVeyor ? ToolResolver.GetPathTool("appveyor") : null);
+        private int _messageCount;
 
         internal AppVeyor()
         {
         }
-
-        protected internal override OutputSink OutputSink => new AppVeyorOutputSink(this);
 
         string IBuildServer.Branch => RepositoryBranch;
         string IBuildServer.Commit => RepositoryCommitSha;
@@ -117,6 +117,15 @@ namespace Nuke.Common.CI.AppVeyor
 
         private void WriteMessage(AppVeyorMessageCategory category, string message, string details)
         {
+            if (_messageCount == MessageLimit)
+            {
+                Theme.WriteWarning(
+                    $"AppVeyor has a default limit of {MessageLimit} messages. " +
+                    "If you're getting an exception from 'appveyor.exe' after this message, " +
+                    "contact https://appveyor.com/support to resolve this issue for your account.");
+            }
+
+            _messageCount++;
             Cli?.Invoke($"AddMessage {message.DoubleQuote()} -Category {category} -Details {details.DoubleQuote()}",
                 logInvocation: false,
                 logOutput: false);

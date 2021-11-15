@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,7 +14,6 @@ using Nuke.Common.CI.TeamCity.Configuration;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
@@ -36,7 +35,7 @@ namespace Nuke.Common.CI.TeamCity
             .Concat(NightlyTriggeredTargets)
             .Concat(ManuallyTriggeredTargets);
 
-        public string Version { get; set; } = "2018.2";
+        public string Version { get; set; } = "2021.1";
 
         public string Description { get; set; }
         public bool CleanCheckoutDirectory { get; set; } = true;
@@ -177,7 +176,7 @@ namespace Nuke.Common.CI.TeamCity
                 .Select(x => GetParameter(x.GetMemberInfo(), build, required: true))
                 .Concat(new TeamCityKeyValueParameter(
                     "teamcity.ui.runButton.caption",
-                    executableTarget.Name.SplitCamelHumpsWithSeparator(" ", Constants.KnownWords))).ToArray();
+                    executableTarget.Name.SplitCamelHumpsWithKnownWords().JoinSpace())).ToArray();
             var triggers = GetTriggers(executableTarget, buildTypes).ToArray();
 
             yield return new TeamCityBuildType

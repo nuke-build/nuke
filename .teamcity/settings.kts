@@ -20,7 +20,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 
-version = "2020.2"
+version = "2021.1"
 
 project {
     buildType(Pack)
@@ -114,7 +114,7 @@ project {
     }
 }
 object Pack : BuildType({
-    name = "📦 Pack 🧩 "
+    name = "📦 Pack"
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -191,7 +191,7 @@ object Test_P2T2 : BuildType({
     }
 })
 object Test : BuildType({
-    name = "🚦 Test 🧩 "
+    name = "🚦 Test"
     type = Type.COMPOSITE
     vcs {
         root(DslContext.settingsRoot)
@@ -228,7 +228,7 @@ object Test : BuildType({
     }
 })
 object ReportDuplicates : BuildType({
-    name = "🎭 ReportDuplicates 🧩 "
+    name = "🎭 ReportDuplicates"
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -258,7 +258,7 @@ object ReportDuplicates : BuildType({
     }
 })
 object ReportIssues : BuildType({
-    name = "💣 ReportIssues 🧩 "
+    name = "💣 ReportIssues"
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -288,7 +288,7 @@ object ReportIssues : BuildType({
     }
 })
 object ReportCoverage : BuildType({
-    name = "📊 ReportCoverage 🧩 "
+    name = "📊 ReportCoverage"
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true

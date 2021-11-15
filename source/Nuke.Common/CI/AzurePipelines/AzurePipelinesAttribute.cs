@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,6 +25,7 @@ namespace Nuke.Common.CI.AzurePipelines
         private readonly AzurePipelinesImage[] _images;
 
         private bool? _triggerBatch;
+        private bool? _pullRequestsAutoCancel;
         private bool? _submodules;
         private bool? _largeFileStorage;
         private int? _fetchDepth;
@@ -97,7 +98,14 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] TriggerPathsInclude { get; set; } = new string[0];
         public string[] TriggerPathsExclude { get; set; } = new string[0];
 
-        public bool PullRequestsAutoCancel { get; set; }
+        public bool PullRequestsDisabled { get; set; }
+
+        public bool? PullRequestsAutoCancel
+        {
+            set => _pullRequestsAutoCancel = value;
+            get => throw new NotSupportedException();
+        }
+
         public string[] PullRequestsBranchesInclude { get; set; } = new string[0];
         public string[] PullRequestsBranchesExclude { get; set; } = new string[0];
         public string[] PullRequestsPathsInclude { get; set; } = new string[0];
@@ -108,7 +116,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public string[] ImportVariableGroups { get; set; } = new string[0];
         public string[] ImportSecrets { get; set; } = new string[0];
-        public string ImportSystemAccessTokenAs { get; set; }
+        public bool EnableAccessToken { get; set; }
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -121,6 +129,7 @@ namespace Nuke.Common.CI.AzurePipelines
                    {
                        VariableGroups = ImportVariableGroups,
                        VcsPushTrigger = GetVcsPushTrigger(),
+                       VcsPullRequestTrigger = GetVcsPullRequestTrigger(),
                        Stages = _images.Select(x => GetStage(x, relevantTargets)).ToArray()
                    };
         }
@@ -148,6 +157,30 @@ namespace Nuke.Common.CI.AzurePipelines
                        TagsExclude = TriggerTagsExclude,
                        PathsInclude = TriggerPathsInclude,
                        PathsExclude = TriggerPathsExclude,
+                   };
+        }
+
+        [CanBeNull]
+        protected AzurePipelinesVcsPushTrigger GetVcsPullRequestTrigger()
+        {
+            if (!PullRequestsDisabled &&
+                _pullRequestsAutoCancel == null &&
+                PullRequestsBranchesInclude.Length == 0 &&
+                PullRequestsBranchesExclude.Length == 0 &&
+                PullRequestsPathsInclude.Length == 0 &&
+                PullRequestsPathsExclude.Length == 0)
+                return null;
+
+            return new AzurePipelinesVcsPushTrigger
+                   {
+                       Disabled = PullRequestsDisabled,
+                       AutoCancel = _pullRequestsAutoCancel,
+                       BranchesInclude = PullRequestsBranchesInclude,
+                       BranchesExclude = PullRequestsBranchesExclude,
+                       TagsInclude = new string[0],
+                       TagsExclude = new string[0],
+                       PathsInclude = PullRequestsPathsInclude,
+                       PathsExclude = PullRequestsPathsExclude,
                    };
         }
 
@@ -265,8 +298,8 @@ namespace Nuke.Common.CI.AzurePipelines
         {
             static string GetSecretValue(string secret) => $"$({secret})";
 
-            if (ImportSystemAccessTokenAs != null)
-                yield return (ImportSystemAccessTokenAs, GetSecretValue("System.AccessToken"));
+            if (EnableAccessToken)
+                yield return ("SYSTEM_ACCESSTOKEN", GetSecretValue("System.AccessToken"));
 
             foreach (var secret in ImportSecrets)
                 yield return (secret, GetSecretValue(secret));

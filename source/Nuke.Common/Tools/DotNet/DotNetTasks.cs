@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
+using Serilog;
 
 namespace Nuke.Common.Tools.DotNet
 {
@@ -37,7 +38,7 @@ namespace Nuke.Common.Tools.DotNet
         {
             if (type == OutputType.Err)
             {
-                Logger.Error(output);
+                Log.Error(output);
                 return;
             }
 
@@ -57,7 +58,7 @@ namespace Nuke.Common.Tools.DotNet
                     'o' == output[i - 1] &&
                     'r' == output[i])
                 {
-                    Logger.Error(output);
+                    Log.Error(output);
                     return;
                 }
 
@@ -70,12 +71,12 @@ namespace Nuke.Common.Tools.DotNet
                     'n' == output[i - 1] &&
                     'g' == output[i])
                 {
-                    Logger.Warn(output);
+                    Log.Warning(output);
                     return;
                 }
             }
 
-            Logger.Normal(output);
+            Log.Debug(output);
         }
 
         public static string EscapeMSBuild(this string str)

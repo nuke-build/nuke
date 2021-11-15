@@ -161,6 +161,18 @@
           "type": "List<SlackMessageField>",
           "json": "fields",
           "help": "Fields get displayed in a table-like way."
+        },
+        {
+          "name": "Actions",
+          "type": "List<SlackMessageAction>",
+          "json": "actions",
+          "help": "A collection of Action objects to include in the attachment. Cannot exceed 5 elements."
+        },
+        {
+          "name": "CallbackId",
+          "type": "string",
+          "json": "callback_id",
+          "help": "The callback id sent to the interactive message endpoint."
         }
       ]
     },
@@ -186,6 +198,81 @@
           "json": "short",
           "help": "An optional flag indicating whether the <c>value</c> is short enough to be displayed side-by-side with other values."
         }
+      ]
+    },
+    {
+      "name": "SlackMessageAction",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Name",
+          "type": "string",
+          "json": "name",
+          "help": "Name this specific action. The name will be returned to your Action URL along with the message's <c>callback_id</c> when this action is invoked. Use it to identify this particular response path."
+        },
+        {
+          "name": "Text",
+          "type": "string",
+          "json": "text",
+          "help": "The user-facing label for the message button or menu representing this action. Cannot contain markup."
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "json": "value",
+          "help": "Provide a string identifying this specific action. It will be sent to your Action URL along with the name and attachment's <c>callback_id</c> . If providing multiple actions with the same name, value can be strategically used to differentiate intent. Cannot exceed <c>2000</c> characters."
+        },
+        {
+          "name": "Style",
+          "type": "SlackMessageActionStyle",
+          "json": "style",
+          "help": "Leave blank to indicate that this is an ordinary button. Use <c>primary</c> or <c>danger</c> to mark important buttons."
+        },
+        {
+          "name": "Confirmation",
+          "type": "SlackMessageConfirmation",
+          "json": "confirm",
+          "help": "Shows a confirmation dialog when the action is selected."
+        }
+      ]
+    },
+    {
+      "name": "SlackMessageConfirmation",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Title",
+          "type": "string",
+          "json": "title",
+          "help": "Title of the confirmation dialog."
+        },
+        {
+          "name": "Text",
+          "type": "string",
+          "json": "text",
+          "help": "Text of the confirmation dialog."
+        },
+        {
+          "name": "OkText",
+          "type": "string",
+          "json": "ok_text",
+          "help": "Confirm button text of the confirmation dialog."
+        },
+        {
+          "name": "DismissText",
+          "type": "string",
+          "json": "dismiss_text",
+          "help": "Dismiss button text of the confirmation dialog."
+        }
+      ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "SlackMessageActionStyle",
+      "values": [
+        "primary",
+        "danger"
       ]
     }
   ]

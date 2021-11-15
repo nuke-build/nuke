@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,6 +13,7 @@ using HtmlAgilityPack;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common;
+using Serilog;
 
 namespace Nuke.CodeGeneration
 {
@@ -44,12 +45,12 @@ namespace Nuke.CodeGeneration
                 var referenceContent = await GetReferenceContent(reference);
                 File.WriteAllText(referenceFile, referenceContent);
 
-                Logger.Info($"Updated reference for '{Path.GetFileName(tool.SpecificationFile)}#{index}'.");
+                Log.Information("Updated reference for {File}#{Index}'", Path.GetFileName(tool.SpecificationFile), index);
             }
             catch (Exception exception)
             {
-                Logger.Error($"Couldn't update {Path.GetFileName(tool.SpecificationFile)}#{index}: {reference}");
-                Logger.Error(exception.Message);
+                Log.Error("Couldn't update {File}#{Index}: {Reference}", Path.GetFileName(tool.SpecificationFile), index, reference);
+                Log.Error(exception.Message);
             }
         }
 
@@ -69,8 +70,7 @@ namespace Nuke.CodeGeneration
             var document = new HtmlDocument();
             document.Load(tempFile, Encoding.UTF8);
             var selectedNode = document.DocumentNode.SelectSingleNode(referenceValues[1]);
-            ControlFlow.Assert(selectedNode != null, "selectedNode != null");
-            return selectedNode.InnerText;
+            return selectedNode.NotNull().InnerText;
         }
 
         private class AutomaticDecompressingWebClient : WebClient

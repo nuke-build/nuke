@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         ///   <p>Powerful .NET library for benchmarking</p>
         ///   <p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> BenchmarkDotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> BenchmarkDotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(BenchmarkDotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, BenchmarkDotNetLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(BenchmarkDotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, BenchmarkDotNetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

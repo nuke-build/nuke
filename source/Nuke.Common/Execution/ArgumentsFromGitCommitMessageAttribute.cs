@@ -11,7 +11,6 @@ using Nuke.Common.Tools.Git;
 using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 using static Nuke.Common.CI.BuildServerConfigurationGenerationAttributeBase;
-using static Nuke.Common.CI.InvokeBuildServerConfigurationGenerationAttribute;
 
 namespace Nuke.Common.Execution
 {

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,10 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common;
-using Nuke.Common.CI;
 using Nuke.Common.CI.TeamCity.Configuration;
 using Nuke.Common.Execution;
-using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Components;
 #if NUKE_ENTERPRISE
@@ -18,7 +16,6 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
 #endif
 
 [TeamCity(
-    Version = "2020.2",
     VcsTriggeredTargets =
         new[]
         {
@@ -41,7 +38,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
                     {
                         nameof(EnterpriseAccessToken),
 #if NUKE_ENTERPRISE
-                        Slack + nameof(IHazSlackCredentials.UserAccessToken),
+                        $"{Slack}{nameof(IHazSlackCredentials.UserAccessToken)}",
 #endif
                     })]
 partial class Build
@@ -58,10 +55,10 @@ partial class Build
             return base.GetBuildTypes(build, executableTarget, vcsRoot, buildTypes, relevantTargets)
                 .ForEachLazy(x =>
                 {
-                    var symbol = CustomNames.GetValueOrDefault(x.InvokedTargets.Last()).NotNull("symbol != null");
-                    x.Name = x.Partition == Partition.Single
+                    var symbol = CustomNames.GetValueOrDefault(x.InvokedTargets.Last());
+                    x.Name = (x.Partition == null
                         ? $"{symbol} {x.Name}"
-                        : $"{symbol} {x.InvokedTargets.Last()} 🧩 {x.Partition}";
+                        : $"{symbol} {x.InvokedTargets.Last()} 🧩 {x.Partition}").Trim();
                 });
         }
     }

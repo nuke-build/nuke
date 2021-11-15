@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -122,46 +122,6 @@ namespace Nuke.Common.Tooling
         {
             var newToolSettings = toolSettings.NewInstance();
             newToolSettings.ProcessLogInvocation = false;
-            return newToolSettings;
-        }
-
-        ///<summary>Sets <see cref="ToolSettings.ProcessLogTimestamp"/> -- <inheritdoc cref="ToolSettings.ProcessLogTimestamp" /></summary>
-        [Pure]
-        public static T SetProcessLogTimestamp<T>(this T toolSettings, bool logTimestamp)
-            where T : ToolSettings
-        {
-            var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.ProcessLogTimestamp = logTimestamp;
-            return newToolSettings;
-        }
-
-        ///<summary>Enables <see cref="ToolSettings.ProcessLogTimestamp"/> -- <inheritdoc cref="ToolSettings.ProcessLogTimestamp" /></summary>
-        [Pure]
-        public static T EnableProcessLogTimestamp<T>(this T toolSettings)
-            where T : ToolSettings
-        {
-            var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.ProcessLogTimestamp = true;
-            return newToolSettings;
-        }
-
-        ///<summary>Disables <see cref="ToolSettings.ProcessLogTimestamp"/> -- <inheritdoc cref="ToolSettings.ProcessLogTimestamp" /></summary>
-        [Pure]
-        public static T DisableProcessLogTimestamp<T>(this T toolSettings)
-            where T : ToolSettings
-        {
-            var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.ProcessLogTimestamp = false;
-            return newToolSettings;
-        }
-
-        ///<summary>Sets <see cref="ToolSettings.ProcessLogFile"/> -- <inheritdoc cref="ToolSettings.ProcessLogFile" /></summary>
-        [Pure]
-        public static T SetProcessLogFile<T>(this T toolSettings, string logFile)
-            where T : ToolSettings
-        {
-            var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.ProcessLogFile = logFile;
             return newToolSettings;
         }
 

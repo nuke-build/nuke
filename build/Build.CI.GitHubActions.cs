@@ -14,16 +14,17 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
     GitHubActionsImage.WindowsLatest,
     GitHubActionsImage.UbuntuLatest,
     GitHubActionsImage.MacOsLatest,
-    OnPushBranchesIgnore = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
+    OnPushBranchesIgnore = new[] { MasterBranch, $"{ReleaseBranchPrefix}/*" },
     OnPullRequestBranches = new[] { DevelopBranch },
     PublishArtifacts = false,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" },
+    EnableGitHubContext = true,
     ImportSecrets = new[]
                     {
                         nameof(EnterpriseAccessToken),
 #if NUKE_ENTERPRISE
-                        Slack + nameof(IHazSlackCredentials.UserAccessToken),
+                        $"{Slack}{nameof(IHazSlackCredentials.UserAccessToken)}",
 #endif
                     })]
 partial class Build
