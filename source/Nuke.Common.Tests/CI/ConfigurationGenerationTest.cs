@@ -143,7 +143,10 @@ namespace Nuke.Common.Tests.CI
                         OnPullRequestIncludePaths = new[] { "pull_request_include_path" },
                         OnPullRequestExcludePaths = new[] { "pull_request_exclude_path/**" },
                         OnWorkflowDispatchOptionalInputs = new[] { "OptionalInput" },
-                        OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" }
+                        OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" },
+                        DotNetVersion = "6.0.x",
+                        Submodules = GitHubSubmodules.Recursive,
+                        IncludeDotNetPreRelease = true
                     }
                 );
 
