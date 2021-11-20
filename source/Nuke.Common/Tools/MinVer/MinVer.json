@@ -41,7 +41,7 @@
           {
             "name": "Verbosity",
             "type": "MinVerVerbosity",
-            "format": "--verbosity"
+            "format": "--verbosity {value}"
           }
         ]
       }
