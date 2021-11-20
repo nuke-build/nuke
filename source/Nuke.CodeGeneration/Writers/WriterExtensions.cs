@@ -63,7 +63,7 @@ namespace Nuke.CodeGeneration.Writers
             where T : IWriterWrapper
         {
             if (condition)
-                writerWrapper.Writer.WriteLine(text);
+                writerWrapper.WriteLine(text);
             return writerWrapper;
         }
 

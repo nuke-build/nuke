@@ -52,8 +52,8 @@ namespace Nuke.Common.Tools.Slack
         /// <summary>
         ///   Attachments let you add more context to a message, making them more useful and effective.
         /// </summary>
-        [JsonProperty("attachments")]
         public virtual IReadOnlyList<SlackMessageAttachment> Attachments => AttachmentsInternal.AsReadOnly();
+        [JsonProperty("attachments")]
         internal List<SlackMessageAttachment> AttachmentsInternal { get; set; } = new List<SlackMessageAttachment>();
     }
     #endregion
@@ -89,8 +89,8 @@ namespace Nuke.Common.Tools.Slack
         /// <summary>
         ///   By default bot message attachments will not be formatted. To enable formatting on attachment fields, set the mrkdwn_in array on each attachment to the list of fields to process.
         /// </summary>
-        [JsonProperty("mrkdwn_in")]
         public virtual IReadOnlyList<string> MarkdownIn => MarkdownInInternal.AsReadOnly();
+        [JsonProperty("mrkdwn_in")]
         internal List<string> MarkdownInInternal { get; set; } = new List<string>();
         /// <summary>
         ///   A plain-text summary of the attachment. This text will be used in clients that don't show formatted text (eg. IRC, mobile notifications) and should not contain any markup.
@@ -145,14 +145,14 @@ namespace Nuke.Common.Tools.Slack
         /// <summary>
         ///   Fields get displayed in a table-like way.
         /// </summary>
-        [JsonProperty("fields")]
         public virtual IReadOnlyList<SlackMessageField> Fields => FieldsInternal.AsReadOnly();
+        [JsonProperty("fields")]
         internal List<SlackMessageField> FieldsInternal { get; set; } = new List<SlackMessageField>();
         /// <summary>
         ///   A collection of Action objects to include in the attachment. Cannot exceed 5 elements.
         /// </summary>
-        [JsonProperty("actions")]
         public virtual IReadOnlyList<SlackMessageAction> Actions => ActionsInternal.AsReadOnly();
+        [JsonProperty("actions")]
         internal List<SlackMessageAction> ActionsInternal { get; set; } = new List<SlackMessageAction>();
         /// <summary>
         ///   The callback id sent to the interactive message endpoint.

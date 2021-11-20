@@ -107,37 +107,28 @@ namespace Nuke.CodeGeneration.Generators
             if (property.CustomImpl)
                 return;
 
+            var type = GetPublicPropertyType(property);
+            var implementation = GetPublicPropertyImplementation(property);
+            var hasInternalProperty = property.IsList() || property.IsDictionary() || property.IsLookupTable();
+
             writer
                 .WriteSummary(property)
-                .WritePublicProperty(property)
-                .WriteInternalPropertyWhenNeeded(property);
+                .WriteObsoleteAttributeWhenObsolete(property)
+                .WriteLineIfTrue(!hasInternalProperty, GetJsonSerializationAttribute(property))
+                .WriteLineIfTrue(hasInternalProperty, GetJsonIgnoreAttribute(property))
+                .WriteLine($"public virtual {type} {property.Name} {implementation}")
+                .WriteLineIfTrue(hasInternalProperty, GetJsonSerializationAttribute(property))
+                .WriteLineIfTrue(hasInternalProperty, $"internal {property.Type} {property.Name}Internal {{ get; set; }}{GetPropertyInitialization(property)}");
         }
 
         private static string GetJsonSerializationAttribute(Property property)
         {
-            if (string.IsNullOrWhiteSpace(property.Json))
-                return null;
-
-            return $"[JsonProperty({property.Json.DoubleQuote()})]";
+            return !string.IsNullOrWhiteSpace(property.Json) ? $"[JsonProperty({property.Json.DoubleQuote()})]" : null;
         }
 
-        private static T WriteInternalPropertyWhenNeeded<T>(this T writer, Property property)
-            where T : DataClassWriter
+        private static string GetJsonIgnoreAttribute(Property property)
         {
-            if (!property.IsList() && !property.IsDictionary() && !property.IsLookupTable())
-                return writer;
-            return writer.WriteLine($"internal {property.Type} {property.Name}Internal {{ get; set; }}{GetPropertyInitialization(property)}");
-        }
-
-        private static T WritePublicProperty<T>(this T writer, Property property)
-            where T : DataClassWriter
-        {
-            var type = GetPublicPropertyType(property);
-            var implementation = GetPublicPropertyImplementation(property);
-            return writer
-                .WriteObsoleteAttributeWhenObsolete(property)
-                .WriteLine(GetJsonSerializationAttribute(property))
-                .WriteLine($"public virtual {type} {property.Name} {implementation}");
+            return !string.IsNullOrWhiteSpace(property.Json) ? "[JsonIgnore]" : null;
         }
 
         private static string GetPropertyInitialization(Property property)
