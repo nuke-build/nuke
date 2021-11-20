@@ -36,7 +36,7 @@ namespace Nuke.Common.CI.AzurePipelines
             _messageSink = messageSink ?? Console.WriteLine;
         }
 
-        string IBuildServer.Branch => SourceBranchName;
+        string IBuildServer.Branch => SourceBranch;
         string IBuildServer.Commit => SourceVersion;
 
         public string AgentBuildDirectory => EnvironmentInfo.GetVariable<string>("AGENT_BUILDDIRECTORY");
