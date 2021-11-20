@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using static Nuke.Common.IO.PathConstruction;
@@ -63,6 +64,9 @@ namespace Nuke.Common.IO
         {
             return path?.ToString();
         }
+
+        public string Name => Path.GetFileName(_path);
+        public string NameWithoutExtension => Path.GetFileNameWithoutExtension(_path);
 
         [CanBeNull]
         public AbsolutePath Parent =>
