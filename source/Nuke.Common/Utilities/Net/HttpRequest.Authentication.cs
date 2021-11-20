@@ -13,14 +13,17 @@ namespace Nuke.Common.Utilities.Net
     {
         public static HttpRequestBuilder WithBearerAuthentication(this HttpRequestBuilder builder, string bearerToken)
         {
-            builder.Request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", bearerToken);
-            return builder;
+            return builder.WithAuthentication("Bearer", bearerToken);
         }
 
         public static HttpRequestBuilder WithBasicAuthentication(this HttpRequestBuilder builder, string username, string password)
         {
-            builder.Request.Headers.Authorization =
-                new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}")));
+            return builder.WithAuthentication("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($"{username}:{password}")));
+        }
+
+        public static HttpRequestBuilder WithAuthentication(this HttpRequestBuilder builder, string scheme, string parameter)
+        {
+            builder.Request.Headers.Authorization = new AuthenticationHeaderValue(scheme, parameter);
             return builder;
         }
     }
