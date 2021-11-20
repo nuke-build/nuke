@@ -181,7 +181,7 @@ namespace Nuke.Common.Execution
                 () => TargetLogEventEnricher.Property = null);
         }
 
-        internal class InMemorySink : ILogEventSink, IDisposable
+        public class InMemorySink : ILogEventSink, IDisposable
         {
             public static InMemorySink Instance { get; } = new InMemorySink();
 
