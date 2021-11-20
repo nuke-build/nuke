@@ -51,8 +51,8 @@ namespace Nuke.Common.Git
             var gitDirectory = Path.Combine(rootDirectory.NotNull($"No parent Git directory for '{directory}'"), ".git");
 
             var head = GetHead(gitDirectory);
-            var branch = ((Host.Instance as IBuildServer)?.Branch ?? GetHeadIfAttached(head))?.TrimStart("refs/heads/").TrimStart("origin/");
-            var commit = (Host.Instance as IBuildServer)?.Commit ?? GetCommitFromHead(gitDirectory, head);
+            var branch = (GetBranchFromCI() ?? GetHeadIfAttached(head))?.TrimStart("refs/heads/").TrimStart("origin/");
+            var commit = GetCommitFromCI() ?? GetCommitFromHead(gitDirectory, head);
             var tags = GetTagsFromCommit(gitDirectory, commit);
             var (remoteName, remoteBranch) = GetRemoteNameAndBranch(gitDirectory, branch);
             var (protocol, endpoint, identifier) = GetRemoteConnectionFromConfig(gitDirectory, remoteName ?? FallbackRemoteName);
