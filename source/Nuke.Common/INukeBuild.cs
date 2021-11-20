@@ -18,6 +18,7 @@ namespace Nuke.Common
     {
         void ReportSummary(Configure<IDictionary<string, string>> configurator = null);
 
+        IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; }
         IReadOnlyCollection<ExecutableTarget> InvokedTargets { get; }
         IReadOnlyCollection<ExecutableTarget> SkippedTargets { get; }
         IReadOnlyCollection<ExecutableTarget> ScheduledTargets { get; }
