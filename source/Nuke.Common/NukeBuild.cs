@@ -75,7 +75,8 @@ namespace Nuke.Common
         }
 
         internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }
-        internal IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; set; }
+
+        public IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; set; }
 
         /// <summary>
         /// Gets the list of targets that were invoked.
