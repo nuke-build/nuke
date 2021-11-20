@@ -7,7 +7,7 @@ using Nuke.Components;
 
 [SpaceAutomation(
     name: "continuous",
-    image: "mcr.microsoft.com/dotnet/sdk:5.0",
+    image: "mcr.microsoft.com/dotnet/sdk:6.0",
     OnPush = true,
     InvokedTargets = new[] { nameof(ITest.Test) })]
 partial class Build
