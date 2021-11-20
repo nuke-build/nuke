@@ -118,7 +118,7 @@ namespace Nuke.Common.Execution.Theming
             // TODO: settings for bold/non-bold ?
             return !text.IsNullOrWhiteSpace()
                 ? $"{code}{text}{AnsiStyleReset}"
-                : string.Empty;
+                : "​";
         }
     }
 }
