@@ -15,8 +15,20 @@ namespace Nuke.CodeGeneration.Generators
     {
         public static bool IsValueType(this Property property)
         {
-            return new[] { "int", "bool", "sbyte", "short", "long", "byte", "ushort", "uint", "ulong", "float", "double", "char", "decimal" }
-                .Contains(property.Type);
+            return property.Type.EqualsAnyOrdinalIgnoreCase(
+                "int",
+                "bool",
+                "sbyte",
+                "short",
+                "long",
+                "byte",
+                "ushort",
+                "uint",
+                "ulong",
+                "float",
+                "double",
+                "char",
+                "decimal");
         }
 
         public static string GetNullableType(this Property property)
@@ -82,7 +94,17 @@ namespace Nuke.CodeGeneration.Generators
 
         public static bool IsBoolean(this Property property)
         {
-            return property.Type.StartsWith("bool");
+            return property.Type.EqualsOrdinalIgnoreCase("bool");
+        }
+
+        public static bool IsString(this Property property)
+        {
+            return property.Type.EqualsOrdinalIgnoreCase("string");
+        }
+
+        public static bool HasCustomListType(this Property property)
+        {
+            return property.DataClass.Tool.DataClasses.Any(x => x.Name == property.GetListValueType());
         }
 
         public static string GetClassName(this Tool tool)

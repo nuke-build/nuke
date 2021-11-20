@@ -510,6 +510,17 @@ namespace Nuke.Common.Tools.Slack
             return toolSettings;
         }
         /// <summary>
+        ///   <p><em>Adds a value to <see cref="SlackMessage.Attachments"/></em></p>
+        ///   <p>Attachments let you add more context to a message, making them more useful and effective.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAttachment<T>(this T toolSettings, Configure<SlackMessageAttachment> configurator) where T : SlackMessage
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttachmentsInternal.Add(configurator.InvokeSafe(new SlackMessageAttachment()));
+            return toolSettings;
+        }
+        /// <summary>
         ///   <p><em>Adds values to <see cref="SlackMessage.Attachments"/></em></p>
         ///   <p>Attachments let you add more context to a message, making them more useful and effective.</p>
         /// </summary>
@@ -1018,6 +1029,17 @@ namespace Nuke.Common.Tools.Slack
             return toolSettings;
         }
         /// <summary>
+        ///   <p><em>Adds a value to <see cref="SlackMessageAttachment.Fields"/></em></p>
+        ///   <p>Fields get displayed in a table-like way.</p>
+        /// </summary>
+        [Pure]
+        public static T AddField<T>(this T toolSettings, Configure<SlackMessageField> configurator) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FieldsInternal.Add(configurator.InvokeSafe(new SlackMessageField()));
+            return toolSettings;
+        }
+        /// <summary>
         ///   <p><em>Adds values to <see cref="SlackMessageAttachment.Fields"/></em></p>
         ///   <p>Fields get displayed in a table-like way.</p>
         /// </summary>
@@ -1096,6 +1118,17 @@ namespace Nuke.Common.Tools.Slack
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.ActionsInternal.AddRange(actions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds a value to <see cref="SlackMessageAttachment.Actions"/></em></p>
+        ///   <p>A collection of Action objects to include in the attachment. Cannot exceed 5 elements.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAction<T>(this T toolSettings, Configure<SlackMessageAction> configurator) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ActionsInternal.Add(configurator.InvokeSafe(new SlackMessageAction()));
             return toolSettings;
         }
         /// <summary>

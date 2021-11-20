@@ -106,6 +106,12 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteMethod($"Add{property.Name}",
                     $"params {valueType}[] {propertyInstance}",
                     $"{propertyAccess}.AddRange({propertyInstance});")
+                .When(property.HasCustomListType(), _ => _
+                    .WriteSummaryExtension($"Adds a value to {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
+                    .WriteMethod($"Add{property.Name.ToSingular()}",
+                        $"Configure<{valueType}> configurator",
+                        $"{propertyAccess}.Add(configurator.InvokeSafe(new {valueType}()));"))
                 .WriteSummaryExtension($"Adds values to {property.GetCrefTag()}", property)
                 .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Add{property.Name}",

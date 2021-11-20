@@ -73,5 +73,13 @@ namespace Nuke.CodeGeneration.Writers
             writerWrapper.Writer.WriteBlock(() => action(writerWrapper));
             return writerWrapper;
         }
+
+        public static T When<T>(this T writerWrapper, bool condition, [InstantHandle] Action<T> action)
+            where T : IWriterWrapper
+        {
+            if (condition)
+                action(writerWrapper);
+            return writerWrapper;
+        }
     }
 }
