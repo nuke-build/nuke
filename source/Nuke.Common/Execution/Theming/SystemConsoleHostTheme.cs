@@ -123,7 +123,7 @@ namespace Nuke.Common.Execution.Theming
                     Console.BackgroundColor = previousBackground;
                 }))
             {
-                Console.WriteLine(text);
+                Console.WriteLine(!text.IsNullOrWhiteSpace() ? text : "​");
             }
         }
     }

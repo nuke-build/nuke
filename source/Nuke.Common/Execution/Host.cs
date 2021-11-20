@@ -56,11 +56,11 @@ namespace Nuke.Common
                         .Split(new[] { EnvironmentInfo.NewLine }, StringSplitOptions.None)
                         .Select(Theme.FormatInformation);
 
-                    Console.WriteLine();
-                    Console.WriteLine("╬" + new string(c: '═', text.Length + 5));
-                    formattedBlockText.ForEach(x => Console.WriteLine($"║ {x}"));
-                    Console.WriteLine("╬" + new string(c: '═', Math.Max(text.Length - 4, 2)));
-                    Console.WriteLine();
+                    Debug();
+                    Debug("╬" + new string(c: '═', text.Length + 5));
+                    formattedBlockText.ForEach(x => Debug($"║ {x}"));
+                    Debug("╬" + new string(c: '═', Math.Max(text.Length - 4, 2)));
+                    Debug();
                 });
         }
 
