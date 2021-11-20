@@ -107,10 +107,17 @@ namespace Nuke.CodeGeneration.Generators
             if (property.CustomImpl)
                 return;
 
+            var type = GetPublicPropertyType(property);
+            var implementation = GetPublicPropertyImplementation(property);
+            var hasInternalProperty = property.IsList() || property.IsDictionary() || property.IsLookupTable();
+
             writer
                 .WriteSummary(property)
-                .WritePublicProperty(property)
-                .WriteInternalPropertyWhenNeeded(property);
+                .WriteObsoleteAttributeWhenObsolete(property)
+                .WriteLineIfTrue(!hasInternalProperty, GetJsonSerializationAttribute(property))
+                .WriteLine($"public virtual {type} {property.Name} {implementation}")
+                .WriteLineIfTrue(hasInternalProperty, GetJsonSerializationAttribute(property))
+                .WriteLineIfTrue(hasInternalProperty, $"internal {property.Type} {property.Name}Internal {{ get; set; }}{GetPropertyInitialization(property)}");
         }
 
         private static string GetJsonSerializationAttribute(Property property)
@@ -119,25 +126,6 @@ namespace Nuke.CodeGeneration.Generators
                 return null;
 
             return $"[JsonProperty({property.Json.DoubleQuote()})]";
-        }
-
-        private static T WriteInternalPropertyWhenNeeded<T>(this T writer, Property property)
-            where T : DataClassWriter
-        {
-            if (!property.IsList() && !property.IsDictionary() && !property.IsLookupTable())
-                return writer;
-            return writer.WriteLine($"internal {property.Type} {property.Name}Internal {{ get; set; }}{GetPropertyInitialization(property)}");
-        }
-
-        private static T WritePublicProperty<T>(this T writer, Property property)
-            where T : DataClassWriter
-        {
-            var type = GetPublicPropertyType(property);
-            var implementation = GetPublicPropertyImplementation(property);
-            return writer
-                .WriteObsoleteAttributeWhenObsolete(property)
-                .WriteLine(GetJsonSerializationAttribute(property))
-                .WriteLine($"public virtual {type} {property.Name} {implementation}");
         }
 
         private static string GetPropertyInitialization(Property property)
