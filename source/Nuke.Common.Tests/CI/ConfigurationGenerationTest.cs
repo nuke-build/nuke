@@ -99,7 +99,7 @@ namespace Nuke.Common.Tests.CI
                     null,
                     new TestAppVeyorAttribute(
                         AppVeyorImage.UbuntuLatest,
-                        AppVeyorImage.VisualStudioLatest)
+                        AppVeyorImage.VisualStudio2022)
                     {
                         InvokedTargets = new[] { nameof(Test) },
                         BranchesOnly = new[] { "only_branch" },
