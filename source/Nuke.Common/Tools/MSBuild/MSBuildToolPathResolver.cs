@@ -37,12 +37,14 @@ namespace Nuke.Common.Tools.MSBuild
             }
 
             var instances = new List<Instance>();
+            var editions = new[] { "Enterprise", "Professional", "Community", "BuildTools", "Preview" };
 
             instances.AddRange(
-                from version in new[] { MSBuildVersion.VS2019, MSBuildVersion.VS2017 }
+                from version in new[] { MSBuildVersion.VS2022, MSBuildVersion.VS2019, MSBuildVersion.VS2017 }
                 from platform in s_platforms
-                from edition in new[] { "Enterprise", "Professional", "Community", "BuildTools", "Preview" }
-                select GetFromVs2017Instance(version, platform, edition));
+                from edition in editions
+                let folder = version == MSBuildVersion.VS2022 ? SpecialFolders.ProgramFiles : SpecialFolders.ProgramFilesX86
+                select GetFromVs2017Instance(version, platform, edition, folder));
 
             instances.AddRange(
                 from version in new[] { MSBuildVersion.VS2015, MSBuildVersion.VS2013 }
@@ -61,11 +63,15 @@ namespace Nuke.Common.Tools.MSBuild
             return filteredInstances.Select(x => x.ToolPath);
         }
 
-        private static Instance GetFromVs2017Instance(MSBuildVersion version, MSBuildPlatform platform, string edition)
+        private static Instance GetFromVs2017Instance(
+            MSBuildVersion version,
+            MSBuildPlatform platform,
+            string edition,
+            SpecialFolders specialFolder)
         {
             var versionDirectoryName = version.ToString().TrimStart("VS");
             var basePath = Path.Combine(
-                EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull("path1 != null"),
+                EnvironmentInfo.SpecialFolder(specialFolder).NotNull("path1 != null"),
                 $@"Microsoft Visual Studio\{versionDirectoryName}\{edition}\MSBuild\{GetVersionFolder(version)}\Bin");
 
             return new Instance(
