@@ -105,7 +105,7 @@ namespace Nuke.Common
         private static AbsolutePath GetBuildAssemblyDirectory()
         {
             var entryAssembly = Assembly.GetEntryAssembly();
-            if (entryAssembly == null || entryAssembly.GetTypes().All(x => !x.IsSubclassOf(typeof(NukeBuild))))
+            if (entryAssembly == null || entryAssembly.Location.IsNullOrEmpty() || entryAssembly.GetTypes().All(x => !x.IsSubclassOf(typeof(NukeBuild))))
                 return null;
 
             return (AbsolutePath) Path.GetDirectoryName(entryAssembly.Location).NotNull();
