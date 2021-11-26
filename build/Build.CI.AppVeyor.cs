@@ -31,7 +31,7 @@ using Nuke.Components;
     BranchesExcept = new[] { MasterBranch, $"/{ReleaseBranchPrefix}\\/*/" },
     SkipTags = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) })]
-[AppVeyorSecret(nameof(PublicNuGetApiKey), "eeJb0U4UaZ7VnH8mfrei0NMxm3MPahOI7gLfxzGgoKLRBXKlr+8/2ayCY+uwdg7T")]
+[AppVeyorSecret(nameof(PublicNuGetApiKey), "gXyMC1PrfsTGaK8vnlB6ch1DDpTEaOuK+Oy0Kz8xm1i4MjA7cb+6GkTaQEI6eCuy")]
 [AppVeyorSecret(ISignPackages.SignPath + nameof(ISignPackages.ApiToken), "uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey), "BY+J0NeFwJrIk/IcLlApwCrhwPFYbs17ryopOEU8S80=")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerSecret), "LzY8VaBdbjdHtbCIJusREn5foh6wOEKqwBqsmBgpyhulQs21PkgYs2tilSL+SowcJw3p4QH6QKLOEp3uGwTj8g==")]
