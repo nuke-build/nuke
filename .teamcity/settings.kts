@@ -61,6 +61,13 @@ project {
             checked = "True",
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
+        checkbox (
+            "env.Major",
+            label = "Major",
+            value = "False",
+            checked = "True",
+            unchecked = "False",
+            display = ParameterDisplay.NORMAL)
         text (
             "env.SignPathOrganizationId",
             label = "SignPathOrganizationId",

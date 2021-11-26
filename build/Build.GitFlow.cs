@@ -20,7 +20,9 @@ using static Nuke.Common.Tools.GitVersion.GitVersionTasks;
 partial class Build
 {
     [Parameter] readonly bool AutoStash = true;
-    string MajorMinorPatchVersion => GitVersion.MajorMinorPatch;
+    [Parameter] readonly bool Major;
+
+    string MajorMinorPatchVersion => Major ? $"{GitVersion.Major + 1}.0.0" : GitVersion.MajorMinorPatch;
 
     Target Milestone => _ => _
         .Unlisted()

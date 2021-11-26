@@ -67,6 +67,9 @@
           "type": "boolean",
           "description": "Ignore unreachable sources during Restore"
         },
+        "Major": {
+          "type": "boolean"
+        },
         "NoLogo": {
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
