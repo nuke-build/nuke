@@ -107,7 +107,7 @@
         "properties": [
           {
             "name": "AllowReferencesWithProperties",
-            "type": "bool?",
+            "type": "bool",
             "format": "/AllowReferencesWithProperties:{value}",
             "help": "Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false)."
           },
@@ -143,25 +143,25 @@
           },
           {
             "name": "FlattenInheritanceHierarchy",
-            "type": "bool?",
+            "type": "bool",
             "format": "/FlattenInheritanceHierarchy:{value}",
             "help": "Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false)."
           },
           {
             "name": "GenerateKnownTypes",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateKnownTypes:{value}",
             "help": "Generate schemas for types in KnownTypeAttribute attributes (default: true)."
           },
           {
             "name": "GenerateXmlObjects",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateXmlObjects:{value}",
             "help": "Generate xmlObject representation for definitions (default: false)."
           },
           {
             "name": "IgnoreObsoleteProperties",
-            "type": "bool?",
+            "type": "bool",
             "format": "/IgnoreObsoleteProperties:{value}",
             "help": "Ignore properties with the ObsoleteAttribute (default: false)."
           }
@@ -195,13 +195,13 @@
         "properties": [
           {
             "name": "AddMissingPathParameters",
-            "type": "bool?",
+            "type": "bool",
             "format": "/AddMissingPathParameters:{value}",
             "help": "Specifies whether to add path parameters which are missing in the action method (default: true)."
           },
           {
             "name": "AspNetCore",
-            "type": "bool?",
+            "type": "bool",
             "format": "/AspNetCore:{value}",
             "help": "Specifies whether the controllers are hosted by ASP.NET Core."
           },
@@ -231,7 +231,7 @@
           },
           {
             "name": "ResolveJsonOptions",
-            "type": "bool?",
+            "type": "bool",
             "format": "/ResolveJsonOptions:{value}",
             "help": "Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set)."
           }
@@ -283,7 +283,7 @@
           },
           {
             "name": "NoBuild",
-            "type": "bool?",
+            "type": "bool",
             "format": "/NoBuild:{value}",
             "help": "Don't build the project. Only use this when the build is up-to-date."
           },
@@ -301,7 +301,7 @@
           },
           {
             "name": "RequireParametersWithoutDefault",
-            "type": "bool?",
+            "type": "bool",
             "format": "/RequireParametersWithoutDefault:{value}",
             "help": "Parameters without default value are always required(i.e. api explorer info and only optional when default is set, legacy, default: false)."
           },
@@ -319,7 +319,7 @@
           },
           {
             "name": "Verbose",
-            "type": "bool?",
+            "type": "bool",
             "format": "/Verbose:{value}",
             "help": "Print verbose output."
           }
@@ -404,7 +404,7 @@
           },
           {
             "name": "GenerateOptionalPropertiesAsNullable",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateOptionalPropertiesAsNullable:{value}",
             "help": "Specifies whether optional schema properties (not required) are generated as nullable properties (default: false)."
           },
@@ -422,7 +422,7 @@
           },
           {
             "name": "RequiredPropertiesMustBeDefined",
-            "type": "bool?",
+            "type": "bool",
             "format": "/RequiredPropertiesMustBeDefined:{value}",
             "help": "Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required)."
           }
@@ -508,7 +508,7 @@
           },
           {
             "name": "DisposeHttpClient",
-            "type": "bool?",
+            "type": "bool",
             "format": "/DisposeHttpClient:{value}",
             "help": "Specifies whether to dispose the HttpClient (injected HttpClient is never disposed)."
           },
@@ -520,49 +520,49 @@
           },
           {
             "name": "ExposeJsonSerializerSettings",
-            "type": "bool?",
+            "type": "bool",
             "format": "/ExposeJsonSerializerSettings:{value}",
             "help": "Specifies whether to expose the JsonSerializerSettings property (default: false)."
           },
           {
             "name": "GenerateBaseUrlProperty",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateBaseUrlProperty:{value}",
             "help": "Specifies whether to generate the BaseUrl property, must be defined on the base class otherwise (default: true)."
           },
           {
             "name": "GenerateClientClasses",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateClientClasses:{value}",
             "help": "Specifies whether generate client classes."
           },
           {
             "name": "GenerateClientInterfaces",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateClientInterfaces:{value}",
             "help": "Specifies whether generate interfaces for the client classes."
           },
           {
             "name": "GenerateContractsOutput",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateContractsOutput:{value}",
             "help": "Specifies whether to generate contracts output (interface and models in a separate file set with the ContractsOutput parameter)."
           },
           {
             "name": "GenerateExceptionClasses",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateExceptionClasses:{value}",
             "help": "Specifies whether to generate exception classes (default: true)."
           },
           {
             "name": "GenerateSyncMethods",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateSyncMethods:{value}",
             "help": "Specifies whether to generate synchronous methods (not recommended, default: false)."
           },
           {
             "name": "GenerateUpdateJsonSerializerSettingsMethod",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateUpdateJsonSerializerSettingsMethod:{value}",
             "help": "Generate the UpdateJsonSerializerSettings method (must be implemented in the base class otherwise, default: true)."
           },
@@ -574,7 +574,7 @@
           },
           {
             "name": "InjectHttpClient",
-            "type": "bool?",
+            "type": "bool",
             "format": "/InjectHttpClient:{value}",
             "help": "Specifies whether an HttpClient instance is injected (default: true)."
           },
@@ -604,7 +604,7 @@
           },
           {
             "name": "SerializeTypeInformation",
-            "type": "bool?",
+            "type": "bool",
             "format": "/SerializeTypeInformation:{value}",
             "help": "Serialize the type information in a $type property (not recommended, also sets TypeNameHandling = Auto, default: true)."
           },
@@ -616,25 +616,25 @@
           },
           {
             "name": "UseBaseUrl",
-            "type": "bool?",
+            "type": "bool",
             "format": "/UseBaseUrl:{value}",
             "help": "Specifies whether to use and expose the base URL (default: true)."
           },
           {
             "name": "UseHttpClientCreationMethod",
-            "type": "bool?",
+            "type": "bool",
             "format": "/UseHttpClientCreationMethod:{value}",
             "help": "Specifies whether to call CreateHttpClientAsync on the base class to create a new HttpClient."
           },
           {
             "name": "UseHttpRequestMessageCreationMethod",
-            "type": "bool?",
+            "type": "bool",
             "format": "/UseHttpRequestMessageCreationMethod:{value}",
             "help": "Specifies whether to call CreateHttpRequestMessageAsync on the base class to create a new HttpRequestMethod."
           },
           {
             "name": "WrapDtoExceptions",
-            "type": "bool?",
+            "type": "bool",
             "format": "/WrapDtoExceptions:{value}",
             "help": "Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: true)."
           }
@@ -694,7 +694,7 @@
           },
           {
             "name": "GenerateModelValidationAttributes",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateModelValidationAttributes:{value}",
             "help": "Add model validation attributes (default: false)."
           },
@@ -706,13 +706,13 @@
           },
           {
             "name": "UseActionResultType",
-            "type": "bool?",
+            "type": "bool",
             "format": "/UseActionResultType:{value}",
             "help": "Use ASP.Net Core (2.1) ActionResult type as return type (default: false)"
           },
           {
             "name": "UseCancellationToken",
-            "type": "bool?",
+            "type": "bool",
             "format": "/UseCancellationToken:{value}",
             "help": "Add a cancellation token parameter (default: false)."
           }
@@ -776,7 +776,7 @@
           },
           {
             "name": "ConvertConstructorInterfaceData",
-            "type": "bool?",
+            "type": "bool",
             "format": "/ConvertConstructorInterfaceData:{value}",
             "help": "Convert POJO objects in the constructor data to DTO instances (GenerateConstructorInterface must be enabled, default: false)."
           },
@@ -806,7 +806,7 @@
           },
           {
             "name": "ExportTypes",
-            "type": "bool?",
+            "type": "bool",
             "format": "/ExportTypes:{value}",
             "help": "Specifies whether the export keyword should be added to all classes, interfaces and enums (default: true)."
           },
@@ -824,55 +824,55 @@
           },
           {
             "name": "GenerateClientClasses",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateClientClasses:{value}",
             "help": "Specifies whether generate client classes."
           },
           {
             "name": "GenerateClientInterfaces",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateClientInterfaces:{value}",
             "help": "Specifies whether generate interfaces for the client classes (default: false)."
           },
           {
             "name": "GenerateCloneMethod",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateCloneMethod:{value}",
             "help": "Specifies whether a clone() method should be generated in the DTO classes (default: false)."
           },
           {
             "name": "GenerateConstructorInterface",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateConstructorInterface:{value}",
             "help": "Generate an class interface which is used in the constructor to initialize the class (only available when TypeStyle is Class, default: true)."
           },
           {
             "name": "GenerateDefaultValues",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateDefaultValues:{value}",
             "help": "Specifies whether to generate default values for properties (default: true)."
           },
           {
             "name": "GenerateDtoTypes",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateDtoTypes:{value}",
             "help": "Specifies whether to generate DTO classes."
           },
           {
             "name": "GenerateOptionalParameters",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateOptionalParameters:{value}",
             "help": "Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false)."
           },
           {
             "name": "GenerateResponseClasses",
-            "type": "bool?",
+            "type": "bool",
             "format": "/GenerateResponseClasses:{value}",
             "help": "Specifies whether to generate response classes (default: true)."
           },
           {
             "name": "HandleReferences",
-            "type": "bool?",
+            "type": "bool",
             "format": "/HandleReferences:{value}",
             "help": "Handle JSON references (default: false)."
           },
@@ -884,7 +884,7 @@
           },
           {
             "name": "ImportRequiredTypes",
-            "type": "bool?",
+            "type": "bool",
             "format": "/ImportRequiredTypes:{value}",
             "help": "Specifies whether required types should be imported (default: true)."
           },
@@ -896,19 +896,19 @@
           },
           {
             "name": "InlineNamedAny",
-            "type": "bool?",
+            "type": "bool",
             "format": "/InlineNamedAny:{value}",
             "help": "Inline named any types (default: false)."
           },
           {
             "name": "InlineNamedDictionaries",
-            "type": "bool?",
+            "type": "bool",
             "format": "/InlineNamedDictionaries:{value}",
             "help": "Inline named dictionaries (default: false)."
           },
           {
             "name": "MarkOptionalProperties",
-            "type": "bool?",
+            "type": "bool",
             "format": "/MarkOptionalProperties:{value}",
             "help": "Specifies whether to mark optional properties with ? (default: false)."
           },
@@ -986,31 +986,31 @@
           },
           {
             "name": "UseGetBaseUrlMethod",
-            "type": "bool?",
+            "type": "bool",
             "format": "/UseGetBaseUrlMethod:{value}",
             "help": "Specifies whether to use the 'getBaseUrl(defaultUrl: string)' method from the base class (default: false)."
           },
           {
             "name": "UseSingletonProvider",
-            "type": "bool?",
+            "type": "bool",
             "format": "/UseSingletonProvider:{value}",
             "help": "Specifies whether to use the Angular 6 Singleton Provider (Angular template only, default: false)."
           },
           {
             "name": "UseTransformOptionsMethod",
-            "type": "bool?",
+            "type": "bool",
             "format": "/UseTransformOptionsMethod:{value}",
             "help": "Call 'transformOptions' on the base class or extension class (default: false)."
           },
           {
             "name": "UseTransformResultMethod",
-            "type": "bool?",
+            "type": "bool",
             "format": "/UseTransformResultMethod:{value}",
             "help": "Call 'transformResult' on the base class or extension class (default: false)."
           },
           {
             "name": "WrapDtoExceptions",
-            "type": "bool?",
+            "type": "bool",
             "format": "/WrapDtoExceptions:{value}",
             "help": "Specifies whether DTO exceptions are wrapped in a SwaggerException instance (default: false)."
           },
@@ -1022,7 +1022,7 @@
           },
           {
             "name": "WrapResponses",
-            "type": "bool?",
+            "type": "bool",
             "format": "/WrapResponses:{value}",
             "help": "Specifies whether to wrap success responses to allow full response access (experimental)."
           }
@@ -1081,7 +1081,7 @@
       },
       {
         "name": "UseNuGetCache",
-        "type": "bool?",
+        "type": "bool",
         "format": "/UseNuGetCache:{value}",
         "help": "Determines if local Nuget's cache folder should be put in the ReferencePaths by default"
       }
@@ -1111,13 +1111,13 @@
     "openApiGeneratorCommand": [
       {
         "name": "AllowNullableBodyParameters",
-        "type": "bool?",
+        "type": "bool",
         "format": "/AllowNullableBodyParameters:{value}",
         "help": "Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true)."
       },
       {
         "name": "AllowReferencesWithProperties",
-        "type": "bool?",
+        "type": "bool",
         "format": "/AllowReferencesWithProperties:{value}",
         "help": "Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false)."
       },
@@ -1195,43 +1195,43 @@
       },
       {
         "name": "FlattenInheritanceHierarchy",
-        "type": "bool?",
+        "type": "bool",
         "format": "/FlattenInheritanceHierarchy:{value}",
         "help": "Flatten the inheritance hierarchy instead of using allOf to describe inheritance (default: false)."
       },
       {
         "name": "GenerateAbstractProperties",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateAbstractProperties:{value}",
         "help": "Generate abstract properties (i.e. interface and abstract properties. Properties may defined multiple times in a inheritance hierarchy, default: false)."
       },
       {
         "name": "GenerateAbstractSchemas",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateAbstractSchemas:{value}",
         "help": "Generate the x-abstract flag on schemas (default: true)."
       },
       {
         "name": "GenerateEnumMappingDescription",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateEnumMappingDescription:{value}",
         "help": "Generate a description with number to enum name mappings (for integer enums only, default: false)."
       },
       {
         "name": "GenerateKnownTypes",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateKnownTypes:{value}",
         "help": "Generate schemas for types in KnownTypeAttribute attributes (default: true)."
       },
       {
         "name": "GenerateXmlObjects",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateXmlObjects:{value}",
         "help": "Generate xmlObject representation for definitions (default: false)."
       },
       {
         "name": "IgnoreObsoleteProperties",
-        "type": "bool?",
+        "type": "bool",
         "format": "/IgnoreObsoleteProperties:{value}",
         "help": "Ignore properties with the ObsoleteAttribute (default: false)."
       },
@@ -1303,7 +1303,7 @@
       },
       {
         "name": "UseDocumentProvider",
-        "type": "bool?",
+        "type": "bool",
         "format": "/UseDocumentProvider:{value}",
         "help": "Generate document using SwaggerDocumentProvider (configuration from AddOpenApiDocument()/AddSwaggerDocument(), most CLI settings will be ignored)."
       }
@@ -1415,7 +1415,7 @@
       },
       {
         "name": "EnforceFlagEnums",
-        "type": "bool?",
+        "type": "bool",
         "format": "/EnforceFlagEnums:{value}",
         "help": "Specifies whether enums should be always generated as bit flags (default: false)."
       },
@@ -1433,85 +1433,85 @@
       },
       {
         "name": "GenerateDataAnnotations",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateDataAnnotations:{value}",
         "help": "Specifies whether to generate data annotation attributes on DTO classes (default: true)."
       },
       {
         "name": "GenerateDefaultValues",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateDefaultValues:{value}",
         "help": "Specifies whether to generate default values for properties (may generate CSharp 6 code, default: true)."
       },
       {
         "name": "GenerateDtoTypes",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateDtoTypes:{value}",
         "help": "Specifies whether to generate DTO classes."
       },
       {
         "name": "GenerateImmutableArrayProperties",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateImmutableArrayProperties:{value}",
         "help": "Specifies whether to remove the setter for non-nullable array properties (default: false)."
       },
       {
         "name": "GenerateImmutableDictionaryProperties",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateImmutableDictionaryProperties:{value}",
         "help": "Specifies whether to remove the setter for non-nullable dictionary properties (default: false)."
       },
       {
         "name": "GenerateJsonMethods",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateJsonMethods:{value}",
         "help": "Specifies whether to render ToJson() and FromJson() methods for DTOs (default: true)."
       },
       {
         "name": "GenerateOptionalParameters",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateOptionalParameters:{value}",
         "help": "Specifies whether to reorder parameters (required first, optional at the end) and generate optional parameters (default: false)."
       },
       {
         "name": "GenerateOptionalPropertiesAsNullable",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateOptionalPropertiesAsNullable:{value}",
         "help": "Specifies whether optional schema properties (not required) are generated as nullable properties (default: false)."
       },
       {
         "name": "GenerateResponseClasses",
-        "type": "bool?",
+        "type": "bool",
         "format": "/GenerateResponseClasses:{value}",
         "help": "Specifies whether to generate response classes (default: true)."
       },
       {
         "name": "HandleReferences",
-        "type": "bool?",
+        "type": "bool",
         "format": "/HandleReferences:{value}",
         "help": "Use preserve references handling (All) in the JSON serializer (default: false)."
       },
       {
         "name": "InlineNamedAny",
-        "type": "bool?",
+        "type": "bool",
         "format": "/InlineNamedAny:{value}",
         "help": "Inline named any types (default: false)."
       },
       {
         "name": "InlineNamedArrays",
-        "type": "bool?",
+        "type": "bool",
         "format": "/InlineNamedArrays:{value}",
         "help": "Inline named arrays (default: false)."
       },
       {
         "name": "InlineNamedDictionaries",
-        "type": "bool?",
+        "type": "bool",
         "format": "/InlineNamedDictionaries:{value}",
         "help": "Inline named dictionaries (default: false)."
       },
       {
         "name": "InlineNamedTuples",
-        "type": "bool?",
+        "type": "bool",
         "format": "/InlineNamedTuples:{value}",
         "help": "Inline named tuples (default: true)."
       },
@@ -1553,7 +1553,7 @@
       },
       {
         "name": "RequiredPropertiesMustBeDefined",
-        "type": "bool?",
+        "type": "bool",
         "format": "/RequiredPropertiesMustBeDefined:{value}",
         "help": "Specifies whether a required property must be defined in JSON (sets Required.Always when the property is required)."
       },
@@ -1595,7 +1595,7 @@
       },
       {
         "name": "WrapResponses",
-        "type": "bool?",
+        "type": "bool",
         "format": "/WrapResponses:{value}",
         "help": "Specifies whether to wrap success responses to allow full response access."
       }
