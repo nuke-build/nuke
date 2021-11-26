@@ -25,7 +25,7 @@ using Nuke.Components;
         })]
 [AppVeyor(
     suffix: "continuous",
-    AppVeyorImage.VisualStudio2019,
+    AppVeyorImage.VisualStudioLatest,
     AppVeyorImage.UbuntuLatest,
     AppVeyorImage.MacOsLatest,
     BranchesExcept = new[] { MasterBranch, $"/{ReleaseBranchPrefix}\\/*/" },
