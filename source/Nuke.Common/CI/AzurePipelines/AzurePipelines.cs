@@ -91,6 +91,7 @@ namespace Nuke.Common.CI.AzurePipelines
         public string JobDisplayName => EnvironmentInfo.GetVariable<string>("SYSTEM_JOBDISPLAYNAME");
         public Guid JobId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_JOBID");
         public Guid TaskInstanceId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_TASKINSTANCEID");
+        public string PhaseName => EnvironmentInfo.GetVariable<string>("SYSTEM_PHASENAME");
 
         public void Group(string group)
         {
