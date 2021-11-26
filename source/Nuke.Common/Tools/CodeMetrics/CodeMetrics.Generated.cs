@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/CodeMetrics.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/CodeMetrics/CodeMetrics.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

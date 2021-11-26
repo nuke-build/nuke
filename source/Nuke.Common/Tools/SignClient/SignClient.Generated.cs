@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/SignClient.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/SignClient/SignClient.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

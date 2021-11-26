@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Coverlet.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Coverlet/Coverlet.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

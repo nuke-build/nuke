@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/MSpec.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/MSpec/MSpec.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

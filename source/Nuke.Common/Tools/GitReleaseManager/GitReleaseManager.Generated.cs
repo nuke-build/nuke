@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/GitReleaseManager.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/GitReleaseManager/GitReleaseManager.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

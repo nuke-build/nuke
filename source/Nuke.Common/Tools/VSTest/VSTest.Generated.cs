@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/VSTest.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/VSTest/VSTest.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

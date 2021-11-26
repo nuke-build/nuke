@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Pulumi.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Pulumi/Pulumi.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

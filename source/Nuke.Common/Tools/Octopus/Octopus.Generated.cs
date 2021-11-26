@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Octopus.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Octopus/Octopus.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

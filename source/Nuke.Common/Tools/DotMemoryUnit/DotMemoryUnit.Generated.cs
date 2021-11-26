@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/DotMemoryUnit.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/DotMemoryUnit/DotMemoryUnit.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

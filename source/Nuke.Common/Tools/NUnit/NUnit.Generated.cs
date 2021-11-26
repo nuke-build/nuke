@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/NUnit.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/NUnit/NUnit.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;

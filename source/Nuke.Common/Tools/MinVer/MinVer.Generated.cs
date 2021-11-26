@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/MinVer.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/MinVer/MinVer.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -132,7 +132,7 @@ namespace Nuke.Common.Tools.MinVer
               .Add("--default-pre-release-phase {value}", DefaultPreReleasePhase)
               .Add("--minimum-major-minor {value}", MinimumMajorMinor)
               .Add("--tag-prefix {value}", TagPrefix)
-              .Add("--verbosity", Verbosity);
+              .Add("--verbosity {value}", Verbosity);
             return base.ConfigureProcessArguments(arguments);
         }
     }
