@@ -20,7 +20,7 @@ using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 namespace Nuke.Components
 {
     [PublicAPI]
-    public interface IReportCoverage : ITest, IHazReports, IHazGitRepository, IHazGitVersion
+    public interface IReportCoverage : ITest, IHazReports, IHazGitRepository
     {
         bool CreateCoverageHtmlReport { get; }
         bool ReportToCodecov { get; }
@@ -64,7 +64,8 @@ namespace Nuke.Components
             .SetToken(CodecovToken)
             .SetBranch(GitRepository.Branch)
             .SetSha(GitRepository.Commit)
-            .SetBuild(Versioning.FullSemVer)
+            .WhenNotNull(this as IHazGitVersion, (_, o) => _
+                .SetBuild(o.Versioning.FullSemVer))
             .SetFramework("netcoreapp3.0");
 
         Configure<CodecovSettings> CodecovSettings => _ => _;
