@@ -10,10 +10,6 @@ using Nuke.Common.CI.TeamCity.Configuration;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Components;
-#if NUKE_ENTERPRISE
-using Nuke.Enterprise.Notifications;
-using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
-#endif
 
 [TeamCity(
     VcsTriggeredTargets =
@@ -33,14 +29,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
             nameof(InstallFonts),
             nameof(ReleaseImage)
         },
-    ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) },
-    ImportSecrets = new[]
-                    {
-                        nameof(EnterpriseAccessToken),
-#if NUKE_ENTERPRISE
-                        $"{Slack}{nameof(IHazSlackCredentials.UserAccessToken)}",
-#endif
-                    })]
+    ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) })]
 partial class Build
 {
     public class TeamCityAttribute : Nuke.Common.CI.TeamCity.TeamCityAttribute

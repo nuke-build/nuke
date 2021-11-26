@@ -4,9 +4,6 @@
 
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Components;
-#if NUKE_ENTERPRISE
-using Nuke.Enterprise.Notifications;
-#endif
 
 [AppVeyor(
     suffix: null,
@@ -17,7 +14,6 @@ using Nuke.Enterprise.Notifications;
     Secrets =
         new[]
         {
-            nameof(EnterpriseAccessToken),
             nameof(PublicNuGetApiKey),
             $"{ISignPackages.SignPath}{nameof(ISignPackages.ApiToken)}",
             $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.ConsumerKey)}",
@@ -25,10 +21,7 @@ using Nuke.Enterprise.Notifications;
             $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.AccessToken)}",
             $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.AccessTokenSecret)}",
             nameof(GitterAuthToken),
-            nameof(SlackWebhook),
-#if NUKE_ENTERPRISE
-            $"{IHazSlackCredentials.Slack}{nameof(IHazSlackCredentials.UserAccessToken)}"
-#endif
+            nameof(SlackWebhook)
         })]
 [AppVeyor(
     suffix: "continuous",
@@ -37,16 +30,7 @@ using Nuke.Enterprise.Notifications;
     AppVeyorImage.MacOsLatest,
     BranchesExcept = new[] { MasterBranch, $"/{ReleaseBranchPrefix}\\/*/" },
     SkipTags = true,
-    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
-    Secrets =
-        new[]
-        {
-            nameof(EnterpriseAccessToken),
-#if NUKE_ENTERPRISE
-            $"{IHazSlackCredentials.Slack}{nameof(IHazSlackCredentials.UserAccessToken)}"
-#endif
-        })]
-[AppVeyorSecret(nameof(EnterpriseAccessToken), "JdpPkaveddV2ldvhKsSt4CUrqA8miFIb72dj+PCLdKsk15fBEQ7E5YU1E0FIISR8")]
+    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) })]
 [AppVeyorSecret(nameof(PublicNuGetApiKey), "eeJb0U4UaZ7VnH8mfrei0NMxm3MPahOI7gLfxzGgoKLRBXKlr+8/2ayCY+uwdg7T")]
 [AppVeyorSecret(ISignPackages.SignPath + nameof(ISignPackages.ApiToken), "uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey), "BY+J0NeFwJrIk/IcLlApwCrhwPFYbs17ryopOEU8S80=")]
@@ -55,9 +39,6 @@ using Nuke.Enterprise.Notifications;
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessTokenSecret), "OGFEkW5fHl0YJzKnTTWJ3oHhQfjMs9RWGJMjeQ2HMIG+yUwy0NQGVUY4qOCRgrXW")]
 [AppVeyorSecret(nameof(GitterAuthToken), "Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw")]
 [AppVeyorSecret(nameof(SlackWebhook), "xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hkn8u/b12lFivnxtTPuMWjAYkoPLlkJ4v39FLYPcxGYbAxRRMcJiHjrNyPtFfK6ddo=")]
-#if NUKE_ENTERPRISE
-[AppVeyorSecret(IHazSlackCredentials.Slack + nameof(IHazSlackCredentials.UserAccessToken), "cMArtN7cGnW6zI9ryMiQZSfcv2y+6Ads8KPvZIN18IQnpTBY6zzBEyCL+1i8v4OF08HW7oY3BDIXWEMT6PdeSQ==")]
-#endif
 partial class Build
 {
 }

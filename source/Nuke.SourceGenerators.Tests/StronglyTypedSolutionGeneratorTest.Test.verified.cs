@@ -13,10 +13,8 @@ internal class Solution : Nuke.Common.ProjectModel.Solution
     public Project Nuke_GlobalTool_Tests => SolutionFolder.GetProject("Nuke.GlobalTool.Tests");
     public Project Nuke_MSBuildTasks => SolutionFolder.GetProject("Nuke.MSBuildTasks");
     public Project Nuke_Components => SolutionFolder.GetProject("Nuke.Components");
-    public Project Nuke_Enterprise => SolutionFolder.GetProject("Nuke.Enterprise");
     public Project Nuke_SourceGenerators => SolutionFolder.GetProject("Nuke.SourceGenerators");
     public Project Nuke_SourceGenerators_Tests => SolutionFolder.GetProject("Nuke.SourceGenerators.Tests");
-    public Project Nuke_Enterprise_Tests => SolutionFolder.GetProject("Nuke.Enterprise.Tests");
     public _misc misc => new(SolutionFolder.GetSolutionFolder("misc"));
     internal class _misc
     {

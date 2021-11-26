@@ -47,11 +47,6 @@ project {
             value = "Release",
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
-        password (
-            "env.EnterpriseAccessToken",
-            label = "EnterpriseAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
         text (
             "env.GitterRoomId",
             label = "GitterRoomId",
@@ -83,11 +78,6 @@ project {
             label = "SignPathProjectSlug",
             value = "nuke",
             allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.SlackUserAccessToken",
-            label = "SlackUserAccessToken",
-            value = "",
             display = ParameterDisplay.NORMAL)
         checkbox (
             "env.UseHttps",

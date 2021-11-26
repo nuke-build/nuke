@@ -41,8 +41,6 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-          EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
-          SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
           GITHUB_CONTEXT: ${{ toJSON(github) }}
   ubuntu-latest:
     name: ubuntu-latest
@@ -59,8 +57,6 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-          EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
-          SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
           GITHUB_CONTEXT: ${{ toJSON(github) }}
   macOS-latest:
     name: macOS-latest
@@ -77,6 +73,4 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-          EnterpriseAccessToken: ${{ secrets.ENTERPRISE_ACCESS_TOKEN }}
-          SlackUserAccessToken: ${{ secrets.SLACK_USER_ACCESS_TOKEN }}
           GITHUB_CONTEXT: ${{ toJSON(github) }}

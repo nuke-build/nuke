@@ -7,4 +7,3 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Nuke.Common.Tests")]
 [assembly: InternalsVisibleTo("Nuke.GlobalTool")]
 [assembly: InternalsVisibleTo("Nuke.GlobalTool.Tests")]
-[assembly: InternalsVisibleTo("Nuke.Enterprise")]

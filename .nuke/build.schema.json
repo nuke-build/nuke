@@ -24,10 +24,6 @@
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
         },
-        "EnterpriseAccessToken": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
         "GitHubRegistryApiKey": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
@@ -143,10 +139,6 @@
               "UpdateContributors"
             ]
           }
-        },
-        "SlackUserAccessToken": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
         },
         "SlackWebhook": {
           "type": "string",
