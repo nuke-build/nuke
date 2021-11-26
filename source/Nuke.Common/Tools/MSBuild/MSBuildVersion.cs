@@ -15,6 +15,7 @@ namespace Nuke.Common.Tools.MSBuild
     [PublicAPI]
     public enum MSBuildVersion
     {
+        VS2022,
         VS2019,
         VS2017,
         VS2015,
