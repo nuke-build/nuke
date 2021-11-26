@@ -4,10 +4,6 @@
 
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Components;
-#if NUKE_ENTERPRISE
-using Nuke.Enterprise.Notifications;
-using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
-#endif
 
 [GitHubActions(
     "continuous",
@@ -19,14 +15,7 @@ using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
     PublishArtifacts = false,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" },
-    EnableGitHubContext = true,
-    ImportSecrets = new[]
-                    {
-                        nameof(EnterpriseAccessToken),
-#if NUKE_ENTERPRISE
-                        $"{Slack}{nameof(IHazSlackCredentials.UserAccessToken)}",
-#endif
-                    })]
+    EnableGitHubContext = true)]
 partial class Build
 {
 }

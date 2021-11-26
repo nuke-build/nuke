@@ -45,10 +45,6 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
-            env:
-              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -72,10 +68,6 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Pack --skip'
-            env:
-              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
@@ -107,10 +99,6 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
-            env:
-              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -134,10 +122,6 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Pack --skip'
-            env:
-              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
@@ -169,10 +153,6 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
-            env:
-              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -196,10 +176,6 @@ stages:
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Pack --skip'
-            env:
-              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
