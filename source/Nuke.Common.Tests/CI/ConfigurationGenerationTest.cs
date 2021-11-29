@@ -164,6 +164,7 @@ namespace Nuke.Common.Tests.CI
                         OnPushPathIncludes = new[] { "include-path" },
                         OnPushPathExcludes = new[] { "exclude-path" },
                         OnCronSchedule = "* 0 * * *",
+                        ImportSecrets = new[] { "GitHubToken" },
                         TimeoutInMinutes = 15
                     }
                 );
