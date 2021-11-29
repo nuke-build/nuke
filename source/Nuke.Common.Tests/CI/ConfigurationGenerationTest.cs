@@ -12,6 +12,7 @@ using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
@@ -48,6 +49,7 @@ namespace Nuke.Common.Tests.CI
         }
 
         [AppVeyorSecret("GitHubToken", "encrypted-yaml")]
+        [TeamCityToken("GitHubToken", "74928d76-46e8-45cc-ad22-6438915ac070")]
         public class TestBuild : NukeBuild
         {
             public static IEnumerable<(string TestName, IConfigurationGenerator Generator)> GetAttributes()
@@ -64,7 +66,8 @@ namespace Nuke.Common.Tests.CI
                         ManuallyTriggeredTargets = new[] { nameof(Publish) },
                         NightlyTriggeredTargets = new[] { nameof(Publish) },
                         NightlyTriggerBranchFilters = new[] { "nightly_branch_filter" },
-                        VcsTriggerBranchFilters = new[] { "vcs_branch_filter" }
+                        VcsTriggerBranchFilters = new[] { "vcs_branch_filter" },
+                        ImportSecrets = new[] { "GitHubToken", "ManualToken" }
                     }
                 );
 
