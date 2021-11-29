@@ -30,7 +30,8 @@ using Nuke.Components;
     AppVeyorImage.MacOsLatest,
     BranchesExcept = new[] { MasterBranch, $"/{ReleaseBranchPrefix}\\/*/" },
     SkipTags = true,
-    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) })]
+    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
+    Secrets = new string[0])]
 [AppVeyorSecret(nameof(PublicNuGetApiKey), "gXyMC1PrfsTGaK8vnlB6ch1DDpTEaOuK+Oy0Kz8xm1i4MjA7cb+6GkTaQEI6eCuy")]
 [AppVeyorSecret(ISignPackages.SignPath + nameof(ISignPackages.ApiToken), "uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey), "BY+J0NeFwJrIk/IcLlApwCrhwPFYbs17ryopOEU8S80=")]
