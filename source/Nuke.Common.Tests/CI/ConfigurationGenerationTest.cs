@@ -47,6 +47,7 @@ namespace Nuke.Common.Tests.CI
             return TestBuild.GetAttributes().Select(x => new object[] { x.TestName, x.Generator });
         }
 
+        [AppVeyorSecret("GitHubToken", "encrypted-yaml")]
         public class TestBuild : NukeBuild
         {
             public static IEnumerable<(string TestName, IConfigurationGenerator Generator)> GetAttributes()
@@ -105,7 +106,8 @@ namespace Nuke.Common.Tests.CI
                         BranchesOnly = new[] { "only_branch" },
                         BranchesExcept = new[] { "except_branch" },
                         SkipTags = true,
-                        SkipBranchesWithPullRequest = true
+                        SkipBranchesWithPullRequest = true,
+                        Secrets = new[] { "GitHubToken" }
                     }
                 );
 
