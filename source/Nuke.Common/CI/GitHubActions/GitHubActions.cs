@@ -48,11 +48,12 @@ namespace Nuke.Common.CI.GitHubActions
             });
             _httpClient = Lazy.Create(() =>
             {
+                var base64Auth = Convert.ToBase64String(Encoding.ASCII.GetBytes($":{Token.NotNull()}"));
+
                 var client = new HttpClient();
                 client.BaseAddress = new Uri("https://api.github.com");
                 client.DefaultRequestHeaders.UserAgent.ParseAdd("nuke-build");
-                client.DefaultRequestHeaders.Authorization =
-                    new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.ASCII.GetBytes($":{Token}")));
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", base64Auth);
                 return client;
             });
             _jobId = Lazy.Create(GetJobId);
