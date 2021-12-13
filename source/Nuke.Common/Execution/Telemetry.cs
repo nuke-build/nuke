@@ -56,6 +56,7 @@ namespace Nuke.Common.Execution
             string GetCookieFile(string name, int version)
                 => Constants.GlobalNukeDirectory / "telemetry-awareness" / $"v{version}" / name;
 
+            // Check for calls from Nuke.GlobalTool and custom global tools
             if (SuppressErrors(() => NukeBuild.BuildProjectFile, logWarning: false) == null)
             {
                 var cookieName = Assembly.GetEntryAssembly().NotNull().GetName().Name;
