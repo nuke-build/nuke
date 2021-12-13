@@ -110,14 +110,10 @@ namespace Nuke.Common.Execution
         public static IReadOnlyDictionary<string, string[]> GetCompletionItems(string buildSchemaFile, IEnumerable<string> profileNames)
         {
             var schema = JObject.Parse(File.ReadAllText(buildSchemaFile));
-
-            var completionItems = new Dictionary<string, string[]>();
-            completionItems.AddDictionary(GetCompletionItemsForBuildSchema(schema));
-            completionItems[LoadedLocalProfilesParameterName] = profileNames.ToArray();
-            return completionItems;
+            return GetCompletionItems(schema, profileNames);
         }
 
-        public static IReadOnlyDictionary<string, string[]> GetCompletionItemsForBuildSchema(JObject schema)
+        public static IReadOnlyDictionary<string, string[]> GetCompletionItems(JObject schema, IEnumerable<string> profileNames)
         {
             string[] GetEnumValues(JObject property)
                 => property["enum"] is { } enumProperty
@@ -127,7 +123,8 @@ namespace Nuke.Common.Execution
                         : null;
 
             var properties = schema["definitions"].NotNull()["build"].NotNull()["properties"].NotNull().Value<JObject>().Properties();
-            return properties.ToDictionary(x => x.Name, x => GetEnumValues((JObject) x.Value));
+            return properties.ToDictionary(x => x.Name, x => GetEnumValues((JObject)x.Value))
+                .SetKeyValue(LoadedLocalProfilesParameterName, profileNames.ToArray()).AsReadOnly();
         }
     }
 }

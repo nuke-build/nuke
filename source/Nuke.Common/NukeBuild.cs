@@ -45,11 +45,11 @@ namespace Nuke.Common
     /// </example>
     [PublicAPI]
     // Before logo
+    [HandleShellCompletion(Priority = 200)]
     [ArgumentsFromParametersFile(Priority = 150)]
     [InjectParameterValues(Priority = 100)]
     [GenerateBuildServerConfigurations(Priority = 50)]
     [InvokeBuildServerConfigurationGeneration(Priority = 45)]
-    [HandleShellCompletion(Priority = 40)]
     [UnsetVisualStudioEnvironmentVariables]
     // [SaveBuildProfile(Priority = 30)]
     // [LoadBuildProfiles(Priority = 25)]
