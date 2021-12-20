@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,6 +17,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
         public string Name { get; set; }
         public GitHubActionsImage Image { get; set; }
         public GitHubActionsStep[] Steps { get; set; }
+        public string ContainerImage { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
@@ -26,6 +27,16 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
             {
                 writer.WriteLine($"name: {Name}");
                 writer.WriteLine($"runs-on: {Image.GetValue()}");
+
+                if (!string.IsNullOrWhiteSpace(ContainerImage))
+                {
+                    writer.WriteLine("container:");
+                    using (writer.Indent())
+                    {
+                        writer.WriteLine($"image: {ContainerImage}");
+                    }
+                }
+
                 writer.WriteLine("steps:");
                 using (writer.Indent())
                 {

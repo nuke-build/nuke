@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -69,6 +69,8 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
+        public string ContainerImage { get; set; }
+
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
             return new CustomFileWriter(streamWriter, indentationFactor: 2, commentPrefix: "#");
@@ -100,7 +102,8 @@ namespace Nuke.Common.CI.GitHubActions
                    {
                        Name = image.GetValue().Replace(".", "_"),
                        Steps = GetSteps(image, relevantTargets).ToArray(),
-                       Image = image
+                       Image = image,
+                       ContainerImage = ContainerImage,
                    };
         }
 
