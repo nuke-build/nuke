@@ -69,7 +69,7 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
-        public string ContainerImage { get; set; }
+        public GithubActionsContainer Container { get; set; }
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -103,7 +103,7 @@ namespace Nuke.Common.CI.GitHubActions
                        Name = image.GetValue().Replace(".", "_"),
                        Steps = GetSteps(image, relevantTargets).ToArray(),
                        Image = image,
-                       ContainerImage = ContainerImage,
+                       Container = Container,
                    };
         }
 

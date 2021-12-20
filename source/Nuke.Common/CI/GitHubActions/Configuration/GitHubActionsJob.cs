@@ -17,7 +17,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
         public string Name { get; set; }
         public GitHubActionsImage Image { get; set; }
         public GitHubActionsStep[] Steps { get; set; }
-        public string ContainerImage { get; set; }
+        public GithubActionsContainer Container { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
@@ -28,14 +28,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                 writer.WriteLine($"name: {Name}");
                 writer.WriteLine($"runs-on: {Image.GetValue()}");
 
-                if (!string.IsNullOrWhiteSpace(ContainerImage))
-                {
-                    writer.WriteLine("container:");
-                    using (writer.Indent())
-                    {
-                        writer.WriteLine($"image: {ContainerImage}");
-                    }
-                }
+                Container?.Write(writer);
 
                 writer.WriteLine("steps:");
                 using (writer.Indent())
