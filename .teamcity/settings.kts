@@ -120,12 +120,12 @@ object Pack : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Restore Compile Pack --skip"
+            arguments = "Restore DownloadLicenses Compile Pack --skip"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Restore Compile Pack --skip"
+            arguments = "Restore DownloadLicenses Compile Pack --skip"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
