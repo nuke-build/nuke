@@ -22,7 +22,7 @@ namespace Nuke.Common.CI
 
         public void OnBuildFinished(NukeBuild build)
         {
-            if (NukeBuild.IsServerBuild)
+            if (NukeBuild.IsServerBuild && NukeBuild.Host is not NukeInDocker)
                 DotNetTasks.DotNet("build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging);
         }
     }

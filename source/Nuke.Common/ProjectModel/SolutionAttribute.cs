@@ -53,7 +53,9 @@ namespace Nuke.Common.ProjectModel
                                GetSolutionFileFromParametersFile(member);
             var deserializer = typeof(SolutionSerializer).GetMethod(nameof(SolutionSerializer.DeserializeFromFile)).NotNull()
                 .MakeGenericMethod(member.GetMemberType());
-            return deserializer.Invoke(obj: null, new object[] { solutionFile });
+            if (File.Exists(solutionFile))
+                return deserializer.Invoke(obj: null, new object[] { solutionFile });
+            return null;
         }
 
         // TODO: allow wildcard matching? [Solution("nuke-*.sln")] -- no globbing?

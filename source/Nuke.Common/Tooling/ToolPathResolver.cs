@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -120,7 +121,7 @@ namespace Nuke.Common.Tooling
                             .Concat(
                                 new[]
                                 {
-                                    EmbeddedPackagesDirectory == null
+                                    EmbeddedPackagesDirectory != null
                                         ? $"Embedded packages directory at '{EmbeddedPackagesDirectory}'"
                                         : null,
                                     NuGetAssetsConfigFile != null
@@ -136,7 +137,7 @@ namespace Nuke.Common.Tooling
             }
             catch (Exception exception)
             {
-                if (!NuGetPackagesConfigFile.EndsWithOrdinalIgnoreCase(".csproj"))
+                if (NuGetPackagesConfigFile != null && !NuGetPackagesConfigFile.EndsWithOrdinalIgnoreCase(".csproj"))
                     throw;
 
                 var packageCombinations =
@@ -169,6 +170,9 @@ namespace Nuke.Common.Tooling
                 ? @"C:\Windows\System32\where.exe"
                 : "/usr/bin/which";
 
+            if (!File.Exists(locateExecutable))
+                return SearchPathForPathExecutable(pathExecutable);
+
             var locateProcess = ProcessTasks.StartProcess(
                 locateExecutable,
                 pathExecutable,
@@ -181,6 +185,38 @@ namespace Nuke.Common.Tooling
                 .Where(x => EnvironmentInfo.IsWin && Path.HasExtension(x) || EnvironmentInfo.IsUnix)
                 .FirstOrDefault(File.Exists)
                 .NotNull($"Could not find '{pathExecutable}' via '{locateExecutable}'.");
+        }
+
+        private static string SearchPathForPathExecutable(string pathExecutable)
+        {
+            if (File.Exists(pathExecutable))
+                return Path.GetFullPath(pathExecutable);
+
+            var environmentVariable = Environment.GetEnvironmentVariable("PATH");
+            if (string.IsNullOrEmpty(environmentVariable))
+                throw new EnvironmentVariableNotFoundException("PATH");
+
+            foreach (var path in environmentVariable.Split(Path.PathSeparator))
+            {
+                var fullPath = Path.Combine(path, pathExecutable);
+                if (string.IsNullOrEmpty(Path.GetExtension(fullPath)) && EnvironmentInfo.IsWin)
+                    fullPath += ".exe";
+                if (File.Exists(fullPath))
+                    return fullPath;
+            }
+
+            throw new ArgumentException($"Could not find '{pathExecutable}' on the PATH.");
+        }
+    }
+
+    internal class EnvironmentVariableNotFoundException
+        : Exception
+    {
+        public string VariableName { get; }
+
+        public EnvironmentVariableNotFoundException(string variableName) :base($"Unable to find environment variable '{variableName}'")
+        {
+            VariableName = variableName;
         }
     }
 }

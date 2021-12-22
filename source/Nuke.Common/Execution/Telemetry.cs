@@ -61,7 +61,10 @@ namespace Nuke.Common.Execution
                 var cookieFile = GetCookieFile(cookieName, CurrentVersion);
                 if (!File.Exists(cookieFile))
                 {
-                    PrintDisclosure($"create awareness cookie for {cookieName.SingleQuote()}");
+                    if (NukeBuild.IsServerBuild)
+                        PrintDisclosure(action: null);
+                    else
+                        PrintDisclosure($"create awareness cookie for {cookieName.SingleQuote()}");
                     FileSystemTasks.Touch(cookieFile);
                 }
 

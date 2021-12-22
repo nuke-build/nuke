@@ -25,6 +25,7 @@ namespace Nuke.Common
             FileSystemTasks.EnsureExistingDirectory(TemporaryDirectory);
 
             BuildAssemblyDirectory = GetBuildAssemblyDirectory();
+            BuildAssembly = GetBuildAssembly();
             BuildProjectFile = GetBuildProjectFile(BuildAssemblyDirectory);
             BuildProjectDirectory = BuildProjectFile?.Parent;
 
@@ -49,6 +50,12 @@ namespace Nuke.Common
         /// </summary>
         [CanBeNull]
         public static AbsolutePath BuildAssemblyDirectory { get; }
+
+        /// <summary>
+        /// Gets the full path to the build assembly, or <c>null</c>.
+        /// </summary>
+        [CanBeNull]
+        public static AbsolutePath BuildAssembly { get; }
 
         /// <summary>
         /// Gets the full path to the build project directory, or <c>null</c>
@@ -82,7 +89,7 @@ namespace Nuke.Common
         public static string[] LoadedLocalProfiles { get; }
 
         public static bool IsLocalBuild => !IsServerBuild;
-        public static bool IsServerBuild => Host is IBuildServer;
+        public static bool IsServerBuild => Host is IBuildServer or NukeInDocker;
 
         private static AbsolutePath GetRootDirectory()
         {
@@ -102,13 +109,23 @@ namespace Nuke.Common
         }
 
         [CanBeNull]
-        private static AbsolutePath GetBuildAssemblyDirectory()
+        private static AbsolutePath GetBuildAssembly()
         {
             var entryAssembly = Assembly.GetEntryAssembly();
             if (entryAssembly == null || entryAssembly.Location.IsNullOrEmpty() || entryAssembly.GetTypes().All(x => !x.IsSubclassOf(typeof(NukeBuild))))
                 return null;
 
-            return (AbsolutePath) Path.GetDirectoryName(entryAssembly.Location).NotNull();
+            return (AbsolutePath) entryAssembly.Location.NotNull();
+        }
+
+        [CanBeNull]
+        private static AbsolutePath GetBuildAssemblyDirectory()
+        {
+            var assembly = GetBuildAssembly();
+            if (assembly == null)
+                return null;
+
+            return (AbsolutePath) Path.GetDirectoryName(assembly).NotNull();
         }
 
         [CanBeNull]

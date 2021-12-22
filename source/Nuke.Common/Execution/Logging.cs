@@ -52,7 +52,9 @@ namespace Nuke.Common.Execution
                 .ConfigureHost(build)
                 .ConfigureConsole(build)
                 .ConfigureInMemory(build)
-                .ConfigureFiles(build)
+                //todo: if the file is locked, then nuke silently fails.
+                //      this happens when calling nuke-in-docker, as it tries to write to the same log file
+                //.ConfigureFiles(build)
                 .ConfigureLevel()
                 .Filter.ByExcluding(x => NukeBuild.Host.FilterMessage(x.MessageTemplate.Text))
                 .CreateLogger();
