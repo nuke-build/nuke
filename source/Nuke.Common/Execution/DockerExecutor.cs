@@ -68,8 +68,7 @@ namespace Nuke.Common.Execution
             {
                 var volumes = new []
                               {
-                                  $"{NukeBuild.RootDirectory}:{workingDirectory}"//,
-                                  //$"{userProfile}:{userProfile}"
+                                  $"{NukeBuild.RootDirectory}:{workingDirectory}"
                               };
                 DockerTasks.DockerRun(settings => settings
                     .EnableRm()
@@ -82,7 +81,7 @@ namespace Nuke.Common.Execution
             }
             finally
             {
-                //File.Delete(tempFile);
+                File.Delete(tempFile);
             }
         }
 
