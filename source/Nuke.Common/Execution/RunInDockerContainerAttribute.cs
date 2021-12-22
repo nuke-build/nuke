@@ -15,6 +15,8 @@ namespace Nuke.Common.Execution
         public PlatformFamily Platform { get; }
 
         //todo: consider supporting credentials for the docker feed
+        //todo: consider supporting additional env vars
+        //todo: consider supporting a "dont pass any env vars" mode
 
         public RunInDockerContainerAttribute(string image, PlatformFamily platform = PlatformFamily.Linux, bool pullImage = true, string[] args = null)
         {
