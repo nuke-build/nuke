@@ -45,31 +45,19 @@ namespace Nuke.Common.Execution
 
             CopyPackageReferences();
 
-            var workingDirectory = attribute.Platform == PlatformFamily.Windows ? "c:\\Build" : "/build";
+            RunDocker(target, attribute);
+        }
 
-            var path = attribute.Platform == PlatformFamily.Windows
-                ? $"c:\\build\\{NukeBuild.RootDirectory.GetWinRelativePathTo(NukeBuild.TemporaryDirectory)}\\nukebuild\\{Path.GetFileName(NukeBuild.BuildAssembly)}"
-                : $"/build/{NukeBuild.RootDirectory.GetUnixRelativePathTo(NukeBuild.TemporaryDirectory)}/nukebuild/{Path.GetFileName(NukeBuild.BuildAssembly)}";
-
-            var args = new[]
-                       {
-                           path,
-                           "--nologo",
-                           "--skip",
-                           "--host", "NukeInDocker",
-                           "--target", $"\"{target.Name}\"",
-                           "--root", workingDirectory
-                       };
-
-            var userProfile = EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile);
-            var tempFile = GetEnvFile(workingDirectory, userProfile);
+        private static void RunDocker(ExecutableTarget target, RunInDockerContainerAttribute attribute)
+        {
+            var workingDirectory = GetWorkingDirectory(attribute);
+            var path = GetPath(attribute);
+            var args = GetArgs(target, path, workingDirectory);
+            var tempFile = GetEnvFile(workingDirectory);
+            var volumes = new[] { $"{NukeBuild.RootDirectory}:{workingDirectory}" };
 
             try
             {
-                var volumes = new []
-                              {
-                                  $"{NukeBuild.RootDirectory}:{workingDirectory}"
-                              };
                 DockerTasks.DockerRun(settings => settings
                     .EnableRm()
                     .SetImage(attribute.Image)
@@ -83,6 +71,31 @@ namespace Nuke.Common.Execution
             {
                 File.Delete(tempFile);
             }
+        }
+
+        private static string[] GetArgs(ExecutableTarget target, string path, string workingDirectory)
+        {
+            return new[]
+                   {
+                       path,
+                       "--nologo",
+                       "--skip",
+                       "--host", "NukeInDocker",
+                       "--target", $"\"{target.Name}\"",
+                       "--root", workingDirectory
+                   };
+        }
+
+        private static string GetPath(RunInDockerContainerAttribute attribute)
+        {
+            return attribute.Platform == PlatformFamily.Windows
+                ? $"c:\\build\\{NukeBuild.RootDirectory.GetWinRelativePathTo(NukeBuild.TemporaryDirectory)}\\nukebuild\\{Path.GetFileName(NukeBuild.BuildAssembly)}"
+                : $"/build/{NukeBuild.RootDirectory.GetUnixRelativePathTo(NukeBuild.TemporaryDirectory)}/nukebuild/{Path.GetFileName(NukeBuild.BuildAssembly)}";
+        }
+
+        private static string GetWorkingDirectory(RunInDockerContainerAttribute attribute)
+        {
+            return attribute.Platform == PlatformFamily.Windows ? "c:\\Build" : "/build";
         }
 
         private static void CopyPackageReferences()
@@ -128,7 +141,7 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private static string GetEnvFile(string workingDirectory, string userProfile)
+        private static string GetEnvFile(string workingDirectory)
         {
             //todo: this will probably fail with an env var value with an ampersand in it
             //todo: this will probably fail with an env var value with new lines in it
