@@ -13,6 +13,15 @@ namespace Nuke.Common.Utilities
 {
     public static class CompletionUtility
     {
+        public enum CompletionSupportedShells
+        {
+            Pwsh,
+            Powershell,
+            Bash,
+            Fish,
+            Zsh
+        }
+
         // ReSharper disable once CognitiveComplexity
         public static IEnumerable<string> GetRelevantCompletionItems(
             string words,
@@ -88,6 +97,61 @@ namespace Nuke.Common.Utilities
                 AddParameters();
 
             return suggestedItems;
+        }
+
+        /// <summary>
+        /// Return the code needed to Shell Auto-Completion.
+        /// </summary>
+        /// <param name="shell">The Shell.</param>
+        /// <returns>String of valid shell code.</returns>
+        public static string RegisterCompleter(CompletionSupportedShells shell)
+        {
+            switch (shell)
+            {
+                case CompletionSupportedShells.Pwsh:
+                case CompletionSupportedShells.Powershell:
+                    return @"
+# Add the following to $PROFILE
+
+Register-ArgumentCompleter -Native -CommandName nuke -ScriptBlock {
+    param($commandName, $wordToComplete, $cursorPosition)
+        nuke :complete ""$wordToComplete"" | ForEach-Object {
+           [System.Management.Automation.CompletionResult]::new($_, $_, 'ParameterValue', $_)
+        }
+}
+";
+                case CompletionSupportedShells.Bash:
+                    return @"
+# For BASH, add the following to .bashrc
+
+_nuke_bash_complete()
+{
+  local word=${COMP_WORDS[COMP_CWORD]}
+  local completions=""$(nuke :complete ""${COMP_LINE}"")""
+  COMPREPLY=( $(compgen -W ""$completions"" -- ""$word"") )
+}
+complete -f -F _nuke_bash_complete nuke
+";
+                case CompletionSupportedShells.Fish:
+                    return @"
+# For fish, add the following to config.fish
+
+complete -fc nuke --arguments '(nuke :complete (commandline -cp))'
+";
+                case CompletionSupportedShells.Zsh:
+                    return @"
+# For ZSH, add the following to .zshrc
+
+_nuke_zsh_complete()
+{
+  local completions=(""$(nuke :complete ""$words"")"")
+  reply=( ""${(ps:\n:)completions}"" )
+}
+compctl -K _nuke_zsh_complete nuke
+";
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(shell), shell, "Unsupported Terminal.");
+            }
         }
     }
 }

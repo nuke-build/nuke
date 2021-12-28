@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `PowerShellTasks`
 - Added `BootsTasks`
 - Added `NetlifyTasks`
+- Added `RegisterCompleter` command to global tool
 - Fixed check for executables compiled with `PublishSingleFile`
 - Fixed `MSBuild` localization using `MSBuildLocator`
 - Fixed Azure Pipelines caching
@@ -955,4 +956,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
-
