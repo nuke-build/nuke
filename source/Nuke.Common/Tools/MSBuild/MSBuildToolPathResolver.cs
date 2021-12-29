@@ -100,6 +100,7 @@ namespace Nuke.Common.Tools.MSBuild
         {
             return version switch
             {
+                MSBuildVersion.VS2022 => "Current",
                 MSBuildVersion.VS2019 => "Current",
                 MSBuildVersion.VS2017 => "15.0",
                 MSBuildVersion.VS2015 => "14.0",
