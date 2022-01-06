@@ -84,13 +84,13 @@ NUKE builds and tests itself on several different CI servers, which helps ensuri
 
 Thanks to all companies, organizations, and individuals who are sponsoring the further development of this project. Your support means a lot! 💙
 
+[<img height="170px" src="https://octopus.com/images/company/OctopusDeploy-logo-RGB.svg" alt="Octopus Deploy" />](https://octopus.com)
 
-[<img height="140px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/virto-commerce.png" alt="Virto Commerce" />](https://virtocommerce.com/)
+[<img height="130px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/virto-commerce.png" alt="Virto Commerce" />](https://virtocommerce.com/)
 
-[<img height="150px" src="https://octopus.com/images/company/OctopusDeploy-logo-RGB.svg" alt="Octopus Deploy" />](https://octopus.com)
-
-[<img height="65px" src="https://www.dangl-it.de/media/1195/logo-en-rectangular.png" alt="Dangl-IT GmbH" />](https://www.dangl-it.com/)
-[<img height="65px" src="https://peiitalliance.com/logos/LevelingUp-Logo.svg" alt="Leveling Up" />](https://github.com/ron-myers)
+[<img height="60px" src="https://www.dangl-it.de/media/1195/logo-en-rectangular.png" alt="Dangl-IT GmbH" />](https://www.dangl-it.com/)
+[<img height="60px" src="https://peiitalliance.com/logos/LevelingUp-Logo.svg" alt="Leveling Up" />](https://github.com/ron-myers)
+[<img height="60px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/multinet.png" alt="MultiNet" />](https://www.multinet.com/)
 
 [![Rodney Littles II](https://avatars.githubusercontent.com/RLittlesII?s=60&v=4)](https://github.com/RLittlesII)
 [![Olga Nelioubov](https://avatars.githubusercontent.com/onelioubov?s=60&v=4)](https://github.com/onelioubov)
@@ -102,8 +102,6 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 
 [![Stephan Müller](https://avatars.githubusercontent.com/chaquotay?s=45&v=4)](https://github.com/chaquotay)
 [![Bitbonk](https://avatars.githubusercontent.com/bitbonk?s=45&v=4)](https://github.com/bitbonk)
-[![Marat Gumerov](https://avatars.githubusercontent.com/Marat-Gumerov?s=45&v=4)](https://github.com/Marat-Gumerov)
-[![Thomas Unger](https://avatars.githubusercontent.com/tunger?s=45&v=4)](https://github.com/tunger)
 [![Matt Brailsford](https://avatars.githubusercontent.com/mattbrailsford?s=45&v=4)](https://github.com/mattbrailsford)
 [![David Driscoll](https://avatars.githubusercontent.com/david-driscoll?s=45&v=4)](https://github.com/david-driscoll)
 [![Actipro Software](https://avatars.githubusercontent.com/Actipro?s=45&v=4)](https://github.com/Actipro)
@@ -115,6 +113,8 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Christian Sindberg](https://avatars.githubusercontent.com/chrsin?s=45&v=4)](https://github.com/chrsin)
 [![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
 [![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=45&v=4)](https://github.com/stevenkuhn)
+[![Jesus Rodriguez Valencia](https://avatars.githubusercontent.com/jrodrigv?s=45&v=4)](https://github.com/jrodrigv)
+[![Влалислав Лищина](https://avatars.githubusercontent.com/Duskone39?s=45&v=4)](https://github.com/Duskone39)
 
 ## Technology Sponsors
 
