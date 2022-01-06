@@ -76,8 +76,10 @@ NUKE builds and tests itself on several different CI servers, which helps ensuri
 - [DNN Community](https://dnncommunity.org/) <sup><a href="https://github.com/DNNCommunity/Dnn.ModuleCreator">1</a></sup>
 - [FluentAssertions](https://fluentassertions.com/) <sup><a href="https://github.com/fluentassertions/fluentassertions">1</a></sup>
 - **[JetBrains s.r.o.](https://www.jetbrains.com/)** <sup><a href="https://github.com/JetBrains/space-dotnet-sdk">1</a> <a href="https://github.com/JetBrains/YouTrackSharp">2</a></sup>
+- [NSwag](https://github.com/RicoSuter/NSwag/) <sup><a href="https://github.com/RicoSuter/NSwag/">1</a></sup>
 - **[Octopus Deploy Pty. Ltd.](https://www.octopus.com/)** <sup><a href="https://github.com/OctopusDeploy/OctopusTentacle">1</a> <a href="https://github.com/OctopusDeploy/OctopusClients">2</a> <a href="https://github.com/OctopusDeploy/Octodiff">3</a></sup>
 - [OmniSharp](http://www.omnisharp.net/) <sup><a href="https://github.com/OmniSharp/csharp-language-server-protocol">1</a></sup>
+- [Quartz.NET](https://github.com/quartznet/quartznet) <sup><a href="https://github.com/quartznet/quartznet/">1</a></sup>
 - **[VirtoCommerce](https://virtocommerce.com/)** <sup><a href="https://github.com/VirtoCommerce/vc-build/">1</a></sup>
 
 ## Sponsors
