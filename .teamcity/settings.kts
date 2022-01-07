@@ -20,7 +20,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 
-version = "2020.2"
+version = "2021.2"
 
 project {
     buildType(Pack)
@@ -47,11 +47,6 @@ project {
             value = "Release",
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
-        password (
-            "env.EnterpriseAccessToken",
-            label = "EnterpriseAccessToken",
-            value = "",
-            display = ParameterDisplay.NORMAL)
         text (
             "env.GitterRoomId",
             label = "GitterRoomId",
@@ -62,6 +57,13 @@ project {
             "env.IgnoreFailedSources",
             label = "IgnoreFailedSources",
             description = "Ignore unreachable sources during Restore",
+            value = "False",
+            checked = "True",
+            unchecked = "False",
+            display = ParameterDisplay.NORMAL)
+        checkbox (
+            "env.Major",
+            label = "Major",
             value = "False",
             checked = "True",
             unchecked = "False",
@@ -83,11 +85,6 @@ project {
             label = "SignPathProjectSlug",
             value = "nuke",
             allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        password (
-            "env.SlackUserAccessToken",
-            label = "SlackUserAccessToken",
-            value = "",
             display = ParameterDisplay.NORMAL)
         checkbox (
             "env.UseHttps",
@@ -114,7 +111,7 @@ project {
     }
 }
 object Pack : BuildType({
-    name = "📦 Pack 🧩 "
+    name = "📦 Pack"
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -123,12 +120,12 @@ object Pack : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Restore Compile Pack --skip"
+            arguments = "Restore DownloadLicenses Compile Pack --skip"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Restore Compile Pack --skip"
+            arguments = "Restore DownloadLicenses Compile Pack --skip"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }
@@ -191,7 +188,7 @@ object Test_P2T2 : BuildType({
     }
 })
 object Test : BuildType({
-    name = "🚦 Test 🧩 "
+    name = "🚦 Test"
     type = Type.COMPOSITE
     vcs {
         root(DslContext.settingsRoot)
@@ -228,7 +225,7 @@ object Test : BuildType({
     }
 })
 object ReportDuplicates : BuildType({
-    name = "🎭 ReportDuplicates 🧩 "
+    name = "🎭 ReportDuplicates"
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -258,7 +255,7 @@ object ReportDuplicates : BuildType({
     }
 })
 object ReportIssues : BuildType({
-    name = "💣 ReportIssues 🧩 "
+    name = "💣 ReportIssues"
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true
@@ -288,7 +285,7 @@ object ReportIssues : BuildType({
     }
 })
 object ReportCoverage : BuildType({
-    name = "📊 ReportCoverage 🧩 "
+    name = "📊 ReportCoverage"
     vcs {
         root(DslContext.settingsRoot)
         cleanCheckout = true

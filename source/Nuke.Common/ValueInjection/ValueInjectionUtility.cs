@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,7 +13,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ValueInjection
 {
-    public static class ValueInjectionUtility
+    internal static class ValueInjectionUtility
     {
         private static readonly Dictionary<MemberInfo, object> s_valueCache = new Dictionary<MemberInfo, object>();
 
@@ -79,8 +79,8 @@ namespace Nuke.Common.ValueInjection
                     continue;
 
                 var valueType = value.GetType();
-                ControlFlow.Assert(member.GetMemberType().IsAssignableFrom(valueType),
-                    $"Member '{member.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'.");
+                Assert.True(member.GetMemberType().IsAssignableFrom(valueType),
+                    $"Member '{member.Name}' must be of type '{valueType.Name}' to get its valued injected from '{attribute.GetType().Name}'");
                 member.SetValue(instance, value);
             }
         }

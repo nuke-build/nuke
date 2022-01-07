@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -57,6 +57,7 @@ namespace Nuke.Common.CI.SpaceAutomation
         public string[] OnPushPathExcludes { get; set; }
 
         public string OnCronSchedule { get; set; }
+        public string[] ImportSecrets { get; set; } = new string[0];
 
         public int TimeoutInMinutes
         {
@@ -88,6 +89,7 @@ namespace Nuke.Common.CI.SpaceAutomation
                    {
                        Image = _image,
                        Resources = GetResources(),
+                       Imports = GetImports().ToDictionary(x => x.Key, x => x.Value),
                        BuildScript = BuildCmdPath.Replace(".cmd", ".sh"),
                        InvokedTargets = InvokedTargets
                    };
@@ -100,6 +102,11 @@ namespace Nuke.Common.CI.SpaceAutomation
                        Cpu = ResourcesCpu,
                        Memory = ResourcesMemory
                    };
+        }
+
+        private IEnumerable<(string Key, string Value)> GetImports()
+        {
+            return ImportSecrets.Select(x => ($"env[{x.DoubleQuote()}]", $"Secrets({x.SplitCamelHumpsWithKnownWords().JoinDash().ToLowerInvariant().DoubleQuote()})"));
         }
 
         protected virtual IEnumerable<SpaceAutomationTrigger> GetTriggers()

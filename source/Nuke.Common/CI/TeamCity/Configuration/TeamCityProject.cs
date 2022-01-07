@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -28,7 +28,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                     writer.WriteLine($"buildType({buildType.Id})");
                 writer.WriteLine();
 
-                writer.WriteLine($"buildTypesOrder = arrayListOf({BuildTypes.Select(x => x.Id).JoinComma()})");
+                writer.WriteLine($"buildTypesOrder = arrayListOf({BuildTypes.Select(x => x.Id).JoinCommaSpace()})");
                 writer.WriteLine();
 
                 if (Parameters.Any())

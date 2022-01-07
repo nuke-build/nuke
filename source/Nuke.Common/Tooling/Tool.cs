@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,8 +15,6 @@ namespace Nuke.Common.Tooling
         int? timeout = null,
         bool? logOutput = null,
         bool? logInvocation = null,
-        bool? logTimestamp = null,
-        string logFile = null,
         Action<OutputType, string> customLogger = null,
         Func<string, string> outputFilter = null);
 }

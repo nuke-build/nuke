@@ -51,7 +51,8 @@ namespace Nuke.Common.Execution
                     (() => repository.Endpoint.ContainsOrdinalIgnoreCase("github.com"), "GitHub"),
                     (() => repository.Endpoint.ContainsOrdinalIgnoreCase("gitlab.com"), "GitLab"),
                     (() => repository.Endpoint.ContainsOrdinalIgnoreCase("bitbucket.org"), "Bitbucket"),
-                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("jetbrains.space"), "JetBrains")
+                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("jetbrains.space"), "JetBrains"),
+                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("visualstudio.com"), "Azure")
                 };
 
             var branches =
@@ -92,9 +93,9 @@ namespace Nuke.Common.Execution
                        ["num_secrets"] = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true)
                            .Count(x => x.HasCustomAttribute<SecretAttribute>()).ToString(),
                        ["config_generators"] = build.GetType().GetCustomAttributes<ConfigurationAttributeBase>()
-                           .Select(GetTypeName).Distinct().OrderBy(x => x).JoinComma(),
+                           .Select(GetTypeName).Distinct().OrderBy(x => x).JoinCommaSpace(),
                        ["build_components"] = build.GetType().GetInterfaces().Where(x => IsCommonType(x) && x != typeof(INukeBuild))
-                           .Select(GetTypeName).Distinct().OrderBy(x => x).JoinComma()
+                           .Select(GetTypeName).Distinct().OrderBy(x => x).JoinCommaSpace()
                    };
         }
 

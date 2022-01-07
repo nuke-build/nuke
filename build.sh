@@ -21,10 +21,6 @@ export DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1
 export DOTNET_MULTILEVEL_LOOKUP=0
 export DOTNET_ROLL_FORWARD="Major"
 export NUKE_TELEMETRY_OPTOUT=1
-export MSBUILDDISABLENODEREUSE=1
-
-#export NUKE_ENTERPRISE_SOURCE="https://nuget.pkg.github.com/nuke-build/index.json"
-#export NUKE_ENTERPRISE_USERNAME="nuke-bot"
 
 ###########################################################################
 # EXECUTION
@@ -72,10 +68,6 @@ else
 fi
 
 echo "Microsoft (R) .NET Core SDK version $("$DOTNET_EXE" --version)"
-
-#if [[ ! -z ${NUKE_ENTERPRISE_PASSWORD+x} && "$NUKE_ENTERPRISE_PASSWORD" != "" ]]; then
-#    "$DOTNET_EXE" nuget add source "$NUKE_ENTERPRISE_SOURCE" --username "$NUKE_ENTERPRISE_USERNAME" --password "$NUKE_ENTERPRISE_PASSWORD" --store-password-in-clear-text
-#fi
 
 "$DOTNET_EXE" build "$BUILD_PROJECT_FILE" /nodeReuse:false /p:UseSharedCompilation=false -nologo -clp:NoSummary
 "$DOTNET_EXE" run --project "$BUILD_PROJECT_FILE" --no-build -- "$@"

@@ -8,14 +8,6 @@
 
   <Import Project="$(NukeTasksDirectory)\Nuke.MSBuildTasks.targets" Condition="'$(NukeTasksEnabled)' != 'False'" />
 
-  <ItemGroup Condition="'$(NukeEnterprise)' != 'True'">
-    <Reference Include="$(NukeTasksDirectory)\Nuke.Enterprise.dll" Condition="Exists('$(NukeTasksDirectory)\Nuke.Enterprise.dll')">
-      <Private>False</Private>
-      <CopyLocal>False</CopyLocal>
-      <ExternallyResolved>True</ExternallyResolved>
-    </Reference>
-  </ItemGroup>
-
   <PropertyGroup>
     <NukeScriptDirectory Condition="'$(NukeScriptDirectory)' == ''">$(NukeRootDirectory)</NukeScriptDirectory>
   </PropertyGroup>
@@ -33,6 +25,7 @@
   <ItemGroup Condition="'$(NukeRootDirectory)' != ''">
     <None Include="$(NukeRootDirectory)\.nuke\parameters.json" LinkBase="config" />
     <None Include="$(NukeRootDirectory)\.nuke\parameters.*.json" LinkBase="config" />
+    <None Include="$(NukeRootDirectory)\.nuke\temp\build*.log" Exclude="$(NukeRootDirectory)\.nuke\temp\build-attempt.log" LinkBase="logs" />
     <None Include="$(NukeRootDirectory)\**\Directory.Build.*" LinkBase="Directory.Build" />
     <None Include="$(NukeRootDirectory)\global.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\global.json')" />
     <None Include="$(NukeRootDirectory)\nuget.config" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\nuget.config')" />

@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/CoverallsNet.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/CoverallsNet/CoverallsNet.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   <p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p>
         ///   <p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> CoverallsNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> CoverallsNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(CoverallsNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, CoverallsNetLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(CoverallsNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, CoverallsNetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

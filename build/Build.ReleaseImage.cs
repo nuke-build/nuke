@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,8 +8,8 @@ using System.IO;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.IO;
-using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
@@ -17,7 +17,6 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.IO.HttpTasks;
-using static Nuke.Common.Logger;
 
 partial class Build
 {
@@ -36,11 +35,11 @@ partial class Build
     Target InstallFonts => _ => _
         .Executes(() =>
         {
-            FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last(), requestConfigurator: x => x.Timeout = 120000));
+            FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last()));
             FontArchives.ForEach(x => Uncompress(x, FontDirectory / Path.GetFileNameWithoutExtension(x)));
 
             FontFiles.ForEach(x => FontCollection.Install(x));
-            FontCollection.Families.ForEach(x => Normal($"Installed font {x.Name.SingleQuote()}"));
+            FontCollection.Families.ForEach(x => Log.Information("Installed font {Font}", x.Name));
         });
 
     AbsolutePath WatermarkImageFile => RootDirectory / "images" / "logo-watermark.png";
@@ -56,7 +55,7 @@ partial class Build
 
             var robotoFont = FontCollection.Families.Single(x => x.Name == "Roboto Black");
             var graphicsOptions =
-                new TextGraphicsOptions
+                new DrawingOptions
                 {
                     TextOptions = new TextOptions
                                   {

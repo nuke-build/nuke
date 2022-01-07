@@ -6,6 +6,55 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [6.0.0] / 2022-01-07
+- Removed `ToolSettings.ProcessLogFile` and `ProcessLogTimestamp`
+- Removed `GitHub` prefix for `GitHubActions` environment variables
+- Deprecated `Logger` in favor of `Serilog.Log`
+- Deprecated `ControlFlow` asserts in favor of `Assert` class
+- Changed `Nuke.GlobalTool` to enable `RollForward` with `LatestMajor`
+- Changed default serialization settings for JSON and YAML in `SerializationTasks`
+- Changed GitHub Actions generation to use default `GitHubActions.Token` through `EnableGitHubContext`
+- Changed Azure Pipelines generation to use default `AzurePipelines.AccessToken` through `EnableAccessToken`
+- Added shell-completion support for global tool builds
+- Added `NukeBuild.ExecutionPlan` to public API
+- Added `Partition.Part` and `Total` to public API
+- Added `MSBuildToolPathResolver` support for Visual Studio 2022
+- Added `XmlTasks` variants for `string` objects
+- Added `AbsolutePath.Name` and `NameWithoutExtension` properties
+- Added `AbsolutePath.Exists`, `FileExists`, and `DirectoryExists` extension methods
+- Added `Project.HasPackageReference` and `GetPackageReferenceVersion`
+- Added `UpdateFile` variants in `SerializationTasks`
+- Added `StdToText` and `StdToJson` extension methods for `IEnumerable<Output>`
+- Added newest worker images for Azure Pipelines, GitHub Actions, and AppVeyor generation
+- Added Azure Pipelines generation for pull-request triggers, fetch depth, and clean checkout
+- Added Space Automation support for secrets
+- Added TeamCity support for GUID tokens
+- Added `AzurePipelinesCachePaths` for common cache paths
+- Added `AzurePipelines.PhaseName` property
+- Added `GitHub.CreateComment` for issue and pull-request comments
+- Added `TeamCity.AuthUserId` and `AuthPassword` properties
+- Added `AppVeyorSecretAttribute` for generation of secret value entries
+- Added `HttpClient`, `HttpRequest`, and `HttpResponse` extensions
+- Added `XNode` extensions
+- Added `LatestMavenVersionAttribute`
+- Added `MauiCheckTasks`
+- Added `MinVerTasks` and `MinVerAttribute`
+- Added `PowerShellTasks`
+- Added `BootsTasks`
+- Added `NetlifyTasks`
+- Fixed check for executables compiled with `PublishSingleFile`
+- Fixed `MSBuild` localization using `MSBuildLocator`
+- Fixed missing assertion for successful status code in `HttpTasks`
+- Fixed Azure Pipelines caching
+- Fixed `IBuildServer.Branch` for `AzurePipelines`
+- Fixed `OctoVersionTasks` and `OctoVersionAttribute` for latest version
+- Fixed `AzureSignToolTasks` to invoke `sign` command
+- Fixed missing `Files` property in `AzureSignTool`
+- Fixed missing `Blame*` properties in `DotNetTasks`
+- Fixed property types in `ILRepackTasks`
+- Fixed `UnityTasks` to auto-detect version
+- Fixed quoting for `UnityTasks.LogFile`
+
 ## [5.3.0] / 2021-08-04
 - Added LFS and Submodule settings in AzurePipelines configuration
 - Added `OctoVersionTasks` and `OctoVersionAttribute`
@@ -828,7 +877,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/5.3.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.0.0...HEAD
+[6.0.0]: https://github.com/nuke-build/nuke/compare/5.3.0...6.0.0
 [5.3.0]: https://github.com/nuke-build/nuke/compare/5.2.1...5.3.0
 [5.2.1]: https://github.com/nuke-build/nuke/compare/5.2.0...5.2.1
 [5.2.0]: https://github.com/nuke-build/nuke/compare/5.1.4...5.2.0

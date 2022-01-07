@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Fixie.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Fixie/Fixie.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.Fixie
         ///   <p>Fixie is a .NET modern test framework similar to NUnit and xUnit, but with an emphasis on low-ceremony defaults and flexible customization.</p>
         ///   <p>For more details, visit the <a href="https://fixie.github.io/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Fixie(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Fixie(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(FixiePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, FixieLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(FixiePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, FixieLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

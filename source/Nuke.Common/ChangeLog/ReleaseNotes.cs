@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -53,7 +53,7 @@ namespace Nuke.Common.ChangeLog
             : this(notes, startIndex, endIndex)
         {
             Version = version;
-            ControlFlow.Assert(notes.Count > 0, "Release Notes should not be empty");
+            Assert.True(notes.Count > 0, "Release Notes should not be empty");
         }
 
         /// <summary>

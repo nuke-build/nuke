@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Pulumi.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Pulumi/Pulumi.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.Pulumi
         ///   <p>Pulumi is an <a href="https://github.com/pulumi/pulumi">open source</a> infrastructure as code tool for creating, deploying and managing cloud infrastructure. Pulumi works with traditional infrastructure like VMs, networks, and databases, in addition to modern architectures, including containers, Kubernetes clusters, and serverless functions. Pulumi supports dozens of public, private, and hybrid cloud service providers.</p>
         ///   <p>For more details, visit the <a href="https://www.pulumi.com/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Pulumi(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Pulumi(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(PulumiPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, PulumiLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(PulumiPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, PulumiLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

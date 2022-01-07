@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/ILRepack.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/ILRepack/ILRepack.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.ILRepack
         ///   <p>ILRepack is meant at replacing <a href="https://github.com/dotnet/ILMerge">ILMerge</a> / <a href="https://evain.net/blog/articles/2006/11/06/an-introduction-to-mono-merge">Mono.Merge</a>.<para/>The former being closed-source (<a href="https://github.com/Microsoft/ILMerge">now open-sourced</a>), impossible to customize, slow, resource consuming and many more. The later being deprecated, unsupported, and based on an old version of Mono.Cecil.<para/>Here we're using latest (slightly modified) Cecil sources (0.9), you can find the fork <a href="https://github.com/gluck/cecil">here</a>. Mono.Posix is also required (build only, it gets merged afterwards) for executable bit set on target file.</p>
         ///   <p>For more details, visit the <a href="https://github.com/gluck/il-repack#readme">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> ILRepack(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> ILRepack(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(ILRepackPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, ILRepackLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(ILRepackPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, ILRepackLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -200,15 +200,15 @@ namespace Nuke.Common.Tools.ILRepack
         /// <summary>
         ///   Merges types with identical names into one.
         /// </summary>
-        public virtual string Union { get; internal set; }
+        public virtual bool? Union { get; internal set; }
         /// <summary>
         ///   Disables symbol file generation.
         /// </summary>
-        public virtual string NoDebug { get; internal set; }
+        public virtual bool? NoDebug { get; internal set; }
         /// <summary>
         ///   Copy assembly attributes (by default only the primary assembly attributes are copied).
         /// </summary>
-        public virtual string CopyAttributes { get; internal set; }
+        public virtual bool? CopyAttributes { get; internal set; }
         /// <summary>
         ///   Take assembly attributes from the given assembly file.
         /// </summary>
@@ -216,7 +216,7 @@ namespace Nuke.Common.Tools.ILRepack
         /// <summary>
         ///   When <c>--copyattrs</c> is specified, allows multiple attributes (if type allows).
         /// </summary>
-        public virtual string AllowMultiple { get; internal set; }
+        public virtual bool? AllowMultiple { get; internal set; }
         /// <summary>
         ///   Specify target assembly kind (<c>library</c>, <c>exe</c>, <c>winexe</c> supported, default is same as first assembly).
         /// </summary>
@@ -435,7 +435,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///   <p>Merges types with identical names into one.</p>
         /// </summary>
         [Pure]
-        public static T SetUnion<T>(this T toolSettings, string union) where T : ILRepackSettings
+        public static T SetUnion<T>(this T toolSettings, bool? union) where T : ILRepackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Union = union;
@@ -452,6 +452,39 @@ namespace Nuke.Common.Tools.ILRepack
             toolSettings.Union = null;
             return toolSettings;
         }
+        /// <summary>
+        ///   <p><em>Enables <see cref="ILRepackSettings.Union"/></em></p>
+        ///   <p>Merges types with identical names into one.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableUnion<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Union = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="ILRepackSettings.Union"/></em></p>
+        ///   <p>Merges types with identical names into one.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableUnion<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Union = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="ILRepackSettings.Union"/></em></p>
+        ///   <p>Merges types with identical names into one.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleUnion<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Union = !toolSettings.Union;
+            return toolSettings;
+        }
         #endregion
         #region NoDebug
         /// <summary>
@@ -459,7 +492,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///   <p>Disables symbol file generation.</p>
         /// </summary>
         [Pure]
-        public static T SetNoDebug<T>(this T toolSettings, string noDebug) where T : ILRepackSettings
+        public static T SetNoDebug<T>(this T toolSettings, bool? noDebug) where T : ILRepackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.NoDebug = noDebug;
@@ -476,6 +509,39 @@ namespace Nuke.Common.Tools.ILRepack
             toolSettings.NoDebug = null;
             return toolSettings;
         }
+        /// <summary>
+        ///   <p><em>Enables <see cref="ILRepackSettings.NoDebug"/></em></p>
+        ///   <p>Disables symbol file generation.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoDebug<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDebug = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="ILRepackSettings.NoDebug"/></em></p>
+        ///   <p>Disables symbol file generation.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoDebug<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDebug = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="ILRepackSettings.NoDebug"/></em></p>
+        ///   <p>Disables symbol file generation.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoDebug<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoDebug = !toolSettings.NoDebug;
+            return toolSettings;
+        }
         #endregion
         #region CopyAttributes
         /// <summary>
@@ -483,7 +549,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///   <p>Copy assembly attributes (by default only the primary assembly attributes are copied).</p>
         /// </summary>
         [Pure]
-        public static T SetCopyAttributes<T>(this T toolSettings, string copyAttributes) where T : ILRepackSettings
+        public static T SetCopyAttributes<T>(this T toolSettings, bool? copyAttributes) where T : ILRepackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CopyAttributes = copyAttributes;
@@ -498,6 +564,39 @@ namespace Nuke.Common.Tools.ILRepack
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.CopyAttributes = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="ILRepackSettings.CopyAttributes"/></em></p>
+        ///   <p>Copy assembly attributes (by default only the primary assembly attributes are copied).</p>
+        /// </summary>
+        [Pure]
+        public static T EnableCopyAttributes<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CopyAttributes = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="ILRepackSettings.CopyAttributes"/></em></p>
+        ///   <p>Copy assembly attributes (by default only the primary assembly attributes are copied).</p>
+        /// </summary>
+        [Pure]
+        public static T DisableCopyAttributes<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CopyAttributes = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="ILRepackSettings.CopyAttributes"/></em></p>
+        ///   <p>Copy assembly attributes (by default only the primary assembly attributes are copied).</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleCopyAttributes<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CopyAttributes = !toolSettings.CopyAttributes;
             return toolSettings;
         }
         #endregion
@@ -531,7 +630,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///   <p>When <c>--copyattrs</c> is specified, allows multiple attributes (if type allows).</p>
         /// </summary>
         [Pure]
-        public static T SetAllowMultiple<T>(this T toolSettings, string allowMultiple) where T : ILRepackSettings
+        public static T SetAllowMultiple<T>(this T toolSettings, bool? allowMultiple) where T : ILRepackSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMultiple = allowMultiple;
@@ -546,6 +645,39 @@ namespace Nuke.Common.Tools.ILRepack
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AllowMultiple = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="ILRepackSettings.AllowMultiple"/></em></p>
+        ///   <p>When <c>--copyattrs</c> is specified, allows multiple attributes (if type allows).</p>
+        /// </summary>
+        [Pure]
+        public static T EnableAllowMultiple<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowMultiple = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="ILRepackSettings.AllowMultiple"/></em></p>
+        ///   <p>When <c>--copyattrs</c> is specified, allows multiple attributes (if type allows).</p>
+        /// </summary>
+        [Pure]
+        public static T DisableAllowMultiple<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowMultiple = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="ILRepackSettings.AllowMultiple"/></em></p>
+        ///   <p>When <c>--copyattrs</c> is specified, allows multiple attributes (if type allows).</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleAllowMultiple<T>(this T toolSettings) where T : ILRepackSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowMultiple = !toolSettings.AllowMultiple;
             return toolSettings;
         }
         #endregion

@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -160,7 +160,7 @@ namespace Nuke.Common.ProjectModel
 
         public static void Serialize(Solution solution, Stream stream)
         {
-            ControlFlow.Assert(solution.Path != null, "solution.Path != null");
+            Assert.NotNull(solution.Path);
 
             using var writer = new StreamWriter(stream, Encoding.UTF8);
 

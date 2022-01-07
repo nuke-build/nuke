@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -49,7 +49,7 @@ partial class Build
     ///   - JetBrains Rider            https://nuke.build/rider
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
-    public static int Main() => Execute<Build>(x => ((IPack) x).Pack);
+    public static int Main() => Execute<Build>(x => ((IPack)x).Pack);
 
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
@@ -82,6 +82,14 @@ partial class Build
             EnsureCleanDirectory(OutputDirectory);
         });
 
+    Configure<DotNetBuildSettings> ICompile.CompileSettings => _ => _
+        .When(!ScheduledTargets.Contains(((IPublish)this).Publish), _ => _
+            .ClearProperties());
+
+    Configure<DotNetPublishSettings> ICompile.PublishSettings => _ => _
+        .When(!ScheduledTargets.Contains(((IPublish)this).Publish), _ => _
+            .ClearProperties());
+
     IEnumerable<(Project Project, string Framework)> ICompile.PublishConfigurations =>
         from project in new[] { Solution.Nuke_GlobalTool, Solution.Nuke_MSBuildTasks }
         from framework in project.GetTargetFrameworks()
@@ -113,7 +121,7 @@ partial class Build
     string PublicNuGetSource => "https://api.nuget.org/v3/index.json";
 
     string GitHubRegistrySource => GitHubActions != null
-        ? $"https://nuget.pkg.github.com/{GitHubActions.GitHubRepositoryOwner}/index.json"
+        ? $"https://nuget.pkg.github.com/{GitHubActions.RepositoryOwner}/index.json"
         : null;
 
     [Parameter] [Secret] readonly string PublicNuGetApiKey;
@@ -140,5 +148,5 @@ partial class Build
 
     T From<T>()
         where T : INukeBuild
-        => (T) (object) this;
+        => (T)(object)this;
 }

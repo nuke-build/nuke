@@ -1,11 +1,10 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities.Collections;
@@ -31,8 +30,6 @@ namespace Nuke.Common.Tooling
         public int? ProcessExecutionTimeout { get; internal set; }
         public bool? ProcessLogOutput { get; internal set; }
         public bool? ProcessLogInvocation { get; internal set; }
-        public bool? ProcessLogTimestamp { get; internal set; }
-        public string ProcessLogFile { get; internal set; }
 
         public abstract Action<OutputType, string> ProcessCustomLogger { get; }
 
@@ -59,7 +56,7 @@ namespace Nuke.Common.Tooling
         {
             try
             {
-                ControlFlow.Assert(File.Exists(ProcessToolPath), "File.Exists(ProcessToolPath)");
+                Assert.FileExists(ProcessToolPath);
                 return true;
             }
             catch

@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/ReSharper.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/ReSharper/ReSharper.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.ReSharper
         /// <summary>
         ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/ReSharper_Command_Line_Tools.html">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> ReSharper(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> ReSharper(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(ReSharperPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, ReSharperLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(ReSharperPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, ReSharperLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

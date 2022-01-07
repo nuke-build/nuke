@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -63,7 +63,7 @@ namespace Nuke.CodeGeneration.Writers
             where T : IWriterWrapper
         {
             if (condition)
-                writerWrapper.Writer.WriteLine(text);
+                writerWrapper.WriteLine(text);
             return writerWrapper;
         }
 
@@ -71,6 +71,14 @@ namespace Nuke.CodeGeneration.Writers
             where T : IWriterWrapper
         {
             writerWrapper.Writer.WriteBlock(() => action(writerWrapper));
+            return writerWrapper;
+        }
+
+        public static T When<T>(this T writerWrapper, bool condition, [InstantHandle] Action<T> action)
+            where T : IWriterWrapper
+        {
+            if (condition)
+                action(writerWrapper);
             return writerWrapper;
         }
     }

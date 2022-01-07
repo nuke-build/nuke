@@ -1,4 +1,4 @@
-// Copyright 2020 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,7 +22,6 @@ using static Nuke.Common.Tools.Slack.SlackTasks;
 
 partial class Build
 {
-    [Parameter] [Secret] readonly string GitHubToken;
     [Parameter] [Secret] readonly string GitterAuthToken;
     [Parameter] [Secret] readonly string SlackWebhook;
     [Parameter] readonly string GitterRoomId;

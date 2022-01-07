@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/Slack.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Slack/Slack.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -52,8 +52,9 @@ namespace Nuke.Common.Tools.Slack
         /// <summary>
         ///   Attachments let you add more context to a message, making them more useful and effective.
         /// </summary>
-        [JsonProperty("attachments")]
+        [JsonIgnore]
         public virtual IReadOnlyList<SlackMessageAttachment> Attachments => AttachmentsInternal.AsReadOnly();
+        [JsonProperty("attachments")]
         internal List<SlackMessageAttachment> AttachmentsInternal { get; set; } = new List<SlackMessageAttachment>();
     }
     #endregion
@@ -89,8 +90,9 @@ namespace Nuke.Common.Tools.Slack
         /// <summary>
         ///   By default bot message attachments will not be formatted. To enable formatting on attachment fields, set the mrkdwn_in array on each attachment to the list of fields to process.
         /// </summary>
-        [JsonProperty("mrkdwn_in")]
+        [JsonIgnore]
         public virtual IReadOnlyList<string> MarkdownIn => MarkdownInInternal.AsReadOnly();
+        [JsonProperty("mrkdwn_in")]
         internal List<string> MarkdownInInternal { get; set; } = new List<string>();
         /// <summary>
         ///   A plain-text summary of the attachment. This text will be used in clients that don't show formatted text (eg. IRC, mobile notifications) and should not contain any markup.
@@ -145,9 +147,22 @@ namespace Nuke.Common.Tools.Slack
         /// <summary>
         ///   Fields get displayed in a table-like way.
         /// </summary>
-        [JsonProperty("fields")]
+        [JsonIgnore]
         public virtual IReadOnlyList<SlackMessageField> Fields => FieldsInternal.AsReadOnly();
+        [JsonProperty("fields")]
         internal List<SlackMessageField> FieldsInternal { get; set; } = new List<SlackMessageField>();
+        /// <summary>
+        ///   A collection of Action objects to include in the attachment. Cannot exceed 5 elements.
+        /// </summary>
+        [JsonIgnore]
+        public virtual IReadOnlyList<SlackMessageAction> Actions => ActionsInternal.AsReadOnly();
+        [JsonProperty("actions")]
+        internal List<SlackMessageAction> ActionsInternal { get; set; } = new List<SlackMessageAction>();
+        /// <summary>
+        ///   The callback id sent to the interactive message endpoint.
+        /// </summary>
+        [JsonProperty("callback_id")]
+        public virtual string CallbackId { get; internal set; }
     }
     #endregion
     #region SlackMessageField
@@ -174,6 +189,73 @@ namespace Nuke.Common.Tools.Slack
         /// </summary>
         [JsonProperty("short")]
         public virtual bool? Short { get; internal set; }
+    }
+    #endregion
+    #region SlackMessageAction
+    /// <summary>
+    ///   Used within <see cref="SlackTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class SlackMessageAction : ISettingsEntity
+    {
+        /// <summary>
+        ///   Name this specific action. The name will be returned to your Action URL along with the message's <c>callback_id</c> when this action is invoked. Use it to identify this particular response path.
+        /// </summary>
+        [JsonProperty("name")]
+        public virtual string Name { get; internal set; }
+        /// <summary>
+        ///   The user-facing label for the message button or menu representing this action. Cannot contain markup.
+        /// </summary>
+        [JsonProperty("text")]
+        public virtual string Text { get; internal set; }
+        /// <summary>
+        ///   Provide a string identifying this specific action. It will be sent to your Action URL along with the name and attachment's <c>callback_id</c> . If providing multiple actions with the same name, value can be strategically used to differentiate intent. Cannot exceed <c>2000</c> characters.
+        /// </summary>
+        [JsonProperty("value")]
+        public virtual string Value { get; internal set; }
+        /// <summary>
+        ///   Leave blank to indicate that this is an ordinary button. Use <c>primary</c> or <c>danger</c> to mark important buttons.
+        /// </summary>
+        [JsonProperty("style")]
+        public virtual SlackMessageActionStyle Style { get; internal set; }
+        /// <summary>
+        ///   Shows a confirmation dialog when the action is selected.
+        /// </summary>
+        [JsonProperty("confirm")]
+        public virtual SlackMessageConfirmation Confirmation { get; internal set; }
+    }
+    #endregion
+    #region SlackMessageConfirmation
+    /// <summary>
+    ///   Used within <see cref="SlackTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class SlackMessageConfirmation : ISettingsEntity
+    {
+        /// <summary>
+        ///   Title of the confirmation dialog.
+        /// </summary>
+        [JsonProperty("title")]
+        public virtual string Title { get; internal set; }
+        /// <summary>
+        ///   Text of the confirmation dialog.
+        /// </summary>
+        [JsonProperty("text")]
+        public virtual string Text { get; internal set; }
+        /// <summary>
+        ///   Confirm button text of the confirmation dialog.
+        /// </summary>
+        [JsonProperty("ok_text")]
+        public virtual string OkText { get; internal set; }
+        /// <summary>
+        ///   Dismiss button text of the confirmation dialog.
+        /// </summary>
+        [JsonProperty("dismiss_text")]
+        public virtual string DismissText { get; internal set; }
     }
     #endregion
     #region SlackMessageExtensions
@@ -429,6 +511,17 @@ namespace Nuke.Common.Tools.Slack
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.AttachmentsInternal.AddRange(attachments);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds a value to <see cref="SlackMessage.Attachments"/></em></p>
+        ///   <p>Attachments let you add more context to a message, making them more useful and effective.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAttachment<T>(this T toolSettings, Configure<SlackMessageAttachment> configurator) where T : SlackMessage
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AttachmentsInternal.Add(configurator.InvokeSafe(new SlackMessageAttachment()));
             return toolSettings;
         }
         /// <summary>
@@ -940,6 +1033,17 @@ namespace Nuke.Common.Tools.Slack
             return toolSettings;
         }
         /// <summary>
+        ///   <p><em>Adds a value to <see cref="SlackMessageAttachment.Fields"/></em></p>
+        ///   <p>Fields get displayed in a table-like way.</p>
+        /// </summary>
+        [Pure]
+        public static T AddField<T>(this T toolSettings, Configure<SlackMessageField> configurator) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FieldsInternal.Add(configurator.InvokeSafe(new SlackMessageField()));
+            return toolSettings;
+        }
+        /// <summary>
         ///   <p><em>Adds values to <see cref="SlackMessageAttachment.Fields"/></em></p>
         ///   <p>Fields get displayed in a table-like way.</p>
         /// </summary>
@@ -983,6 +1087,122 @@ namespace Nuke.Common.Tools.Slack
             toolSettings = toolSettings.NewInstance();
             var hashSet = new HashSet<SlackMessageField>(fields);
             toolSettings.FieldsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Actions
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageAttachment.Actions"/> to a new list</em></p>
+        ///   <p>A collection of Action objects to include in the attachment. Cannot exceed 5 elements.</p>
+        /// </summary>
+        [Pure]
+        public static T SetActions<T>(this T toolSettings, params SlackMessageAction[] actions) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ActionsInternal = actions.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageAttachment.Actions"/> to a new list</em></p>
+        ///   <p>A collection of Action objects to include in the attachment. Cannot exceed 5 elements.</p>
+        /// </summary>
+        [Pure]
+        public static T SetActions<T>(this T toolSettings, IEnumerable<SlackMessageAction> actions) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ActionsInternal = actions.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SlackMessageAttachment.Actions"/></em></p>
+        ///   <p>A collection of Action objects to include in the attachment. Cannot exceed 5 elements.</p>
+        /// </summary>
+        [Pure]
+        public static T AddActions<T>(this T toolSettings, params SlackMessageAction[] actions) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ActionsInternal.AddRange(actions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds a value to <see cref="SlackMessageAttachment.Actions"/></em></p>
+        ///   <p>A collection of Action objects to include in the attachment. Cannot exceed 5 elements.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAction<T>(this T toolSettings, Configure<SlackMessageAction> configurator) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ActionsInternal.Add(configurator.InvokeSafe(new SlackMessageAction()));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="SlackMessageAttachment.Actions"/></em></p>
+        ///   <p>A collection of Action objects to include in the attachment. Cannot exceed 5 elements.</p>
+        /// </summary>
+        [Pure]
+        public static T AddActions<T>(this T toolSettings, IEnumerable<SlackMessageAction> actions) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ActionsInternal.AddRange(actions);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="SlackMessageAttachment.Actions"/></em></p>
+        ///   <p>A collection of Action objects to include in the attachment. Cannot exceed 5 elements.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearActions<T>(this T toolSettings) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ActionsInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SlackMessageAttachment.Actions"/></em></p>
+        ///   <p>A collection of Action objects to include in the attachment. Cannot exceed 5 elements.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveActions<T>(this T toolSettings, params SlackMessageAction[] actions) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<SlackMessageAction>(actions);
+            toolSettings.ActionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="SlackMessageAttachment.Actions"/></em></p>
+        ///   <p>A collection of Action objects to include in the attachment. Cannot exceed 5 elements.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveActions<T>(this T toolSettings, IEnumerable<SlackMessageAction> actions) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<SlackMessageAction>(actions);
+            toolSettings.ActionsInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region CallbackId
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageAttachment.CallbackId"/></em></p>
+        ///   <p>The callback id sent to the interactive message endpoint.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCallbackId<T>(this T toolSettings, string callbackId) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CallbackId = callbackId;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessageAttachment.CallbackId"/></em></p>
+        ///   <p>The callback id sent to the interactive message endpoint.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCallbackId<T>(this T toolSettings) where T : SlackMessageAttachment
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CallbackId = null;
             return toolSettings;
         }
         #endregion
@@ -1101,6 +1321,260 @@ namespace Nuke.Common.Tools.Slack
             return toolSettings;
         }
         #endregion
+    }
+    #endregion
+    #region SlackMessageActionExtensions
+    /// <summary>
+    ///   Used within <see cref="SlackTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class SlackMessageActionExtensions
+    {
+        #region Name
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageAction.Name"/></em></p>
+        ///   <p>Name this specific action. The name will be returned to your Action URL along with the message's <c>callback_id</c> when this action is invoked. Use it to identify this particular response path.</p>
+        /// </summary>
+        [Pure]
+        public static T SetName<T>(this T toolSettings, string name) where T : SlackMessageAction
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = name;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessageAction.Name"/></em></p>
+        ///   <p>Name this specific action. The name will be returned to your Action URL along with the message's <c>callback_id</c> when this action is invoked. Use it to identify this particular response path.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetName<T>(this T toolSettings) where T : SlackMessageAction
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Name = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Text
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageAction.Text"/></em></p>
+        ///   <p>The user-facing label for the message button or menu representing this action. Cannot contain markup.</p>
+        /// </summary>
+        [Pure]
+        public static T SetText<T>(this T toolSettings, string text) where T : SlackMessageAction
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Text = text;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessageAction.Text"/></em></p>
+        ///   <p>The user-facing label for the message button or menu representing this action. Cannot contain markup.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetText<T>(this T toolSettings) where T : SlackMessageAction
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Text = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Value
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageAction.Value"/></em></p>
+        ///   <p>Provide a string identifying this specific action. It will be sent to your Action URL along with the name and attachment's <c>callback_id</c> . If providing multiple actions with the same name, value can be strategically used to differentiate intent. Cannot exceed <c>2000</c> characters.</p>
+        /// </summary>
+        [Pure]
+        public static T SetValue<T>(this T toolSettings, string value) where T : SlackMessageAction
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Value = value;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessageAction.Value"/></em></p>
+        ///   <p>Provide a string identifying this specific action. It will be sent to your Action URL along with the name and attachment's <c>callback_id</c> . If providing multiple actions with the same name, value can be strategically used to differentiate intent. Cannot exceed <c>2000</c> characters.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetValue<T>(this T toolSettings) where T : SlackMessageAction
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Value = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Style
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageAction.Style"/></em></p>
+        ///   <p>Leave blank to indicate that this is an ordinary button. Use <c>primary</c> or <c>danger</c> to mark important buttons.</p>
+        /// </summary>
+        [Pure]
+        public static T SetStyle<T>(this T toolSettings, SlackMessageActionStyle style) where T : SlackMessageAction
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Style = style;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessageAction.Style"/></em></p>
+        ///   <p>Leave blank to indicate that this is an ordinary button. Use <c>primary</c> or <c>danger</c> to mark important buttons.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetStyle<T>(this T toolSettings) where T : SlackMessageAction
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Style = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Confirmation
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageAction.Confirmation"/></em></p>
+        ///   <p>Shows a confirmation dialog when the action is selected.</p>
+        /// </summary>
+        [Pure]
+        public static T SetConfirmation<T>(this T toolSettings, SlackMessageConfirmation confirmation) where T : SlackMessageAction
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Confirmation = confirmation;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessageAction.Confirmation"/></em></p>
+        ///   <p>Shows a confirmation dialog when the action is selected.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetConfirmation<T>(this T toolSettings) where T : SlackMessageAction
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Confirmation = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region SlackMessageConfirmationExtensions
+    /// <summary>
+    ///   Used within <see cref="SlackTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class SlackMessageConfirmationExtensions
+    {
+        #region Title
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageConfirmation.Title"/></em></p>
+        ///   <p>Title of the confirmation dialog.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTitle<T>(this T toolSettings, string title) where T : SlackMessageConfirmation
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Title = title;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessageConfirmation.Title"/></em></p>
+        ///   <p>Title of the confirmation dialog.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetTitle<T>(this T toolSettings) where T : SlackMessageConfirmation
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Title = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Text
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageConfirmation.Text"/></em></p>
+        ///   <p>Text of the confirmation dialog.</p>
+        /// </summary>
+        [Pure]
+        public static T SetText<T>(this T toolSettings, string text) where T : SlackMessageConfirmation
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Text = text;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessageConfirmation.Text"/></em></p>
+        ///   <p>Text of the confirmation dialog.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetText<T>(this T toolSettings) where T : SlackMessageConfirmation
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Text = null;
+            return toolSettings;
+        }
+        #endregion
+        #region OkText
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageConfirmation.OkText"/></em></p>
+        ///   <p>Confirm button text of the confirmation dialog.</p>
+        /// </summary>
+        [Pure]
+        public static T SetOkText<T>(this T toolSettings, string okText) where T : SlackMessageConfirmation
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OkText = okText;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessageConfirmation.OkText"/></em></p>
+        ///   <p>Confirm button text of the confirmation dialog.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOkText<T>(this T toolSettings) where T : SlackMessageConfirmation
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OkText = null;
+            return toolSettings;
+        }
+        #endregion
+        #region DismissText
+        /// <summary>
+        ///   <p><em>Sets <see cref="SlackMessageConfirmation.DismissText"/></em></p>
+        ///   <p>Dismiss button text of the confirmation dialog.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDismissText<T>(this T toolSettings, string dismissText) where T : SlackMessageConfirmation
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DismissText = dismissText;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SlackMessageConfirmation.DismissText"/></em></p>
+        ///   <p>Dismiss button text of the confirmation dialog.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDismissText<T>(this T toolSettings) where T : SlackMessageConfirmation
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DismissText = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region SlackMessageActionStyle
+    /// <summary>
+    ///   Used within <see cref="SlackTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [Serializable]
+    [ExcludeFromCodeCoverage]
+    [TypeConverter(typeof(TypeConverter<SlackMessageActionStyle>))]
+    public partial class SlackMessageActionStyle : Enumeration
+    {
+        public static SlackMessageActionStyle primary = (SlackMessageActionStyle) "primary";
+        public static SlackMessageActionStyle danger = (SlackMessageActionStyle) "danger";
+        public static implicit operator SlackMessageActionStyle(string value)
+        {
+            return new SlackMessageActionStyle { Value = value };
+        }
     }
     #endregion
 }

@@ -7,14 +7,12 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
-using Nuke.Common.CI;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Codecov;
 using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Utilities.Collections;
-using Nuke.Common.ValueInjection;
 using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.Tools.Codecov.CodecovTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
@@ -22,11 +20,11 @@ using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 namespace Nuke.Components
 {
     [PublicAPI]
-    public interface IReportCoverage : ITest, IHazReports, IHazGitRepository, IHazGitVersion
+    public interface IReportCoverage : ITest, IHazReports, IHazGitRepository
     {
         bool CreateCoverageHtmlReport { get; }
         bool ReportToCodecov { get; }
-        [Parameter] [Secret] string CodecovToken => ValueInjectionUtility.TryGetValue(() => CodecovToken);
+        [Parameter] [Secret] string CodecovToken => TryGetValue(() => CodecovToken);
 
         string CoverageReportDirectory => ReportDirectory / "coverage-report";
         string CoverageReportArchive => Path.ChangeExtension(CoverageReportDirectory, ".zip");
@@ -66,7 +64,8 @@ namespace Nuke.Components
             .SetToken(CodecovToken)
             .SetBranch(GitRepository.Branch)
             .SetSha(GitRepository.Commit)
-            .SetBuild(Versioning.FullSemVer)
+            .WhenNotNull(this as IHazGitVersion, (_, o) => _
+                .SetBuild(o.Versioning.FullSemVer))
             .SetFramework("netcoreapp3.0");
 
         Configure<CodecovSettings> CodecovSettings => _ => _;

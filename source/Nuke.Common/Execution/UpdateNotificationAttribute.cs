@@ -20,7 +20,7 @@ namespace Nuke.Common.Execution
             if (NukeBuild.IsLocalBuild && ShouldNotify)
             {
                 Notify();
-                Logger.Info("Press any key to continue without update...");
+                Host.Information("Press any key to continue without update ...");
                 Console.ReadKey();
             }
         }
@@ -35,7 +35,7 @@ namespace Nuke.Common.Execution
 
         private static void Notify()
         {
-            Logger.Warn(
+            Host.Warning(
                 new[]
                 {
                     "--- UPDATE RECOMMENDED FROM 5.1.0 ---",

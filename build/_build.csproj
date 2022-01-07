@@ -4,16 +4,11 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace></RootNamespace>
     <NoWarn>CS0649;CS0169</NoWarn>
     <NukeRootDirectory>.\..</NukeRootDirectory>
     <NukeTelemetryVersion>1</NukeTelemetryVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="Exists('..\external\enterprise\.gitignore')">
-    <NukeEnterprise>True</NukeEnterprise>
-    <AppendTargetFrameworkToOutputPath>True</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
   <!-- Test properties for MSBuild integration -->
@@ -50,9 +45,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta0008" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
     <PackageDownload Include="Codecov.Tool" Version="[1.12.3]" />
-    <PackageDownload Include="GitVersion.Tool" Version="[5.6.10]" />
+    <PackageDownload Include="GitVersion.Tool" Version="[5.8.0]" />
     <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.3.2]" />
     <PackageDownload Include="ReportGenerator" Version="[4.6.1]" />
     <PackageDownload Include="xunit.runner.console" Version="[2.4.1]" />
@@ -62,10 +57,8 @@
     <ProjectReference Include="..\source\Nuke.Components\Nuke.Components.csproj" />
     <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
     <ProjectReference Include="..\source\Nuke.SourceGenerators\Nuke.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
-    <ProjectReference Include="..\external\enterprise\src\Nuke.Enterprise\Nuke.Enterprise.csproj" Condition="'$(NukeEnterprise)' == 'True'" />
   </ItemGroup>
 
-  <Import Project="..\external\enterprise\src\Nuke.Enterprise\Nuke.Enterprise.props" Condition="'$(NukeEnterprise)' == 'True'" />
   <Import Project="..\source\Nuke.Common\Nuke.Common.targets" />
 
 </Project>

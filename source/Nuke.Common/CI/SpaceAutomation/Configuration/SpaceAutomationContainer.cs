@@ -1,11 +1,13 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.SpaceAutomation.Configuration
 {
@@ -14,6 +16,7 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
     {
         public string Image { get; set; }
         public SpaceAutomationResources Resources { get; set; }
+        public Dictionary<string, string> Imports { get; set; }
         public string BuildScript { get; set; }
         public string[] InvokedTargets { get; set; }
 
@@ -22,6 +25,7 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
             using (writer.WriteBlock($"container({Image.DoubleQuote()})"))
             {
                 Resources.Write(writer);
+                Imports.ForEach(x => writer.WriteLine($"{x.Key} = {x.Value}"));
 
                 using (writer.WriteBlock("shellScript"))
                 {

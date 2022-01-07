@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,8 +15,20 @@ namespace Nuke.CodeGeneration.Generators
     {
         public static bool IsValueType(this Property property)
         {
-            return new[] { "int", "bool", "sbyte", "short", "long", "byte", "ushort", "uint", "ulong", "float", "double", "char", "decimal" }
-                .Contains(property.Type);
+            return property.Type.EqualsAnyOrdinalIgnoreCase(
+                "int",
+                "bool",
+                "sbyte",
+                "short",
+                "long",
+                "byte",
+                "ushort",
+                "uint",
+                "ulong",
+                "float",
+                "double",
+                "char",
+                "decimal");
         }
 
         public static string GetNullableType(this Property property)
@@ -31,27 +43,27 @@ namespace Nuke.CodeGeneration.Generators
 
         public static string GetListValueType(this Property property)
         {
-            ControlFlow.Assert(property.IsList(), "property.IsList()");
+            Assert.True(property.IsList());
             return GetGenerics(property).Single();
         }
 
         public static (string, string) GetDictionaryKeyValueTypes(this Property property)
         {
-            ControlFlow.Assert(property.IsDictionary(), "property.IsDictionary()");
+            Assert.True(property.IsDictionary());
             var generics = GetGenerics(property);
             return (generics[0], generics[1]);
         }
 
         public static (string, string) GetLookupTableKeyValueTypes(this Property property)
         {
-            ControlFlow.Assert(property.IsLookupTable(), "property.IsLookupTable()");
+            Assert.True(property.IsLookupTable());
             var generics = GetGenerics(property);
             return (generics[0], generics[1]);
         }
 
         public static string GetKeyComparer(this Property property)
         {
-            ControlFlow.Assert(property.IsDictionary() || property.IsLookupTable(), "property.IsDictionary() || property.IsLookupTable()");
+            Assert.True(property.IsDictionary() || property.IsLookupTable());
             var keyType = GetGenerics(property).First();
 
             return keyType.EqualsOrdinalIgnoreCase("string")
@@ -82,7 +94,17 @@ namespace Nuke.CodeGeneration.Generators
 
         public static bool IsBoolean(this Property property)
         {
-            return property.Type.StartsWith("bool");
+            return property.Type.EqualsOrdinalIgnoreCase("bool");
+        }
+
+        public static bool IsString(this Property property)
+        {
+            return property.Type.EqualsOrdinalIgnoreCase("string");
+        }
+
+        public static bool HasCustomListType(this Property property)
+        {
+            return property.DataClass.Tool.DataClasses.Any(x => x.Name == property.GetListValueType());
         }
 
         public static string GetClassName(this Tool tool)

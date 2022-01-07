@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -9,7 +9,6 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
-using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -73,12 +72,11 @@ namespace Nuke.Common.ProjectModel
                 return null;
 
             var solutionFileRelative = File.ReadAllLines(nukeFile).ElementAtOrDefault(0);
-            ControlFlow.Assert(solutionFileRelative != null && !solutionFileRelative.Contains(value: '\\'),
+            Assert.True(solutionFileRelative != null && !solutionFileRelative.Contains(value: '\\'),
                 $"First line of {Constants.NukeFileName} must provide solution path using UNIX separators");
 
             var solutionFile = Path.GetFullPath(Path.Combine(NukeBuild.RootDirectory, solutionFileRelative));
-            ControlFlow.Assert(File.Exists(solutionFile),
-                $"Solution file '{solutionFile}' provided via {Constants.NukeFileName} does not exist.");
+            Assert.FileExists(solutionFile, $"Solution file '{solutionFile}' provided via {Constants.NukeFileName} does not exist");
 
             return (AbsolutePath) solutionFile;
         }

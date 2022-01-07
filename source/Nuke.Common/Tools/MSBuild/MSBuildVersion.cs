@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,6 +15,7 @@ namespace Nuke.Common.Tools.MSBuild
     [PublicAPI]
     public enum MSBuildVersion
     {
+        VS2022,
         VS2019,
         VS2017,
         VS2015,

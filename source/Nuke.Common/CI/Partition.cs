@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,8 +17,8 @@ namespace Nuke.Common.CI
     {
         public static Partition Single { get; } = new Partition { Part = 1, Total = 1 };
 
-        internal int Part { get; set; }
-        internal int Total { get; set; }
+        public int Part { get; set; }
+        public int Total { get; set; }
 
         public class TypeConverter : System.ComponentModel.TypeConverter
         {

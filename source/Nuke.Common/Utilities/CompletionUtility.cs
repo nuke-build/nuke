@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -51,7 +51,7 @@ namespace Nuke.Common.Utilities
                             new string[0];
 
                 if (parameter.EqualsOrdinalIgnoreCase(Constants.InvokedTargetsParameterName))
-                    items = items.Select(x => x.SplitCamelHumpsWithSeparator("-", Constants.KnownWords));
+                    items = items.Select(x => x.SplitCamelHumpsWithKnownWords().JoinDash());
 
                 AddItems(items);
             }

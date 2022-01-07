@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,7 +15,6 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities;
-using static Nuke.Common.ControlFlow;
 
 namespace Nuke.MSBuildTasks
 {
@@ -68,7 +67,7 @@ namespace Nuke.MSBuildTasks
 
             static Uri GetUri(string uriString)
             {
-                Assert(Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out var uri), $"Could not parse URI from '{uriString}'.");
+                Assert.True(Uri.TryCreate(uriString, UriKind.RelativeOrAbsolute, out var uri), $"Could not parse URI from '{uriString}'.");
                 return uri;
             }
 

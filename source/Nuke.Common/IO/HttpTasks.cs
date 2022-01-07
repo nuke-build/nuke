@@ -1,10 +1,12 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
@@ -14,71 +16,61 @@ namespace Nuke.Common.IO
     [PublicAPI]
     public static class HttpTasks
     {
+        public static TimeSpan DefaultTimeout = TimeSpan.FromSeconds(5);
+
         [Pure]
         public static string HttpDownloadString(
             string uri,
-            Configure<WebClient> clientConfigurator = null,
-            Action<WebHeaderCollection> headerConfigurator = null,
-            Action<WebRequest> requestConfigurator = null)
+            Configure<HttpClient> clientConfigurator = null,
+            Action<HttpRequestHeaders> headerConfigurator = null)
         {
-            return HttpDownloadStringAsync(uri, clientConfigurator, headerConfigurator, requestConfigurator).GetAwaiter().GetResult();
+            return HttpDownloadStringAsync(uri, clientConfigurator, headerConfigurator).GetAwaiter().GetResult();
         }
 
         [Pure]
         public static async Task<string> HttpDownloadStringAsync(
             string uri,
-            Configure<WebClient> clientConfigurator = null,
-            Action<WebHeaderCollection> headerConfigurator = null,
-            Action<WebRequest> requestConfigurator = null)
+            Configure<HttpClient> clientConfigurator = null,
+            Action<HttpRequestHeaders> headerConfigurator = null)
         {
-            WebClient webClient = new CustomWebClient(requestConfigurator);
-            webClient = clientConfigurator.InvokeSafe(webClient);
-            headerConfigurator?.Invoke(webClient.Headers);
-
-            return await webClient.DownloadStringTaskAsync(new Uri(uri));
+            var httpClient = CreateHttpClient(clientConfigurator, headerConfigurator);
+            return await httpClient.GetAsync(uri).Result.Content.ReadAsStringAsync();
         }
 
         public static void HttpDownloadFile(
             string uri,
             string path,
-            Configure<WebClient> clientConfigurator = null,
-            Action<WebHeaderCollection> headerConfigurator = null,
-            Action<WebRequest> requestConfigurator = null)
+            FileMode mode = FileMode.Create,
+            Configure<HttpClient> clientConfigurator = null,
+            Action<HttpRequestHeaders> headerConfigurator = null)
         {
-            HttpDownloadFileAsync(uri, path, clientConfigurator, headerConfigurator, requestConfigurator).GetAwaiter().GetResult();
+            HttpDownloadFileAsync(uri, path, mode, clientConfigurator, headerConfigurator).GetAwaiter().GetResult();
         }
 
         public static async Task HttpDownloadFileAsync(
             string uri,
             string path,
-            Configure<WebClient> clientConfigurator = null,
-            Action<WebHeaderCollection> headerConfigurator = null,
-            Action<WebRequest> requestConfigurator = null)
+            FileMode mode = FileMode.Create,
+            Configure<HttpClient> clientConfigurator = null,
+            Action<HttpRequestHeaders> headerConfigurator = null)
         {
-            WebClient webClient = new CustomWebClient(requestConfigurator);
-            webClient = clientConfigurator.InvokeSafe(webClient);
-            headerConfigurator?.Invoke(webClient.Headers);
+            var httpClient = CreateHttpClient(clientConfigurator, headerConfigurator);
+            var response = await httpClient.GetAsync(uri);
+            Assert.True(response.IsSuccessStatusCode, $"{response.ReasonPhrase}: {uri}");
 
             FileSystemTasks.EnsureExistingParentDirectory(path);
-
-            await webClient.DownloadFileTaskAsync(new Uri(uri), path);
+            using var fileStream = File.Open(path, mode);
+            await response.Content.CopyToAsync(fileStream);
         }
 
-        private class CustomWebClient : WebClient
+        private static HttpClient CreateHttpClient(
+            Configure<HttpClient> clientConfigurator = null,
+            Action<HttpRequestHeaders> headerConfigurator = null)
         {
-            private readonly Action<WebRequest> _requestConfigurator;
-
-            public CustomWebClient(Action<WebRequest> requestConfigurator)
-            {
-                _requestConfigurator = requestConfigurator;
-            }
-
-            protected override WebRequest GetWebRequest(Uri address)
-            {
-                var webRequest = base.GetWebRequest(address);
-                _requestConfigurator?.Invoke(webRequest);
-                return webRequest;
-            }
+            var httpClient = new HttpClient { Timeout = DefaultTimeout };
+            clientConfigurator?.Invoke(httpClient);
+            headerConfigurator?.Invoke(httpClient.DefaultRequestHeaders);
+            return httpClient;
         }
     }
 }

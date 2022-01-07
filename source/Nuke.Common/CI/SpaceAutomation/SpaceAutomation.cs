@@ -16,7 +16,7 @@ namespace Nuke.Common.CI.SpaceAutomation
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class SpaceAutomation : Host, IBuildServer
+    public partial class SpaceAutomation : Host, IBuildServer
     {
         public new static SpaceAutomation Instance => Host.Instance as SpaceAutomation;
 

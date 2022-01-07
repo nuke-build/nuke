@@ -6,6 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.CI.AzurePipelines.Configuration
 {
@@ -13,18 +14,31 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     [PublicAPI]
     public class AzurePipelinesCacheStep : AzurePipelinesStep
     {
+        public AzurePipelinesImage Image { get; set; }
         public string[] KeyFiles { get; set; }
         public string Path { get; set; }
+
+        private string AdjustedPath =>
+            Image.GetValue().StartsWithAnyOrdinalIgnoreCase("ubuntu", "macos")
+                ? Path.Replace("~", "$(HOME)")
+                : Path.Replace("~", "$(USERPROFILE)");
+
+        private string Identifier => Path
+            .Replace(".", "/")
+            .Replace("~", "/")
+            .Replace("/", "-")
+            .Trim('-');
 
         public override void Write(CustomFileWriter writer)
         {
             using (writer.WriteBlock("- task: Cache@2"))
             {
+                writer.WriteLine($"displayName: Cache ({Identifier})");
                 using (writer.WriteBlock("inputs:"))
                 {
-                    writer.WriteLine($"key: $(Agent.OS) | {KeyFiles.JoinComma()}");
-                    writer.WriteLine("restoreKeys: $(Agent.OS)");
-                    writer.WriteLine($"path: {Path}");
+                    writer.WriteLine($"key: $(Agent.OS) | {Identifier} | {KeyFiles.JoinCommaSpace()}");
+                    writer.WriteLine($"restoreKeys: $(Agent.OS) | {Identifier}");
+                    writer.WriteLine($"path: {AdjustedPath}");
                 }
             }
         }

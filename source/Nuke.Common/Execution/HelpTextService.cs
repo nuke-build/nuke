@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,7 +25,7 @@ namespace Nuke.Common.Execution
             foreach (var target in executableTargets.Where(x => x.Listed))
             {
                 var dependencies = target.ExecutionDependencies.Count > 0
-                    ? $" -> {target.ExecutionDependencies.Select(x => x.Name).JoinComma()}"
+                    ? $" -> {target.ExecutionDependencies.Select(x => x.Name).JoinCommaSpace()}"
                     : string.Empty;
                 var targetEntry = target.Name + (target.IsDefault ? " (default)" : string.Empty);
                 builder.AppendLine($"  {targetEntry.PadRight(padRightTargets)}{dependencies}");

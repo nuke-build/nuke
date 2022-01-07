@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -45,11 +45,11 @@ namespace Nuke.Common
     /// </example>
     [PublicAPI]
     // Before logo
+    [HandleShellCompletion(Priority = 200)]
     [ArgumentsFromParametersFile(Priority = 150)]
     [InjectParameterValues(Priority = 100)]
     [GenerateBuildServerConfigurations(Priority = 50)]
     [InvokeBuildServerConfigurationGeneration(Priority = 45)]
-    [HandleShellCompletion(Priority = 40)]
     [UnsetVisualStudioEnvironmentVariables]
     // [SaveBuildProfile(Priority = 30)]
     // [LoadBuildProfiles(Priority = 25)]
@@ -59,7 +59,6 @@ namespace Nuke.Common
     [HandleVisualStudioDebugging]
     [InjectNonParameterValues(Priority = -100)]
     // After finish
-    [ShowSponsorship(Priority = 50)]
     [UpdateNotification(Priority = 10)]
     [SerializeBuildServerState]
     public abstract partial class NukeBuild : INukeBuild
@@ -75,7 +74,8 @@ namespace Nuke.Common
         }
 
         internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }
-        internal IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; set; }
+
+        public IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; set; }
 
         /// <summary>
         /// Gets the list of targets that were invoked.

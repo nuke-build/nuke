@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -54,6 +54,29 @@ namespace Nuke.Common.ProjectModel
         public static IEnumerable<T> GetItemMetadata<T>(this Project project, string itemGroupName, string metadataName)
         {
             return project.GetItemMetadata(itemGroupName, metadataName).Select(Convert<T>);
+        }
+
+        [CanBeNull]
+        public static string GetItemMetadataSingleOrDefault(this Project project, string itemGroupName, string includeName, string metadataName)
+        {
+            var items = project.GetMSBuildProject().GetItems(itemGroupName);
+            return items.SingleOrDefault(x => x.EvaluatedInclude == includeName)?.GetMetadataValue(metadataName);
+        }
+
+        [CanBeNull]
+        public static T GetItemMetadataSingleOrDefault<T>(this Project project, string itemGroupName, string includeName, string metadataName)
+        {
+            return Convert<T>(project.GetItemMetadataSingleOrDefault(itemGroupName, includeName, metadataName));
+        }
+
+        public static bool HasPackageReference(this Project project, string packageId)
+        {
+            return project.GetItems("PackageReference").Contains(packageId);
+        }
+
+        public static string GetPackageReferenceVersion(this Project project, string packageId)
+        {
+            return project.GetItemMetadataSingleOrDefault("PackageReference", packageId, "Version");
         }
 
         [CanBeNull]

@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/SignTool.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/SignTool/SignTool.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, SignToolLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, SignToolLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

@@ -14,6 +14,9 @@
 # </auto-generated>
 # ------------------------------------------------------------------------------
 
+pr:
+  none
+
 stages:
   - stage: ubuntu_latest
     displayName: 'ubuntu-latest'
@@ -27,13 +30,21 @@ stages:
         strategy:
           parallel: 2
         steps:
+          - task: Cache@2
+            displayName: Cache (nuke-temp)
+            inputs:
+              key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuke-temp
+              path: .nuke/temp
+          - task: Cache@2
+            displayName: Cache (nuget-packages)
+            inputs:
+              key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuget-packages
+              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
-            env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -42,13 +53,21 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [  ]
         steps:
+          - task: Cache@2
+            displayName: Cache (nuke-temp)
+            inputs:
+              key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuke-temp
+              path: .nuke/temp
+          - task: Cache@2
+            displayName: Cache (nuget-packages)
+            inputs:
+              key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuget-packages
+              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Restore Compile Pack --skip'
-            env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
+              script: './build.cmd Restore DownloadLicenses Compile Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
@@ -65,13 +84,21 @@ stages:
         strategy:
           parallel: 2
         steps:
+          - task: Cache@2
+            displayName: Cache (nuke-temp)
+            inputs:
+              key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuke-temp
+              path: .nuke/temp
+          - task: Cache@2
+            displayName: Cache (nuget-packages)
+            inputs:
+              key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuget-packages
+              path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
-            env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -80,13 +107,21 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [  ]
         steps:
+          - task: Cache@2
+            displayName: Cache (nuke-temp)
+            inputs:
+              key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuke-temp
+              path: .nuke/temp
+          - task: Cache@2
+            displayName: Cache (nuget-packages)
+            inputs:
+              key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuget-packages
+              path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Restore Compile Pack --skip'
-            env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
+              script: './build.cmd Restore DownloadLicenses Compile Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages
@@ -103,13 +138,21 @@ stages:
         strategy:
           parallel: 2
         steps:
+          - task: Cache@2
+            displayName: Cache (nuke-temp)
+            inputs:
+              key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuke-temp
+              path: .nuke/temp
+          - task: Cache@2
+            displayName: Cache (nuget-packages)
+            inputs:
+              key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuget-packages
+              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
-            env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
@@ -118,13 +161,21 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [  ]
         steps:
+          - task: Cache@2
+            displayName: Cache (nuke-temp)
+            inputs:
+              key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuke-temp
+              path: .nuke/temp
+          - task: Cache@2
+            displayName: Cache (nuget-packages)
+            inputs:
+              key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
+              restoreKeys: $(Agent.OS) | nuget-packages
+              path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Restore Compile Pack --skip'
-            env:
-              AzurePipelinesAccessToken: $(System.AccessToken)
-              EnterpriseAccessToken: $(EnterpriseAccessToken)
-              SlackUserAccessToken: $(SlackUserAccessToken)
+              script: './build.cmd Restore DownloadLicenses Compile Pack --skip'
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: packages

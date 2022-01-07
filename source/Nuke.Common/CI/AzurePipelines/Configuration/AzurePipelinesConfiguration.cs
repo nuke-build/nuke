@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,6 +15,9 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
 
         [CanBeNull]
         public AzurePipelinesVcsPushTrigger VcsPushTrigger { get; set; }
+
+        [CanBeNull]
+        public AzurePipelinesVcsPushTrigger VcsPullRequestTrigger { get; set; }
 
         public AzurePipelinesStage[] Stages { get; set; }
 
@@ -34,6 +37,15 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                 using (writer.WriteBlock("trigger:"))
                 {
                     VcsPushTrigger.Write(writer);
+                    writer.WriteLine();
+                }
+            }
+
+            if (VcsPullRequestTrigger != null)
+            {
+                using (writer.WriteBlock("pr:"))
+                {
+                    VcsPullRequestTrigger.Write(writer);
                     writer.WriteLine();
                 }
             }

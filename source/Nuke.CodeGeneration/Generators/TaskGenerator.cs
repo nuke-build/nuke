@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -51,8 +51,6 @@ namespace Nuke.CodeGeneration.Generators
                                  "int? timeout = null",
                                  "bool? logOutput = null",
                                  "bool? logInvocation = null",
-                                 "bool? logTimestamp = null",
-                                 "string logFile = null",
                                  "Func<string, string> outputFilter = null"
                              };
             var arguments = new[]
@@ -64,17 +62,15 @@ namespace Nuke.CodeGeneration.Generators
                                 "timeout",
                                 "logOutput",
                                 "logInvocation",
-                                "logTimestamp",
-                                "logFile",
                                 $"{tool.Name}Logger",
                                 "outputFilter"
                             };
             writer
                 .WriteSummary(tool)
                 .WriteObsoleteAttributeWhenObsolete(tool)
-                .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinComma()})")
+                .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinCommaSpace()})")
                 .WriteBlock(w => w
-                    .WriteLine($"using var process = ProcessTasks.StartProcess({arguments.JoinComma()});")
+                    .WriteLine($"using var process = ProcessTasks.StartProcess({arguments.JoinCommaSpace()});")
                     .WriteLine("process.AssertZeroExitCode();")
                     .WriteLine("return process.Output;"));
         }
@@ -131,7 +127,7 @@ namespace Nuke.CodeGeneration.Generators
                                  $"CombinatorialConfigure<{task.SettingsClass.Name}> configurator",
                                  "int degreeOfParallelism = 1",
                                  "bool completeOnFailure = false"
-                             }.JoinComma();
+                             }.JoinCommaSpace();
 
             return writer
                 .WriteSummary(task)

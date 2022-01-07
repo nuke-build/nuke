@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.IO
 {
@@ -34,12 +35,17 @@ namespace Nuke.Common.IO
             return directory.Name.StartsWith(".");
         }
 
-        public static bool FileExists(AbsolutePath path)
+        public static bool Exists(this AbsolutePath path)
+        {
+            return path.FileExists() || path.DirectoryExists();
+        }
+
+        public static bool FileExists(this AbsolutePath path)
         {
             return File.Exists(path);
         }
 
-        public static bool DirectoryExists(AbsolutePath path)
+        public static bool DirectoryExists(this AbsolutePath path)
         {
             return Directory.Exists(path);
         }
@@ -64,7 +70,7 @@ namespace Nuke.Common.IO
             if (Directory.Exists(directory))
                 return;
 
-            Logger.Info($"Creating directory '{directory}'...");
+            Log.Information("Creating directory {Directory}...", directory);
             Directory.CreateDirectory(directory);
         }
 
@@ -77,7 +83,7 @@ namespace Nuke.Common.IO
         {
             if (Directory.Exists(directory))
             {
-                Logger.Info($"Cleaning directory '{directory}'...");
+                Log.Information("Cleaning directory {Directory}...", directory);
                 Directory.GetFiles(directory).ForEach(DeleteFileInternal);
                 Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
             }
@@ -97,7 +103,7 @@ namespace Nuke.Common.IO
             if (!Directory.Exists(directory))
                 return;
 
-            Logger.Info($"Deleting directory '{directory}'...");
+            Log.Information("Deleting directory {Directory}...", directory);
             DeleteDirectoryInternal(directory);
         }
 
@@ -109,13 +115,13 @@ namespace Nuke.Common.IO
             Directory.GetFiles(directory).ForEach(DeleteFileInternal);
             Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
 
-            Logger.Trace($"Deleting directory '{directory}'...");
+            Log.Verbose("Deleting directory {Directory}...", directory);
             Directory.Delete(directory, recursive: false);
         }
 
         private static void DeleteFileInternal(string file)
         {
-            Logger.Trace($"Deleting file '{file}'...");
+            Log.Verbose("Deleting file {File}...", file);
             EnsureFileAttributes(file);
             File.Delete(file);
         }
@@ -130,7 +136,7 @@ namespace Nuke.Common.IO
             if (!File.Exists(file))
                 return;
 
-            Logger.Info($"Deleting file '{file}'...");
+            Log.Information("Deleting file {File}...", file);
             EnsureFileAttributes(file);
             File.Delete(file);
         }
@@ -143,7 +149,7 @@ namespace Nuke.Common.IO
             if (createDirectories)
                 EnsureExistingParentDirectory(target);
 
-            Logger.Info($"Copying file '{source}' to '{target}'...");
+            Log.Information("Copying file {Source} to {Target}...", source, target);
             File.Copy(source, target, overwrite: true);
         }
 
@@ -164,7 +170,7 @@ namespace Nuke.Common.IO
             if (createDirectories)
                 EnsureExistingParentDirectory(target);
 
-            Logger.Info($"Moving file from '{source}' to '{target}'...");
+            Log.Information("Moving file from {Source} to {Target}...", source, target);
             if (File.Exists(target))
                 File.Delete(target);
 
@@ -195,10 +201,8 @@ namespace Nuke.Common.IO
             FileExistsPolicy filePolicy = FileExistsPolicy.Fail,
             bool deleteRemainingFiles = false)
         {
-            ControlFlow.Assert(!Directory.Exists(target) || directoryPolicy != DirectoryExistsPolicy.Fail,
-                $"!Directory.Exists({target}) || policy != DirectoryExistsPolicy.Fail");
-
-            Logger.Info($"Moving directory from '{source}' to '{target}'...");
+            Assert.True(!Directory.Exists(target) || directoryPolicy != DirectoryExistsPolicy.Fail);
+            Log.Information("Moving directory from {Source} to {Target}...", source, target);
             if (!Directory.Exists(target))
             {
                 Directory.Move(source, target);
@@ -239,12 +243,12 @@ namespace Nuke.Common.IO
             Func<DirectoryInfo, bool> excludeDirectory = null,
             Func<FileInfo, bool> excludeFile = null)
         {
-            ControlFlow.Assert(Directory.Exists(source), $"Directory.Exists({source})");
-            ControlFlow.Assert(!PathConstruction.IsDescendantPath(source, target),
-                $"Target directory '{target}' must not be in source directory '{source}'.");
+            Assert.DirectoryExists(source);
+            Assert.False(PathConstruction.IsDescendantPath(source, target),
+                $"Target directory '{target}' must not be in source directory '{source}'");
             //ControlFlow.Assert(!Contains(source, target), $"Target '{target}' is not contained in source '{source}'.");
 
-            Logger.Info($"Recursively copying from '{source}' to '{target}'...");
+            Log.Information("Recursively copying from {Source} to {Target}...", source, target);
             CopyRecursivelyInternal(source, target, directoryPolicy, filePolicy, excludeDirectory, excludeFile);
         }
 
@@ -259,8 +263,7 @@ namespace Nuke.Common.IO
             if (excludeDirectory != null && excludeDirectory(new DirectoryInfo(source)))
                 return;
 
-            ControlFlow.Assert(!Directory.Exists(target) || directoryPolicy != DirectoryExistsPolicy.Fail,
-                $"!Directory.Exists({target}) || directoryPolicy != DirectoryExistsPolicy.Fail");
+            Assert.True(!Directory.Exists(target) || directoryPolicy != DirectoryExistsPolicy.Fail);
 
             string GetDestinationPath(string path)
                 => Path.Combine(target, PathConstruction.GetRelativePath(source, path));
@@ -306,7 +309,7 @@ namespace Nuke.Common.IO
 
         public static void Touch(string path, DateTime? time = null, bool createDirectories = true)
         {
-            Logger.Info($"Touching file '{path}'...");
+            Log.Information("Touching file {Path}...", path);
 
             if (createDirectories)
                 EnsureExistingParentDirectory(path);
@@ -327,7 +330,7 @@ namespace Nuke.Common.IO
         /// </summary>
         public static DateTime GetLastWriteTimeUtc(string path)
         {
-            ControlFlow.Assert(Directory.Exists(path) || File.Exists(path), "Directory.Exists(path) || File.Exists(path)");
+            Assert.True(Directory.Exists(path) || File.Exists(path));
 
             return Directory.Exists(path)
                 ? new DirectoryInfo(path)
@@ -353,7 +356,7 @@ namespace Nuke.Common.IO
 
         public static string GetFileHash(string file)
         {
-            ControlFlow.Assert(File.Exists(file), $"File.Exists({file})");
+            Assert.FileExists(file);
 
             using var md5 = MD5.Create();
             using var stream = File.OpenRead(file);
@@ -363,7 +366,7 @@ namespace Nuke.Common.IO
 
         public static string GetDirectoryHash(string directory, params string[] fileGlobPatterns)
         {
-            ControlFlow.Assert(Directory.Exists(directory), $"Directory.Exists({directory})");
+            Assert.DirectoryExists(directory);
 
             var files = (fileGlobPatterns.Length == 0
                     ? Directory.GetFiles(directory, "*", SearchOption.AllDirectories)

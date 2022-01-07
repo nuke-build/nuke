@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,8 +8,8 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
-using Nuke.Common.CI;
 using Nuke.Common.CI.AzurePipelines;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
@@ -96,7 +96,15 @@ namespace Nuke.Components
 
         sealed Configure<DotNetTestSettings, Project> TestProjectSettingsBase => (_, v) => _
             .SetProjectFile(v)
-            .SetLoggers($"trx;LogFileName={v.Name}.trx")
+            // https://github.com/Tyrrrz/GitHubActionsTestLogger
+            .When(GitHubActions.Instance is not null && v.HasPackageReference("GitHubActionsTestLogger"), _ => _
+                .AddLoggers("GitHubActions;report-warnings=false"))
+            // https://github.com/JetBrains/TeamCity.VSTest.TestAdapter
+            .When(TeamCity.Instance is not null && v.HasPackageReference("TeamCity.VSTest.TestAdapter"), _ => _
+                .AddLoggers("TeamCity")
+                // https://github.com/xunit/visualstudio.xunit/pull/108
+                .AddRunSetting("RunConfiguration.NoAutoReporters", bool.TrueString))
+            .AddLoggers($"trx;LogFileName={v.Name}.trx")
             .When(InvokedTargets.Contains((this as IReportCoverage)?.ReportCoverage) || IsServerBuild, _ => _
                 .SetCoverletOutput(TestResultDirectory / $"{v.Name}.xml"));
 

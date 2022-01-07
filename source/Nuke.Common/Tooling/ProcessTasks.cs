@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,6 +12,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.Tooling
 {
@@ -20,7 +21,6 @@ namespace Nuke.Common.Tooling
     {
         public static bool DefaultLogOutput = true;
         public static bool DefaultLogInvocation = true;
-        public static bool DefaultLogTimestamp = false;
         public static bool LogWorkingDirectory = true;
 
         private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
@@ -32,8 +32,6 @@ namespace Nuke.Common.Tooling
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
-            bool? logTimestamp = null,
-            string logFile = null,
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
@@ -46,8 +44,6 @@ namespace Nuke.Common.Tooling
                 timeout,
                 logOutput,
                 logInvocation,
-                logTimestamp,
-                logFile,
                 customLogger,
                 outputFilter);
         }
@@ -64,8 +60,6 @@ namespace Nuke.Common.Tooling
                 toolSettings.ProcessExecutionTimeout,
                 toolSettings.ProcessLogOutput,
                 toolSettings.ProcessLogInvocation,
-                toolSettings.ProcessLogTimestamp,
-                toolSettings.ProcessLogFile,
                 toolSettings.ProcessCustomLogger,
                 arguments.FilterSecrets);
         }
@@ -78,12 +72,10 @@ namespace Nuke.Common.Tooling
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
-            bool? logTimestamp = null,
-            string logFile = null,
             Action<OutputType, string> customLogger = null,
             Func<string, string> outputFilter = null)
         {
-            ControlFlow.Assert(toolPath != null, "ToolPath was not set.");
+            Assert.True(toolPath != null);
             if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
                 toolPath = ToolPathResolver.GetPathExecutable(toolPath);
 
@@ -95,12 +87,13 @@ namespace Nuke.Common.Tooling
             }
 
             outputFilter ??= x => x;
-            ControlFlow.Assert(File.Exists(toolPath), $"ToolPath '{toolPath}' does not exist.");
+            Assert.FileExists(toolPath);
             if (logInvocation ?? DefaultLogInvocation)
             {
-                Logger.Info($"> {Path.GetFullPath(toolPath).DoubleQuoteIfNeeded()} {outputFilter(arguments)}");
+                // TODO: logging additional
+                Log.Information("> {ToolPath} {Arguments}", Path.GetFullPath(toolPath).DoubleQuoteIfNeeded(), outputFilter(arguments));
                 if (LogWorkingDirectory && workingDirectory != null)
-                    Logger.Info($"@ {workingDirectory}");
+                    Log.Information("@ {WorkingDirectory}", workingDirectory);
             }
 
             return StartProcessInternal(toolPath,
@@ -108,8 +101,6 @@ namespace Nuke.Common.Tooling
                 workingDirectory,
                 environmentVariables,
                 timeout,
-                logTimestamp ?? DefaultLogTimestamp,
-                logFile,
                 logOutput ?? DefaultLogOutput
                     ? customLogger ?? DefaultLogger
                     : null,
@@ -143,13 +134,10 @@ namespace Nuke.Common.Tooling
             [CanBeNull] string workingDirectory,
             [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
             int? timeout,
-            bool logTimestamp,
-            [CanBeNull] string logFile,
             [CanBeNull] Action<OutputType, string> logger,
             Func<string, string> outputFilter)
         {
-            ControlFlow.Assert(workingDirectory == null || Directory.Exists(workingDirectory),
-                $"WorkingDirectory '{workingDirectory}' does not exist.");
+            Assert.True(workingDirectory == null || Directory.Exists(workingDirectory), $"WorkingDirectory '{workingDirectory}' does not exist");
 
             var startInfo = new ProcessStartInfo
                             {
@@ -170,9 +158,8 @@ namespace Nuke.Common.Tooling
             if (process == null)
                 return null;
 
-            var logStream = logFile != null ? new StreamWriter(File.Open(logFile, FileMode.Create)) : null;
-            var output = GetOutputCollection(process, logTimestamp, logger, logStream, outputFilter);
-            return new Process2(process, outputFilter, timeout, logStream, output);
+            var output = GetOutputCollection(process, logger, outputFilter);
+            return new Process2(process, outputFilter, timeout, output);
         }
 
         private static void ApplyEnvironmentVariables(
@@ -190,17 +177,10 @@ namespace Nuke.Common.Tooling
 
         private static BlockingCollection<Output> GetOutputCollection(
             Process process,
-            bool logTimestamp,
             [CanBeNull] Action<OutputType, string> logger,
-            [CanBeNull] StreamWriter logFile,
             Func<string, string> outputFilter)
         {
             var output = new BlockingCollection<Output>();
-
-            string GetProcessedOutput(string data)
-                => logTimestamp
-                    ? $"{DateTime.Now.ToLongTimeString()} {outputFilter.Invoke(data)}"
-                    : outputFilter.Invoke(data);
 
             process.OutputDataReceived += (_, e) =>
             {
@@ -209,9 +189,8 @@ namespace Nuke.Common.Tooling
 
                 output.Add(new Output { Text = e.Data, Type = OutputType.Std });
 
-                var processedOutput = GetProcessedOutput(e.Data);
-                logFile?.WriteLine($"[STD] {processedOutput}");
-                logger?.Invoke(OutputType.Std, processedOutput);
+                var filteredOutput = outputFilter(e.Data);
+                logger?.Invoke(OutputType.Std, filteredOutput);
             };
             process.ErrorDataReceived += (_, e) =>
             {
@@ -220,9 +199,8 @@ namespace Nuke.Common.Tooling
 
                 output.Add(new Output { Text = e.Data, Type = OutputType.Err });
 
-                var processedOutput = GetProcessedOutput(e.Data);
-                logFile?.WriteLine($"[ERR] {processedOutput}");
-                logger?.Invoke(OutputType.Err, processedOutput);
+                var filteredOutput = outputFilter(e.Data);
+                logger?.Invoke(OutputType.Err, filteredOutput);
             };
 
             process.BeginOutputReadLine();
@@ -234,16 +212,17 @@ namespace Nuke.Common.Tooling
         public static void DefaultLogger(OutputType type, string output)
         {
             if (type == OutputType.Std)
-                Logger.Normal(output);
+                Log.Debug(output);
             else
-                Logger.Error(output);
+                Log.Error(output);
         }
 
         private static void PrintEnvironmentVariables(ProcessStartInfo startInfo)
         {
-            static void TraceItem(string key, string value) => Logger.Trace($"  - {key} = {value}");
+            static void TraceItem(string key, string value) => Log.Verbose($"  - {key} = {value}");
 
-            Logger.Trace("Environment variables:");
+            // TODO: logging additional
+            Log.Verbose("Environment variables:");
 
             foreach (var (key, value) in startInfo.Environment.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
             {
@@ -272,7 +251,7 @@ namespace Nuke.Common.Tooling
                 .Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries)
                 .Select(EnvironmentInfo.ExpandVariables)
                 .Where(x => !Directory.Exists(x))
-                .ForEach(x => Logger.Warn($"Path environment variable contains invalid or inaccessible path '{x}'."));
+                .ForEach(x => Log.Warning("Path environment variable contains invalid or inaccessible path {Path}", x));
         }
     }
 }

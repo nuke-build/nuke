@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -32,13 +32,8 @@ namespace Nuke.GlobalTool
         private const string PLATFORM_NETCORE = "netcore";
         private const string PLATFORM_NETFX = "netfx";
         private const string FRAMEWORK_NETFX = "net472";
-#if NET5_0_OR_GREATER
-        private const string FRAMEWORK_NETCORE = "net5.0";
-#elif NETCOREAPP3_1_OR_GREATER
-        private const string FRAMEWORK_NETCORE = "netcoreapp3.1";
-#else
-        private const string FRAMEWORK_NETCORE = "netcoreapp2.1";
-#endif
+        private const string FRAMEWORK_NETCORE = "net6.0";
+
         private const string FORMAT_SDK = "sdk";
         private const string FORMAT_LEGACY = "legacy";
 
@@ -77,7 +72,7 @@ namespace Nuke.GlobalTool
 
             if (rootDirectory == null)
             {
-                Logger.Warn("Could not find root directory. Falling back to working directory.");
+                Host.Warning("Could not find root directory. Falling back to working directory ...");
                 rootDirectory = WorkingDirectory;
             }
 
@@ -231,7 +226,7 @@ namespace Nuke.GlobalTool
                                 TargetFramework = targetFramework,
                                 TelemetryVersion = Telemetry.CurrentVersion,
                                 NukeVersion = nukeVersion,
-                                NukeVersionMajorMinor = nukeVersion.Split(".").Take(2).Join(".")
+                                NukeVersionMajorMinor = nukeVersion.Split(".").Take(2).JoinDot()
                             }))));
 
             if (projectFormat == FORMAT_LEGACY)
@@ -283,7 +278,7 @@ namespace Nuke.GlobalTool
                 return;
 
             var globalIndex = content.IndexOf("Global");
-            ControlFlow.Assert(globalIndex != -1, "Could not find a 'Global' section in solution file.");
+            Assert.True(globalIndex != -1, "Could not find a 'Global' section in solution file");
 
             var projectConfigurationIndex = content.FindIndex(x => x.Contains("GlobalSection(ProjectConfigurationPlatforms)"));
             if (projectConfigurationIndex == -1)

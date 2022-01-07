@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -62,10 +62,15 @@ namespace Nuke.Common.Utilities
             return str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
         }
 
-        [Pure]
-        public static string SplitCamelHumpsWithSeparator(this string str, string separator, params string[] exclusions)
+        public static string[] SplitSpace(this string str)
         {
-            return str.SplitCamelHumps(exclusions).Join(separator);
+            return str.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        [Pure]
+        public static IEnumerable<string> SplitCamelHumpsWithKnownWords(this string str)
+        {
+            return str.SplitCamelHumps(KnownWords);
         }
     }
 }

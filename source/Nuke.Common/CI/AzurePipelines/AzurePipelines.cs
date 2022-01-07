@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -19,7 +18,7 @@ namespace Nuke.Common.CI.AzurePipelines
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public class AzurePipelines : Host, IBuildServer
+    public partial class AzurePipelines : Host, IBuildServer
     {
         public new static AzurePipelines Instance => Host.Instance as AzurePipelines;
 
@@ -37,9 +36,7 @@ namespace Nuke.Common.CI.AzurePipelines
             _messageSink = messageSink ?? Console.WriteLine;
         }
 
-        protected internal override OutputSink OutputSink => new AzurePipelinesOutputSink(this);
-
-        string IBuildServer.Branch => SourceBranchName;
+        string IBuildServer.Branch => SourceBranch;
         string IBuildServer.Commit => SourceVersion;
 
         public string AgentBuildDirectory => EnvironmentInfo.GetVariable<string>("AGENT_BUILDDIRECTORY");
@@ -94,6 +91,7 @@ namespace Nuke.Common.CI.AzurePipelines
         public string JobDisplayName => EnvironmentInfo.GetVariable<string>("SYSTEM_JOBDISPLAYNAME");
         public Guid JobId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_JOBID");
         public Guid TaskInstanceId => EnvironmentInfo.GetVariable<Guid>("SYSTEM_TASKINSTANCEID");
+        public string PhaseName => EnvironmentInfo.GetVariable<string>("SYSTEM_PHASENAME");
 
         public void Group(string group)
         {
@@ -163,7 +161,7 @@ namespace Nuke.Common.CI.AzurePipelines
                     .AddPair("codeCoverageTool", coverageTool)
                     .AddPair("summaryFile", summaryFile)
                     .AddPair("reportDirectory", reportDirectory)
-                    .AddPair("additionalCodeCoverageFiles", additionalCodeCoverageFiles.Join(",")));
+                    .AddPair("additionalCodeCoverageFiles", additionalCodeCoverageFiles.JoinComma()));
         }
 
         public void PublishTestResults(
@@ -179,7 +177,7 @@ namespace Nuke.Common.CI.AzurePipelines
                 "results.publish",
                 dictionaryConfigurator: x => x
                     .AddPair("type", type)
-                    .AddPair("resultFiles", files.Join(","))
+                    .AddPair("resultFiles", files.JoinComma())
                     .AddPairWhenValueNotNull("mergeResults", mergeResults)
                     .AddPairWhenValueNotNull("platform", platform)
                     .AddPairWhenValueNotNull("config", configuration)
@@ -243,7 +241,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
         private void Write(string command, string[] escapedTokens, [CanBeNull] string message)
         {
-            _messageSink.Invoke($"##vso[{command} {escapedTokens.Join(";")}]{EscapeMessage(message)}");
+            _messageSink.Invoke($"##vso[{command} {escapedTokens.JoinSemicolon()}]{EscapeMessage(message)}");
         }
 
         private string EscapeMessage([CanBeNull] string data)

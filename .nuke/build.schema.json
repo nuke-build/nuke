@@ -9,10 +9,6 @@
         "AutoStash": {
           "type": "boolean"
         },
-        "AzurePipelinesAccessToken": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
         "CodecovToken": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
@@ -28,15 +24,7 @@
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
         },
-        "EnterpriseAccessToken": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
         "GitHubRegistryApiKey": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
-        "GitHubToken": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
         },
@@ -78,6 +66,9 @@
         "IgnoreFailedSources": {
           "type": "boolean",
           "description": "Ignore unreachable sources during Restore"
+        },
+        "Major": {
+          "type": "boolean"
         },
         "NoLogo": {
           "type": "boolean",
@@ -130,6 +121,7 @@
               "CheckoutExternalRepositories",
               "Clean",
               "Compile",
+              "DownloadLicenses",
               "GenerateGlobalSolution",
               "GeneratePublicApi",
               "GenerateTools",
@@ -152,10 +144,6 @@
             ]
           }
         },
-        "SlackUserAccessToken": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
-        },
         "SlackWebhook": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secret [profile]'"
@@ -175,6 +163,7 @@
               "CheckoutExternalRepositories",
               "Clean",
               "Compile",
+              "DownloadLicenses",
               "GenerateGlobalSolution",
               "GeneratePublicApi",
               "GenerateTools",

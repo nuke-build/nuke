@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,19 +14,6 @@ namespace Nuke.Common
 {
     internal static class Constants
     {
-        internal static readonly string[] KnownWords =
-        {
-            "DotNet",
-            "GitHub",
-            "GitVersion",
-            "MSBuild",
-            "NuGet",
-            "ReSharper",
-            "AppVeyor",
-            "TeamCity",
-            "GitLab"
-        };
-
         internal const string NukeFileName = NukeDirectoryName;
         internal const string NukeDirectoryName = ".nuke";
         internal const string NukeCommonPackageId = nameof(Nuke) + "." + nameof(Common);

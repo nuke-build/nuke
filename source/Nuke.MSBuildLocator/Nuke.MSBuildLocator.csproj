@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.2.1" PrivateAssets="All" />
+    <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" PrivateAssets="All" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
-    <PackageReference Include="vswhere" Version="2.7.1" GeneratePathProperty="true" />
+    <PackageReference Include="vswhere" Version="2.8.4" GeneratePathProperty="true" />
   </ItemGroup>
 
   <ItemGroup>

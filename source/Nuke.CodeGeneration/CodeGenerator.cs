@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,6 +12,7 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.CodeGeneration
 {
@@ -58,7 +59,7 @@ namespace Nuke.CodeGeneration
                 ToolGenerator.Run(tool, streamWriter);
             }
 
-            Logger.Info($"Generated code for {tool.Name} from {Path.GetFileName(tool.SpecificationFile) ?? "<in-memory>"}.");
+            Log.Information("Generated code for {ToolName} from {File}", tool.Name, Path.GetFileName(tool.SpecificationFile) ?? "<in-memory>");
         }
 
         // ReSharper disable once CognitiveComplexity
@@ -77,14 +78,15 @@ namespace Nuke.CodeGeneration
                 bool NotExistent(Property property)
                 {
                     var nonExistent = task.SettingsClass.Properties.All(x => x.Name != property.Name);
-                    ControlFlow.AssertWarn(nonExistent, $"Property '{property.Name}' for task '{task.GetTaskMethodName()}' already exists.");
+                    if (!nonExistent)
+                        Log.Warning("Property {PropertyName} for task {TaskName} already exists", property.Name, task.GetTaskMethodName());
                     return nonExistent;
                 }
 
                 foreach (var commonPropertySet in task.CommonPropertySets)
                 {
-                    ControlFlow.Assert(tool.CommonTaskPropertySets.TryGetValue(commonPropertySet, out var properties),
-                        $"commonPropertySets[{commonPropertySet}] != null");
+                    Assert.True(tool.CommonTaskPropertySets.TryGetValue(commonPropertySet, out var properties),
+                        $"No common property set {commonPropertySet}");
                     properties.Where(NotExistent).ForEach(x => task.SettingsClass.Properties.Add(x.Clone()));
                 }
 

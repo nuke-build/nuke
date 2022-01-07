@@ -1,0 +1,86 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://github.com/jonathanpeppers/boots#systemcommandline"
+  ],
+  "name": "Boots",
+  "officialUrl": "https://github.com/jonathanpeppers/boots",
+  "help": "boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.",
+  "packageId": "Boots",
+  "packageExecutable": "Boots.exe",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Stable",
+            "type": "BootsProductType",
+            "format": "--stable {value}",
+            "help": "Install the latest <em>stable</em> version of a product from VS manifests. Options include: <c>Xamarin.Android</c>, <c>Xamarin.iOS</c>, <c>Xamarin.Mac</c>, and <c>Mono</c>"
+          },
+          {
+            "name": "Preview",
+            "type": "BootsProductType",
+            "format": "--preview {value}",
+            "help": "Install the latest <em>preview</em> version of a product from VS manifests. Options include: <c>Xamarin.Android</c>, <c>Xamarin.iOS</c>, <c>Xamarin.Mac</c>, and <c>Mono</c>"
+          },
+          {
+            "name": "Url",
+            "type": "string",
+            "format": "--url {value}",
+            "help": "A Url to a <c>pkg</c> or <c>vsix</c> file to install"
+          },
+          {
+            "name": "FileType",
+            "type": "BootsFileType",
+            "format": "--file-type {value}",
+            "help": "Specifies the type of file to be installed such as <c>vsix</c>, <c>pkg</c>, or <c>msi</c>. Defaults to <c>vsix</c> on Windows and <c>pkg</c> on macOS"
+          },
+          {
+            "name": "Timeout",
+            "type": "int",
+            "format": "--timeout {value}",
+            "help": "Specifies a timeout for <c>HttpClient</c>. If omitted, uses the .NET default of 100 seconds"
+          },
+          {
+            "name": "ReadWriteTimeout",
+            "type": "int",
+            "format": "--read-write-timeout {value}",
+            "help": "Specifies a timeout for reading/writing from a <c>HttpClient</c> stream. If omitted, uses a default of 300 seconds"
+          },
+          {
+            "name": "Retries",
+            "type": "int",
+            "format": "--retries {value}",
+            "help": "Specifies a number of retries for <c>HttpClient</c> failures. If omitted, uses a default of 3 retries"
+          },
+          {
+            "name": "Version",
+            "type": "bool",
+            "format": "--version",
+            "help": "Show version information"
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "BootsProductType",
+      "values": [
+        "Mono",
+        "Xamarin.Android",
+        "Xamarin.iOS",
+        "Xamarin.Mac"
+      ]
+    },
+    {
+      "name": "BootsFileType",
+      "values": [
+        "vsix",
+        "pkg",
+        "msi"
+      ]
+    }
+  ]
+}

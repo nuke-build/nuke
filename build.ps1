@@ -25,10 +25,6 @@ $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
 $env:DOTNET_MULTILEVEL_LOOKUP = 0
 $env:DOTNET_ROLL_FORWARD = "Major"
 $env:NUKE_TELEMETRY_OPTOUT = 1
-$env:MSBUILDDISABLENODEREUSE = 1
-
-#$env:NUKE_ENTERPRISE_SOURCE = "https://nuget.pkg.github.com/nuke-build/index.json"
-#$env:NUKE_ENTERPRISE_USERNAME = "nuke-bot"
 
 ###########################################################################
 # EXECUTION
@@ -79,10 +75,6 @@ else {
 }
 
 Write-Output "Microsoft (R) .NET Core SDK version $(& $env:DOTNET_EXE --version)"
-
-#if (Test-Path env:NUKE_ENTERPRISE_PASSWORD) {
-#    ExecSafe { & $env:DOTNET_EXE nuget add source $env:NUKE_ENTERPRISE_SOURCE --username $env:NUKE_ENTERPRISE_USERNAME --password $env:NUKE_ENTERPRISE_PASSWORD }
-#}
 
 ExecSafe { & $env:DOTNET_EXE build $BuildProjectFile /nodeReuse:false /p:UseSharedCompilation=false -nologo -clp:NoSummary }
 ExecSafe { & $env:DOTNET_EXE run --project $BuildProjectFile --no-build -- $BuildArguments }

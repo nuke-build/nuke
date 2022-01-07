@@ -1,15 +1,14 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using System.Web;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -17,6 +16,10 @@ using Nuke.Common.Gitter;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
+#if NETCORE
+using System.Collections.Specialized;
+using System.Web;
+#endif
 
 namespace Nuke.Common.Tools.Slack
 {
@@ -56,7 +59,7 @@ namespace Nuke.Common.Tools.Slack
 
             var response = await client.UploadDataTaskAsync(webhook, "POST", bytes);
             var responseText = Encoding.UTF8.GetString(response);
-            ControlFlow.Assert(responseText == "ok", $"'{responseText}' == 'ok'");
+            Assert.True(responseText == "ok");
         }
 #endif
 
@@ -77,15 +80,24 @@ namespace Nuke.Common.Tools.Slack
             var httpHandler = new GitterTasks.AuthenticatedHttpClientHandler(accessToken);
             using var client = new HttpClient(httpHandler);
 
-            var payload = JsonConvert.SerializeObject(message);
+            var payload = JsonConvert.SerializeObject(message, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             var response = await client.PostAsync(url, new StringContent(payload, Encoding.UTF8, "application/json"));
             var responseContent = await response.Content.ReadAsStringAsync();
-            ControlFlow.Assert(response.StatusCode == HttpStatusCode.OK, responseContent);
+            Assert.True(response.StatusCode == HttpStatusCode.OK, responseContent);
 
             var jobject = SerializationTasks.JsonDeserialize<JObject>(responseContent);
             var error = jobject.GetPropertyValueOrNull<string>("error");
-            ControlFlow.Assert(error == null, error);
+            Assert.True(error == null, error);
             return jobject;
         }
+    }
+
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public class SlackMessageActionButton : SlackMessageAction
+    {
+        [JsonProperty("type")]
+        public string Type => "button";
     }
 }

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,7 +14,6 @@ using Nuke.Common.CI.TeamCity.Configuration;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
@@ -36,7 +35,7 @@ namespace Nuke.Common.CI.TeamCity
             .Concat(NightlyTriggeredTargets)
             .Concat(ManuallyTriggeredTargets);
 
-        public string Version { get; set; } = "2018.2";
+        public string Version { get; set; } = "2021.2";
 
         public string Description { get; set; }
         public bool CleanCheckoutDirectory { get; set; } = true;
@@ -177,7 +176,7 @@ namespace Nuke.Common.CI.TeamCity
                 .Select(x => GetParameter(x.GetMemberInfo(), build, required: true))
                 .Concat(new TeamCityKeyValueParameter(
                     "teamcity.ui.runButton.caption",
-                    executableTarget.Name.SplitCamelHumpsWithSeparator(" ", Constants.KnownWords))).ToArray();
+                    executableTarget.Name.SplitCamelHumpsWithKnownWords().JoinSpace())).ToArray();
             var triggers = GetTriggers(executableTarget, buildTypes).ToArray();
 
             yield return new TeamCityBuildType
@@ -248,10 +247,25 @@ namespace Nuke.Common.CI.TeamCity
                 .Except(relevantTargets.SelectMany(x => x.Requirements
                     .Where(y => y is not Expression<Func<bool>>)
                     .Select(y => y.GetMemberInfo())))
-                .Where(x => !x.HasCustomAttribute<SecretAttribute>() || ImportSecrets.Contains(ParameterService.GetParameterMemberName(x)))
+                .Where(x => !x.HasCustomAttribute<SecretAttribute>())
                 .Where(x => x.DeclaringType != typeof(NukeBuild) || x.Name == nameof(NukeBuild.Verbosity))
                 .Select(x => GetParameter(x, build, required: false))
+                .Concat(GetSecretParameters(build))
                 .Concat(GetDefaultParameters());
+        }
+
+        protected virtual IEnumerable<TeamCityParameter> GetSecretParameters(NukeBuild build)
+        {
+            var guids = build.GetType().GetCustomAttributes<TeamCityTokenAttribute>()
+                .ToDictionary(x => x.Name, x => $"credentialsJSON:{Guid.Parse(x.Guid):D}");
+            return ImportSecrets.Select(x =>
+                new TeamCityConfigurationParameter
+                {
+                    Type = TeamCityParameterType.Password,
+                    Name = x,
+                    DefaultValue = guids.GetValueOrDefault(x),
+                    Display = TeamCityParameterDisplay.Hidden
+                });
         }
 
         protected virtual IEnumerable<TeamCityParameter> GetDefaultParameters()

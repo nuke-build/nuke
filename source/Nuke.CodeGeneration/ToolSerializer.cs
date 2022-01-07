@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,8 +11,8 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.CodeGeneration.Model;
-using Nuke.Common;
 using Nuke.Common.Utilities;
+using Serilog;
 
 namespace Nuke.CodeGeneration
 {
@@ -28,8 +28,7 @@ namespace Nuke.CodeGeneration
             catch (Exception exception)
             {
                 // TODO: update metadata -> specification
-                Logger.Error($"Couldn't load metadata file '{Path.GetFileName(file)}'.");
-                Logger.Error(exception.Message);
+                Log.Error(exception, "Couldn't load metadata file {File}", Path.GetFileName(file));
                 throw;
             }
         }

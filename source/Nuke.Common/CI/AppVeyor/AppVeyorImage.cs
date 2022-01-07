@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -19,9 +19,12 @@ namespace Nuke.Common.CI.AppVeyor
         [EnumValue("Visual Studio 2015")] VisualStudio2015,
         [EnumValue("Visual Studio 2017")] VisualStudio2017,
         [EnumValue("Visual Studio 2019")] VisualStudio2019,
-        [EnumValue("Visual Studio 2019")] VisualStudioLatest,
+        [EnumValue("Visual Studio 2022")] VisualStudio2022,
+        [EnumValue("Visual Studio 2022")] VisualStudioLatest,
         [EnumValue("Ubuntu1604")] Ubuntu1604,
         [EnumValue("Ubuntu1804")] Ubuntu1804,
-        [EnumValue("Ubuntu1804")] UbuntuLatest
+        [EnumValue("Ubuntu")] UbuntuLatest,
+        [EnumValue("MacOs-Mojave")] MacOsMojave,
+        [EnumValue("MacOs")] MacOsLatest
     }
 }

@@ -1,12 +1,14 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.GitHub;
+using Nuke.Common.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;
 using static Nuke.CodeGeneration.SchemaGenerator;
@@ -15,9 +17,8 @@ using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
 {
-    string SpecificationsDirectory => BuildProjectDirectory / "specifications";
+    AbsolutePath SpecificationsDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
     string ReferencesDirectory => BuildProjectDirectory / "references";
-    AbsolutePath GenerationDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
     string ToolSchemaFile => SourceDirectory / "Nuke.CodeGeneration" / "schema.json";
 
     Target References => _ => _
@@ -38,10 +39,10 @@ partial class Build
                 GitRepository.GetGitHubDownloadUrl(ToolSchemaFile, MasterBranch),
                 "Tool specification schema file by NUKE");
 
-            GenerateCodeFromDirectory(
-                SpecificationsDirectory,
-                outputFileProvider: x => GenerationDirectory / x.Name / x.DefaultOutputFileName,
-                namespaceProvider: x => $"Nuke.Common.Tools.{x.Name}",
-                sourceFileProvider: x => GitRepository.SetBranch(MasterBranch).GetGitHubBrowseUrl(x.SpecificationFile));
+            SpecificationsDirectory.GlobFiles("*/*.json").ForEach(x =>
+                GenerateCode(
+                    x,
+                    namespaceProvider: x => $"Nuke.Common.Tools.{x.Name}",
+                    sourceFileProvider: x => GitRepository.SetBranch(MasterBranch).GetGitHubBrowseUrl(x.SpecificationFile)));
         });
 }

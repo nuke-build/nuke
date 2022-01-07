@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,6 +12,7 @@ using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common
 {
@@ -65,7 +66,7 @@ namespace Nuke.Common
         private static string[] GetSurrogateArguments()
         {
             var entryAssemblyLocation = Assembly.GetEntryAssembly()?.Location;
-            if (entryAssemblyLocation == null)
+            if (entryAssemblyLocation.IsNullOrEmpty())
                 return null;
 
             var assemblyDirectory = Path.GetDirectoryName(entryAssemblyLocation).NotNull();
@@ -76,11 +77,11 @@ namespace Nuke.Common
             var argumentLines = File.ReadAllLines(argumentsFile);
             var lastWriteTime = File.GetLastWriteTime(argumentsFile);
 
-            ControlFlow.Assert(argumentLines.Length == 1, $"{c_nukeTmpFileName} must have only one single line");
+            Assert.HasSingleItem(argumentLines, $"{c_nukeTmpFileName} must have only one single line");
             File.Delete(argumentsFile);
             if (lastWriteTime.AddMinutes(value: 1) < DateTime.Now)
             {
-                Logger.Warn($"Last write time of '{c_nukeTmpFileName}' was '{lastWriteTime}'. Skipping...");
+                Log.Warning("Last write time of {File} was {LastWriteTime}. Skipping ...", c_nukeTmpFileName, lastWriteTime);
                 return null;
             }
 

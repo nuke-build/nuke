@@ -1,40 +1,26 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nuke.Common;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
-using Nuke.Common.Tooling;
+using Nuke.Common.Utilities.Collections;
 using Nuke.Components;
-#if NUKE_ENTERPRISE
-using Nuke.Enterprise.Notifications;
-using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
-#endif
 
 [AzurePipelines(
     suffix: null,
     AzurePipelinesImage.UbuntuLatest,
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.MacOsLatest,
-    ImportSecrets = new[]
-                    {
-                        nameof(EnterpriseAccessToken),
-#if NUKE_ENTERPRISE
-                        Slack + nameof(IHazSlackCredentials.UserAccessToken),
-#endif
-                    },
-#if NUKE_ENTERPRISE
-    ImportSystemAccessTokenAs = IHazAzurePipelinesAccessToken.AzurePipelines + nameof(IHazAzurePipelinesAccessToken.AccessToken),
-#endif
+    PullRequestsDisabled = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
-    NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(ICompile.Compile), nameof(InstallFonts), nameof(ReleaseImage) },
+    NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(DownloadLicenses), nameof(ICompile.Compile), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) },
-    CacheKeyFiles = new string[0])]
+    CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" })]
 partial class Build
 {
     public class AzurePipelinesAttribute : Nuke.Common.CI.AzurePipelines.AzurePipelinesAttribute
@@ -50,14 +36,15 @@ partial class Build
         protected override AzurePipelinesJob GetJob(
             ExecutableTarget executableTarget,
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
-            IReadOnlyCollection<ExecutableTarget> relevantTargets)
+            IReadOnlyCollection<ExecutableTarget> relevantTargets,
+            AzurePipelinesImage image)
         {
-            var job = base.GetJob(executableTarget, jobs, relevantTargets);
+            var job = base.GetJob(executableTarget, jobs, relevantTargets, image);
 
-            var symbol = CustomNames.GetValueOrDefault(job.Name).NotNull("symbol != null");
-            job.DisplayName = job.Parallel == 0
+            var symbol = CustomNames.GetValueOrDefault(job.Name);
+            job.DisplayName = (job.Parallel == 0
                 ? $"{symbol} {job.DisplayName}"
-                : $"{symbol} {job.DisplayName} 🧩";
+                : $"{symbol} {job.DisplayName} 🧩").Trim();
             return job;
         }
     }

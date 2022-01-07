@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -30,6 +30,32 @@ namespace Nuke.Common.Utilities.Collections
             try
             {
                 return enumerable.SingleOrDefault();
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException(message, ex);
+            }
+        }
+
+        [CanBeNull]
+        public static T SingleOrError<T>(this IEnumerable<T> enumerable, Func<T, bool> predicate, string message)
+        {
+            try
+            {
+                return enumerable.Single(predicate);
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException(message, ex);
+            }
+        }
+
+        [CanBeNull]
+        public static T SingleOrError<T>(this IEnumerable<T> enumerable, string message)
+        {
+            try
+            {
+                return enumerable.Single();
             }
             catch (InvalidOperationException ex)
             {

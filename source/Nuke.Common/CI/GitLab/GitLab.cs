@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,7 +6,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.OutputSinks;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.GitLab
@@ -17,7 +16,7 @@ namespace Nuke.Common.CI.GitLab
     [PublicAPI]
     [CI]
     [ExcludeFromCodeCoverage]
-    public class GitLab : Host, IBuildServer
+    public partial class GitLab : Host, IBuildServer
     {
         public new static GitLab Instance => Host.Instance as GitLab;
 
@@ -41,13 +40,11 @@ namespace Nuke.Common.CI.GitLab
         string IBuildServer.Branch => CommitRefName;
         string IBuildServer.Commit => CommitSha;
 
-        protected internal override OutputSink OutputSink => new GitLabOutputSink(this);
-
-        public void BeginSection(string text)
+        public void BeginSection(string text, bool collapsed = true)
         {
             var sectionId = GetSectionId(text);
             var unixTimestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
-            _messageSink($"{SectionStartSequence}section_start:{unixTimestamp}:{sectionId}{SectionResetSequence}{text}");
+            _messageSink($"{SectionStartSequence}section_start:{unixTimestamp}:{sectionId}[collapsed={collapsed.ToString().ToLowerInvariant()}]{SectionResetSequence}{text}");
         }
 
         public void EndSection(string text)

@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -59,13 +59,13 @@ namespace Nuke.Common.CI.GitHubActions
         public string OnCronSchedule { get; set; }
 
         public string[] ImportSecrets { get; set; } = new string[0];
-        public string ImportGitHubTokenAs { get; set; }
 
         public string[] CacheIncludePatterns { get; set; } = { ".nuke/temp", "~/.nuget/packages" };
         public string[] CacheExcludePatterns { get; set; } = new string[0];
         public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj" };
 
         public bool PublishArtifacts { get; set; } = true;
+        public bool EnableGitHubContext { get; set; }
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
@@ -86,10 +86,10 @@ namespace Nuke.Common.CI.GitHubActions
                                     Jobs = _images.Select(x => GetJobs(x, relevantTargets)).ToArray()
                                 };
 
-            ControlFlow.Assert(configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0,
-                $"Workflows can only define either shorthand '{On}' or '{On}*' triggers.");
-            ControlFlow.Assert(configuration.ShortTriggers.Length > 0 || configuration.DetailedTriggers.Length > 0,
-                "Workflows must define either shorthand '{On}' or '{On}*' triggers.");
+            Assert.True(configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0,
+                $"Workflows can only define either shorthand '{On}' or '{On}*' triggers");
+            Assert.True(configuration.ShortTriggers.Length > 0 || configuration.DetailedTriggers.Length > 0,
+                "Workflows must define either shorthand '{On}' or '{On}*' triggers");
 
             return configuration;
         }
@@ -153,13 +153,13 @@ namespace Nuke.Common.CI.GitHubActions
                 yield return (input, $"${{{{ github.event.inputs.{input} }}}}");
 
             static string GetSecretValue(string secret)
-                => $"${{{{ secrets.{secret.SplitCamelHumpsWithSeparator("_", Constants.KnownWords).ToUpperInvariant()} }}}}";
-
-            if (ImportGitHubTokenAs != null)
-                yield return (ImportGitHubTokenAs, GetSecretValue("GITHUB_TOKEN"));
+                => $"${{{{ secrets.{secret.SplitCamelHumpsWithKnownWords().JoinUnderscore().ToUpperInvariant()} }}}}";
 
             foreach (var secret in ImportSecrets)
                 yield return (secret, GetSecretValue(secret));
+
+            if (EnableGitHubContext)
+                yield return ("GITHUB_CONTEXT", "${{ toJSON(github) }}");
         }
 
         protected virtual IEnumerable<GitHubActionsDetailedTrigger> GetTriggers()
@@ -171,7 +171,7 @@ namespace Nuke.Common.CI.GitHubActions
                 OnPushIncludePaths.Length > 0 ||
                 OnPushExcludePaths.Length > 0)
             {
-                ControlFlow.Assert(
+                Assert.True(
                     OnPushBranches.Length == 0 && OnPushTags.Length == 0 || OnPushBranchesIgnore.Length == 0 && OnPushTagsIgnore.Length == 0,
                     $"Cannot use {nameof(OnPushBranches)}/{nameof(OnPushTags)} and {nameof(OnPushBranchesIgnore)}/{nameof(OnPushTagsIgnore)} in combination");
 

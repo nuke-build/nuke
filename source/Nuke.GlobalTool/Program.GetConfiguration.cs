@@ -26,10 +26,9 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int GetConfiguration(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
-            ControlFlow.Assert(buildScript != null, "buildScript != null");
-            var configuration = GetConfiguration(buildScript, evaluate: false);
+            var configuration = GetConfiguration(buildScript.NotNull(), evaluate: false);
 
-            Logger.Info($"Configuration from {buildScript}:");
+            Host.Information($"Configuration from {buildScript}:");
             configuration.ForEach(x => Console.WriteLine($"{x.Key} = {x.Value}"));
 
             return 0;
@@ -51,7 +50,7 @@ namespace Nuke.GlobalTool
                 .Select(ReplaceScriptDirectory)
                 .Select(x => x.Split("="))
                 .ToDictionary(
-                    x => x.ElementAt(0).TrimStart("$").Trim().SplitCamelHumpsWithSeparator("_", Constants.KnownWords).ToUpperInvariant(),
+                    x => x.ElementAt(0).TrimStart("$").Trim().SplitCamelHumpsWithKnownWords().JoinUnderscore().ToUpperInvariant(),
                     x => x.ElementAt(1).Trim().TrimMatchingDoubleQuotes());
         }
     }

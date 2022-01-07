@@ -1,4 +1,4 @@
-﻿// Copyright 2019 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -106,6 +106,12 @@ namespace Nuke.CodeGeneration.Generators
                 .WriteMethod($"Add{property.Name}",
                     $"params {valueType}[] {propertyInstance}",
                     $"{propertyAccess}.AddRange({propertyInstance});")
+                .When(property.HasCustomListType(), _ => _
+                    .WriteSummaryExtension($"Adds a value to {property.GetCrefTag()}", property)
+                    .WriteObsoleteAttributeWhenObsolete(property)
+                    .WriteMethod($"Add{property.Name.ToSingular()}",
+                        $"Configure<{valueType}> configurator",
+                        $"{propertyAccess}.Add(configurator.InvokeSafe(new {valueType}()));"))
                 .WriteSummaryExtension($"Adds values to {property.GetCrefTag()}", property)
                 .WriteObsoleteAttributeWhenObsolete(property)
                 .WriteMethod($"Add{property.Name}",
@@ -334,7 +340,7 @@ namespace Nuke.CodeGeneration.Generators
             var parameters = new[] { "this T toolSettings" }.Concat(additionalParameters);
             return writer
                 .WriteLine("[Pure]")
-                .WriteLine($"public static T {name}<T>({parameters.JoinComma()}) where T : {writer.DataClass.Name}")
+                .WriteLine($"public static T {name}<T>({parameters.JoinCommaSpace()}) where T : {writer.DataClass.Name}")
                 .WriteBlock(w => w
                     .WriteLine("toolSettings = toolSettings.NewInstance();")
                     .ForEachWriteLine(modifications)

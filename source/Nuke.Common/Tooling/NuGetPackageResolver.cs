@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -21,17 +21,15 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetPackageResolver
     {
-        private const int DefaultTimeout = 2000;
-
         [ItemCanBeNull]
-        public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, bool includeUnlisted = false, int? timeout = null)
+        public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, bool includeUnlisted = false)
         {
             try
             {
                 var url = includeUnlisted
                     ? $"https://api.nuget.org/v3/flatcontainer/{packageId.ToLowerInvariant()}/index.json"
                     : $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
-                var jsonString = await HttpTasks.HttpDownloadStringAsync(url, requestConfigurator: x => x.Timeout = timeout ?? DefaultTimeout);
+                var jsonString = await HttpTasks.HttpDownloadStringAsync(url);
                 var jsonObject = JsonConvert.DeserializeObject<JObject>(jsonString);
                 return includeUnlisted
                     ? jsonObject.First.NotNull().First.NotNull().Children()
@@ -39,7 +37,7 @@ namespace Nuke.Common.Tooling
                         .Last(x => includePrereleases || !x.Contains("-"))
                     : jsonObject["data"].NotNull().Single()["version"].NotNull().ToString();
             }
-            catch (Exception)
+            catch
             {
                 return null;
             }

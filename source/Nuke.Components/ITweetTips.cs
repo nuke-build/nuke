@@ -10,11 +10,11 @@ using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using Serilog;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 using static Nuke.Common.IO.TextTasks;
-using static Nuke.Common.Logger;
 
 namespace Nuke.Components
 {
@@ -68,7 +68,7 @@ namespace Nuke.Components
                     sentTweets.Add(tweet);
                 }
 
-                Info($"Sent tweet: {sentTweets.First().Url}");
+                Log.Information("Sent tweet {Url}", sentTweets.First().Url);
             });
     }
 }

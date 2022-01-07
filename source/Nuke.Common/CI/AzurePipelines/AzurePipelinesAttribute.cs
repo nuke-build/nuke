@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -25,8 +25,11 @@ namespace Nuke.Common.CI.AzurePipelines
         private readonly AzurePipelinesImage[] _images;
 
         private bool? _triggerBatch;
+        private bool? _pullRequestsAutoCancel;
         private bool? _submodules;
         private bool? _largeFileStorage;
+        private int? _fetchDepth;
+        private bool? _clean;
 
         public AzurePipelinesAttribute(
             AzurePipelinesImage image,
@@ -64,6 +67,18 @@ namespace Nuke.Common.CI.AzurePipelines
             get => throw new NotSupportedException();
         }
 
+        public int FetchDepth
+        {
+            set => _fetchDepth = value;
+            get => throw new NotSupportedException();
+        }
+
+        public bool Clean
+        {
+            set => _clean = value;
+            get => throw new NotSupportedException();
+        }
+
         public bool LargeFileStorage
         {
             set => _largeFileStorage = value;
@@ -83,18 +98,25 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] TriggerPathsInclude { get; set; } = new string[0];
         public string[] TriggerPathsExclude { get; set; } = new string[0];
 
-        public bool PullRequestsAutoCancel { get; set; }
+        public bool PullRequestsDisabled { get; set; }
+
+        public bool? PullRequestsAutoCancel
+        {
+            set => _pullRequestsAutoCancel = value;
+            get => throw new NotSupportedException();
+        }
+
         public string[] PullRequestsBranchesInclude { get; set; } = new string[0];
         public string[] PullRequestsBranchesExclude { get; set; } = new string[0];
         public string[] PullRequestsPathsInclude { get; set; } = new string[0];
         public string[] PullRequestsPathsExclude { get; set; } = new string[0];
 
         public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj" };
-        public string CachePath { get; set; } = "~/.nuget/packages";
+        public string[] CachePaths { get; set; } = { AzurePipelinesCachePaths.Nuke, AzurePipelinesCachePaths.NuGet };
 
         public string[] ImportVariableGroups { get; set; } = new string[0];
         public string[] ImportSecrets { get; set; } = new string[0];
-        public string ImportSystemAccessTokenAs { get; set; }
+        public bool EnableAccessToken { get; set; }
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -107,6 +129,7 @@ namespace Nuke.Common.CI.AzurePipelines
                    {
                        VariableGroups = ImportVariableGroups,
                        VcsPushTrigger = GetVcsPushTrigger(),
+                       VcsPullRequestTrigger = GetVcsPullRequestTrigger(),
                        Stages = _images.Select(x => GetStage(x, relevantTargets)).ToArray()
                    };
         }
@@ -137,13 +160,37 @@ namespace Nuke.Common.CI.AzurePipelines
                    };
         }
 
+        [CanBeNull]
+        protected AzurePipelinesVcsPushTrigger GetVcsPullRequestTrigger()
+        {
+            if (!PullRequestsDisabled &&
+                _pullRequestsAutoCancel == null &&
+                PullRequestsBranchesInclude.Length == 0 &&
+                PullRequestsBranchesExclude.Length == 0 &&
+                PullRequestsPathsInclude.Length == 0 &&
+                PullRequestsPathsExclude.Length == 0)
+                return null;
+
+            return new AzurePipelinesVcsPushTrigger
+                   {
+                       Disabled = PullRequestsDisabled,
+                       AutoCancel = _pullRequestsAutoCancel,
+                       BranchesInclude = PullRequestsBranchesInclude,
+                       BranchesExclude = PullRequestsBranchesExclude,
+                       TagsInclude = new string[0],
+                       TagsExclude = new string[0],
+                       PathsInclude = PullRequestsPathsInclude,
+                       PathsExclude = PullRequestsPathsExclude,
+                   };
+        }
+
         protected virtual AzurePipelinesStage GetStage(
             AzurePipelinesImage image,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var lookupTable = new LookupTable<ExecutableTarget, AzurePipelinesJob>();
             var jobs = relevantTargets
-                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable, relevantTargets)))
+                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable, relevantTargets, image)))
                 .ForEachLazy(x => lookupTable.Add(x.ExecutableTarget, x.Job))
                 .Select(x => x.Job).ToArray();
 
@@ -160,7 +207,8 @@ namespace Nuke.Common.CI.AzurePipelines
         protected virtual AzurePipelinesJob GetJob(
             ExecutableTarget executableTarget,
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
-            IReadOnlyCollection<ExecutableTarget> relevantTargets)
+            IReadOnlyCollection<ExecutableTarget> relevantTargets,
+            AzurePipelinesImage image)
         {
             var totalPartitions = executableTarget.PartitionSize ?? 0;
             var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
@@ -170,30 +218,37 @@ namespace Nuke.Common.CI.AzurePipelines
                        DisplayName = executableTarget.Name,
                        Dependencies = dependencies,
                        Parallel = totalPartitions,
-                       Steps = GetSteps(executableTarget, relevantTargets).ToArray(),
+                       Steps = GetSteps(executableTarget, relevantTargets, image).ToArray(),
                    };
         }
 
         protected virtual IEnumerable<AzurePipelinesStep> GetSteps(
             ExecutableTarget executableTarget,
-            IReadOnlyCollection<ExecutableTarget> relevantTargets)
+            IReadOnlyCollection<ExecutableTarget> relevantTargets,
+            AzurePipelinesImage image)
         {
-            if (_submodules.HasValue || _largeFileStorage.HasValue)
+            if (_submodules.HasValue || _largeFileStorage.HasValue || _fetchDepth.HasValue || _clean.HasValue)
             {
                 yield return new AzurePipelineCheckoutStep
                              {
                                  InclueSubmodules = _submodules,
-                                 IncludeLargeFileStorage = _largeFileStorage
+                                 IncludeLargeFileStorage = _largeFileStorage,
+                                 FetchDepth = _fetchDepth,
+                                 Clean = _clean
                              };
             }
-            
+
             if (CacheKeyFiles.Any())
             {
-                yield return new AzurePipelinesCacheStep
-                             {
-                                 KeyFiles = CacheKeyFiles,
-                                 Path = CachePath
-                             };
+                foreach (var cachePath in CachePaths.NotNull("CachePaths != null"))
+                {
+                    yield return new AzurePipelinesCacheStep
+                                 {
+                                     Image = image,
+                                     KeyFiles = CacheKeyFiles,
+                                     Path = cachePath
+                                 };
+                }
             }
 
             static string GetArtifactPath(AbsolutePath path)
@@ -243,8 +298,8 @@ namespace Nuke.Common.CI.AzurePipelines
         {
             static string GetSecretValue(string secret) => $"$({secret})";
 
-            if (ImportSystemAccessTokenAs != null)
-                yield return (ImportSystemAccessTokenAs, GetSecretValue("System.AccessToken"));
+            if (EnableAccessToken)
+                yield return ("SYSTEM_ACCESSTOKEN", GetSecretValue("System.AccessToken"));
 
             foreach (var secret in ImportSecrets)
                 yield return (secret, GetSecretValue(secret));

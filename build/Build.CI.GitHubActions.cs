@@ -4,28 +4,18 @@
 
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Components;
-#if NUKE_ENTERPRISE
-using Nuke.Enterprise.Notifications;
-using static Nuke.Enterprise.Notifications.IHazSlackCredentials;
-#endif
 
 [GitHubActions(
     "continuous",
     GitHubActionsImage.WindowsLatest,
     GitHubActionsImage.UbuntuLatest,
     GitHubActionsImage.MacOsLatest,
-    OnPushBranchesIgnore = new[] { MasterBranch, ReleaseBranchPrefix + "/*" },
+    OnPushBranchesIgnore = new[] { MasterBranch, $"{ReleaseBranchPrefix}/*" },
     OnPullRequestBranches = new[] { DevelopBranch },
     PublishArtifacts = false,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" },
-    ImportSecrets = new[]
-                    {
-                        nameof(EnterpriseAccessToken),
-#if NUKE_ENTERPRISE
-                        Slack + nameof(IHazSlackCredentials.UserAccessToken),
-#endif
-                    })]
+    EnableGitHubContext = true)]
 partial class Build
 {
 }

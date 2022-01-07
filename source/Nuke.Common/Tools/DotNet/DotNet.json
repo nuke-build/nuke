@@ -1,0 +1,1246 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-test.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-run.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-restore.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-pack.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-build.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-clean.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-publish.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-nuget-push.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-install.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-uninstall.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-update.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-msbuild.md"
+  ],
+  "name": "DotNet",
+  "officialUrl": "https://docs.microsoft.com/en-us/dotnet/core/tools/",
+  "pathExecutable": "dotnet",
+  "customLogger": true,
+  "tasks": [
+    {
+      "help": "The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.",
+      "postfix": "Test",
+      "commonPropertySets": [
+        "restore",
+        "restore-runtime"
+      ],
+      "definiteArgument": "test",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ProjectFile",
+            "type": "string",
+            "format": "{value}",
+            "help": "Specifies a path to the test project. If omitted, it defaults to current directory."
+          },
+          {
+            "name": "TestAdapterPath",
+            "type": "string",
+            "format": "--test-adapter-path {value}",
+            "help": "Use the custom test adapters from the specified path in the test run."
+          },
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "--configuration {value}",
+            "help": "Configuration under which to build. The default value is <c>Debug</c>, but your project's configuration could override this default SDK setting."
+          },
+          {
+            "name": "DataCollector",
+            "type": "string",
+            "format": "--collect {value}",
+            "help": "Enables data collector for the test run. For more information, see <a href=\"https://aka.ms/vstest-collect\">Monitor and analyze test run</a>."
+          },
+          {
+            "name": "DiagnosticsFile",
+            "type": "string",
+            "format": "--diag {value}",
+            "help": "Enables diagnostic mode for the test platform and write diagnostic messages to the specified file."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "--framework {value}",
+            "help": "Looks for test binaries for a specific <a href=\"https://docs.microsoft.com/en-us/dotnet/standard/frameworks\">framework</a>."
+          },
+          {
+            "name": "Filter",
+            "type": "string",
+            "format": "--filter {value}",
+            "help": "Filters out tests in the current project using the given expression. For more information, see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-test#filter-option-details\">Filter option details</a> section. For additional information and examples on how to use selective unit test filtering, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests\">Running selective unit tests</a>."
+          },
+          {
+            "name": "Loggers",
+            "type": "List<string>",
+            "format": "--logger {value}",
+            "help": "Specifies a logger for test results. Specify the parameter multiple times to enable multiple loggers."
+          },
+          {
+            "name": "NoBuild",
+            "type": "bool",
+            "format": "--no-build",
+            "help": "Does not build the test project prior to running it."
+          },
+          {
+            "name": "NoRestore",
+            "type": "bool",
+            "format": "--no-restore",
+            "help": "Doesn't perform an implicit restore when running the command."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Directory in which to find the binaries to run."
+          },
+          {
+            "name": "ResultsDirectory",
+            "type": "string",
+            "format": "--results-directory {value}",
+            "help": "The directory where the test results are going to be placed. The specified directory will be created if it doesn't exist."
+          },
+          {
+            "name": "SettingsFile",
+            "type": "string",
+            "format": "--settings {value}",
+            "help": "Settings to use when running tests."
+          },
+          {
+            "name": "ListTests",
+            "type": "bool",
+            "format": "--list-tests",
+            "help": "List all of the discovered tests in the current project."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "/property:{value}",
+            "itemFormat": "{key}={value}",
+            "disallowedCharacter": ";",
+            "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>"
+          },
+          {
+            "name": "BlameMode",
+            "type": "bool",
+            "format": "--blame",
+            "help": "Runs the tests in blame mode. This option is helpful in isolating the problematic tests causing test host to crash. It creates an output file in the current directory as <em>Sequence.xml</em> that captures the order of tests execution before the crash."
+          },
+          {
+            "name": "BlameCrash",
+            "type": "bool",
+            "format": "--blame-crash",
+            "help": "<p>Runs the tests in blame mode and collects a crash dump when the test host exits unexpectedly. This option depends on the version of .NET used, the type of error, and the operating system.</p><p>For exceptions in managed code, a dump will be automatically collected on .NET 5.0 and later versions. It will generate a dump for testhost or any child process that also ran on .NET 5.0 and crashed. Crashes in native code will not generate a dump. This option works on Windows, macOS, and Linux.</p><p>Crash dumps in native code, or when using .NET Core 3.1 or earlier versions, can only be collected on Windows, by using Procdump. A directory that contains procdump.exe and procdump64.exe must be in the PATH or PROCDUMP_PATH environment variable. <a href=\"https://docs.microsoft.com/en-us/sysinternals/downloads/procdump\">Download the tools</a>. Implies <em>--blame</em>.</p><p>To collect a crash dump from a native application running on .NET 5.0 or later, the usage of Procdump can be forced by setting the <em>VSTEST_DUMP_FORCEPROCDUMP</em> environment variable to <em>1</em>.</p>"
+          },
+          {
+            "name": "BlameCrashDumpType",
+            "type": "string",
+            "format": "--blame-crash-dump-type {value}",
+            "help": "The type of crash dump to be collected. Implies <em>--blame-crash</em>."
+          },
+          {
+            "name": "BlameCrashCollectAlways",
+            "type": "bool",
+            "format": "--blame-crash-collect-always",
+            "help": "Collects a crash dump on expected as well as unexpected test host exit."
+          },
+          {
+            "name": "BlameHang",
+            "type": "bool",
+            "format": "--blame-hang",
+            "help": "Run the tests in blame mode and collects a hang dump when a test exceeds the given timeout."
+          },
+          {
+            "name": "BlameHangDumpType",
+            "type": "string",
+            "format": "--blame-hang-dump-type {value}",
+            "help": "The type of crash dump to be collected. It should be <em>full</em>, <em>mini</em>, or <em>none</em>. When <em>none</em> is specified, test host is terminated on timeout, but no dump is collected. Implies <em>--blame-hang</em>."
+          },
+          {
+            "name": "BlameHangTimeout",
+            "type": "string",
+            "format": "--blame-hang-timeout {value}",
+            "help": "<p>Per-test timeout, after which a hang dump is triggered and the test host process and all of its child processes are dumped and terminated. The timeout value is specified in one of the following formats:</p><p><ul><li>1.5h, 1.5hour, 1.5hours</li><li>90m, 90min, 90minute, 90minutes</li><li>5400s, 5400sec, 5400second, 5400seconds</li><li>5400000ms, 5400000mil, 5400000millisecond, 5400000milliseconds</li></ul></p><p>When no unit is used (for example, 5400000), the value is assumed to be in milliseconds. When used together with data driven tests, the timeout behavior depends on the test adapter used. For xUnit and NUnit the timeout is renewed after every test case. For MSTest, the timeout is used for all test cases. This option is supported on Windows with netcoreapp2.1 and later, on Linux with netcoreapp3.1 and later, and on macOS with net5.0 or later. Implies <em>--blame</em> and <em>--blame-hang</em>.</p>"
+          },
+          {
+            "name": "RunSettings",
+            "type": "Dictionary<string, object>",
+            "format": "-- {value}",
+            "itemFormat": "{key}={value}",
+            "separator": " ",
+            "isTailArgument": true
+          }
+        ]
+      }
+    },
+    {
+      "help": "<p>The <c>dotnet run</c> command provides a convenient option to run your application from the source code with one command. It's useful for fast iterative development from the command line. The command depends on the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build\"><c>dotnet build</c></a> command to build the code. Any requirements for the build, such as that the project must be restored first, apply to <c>dotnet run</c> as well.</p><p>Output files are written into the default location, which is <c>bin/&lt;configuration&gt;/&lt;target&gt;</c>. For example if you have a <c>netcoreapp1.0</c> application and you run <c>dotnet run</c>, the output is placed in <c>bin/Debug/netcoreapp1.0</c>. Files are overwritten as needed. Temporary files are placed in the <c>obj</c> directory.</p><p>If the project specifies multiple frameworks, executing <c>dotnet run</c> results in an error unless the <c>-f|--framework &lt;FRAMEWORK&gt;</c> option is used to specify the framework.</p><p>The <c>dotnet run</c> command is used in the context of projects, not built assemblies. If you're trying to run a framework-dependent application DLL instead, you must use <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet\">dotnet</a> without a command. For example, to run <c>myapp.dll</c>, use: <c>dotnet myapp.dll</c></p><p>For more information on the <c>dotnet</c> driver, see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/index\">.NET Core Command Line Tools (CLI)</a> topic.</p><p>In order to run the application, the <c>dotnet run</c> command resolves the dependencies of the application that are outside of the shared runtime from the NuGet cache. Because it uses cached dependencies, it's not recommended to use <c>dotnet run</c> to run applications in production. Instead, <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index\">create a deployment</a> using the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish\"><c>dotnet publish</c></a> command and deploy the published output.</p>",
+      "postfix": "Run",
+      "commonPropertySets": [
+        "restore",
+        "restore-runtime"
+      ],
+      "definiteArgument": "run",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "--configuration {value}",
+            "help": "Configuration to use for building the project. The default value is Debug."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "--framework {value}",
+            "help": "Builds and runs the app using the specified framework. The framework must be specified in the project file."
+          },
+          {
+            "name": "LaunchProfile",
+            "type": "string",
+            "format": "--launch-profile {value}",
+            "help": "The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the <em>launchSettings.json</em> file and are typically called <c>Development</c>, <c>Staging</c> and <c>Production</c>. For more information, see <a href=\"https://docs.microsoft.com/en-us/aspnetcore/fundamentals/environments\">Working with multiple environments</a>."
+          },
+          {
+            "name": "NoBuild",
+            "type": "bool",
+            "format": "--no-build",
+            "help": "Doesn't build the project before running."
+          },
+          {
+            "name": "NoLaunchProfile",
+            "type": "bool",
+            "format": "--no-launch-profile",
+            "help": "Doesn't attempt to use <em>launchSettings.json</em> to configure the application."
+          },
+          {
+            "name": "NoRestore",
+            "type": "bool",
+            "format": "--no-restore",
+            "help": "Doesn't perform an implicit restore when running the command."
+          },
+          {
+            "name": "ProjectFile",
+            "type": "string",
+            "format": "--project {value}",
+            "help": "Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified."
+          },
+          {
+            "name": "ApplicationArguments",
+            "type": "string",
+            "format": "-- {value}",
+            "customValue": true,
+            "help": "Arguments passed to the application being run.",
+            "isTailArgument": true
+          }
+        ]
+      }
+    },
+    {
+      "help": "<p>The <c>dotnet restore</c> command uses NuGet to restore dependencies as well as project-specific tools that are specified in the project file. By default, the restoration of dependencies and tools are performed in parallel.</p><p>Starting with .NET Core 2.0, you don't have to run <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore\"><c>dotnet restore</c></a> because it's run implicitly by all commands, such as <c>dotnet build</c> and <c>dotnet run</c>, that require a restore to occur. It's still a valid command in certain scenarios where doing an explicit restore makes sense, such as <a href=\"https://docs.microsoft.com/en-us/vsts/build-release/apps/aspnet/build-aspnet-core\">continuous integration builds in Visual Studio Team Services</a> or in build systems that need to explicitly control the time at which the restore occurs.</p><p>In order to restore the dependencies, NuGet needs the feeds where the packages are located. Feeds are usually provided via the <em>NuGet.config</em> configuration file. A default configuration file is provided when the CLI tools are installed. You specify additional feeds by creating your own <em>NuGet.config</em> file in the project directory. You also specify additional feeds per invocation at a command prompt.</p><p>For dependencies, you specify where the restored packages are placed during the restore operation using the <c>--packages</c> argument. If not specified, the default NuGet package cache is used, which is found in the <c>.nuget/packages</c> directory in the user's home directory on all operating systems (for example, <em>/home/user1</em> on Linux or <em>C:\\Users\\user1</em> on Windows).</p><p>For project-specific tooling, <c>dotnet restore</c> first restores the package in which the tool is packed, and then proceeds to restore the tool's dependencies as specified in its project file.</p><p>The behavior of the <c>dotnet restore</c> command is affected by some of the settings in the <em>Nuget.Config</em> file, if present. For example, setting the <c>globalPackagesFolder</c> in <em>NuGet.Config</em> places the restored NuGet packages in the specified folder. This is an alternative to specifying the <c>--packages</c> option on the <c>dotnet restore</c> command. For more information, see the <a href=\"https://docs.microsoft.com/nuget/schema/nuget-config-file\">NuGet.Config reference</a>.</p>",
+      "postfix": "Restore",
+      "commonPropertySets": [
+        "restore",
+        "restore-runtime"
+      ],
+      "definiteArgument": "restore",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ProjectFile",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "Optional path to the project file to restore."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "The NuGet configuration file (<em>NuGet.config</em>) to use for the restore operation."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "<p>The <c>dotnet pack</c> command builds the project and creates NuGet packages. The result of this command is a NuGet package. If the <c>--include-symbols</c> option is present, another package containing the debug symbols is created.</p><p>NuGet dependencies of the packed project are added to the <em>.nuspec</em> file, so they're properly resolved when the package is installed. Project-to-project references aren't packaged inside the project. Currently, you must have a package per project if you have project-to-project dependencies.</p><p>By default, <c>dotnet pack</c> builds the project first. If you wish to avoid this behavior, pass the <c>--no-build</c> option. This is often useful in Continuous Integration (CI) build scenarios where you know the code was previously built.</p><p>You can provide MSBuild properties to the <c>dotnet pack</c> command for the packing process. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/csproj#nuget-metadata-properties\">NuGet metadata properties</a> and the <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference\">MSBuild Command-Line Reference</a>.</p>",
+      "postfix": "Pack",
+      "commonPropertySets": [
+        "restore",
+        "restore-runtime"
+      ],
+      "definiteArgument": "pack",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory."
+          },
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "--configuration {value}",
+            "help": "Configuration to use when building the project. If not specified, configuration defaults to <c>Debug</c>."
+          },
+          {
+            "name": "IncludeSource",
+            "type": "bool",
+            "format": "--include-source",
+            "help": "Includes the source files in the NuGet package. The sources files are included in the <c>src</c> folder within the <c>nupkg</c>."
+          },
+          {
+            "name": "IncludeSymbols",
+            "type": "bool",
+            "format": "--include-symbols",
+            "help": "Generates the symbols <c>nupkg</c>."
+          },
+          {
+            "name": "NoBuild",
+            "type": "bool",
+            "format": "--no-build",
+            "help": "Don't build the project before packing."
+          },
+          {
+            "name": "NoRestore",
+            "type": "bool",
+            "format": "--no-restore",
+            "help": "Doesn't perform an implicit restore when running the command."
+          },
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Places the built packages in the directory specified."
+          },
+          {
+            "name": "Serviceable",
+            "type": "bool",
+            "format": "--serviceable",
+            "help": "Sets the serviceable flag in the package. For more information, see <a href=\"https://aka.ms/nupkgservicing\">.NET Blog: .NET 4.5.1 Supports Microsoft Security Updates for .NET NuGet Libraries</a>."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          },
+          {
+            "name": "VersionSuffix",
+            "type": "string",
+            "format": "--version-suffix {value}",
+            "help": "Defines the value for the <c>$(VersionSuffix)</c> MSBuild property in the project."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "--nologo",
+            "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          }
+        ]
+      }
+    },
+    {
+      "help": "<p>The <c>dotnet build</c> command builds the project and its dependencies into a set of binaries. The binaries include the project's code in Intermediate Language (IL) files with a <em>.dll</em> extension and symbol files used for debugging with a <em>.pdb</em> extension. A dependencies JSON file (<em>*.deps.json</em>) is produced that lists the dependencies of the application. A <em>.runtimeconfig.json</em> file is produced, which specifies the shared runtime and its version for the application.</p><p>If the project has third-party dependencies, such as libraries from NuGet, they're resolved from the NuGet cache and aren't available with the project's built output. With that in mind, the product of <c>dotnet build</c>d isn't ready to be transferred to another machine to run. This is in contrast to the behavior of the .NET Framework in which building an executable project (an application) produces output that's runnable on any machine where the .NET Framework is installed. To have a similar experience with .NET Core, you use the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish\"><c>dotnet publish</c></a> command. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index\">.NET Core Application Deployment</a>.</p><p>Building requires the <em>project.assets.json</em> file, which lists the dependencies of your application. The file is created <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore\"><c>dotnet restore</c></a> is executed. Without the assets file in place, the tooling cannot resolve reference assemblies, which will result in errors. With .NET Core 1.x SDK, you needed to explicitily run the <c>dotnet restore</c> before running <c>dotnet build</c>. Starting with .NET Core 2.0 SDK, <c>dotnet restore</c> runs implicitily when you run <c>dotnet build</c>. If you want to disable implicit restore when running the build command, you can pass the <c>--no-restore</c> option.</p><p><c>dotnet build</c> uses MSBuild to build the project; thus, it supports both parallel and incremental builds. Refer to <a href=\"https://docs.microsoft.com/visualstudio/msbuild/incremental-builds\">Incremental Builds</a> for more information.</p><p>In addition to its options, the <c>dotnet build</c> command accepts MSBuild options, such as <c>/p</c> for setting properties or <c>/l</c> to define a logger. Learn more about these options in the <a href=\"https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference\">MSBuild Command-Line Reference</a>.</p>",
+      "postfix": "Build",
+      "commonPropertySets": [
+        "restore"
+      ],
+      "definiteArgument": "build",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ProjectFile",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file."
+          },
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "--configuration {value}",
+            "help": "Defines the build configuration. If omitted, the build configuration defaults to <c>Debug</c>. Use <c>Release</c> build a Release configuration."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "--framework {value}",
+            "help": "Compiles for a specific <a href=\"https://docs.microsoft.com/en-us/dotnet/standard/frameworks\">framework</a>. The framework must be defined in the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/csproj\">project file</a>."
+          },
+          {
+            "name": "NoIncremental",
+            "type": "bool",
+            "format": "--no-incremental",
+            "help": "Marks the build as unsafe for incremental build. This turns off incremental compilation and forces a clean rebuild of the project's dependency graph."
+          },
+          {
+            "name": "NoRestore",
+            "type": "bool",
+            "format": "--no-restore",
+            "help": "Doesn't perform an implicit restore during build."
+          },
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Directory in which to place the built binaries. You also need to define <c>--framework</c> when you specify this option."
+          },
+          {
+            "name": "Runtime",
+            "type": "string",
+            "format": "--runtime {value}",
+            "help": "Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          },
+          {
+            "name": "VersionSuffix",
+            "type": "string",
+            "format": "--version-suffix {value}",
+            "help": "Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines."
+          },
+          {
+            "name": "Loggers",
+            "type": "List<string>",
+            "format": "/logger:{value}",
+            "help": "Specifies the loggers to use to log events from MSBuild."
+          },
+          {
+            "name": "NoConsoleLogger",
+            "type": "bool",
+            "format": "/noconsolelogger",
+            "help": "Disable the default console logger, and don't log events to the console."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "--nologo",
+            "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet msbuild</c> command allows access to a fully functional MSBuild.<para/>The command has the exact same capabilities as the existing MSBuild command-line client for SDK-style projects only. The options are all the same. For more information about the available options, see the <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference\">MSBuild command-line reference</a>.<para/>The <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build\">dotnet build</a> command is equivalent to <c>dotnet msbuild -restore</c>. When you don't want to build the project and you have a specific target you want to run, use <c>dotnet build</c> or <c>dotnet msbuild</c> and specify the target.",
+      "postfix": "MSBuild",
+      "definiteArgument": "msbuild",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "The solution or project file on which MSBuild is executed."
+          },
+          {
+            "name": "DetailedSummary",
+            "type": "bool",
+            "format": "/detailedsummary",
+            "help": "Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes."
+          },
+          {
+            "name": "MaxCpuCount",
+            "type": "int",
+            "format": "/maxcpucount:{value}",
+            "help": "<p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/bb651793.aspx\">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p>"
+          },
+          {
+            "name": "NodeReuse",
+            "type": "bool",
+            "format": "/nodeReuse:{value}",
+            "help": "<p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>"
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "/nologo",
+            "help": "Don't display the startup banner or the copyright message."
+          },
+          {
+            "name": "Restore",
+            "type": "bool",
+            "format": "/restore",
+            "help": "Runs the <c>Restore</c> target prior to building the actual targets."
+          },
+          {
+            "name": "Targets",
+            "type": "List<string>",
+            "format": "/target:{value}",
+            "separator": ";",
+            "help": "<p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ee216359.aspx\">Target Build Order</a> and <a href=\"https://msdn.microsoft.com/en-us/library/ms171463.aspx\">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ms171462.aspx\">Targets</a>.</p>"
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "/verbosity:{value}",
+            "help": "<p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p>"
+          },
+          {
+            "name": "Loggers",
+            "type": "List<string>",
+            "format": "/logger:{value}",
+            "help": "Specifies the loggers to use to log events from MSBuild."
+          },
+          {
+            "name": "NoConsoleLogger",
+            "type": "bool",
+            "format": "/noconsolelogger",
+            "help": "Disable the default console logger, and don't log events to the console."
+          },
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "/property:Configuration={value}",
+            "help": "Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time."
+          },
+          {
+            "name": "GraphBuild",
+            "type": "bool",
+            "format": "/graphBuild",
+            "help": "Causes MSBuild to construct and build a project graph. Constructing a graph involves identifying project references to form dependencies. Building that graph involves attempting to build project references prior to the projects that reference them, differing from traditional MSBuild scheduling. Requires MSBuild 16 or later."
+          }
+        ]
+      }
+    },
+    {
+      "help": "<p>The <c>dotnet clean</c> command cleans the output of the previous build. It's implemented as an <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-targets\">MSBuild target</a>, so the project is evaluated when the command is run. Only the outputs created during the build are cleaned. Both intermediate <em>(obj)</em> and final output <em>(bin)</em> folders are cleaned.</p>",
+      "postfix": "Clean",
+      "definiteArgument": "clean",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "{value}",
+            "createOverload": true,
+            "help": "The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file."
+          },
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "--configuration {value}",
+            "help": "Defines the build configuration. The default value is <c>Debug</c>. This option is only required when cleaning if you specified it during build time."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "--framework {value}",
+            "help": "The <a href=\"https://docs.microsoft.com/en-us/dotnet/standard/frameworks\">framework</a> that was specified at build time. The framework must be defined in the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/csproj\">project file</a>. If you specified the framework at build time, you must specify the framework when cleaning."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Directory in which the build outputs are placed. Specify the <c>--framework</c> switch with the output directory switch if you specified the framework when the project was built."
+          },
+          {
+            "name": "Runtime",
+            "type": "string",
+            "format": "--runtime {value}",
+            "help": "Cleans the output folder of the specified runtime. This is used when a <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd\">self-contained deployment</a> was created."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed levels are q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "--nologo",
+            "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          }
+        ]
+      }
+    },
+    {
+      "help": "<c>dotnet publish</c> compiles the application, reads through its dependencies specified in the project file, and publishes the resulting set of files to a directory. The output will contain the following:<para/><ul><li>Intermediate Language (IL) code in an assembly with a <em>dll</em> extension.</li><li><em>.deps.json</em> file that contains all of the dependencies of the project.</li><li><em>.runtime.config.json</em> file that specifies the shared runtime that the application expects, as well as other configuration options for the runtime (for example, garbage collection type).</li><li>The application's dependencies. These are copied from the NuGet cache into the output folder.</li></ul><para/>The <c>dotnet publish</c> command's output is ready for deployment to a hosting system (for example, a server, PC, Mac, laptop) for execution and is the only officially supported way to prepare the application for deployment. Depending on the type of deployment that the project specifies, the hosting system may or may not have the .NET Core shared runtime installed on it. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index\">.NET Core Application Deployment</a>. For the directory structure of a published application, see <a href=\"https://docs.microsoft.com/en-us/aspnet/core/hosting/directory-structure\">Directory structure</a>.",
+      "postfix": "Publish",
+      "commonPropertySets": [
+        "restore"
+      ],
+      "definiteArgument": "publish",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "{value}",
+            "help": "The project to publish, which defaults to the current directory if not specified."
+          },
+          {
+            "name": "Configuration",
+            "type": "string",
+            "format": "--configuration {value}",
+            "help": "Defines the build configuration. The default value is <c>Debug</c>."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "--framework {value}",
+            "help": "Publishes the application for the specified <a href=\"https://docs.microsoft.com/en-us/dotnet/standard/frameworks\">target framework</a>. You must specify the target framework in the project file."
+          },
+          {
+            "name": "Manifest",
+            "type": "string",
+            "format": "--manifest {value}",
+            "help": "Specifies one or several <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/runtime-store\">target manifests</a> to use to trim the set of packages published with the app. The manifest file is part of the output of the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-store\"><c>dotnet store</c></a> command. To specify multiple manifests, add a <c>--manifest</c> option for each manifest. This option is available starting with .NET Core 2.0 SDK."
+          },
+          {
+            "name": "NoRestore",
+            "type": "bool",
+            "format": "--no-restore",
+            "help": "Doesn't perform an implicit restore when running the command."
+          },
+          {
+            "name": "NoBuild",
+            "type": "bool",
+            "format": "--no-build",
+            "help": "Doesn't build the project before publishing. It also implicitly sets the <c>--no-restore</c> flag."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory."
+          },
+          {
+            "name": "SelfContained",
+            "type": "bool",
+            "format": "--self-contained {value}",
+            "help": "Publishes the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. If a runtime identifier is specified, its default value is <c>true</c>. For more information about the different deployment types, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index\">.NET Core application deployment</a>."
+          },
+          {
+            "name": "Runtime",
+            "type": "string",
+            "format": "--runtime {value}",
+            "help": "Publishes the application for a given runtime. This is used when creating a <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index#self-contained-deployments-scd\">self-contained deployment (SCD)</a>. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>. Default is to publish a <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/index#framework-dependent-deployments-fdd\">framework-dependent deployment (FDD)</a>."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          },
+          {
+            "name": "VersionSuffix",
+            "type": "string",
+            "format": "--version-suffix {value}",
+            "help": "Defines the version suffix for an asterisk (<c>*</c>) in the version field of the project file. The format follows NuGet's version guidelines."
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "--nologo",
+            "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Pushes a package to the server and publishes it.",
+      "postfix": "NuGetPush",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget push",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "help": "Path of the package to push."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file."
+          },
+          {
+            "name": "SymbolSource",
+            "type": "string",
+            "format": "--symbol-source {value}",
+            "help": "Specifies the symbol server URL."
+          },
+          {
+            "name": "Timeout",
+            "type": "int",
+            "format": "--timeout {value}",
+            "help": "Specifies the timeout for pushing to a server in seconds. Defaults to 300 seconds (5 minutes). Specifying 0 (zero seconds) applies the default value."
+          },
+          {
+            "name": "ApiKey",
+            "type": "string",
+            "format": "--api-key {value}",
+            "secret": true,
+            "help": "The API key for the server."
+          },
+          {
+            "name": "SymbolApiKey",
+            "type": "string",
+            "format": "--symbol-api-key {value}",
+            "secret": true,
+            "help": "The API key for the symbol server."
+          },
+          {
+            "name": "DisableBuffering",
+            "type": "bool",
+            "format": "--disable-buffering",
+            "help": "Disables buffering when pushing to an HTTP(S) server to decrease memory usage."
+          },
+          {
+            "name": "NoSymbols",
+            "type": "bool",
+            "format": "--no-symbols",
+            "help": "Doesn't push symbols (even if present)."
+          },
+          {
+            "name": "ForceEnglishOutput",
+            "type": "bool",
+            "format": "--force-english-output",
+            "help": "Forces all logged output in English."
+          },
+          {
+            "name": "SkipDuplicate",
+            "type": "bool",
+            "format": "--skip-duplicate",
+            "help": "When pushing multiple packages to an HTTP(S) server, treats any 409 Conflict response as a warning so that the push can continue. Available since .NET Core 3.1 SDK."
+          },
+          {
+            "name": "NoServiceEndpoint",
+            "type": "bool",
+            "format": "--no-service-endpoint",
+            "help": "Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Adds a NuGet source.",
+      "postfix": "NuGetAddSource",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget add source",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "{value}",
+            "help": "URL of the source."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name {value}",
+            "help": "Name of the source."
+          },
+          {
+            "name": "Username",
+            "type": "string",
+            "format": "--username {value}",
+            "help": "Username to be used when connecting to an authenticated source."
+          },
+          {
+            "name": "Password",
+            "type": "string",
+            "format": "--password {value}",
+            "secret": true,
+            "help": "Password to be used when connecting to an authenticated source."
+          },
+          {
+            "name": "StorePasswordInClearText",
+            "type": "bool",
+            "format": "--store-password-in-clear-text",
+            "help": "Enables storing portable package source credentials by disabling password encryption."
+          },
+          {
+            "name": "ValidAuthenticationTypes",
+            "type": "List<DotNetNuGetAuthentication>",
+            "format": "--valid-authentication-types",
+            "separator": ",",
+            "help": "List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet tool install</c> command provides a way for you to install .NET Core Global Tools on your machine. To use the command, you either have to specify that you want a user-wide installation using the <c>--global</c> option or you specify a path to install it using the <c>--tool-path</c> option.<para/>Global Tools are installed in the following directories by default when you specify the <c>-g</c> (or <c>--global</c>) option:<ul><li>Linux/macOS: <c>$HOME/.dotnet/tools</c></li><li>Windows: <c>%USERPROFILE%\\.dotnet\\tools</c></li></ul>",
+      "postfix": "ToolInstall",
+      "omitCommonProperties": true,
+      "definiteArgument": "tool install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The Name/ID of the NuGet package that contains the .NET Core Global Tool to install."
+          },
+          {
+            "name": "Sources",
+            "type": "List<string>",
+            "format": "--add-source {value}",
+            "help": "Adds an additional NuGet package source to use during installation."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "Specifies the NuGet configuration (<em>nuget.config</em>) file to use."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "--framework {value}",
+            "help": "Specifies the <a href=\"https://docs.microsoft.com/en-us/dotnet/standard/frameworks\">target framework</a> to install the tool for. By default, the .NET Core SDK tries to choose the most appropriate target framework."
+          },
+          {
+            "name": "Global",
+            "type": "bool",
+            "format": "--global",
+            "help": "Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option."
+          },
+          {
+            "name": "ToolInstallationPath",
+            "type": "string",
+            "format": "--tool-path {value}",
+            "help": "Specifies the location where to install the Global Tool. The path can be absolute or relative. If the path doesn't exist, the command tries to create it. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version {value}",
+            "help": "The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet tool restore</c> command finds the tool manifest file that is in scope for the current directory and installs the tools that are listed in it.",
+      "postfix": "ToolRestore",
+      "omitCommonProperties": true,
+      "definiteArgument": "tool restore",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "Specifies the NuGet configuration (<em>nuget.config</em>) file to use."
+          },
+          {
+            "name": "Sources",
+            "type": "List<string>",
+            "format": "--add-source {value}",
+            "help": "Adds an additional NuGet package source to use during installation."
+          },
+          {
+            "name": "ToolManifest",
+            "type": "string",
+            "format": "--tool-manifest {value}",
+            "help": "Path to the manifest file."
+          },
+          {
+            "name": "DisableParallel",
+            "type": "bool",
+            "format": "--disable-parallel",
+            "help": "Prevent restoring multiple projects in parallel."
+          },
+          {
+            "name": "IgnoreFailedSources",
+            "type": "bool",
+            "format": "--ignore-failed-sources",
+            "help": "Treat package source failures as warnings."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "--no-cache",
+            "help": "Do not cache packages and http requests."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action (for example to complete authentication)."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet tool uninstall</c> command provides a way for you to uninstall .NET Core Global Tools from your machine. To use the command, you either have to specify that you want to remove a user-wide tool using the <c>--global</c> option or specify a path to where the tool is installed using the <c>--tool-path</c> option.",
+      "postfix": "ToolUninstall",
+      "omitCommonProperties": true,
+      "definiteArgument": "tool uninstall",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list\">dotnet tool list</a> command."
+          },
+          {
+            "name": "Global",
+            "type": "bool",
+            "format": "--global",
+            "help": "Specifies that the tool to be removed is from a user-wide installation. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option."
+          },
+          {
+            "name": "ToolInstallationPath",
+            "type": "string",
+            "format": "--tool-path {value}",
+            "help": "Specifies the location where to uninstall the Global Tool. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet tool update</c> command provides a way for you to update .NET Core Global Tools on your machine to the latest stable version of the package. The command uninstalls and re-installs a tool, effectively updating it. To use the command, you either have to specify that you want to update a tool from a user-wide installation using the <c>--global</c> option or specify a path to where the tool is installed using the <c>--tool-path</c> option.",
+      "postfix": "ToolUpdate",
+      "omitCommonProperties": true,
+      "definiteArgument": "tool update",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageName",
+            "type": "string",
+            "format": "{value}",
+            "help": "The Name/ID of the NuGet package that contains the .NET Core Global Tool to install."
+          },
+          {
+            "name": "Sources",
+            "type": "List<string>",
+            "format": "--add-source {value}",
+            "help": "Adds an additional NuGet package source to use during installation."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "Specifies the NuGet configuration (<em>nuget.config</em>) file to use."
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "format": "--framework {value}",
+            "help": "Specifies the <a href=\"https://docs.microsoft.com/en-us/dotnet/standard/frameworks\">target framework</a> to update the tool for."
+          },
+          {
+            "name": "Global",
+            "type": "bool",
+            "format": "--global",
+            "help": "Specifies that the installation is user wide. Can't be combined with the <c>--tool-path</c> option. If you don't specify this option, you must specify the <c>--tool-path</c> option."
+          },
+          {
+            "name": "ToolInstallationPath",
+            "type": "string",
+            "format": "--tool-path {value}",
+            "help": "Specifies the location where the Global Tool is installed. The path can be absolute or relative. Can't be combined with the <c>--global</c> option. If you don't specify this option, you must specify the <c>--global</c> option."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version {value}",
+            "help": "The version of the tool to install. By default, the latest stable package version is installed. Use this option to install preview or older versions of the tool."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "Properties",
+      "type": "Dictionary<string, object>",
+      "format": "/property:{value}",
+      "itemFormat": "{key}={value}",
+      "disallowedCharacter": ";",
+      "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
+      "delegates": [
+        {
+          "name": "RunCodeAnalysis",
+          "type": "bool"
+        },
+        {
+          "name": "NoWarn",
+          "type": "List<int>",
+          "separator": ";"
+        },
+        {
+          "name": "WarningsAsErrors",
+          "type": "List<int>",
+          "separator": ";"
+        },
+        {
+          "name": "WarningLevel",
+          "type": "int"
+        },
+        {
+          "name": "TreatWarningsAsErrors",
+          "type": "bool"
+        },
+        {
+          "name": "AssemblyVersion",
+          "type": "string"
+        },
+        {
+          "name": "FileVersion",
+          "type": "string"
+        },
+        {
+          "name": "InformationalVersion",
+          "type": "string"
+        },
+        {
+          "name": "PackageId",
+          "type": "string"
+        },
+        {
+          "name": "Version",
+          "type": "string"
+        },
+        {
+          "name": "VersionPrefix",
+          "type": "string"
+        },
+        {
+          "name": "Authors",
+          "type": "List<string>",
+          "separator": ","
+        },
+        {
+          "name": "Title",
+          "type": "string"
+        },
+        {
+          "name": "Description",
+          "type": "string"
+        },
+        {
+          "name": "Copyright",
+          "type": "string"
+        },
+        {
+          "name": "PackageRequireLicenseAcceptance",
+          "type": "bool"
+        },
+        {
+          "name": "PackageLicenseUrl",
+          "type": "string"
+        },
+        {
+          "name": "PackageProjectUrl",
+          "type": "string"
+        },
+        {
+          "name": "PackageIconUrl",
+          "type": "string"
+        },
+        {
+          "name": "PackageTags",
+          "type": "List<string>",
+          "separator": " "
+        },
+        {
+          "name": "PackageReleaseNotes",
+          "type": "string"
+        },
+        {
+          "name": "RepositoryUrl",
+          "type": "string"
+        },
+        {
+          "name": "RepositoryType",
+          "type": "string"
+        },
+        {
+          "name": "SymbolPackageFormat",
+          "type": "DotNetSymbolPackageFormat",
+          "help": "Format for packaging symbols."
+        },
+        {
+          "name": "PublishReadyToRun",
+          "type": "bool",
+          "help": "Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run\">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+        },
+        {
+          "name": "PublishSingleFile",
+          "type": "bool",
+          "help": "Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href=\"https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md\">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+        },
+        {
+          "name": "PublishTrimmed",
+          "type": "bool",
+          "help": "Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained\">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+        },
+        {
+          "name": "PublishProfile",
+          "type": "string"
+        },
+        {
+          "name": "Platform",
+          "type": "string"
+        },
+        {
+          "name": "ContinuousIntegrationBuild",
+          "type": "bool"
+        },
+        {
+          "name": "DeterministicSourcePaths",
+          "type": "bool"
+        },
+        {
+          "name": "Deterministic",
+          "type": "bool"
+        }
+      ]
+    }
+  ],
+  "commonTaskPropertySets": {
+    "restore": [
+      {
+        "name": "DisableParallel",
+        "type": "bool",
+        "format": "--disable-parallel",
+        "help": "Disables restoring multiple projects in parallel."
+      },
+      {
+        "name": "Force",
+        "type": "bool",
+        "format": "--force",
+        "help": "Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file."
+      },
+      {
+        "name": "IgnoreFailedSources",
+        "type": "bool",
+        "format": "--ignore-failed-sources",
+        "help": "Only warn about failed sources if there are packages meeting the version requirement."
+      },
+      {
+        "name": "NoCache",
+        "type": "bool",
+        "format": "--no-cache",
+        "help": "Specifies to not cache packages and HTTP requests."
+      },
+      {
+        "name": "NoDependencies",
+        "type": "bool",
+        "format": "--no-dependencies",
+        "help": "When restoring a project with project-to-project (P2P) references, restore the root project and not the references."
+      },
+      {
+        "name": "PackageDirectory",
+        "type": "string",
+        "format": "--packages {value}",
+        "help": "Specifies the directory for restored packages."
+      },
+      {
+        "name": "Sources",
+        "type": "List<string>",
+        "format": "--source {value}",
+        "help": "Specifies a NuGet package source to use during the restore operation. This overrides all of the sources specified in the <em>NuGet.config</em> file(s). Multiple sources can be provided by specifying this option multiple times."
+      },
+      {
+        "name": "UseLockFile",
+        "type": "bool",
+        "format": "--use-lock-file",
+        "help": "Enables project lock file to be generated and used with restore."
+      },
+      {
+        "name": "LockedMode",
+        "type": "bool",
+        "format": "--locked-mode",
+        "help": "Don't allow updating project lock file."
+      },
+      {
+        "name": "LockFilePath",
+        "type": "string",
+        "format": "--lock-file-path {value}",
+        "help": "Output location where project lock file is written. By default, this is 'PROJECT_ROOT\\packages.lock.json'."
+      },
+      {
+        "name": "ForceEvaluate",
+        "type": "bool",
+        "format": "--force-evaluate",
+        "help": "Forces restore to reevaluate all dependencies even if a lock file already exists."
+      }
+    ],
+    "restore-runtime": [
+      {
+        "name": "Runtime",
+        "type": "string",
+        "format": "--runtime {value}",
+        "help": "Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times."
+      }
+    ]
+  },
+  "enumerations": [
+    {
+      "name": "DotNetVerbosity",
+      "values": [
+        "Quiet",
+        "Minimal",
+        "Normal",
+        "Detailed",
+        "Diagnostic"
+      ]
+    },
+    {
+      "name": "DotNetSymbolPackageFormat",
+      "values": [
+        "symbols.nupkg",
+        "snupkg"
+      ]
+    },
+    {
+      "name": "DotNetNuGetAuthentication",
+      "values": [
+        "basic",
+        "negotiate",
+        "kerberos",
+        "ntlm",
+        "digest"
+      ]
+    }
+  ]
+}

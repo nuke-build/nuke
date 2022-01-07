@@ -1,4 +1,4 @@
-﻿// Copyright 2020 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -15,7 +15,7 @@ namespace Nuke.Common.Utilities
     {
         public static string GetDisplayName(this Type type)
         {
-            return type.DescendantsAndSelf(x => x.DeclaringType).Reverse().Select(x => x.GetDisplayShortName()).Join(".");
+            return type.DescendantsAndSelf(x => x.DeclaringType).Reverse().Select(x => x.GetDisplayShortName()).JoinDot();
         }
 
         public static string GetDisplayShortName(this Type type)
@@ -74,8 +74,8 @@ namespace Nuke.Common.Utilities
 
                 var typeName = type.Name.Substring(startIndex: 0, type.Name.IndexOf('`'));
                 return typeName != nameof(ValueTuple) || tupleNames == null
-                    ? $"{typeName}<{type.GetGenericArguments().Select(x => x.GetDisplayShortName(tupleNames)).JoinComma()}>"
-                    : $"({type.GetGenericArguments().Select(x => $"{PopName()}{x.GetDisplayShortName(tupleNames)}").JoinComma()})";
+                    ? $"{typeName}<{type.GetGenericArguments().Select(x => x.GetDisplayShortName(tupleNames)).JoinCommaSpace()}>"
+                    : $"({type.GetGenericArguments().Select(x => $"{PopName()}{x.GetDisplayShortName(tupleNames)}").JoinCommaSpace()})";
             }
 
             if (type.IsArray)
@@ -111,7 +111,7 @@ namespace Nuke.Common.Utilities
                 return type.GetDisplayShortName();
 
             var parameterList = member is MethodBase methodBase
-                ? $"({methodBase.GetParameters().Select(x => x.GetDisplayText()).JoinComma()})"
+                ? $"({methodBase.GetParameters().Select(x => x.GetDisplayText()).JoinCommaSpace()})"
                 : string.Empty;
 
             var tupleNamesAttribute = member is MethodInfo method

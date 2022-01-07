@@ -1,5 +1,5 @@
 #pragma warning disable CS1574
-// Generated from https://github.com/nuke-build/nuke/blob/master/build/specifications/NSwag.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/NSwag/NSwag.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -38,9 +38,9 @@ namespace Nuke.Common.Tools.NSwag
         ///   <p>The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance">inheritance</a>, <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Enums">enum</a> and reference handling). The NSwag project heavily uses <a href="http://njsonschema.org/">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.</p>
         ///   <p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> NSwag(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, bool? logTimestamp = null, string logFile = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> NSwag(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
         {
-            using var process = ProcessTasks.StartProcess(NSwagPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logTimestamp, logFile, NSwagLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(NSwagPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, NSwagLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

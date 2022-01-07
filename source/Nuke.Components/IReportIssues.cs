@@ -13,6 +13,7 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.ReSharper;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 
@@ -91,17 +92,12 @@ namespace Nuke.Components
                     !InspectCodeFailOnCategories.Contains(issue.CategoryId))
                     continue;
 
-                var message = InspectCodeIssueMessage(issue.TypeId, issue.File, issue.Line, issue.Message);
-                Logger.Normal(message);
+                Log.Debug("[{File}:{Line}] {TypeId}: {Message}", issue.File, issue.Line, issue.TypeId, issue.Message);
             }
 
             if (InspectCodeReportIssueSummary)
-            {
-                Logger.Normal();
                 InspectCodeWriteIssueSummary(issues);
-            }
 
-            Logger.Normal();
             ReportIssueCount(issues);
         }
 
@@ -110,14 +106,13 @@ namespace Nuke.Components
             var indentation = issues.Count.ToString().Length + 2;
             foreach (var issuesByCategory in issues.GroupBy(x => x.CategoryId).OrderBy(x => x.Key))
             {
-                Logger.Info($"{issuesByCategory.Key} ({issuesByCategory.Count()})");
+                Log.Information("{IssueCategory} ({Number})", issuesByCategory.Key, issuesByCategory.Count());
                 foreach (var issuesByType in issuesByCategory.GroupBy(x => x.TypeId).OrderByDescending(x => x.Count()))
                 {
-                    var message = $"{issuesByType.Count().ToString().PadLeft(indentation)} {issuesByType.Key}";
                     // if (issueTypes[issuesByType.Key].Severity == nameof(ReSharperSeverity.ERROR) && InspectCodeFailOnError ||
                     //     issueTypes[issuesByType.Key].Severity == nameof(ReSharperSeverity.WARNING) &&
                     //     (InspectCodeFailOnError)
-                    Logger.Normal(message);
+                    Log.Information("{Count} {Type}", issuesByType.Count().ToString().PadLeft(indentation), issuesByType.Key);
                 }
             }
         }
@@ -128,26 +123,22 @@ namespace Nuke.Components
             var errorCount = issues.Count(x => x.Severity == nameof(ReSharperSeverity.ERROR));
             var warningCount = issues.Count(x => x.Severity == nameof(ReSharperSeverity.WARNING));
 
+            // TODO: logging
             var summaryMessage = $"Found {errorCount} errors and {warningCount} warnings in {Solution}.";
 
             if (InspectCodeFailOnError && errorCount > 0 ||
                 InspectCodeFailOnWarning && warningCount > 0 ||
                 issues.Any(x => InspectCodeFailOnIssues.Contains(x.TypeId)) ||
                 issues.Any(x => InspectCodeFailOnCategories.Contains(x.CategoryId)))
-                ControlFlow.Fail(summaryMessage);
+                Assert.Fail(summaryMessage);
             else if (errorCount > 0 || warningCount > 0)
-                Logger.Warn(summaryMessage);
+                Log.Warning(summaryMessage);
 
             ReportSummary(_ => _
                 .When(errorCount > 0, _ => _
                     .AddPair("Errors", errorCount.ToString()))
                 .When(warningCount > 0, _ => _
                     .AddPair("Warnings", warningCount.ToString())));
-        }
-
-        string InspectCodeIssueMessage(string typeId, string file, string line, string message)
-        {
-            return $"[{file}:{line}] {typeId}: {message}";
         }
     }
 }

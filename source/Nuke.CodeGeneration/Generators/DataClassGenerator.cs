@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -9,6 +9,7 @@ using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
 using Nuke.Common;
 using Nuke.Common.Utilities;
+using Serilog;
 
 // ReSharper disable UnusedMethodReturnValue.Local
 
@@ -60,7 +61,7 @@ namespace Nuke.CodeGeneration.Generators
             if (new[] { "int", "bool" }.Contains(property.Type))
                 return;
 
-            Logger.Warn($"Property {property.DataClass.Name}.{property.Name} doesn't contain '{{value}}'.");
+            Log.Warning("Property {ClassName}.{PropertyName} doesn't contain '{{value}}'", property.DataClass.Name, property.Name);
         }
 
         private static void CheckMissingSecret(Property property)
@@ -73,7 +74,7 @@ namespace Nuke.CodeGeneration.Generators
                 !property.Name.ContainsOrdinalIgnoreCase("token"))
                 return;
 
-            Logger.Warn($"Property {property.DataClass.Name}.{property.Name} should have explicit secret definition.");
+            Log.Warning("Property {ClassName}.{PropertyName} should have explicit secret definition", property.DataClass.Name, property.Name);
         }
 
         private static DataClassWriter WriteProcessToolPath(this DataClassWriter writer)
@@ -106,37 +107,28 @@ namespace Nuke.CodeGeneration.Generators
             if (property.CustomImpl)
                 return;
 
+            var type = GetPublicPropertyType(property);
+            var implementation = GetPublicPropertyImplementation(property);
+            var hasInternalProperty = property.IsList() || property.IsDictionary() || property.IsLookupTable();
+
             writer
                 .WriteSummary(property)
-                .WritePublicProperty(property)
-                .WriteInternalPropertyWhenNeeded(property);
+                .WriteObsoleteAttributeWhenObsolete(property)
+                .WriteLineIfTrue(!hasInternalProperty, GetJsonSerializationAttribute(property))
+                .WriteLineIfTrue(hasInternalProperty, GetJsonIgnoreAttribute(property))
+                .WriteLine($"public virtual {type} {property.Name} {implementation}")
+                .WriteLineIfTrue(hasInternalProperty, GetJsonSerializationAttribute(property))
+                .WriteLineIfTrue(hasInternalProperty, $"internal {property.Type} {property.Name}Internal {{ get; set; }}{GetPropertyInitialization(property)}");
         }
 
         private static string GetJsonSerializationAttribute(Property property)
         {
-            if (string.IsNullOrWhiteSpace(property.Json))
-                return null;
-
-            return $"[JsonProperty({property.Json.DoubleQuote()})]";
+            return !string.IsNullOrWhiteSpace(property.Json) ? $"[JsonProperty({property.Json.DoubleQuote()})]" : null;
         }
 
-        private static T WriteInternalPropertyWhenNeeded<T>(this T writer, Property property)
-            where T : DataClassWriter
+        private static string GetJsonIgnoreAttribute(Property property)
         {
-            if (!property.IsList() && !property.IsDictionary() && !property.IsLookupTable())
-                return writer;
-            return writer.WriteLine($"internal {property.Type} {property.Name}Internal {{ get; set; }}{GetPropertyInitialization(property)}");
-        }
-
-        private static T WritePublicProperty<T>(this T writer, Property property)
-            where T : DataClassWriter
-        {
-            var type = GetPublicPropertyType(property);
-            var implementation = GetPublicPropertyImplementation(property);
-            return writer
-                .WriteObsoleteAttributeWhenObsolete(property)
-                .WriteLine(GetJsonSerializationAttribute(property))
-                .WriteLine($"public virtual {type} {property.Name} {implementation}");
+            return !string.IsNullOrWhiteSpace(property.Json) ? "[JsonIgnore]" : null;
         }
 
         private static string GetPropertyInitialization(Property property)
@@ -225,7 +217,7 @@ namespace Nuke.CodeGeneration.Generators
             if (property.Secret ?? false)
                 arguments.Add("secret: true");
 
-            return $"  .Add({arguments.JoinComma()})";
+            return $"  .Add({arguments.JoinCommaSpace()})";
         }
     }
 }

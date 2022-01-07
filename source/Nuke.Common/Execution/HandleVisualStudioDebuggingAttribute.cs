@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,8 +26,8 @@ namespace Nuke.Common.Execution
 
             File.WriteAllText(Constants.GetVisualStudioDebugFile(NukeBuild.RootDirectory),
                 Process.GetCurrentProcess().Id.ToString());
-            ControlFlow.Assert(SpinWait.SpinUntil(() => Debugger.IsAttached, millisecondsTimeout: TimeoutInMilliseconds),
-                $"VisualStudio debugger was not attached within {TimeoutInMilliseconds} milliseconds.");
+            Assert.True(SpinWait.SpinUntil(() => Debugger.IsAttached, millisecondsTimeout: TimeoutInMilliseconds),
+                $"VisualStudio debugger was not attached within {TimeoutInMilliseconds} milliseconds");
         }
     }
 }
