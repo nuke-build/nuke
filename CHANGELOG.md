@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [6.0.0] / 2022-01-07
 - Removed `ToolSettings.ProcessLogFile` and `ProcessLogTimestamp`
 - Removed `GitHub` prefix for `GitHubActions` environment variables
 - Deprecated `Logger` in favor of `Serilog.Log`
@@ -875,7 +877,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/5.3.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.0.0...HEAD
+[6.0.0]: https://github.com/nuke-build/nuke/compare/5.3.0...6.0.0
 [5.3.0]: https://github.com/nuke-build/nuke/compare/5.2.1...5.3.0
 [5.2.1]: https://github.com/nuke-build/nuke/compare/5.2.0...5.2.1
 [5.2.0]: https://github.com/nuke-build/nuke/compare/5.1.4...5.2.0
