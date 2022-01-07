@@ -74,10 +74,10 @@ partial class Build
             var image = new Image<Rgba64>(width: width, height: height);
             image.Mutate(x => x
                 .BackgroundColor(Color.FromRgb(r: 25, g: 25, b: 25))
-                .DrawImage(
-                    logo,
-                    location: new Point(image.Width / 2 - logo.Width / 2, image.Height / 2 - logo.Height / 2),
-                    opacity: 0.05f)
+                // .DrawImage(
+                //     logo,
+                //     location: new Point(image.Width / 2 - logo.Width / 2, image.Height / 2 - logo.Height / 2),
+                //     opacity: 0.05f)
                 .DrawText(
                     text: "New Release".ToUpperInvariant(),
                     font: thinFont.CreateFont(100),
