@@ -110,7 +110,7 @@ namespace Nuke.Common.IO
             var destinationParts = destinationPath.Split(new[] { separator }, StringSplitOptions.RemoveEmptyEntries);
 
             var sameParts = baseParts.Zip(destinationParts, (a, b) => new { Base = a, Destination = b })
-                .Count(x => x.Base.EqualsOrdinalIgnoreCase(x.Destination));
+                .TakeWhile(x => x.Base.EqualsOrdinalIgnoreCase(x.Destination)).Count();
             return Enumerable.Repeat("..", baseParts.Length - sameParts).ToList()
                 .Concat(destinationParts.Skip(sameParts).ToList()).Join(separator);
         }
