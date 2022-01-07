@@ -7,7 +7,7 @@ using Nuke.Components;
 
 [AppVeyor(
     suffix: null,
-    AppVeyorImage.VisualStudio2019,
+    AppVeyorImage.VisualStudio2022,
     BranchesOnly = new[] { MasterBranch, $"/{ReleaseBranchPrefix}\\/*/" },
     SkipTags = true,
     InvokedTargets = new[] { nameof(IPack.Pack), nameof(ITest.Test), nameof(ISignPackages.SignPackages), nameof(IPublish.Publish) },
