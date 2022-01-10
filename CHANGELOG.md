@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [6.0.1] / 2022-01-10
+- Fixed invisible output for `SystemConsoleHostTheme`
+- Fixed `GetRelativePath` for same parts in different places
+
 ## [6.0.0] / 2022-01-07
 - Removed `ToolSettings.ProcessLogFile` and `ProcessLogTimestamp`
 - Removed `GitHub` prefix for `GitHubActions` environment variables
@@ -877,7 +881,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.0.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.0.1...HEAD
+[6.0.1]: https://github.com/nuke-build/nuke/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/nuke-build/nuke/compare/5.3.0...6.0.0
 [5.3.0]: https://github.com/nuke-build/nuke/compare/5.2.1...5.3.0
 [5.2.1]: https://github.com/nuke-build/nuke/compare/5.2.0...5.2.1

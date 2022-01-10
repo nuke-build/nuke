@@ -38,7 +38,10 @@ namespace Nuke.Common.Tests
         [InlineData("C:\\A\\B\\C", "C:\\A\\B", "..")]
         [InlineData("C:\\A\\B\\", "C:\\A\\B\\C", "C")]
         [InlineData("C:\\A\\B\\C", "C:\\A\\B\\D\\E", "..\\D\\E")]
+        [InlineData("C:\\A\\B\\C\\B", "C:\\A\\B\\D\\B", "..\\..\\D\\B")]
         [InlineData("/bin/etc", "/bin/tmp", "../tmp")]
+        [InlineData("/bin/etc/bin", "/bin/tmp/bin", "../../tmp/bin")]
+        [InlineData("/same1/diff1/same2", "/diff1/diff2/same2", "../../../diff1/diff2/same2")]
         public void TestGetRelativePath(string basePath, string destinationPath, string expected)
         {
             GetRelativePath(basePath, destinationPath).Should().Be(expected);

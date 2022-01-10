@@ -15,7 +15,7 @@
 # ------------------------------------------------------------------------------
 
 image:
-  - Visual Studio 2019
+  - Visual Studio 2022
 
 branches:
   only:
@@ -49,4 +49,4 @@ environment:
   GitterAuthToken:
     secure: Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw
   SlackWebhook:
-    secure: xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hkn8u/b12lFivnxtTPuMWjAYkoPLlkJ4v39FLYPcxGYbAxRRMcJiHjrNyPtFfK6ddo=
+    secure: xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hkmagda0rH4ZxOTbJ1bcmC3D6uhvJKLtSHqY7TK/48Nw3EbvN9wNFEt97HWYc9FE+g=
