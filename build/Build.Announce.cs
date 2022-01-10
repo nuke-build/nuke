@@ -44,7 +44,7 @@ partial class Build
         {
             var committers = GitTasks.Git($"log {MajorMinorPatchVersion}^..{MajorMinorPatchVersion} --pretty=tformat:%an", logOutput: false);
             var commitsText = $"{committers.Count} {(committers.Count == 1 ? "commit" : "commits")}";
-            var comparisonUrl = GitRepository.GetGitHubCompareTagsUrl($"{MajorMinorPatchVersion}^", MajorMinorPatchVersion);
+            var comparisonUrl = GitRepository.GetGitHubCompareTagsUrl(MajorMinorPatchVersion, $"{MajorMinorPatchVersion}^");
             var notableCommitters = committers
                 .Select(x => x.Text)
                 .GroupBy(x => x)
