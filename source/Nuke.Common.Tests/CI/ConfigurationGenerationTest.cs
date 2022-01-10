@@ -148,7 +148,9 @@ namespace Nuke.Common.Tests.CI
                         OnPullRequestIncludePaths = new[] { "pull_request_include_path" },
                         OnPullRequestExcludePaths = new[] { "pull_request_exclude_path/**" },
                         OnWorkflowDispatchOptionalInputs = new[] { "OptionalInput" },
-                        OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" }
+                        OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" },
+                        Submodules = GitHubActionsSubmodules.Recursive,
+                        FetchDepth = 2
                     }
                 );
 
