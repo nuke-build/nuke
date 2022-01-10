@@ -21,6 +21,7 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
         public AppVeyorBranches Branches { get; set; }
         public string[] Init { get; set; }
         public string[] Cache { get; set; }
+        public bool Submodules { get; set; }
         public string[] InvokedTargets { get; set; }
         public string[] Artifacts { get; set; }
         public bool SkipTags { get; set; }
@@ -100,6 +101,15 @@ namespace Nuke.Common.CI.AppVeyor.Configuration
                 using (writer.WriteBlock("init:"))
                 {
                     Init.ForEach(x => writer.WriteLine($"- {x}"));
+                }
+                writer.WriteLine();
+            }
+
+            if (Submodules)
+            {
+                using (writer.WriteBlock("install:"))
+                {
+                    writer.WriteLine("- git submodule update --init --recursive");
                 }
                 writer.WriteLine();
             }

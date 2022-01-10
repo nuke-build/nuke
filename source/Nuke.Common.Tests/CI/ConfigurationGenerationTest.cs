@@ -110,6 +110,7 @@ namespace Nuke.Common.Tests.CI
                         BranchesExcept = new[] { "except_branch" },
                         SkipTags = true,
                         SkipBranchesWithPullRequest = true,
+                        Submodules = true,
                         Secrets = new[] { "GitHubToken" }
                     }
                 );
