@@ -25,10 +25,8 @@ namespace Nuke.Common.CI.GitHubActions
     {
         private readonly string _name;
         private readonly GitHubActionsImage[] _images;
-        private string _gitHubSubmodules;
-        private string _gitHubDotNetVersion;
-        private bool? _gitHubIncludeDotNetPreRelease;
-        private uint? _gitHubFetchDepth;
+        private GitHubActionsSubmodules? _submodules;
+        private uint? _fetchDepth;
 
         public GitHubActionsAttribute(
             string name,
@@ -73,27 +71,15 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
-        public string Submodules
+        public GitHubActionsSubmodules Submodules
         {
-            set => _gitHubSubmodules = value;
-            get => throw new NotSupportedException();
-        }
-
-        public string DotNetVersion
-        {
-            set => _gitHubDotNetVersion = value;
-            get => throw new NotSupportedException();
-        }
-
-        public bool? IncludeDotNetPreRelease
-        {
-            set => _gitHubIncludeDotNetPreRelease = value;
+            set => _submodules = value;
             get => throw new NotSupportedException();
         }
 
         public uint? FetchDepth
         {
-            set => _gitHubFetchDepth = value;
+            set => _fetchDepth = value;
             get => throw new NotSupportedException();
         }
 
@@ -134,38 +120,11 @@ namespace Nuke.Common.CI.GitHubActions
 
         private IEnumerable<GitHubActionsStep> GetSteps(GitHubActionsImage image, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            var checkoutStep = new GitHubActionsUsingStep
-                               {
-                                   Using = "actions/checkout@v2"
-                               };
-
-            if (!string.IsNullOrWhiteSpace(_gitHubSubmodules))
-            {
-                checkoutStep.With.Add("submodules", _gitHubSubmodules);
-            }
-
-            if (_gitHubFetchDepth.HasValue)
-            {
-                checkoutStep.With.Add("fetch-depth", $"{_gitHubFetchDepth.Value}");
-            }
-
-            yield return checkoutStep;
-
-            if (!string.IsNullOrWhiteSpace(_gitHubDotNetVersion) || _gitHubIncludeDotNetPreRelease.HasValue)
-            {
-                var setupDotNet = new GitHubActionsUsingStep
-                                  {
-                                      Using = "actions/setup-dotnet@v1"
-                                  };
-
-                setupDotNet.With.Add("dotnet-version", _gitHubDotNetVersion);
-                if (_gitHubIncludeDotNetPreRelease.HasValue)
-                {
-                    setupDotNet.With.Add("include-prerelease", $"{_gitHubIncludeDotNetPreRelease.Value}".ToLower());
-                }
-
-                yield return setupDotNet;
-            }
+            yield return new GitHubActionsCheckoutStep
+                         {
+                             Submodules = _submodules,
+                             FetchDepth = _fetchDepth
+                         };
 
             if (CacheKeyFiles.Any())
             {

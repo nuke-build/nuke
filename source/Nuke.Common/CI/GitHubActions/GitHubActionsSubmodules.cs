@@ -7,10 +7,10 @@ using System.Linq;
 
 namespace Nuke.Common.CI.GitHubActions
 {
-    public static class GitHubSubmodules
+    public enum GitHubActionsSubmodules
     {
-        public const string No = "false";
-        public const string Yes = "true";
-        public const string Recursive = "recursive";
+        False,
+        True,
+        Recursive
     }
 }

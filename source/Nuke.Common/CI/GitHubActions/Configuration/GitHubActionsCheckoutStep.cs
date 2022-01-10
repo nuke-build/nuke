@@ -3,36 +3,37 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
     [PublicAPI]
-    public class GitHubActionsUsingStep : GitHubActionsStep
+    public class GitHubActionsCheckoutStep : GitHubActionsStep
     {
-        public string Using { get; set; }
+        public GitHubActionsSubmodules? Submodules { get; set; }
+        public uint? FetchDepth { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
-            writer.WriteLine($"- uses: {Using}");
+            writer.WriteLine("- uses: actions/checkout@v2");
 
-            if (With.Count > 0)
+            if (Submodules.HasValue || FetchDepth.HasValue)
             {
-                using var _ = writer.Indent();
-                writer.WriteLine("with:");
-                using var __ = writer.Indent();
-                foreach (var (with, value) in With)
+                using (writer.Indent())
                 {
-                    writer.WriteLine($"{with}: {value}");
+                    writer.WriteLine("with:");
+                    using (writer.Indent())
+                    {
+                        if (Submodules.HasValue)
+                            writer.WriteLine($"submodules: {Submodules.ToString().ToLowerInvariant()}");
+                        if (FetchDepth.HasValue)
+                            writer.WriteLine($"fetch-depth: {FetchDepth}");
+                    }
                 }
             }
         }
-
-        public Dictionary<string, string> With { get; } = new();
     }
 
     public class GitHubActionsArtifactStep : GitHubActionsStep
