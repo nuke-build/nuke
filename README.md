@@ -116,7 +116,8 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
 [![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=45&v=4)](https://github.com/stevenkuhn)
 [![Jesus Rodriguez Valencia](https://avatars.githubusercontent.com/jrodrigv?s=45&v=4)](https://github.com/jrodrigv)
-[![Влалислав Лищина](https://avatars.githubusercontent.com/Duskone39?s=45&v=4)](https://github.com/Duskone39)
+[![Vladislav Lischyna](https://avatars.githubusercontent.com/Duskone39?s=45&v=4)](https://github.com/Duskone39)
+[![Adam Renaud](https://avatars.githubusercontent.com/rena0157?s=45&v=4)](https://github.com/rena0157)
 
 ## Technology Sponsors
 
