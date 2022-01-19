@@ -1829,6 +1829,137 @@
       }
     },
     {
+      "help": "Apply a configuration to a resource by using kustomize. The resource name must be specified. This resource will be created if it doesn't exist yet. To use 'apply', always create the resource initially with either 'apply' or 'create --save-config'. JSON and YAML formats are accepted. Alpha Disclaimer: the --prune functionality is not yet complete. Do not use unless you are aware of what the current state is. See https://issues.k8s.io/34274.",
+      "postfix": "ApplyKustomize",
+      "definiteArgument": "apply -k",
+      "settingsClass": {
+        "baseClass": "KubernetesToolSettings",
+        "properties": [
+          {
+            "name": "All",
+            "type": "bool",
+            "format": "--all={value}",
+            "help": "Select all resources in the namespace of the specified resource types."
+          },
+          {
+            "name": "AllowMissingTemplateKeys",
+            "type": "bool",
+            "format": "--allow-missing-template-keys={value}",
+            "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
+          },
+          {
+            "name": "Cascade",
+            "type": "bool",
+            "format": "--cascade={value}",
+            "help": "If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true."
+          },
+          {
+            "name": "DryRun",
+            "type": "bool",
+            "format": "--dry-run={value}",
+            "help": "If true, only print the object that would be sent, without sending it."
+          },
+          {
+            "name": "Filename",
+            "type": "List<string>",
+            "format": "--filename={value}",
+            "separator": ",",
+            "help": "that contains the configuration to apply."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force={value}",
+            "help": "Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation."
+          },
+          {
+            "name": "GracePeriod",
+            "type": "int",
+            "format": "--grace-period={value}",
+            "help": "Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion)."
+          },
+          {
+            "name": "IncludeUninitialized",
+            "type": "bool",
+            "format": "--include-uninitialized={value}",
+            "help": "If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., \"--all\". Objects with empty metadata.initializers are regarded as initialized."
+          },
+          {
+            "name": "OpenapiPatch",
+            "type": "bool",
+            "format": "--openapi-patch={value}",
+            "help": "If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types."
+          },
+          {
+            "name": "Output",
+            "type": "KubernetesApplyOutput",
+            "format": "--output={value}",
+            "help": "Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file."
+          },
+          {
+            "name": "Overwrite",
+            "type": "bool",
+            "format": "--overwrite={value}",
+            "help": "Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration."
+          },
+          {
+            "name": "Prune",
+            "type": "bool",
+            "format": "--prune={value}",
+            "help": "Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all."
+          },
+          {
+            "name": "PruneWhitelist",
+            "type": "List<string>",
+            "format": "--prune-whitelist={value}",
+            "help": "Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune."
+          },
+          {
+            "name": "Record",
+            "type": "bool",
+            "format": "--record={value}",
+            "help": "Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists."
+          },
+          {
+            "name": "Recursive",
+            "type": "bool",
+            "format": "--recursive={value}",
+            "help": "Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory."
+          },
+          {
+            "name": "Selector",
+            "type": "string",
+            "format": "--selector={value}",
+            "help": "Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2)."
+          },
+          {
+            "name": "Template",
+            "type": "string",
+            "format": "--template={value}",
+            "help": "Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview]."
+          },
+          {
+            "name": "Timeout",
+            "type": "TimeSpan?",
+            "format": "--timeout={value}",
+            "help": "The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object."
+          },
+          {
+            "name": "Validate",
+            "type": "bool",
+            "format": "--validate={value}",
+            "help": "If true, use a schema to validate the input before sending it."
+          },
+          {
+            "name": "Wait",
+            "type": "bool",
+            "format": "--wait={value}",
+            "help": "If true, wait for resources to be gone before returning. This waits for finalizers."
+          }
+        ]
+      }
+    },
+    {
       "help": "Mark node as unschedulable.",
       "postfix": "Cordon",
       "definiteArgument": "cordon",
