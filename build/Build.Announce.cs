@@ -9,6 +9,7 @@ using System.Text;
 using Nuke.Common;
 using Nuke.Common.ChangeLog;
 using Nuke.Common.Git;
+using Nuke.Common.Tools.Git;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities;
@@ -41,6 +42,16 @@ partial class Build
         .Requires(() => GitterAuthToken)
         .Executes(async () =>
         {
+            var committers = GitTasks.Git($"log {MajorMinorPatchVersion}^..{MajorMinorPatchVersion} --pretty=tformat:%an", logOutput: false);
+            var commitsText = $"{committers.Count} {(committers.Count == 1 ? "commit" : "commits")}";
+            var comparisonUrl = GitRepository.GetGitHubCompareTagsUrl(MajorMinorPatchVersion, $"{MajorMinorPatchVersion}^");
+            var notableCommitters = committers
+                .Select(x => x.Text)
+                .GroupBy(x => x)
+                .OrderByDescending(x => x.Count())
+                .Select(x => x.Key)
+                .Where(x => x != "Matthias Koch").ToList();
+
             var client = new TwitterClient(
                 new TwitterCredentials(
                     TwitterCredentials.ConsumerKey,
@@ -67,10 +78,30 @@ partial class Build
                 });
 
             await SendSlackMessageAsync(_ => _
-                    .SetText(new StringBuilder()
-                        .AppendLine($"<!here> :mega::shipit: *NUKE {MajorMinorPatchVersion} IS OUT!!!*")
-                        .AppendLine()
-                        .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ")).JoinNewLine()).ToString()),
+                    .AddAttachment(_ => _
+                        .SetFallback($"NUKE {MajorMinorPatchVersion} RELEASED!")
+                        .SetAuthorName($"NUKE {MajorMinorPatchVersion} RELEASED!")
+                        .SetAuthorLink($"https://nuget.org/packages/Nuke.Common/{MajorMinorPatchVersion}")
+                        .SetColor("#00ACC1")
+                        .SetThumbUrl(
+                            MajorMinorPatchVersion.EndsWith(".0.0")
+                                ? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/rocket_1f680.png"
+                                : MajorMinorPatchVersion.EndsWith(".0")
+                                    ? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/wrapped-gift_1f381.png"
+                                    : "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/package_1f4e6.png")
+                        .SetText(new StringBuilder()
+                            .Append($"This release includes *<{comparisonUrl}|{commitsText}>*")
+                            .AppendLine(notableCommitters.Count > 0
+                                ? $" with notable contributions from {notableCommitters.JoinCommaAnd()}. A round of applause for them! :clap:"
+                                : ". No contributions this time. :sweat_smile:")
+                            .AppendLine()
+                            .AppendLine("Remember that you can call `nuke :update` to update your builds! :bulb:")
+                            .AppendLine()
+                            .AppendLine("*Release Notes*")
+                            .AppendLine("```")
+                            .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ").Replace("`", string.Empty)).JoinNewLine())
+                            .AppendLine("```").ToString())
+                        .SetFooter("Powered by *<https://octopus.com/|Octopus Deploy>* and *<https://virtocommerce.com/|Virto Commerce>*.")),
                 SlackWebhook);
 
             SendGitterMessage(new StringBuilder()

@@ -34,6 +34,7 @@ namespace Nuke.Common.CI.TeamCity.Configuration
                     writer.WriteLine($"description = {Description.DoubleQuote()},");
 
                 writer.WriteLine($"value = {DefaultValue.DoubleQuote()},");
+
                 if (Type == TeamCityParameterType.Checkbox)
                 {
                     writer.WriteLine($"checked = {true.ToString().DoubleQuote()},");

@@ -12,6 +12,7 @@ using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
+using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
@@ -47,6 +48,8 @@ namespace Nuke.Common.Tests.CI
             return TestBuild.GetAttributes().Select(x => new object[] { x.TestName, x.Generator });
         }
 
+        [AppVeyorSecret("GitHubToken", "encrypted-yaml")]
+        [TeamCityToken("GitHubToken", "74928d76-46e8-45cc-ad22-6438915ac070")]
         public class TestBuild : NukeBuild
         {
             public static IEnumerable<(string TestName, IConfigurationGenerator Generator)> GetAttributes()
@@ -63,7 +66,8 @@ namespace Nuke.Common.Tests.CI
                         ManuallyTriggeredTargets = new[] { nameof(Publish) },
                         NightlyTriggeredTargets = new[] { nameof(Publish) },
                         NightlyTriggerBranchFilters = new[] { "nightly_branch_filter" },
-                        VcsTriggerBranchFilters = new[] { "vcs_branch_filter" }
+                        VcsTriggerBranchFilters = new[] { "vcs_branch_filter" },
+                        ImportSecrets = new[] { "GitHubToken", "ManualToken" }
                     }
                 );
 
@@ -105,7 +109,9 @@ namespace Nuke.Common.Tests.CI
                         BranchesOnly = new[] { "only_branch" },
                         BranchesExcept = new[] { "except_branch" },
                         SkipTags = true,
-                        SkipBranchesWithPullRequest = true
+                        SkipBranchesWithPullRequest = true,
+                        Submodules = true,
+                        Secrets = new[] { "GitHubToken" }
                     }
                 );
 
@@ -143,7 +149,9 @@ namespace Nuke.Common.Tests.CI
                         OnPullRequestIncludePaths = new[] { "pull_request_include_path" },
                         OnPullRequestExcludePaths = new[] { "pull_request_exclude_path/**" },
                         OnWorkflowDispatchOptionalInputs = new[] { "OptionalInput" },
-                        OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" }
+                        OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" },
+                        Submodules = GitHubActionsSubmodules.Recursive,
+                        FetchDepth = 2
                     }
                 );
 
@@ -164,6 +172,7 @@ namespace Nuke.Common.Tests.CI
                         OnPushPathIncludes = new[] { "include-path" },
                         OnPushPathExcludes = new[] { "exclude-path" },
                         OnCronSchedule = "* 0 * * *",
+                        ImportSecrets = new[] { "GitHubToken" },
                         TimeoutInMinutes = 15
                     }
                 );

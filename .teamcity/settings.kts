@@ -20,7 +20,7 @@ import jetbrains.buildServer.configs.kotlin.v2018_1.buildSteps.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.triggers.*
 import jetbrains.buildServer.configs.kotlin.v2018_1.vcs.*
 
-version = "2021.1"
+version = "2021.2"
 
 project {
     buildType(Pack)
@@ -120,12 +120,12 @@ object Pack : BuildType({
     steps {
         exec {
             path = "build.cmd"
-            arguments = "Restore Compile Pack --skip"
+            arguments = "Restore DownloadLicenses Compile Pack --skip"
             conditions { contains("teamcity.agent.jvm.os.name", "Windows") }
         }
         exec {
             path = "build.sh"
-            arguments = "Restore Compile Pack --skip"
+            arguments = "Restore DownloadLicenses Compile Pack --skip"
             conditions { doesNotContain("teamcity.agent.jvm.os.name", "Windows") }
         }
     }

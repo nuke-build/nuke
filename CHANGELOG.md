@@ -5,14 +5,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Added GitHub Actions support for submodules and fetch-depth
+- Added AppVeyor support for submodules
+
+## [6.0.1] / 2022-01-10
+- Fixed invisible output for `SystemConsoleHostTheme`
+- Fixed `GetRelativePath` for same parts in different places
+
+## [6.0.0] / 2022-01-07
 - Removed `ToolSettings.ProcessLogFile` and `ProcessLogTimestamp`
-- Removed `GitHub` prefix in `GitHubActions`
+- Removed `GitHub` prefix for `GitHubActions` environment variables
 - Deprecated `Logger` in favor of `Serilog.Log`
 - Deprecated `ControlFlow` asserts in favor of `Assert` class
 - Changed `Nuke.GlobalTool` to enable `RollForward` with `LatestMajor`
 - Changed default serialization settings for JSON and YAML in `SerializationTasks`
 - Changed GitHub Actions generation to use default `GitHubActions.Token` through `EnableGitHubContext`
 - Changed Azure Pipelines generation to use default `AzurePipelines.AccessToken` through `EnableAccessToken`
+- Added shell-completion support for global tool builds
 - Added `NukeBuild.ExecutionPlan` to public API
 - Added `Partition.Part` and `Total` to public API
 - Added `MSBuildToolPathResolver` support for Visual Studio 2022
@@ -24,6 +33,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `StdToText` and `StdToJson` extension methods for `IEnumerable<Output>`
 - Added newest worker images for Azure Pipelines, GitHub Actions, and AppVeyor generation
 - Added Azure Pipelines generation for pull-request triggers, fetch depth, and clean checkout
+- Added Space Automation support for secrets
+- Added TeamCity support for GUID tokens
 - Added `AzurePipelinesCachePaths` for common cache paths
 - Added `AzurePipelines.PhaseName` property
 - Added `GitHub.CreateComment` for issue and pull-request comments
@@ -39,6 +50,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `NetlifyTasks`
 - Fixed check for executables compiled with `PublishSingleFile`
 - Fixed `MSBuild` localization using `MSBuildLocator`
+- Fixed missing assertion for successful status code in `HttpTasks`
 - Fixed Azure Pipelines caching
 - Fixed `IBuildServer.Branch` for `AzurePipelines`
 - Fixed `OctoVersionTasks` and `OctoVersionAttribute` for latest version
@@ -871,7 +883,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/5.3.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.0.1...HEAD
+[6.0.1]: https://github.com/nuke-build/nuke/compare/6.0.0...6.0.1
+[6.0.0]: https://github.com/nuke-build/nuke/compare/5.3.0...6.0.0
 [5.3.0]: https://github.com/nuke-build/nuke/compare/5.2.1...5.3.0
 [5.2.1]: https://github.com/nuke-build/nuke/compare/5.2.0...5.2.1
 [5.2.0]: https://github.com/nuke-build/nuke/compare/5.1.4...5.2.0

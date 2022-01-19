@@ -65,6 +65,7 @@ namespace Nuke.Common.CI.AppVeyor
         public string[] Init { get; set; } = new string[0];
         public string[] Cache { get; set; } = new string[0];
         public string[] Secrets { get; set; }
+        public bool Submodules { get; set; }
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -91,7 +92,8 @@ namespace Nuke.Common.CI.AppVeyor
                        Init = Init,
                        Cache = Cache,
                        Artifacts = GetArtifacts(relevantTargets).ToArray(),
-                       Secrets = GetSecrets(build)
+                       Secrets = GetSecrets(build),
+                       Submodules = Submodules
                    };
         }
 

@@ -61,13 +61,15 @@ namespace Nuke.Common.Tests
   }
 }
 ");
-            var items = SchemaUtility.GetCompletionItemsForBuildSchema(schema);
+            var profileNames = new[] { "dev" };
+            var items = SchemaUtility.GetCompletionItems(schema, profileNames);
             items.Should().BeEquivalentTo(
                 new Dictionary<string, string[]>
                 {
                     ["NoLogo"] = null,
                     ["Configuration"] = new[] { "Debug", "Release" },
-                    ["Target"] = new[] { "Restore", "Compile" }
+                    ["Target"] = new[] { "Restore", "Compile" },
+                    [Constants.LoadedLocalProfilesParameterName] = profileNames
                 });
         }
 

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
 
@@ -19,10 +20,23 @@ namespace Nuke.Common.Execution
             {
                 WriteCompletionFile(build);
             }
-            else
+            else if (NukeBuild.BuildProjectFile != null)
             {
                 SchemaUtility.WriteBuildSchemaFile(build);
                 SchemaUtility.WriteDefaultParametersFile();
+            }
+            else if (EnvironmentInfo.GetPositionalArgument<string>(0) == ":complete")
+            {
+                var schema = SchemaUtility.GetBuildSchema(build);
+                var profileNames = GetProfileNames(NukeBuild.RootDirectory);
+                var completionItems = SchemaUtility.GetCompletionItems(schema, profileNames);
+
+                var words = EnvironmentInfo.CommandLineArguments.Skip(2).JoinSpace();
+                var relevantCompletionItems = CompletionUtility.GetRelevantCompletionItems(words, completionItems);
+                foreach (var item in relevantCompletionItems)
+                    Console.WriteLine(item);
+
+                Environment.Exit(exitCode: 0);
             }
 
             if (EnvironmentInfo.GetParameter<bool>(CompletionParameterName))

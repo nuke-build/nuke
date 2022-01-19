@@ -8,7 +8,7 @@
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
     <ProjectReference Include="..\Nuke.GlobalTool\Nuke.GlobalTool.csproj" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Remove="cake-scripts\*" />
     <None Include="cake-scripts\*" />
