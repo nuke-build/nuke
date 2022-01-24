@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -43,7 +43,7 @@ namespace Nuke.Common.Tools.MSBuild
                 from version in new[] { MSBuildVersion.VS2022, MSBuildVersion.VS2019, MSBuildVersion.VS2017 }
                 from platform in s_platforms
                 from edition in editions
-                let folder = version == MSBuildVersion.VS2022 ? SpecialFolders.ProgramFiles : SpecialFolders.ProgramFilesX86
+                let folder = version == MSBuildVersion.VS2022 && edition != "BuildTools" ? SpecialFolders.ProgramFiles : SpecialFolders.ProgramFilesX86
                 select GetFromVs2017Instance(version, platform, edition, folder));
 
             instances.AddRange(
