@@ -221,6 +221,12 @@
             "type": "string",
             "format": "/d:sonar.pullrequest.base={value}",
             "help": "The branch into which the Pull Request will be merged. Default: <c>master</c>. e.g.: <c>sonar.pullrequest.base=master</c>"
+          },
+          {
+            "name": "ExcludeTestProjects",
+            "type": "bool",
+            "format": "/d:sonar.dotnet.excludeTestProjects={value}",
+            "help": "Excludes Test Projects from analysis. Add this argument to improve build performance when issues should not be detected in Test Projects."
           }
         ]
       }
