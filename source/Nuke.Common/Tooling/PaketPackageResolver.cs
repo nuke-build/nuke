@@ -13,15 +13,20 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class PaketPackageResolver
     {
-        public static string GetLocalInstalledPackageDirectory(string packageId, string packagesConfigFile)
+        public static string GetLocalInstalledPackageDirectory(string packageId, string packagesConfigFile, string packagesGroup)
         {
-            var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
+            var packagesDirectory = GetPackagesDirectory(packagesConfigFile, packagesGroup);
             return Path.Combine(packagesDirectory, packageId);
         }
 
-        private static string GetPackagesDirectory(string packagesConfigFile)
+        private static string GetPackagesDirectory(string packagesConfigFile, string packagesGroup)
         {
-            return Path.Combine(Path.GetDirectoryName(packagesConfigFile).NotNull(), "packages");
+            if (string.IsNullOrWhiteSpace(packagesGroup))
+            {
+                return Path.Combine(Path.GetDirectoryName(packagesConfigFile).NotNull(), "packages");
+            }
+
+            return Path.Combine(Path.GetDirectoryName(packagesConfigFile).NotNull(), "packages", packagesGroup);
         }
     }
 }
