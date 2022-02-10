@@ -1,0 +1,35 @@
+name: website
+
+on:
+  push:
+    branches: [develop]
+    paths:
+      - 'website/**'
+
+jobs:
+  deploy:
+    name: Deploy Website
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+      - name: Build
+        working-directory: website
+        run: |
+          npm ci
+          npm run build
+
+      # Popular action to deploy to GitHub Pages:
+      # Docs: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Build output to publish to the `gh-pages` branch:
+          publish_dir: ./website/build
+#          user_name: github-actions[bot]
+#          user_email: 41898282+github-actions[bot]@users.noreply.github.com
