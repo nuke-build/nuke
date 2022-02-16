@@ -13,10 +13,7 @@ namespace Nuke.Common.Utilities
         [Pure]
         public static string EscapeBraces([CanBeNull] this string str)
         {
-            if (string.IsNullOrWhiteSpace(str))
-                return string.Empty;
-
-            return str.NotNull().Replace("{", "{{").Replace("}", "}}");
+            return string.IsNullOrWhiteSpace(str) ? string.Empty : str.NotNull().Replace("{", "{{").Replace("}", "}}");
         }
     }
 }
