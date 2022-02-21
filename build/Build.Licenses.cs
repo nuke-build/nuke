@@ -33,7 +33,6 @@ partial class Build
            };
 
     Target DownloadLicenses => _ => _
-        .Before<ICompile>()
         .DependentFor<IPack>()
         .Executes(() =>
         {
