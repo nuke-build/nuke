@@ -10,13 +10,29 @@ using Nuke.Common.Utilities;
 namespace Nuke.Common.CI.GitHubActions.Configuration
 {
     [PublicAPI]
-    public class GitHubActionsUsingStep : GitHubActionsStep
+    public class GitHubActionsCheckoutStep : GitHubActionsStep
     {
-        public string Using { get; set; }
+        public GitHubActionsSubmodules? Submodules { get; set; }
+        public uint? FetchDepth { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
-            writer.WriteLine($"- uses: {Using}");
+            writer.WriteLine("- uses: actions/checkout@v2");
+
+            if (Submodules.HasValue || FetchDepth.HasValue)
+            {
+                using (writer.Indent())
+                {
+                    writer.WriteLine("with:");
+                    using (writer.Indent())
+                    {
+                        if (Submodules.HasValue)
+                            writer.WriteLine($"submodules: {Submodules.ToString().ToLowerInvariant()}");
+                        if (FetchDepth.HasValue)
+                            writer.WriteLine($"fetch-depth: {FetchDepth}");
+                    }
+                }
+            }
         }
     }
 

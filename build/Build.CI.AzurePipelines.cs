@@ -18,7 +18,7 @@ using Nuke.Components;
     AzurePipelinesImage.MacOsLatest,
     PullRequestsDisabled = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
-    NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(ICompile.Compile), nameof(InstallFonts), nameof(ReleaseImage) },
+    NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(DownloadLicenses), nameof(ICompile.Compile), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) },
     CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" })]
 partial class Build

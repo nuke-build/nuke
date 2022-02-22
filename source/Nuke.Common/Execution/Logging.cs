@@ -18,6 +18,7 @@ using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Nuke.Common.Execution
 {
+    [PublicAPI]
     public static class Logging
     {
         public static readonly LoggingLevelSwitch LevelSwitch = new LoggingLevelSwitch();
@@ -54,8 +55,62 @@ namespace Nuke.Common.Execution
                 .ConfigureInMemory(build)
                 .ConfigureFiles(build)
                 .ConfigureLevel()
-                .Filter.ByExcluding(x => NukeBuild.Host.FilterMessage(x.MessageTemplate.Text))
+                .ConfigureFilter()
                 .CreateLogger();
+        }
+
+        public static LoggerConfiguration ConfigureLevel(this LoggerConfiguration configuration)
+        {
+            return configuration.MinimumLevel.Verbose();
+        }
+
+        public static LoggerConfiguration ConfigureFilter(this LoggerConfiguration configuration)
+        {
+            return configuration.Filter.ByExcluding(x => NukeBuild.Host.FilterMessage(x.MessageTemplate.Text));
+        }
+
+        public static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
+        {
+            return configuration
+                .WriteTo.Console(
+                    outputTemplate: build != null ? NukeBuild.Host.OutputTemplate : Host.DefaultOutputTemplate,
+                    theme: (ConsoleTheme)(build != null ? NukeBuild.Host.Theme : Host.DefaultTheme),
+                    applyThemeToRedirectedOutput: true,
+                    levelSwitch: LevelSwitch);
+        }
+
+        public static LoggerConfiguration ConfigureHost(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
+        {
+            if (build == null)
+                return configuration;
+
+            return configuration
+                .WriteTo.Sink<Host.LogEventSink>(restrictedToMinimumLevel: LogEventLevel.Warning);
+        }
+
+        public static LoggerConfiguration ConfigureInMemory(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
+        {
+            if (build == null)
+                return configuration;
+
+            return configuration
+                .WriteTo.Sink(InMemorySink.Instance, LogEventLevel.Warning);
+        }
+
+        public static LoggerConfiguration ConfigureFiles(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
+        {
+            if (build == null || NukeBuild.Host is IBuildServer)
+                return configuration;
+
+            var buildLogFile = NukeBuild.TemporaryDirectory / "build.log";
+            var targetPadding = build.TargetNames.Max(x => x.Length);
+            return configuration
+                .WriteTo.File(
+                    path: buildLogFile,
+                    outputTemplate: $"{{Timestamp:HH:mm:ss.fff}} | {{Level:u1}} | {{Target,{targetPadding}}} | {{Message:l}}{{NewLine}}{{Exception}}")
+                .WriteTo.File(
+                    path: Path.ChangeExtension(buildLogFile, $".{DateTime.Now:s}.log"),
+                    outputTemplate: $"{{Level:u1}} | {{Target,{targetPadding}}} | {{Message:l}}{{NewLine}}{{Exception}}");
         }
 
         private static void DeleteOldLogFiles()
@@ -73,55 +128,6 @@ namespace Nuke.Common.Execution
                 using var filestream = File.OpenWrite(buildLogFile);
                 filestream.SetLength(0);
             }
-        }
-
-        private static LoggerConfiguration ConfigureLevel(this LoggerConfiguration configuration)
-        {
-            return configuration.MinimumLevel.Verbose();
-        }
-
-        private static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
-        {
-            return configuration
-                .WriteTo.Console(
-                    outputTemplate: build != null ? NukeBuild.Host.OutputTemplate : Host.DefaultOutputTemplate,
-                    theme: (ConsoleTheme)(build != null ? NukeBuild.Host.Theme : Host.DefaultTheme),
-                    applyThemeToRedirectedOutput: true,
-                    levelSwitch: LevelSwitch);
-        }
-
-        private static LoggerConfiguration ConfigureHost(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
-        {
-            if (build == null)
-                return configuration;
-
-            return configuration
-                .WriteTo.Sink<Host.LogEventSink>(restrictedToMinimumLevel: LogEventLevel.Warning);
-        }
-
-        private static LoggerConfiguration ConfigureInMemory(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
-        {
-            if (build == null)
-                return configuration;
-
-            return configuration
-                .WriteTo.Sink(InMemorySink.Instance, LogEventLevel.Warning);
-        }
-
-        private static LoggerConfiguration ConfigureFiles(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
-        {
-            if (build == null || NukeBuild.Host is IBuildServer)
-                return configuration;
-
-            var buildLogFile = NukeBuild.TemporaryDirectory / "build.log";
-            var targetPadding = build.TargetNames.Max(x => x.Length);
-            return configuration
-                .WriteTo.File(
-                    path: buildLogFile,
-                    outputTemplate: $"{{Timestamp:HH:mm:ss.fff}} | {{Level:u1}} | {{Target,{targetPadding}}} | {{Message:l}}{{NewLine}}{{Exception}}")
-                .WriteTo.File(
-                    path: Path.ChangeExtension(buildLogFile, $".{DateTime.Now:s}.log"),
-                    outputTemplate: $"{{Level:u1}} | {{Target,{targetPadding}}} | {{Message:l}}{{NewLine}}{{Exception}}");
         }
 
         internal static void Test()

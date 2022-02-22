@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Collections;
 using Serilog;
 using SixLabors.Fonts;
@@ -20,11 +21,14 @@ using static Nuke.Common.IO.HttpTasks;
 
 partial class Build
 {
+    [LatestGitHubRelease("JetBrains/JetBrainsMono", TrimPrefix = true)]
+    readonly string JetBrainsMonoVersion;
+
     string[] FontDownloadUrls =>
         new[]
         {
             "https://github.com/googlefonts/roboto/releases/latest/download/roboto-unhinted.zip",
-            "https://github.com/JetBrains/JetBrainsMono/releases/download/v1.0.6/JetBrainsMono-1.0.6.zip"
+            $"https://github.com/JetBrains/JetBrainsMono/releases/download/v{JetBrainsMonoVersion}/JetBrainsMono-{JetBrainsMonoVersion}.zip"
         };
 
     AbsolutePath FontDirectory => TemporaryDirectory / "fonts";
@@ -53,7 +57,8 @@ partial class Build
             var logo = Image.Load(WatermarkImageFile);
             logo.Mutate(x => x.Resize((int) (logo.Width * logoScaling), (int) (logo.Height * logoScaling)));
 
-            var robotoFont = FontCollection.Families.Single(x => x.Name == "Roboto Black");
+            var thinFont = FontCollection.Families.Single(x => x.Name == "JetBrains Mono Thin");
+            var boldFont = FontCollection.Families.Single(x => x.Name == "JetBrains Mono ExtraBold");
             var graphicsOptions =
                 new DrawingOptions
                 {
@@ -69,21 +74,21 @@ partial class Build
             var image = new Image<Rgba64>(width: width, height: height);
             image.Mutate(x => x
                 .BackgroundColor(Color.FromRgb(r: 25, g: 25, b: 25))
-                .DrawImage(
-                    logo,
-                    location: new Point(image.Width / 2 - logo.Width / 2, image.Height / 2 - logo.Height / 2),
-                    opacity: 0.05f)
+                // .DrawImage(
+                //     logo,
+                //     location: new Point(image.Width / 2 - logo.Width / 2, image.Height / 2 - logo.Height / 2),
+                //     opacity: 0.05f)
                 .DrawText(
                     text: "New Release".ToUpperInvariant(),
-                    font: robotoFont.CreateFont(70),
+                    font: thinFont.CreateFont(100),
                     color: Color.WhiteSmoke,
-                    location: new PointF(image.Width / 2f, image.Height / 2f - 100),
+                    location: new PointF(image.Width / 2f, image.Height / 2f - 120),
                     options: graphicsOptions)
                 .DrawText(
                     text: MajorMinorPatchVersion,
-                    font: robotoFont.CreateFont(180),
+                    font: boldFont.CreateFont(230),
                     color: Color.WhiteSmoke,
-                    location: new PointF(image.Width / 2f, image.Height / 2f),
+                    location: new PointF(image.Width / 2f, image.Height / 2f + 60),
                     options: graphicsOptions));
 
             using var fileStream = new FileStream(ReleaseImageFile, FileMode.Create);

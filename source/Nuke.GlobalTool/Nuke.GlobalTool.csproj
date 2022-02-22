@@ -23,4 +23,8 @@
     <EmbeddedResource Include="templates\*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\..\.nuke\temp\licenses\*.txt" PackagePath="licenses" Pack="true" Visible="false" />
+  </ItemGroup>
+
 </Project>

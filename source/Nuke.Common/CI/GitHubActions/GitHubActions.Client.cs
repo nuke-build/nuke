@@ -25,7 +25,8 @@ namespace Nuke.Common.CI.GitHubActions
         {
             var response = _httpClient.Value
                 .CreateRequest(HttpMethod.Get, $"repos/{Repository}/actions/runs/{runId}/jobs")
-                .GetResponse();
+                .GetResponse()
+                .AssertSuccessfulStatusCode();
 
             return response.GetBodyAsJson().GetAwaiter().GetResult()
                 .GetChildren("jobs")

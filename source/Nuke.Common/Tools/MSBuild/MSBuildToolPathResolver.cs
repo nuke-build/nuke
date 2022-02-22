@@ -100,11 +100,10 @@ namespace Nuke.Common.Tools.MSBuild
         {
             return version switch
             {
-                MSBuildVersion.VS2019 => "Current",
-                MSBuildVersion.VS2017 => "15.0",
-                MSBuildVersion.VS2015 => "14.0",
                 MSBuildVersion.VS2013 => "12.0",
-                _ => throw new ArgumentOutOfRangeException(nameof(version), version, message: null)
+                MSBuildVersion.VS2015 => "14.0",
+                MSBuildVersion.VS2017 => "15.0",
+                _ => "Current"
             };
         }
 

@@ -56,6 +56,7 @@ namespace Nuke.Common.IO
         {
             var httpClient = CreateHttpClient(clientConfigurator, headerConfigurator);
             var response = await httpClient.GetAsync(uri);
+            Assert.True(response.IsSuccessStatusCode, $"{response.ReasonPhrase}: {uri}");
 
             FileSystemTasks.EnsureExistingParentDirectory(path);
             using var fileStream = File.Open(path, mode);

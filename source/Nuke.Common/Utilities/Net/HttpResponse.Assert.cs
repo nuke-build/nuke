@@ -38,6 +38,12 @@ namespace Nuke.Common.Utilities.Net
             return inspector;
         }
 
+        public static HttpResponseInspector AssertSuccessfulStatusCode(this HttpResponseInspector inspector)
+        {
+            inspector.Response.EnsureSuccessStatusCode();
+            return inspector;
+        }
+
         public static HttpResponseInspector AssertResponse(this HttpResponseInspector inspector, Func<HttpResponseMessage, string> errorSelector)
         {
             var response = inspector.Response;

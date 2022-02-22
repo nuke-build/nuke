@@ -25,6 +25,8 @@ namespace Nuke.Common.CI.GitHubActions
     {
         private readonly string _name;
         private readonly GitHubActionsImage[] _images;
+        private GitHubActionsSubmodules? _submodules;
+        private uint? _fetchDepth;
 
         public GitHubActionsAttribute(
             string name,
@@ -69,6 +71,18 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
+        public GitHubActionsSubmodules Submodules
+        {
+            set => _submodules = value;
+            get => throw new NotSupportedException();
+        }
+
+        public uint? FetchDepth
+        {
+            set => _fetchDepth = value;
+            get => throw new NotSupportedException();
+        }
+
         public GithubActionsContainer Container { get; set; }
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
@@ -109,9 +123,10 @@ namespace Nuke.Common.CI.GitHubActions
 
         private IEnumerable<GitHubActionsStep> GetSteps(GitHubActionsImage image, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            yield return new GitHubActionsUsingStep
+            yield return new GitHubActionsCheckoutStep
                          {
-                             Using = "actions/checkout@v1"
+                             Submodules = _submodules,
+                             FetchDepth = _fetchDepth
                          };
 
             if (CacheKeyFiles.Any())
@@ -134,7 +149,7 @@ namespace Nuke.Common.CI.GitHubActions
             {
                 var artifacts = relevantTargets
                     .SelectMany(x => x.ArtifactProducts)
-                    .Select(x => (AbsolutePath) x)
+                    .Select(x => (AbsolutePath)x)
                     // TODO: https://github.com/actions/upload-artifact/issues/11
                     .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
                     .Distinct().ToList();

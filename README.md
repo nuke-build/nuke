@@ -1,4 +1,5 @@
-<img width="400px" src="https://github.com/nuke-build/nuke/raw/develop/images/logo-black.png" />
+<img width="400px" src="https://github.com/nuke-build/nuke/raw/develop/images/logo-black.png#gh-light-mode-only" />
+<img width="400px" src="https://github.com/nuke-build/nuke/raw/develop/images/logo-white.png#gh-dark-mode-only" />
 
 > The AKEless Build System for C#/.NET
 
@@ -70,27 +71,29 @@ NUKE builds and tests itself on several different CI servers, which helps ensuri
 
 - [ASP.NET Boilerplate](https://aspnetboilerplate.com/) <sup><a href="https://github.com/aspnetboilerplate/aspnetboilerplate">1</a></sup>
 - [AvaloniaUI](https://avaloniaui.net/) <sup><a href="https://github.com/AvaloniaUI/Avalonia">1</a></sup>
-- **[Aviva Solutions Inc.](https://www.avivasolutions.com/)** <sup><a href="https://github.com/avivasolutionsnl/sitecore-commerce-docker">1</a> <a href="https://github.com/avivasolutionsnl/sitecore-docker">2</a></sup>
+- **[Aviva Solutions B.V.](https://www.avivasolutions.nl/)** <sup><a href="https://github.com/avivasolutionsnl/sitecore-commerce-docker">1</a> <a href="https://github.com/avivasolutionsnl/sitecore-docker">2</a></sup>
 - [ChilliCream](https://chillicream.com/) <sup><a href="https://github.com/ChilliCream/hotchocolate">1</a></sup>
 - [CvsHelper](https://joshclose.github.io/CsvHelper/) <sup><a href="https://github.com/JoshClose/CsvHelper">1</a></sup>
 - [DNN Community](https://dnncommunity.org/) <sup><a href="https://github.com/DNNCommunity/Dnn.ModuleCreator">1</a></sup>
 - [FluentAssertions](https://fluentassertions.com/) <sup><a href="https://github.com/fluentassertions/fluentassertions">1</a></sup>
 - **[JetBrains s.r.o.](https://www.jetbrains.com/)** <sup><a href="https://github.com/JetBrains/space-dotnet-sdk">1</a> <a href="https://github.com/JetBrains/YouTrackSharp">2</a></sup>
-- **[Octopus Deploy Pty. Ltd.](https://www.octopus.com/)** <sup><a href="https://github.com/OctopusDeploy/Time">1</a> <a href="https://github.com/OctopusDeploy/Shellfish">2</a> <a href="https://github.com/OctopusDeploy/Ocl">3</a></sup>
+- [NSwag](https://github.com/RicoSuter/NSwag/) <sup><a href="https://github.com/RicoSuter/NSwag/">1</a></sup>
+- **[Octopus Deploy Pty. Ltd.](https://www.octopus.com/)** <sup><a href="https://github.com/OctopusDeploy/OctopusTentacle">1</a> <a href="https://github.com/OctopusDeploy/OctopusClients">2</a> <a href="https://github.com/OctopusDeploy/Octodiff">3</a></sup>
 - [OmniSharp](http://www.omnisharp.net/) <sup><a href="https://github.com/OmniSharp/csharp-language-server-protocol">1</a></sup>
+- [Quartz.NET](https://github.com/quartznet/quartznet) <sup><a href="https://github.com/quartznet/quartznet/">1</a></sup>
 - **[VirtoCommerce](https://virtocommerce.com/)** <sup><a href="https://github.com/VirtoCommerce/vc-build/">1</a></sup>
 
 ## Sponsors
 
 Thanks to all companies, organizations, and individuals who are sponsoring the further development of this project. Your support means a lot! 💙
 
+[<img height="170px" src="https://octopus.com/images/company/OctopusDeploy-logo-RGB.svg" alt="Octopus Deploy" />](https://octopus.com)
 
-[<img height="140px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/virto-commerce.png" alt="Virto Commerce" />](https://virtocommerce.com/)
+[<img height="130px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/virto-commerce.png" alt="Virto Commerce" />](https://virtocommerce.com/)
 
-[<img height="150px" src="https://octopus.com/images/company/OctopusDeploy-logo-RGB.svg" alt="Octopus Deploy" />](https://octopus.com)
-
-[<img height="65px" src="https://www.dangl-it.de/media/1195/logo-en-rectangular.png" alt="Dangl-IT GmbH" />](https://www.dangl-it.com/)
-[<img height="65px" src="https://peiitalliance.com/logos/LevelingUp-Logo.svg" alt="Leveling Up" />](https://github.com/ron-myers)
+[<img height="60px" src="https://www.dangl-it.de/media/1195/logo-en-rectangular.png" alt="Dangl-IT GmbH" />](https://www.dangl-it.com/)
+[<img height="60px" src="https://peiitalliance.com/logos/LevelingUp-Logo.svg" alt="Leveling Up" />](https://github.com/ron-myers)
+[<img height="60px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/multinet.png" alt="MultiNet" />](https://www.multinet.com/)
 
 [![Rodney Littles II](https://avatars.githubusercontent.com/RLittlesII?s=60&v=4)](https://github.com/RLittlesII)
 [![Olga Nelioubov](https://avatars.githubusercontent.com/onelioubov?s=60&v=4)](https://github.com/onelioubov)
@@ -99,11 +102,10 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Anton Wieslander](https://avatars.githubusercontent.com/T0shik?s=60&v=4)](https://github.com/T0shik)
 [![Chase Florell](https://avatars.githubusercontent.com/ChaseFlorell?s=60&v=4)](https://github.com/ChaseFlorell)
 [![business//acts](https://avatars.githubusercontent.com/BusinessActs?s=60&v=4)](https://github.com/BusinessActs)
+[![xsegno GmbH](https://avatars.githubusercontent.com/xsegno?s=60&v=4)](https://github.com/xsegno)
 
 [![Stephan Müller](https://avatars.githubusercontent.com/chaquotay?s=45&v=4)](https://github.com/chaquotay)
 [![Bitbonk](https://avatars.githubusercontent.com/bitbonk?s=45&v=4)](https://github.com/bitbonk)
-[![Marat Gumerov](https://avatars.githubusercontent.com/Marat-Gumerov?s=45&v=4)](https://github.com/Marat-Gumerov)
-[![Thomas Unger](https://avatars.githubusercontent.com/tunger?s=45&v=4)](https://github.com/tunger)
 [![Matt Brailsford](https://avatars.githubusercontent.com/mattbrailsford?s=45&v=4)](https://github.com/mattbrailsford)
 [![David Driscoll](https://avatars.githubusercontent.com/david-driscoll?s=45&v=4)](https://github.com/david-driscoll)
 [![Actipro Software](https://avatars.githubusercontent.com/Actipro?s=45&v=4)](https://github.com/Actipro)
@@ -115,6 +117,9 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Christian Sindberg](https://avatars.githubusercontent.com/chrsin?s=45&v=4)](https://github.com/chrsin)
 [![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
 [![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=45&v=4)](https://github.com/stevenkuhn)
+[![Jesus Rodriguez Valencia](https://avatars.githubusercontent.com/jrodrigv?s=45&v=4)](https://github.com/jrodrigv)
+[![Vladislav Lischyna](https://avatars.githubusercontent.com/Duskone39?s=45&v=4)](https://github.com/Duskone39)
+[![Adam Renaud](https://avatars.githubusercontent.com/rena0157?s=45&v=4)](https://github.com/rena0157)
 
 ## Technology Sponsors
 

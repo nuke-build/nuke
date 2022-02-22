@@ -115,7 +115,7 @@ namespace Nuke.Common.Execution.Theming
                 () =>
                 {
                     Console.ForegroundColor = style.Foreground ?? previousForeground;
-                    Console.ForegroundColor = style.Background ?? previousBackground;
+                    Console.BackgroundColor = style.Background ?? previousBackground;
                 },
                 () =>
                 {

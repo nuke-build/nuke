@@ -27,6 +27,9 @@ branches:
 skip_tags: true
 skip_branch_with_pr: true
 
+install:
+  - git submodule update --init --recursive
+
 build_script:
   - cmd: .\build.cmd Test
   - sh: ./build.cmd Test
@@ -37,3 +40,7 @@ artifacts:
   - path: output/test-results/*.trx
   - path: output/test-results/*.xml
   - path: output/coverage-report.zip
+
+environment:
+  GitHubToken:
+    secure: encrypted-yaml
