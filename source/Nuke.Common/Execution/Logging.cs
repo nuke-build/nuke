@@ -109,7 +109,7 @@ namespace Nuke.Common.Execution
                     path: buildLogFile,
                     outputTemplate: $"{{Timestamp:HH:mm:ss.fff}} | {{Level:u1}} | {{Target,{targetPadding}}} | {{Message:l}}{{NewLine}}{{Exception}}")
                 .WriteTo.File(
-                    path: Path.ChangeExtension(buildLogFile, $".{DateTime.Now:s}.log"),
+                    path: Path.ChangeExtension(buildLogFile, $".{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.log"),
                     outputTemplate: $"{{Level:u1}} | {{Target,{targetPadding}}} | {{Message:l}}{{NewLine}}{{Exception}}");
         }
 
