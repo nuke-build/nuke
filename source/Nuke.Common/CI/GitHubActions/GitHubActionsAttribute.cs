@@ -87,9 +87,9 @@ namespace Nuke.Common.CI.GitHubActions
                                 };
 
             Assert.True(configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0,
-                $"Workflows can only define either shorthand '{On}' or '{On}*' triggers");
+                $"Workflows can only define either shorthand '{nameof(On)}' or '{nameof(On)}*' triggers");
             Assert.True(configuration.ShortTriggers.Length > 0 || configuration.DetailedTriggers.Length > 0,
-                "Workflows must define either shorthand '{On}' or '{On}*' triggers");
+                $"Workflows must define either shorthand '{nameof(On)}' or '{nameof(On)}*' triggers");
 
             return configuration;
         }
