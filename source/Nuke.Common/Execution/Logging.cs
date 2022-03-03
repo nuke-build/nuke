@@ -115,8 +115,7 @@ namespace Nuke.Common.Execution
 
         private static void DeleteOldLogFiles()
         {
-            var configurationId = EnvironmentInfo.GetParameter<string>(BuildServerConfigurationGenerationAttributeBase.ConfigurationParameterName);
-            if (configurationId != null)
+            if (BuildServerConfigurationGeneration.IsActive)
                 return;
 
             NukeBuild.TemporaryDirectory.GlobFiles("build.*.log").OrderByDescending(x => x.ToString()).Skip(5)
