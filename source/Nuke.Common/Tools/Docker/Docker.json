@@ -4402,6 +4402,12 @@
         "baseClass": "DockerSettings",
         "properties": [
           {
+            "name": "AllTags",
+            "type": "bool",
+            "format": "--all-tags",
+            "help": "Push all tagged images in the repository."
+          },
+          {
             "name": "DisableContentTrust",
             "type": "bool",
             "format": "--disable-content-trust",
@@ -6193,6 +6199,12 @@
       "settingsClass": {
         "baseClass": "DockerSettings",
         "properties": [
+          {
+            "name": "AllTags",
+            "type": "bool",
+            "format": "--all-tags",
+            "help": "Push all tagged images in the repository."
+          },
           {
             "name": "DisableContentTrust",
             "type": "bool",
