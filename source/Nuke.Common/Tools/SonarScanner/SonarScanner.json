@@ -267,13 +267,17 @@
           {
             "name": "CustomAnalysisParameter",
             "type": "Dictionary<string, string>",
-            "format": "/d:sonar.analysis.{key}={value}",
+            "format": "/d:{value}",
+            "itemFormat": "sonar.analysis.{key}={value}",
+            "separator": " ",
             "help": "This property stub allows you to insert custom key/value pairs into the analysis context, which will also be passed forward to webhooks."
           },
           {
             "name": "AnalysisParameter",
             "type": "Dictionary<string, string>",
-            "format": "/d:{key}={value}",
+            "format": "/d:{value}",
+            "itemFormat": "{key}={value}",
+            "separator": " ",
             "help": "Specifies an additional SonarQube analysis parameter, you can add this argument multiple times."
           },
           {
