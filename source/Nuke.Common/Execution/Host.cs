@@ -15,6 +15,7 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
+// ReSharper disable CheckNamespace
 
 namespace Nuke.Common
 {
@@ -34,6 +35,11 @@ namespace Nuke.Common
 
         protected internal void WriteLogo()
         {
+            if (NoBuildBannerAttribute.IsDeclared)
+            {
+                return;
+            }
+
             Debug();
             new[]
             {
@@ -49,6 +55,11 @@ namespace Nuke.Common
 
         protected internal virtual IDisposable WriteBlock(string text)
         {
+            if (NoBuildBannerAttribute.IsDeclared)
+            {
+                return new DelegateDisposable(static () => {});
+            }
+
             return DelegateDisposable.CreateBracket(
                 () =>
                 {
@@ -79,6 +90,11 @@ namespace Nuke.Common
 
         internal virtual void WriteSummary(NukeBuild build)
         {
+            if (NoBuildBannerAttribute.IsDeclared)
+            {
+                return;
+            }
+
             WriteSevereLogEvents(Logging.InMemorySink.Instance.LogEvents);
             WriteSummaryTable(build);
 
@@ -90,6 +106,11 @@ namespace Nuke.Common
 
         protected virtual void WriteSevereLogEvents(IReadOnlyCollection<LogEvent> instanceLogEvents)
         {
+            if (NoBuildBannerAttribute.IsDeclared)
+            {
+                return;
+            }
+
             if (instanceLogEvents.Count == 0)
                 return;
 
@@ -110,6 +131,11 @@ namespace Nuke.Common
 
         protected virtual void WriteSummaryTable(NukeBuild build)
         {
+            if (NoBuildBannerAttribute.IsDeclared)
+            {
+                return;
+            }
+
             var firstColumn = Math.Max(build.ExecutionPlan.Max(x => x.Name.Length) + 4, val2: 19);
             var secondColumn = 10;
             var thirdColumn = 10;
@@ -175,11 +201,21 @@ namespace Nuke.Common
 
         protected virtual void WriteSuccessfulBuild(NukeBuild build)
         {
+            if (NoBuildBannerAttribute.IsDeclared)
+            {
+                return;
+            }
+
             Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. ＼（＾ᴗ＾）／");
         }
 
         protected virtual void WriteFailedBuild()
         {
+            if (NoBuildBannerAttribute.IsDeclared)
+            {
+                return;
+            }
+
             Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. (╯°□°）╯︵ ┻━┻");
         }
 

@@ -53,7 +53,7 @@ namespace Nuke.Common.Execution
         {
             var continueParameterName = ParameterService.GetParameterMemberName(() => build.Continue);
             var invocation = EnvironmentInfo.CommandLineArguments
-                .Where(x => !x.StartsWith("-") || x.TrimStart("-").EqualsOrdinalIgnoreCase(continueParameterName))
+                .Where(x => !x.StartsWith("-", StringComparison.Ordinal) || x.TrimStart("-").EqualsOrdinalIgnoreCase(continueParameterName))
                 .JoinSpace();
             var invocationHash = invocation.GetMD5Hash();
 
@@ -100,38 +100,48 @@ namespace Nuke.Common.Execution
                 return;
             }
 
-            using (Logging.SetTarget(target.Name))
-            using (NukeBuild.Host.WriteBlock(target.Name))
+            using var loggingTarget = Logging.SetTarget(target.Name);
+            using var targetBlock = NoTargetBannerAttribute.IsDeclaredOn(target)
+                ? default
+                : NukeBuild.Host.WriteBlock(target.Name);
+
+            target.Stopwatch.Start();
+            target.Status = ExecutionStatus.Running;
+            build.ExecuteExtension<IOnTargetRunning>(x => x.OnTargetRunning(build, target));
+
+            try
             {
-                target.Stopwatch.Start();
-                target.Status = ExecutionStatus.Running;
-                build.ExecuteExtension<IOnTargetRunning>(x => x.OnTargetRunning(build, target));
-                try
-                {
-                    target.Actions.ForEach(x => x());
-                    target.Stopwatch.Stop();
-                    target.Status = ExecutionStatus.Succeeded;
-                    build.ExecuteExtension<IOnTargetSucceeded>(x => x.OnTargetSucceeded(build, target));
+                target.Actions.ForEach(x => x());
+                target.Stopwatch.Stop();
+                target.Status = ExecutionStatus.Succeeded;
+                build.ExecuteExtension<IOnTargetSucceeded>(x => x.OnTargetSucceeded(build, target));
 
-                    AppendToBuildAttemptFile(target.Name);
-                }
-                catch (Exception exception)
-                {
-                    build.ReportSummary(_ =>
-                        target.SummaryInformation.Any()
-                            ? target.SummaryInformation
-                            : _.AddPair(exception.GetType().Name, exception.Message.SplitLineBreaks().First()));
-
-                    Log.Error(exception, "Target {TargetName} failed", target.Name);
-
-                    target.Stopwatch.Stop();
-                    target.Status = ExecutionStatus.Failed;
-                    build.ExecuteExtension<IOnTargetFailed>(x => x.OnTargetFailed(build, target));
-
-                    if (!target.ProceedAfterFailure && !failureMode)
-                        throw new TargetExecutionException(target.Name, exception);
-                }
+                AppendToBuildAttemptFile(target.Name);
             }
+            catch (Exception exception)
+            {
+                build.ReportSummary(
+                    _ => target.SummaryInformation.Any()
+                        ? target.SummaryInformation
+                        : _.AddPair(
+                            exception.GetType()
+                                .Name,
+                            exception.Message.SplitLineBreaks()
+                                .First()
+                        )
+                );
+
+                Log.Error(exception, "Target {TargetName} failed", target.Name);
+
+                target.Stopwatch.Stop();
+                target.Status = ExecutionStatus.Failed;
+                build.ExecuteExtension<IOnTargetFailed>(x => x.OnTargetFailed(build, target));
+
+                if (!target.ProceedAfterFailure
+                    && !failureMode)
+                    throw new TargetExecutionException(target.Name, exception);
+            }
+            
         }
 
         private static void MarkSkippedTargets(NukeBuild build, IReadOnlyCollection<string> skippedTargets)
