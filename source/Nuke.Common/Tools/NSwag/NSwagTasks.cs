@@ -21,6 +21,9 @@ namespace Nuke.Common.Tools.NSwag
             NetCore11,
             NetCore20,
             NetCore21,
+            NetCore31,
+            Net50,
+            Net60,
             Win
         }
     }
