@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2022 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,8 +12,14 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities.Collections;
 using Serilog;
 
+
 namespace Nuke.Common.Execution
 {
+
+    /// <summary>
+    ///     Specifies that NUKE should verify that the build project itself is excluded from the build in the solution
+    ///     and logs a warning if it is not.
+    /// </summary>
     [PublicAPI]
     public class CheckBuildProjectConfigurationsAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
@@ -25,7 +31,12 @@ namespace Nuke.Common.Execution
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
             if (!Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds))
-                Log.Warning("Could not complete checking build configurations within {Timeout} milliseconds", TimeoutInMilliseconds);
+            {
+                Log.Warning(
+                    "Could not complete build consistency verification within {TimeoutInMilliseconds} milliseconds, consider increasing the timeout "
+                  + "of the CheckBuildProjectConfigurations attribute or remove the attribute to turn off verification",
+                    TimeoutInMilliseconds);
+            }
 
             static Task CheckConfiguration()
             {
