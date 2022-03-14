@@ -1,4 +1,4 @@
-// Copyright 2019 Maintainers of NUKE.
+// Copyright 2022 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,6 +13,10 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
+    /// <summary>
+    ///     Specifies that NUKE should verify that the build project itself is excluded from the build in the solution
+    ///     and logs a warning if it is not.
+    /// </summary>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Class)]
     public class CheckBuildProjectConfigurationsAttribute : Attribute, IOnAfterLogo
@@ -24,8 +28,10 @@ namespace Nuke.Common.Execution
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            ControlFlow.AssertWarn(Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds),
-                $"Could not complete checking build configurations within {TimeoutInMilliseconds} milliseconds.");
+            ControlFlow.AssertWarn(
+                Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds),
+                $"Could not complete build consistency verification within {TimeoutInMilliseconds} milliseconds, consider increasing the timeout "
+              + $"of the {nameof(CheckBuildProjectConfigurationsAttribute)} or remove the attribute to turn verification off.");
 
             Task CheckConfiguration()
             {
