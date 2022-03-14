@@ -1,0 +1,91 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://docs.dhall-lang.org/tutorials/Getting-started_Generate-JSON-or-YAML.html",
+    "https://github.com/dhall-lang/dhall-haskell/tree/master/dhall-yaml"
+  ],
+  "name": "DhallToYamlNg",
+  "officialUrl": "https://dhall-lang.org/",
+  "help": "Dhall is a programmable configuration language that you can think of as: JSON + functions + types + imports",
+  "pathExecutable": "dhall-to-yaml-ng",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Explain",
+            "type": "bool",
+            "format": "--explain",
+            "help": "Explain error messages in detail"
+          },
+          {
+            "name": "OmitEmpty",
+            "type": "bool",
+            "format": "--omit-empty",
+            "help": "Omit record fields that are null or empty records"
+          },
+          {
+            "name": "PreserveNull",
+            "type": "bool",
+            "format": "--preserve-null",
+            "help": "Preserve record fields that are null"
+          },
+          {
+            "name": "Documents",
+            "type": "string",
+            "format": "--documents {value}",
+            "help": "If given a Dhall list, output a document for every element. Each document, including the first one, will be preceded by \"---\", even if there is only one document. If not given a list, output a single document (as if it were a list of one element)"
+          },
+          {
+            "name": "Quoted",
+            "type": "bool",
+            "format": "--quoted",
+            "help": "Prevent from generating not quoted scalars"
+          },
+          {
+            "name": "Key",
+            "type": "string",
+            "format": "--key {value}",
+            "help": "Reserved key field name for association lists"
+          },
+          {
+            "name": "Value",
+            "type": "string",
+            "format": "--value {value}",
+            "help": "Reserved value field name for association lists"
+          },
+          {
+            "name": "NoMaps",
+            "type": "bool",
+            "format": "--no-maps",
+            "help": "Disable conversion of association lists to homogeneous maps"
+          },
+          {
+            "name": "File",
+            "type": "string",
+            "format": "--file {value}",
+            "help": "Read expression from a file instead of standard input"
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Write YAML to a file instead of standard output"
+          },
+          {
+            "name": "GeneratedComment",
+            "type": "bool",
+            "format": "--generated-comment",
+            "help": "Include a comment header warning not to edit thegenerated file"
+          },
+          {
+            "name": "Version",
+            "type": "bool",
+            "format": "--version",
+            "help": "Display version"
+          }
+        ]
+      }
+    }
+  ]
+}
