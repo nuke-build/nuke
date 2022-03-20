@@ -26,6 +26,12 @@ namespace Nuke.Common.CI.AzurePipelines
         {
             var valuesSet = new HashSet<string>(Values);
 
+            var enumType = memberType.IsArray ? memberType.GetElementType() : memberType;
+            if(valuesSet.IsEmpty() && enumType.IsEnum)
+            {
+                return Enum.GetNames(enumType);
+            }
+
             if (defaultValue == null)
                 return valuesSet.ToArray();
 
