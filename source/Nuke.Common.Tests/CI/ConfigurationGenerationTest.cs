@@ -78,6 +78,7 @@ namespace Nuke.Common.Tests.CI
                         AzurePipelinesImage.Ubuntu1804,
                         AzurePipelinesImage.Windows2019)
                     {
+                        Name = "test_build",
                         NonEntryTargets = new[] { nameof(Clean) },
                         InvokedTargets = new[] { nameof(Test) },
                         ExcludedTargets = new[] { nameof(Pack) },

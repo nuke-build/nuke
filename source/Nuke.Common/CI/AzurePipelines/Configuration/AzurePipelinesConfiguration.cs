@@ -11,6 +11,9 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     [PublicAPI]
     public class AzurePipelinesConfiguration : ConfigurationEntity
     {
+        [CanBeNull]
+        public string Name { get; set; }
+
         public string[] VariableGroups { get; set; }
 
         [CanBeNull]
@@ -20,14 +23,30 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
         public AzurePipelinesVcsPushTrigger VcsPullRequestTrigger { get; set; }
 
         public AzurePipelinesStage[] Stages { get; set; }
+        public AzurePipelinesParameter[] Parameters { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
+            if (!string.IsNullOrWhiteSpace(Name))
+            {
+                writer.WriteLine($"name: {Name}");
+                writer.WriteLine();
+            }
+
             if (VariableGroups.Length > 0)
             {
                 using (writer.WriteBlock("variables:"))
                 {
                     VariableGroups.ForEach(x => writer.WriteLine($"- group: {x}"));
+                    writer.WriteLine();
+                }
+            }
+
+            if (Parameters.Length > 0)
+            {
+                using (writer.WriteBlock("parameters:"))
+                {
+                    Parameters.ForEach(x => x.Write(writer));
                     writer.WriteLine();
                 }
             }

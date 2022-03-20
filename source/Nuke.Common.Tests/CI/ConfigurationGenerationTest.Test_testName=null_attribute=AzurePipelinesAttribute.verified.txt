@@ -14,8 +14,36 @@
 # </auto-generated>
 # ------------------------------------------------------------------------------
 
+name: test_build
+
 variables:
   - group: variable-group-1
+
+parameters:
+  - name: Configuration
+    displayName: Configuration for compilation
+    type: string
+    default: Debug
+  - name: ConfigurationArray
+    type: string
+    default: Debug Release
+  - name: IgnoreFailedSources
+    type: boolean
+    default: false
+  - name: IntegerArray
+    type: number
+    default: 1 2
+  - name: Source
+    displayName: NuGet Source for Packages
+    type: string
+    default: https://api.nuget.org/v3/index.json
+  - name: StringArray
+    type: string
+    default: first second
+  - name: Verbosity
+    displayName: Logging verbosity during build execution. Default is 'Normal'.
+    type: string
+    default: Normal
 
 trigger:
   batch: true
@@ -65,7 +93,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Restore --skip'
+              script: './build.cmd Restore --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -96,7 +124,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Compile --skip'
+              script: './build.cmd Compile --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -129,7 +157,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Test --skip --partition $(System.JobPositionInPhase)/2'
+              script: './build.cmd Test --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}}) --partition $(System.JobPositionInPhase)/2'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -160,7 +188,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Coverage --skip'
+              script: './build.cmd Coverage --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -197,7 +225,7 @@ stages:
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Restore --skip'
+              script: './build.cmd Restore --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -228,7 +256,7 @@ stages:
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Compile --skip'
+              script: './build.cmd Compile --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -261,7 +289,7 @@ stages:
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Test --skip --partition $(System.JobPositionInPhase)/2'
+              script: './build.cmd Test --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}}) --partition $(System.JobPositionInPhase)/2'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -292,7 +320,7 @@ stages:
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Coverage --skip'
+              script: './build.cmd Coverage --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)

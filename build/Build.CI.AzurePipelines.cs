@@ -37,9 +37,10 @@ partial class Build
             ExecutableTarget executableTarget,
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
             IReadOnlyCollection<ExecutableTarget> relevantTargets,
-            AzurePipelinesImage image)
+            AzurePipelinesImage image,
+            AzurePipelinesParameter[] parameters)
         {
-            var job = base.GetJob(executableTarget, jobs, relevantTargets, image);
+            var job = base.GetJob(executableTarget, jobs, relevantTargets, image, parameters);
 
             var symbol = CustomNames.GetValueOrDefault(job.Name);
             job.DisplayName = (job.Parallel == 0
