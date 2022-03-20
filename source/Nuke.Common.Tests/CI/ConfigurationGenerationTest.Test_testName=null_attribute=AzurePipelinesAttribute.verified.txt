@@ -124,7 +124,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Compile --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
+              script: './build.cmd Compile --skip --Configuration ${{ parameters.Configuration }} --ConfigurationArray ${{ parameters.ConfigurationArray }} --IgnoreFailedSources ${{ parameters.IgnoreFailedSources }} --IntegerArray ${{ parameters.IntegerArray }} --Source ${{ parameters.Source }} --StringArray ${{ parameters.StringArray }} --Verbosity ${{ parameters.Verbosity }}'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -157,7 +157,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Test --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}}) --partition $(System.JobPositionInPhase)/2'
+              script: './build.cmd Test --skip --Configuration ${{ parameters.Configuration }} --ConfigurationArray ${{ parameters.ConfigurationArray }} --IgnoreFailedSources ${{ parameters.IgnoreFailedSources }} --IntegerArray ${{ parameters.IntegerArray }} --Source ${{ parameters.Source }} --StringArray ${{ parameters.StringArray }} --Verbosity ${{ parameters.Verbosity }} --partition $(System.JobPositionInPhase)/2'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -188,7 +188,7 @@ stages:
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Coverage --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
+              script: './build.cmd Coverage --skip --Configuration ${{ parameters.Configuration }} --ConfigurationArray ${{ parameters.ConfigurationArray }} --IgnoreFailedSources ${{ parameters.IgnoreFailedSources }} --IntegerArray ${{ parameters.IntegerArray }} --Source ${{ parameters.Source }} --StringArray ${{ parameters.StringArray }} --Verbosity ${{ parameters.Verbosity }}'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -225,7 +225,7 @@ stages:
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Restore --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
+              script: './build.cmd Restore --skip --Configuration ${{ parameters.Configuration }} --ConfigurationArray ${{ parameters.ConfigurationArray }} --IgnoreFailedSources ${{ parameters.IgnoreFailedSources }} --IntegerArray ${{ parameters.IntegerArray }} --Source ${{ parameters.Source }} --StringArray ${{ parameters.StringArray }} --Verbosity ${{ parameters.Verbosity }}'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -256,7 +256,7 @@ stages:
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Compile --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
+              script: './build.cmd Compile --skip --Configuration ${{ parameters.Configuration }} --ConfigurationArray ${{ parameters.ConfigurationArray }} --IgnoreFailedSources ${{ parameters.IgnoreFailedSources }} --IntegerArray ${{ parameters.IntegerArray }} --Source ${{ parameters.Source }} --StringArray ${{ parameters.StringArray }} --Verbosity ${{ parameters.Verbosity }}'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -289,7 +289,7 @@ stages:
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Test --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}}) --partition $(System.JobPositionInPhase)/2'
+              script: './build.cmd Test --skip --Configuration ${{ parameters.Configuration }} --ConfigurationArray ${{ parameters.ConfigurationArray }} --IgnoreFailedSources ${{ parameters.IgnoreFailedSources }} --IntegerArray ${{ parameters.IntegerArray }} --Source ${{ parameters.Source }} --StringArray ${{ parameters.StringArray }} --Verbosity ${{ parameters.Verbosity }} --partition $(System.JobPositionInPhase)/2'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
@@ -320,7 +320,7 @@ stages:
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
             inputs:
-              script: './build.cmd Coverage --skip --Configuration ${{Configuration}}) --ConfigurationArray ${{ConfigurationArray}}) --IgnoreFailedSources ${{IgnoreFailedSources}}) --IntegerArray ${{IntegerArray}}) --Source ${{Source}}) --StringArray ${{StringArray}}) --Verbosity ${{Verbosity}})'
+              script: './build.cmd Coverage --skip --Configuration ${{ parameters.Configuration }} --ConfigurationArray ${{ parameters.ConfigurationArray }} --IgnoreFailedSources ${{ parameters.IgnoreFailedSources }} --IntegerArray ${{ parameters.IntegerArray }} --Source ${{ parameters.Source }} --StringArray ${{ parameters.StringArray }} --Verbosity ${{ parameters.Verbosity }}'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)

@@ -29,7 +29,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                 arguments.Append($"{InvokedTargets.JoinSpace()} --skip");
 
                 if (Parameters.Length > 0)
-                    arguments.Append($" {Parameters.Select(x => $"--{x.Name} {x.TemplateVar})").JoinSpace()}");
+                    arguments.Append($" {Parameters.Select(x => $"--{x.Name} {x.TemplateVar}").JoinSpace()}");
 
                 if (PartitionSize != null)
                     arguments.Append($" --partition $(System.JobPositionInPhase)/{PartitionSize}");
