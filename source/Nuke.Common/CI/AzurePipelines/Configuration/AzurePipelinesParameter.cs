@@ -19,7 +19,18 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
         public string[] Values { get; set; }
 
         // Template expansion form is ${{ parameter.VARNAME }}
-        public string TemplateVar => $"${{{{ parameters.{Name} }}}}";
+        public string TemplateVar
+        {
+            get
+            {
+                var templateVar = $"${{{{ parameters.{Name} }}}}";
+                if (Type == AzurePipelinesParameterType.String)
+                    templateVar = $"\"{templateVar}\"";
+
+                return templateVar;
+            }
+        }
+
         public override void Write(CustomFileWriter writer)
         {
             using (writer.WriteBlock($"- name: {Name}"))
