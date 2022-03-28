@@ -31,7 +31,7 @@ namespace Nuke.Common
             string argumentExpression = null)
         {
             if (!condition)
-                throw new ArgumentException(message ?? "Expected condition to be true", argumentExpression);
+                throw new ArgumentException(message ?? "Expected condition to be true", message == null ? argumentExpression : null);
         }
 
         [AssertionMethod]
@@ -43,7 +43,7 @@ namespace Nuke.Common
             string argumentExpression = null)
         {
             if (condition)
-                throw new ArgumentException(message ?? "Expected condition to be false", argumentExpression);
+                throw new ArgumentException(message ?? "Expected condition to be false", message == null ? argumentExpression : null);
         }
 
         [AssertionMethod]
@@ -52,14 +52,15 @@ namespace Nuke.Common
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this T obj,
             string message = null,
-            [CallerArgumentExpression("obj")] string argumentExpression = null)
+            [CallerArgumentExpression("obj")]
+            string argumentExpression = null)
             where T : class
         {
             if (obj == null)
             {
                 throw new ArgumentException(
                     message ?? $"Expected object of type '{typeof(T).FullName}' to be not null",
-                    argumentExpression);
+                    message == null ? argumentExpression : null);
             }
 
             return obj;
@@ -71,7 +72,8 @@ namespace Nuke.Common
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this T? obj,
             string message = null,
-            [CallerArgumentExpression("obj")] string argumentExpression = null)
+            [CallerArgumentExpression("obj")]
+            string argumentExpression = null)
             where T : struct
         {
             if (obj == null)
@@ -89,10 +91,11 @@ namespace Nuke.Common
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this string str,
             string message = null,
-            [CallerArgumentExpression("str")] string argumentExpression = null)
+            [CallerArgumentExpression("str")]
+            string argumentExpression = null)
         {
             if (string.IsNullOrEmpty(str))
-                throw new ArgumentException(message ?? "Expected string to be not null or empty", argumentExpression);
+                throw new ArgumentException(message ?? "Expected string to be not null or empty", message == null ? argumentExpression : null);
             return str;
         }
 
@@ -101,10 +104,11 @@ namespace Nuke.Common
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
             this string str,
             string message = null,
-            [CallerArgumentExpression("str")] string argumentExpression = null)
+            [CallerArgumentExpression("str")]
+            string argumentExpression = null)
         {
             if (string.IsNullOrWhiteSpace(str))
-                throw new ArgumentException(message ?? "Expected string to be not null or whitespace", argumentExpression);
+                throw new ArgumentException(message ?? "Expected string to be not null or whitespace", message == null ? argumentExpression : null);
             return str;
         }
 
@@ -117,7 +121,7 @@ namespace Nuke.Common
             string argumentExpression = null)
         {
             if (collection.NotNull(argumentExpression: argumentExpression).Count == 0)
-                throw new ArgumentException(message ?? "Expected collection to be not empty", argumentExpression);
+                throw new ArgumentException(message ?? "Expected collection to be not empty", message == null ? argumentExpression : null);
         }
 
         [AssertionMethod]
@@ -129,7 +133,7 @@ namespace Nuke.Common
             string argumentExpression = null)
         {
             if (collection.NotNull(argumentExpression: argumentExpression).Count > 0)
-                throw new ArgumentException(message ?? "Expected collection to be empty", argumentExpression);
+                throw new ArgumentException(message ?? "Expected collection to be empty", message == null ? argumentExpression : null);
         }
 
         [AssertionMethod]
@@ -142,7 +146,7 @@ namespace Nuke.Common
             string argumentExpression = null)
         {
             if (collection.NotNull(argumentExpression: argumentExpression).Count != length)
-                throw new ArgumentException(message ?? $"Expected collection to have length of {length}", argumentExpression);
+                throw new ArgumentException(message ?? $"Expected collection to have length of {length}");
         }
 
         [AssertionMethod]
@@ -159,13 +163,13 @@ namespace Nuke.Common
         public static void FileExists(string path, string message = null, [CallerArgumentExpression("path")] string argumentExpression = null)
         {
             if (!File.Exists(path.NotNull(argumentExpression)))
-                throw new ArgumentException(message ?? $"Expected file to exist: {path}", argumentExpression);
+                throw new ArgumentException(message ?? $"Expected file to exist: {path}");
         }
 
         public static void DirectoryExists(string path, string message = null, [CallerArgumentExpression("path")] string argumentExpression = null)
         {
             if (!Directory.Exists(path.NotNull(argumentExpression)))
-                throw new ArgumentException(message ?? $"Expected directory to exist: {path}", argumentExpression);
+                throw new ArgumentException(message ?? $"Expected directory to exist: {path}");
         }
     }
 }
