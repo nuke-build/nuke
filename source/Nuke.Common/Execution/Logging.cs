@@ -23,6 +23,8 @@ namespace Nuke.Common.Execution
     {
         public static readonly LoggingLevelSwitch LevelSwitch = new LoggingLevelSwitch();
 
+        private const int TargetNameLength = 20;
+
         public static LogLevel Level
         {
             get => LevelSwitch.MinimumLevel switch
@@ -103,14 +105,13 @@ namespace Nuke.Common.Execution
                 return configuration;
 
             var buildLogFile = NukeBuild.TemporaryDirectory / "build.log";
-            var targetPadding = build.TargetNames.Max(x => x.Length);
             return configuration
                 .WriteTo.File(
                     path: buildLogFile,
-                    outputTemplate: $"{{Timestamp:HH:mm:ss.fff}} | {{Level:u1}} | {{Target,{targetPadding}}} | {{Message:l}}{{NewLine}}{{Exception}}")
+                    outputTemplate: $"{{Timestamp:HH:mm:ss.fff}} | {{Level:u1}} | {{Target,-{TargetNameLength}}} | {{Message:l}}{{NewLine}}{{Exception}}")
                 .WriteTo.File(
                     path: Path.ChangeExtension(buildLogFile, $".{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.log"),
-                    outputTemplate: $"{{Level:u1}} | {{Target,{targetPadding}}} | {{Message:l}}{{NewLine}}{{Exception}}");
+                    outputTemplate: $"{{Level:u1}} | {{Target,-{TargetNameLength}}} | {{Message:l}}{{NewLine}}{{Exception}}");
         }
 
         private static void DeleteOldLogFiles()
@@ -181,9 +182,7 @@ namespace Nuke.Common.Execution
 
         public static IDisposable SetTarget(string name)
         {
-            return DelegateDisposable.CreateBracket(
-                () => TargetLogEventEnricher.Property = new LogEventProperty("Target", new ScalarValue(name)),
-                () => TargetLogEventEnricher.Property = null);
+            return TargetLogEventEnricher.SetTargetEventProperty(name);
         }
 
         public class InMemorySink : ILogEventSink, IDisposable
@@ -213,11 +212,23 @@ namespace Nuke.Common.Execution
 
         internal class TargetLogEventEnricher : ILogEventEnricher
         {
-            private static LogEventProperty s_defaultProperty = new LogEventProperty("Target", new ScalarValue(""));
+            public static LogEventProperty Current => s_property ?? s_defaultProperty;
 
-            public  static LogEventProperty Property;
+            private static readonly LogEventProperty s_defaultProperty = GetTargetEventProperty(string.Empty);
+            private static LogEventProperty s_property;
 
-            public static LogEventProperty Current => Property ?? s_defaultProperty;
+            public static IDisposable SetTargetEventProperty(string name)
+            {
+                return DelegateDisposable.CreateBracket(
+                    () => s_property = GetTargetEventProperty(name),
+                    () => s_property = null);
+            }
+
+            private static LogEventProperty GetTargetEventProperty(string name)
+            {
+                var paddedName = name.Substring(startIndex: 0, Math.Min(name.Length, TargetNameLength));
+                return new LogEventProperty("Target", new ScalarValue(paddedName));
+            }
 
             public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
             {
