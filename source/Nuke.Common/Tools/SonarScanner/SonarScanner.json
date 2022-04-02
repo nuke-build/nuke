@@ -253,7 +253,7 @@
             "help": "Overrides the revision, for instance the Git sha1, displayed in analysis results. By default value is provided by the CI environment or guessed by the checked-out sources."
           },
           {
-            "name": "WaitQualityGate",
+            "name": "QualityGateWait",
             "type": "bool",
             "format": "/d:sonar.qualitygate.wait={value}",
             "help": "Forces the analysis step to poll the SonarQube instance and wait for the Quality Gate status. If there are no other options, you can use this to fail a pipeline build when the Quality Gate is failing."
@@ -265,19 +265,17 @@
             "help": "Sets the number of seconds that the scanner should wait for a report to be processed. Default: <c>300</c>. e.g.: <c>sonar.qualitygate.timeout=300</c>"
           },
           {
-            "name": "CustomAnalysisParameter",
+            "name": "AdditionalAnalysisParameters",
             "type": "Dictionary<string, string>",
-            "format": "/d:{value}",
-            "itemFormat": "sonar.analysis.{key}={value}",
-            "separator": " ",
+            "format": "/d:sonar.analysis.{value}",
+            "itemFormat": "{key}={value}",
             "help": "This property stub allows you to insert custom key/value pairs into the analysis context, which will also be passed forward to webhooks."
           },
           {
-            "name": "AnalysisParameter",
+            "name": "AdditionalParameters",
             "type": "Dictionary<string, string>",
             "format": "/d:{value}",
             "itemFormat": "{key}={value}",
-            "separator": " ",
             "help": "Specifies an additional SonarQube analysis parameter, you can add this argument multiple times."
           },
           {
