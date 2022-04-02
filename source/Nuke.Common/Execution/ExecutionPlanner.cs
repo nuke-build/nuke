@@ -55,10 +55,9 @@ namespace Nuke.Common.Execution
             if (cycles.Count > 0)
             {
                 // TODO: logging additional
-                Log.Error("Circular dependencies between targets:"
+                Assert.Fail("Circular dependencies between targets:"
                     .Concat(cycles.Select(x => $" - {x.Select(y => y.Value.Name).JoinCommaSpace()}"))
                     .JoinNewLine());
-                Environment.Exit(exitCode: -1);
             }
 
             while (graphAsList.Any())
@@ -67,10 +66,9 @@ namespace Nuke.Common.Execution
                 if (EnvironmentInfo.GetNamedArgument<bool>("strict") && independents.Count > 1)
                 {
                     // TODO: logging additional
-                    Log.Error("Incomplete target definition order:"
+                    Assert.Fail("Incomplete target definition order:"
                         .Concat(independents.Select(x => $"  - {x.Value.Name}"))
                         .JoinNewLine());
-                    Environment.Exit(exitCode: -1);
                 }
 
                 var independent = independents.First();
@@ -107,12 +105,9 @@ namespace Nuke.Common.Execution
             var executableTarget = executableTargets.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
             if (executableTarget == null)
             {
-                // TODO: logging additional
-                Log.Error("Target with name {TargetName} does not exist. Available targets are:"
-                        .Concat(executableTargets.Select(x => $"  - {x.Name}").OrderBy(x => x))
-                        .JoinNewLine(),
-                    targetName);
-                Environment.Exit(exitCode: -1);
+                Assert.Fail($"Target with name {targetName.SingleQuote()} does not exist. Available targets are:"
+                    .Concat(executableTargets.Select(x => $"  - {x.Name}").OrderBy(x => x))
+                    .JoinNewLine());
             }
 
             return executableTarget;
