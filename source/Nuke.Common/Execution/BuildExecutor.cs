@@ -124,7 +124,7 @@ namespace Nuke.Common.Execution
                             _ => _.AddPair(exception.GetType().Name, exception.Message.SplitLineBreaks().First()));
                     }
 
-                    Log.Error(exception, "Target {TargetName} failed", target.Name);
+                    Log.Error(exception, "Running target {TargetName} failed", target.Name);
 
                     target.Stopwatch.Stop();
                     target.Status = ExecutionStatus.Failed;
