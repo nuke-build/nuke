@@ -1,0 +1,96 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://github.com/dhall-lang/dhall-haskell/tree/master/dhall-yaml"
+  ],
+  "name": "YamlToDhall",
+  "officialUrl": "https://dhall-lang.org/",
+  "help": "Convert a YAML expression to a Dhall expression, given the expected Dhall type",
+  "pathExecutable": "yaml-to-dhall",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Schema",
+            "type": "string",
+            "format": "{value}",
+            "help": "Dhall type expression (schema)"
+          },
+          {
+            "name": "RecordsStrict",
+            "type": "bool",
+            "format": "--records-strict",
+            "help": "Fail if any YAML fields are missing from the expected Dhall type"
+          },
+          {
+            "name": "RecordsLoose",
+            "type": "bool",
+            "format": "--records-loose",
+            "help": "Tolerate JSON fields not present within the expected Dhall type"
+          },
+          {
+            "name": "NoKeyValArrays",
+            "type": "bool",
+            "format": "--no-keyval-arrays",
+            "help": "Disable conversion of key-value arrays to records"
+          },
+          {
+            "name": "NoKeyValMaps",
+            "type": "bool",
+            "format": "--no-keyval-maps",
+            "help": "Disable conversion of homogeneous map objects to association lists"
+          },
+          {
+            "name": "UnionsFirst",
+            "type": "bool",
+            "format": "--unions-first",
+            "help": "The first value with the matching type (successfully parsed all the way down the tree) is accepted, even if not the only possible match"
+          },
+          {
+            "name": "UnionsNone",
+            "type": "bool",
+            "format": "--unions-none",
+            "help": "Unions not allowed"
+          },
+          {
+            "name": "UnionsStrict",
+            "type": "bool",
+            "format": "--unions-strict",
+            "help": "Error if more than one union values match the type (and parse successfully)"
+          },
+          {
+            "name": "OmissibleLists",
+            "type": "bool",
+            "format": "--omissible-lists",
+            "help": "Tolerate missing list values, they are assumed empty"
+          },
+          {
+            "name": "File",
+            "type": "string",
+            "format": "--file {value}",
+            "help": "Read YAML expression from a file instead of standard input"
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Write Dhall expression to a file instead of standard output"
+          },
+          {
+            "name": "ASCII",
+            "type": "bool",
+            "format": "--ascii",
+            "help": "Format code using only ASCII syntax"
+          },
+          {
+            "name": "Version",
+            "type": "bool",
+            "format": "--version",
+            "help": "Display version"
+          }
+        ]
+      }
+    }
+  ]
+}
