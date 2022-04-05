@@ -5,10 +5,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using FluentAssertions;
 using Nuke.Common.Execution;
-using Nuke.Common.Utilities.Collections;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -19,7 +17,7 @@ namespace Nuke.Common.Tests.Execution
     public class LogExtensionTest
     {
         //example: replace console logging template
-        [LogExtension(ConsoleTemplate="My Template: {Message}")]
+        [LogExtension(ConsoleTemplate="My Template: {Message:l}{NewLine}")]
         private class TestBuildWithConsoleTemplate : NukeBuild
         {
             Target Foo => _ => _.Executes(() =>{ Log.Information("hello"); });
@@ -80,7 +78,7 @@ namespace Nuke.Common.Tests.Execution
         {
             Logging.GetConsoleTemplate(null).Should().Be(Host.DefaultOutputTemplate);
             Logging.GetConsoleTemplate(new TestBuild()).Should().Be( NukeBuild.Host.OutputTemplate );
-            Logging.GetConsoleTemplate(new TestBuildWithConsoleTemplate()).Should().Be( "My Template: {Message}" );
+            Logging.GetConsoleTemplate(new TestBuildWithConsoleTemplate()).Should().Be( "My Template: {Message:l}{NewLine}" );
         }
 
         [Fact]
