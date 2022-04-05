@@ -1722,6 +1722,7 @@
 - PullRequest : AzurePipelinesBuildReason
 - Schedule : AzurePipelinesBuildReason
 - ValidateShelveset : AzurePipelinesBuildReason
+- ResourceTrigger : AzurePipelinesBuildReason
 
 ### Nuke.Common.CI.AzurePipelines.AzurePipelinesCodeCoverageToolType
 
