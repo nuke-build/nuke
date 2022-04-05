@@ -15,6 +15,7 @@ using Serilog;
 using Serilog.Core;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
+using System.Reflection;
 
 namespace Nuke.Common.Execution
 {
@@ -48,15 +49,22 @@ namespace Nuke.Common.Execution
             if (build != null)
                 DeleteOldLogFiles();
 
-            Log.Logger = new LoggerConfiguration()
+            var config = new LoggerConfiguration()
                 .Enrich.With<TargetLogEventEnricher>()
                 .ConfigureHost(build)
                 .ConfigureConsole(build)
                 .ConfigureInMemory(build)
                 .ConfigureFiles(build)
                 .ConfigureLevel()
-                .ConfigureFilter()
-                .CreateLogger();
+                .ConfigureFilter();
+
+            if (build != null)
+            {
+                foreach( var extension in build.LogExtensions )
+                    config = extension.Configure(config,build);
+            }
+
+            Log.Logger = config.CreateLogger();
         }
 
         public static LoggerConfiguration ConfigureLevel(this LoggerConfiguration configuration)
@@ -71,12 +79,24 @@ namespace Nuke.Common.Execution
 
         public static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
         {
+
             return configuration
                 .WriteTo.Console(
-                    outputTemplate: build != null ? NukeBuild.Host.OutputTemplate : Host.DefaultOutputTemplate,
+                    outputTemplate: GetConsoleTemplate(build),
                     theme: (ConsoleTheme)(build != null ? NukeBuild.Host.Theme : Host.DefaultTheme),
                     applyThemeToRedirectedOutput: true,
                     levelSwitch: LevelSwitch);
+        }
+
+        public static string GetConsoleTemplate([CanBeNull] NukeBuild build)
+        {
+            if (build == null)
+              return Host.DefaultOutputTemplate;
+
+            var extensionTemplate = build?.LogExtensions
+                .Select(r => r.ConsoleTemplate)
+                .FirstOrDefault(r => !string.IsNullOrWhiteSpace(r));
+            return extensionTemplate ?? NukeBuild.Host.OutputTemplate;
         }
 
         public static LoggerConfiguration ConfigureHost(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
@@ -212,7 +232,7 @@ namespace Nuke.Common.Execution
             }
         }
 
-        internal class TargetLogEventEnricher : ILogEventEnricher
+        public class TargetLogEventEnricher : ILogEventEnricher
         {
             private static LogEventProperty s_defaultProperty = new LogEventProperty("Target", new ScalarValue(""));
 

@@ -18,12 +18,17 @@ namespace Nuke.Common
     public abstract partial class NukeBuild
     {
         internal List<IBuildExtension> BuildExtensions { get; }
+        internal List<ILogExtension> LogExtensions { get; }
 
         protected NukeBuild()
         {
             BuildExtensions ??= GetType()
                 .GetCustomAttributes<BuildExtensionAttributeBase>()
                 .Cast<IBuildExtension>()
+                .OrderByDescending(x => x.Priority).ToList();
+            LogExtensions ??= GetType()
+                .GetCustomAttributes<LogExtensionAttribute>()
+                .Cast<ILogExtension>()
                 .OrderByDescending(x => x.Priority).ToList();
         }
 
