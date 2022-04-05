@@ -1923,6 +1923,108 @@ namespace Nuke.Common.Tools.Kubernetes
             return configurator.Invoke(KubernetesApply, KubernetesLogger, degreeOfParallelism, completeOnFailure);
         }
         /// <summary>
+        ///   <p>Apply a configuration to a resource by using kustomize. The resource name must be specified. This resource will be created if it doesn't exist yet. To use 'apply', always create the resource initially with either 'apply' or 'create --save-config'. JSON and YAML formats are accepted. Alpha Disclaimer: the --prune functionality is not yet complete. Do not use unless you are aware of what the current state is. See https://issues.k8s.io/34274.</p>
+        ///   <p>For more details, visit the <a href="https://kubernetes.io/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--all</c> via <see cref="KubernetesApplyKustomizeSettings.All"/></li>
+        ///     <li><c>--allow-missing-template-keys</c> via <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></li>
+        ///     <li><c>--cascade</c> via <see cref="KubernetesApplyKustomizeSettings.Cascade"/></li>
+        ///     <li><c>--dry-run</c> via <see cref="KubernetesApplyKustomizeSettings.DryRun"/></li>
+        ///     <li><c>--filename</c> via <see cref="KubernetesApplyKustomizeSettings.Filename"/></li>
+        ///     <li><c>--force</c> via <see cref="KubernetesApplyKustomizeSettings.Force"/></li>
+        ///     <li><c>--grace-period</c> via <see cref="KubernetesApplyKustomizeSettings.GracePeriod"/></li>
+        ///     <li><c>--include-uninitialized</c> via <see cref="KubernetesApplyKustomizeSettings.IncludeUninitialized"/></li>
+        ///     <li><c>--openapi-patch</c> via <see cref="KubernetesApplyKustomizeSettings.OpenapiPatch"/></li>
+        ///     <li><c>--output</c> via <see cref="KubernetesApplyKustomizeSettings.Output"/></li>
+        ///     <li><c>--overwrite</c> via <see cref="KubernetesApplyKustomizeSettings.Overwrite"/></li>
+        ///     <li><c>--prune</c> via <see cref="KubernetesApplyKustomizeSettings.Prune"/></li>
+        ///     <li><c>--prune-whitelist</c> via <see cref="KubernetesApplyKustomizeSettings.PruneWhitelist"/></li>
+        ///     <li><c>--record</c> via <see cref="KubernetesApplyKustomizeSettings.Record"/></li>
+        ///     <li><c>--recursive</c> via <see cref="KubernetesApplyKustomizeSettings.Recursive"/></li>
+        ///     <li><c>--selector</c> via <see cref="KubernetesApplyKustomizeSettings.Selector"/></li>
+        ///     <li><c>--template</c> via <see cref="KubernetesApplyKustomizeSettings.Template"/></li>
+        ///     <li><c>--timeout</c> via <see cref="KubernetesApplyKustomizeSettings.Timeout"/></li>
+        ///     <li><c>--validate</c> via <see cref="KubernetesApplyKustomizeSettings.Validate"/></li>
+        ///     <li><c>--wait</c> via <see cref="KubernetesApplyKustomizeSettings.Wait"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> KubernetesApplyKustomize(KubernetesApplyKustomizeSettings toolSettings = null)
+        {
+            toolSettings = toolSettings ?? new KubernetesApplyKustomizeSettings();
+            using var process = ProcessTasks.StartProcess(toolSettings);
+            process.AssertZeroExitCode();
+            return process.Output;
+        }
+        /// <summary>
+        ///   <p>Apply a configuration to a resource by using kustomize. The resource name must be specified. This resource will be created if it doesn't exist yet. To use 'apply', always create the resource initially with either 'apply' or 'create --save-config'. JSON and YAML formats are accepted. Alpha Disclaimer: the --prune functionality is not yet complete. Do not use unless you are aware of what the current state is. See https://issues.k8s.io/34274.</p>
+        ///   <p>For more details, visit the <a href="https://kubernetes.io/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--all</c> via <see cref="KubernetesApplyKustomizeSettings.All"/></li>
+        ///     <li><c>--allow-missing-template-keys</c> via <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></li>
+        ///     <li><c>--cascade</c> via <see cref="KubernetesApplyKustomizeSettings.Cascade"/></li>
+        ///     <li><c>--dry-run</c> via <see cref="KubernetesApplyKustomizeSettings.DryRun"/></li>
+        ///     <li><c>--filename</c> via <see cref="KubernetesApplyKustomizeSettings.Filename"/></li>
+        ///     <li><c>--force</c> via <see cref="KubernetesApplyKustomizeSettings.Force"/></li>
+        ///     <li><c>--grace-period</c> via <see cref="KubernetesApplyKustomizeSettings.GracePeriod"/></li>
+        ///     <li><c>--include-uninitialized</c> via <see cref="KubernetesApplyKustomizeSettings.IncludeUninitialized"/></li>
+        ///     <li><c>--openapi-patch</c> via <see cref="KubernetesApplyKustomizeSettings.OpenapiPatch"/></li>
+        ///     <li><c>--output</c> via <see cref="KubernetesApplyKustomizeSettings.Output"/></li>
+        ///     <li><c>--overwrite</c> via <see cref="KubernetesApplyKustomizeSettings.Overwrite"/></li>
+        ///     <li><c>--prune</c> via <see cref="KubernetesApplyKustomizeSettings.Prune"/></li>
+        ///     <li><c>--prune-whitelist</c> via <see cref="KubernetesApplyKustomizeSettings.PruneWhitelist"/></li>
+        ///     <li><c>--record</c> via <see cref="KubernetesApplyKustomizeSettings.Record"/></li>
+        ///     <li><c>--recursive</c> via <see cref="KubernetesApplyKustomizeSettings.Recursive"/></li>
+        ///     <li><c>--selector</c> via <see cref="KubernetesApplyKustomizeSettings.Selector"/></li>
+        ///     <li><c>--template</c> via <see cref="KubernetesApplyKustomizeSettings.Template"/></li>
+        ///     <li><c>--timeout</c> via <see cref="KubernetesApplyKustomizeSettings.Timeout"/></li>
+        ///     <li><c>--validate</c> via <see cref="KubernetesApplyKustomizeSettings.Validate"/></li>
+        ///     <li><c>--wait</c> via <see cref="KubernetesApplyKustomizeSettings.Wait"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IReadOnlyCollection<Output> KubernetesApplyKustomize(Configure<KubernetesApplyKustomizeSettings> configurator)
+        {
+            return KubernetesApplyKustomize(configurator(new KubernetesApplyKustomizeSettings()));
+        }
+        /// <summary>
+        ///   <p>Apply a configuration to a resource by using kustomize. The resource name must be specified. This resource will be created if it doesn't exist yet. To use 'apply', always create the resource initially with either 'apply' or 'create --save-config'. JSON and YAML formats are accepted. Alpha Disclaimer: the --prune functionality is not yet complete. Do not use unless you are aware of what the current state is. See https://issues.k8s.io/34274.</p>
+        ///   <p>For more details, visit the <a href="https://kubernetes.io/">official website</a>.</p>
+        /// </summary>
+        /// <remarks>
+        ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+        ///   <ul>
+        ///     <li><c>--all</c> via <see cref="KubernetesApplyKustomizeSettings.All"/></li>
+        ///     <li><c>--allow-missing-template-keys</c> via <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></li>
+        ///     <li><c>--cascade</c> via <see cref="KubernetesApplyKustomizeSettings.Cascade"/></li>
+        ///     <li><c>--dry-run</c> via <see cref="KubernetesApplyKustomizeSettings.DryRun"/></li>
+        ///     <li><c>--filename</c> via <see cref="KubernetesApplyKustomizeSettings.Filename"/></li>
+        ///     <li><c>--force</c> via <see cref="KubernetesApplyKustomizeSettings.Force"/></li>
+        ///     <li><c>--grace-period</c> via <see cref="KubernetesApplyKustomizeSettings.GracePeriod"/></li>
+        ///     <li><c>--include-uninitialized</c> via <see cref="KubernetesApplyKustomizeSettings.IncludeUninitialized"/></li>
+        ///     <li><c>--openapi-patch</c> via <see cref="KubernetesApplyKustomizeSettings.OpenapiPatch"/></li>
+        ///     <li><c>--output</c> via <see cref="KubernetesApplyKustomizeSettings.Output"/></li>
+        ///     <li><c>--overwrite</c> via <see cref="KubernetesApplyKustomizeSettings.Overwrite"/></li>
+        ///     <li><c>--prune</c> via <see cref="KubernetesApplyKustomizeSettings.Prune"/></li>
+        ///     <li><c>--prune-whitelist</c> via <see cref="KubernetesApplyKustomizeSettings.PruneWhitelist"/></li>
+        ///     <li><c>--record</c> via <see cref="KubernetesApplyKustomizeSettings.Record"/></li>
+        ///     <li><c>--recursive</c> via <see cref="KubernetesApplyKustomizeSettings.Recursive"/></li>
+        ///     <li><c>--selector</c> via <see cref="KubernetesApplyKustomizeSettings.Selector"/></li>
+        ///     <li><c>--template</c> via <see cref="KubernetesApplyKustomizeSettings.Template"/></li>
+        ///     <li><c>--timeout</c> via <see cref="KubernetesApplyKustomizeSettings.Timeout"/></li>
+        ///     <li><c>--validate</c> via <see cref="KubernetesApplyKustomizeSettings.Validate"/></li>
+        ///     <li><c>--wait</c> via <see cref="KubernetesApplyKustomizeSettings.Wait"/></li>
+        ///   </ul>
+        /// </remarks>
+        public static IEnumerable<(KubernetesApplyKustomizeSettings Settings, IReadOnlyCollection<Output> Output)> KubernetesApplyKustomize(CombinatorialConfigure<KubernetesApplyKustomizeSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+        {
+            return configurator.Invoke(KubernetesApplyKustomize, KubernetesLogger, degreeOfParallelism, completeOnFailure);
+        }
+        /// <summary>
         ///   <p>Mark node as unschedulable.</p>
         ///   <p>For more details, visit the <a href="https://kubernetes.io/">official website</a>.</p>
         /// </summary>
@@ -4837,6 +4939,130 @@ namespace Nuke.Common.Tools.Kubernetes
         {
             arguments
               .Add("apply")
+              .Add("--all={value}", All)
+              .Add("--allow-missing-template-keys={value}", AllowMissingTemplateKeys)
+              .Add("--cascade={value}", Cascade)
+              .Add("--dry-run={value}", DryRun)
+              .Add("--filename={value}", Filename, separator: ',')
+              .Add("--force={value}", Force)
+              .Add("--grace-period={value}", GracePeriod)
+              .Add("--include-uninitialized={value}", IncludeUninitialized)
+              .Add("--openapi-patch={value}", OpenapiPatch)
+              .Add("--output={value}", Output)
+              .Add("--overwrite={value}", Overwrite)
+              .Add("--prune={value}", Prune)
+              .Add("--prune-whitelist={value}", PruneWhitelist)
+              .Add("--record={value}", Record)
+              .Add("--recursive={value}", Recursive)
+              .Add("--selector={value}", Selector)
+              .Add("--template={value}", Template)
+              .Add("--timeout={value}", Timeout)
+              .Add("--validate={value}", Validate)
+              .Add("--wait={value}", Wait);
+            return base.ConfigureProcessArguments(arguments);
+        }
+    }
+    #endregion
+    #region KubernetesApplyKustomizeSettings
+    /// <summary>
+    ///   Used within <see cref="KubernetesTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class KubernetesApplyKustomizeSettings : KubernetesToolSettings
+    {
+        /// <summary>
+        ///   Path to the Kubernetes executable.
+        /// </summary>
+        public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
+        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        /// <summary>
+        ///   Select all resources in the namespace of the specified resource types.
+        /// </summary>
+        public virtual bool? All { get; internal set; }
+        /// <summary>
+        ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
+        /// </summary>
+        public virtual bool? AllowMissingTemplateKeys { get; internal set; }
+        /// <summary>
+        ///   If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.
+        /// </summary>
+        public virtual bool? Cascade { get; internal set; }
+        /// <summary>
+        ///   If true, only print the object that would be sent, without sending it.
+        /// </summary>
+        public virtual bool? DryRun { get; internal set; }
+        /// <summary>
+        ///   that contains the configuration to apply.
+        /// </summary>
+        public virtual IReadOnlyList<string> Filename => FilenameInternal.AsReadOnly();
+        internal List<string> FilenameInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.
+        /// </summary>
+        public virtual bool? Force { get; internal set; }
+        /// <summary>
+        ///   Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).
+        /// </summary>
+        public virtual int? GracePeriod { get; internal set; }
+        /// <summary>
+        ///   If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.
+        /// </summary>
+        public virtual bool? IncludeUninitialized { get; internal set; }
+        /// <summary>
+        ///   If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.
+        /// </summary>
+        public virtual bool? OpenapiPatch { get; internal set; }
+        /// <summary>
+        ///   Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.
+        /// </summary>
+        public virtual KubernetesApplyOutput Output { get; internal set; }
+        /// <summary>
+        ///   Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.
+        /// </summary>
+        public virtual bool? Overwrite { get; internal set; }
+        /// <summary>
+        ///   Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.
+        /// </summary>
+        public virtual bool? Prune { get; internal set; }
+        /// <summary>
+        ///   Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.
+        /// </summary>
+        public virtual IReadOnlyList<string> PruneWhitelist => PruneWhitelistInternal.AsReadOnly();
+        internal List<string> PruneWhitelistInternal { get; set; } = new List<string>();
+        /// <summary>
+        ///   Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.
+        /// </summary>
+        public virtual bool? Record { get; internal set; }
+        /// <summary>
+        ///   Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.
+        /// </summary>
+        public virtual bool? Recursive { get; internal set; }
+        /// <summary>
+        ///   Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).
+        /// </summary>
+        public virtual string Selector { get; internal set; }
+        /// <summary>
+        ///   Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].
+        /// </summary>
+        public virtual string Template { get; internal set; }
+        /// <summary>
+        ///   The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.
+        /// </summary>
+        public virtual TimeSpan? Timeout { get; internal set; }
+        /// <summary>
+        ///   If true, use a schema to validate the input before sending it.
+        /// </summary>
+        public virtual bool? Validate { get; internal set; }
+        /// <summary>
+        ///   If true, wait for resources to be gone before returning. This waits for finalizers.
+        /// </summary>
+        public virtual bool? Wait { get; internal set; }
+        protected override Arguments ConfigureProcessArguments(Arguments arguments)
+        {
+            arguments
+              .Add("apply -k")
               .Add("--all={value}", All)
               .Add("--allow-missing-template-keys={value}", AllowMissingTemplateKeys)
               .Add("--cascade={value}", Cascade)
@@ -17416,6 +17642,1039 @@ namespace Nuke.Common.Tools.Kubernetes
         /// </summary>
         [Pure]
         public static T ToggleWait<T>(this T toolSettings) where T : KubernetesApplySettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Wait = !toolSettings.Wait;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region KubernetesApplyKustomizeSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="KubernetesTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class KubernetesApplyKustomizeSettingsExtensions
+    {
+        #region All
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.All"/></em></p>
+        ///   <p>Select all resources in the namespace of the specified resource types.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAll<T>(this T toolSettings, bool? all) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.All = all;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.All"/></em></p>
+        ///   <p>Select all resources in the namespace of the specified resource types.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetAll<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.All = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.All"/></em></p>
+        ///   <p>Select all resources in the namespace of the specified resource types.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableAll<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.All = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.All"/></em></p>
+        ///   <p>Select all resources in the namespace of the specified resource types.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableAll<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.All = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.All"/></em></p>
+        ///   <p>Select all resources in the namespace of the specified resource types.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleAll<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.All = !toolSettings.All;
+            return toolSettings;
+        }
+        #endregion
+        #region AllowMissingTemplateKeys
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></em></p>
+        ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAllowMissingTemplateKeys<T>(this T toolSettings, bool? allowMissingTemplateKeys) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowMissingTemplateKeys = allowMissingTemplateKeys;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></em></p>
+        ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowMissingTemplateKeys = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></em></p>
+        ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowMissingTemplateKeys = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></em></p>
+        ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowMissingTemplateKeys = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></em></p>
+        ///   <p>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleAllowMissingTemplateKeys<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllowMissingTemplateKeys = !toolSettings.AllowMissingTemplateKeys;
+            return toolSettings;
+        }
+        #endregion
+        #region Cascade
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Cascade"/></em></p>
+        ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCascade<T>(this T toolSettings, bool? cascade) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Cascade = cascade;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Cascade"/></em></p>
+        ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCascade<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Cascade = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.Cascade"/></em></p>
+        ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableCascade<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Cascade = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.Cascade"/></em></p>
+        ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableCascade<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Cascade = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.Cascade"/></em></p>
+        ///   <p>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleCascade<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Cascade = !toolSettings.Cascade;
+            return toolSettings;
+        }
+        #endregion
+        #region DryRun
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.DryRun"/></em></p>
+        ///   <p>If true, only print the object that would be sent, without sending it.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDryRun<T>(this T toolSettings, bool? dryRun) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DryRun = dryRun;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.DryRun"/></em></p>
+        ///   <p>If true, only print the object that would be sent, without sending it.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDryRun<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DryRun = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.DryRun"/></em></p>
+        ///   <p>If true, only print the object that would be sent, without sending it.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableDryRun<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DryRun = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.DryRun"/></em></p>
+        ///   <p>If true, only print the object that would be sent, without sending it.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableDryRun<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DryRun = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.DryRun"/></em></p>
+        ///   <p>If true, only print the object that would be sent, without sending it.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleDryRun<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DryRun = !toolSettings.DryRun;
+            return toolSettings;
+        }
+        #endregion
+        #region Filename
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Filename"/> to a new list</em></p>
+        ///   <p>that contains the configuration to apply.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FilenameInternal = filename.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Filename"/> to a new list</em></p>
+        ///   <p>that contains the configuration to apply.</p>
+        /// </summary>
+        [Pure]
+        public static T SetFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FilenameInternal = filename.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="KubernetesApplyKustomizeSettings.Filename"/></em></p>
+        ///   <p>that contains the configuration to apply.</p>
+        /// </summary>
+        [Pure]
+        public static T AddFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FilenameInternal.AddRange(filename);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="KubernetesApplyKustomizeSettings.Filename"/></em></p>
+        ///   <p>that contains the configuration to apply.</p>
+        /// </summary>
+        [Pure]
+        public static T AddFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FilenameInternal.AddRange(filename);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="KubernetesApplyKustomizeSettings.Filename"/></em></p>
+        ///   <p>that contains the configuration to apply.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearFilename<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.FilenameInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="KubernetesApplyKustomizeSettings.Filename"/></em></p>
+        ///   <p>that contains the configuration to apply.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFilename<T>(this T toolSettings, params string[] filename) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(filename);
+            toolSettings.FilenameInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="KubernetesApplyKustomizeSettings.Filename"/></em></p>
+        ///   <p>that contains the configuration to apply.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveFilename<T>(this T toolSettings, IEnumerable<string> filename) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(filename);
+            toolSettings.FilenameInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Force
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Force"/></em></p>
+        ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
+        /// </summary>
+        [Pure]
+        public static T SetForce<T>(this T toolSettings, bool? force) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = force;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Force"/></em></p>
+        ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetForce<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.Force"/></em></p>
+        ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableForce<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.Force"/></em></p>
+        ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableForce<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.Force"/></em></p>
+        ///   <p>Only used when grace-period=0. If true, immediately remove resources from API and bypass graceful deletion. Note that immediate deletion of some resources may result in inconsistency or data loss and requires confirmation.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleForce<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Force = !toolSettings.Force;
+            return toolSettings;
+        }
+        #endregion
+        #region GracePeriod
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.GracePeriod"/></em></p>
+        ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
+        /// </summary>
+        [Pure]
+        public static T SetGracePeriod<T>(this T toolSettings, int? gracePeriod) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GracePeriod = gracePeriod;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.GracePeriod"/></em></p>
+        ///   <p>Period of time in seconds given to the resource to terminate gracefully. Ignored if negative. Set to 1 for immediate shutdown. Can only be set to 0 when --force is true (force deletion).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetGracePeriod<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.GracePeriod = null;
+            return toolSettings;
+        }
+        #endregion
+        #region IncludeUninitialized
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.IncludeUninitialized"/></em></p>
+        ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
+        /// </summary>
+        [Pure]
+        public static T SetIncludeUninitialized<T>(this T toolSettings, bool? includeUninitialized) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeUninitialized = includeUninitialized;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.IncludeUninitialized"/></em></p>
+        ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetIncludeUninitialized<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeUninitialized = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.IncludeUninitialized"/></em></p>
+        ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeUninitialized = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.IncludeUninitialized"/></em></p>
+        ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableIncludeUninitialized<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeUninitialized = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.IncludeUninitialized"/></em></p>
+        ///   <p>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleIncludeUninitialized<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.IncludeUninitialized = !toolSettings.IncludeUninitialized;
+            return toolSettings;
+        }
+        #endregion
+        #region OpenapiPatch
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.OpenapiPatch"/></em></p>
+        ///   <p>If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.</p>
+        /// </summary>
+        [Pure]
+        public static T SetOpenapiPatch<T>(this T toolSettings, bool? openapiPatch) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OpenapiPatch = openapiPatch;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.OpenapiPatch"/></em></p>
+        ///   <p>If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOpenapiPatch<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OpenapiPatch = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.OpenapiPatch"/></em></p>
+        ///   <p>If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableOpenapiPatch<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OpenapiPatch = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.OpenapiPatch"/></em></p>
+        ///   <p>If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableOpenapiPatch<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OpenapiPatch = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.OpenapiPatch"/></em></p>
+        ///   <p>If true, use openapi to calculate diff when the openapi presents and the resource can be found in the openapi spec. Otherwise, fall back to use baked-in types.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleOpenapiPatch<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.OpenapiPatch = !toolSettings.OpenapiPatch;
+            return toolSettings;
+        }
+        #endregion
+        #region Output
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Output"/></em></p>
+        ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
+        /// </summary>
+        [Pure]
+        public static T SetOutput<T>(this T toolSettings, KubernetesApplyOutput output) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Output = output;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Output"/></em></p>
+        ///   <p>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOutput<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Output = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Overwrite
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Overwrite"/></em></p>
+        ///   <p>Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.</p>
+        /// </summary>
+        [Pure]
+        public static T SetOverwrite<T>(this T toolSettings, bool? overwrite) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Overwrite = overwrite;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Overwrite"/></em></p>
+        ///   <p>Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetOverwrite<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Overwrite = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.Overwrite"/></em></p>
+        ///   <p>Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableOverwrite<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Overwrite = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.Overwrite"/></em></p>
+        ///   <p>Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableOverwrite<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Overwrite = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.Overwrite"/></em></p>
+        ///   <p>Automatically resolve conflicts between the modified and live configuration by using values from the modified configuration.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleOverwrite<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Overwrite = !toolSettings.Overwrite;
+            return toolSettings;
+        }
+        #endregion
+        #region Prune
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Prune"/></em></p>
+        ///   <p>Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPrune<T>(this T toolSettings, bool? prune) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Prune = prune;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Prune"/></em></p>
+        ///   <p>Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPrune<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Prune = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.Prune"/></em></p>
+        ///   <p>Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.</p>
+        /// </summary>
+        [Pure]
+        public static T EnablePrune<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Prune = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.Prune"/></em></p>
+        ///   <p>Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.</p>
+        /// </summary>
+        [Pure]
+        public static T DisablePrune<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Prune = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.Prune"/></em></p>
+        ///   <p>Automatically delete resource objects, including the uninitialized ones, that do not appear in the configs and are created by either apply or create --save-config. Should be used with either -l or --all.</p>
+        /// </summary>
+        [Pure]
+        public static T TogglePrune<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Prune = !toolSettings.Prune;
+            return toolSettings;
+        }
+        #endregion
+        #region PruneWhitelist
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.PruneWhitelist"/> to a new list</em></p>
+        ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPruneWhitelist<T>(this T toolSettings, params string[] pruneWhitelist) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PruneWhitelistInternal = pruneWhitelist.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.PruneWhitelist"/> to a new list</em></p>
+        ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPruneWhitelist<T>(this T toolSettings, IEnumerable<string> pruneWhitelist) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PruneWhitelistInternal = pruneWhitelist.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="KubernetesApplyKustomizeSettings.PruneWhitelist"/></em></p>
+        ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
+        /// </summary>
+        [Pure]
+        public static T AddPruneWhitelist<T>(this T toolSettings, params string[] pruneWhitelist) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PruneWhitelistInternal.AddRange(pruneWhitelist);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="KubernetesApplyKustomizeSettings.PruneWhitelist"/></em></p>
+        ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
+        /// </summary>
+        [Pure]
+        public static T AddPruneWhitelist<T>(this T toolSettings, IEnumerable<string> pruneWhitelist) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PruneWhitelistInternal.AddRange(pruneWhitelist);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="KubernetesApplyKustomizeSettings.PruneWhitelist"/></em></p>
+        ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearPruneWhitelist<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PruneWhitelistInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="KubernetesApplyKustomizeSettings.PruneWhitelist"/></em></p>
+        ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
+        /// </summary>
+        [Pure]
+        public static T RemovePruneWhitelist<T>(this T toolSettings, params string[] pruneWhitelist) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(pruneWhitelist);
+            toolSettings.PruneWhitelistInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="KubernetesApplyKustomizeSettings.PruneWhitelist"/></em></p>
+        ///   <p>Overwrite the default whitelist with &lt;group/version/kind&gt; for --prune.</p>
+        /// </summary>
+        [Pure]
+        public static T RemovePruneWhitelist<T>(this T toolSettings, IEnumerable<string> pruneWhitelist) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(pruneWhitelist);
+            toolSettings.PruneWhitelistInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
+        #region Record
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Record"/></em></p>
+        ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
+        /// </summary>
+        [Pure]
+        public static T SetRecord<T>(this T toolSettings, bool? record) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Record = record;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Record"/></em></p>
+        ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetRecord<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Record = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.Record"/></em></p>
+        ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableRecord<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Record = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.Record"/></em></p>
+        ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableRecord<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Record = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.Record"/></em></p>
+        ///   <p>Record current kubectl command in the resource annotation. If set to false, do not record the command. If set to true, record the command. If not set, default to updating the existing annotation value only if one already exists.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleRecord<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Record = !toolSettings.Record;
+            return toolSettings;
+        }
+        #endregion
+        #region Recursive
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Recursive"/></em></p>
+        ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
+        /// </summary>
+        [Pure]
+        public static T SetRecursive<T>(this T toolSettings, bool? recursive) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Recursive = recursive;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Recursive"/></em></p>
+        ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetRecursive<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Recursive = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.Recursive"/></em></p>
+        ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableRecursive<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Recursive = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.Recursive"/></em></p>
+        ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableRecursive<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Recursive = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.Recursive"/></em></p>
+        ///   <p>Process the directory used in -f, --filename recursively. Useful when you want to manage related manifests organized within the same directory.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleRecursive<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Recursive = !toolSettings.Recursive;
+            return toolSettings;
+        }
+        #endregion
+        #region Selector
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Selector"/></em></p>
+        ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
+        /// </summary>
+        [Pure]
+        public static T SetSelector<T>(this T toolSettings, string selector) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Selector = selector;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Selector"/></em></p>
+        ///   <p>Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetSelector<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Selector = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Template
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Template"/></em></p>
+        ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
+        /// </summary>
+        [Pure]
+        public static T SetTemplate<T>(this T toolSettings, string template) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Template = template;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Template"/></em></p>
+        ///   <p>Template string or path to template file to use when -o=go-template, -o=go-template-file. The template format is golang templates [http://golang.org/pkg/text/template/#pkg-overview].</p>
+        /// </summary>
+        [Pure]
+        public static T ResetTemplate<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Template = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Timeout
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Timeout"/></em></p>
+        ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
+        /// </summary>
+        [Pure]
+        public static T SetTimeout<T>(this T toolSettings, TimeSpan? timeout) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timeout = timeout;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Timeout"/></em></p>
+        ///   <p>The length of time to wait before giving up on a delete, zero means determine a timeout from the size of the object.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetTimeout<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Timeout = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Validate
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Validate"/></em></p>
+        ///   <p>If true, use a schema to validate the input before sending it.</p>
+        /// </summary>
+        [Pure]
+        public static T SetValidate<T>(this T toolSettings, bool? validate) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Validate = validate;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Validate"/></em></p>
+        ///   <p>If true, use a schema to validate the input before sending it.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetValidate<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Validate = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.Validate"/></em></p>
+        ///   <p>If true, use a schema to validate the input before sending it.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableValidate<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Validate = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.Validate"/></em></p>
+        ///   <p>If true, use a schema to validate the input before sending it.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableValidate<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Validate = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.Validate"/></em></p>
+        ///   <p>If true, use a schema to validate the input before sending it.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleValidate<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Validate = !toolSettings.Validate;
+            return toolSettings;
+        }
+        #endregion
+        #region Wait
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Wait"/></em></p>
+        ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
+        /// </summary>
+        [Pure]
+        public static T SetWait<T>(this T toolSettings, bool? wait) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Wait = wait;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Wait"/></em></p>
+        ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetWait<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Wait = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="KubernetesApplyKustomizeSettings.Wait"/></em></p>
+        ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableWait<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Wait = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="KubernetesApplyKustomizeSettings.Wait"/></em></p>
+        ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableWait<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Wait = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="KubernetesApplyKustomizeSettings.Wait"/></em></p>
+        ///   <p>If true, wait for resources to be gone before returning. This waits for finalizers.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleWait<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Wait = !toolSettings.Wait;

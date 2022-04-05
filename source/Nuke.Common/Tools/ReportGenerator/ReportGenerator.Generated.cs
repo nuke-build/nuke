@@ -820,6 +820,7 @@ namespace Nuke.Common.Tools.ReportGenerator
     {
         public static ReportTypes Badges = (ReportTypes) "Badges";
         public static ReportTypes Cobertura = (ReportTypes) "Cobertura";
+        public static ReportTypes Clover = (ReportTypes) "Clover";
         public static ReportTypes CsvSummary = (ReportTypes) "CsvSummary";
         public static ReportTypes Html = (ReportTypes) "Html";
         public static ReportTypes HtmlInline = (ReportTypes) "HtmlInline";
@@ -827,8 +828,11 @@ namespace Nuke.Common.Tools.ReportGenerator
         public static ReportTypes HtmlInline_AzurePipelines_Dark = (ReportTypes) "HtmlInline_AzurePipelines_Dark";
         public static ReportTypes HtmlChart = (ReportTypes) "HtmlChart";
         public static ReportTypes HtmlSummary = (ReportTypes) "HtmlSummary";
+        public static ReportTypes JsonSummary = (ReportTypes) "JsonSummary";
         public static ReportTypes Latex = (ReportTypes) "Latex";
         public static ReportTypes LatexSummary = (ReportTypes) "LatexSummary";
+        public static ReportTypes lcov = (ReportTypes) "lcov";
+        public static ReportTypes MarkdownSummary = (ReportTypes) "MarkdownSummary";
         public static ReportTypes MHtml = (ReportTypes) "MHtml";
         public static ReportTypes PngChart = (ReportTypes) "PngChart";
         public static ReportTypes TextSummary = (ReportTypes) "TextSummary";
