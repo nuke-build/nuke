@@ -92,7 +92,7 @@ namespace Nuke.Common.Execution
             if (build == null)
               return Host.DefaultOutputTemplate;
 
-            var extensionTemplate = build?.LogExtensions
+            var extensionTemplate = build.LogExtensions
                 .Select(r => r.ConsoleTemplate)
                 .FirstOrDefault(r => !string.IsNullOrWhiteSpace(r));
             return extensionTemplate ?? NukeBuild.Host.OutputTemplate;
