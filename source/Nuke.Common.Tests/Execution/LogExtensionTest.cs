@@ -82,6 +82,15 @@ namespace Nuke.Common.Tests.Execution
         }
 
         [Fact]
+        public void LoggingWithBareBuild()
+        {
+            Logging.Configure(new TestBuild());
+            Log.Error("LoggingWithBareBuild");
+            Log.Logger.NotNull();
+            Log.CloseAndFlush();
+        }
+
+        [Fact]
         public void LoggingWithNullBuild()
         {
             Logging.Configure(null);
