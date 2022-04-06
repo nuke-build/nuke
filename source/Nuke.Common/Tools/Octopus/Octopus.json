@@ -144,6 +144,18 @@
             "help": "Default version number of all packages to use for this release."
           },
           {
+            "name": "GitCommit",
+            "type": "string",
+            "format": "--gitCommit={value}",
+            "help": "Git commit to use when creating the release. Use in conjunction with the --gitRef parameter to select any previous commit."
+          },
+          {
+            "name": "GitRef",
+            "type": "string",
+            "format": "--gitRef={value}",
+            "help": "Git reference to use when creating the release."
+          },
+          {
             "name": "Version",
             "type": "string",
             "format": "--version={value}",
