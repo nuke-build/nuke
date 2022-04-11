@@ -41,19 +41,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <PackageReference Include="coverlet.msbuild" Version="3.1.0" />
-    <PackageReference Include="FluentAssertions" Version="6.1.0"/>
+    <PackageReference Include="FluentAssertions" Version="6.6.0"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0"/>
-    <PackageReference Include="TeamCity.VSTest.TestAdapter" Version="1.0.27"/>
-    <PackageReference Include="Verify.Xunit" Version="16.3.4" />
-    <PackageReference Include="Verify.DiffPlex" Version="1.0.0" />
+    <PackageReference Include="TeamCity.VSTest.TestAdapter" Version="1.0.36"/>
+    <PackageReference Include="Verify.Xunit" Version="16.5.4" />
+    <PackageReference Include="Verify.DiffPlex" Version="1.2.0" />
     <PackageReference Include="xunit" Version="2.4.1"/>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3"/>
-    <PackageReference Include="GitHubActionsTestLogger" Version="1.2.0"/>
+    <PackageReference Include="GitHubActionsTestLogger" Version="1.3.0"/>
   </ItemGroup>
 
 </Project>
