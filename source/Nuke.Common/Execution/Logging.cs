@@ -51,7 +51,7 @@ namespace Nuke.Common.Execution
                 DeleteOldLogFiles();
 
             Log.Logger = new LoggerConfiguration()
-                .Enrich.With<TargetLogEventEnricher>()
+                .Enrich.With<ExecutingTargetLogEventEnricher>()
                 .ConfigureHost(build)
                 .ConfigureConsole(build)
                 .ConfigureInMemory(build)
@@ -108,10 +108,10 @@ namespace Nuke.Common.Execution
             return configuration
                 .WriteTo.File(
                     path: buildLogFile,
-                    outputTemplate: $"{{Timestamp:HH:mm:ss.fff}} | {{Level:u1}} | {{Target,-{TargetNameLength}}} | {{Message:l}}{{NewLine}}{{Exception}}")
+                    outputTemplate: $"{{Timestamp:HH:mm:ss.fff}} | {{Level:u1}} | {{ExecutingTarget,-{TargetNameLength}}} | {{Message:l}}{{NewLine}}{{Exception}}")
                 .WriteTo.File(
                     path: Path.ChangeExtension(buildLogFile, $".{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.log"),
-                    outputTemplate: $"{{Level:u1}} | {{Target,-{TargetNameLength}}} | {{Message:l}}{{NewLine}}{{Exception}}");
+                    outputTemplate: $"{{Level:u1}} | {{ExecutingTarget,-{TargetNameLength}}} | {{Message:l}}{{NewLine}}{{Exception}}");
         }
 
         private static void DeleteOldLogFiles()
@@ -182,7 +182,7 @@ namespace Nuke.Common.Execution
 
         public static IDisposable SetTarget(string name)
         {
-            return TargetLogEventEnricher.SetTargetEventProperty(name);
+            return ExecutingTargetLogEventEnricher.SetTargetEventProperty(name);
         }
 
         public class InMemorySink : ILogEventSink, IDisposable
@@ -200,7 +200,7 @@ namespace Nuke.Common.Execution
 
             public void Emit(LogEvent logEvent)
             {
-                logEvent.AddOrUpdateProperty(TargetLogEventEnricher.Current);
+                logEvent.AddOrUpdateProperty(ExecutingTargetLogEventEnricher.Current);
                 _logEvents.Add(logEvent);
             }
 
@@ -210,7 +210,7 @@ namespace Nuke.Common.Execution
             }
         }
 
-        internal class TargetLogEventEnricher : ILogEventEnricher
+        internal class ExecutingTargetLogEventEnricher : ILogEventEnricher
         {
             public static LogEventProperty Current => s_property ?? s_defaultProperty;
 
@@ -227,7 +227,7 @@ namespace Nuke.Common.Execution
             private static LogEventProperty GetTargetEventProperty(string name)
             {
                 var paddedName = name.Substring(startIndex: 0, Math.Min(name.Length, TargetNameLength));
-                return new LogEventProperty("Target", new ScalarValue(paddedName));
+                return new LogEventProperty("ExecutingTarget", new ScalarValue(paddedName));
             }
 
             public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
