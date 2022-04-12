@@ -74,7 +74,7 @@ else {
     $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
 }
 
-Write-Output "Microsoft (R) .NET Core SDK version $(& $env:DOTNET_EXE --version)"
+Write-Output "Microsoft (R) .NET SDK version $(& $env:DOTNET_EXE --version)"
 
 ExecSafe { & $env:DOTNET_EXE build $BuildProjectFile /nodeReuse:false /p:UseSharedCompilation=false -nologo -clp:NoSummary }
 ExecSafe { & $env:DOTNET_EXE run --project $BuildProjectFile --no-build -- $BuildArguments }

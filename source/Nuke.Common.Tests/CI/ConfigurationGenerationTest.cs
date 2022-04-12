@@ -125,7 +125,7 @@ namespace Nuke.Common.Tests.CI
                         On = new[] { GitHubActionsTrigger.Push, GitHubActionsTrigger.PullRequest },
                         InvokedTargets = new[] { nameof(Test) },
                         ImportSecrets = new[] { nameof(ApiKey) },
-                        EnableGitHubContext = true
+                        EnableGitHubToken = true
                     }
                 );
 

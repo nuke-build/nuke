@@ -75,7 +75,7 @@ namespace Nuke.Common.Execution
                     property["description"] = parameter.Description;
 
                 if (parameter.IsSecret)
-                    property["default"] = "Secrets must be entered via 'nuke :secret [profile]'";
+                    property["default"] = "Secrets must be entered via 'nuke :secrets [profile]'";
 
                 if (parameter.EnumValues != null && !parameter.MemberType.IsCollectionLike())
                     property["enum"] = new JArray(parameter.EnumValues);

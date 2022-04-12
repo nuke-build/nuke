@@ -30,7 +30,6 @@ namespace Nuke.Common.CI.GitHubActions
         public new static GitHubActions Instance => Host.Instance as GitHubActions;
 
         private readonly Lazy<JObject> _eventContext;
-        private readonly Lazy<JObject> _githubContext;
         private readonly Lazy<HttpClient> _httpClient;
         private readonly Lazy<long> _jobId;
 
@@ -40,11 +39,6 @@ namespace Nuke.Common.CI.GitHubActions
             {
                 var content = File.ReadAllText(EventPath);
                 return JsonConvert.DeserializeObject<JObject>(content);
-            });
-            _githubContext = Lazy.Create(() =>
-            {
-                var content = EnvironmentInfo.GetVariable<string>("GITHUB_CONTEXT");
-                return content != null ? JsonConvert.DeserializeObject<JObject>(content) : null;
             });
             _httpClient = Lazy.Create(() =>
             {
@@ -108,8 +102,7 @@ namespace Nuke.Common.CI.GitHubActions
 
         // https://github.com/actions/toolkit/tree/master/packages/core/src
 
-        public JObject GitHubContext => _githubContext.Value;
-        public string Token => GitHubContext.GetPropertyStringValue("token");
+        public string Token => EnvironmentInfo.GetVariable<string>("GITHUB_TOKEN");
         public long JobId => _jobId.Value;
 
         public JObject GitHubEvent => _eventContext.Value;

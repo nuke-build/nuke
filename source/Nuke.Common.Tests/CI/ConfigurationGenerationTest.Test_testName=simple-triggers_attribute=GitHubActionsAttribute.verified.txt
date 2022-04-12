@@ -35,7 +35,7 @@ jobs:
         run: ./build.cmd Test
         env:
           ApiKey: ${{ secrets.API_KEY }}
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
@@ -64,7 +64,7 @@ jobs:
         run: ./build.cmd Test
         env:
           ApiKey: ${{ secrets.API_KEY }}
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v1
         with:
           name: src
@@ -93,7 +93,7 @@ jobs:
         run: ./build.cmd Test
         env:
           ApiKey: ${{ secrets.API_KEY }}
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/upload-artifact@v1
         with:
           name: src

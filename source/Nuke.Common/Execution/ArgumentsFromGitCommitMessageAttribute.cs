@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.CI;
 using Nuke.Common.Git;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Utilities;
@@ -17,13 +18,11 @@ namespace Nuke.Common.Execution
     [PublicAPI]
     public class ArgumentsFromGitCommitMessageAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        private bool GenerationMode { get; } = EnvironmentInfo.GetParameter<string>(ConfigurationParameterName) != null;
-
         public string Prefix { get; set; } = "[nuke++]";
 
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            if (GenerationMode)
+            if (BuildServerConfigurationGeneration.IsActive)
                 return;
 
             var commit = GitRepository.GetCommitFromCI();

@@ -31,8 +31,13 @@ namespace Nuke.Common.ValueInjection
         protected T GetMemberValue<T>(string memberName, object instance)
         {
             var type = instance.GetType();
-            var member = type.GetMember(memberName, ReflectionUtility.All)
-                .SingleOrDefaultOrError($"Found multiple members with the name '{memberName}' in '{type.Name}'")
+            var member = type
+                .GetAllMembers(
+                    x => x.Name == memberName,
+                    bindingFlags: ReflectionUtility.All,
+                    allowAmbiguity: true,
+                    filterQuasiOverridden: true)
+                .FirstOrDefault()
                 .NotNull($"No member '{memberName}' found in '{type.Name}'");
             Assert.True(typeof(T).IsAssignableFrom(member.GetMemberType()), $"Member '{type.Name}.{member.Name}' must be of type '{typeof(T).Name}'");
             return member.GetValue<T>(instance);

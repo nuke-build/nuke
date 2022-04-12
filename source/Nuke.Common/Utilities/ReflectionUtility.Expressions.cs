@@ -32,5 +32,12 @@ namespace Nuke.Common.Utilities
                 : (MemberExpression) unaryExpression.Operand;
             return memberExpression.Member;
         }
+
+        public static object GetTarget(this LambdaExpression expression)
+        {
+            var memberExpression = expression.Body as MemberExpression;
+            var constantExpression = memberExpression?.Expression as ConstantExpression;
+            return constantExpression?.Value;
+        }
     }
 }

@@ -15,7 +15,7 @@ using Nuke.Components;
     PublishArtifacts = false,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" },
-    EnableGitHubContext = true)]
+    EnableGitHubToken = true)]
 partial class Build
 {
 }

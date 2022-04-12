@@ -18,6 +18,11 @@ namespace Nuke.Common.Utilities
             return type.DescendantsAndSelf(x => x.DeclaringType).Reverse().Select(x => x.GetDisplayShortName()).JoinDot();
         }
 
+        public static string GetDisplayName(this MemberInfo member)
+        {
+            return $"{member.DeclaringType.GetDisplayName()}.{member.GetDisplayShortName()}";
+        }
+
         public static string GetDisplayShortName(this Type type)
         {
             return type.GetDisplayShortName(tupleNames: null);

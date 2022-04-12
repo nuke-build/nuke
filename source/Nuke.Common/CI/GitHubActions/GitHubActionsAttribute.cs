@@ -59,13 +59,13 @@ namespace Nuke.Common.CI.GitHubActions
         public string OnCronSchedule { get; set; }
 
         public string[] ImportSecrets { get; set; } = new string[0];
+        public bool EnableGitHubToken { get; set; }
 
         public string[] CacheIncludePatterns { get; set; } = { ".nuke/temp", "~/.nuget/packages" };
         public string[] CacheExcludePatterns { get; set; } = new string[0];
         public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj" };
 
         public bool PublishArtifacts { get; set; } = true;
-        public bool EnableGitHubContext { get; set; }
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
@@ -87,9 +87,9 @@ namespace Nuke.Common.CI.GitHubActions
                                 };
 
             Assert.True(configuration.ShortTriggers.Length == 0 || configuration.DetailedTriggers.Length == 0,
-                $"Workflows can only define either shorthand '{On}' or '{On}*' triggers");
+                $"Workflows can only define either shorthand '{nameof(On)}' or '{nameof(On)}*' triggers");
             Assert.True(configuration.ShortTriggers.Length > 0 || configuration.DetailedTriggers.Length > 0,
-                "Workflows must define either shorthand '{On}' or '{On}*' triggers");
+                $"Workflows must define either shorthand '{nameof(On)}' or '{nameof(On)}*' triggers");
 
             return configuration;
         }
@@ -158,8 +158,8 @@ namespace Nuke.Common.CI.GitHubActions
             foreach (var secret in ImportSecrets)
                 yield return (secret, GetSecretValue(secret));
 
-            if (EnableGitHubContext)
-                yield return ("GITHUB_CONTEXT", "${{ toJSON(github) }}");
+            if (EnableGitHubToken)
+                yield return ("GITHUB_TOKEN", GetSecretValue("GITHUB_TOKEN"));
         }
 
         protected virtual IEnumerable<GitHubActionsDetailedTrigger> GetTriggers()

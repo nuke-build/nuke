@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Nuke.Common.CI;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
@@ -16,6 +17,9 @@ namespace Nuke.Common.Execution
     {
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
+            if (BuildServerConfigurationGeneration.IsActive)
+                return;
+
             if (IsLegacy(NukeBuild.RootDirectory))
             {
                 WriteCompletionFile(build);

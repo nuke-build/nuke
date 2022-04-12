@@ -2938,6 +2938,13 @@
             "help": "If a release by this name doesn't already exist, run an install."
           },
           {
+            "name": "CreateNamespace",
+            "type": "bool",
+            "format": "--create-namespace",
+            "secret": false,
+            "help": "If --install is set, create the release namespace if not present."
+          },
+          {
             "name": "KeyFile",
             "type": "string",
             "format": "--key-file {value}",

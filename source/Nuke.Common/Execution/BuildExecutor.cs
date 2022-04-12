@@ -117,12 +117,14 @@ namespace Nuke.Common.Execution
                 }
                 catch (Exception exception)
                 {
-                    build.ReportSummary(_ =>
-                        target.SummaryInformation.Any()
-                            ? target.SummaryInformation
-                            : _.AddPair(exception.GetType().Name, exception.Message.SplitLineBreaks().First()));
+                    if (!target.SummaryInformation.Any())
+                    {
+                        build.ReportSummary(
+                            target,
+                            _ => _.AddPair(exception.GetType().Name, exception.Message.SplitLineBreaks().First()));
+                    }
 
-                    Log.Error(exception, "Target {TargetName} failed", target.Name);
+                    Log.Error(exception, "Running target {TargetName} failed", target.Name);
 
                     target.Stopwatch.Stop();
                     target.Status = ExecutionStatus.Failed;
