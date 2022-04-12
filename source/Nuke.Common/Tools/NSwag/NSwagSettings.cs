@@ -17,9 +17,9 @@ namespace Nuke.Common.Tools.NSwag
     public class NSwagSettings : ToolSettings
     {
         /// <summary>The runtime of the nswag tool to use.</summary>
-        public string NSwagRuntime { get; set; } = NSwagTasks.Runtime.Win.ToString();
+        public string NSwagRuntime { get; set; } = NSwagTasks.Runtime.Net60.ToString();
 
-        private bool IsNetCore => NSwagRuntime != null && NSwagRuntime.StartsWith("NetCore", StringComparison.OrdinalIgnoreCase);
+        private bool IsNetCore => NSwagRuntime != null && NSwagRuntime.StartsWith("Net", StringComparison.OrdinalIgnoreCase);
 
         public override Action<OutputType, string> ProcessCustomLogger { get; }
 

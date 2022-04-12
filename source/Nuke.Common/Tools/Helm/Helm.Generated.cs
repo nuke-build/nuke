@@ -2735,6 +2735,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--atomic</c> via <see cref="HelmUpgradeSettings.Atomic"/></li>
         ///     <li><c>--ca-file</c> via <see cref="HelmUpgradeSettings.CaFile"/></li>
         ///     <li><c>--cert-file</c> via <see cref="HelmUpgradeSettings.CertFile"/></li>
+        ///     <li><c>--create-namespace</c> via <see cref="HelmUpgradeSettings.CreateNamespace"/></li>
         ///     <li><c>--description</c> via <see cref="HelmUpgradeSettings.Description"/></li>
         ///     <li><c>--devel</c> via <see cref="HelmUpgradeSettings.Devel"/></li>
         ///     <li><c>--dry-run</c> via <see cref="HelmUpgradeSettings.DryRun"/></li>
@@ -2787,6 +2788,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--atomic</c> via <see cref="HelmUpgradeSettings.Atomic"/></li>
         ///     <li><c>--ca-file</c> via <see cref="HelmUpgradeSettings.CaFile"/></li>
         ///     <li><c>--cert-file</c> via <see cref="HelmUpgradeSettings.CertFile"/></li>
+        ///     <li><c>--create-namespace</c> via <see cref="HelmUpgradeSettings.CreateNamespace"/></li>
         ///     <li><c>--description</c> via <see cref="HelmUpgradeSettings.Description"/></li>
         ///     <li><c>--devel</c> via <see cref="HelmUpgradeSettings.Devel"/></li>
         ///     <li><c>--dry-run</c> via <see cref="HelmUpgradeSettings.DryRun"/></li>
@@ -2836,6 +2838,7 @@ namespace Nuke.Common.Tools.Helm
         ///     <li><c>--atomic</c> via <see cref="HelmUpgradeSettings.Atomic"/></li>
         ///     <li><c>--ca-file</c> via <see cref="HelmUpgradeSettings.CaFile"/></li>
         ///     <li><c>--cert-file</c> via <see cref="HelmUpgradeSettings.CertFile"/></li>
+        ///     <li><c>--create-namespace</c> via <see cref="HelmUpgradeSettings.CreateNamespace"/></li>
         ///     <li><c>--description</c> via <see cref="HelmUpgradeSettings.Description"/></li>
         ///     <li><c>--devel</c> via <see cref="HelmUpgradeSettings.Devel"/></li>
         ///     <li><c>--dry-run</c> via <see cref="HelmUpgradeSettings.DryRun"/></li>
@@ -5657,6 +5660,10 @@ namespace Nuke.Common.Tools.Helm
         /// </summary>
         public virtual bool? Install { get; internal set; }
         /// <summary>
+        ///   If --install is set, create the release namespace if not present.
+        /// </summary>
+        public virtual bool? CreateNamespace { get; internal set; }
+        /// <summary>
         ///   Identify HTTPS client using this SSL key file.
         /// </summary>
         public virtual string KeyFile { get; internal set; }
@@ -5781,6 +5788,7 @@ namespace Nuke.Common.Tools.Helm
               .Add("--force", Force)
               .Add("--help", Help)
               .Add("--install", Install)
+              .Add("--create-namespace", CreateNamespace)
               .Add("--key-file {value}", KeyFile)
               .Add("--keyring {value}", Keyring)
               .Add("--namespace {value}", Namespace)
@@ -20433,6 +20441,63 @@ namespace Nuke.Common.Tools.Helm
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Install = !toolSettings.Install;
+            return toolSettings;
+        }
+        #endregion
+        #region CreateNamespace
+        /// <summary>
+        ///   <p><em>Sets <see cref="HelmUpgradeSettings.CreateNamespace"/></em></p>
+        ///   <p>If --install is set, create the release namespace if not present.</p>
+        /// </summary>
+        [Pure]
+        public static T SetCreateNamespace<T>(this T toolSettings, bool? createNamespace) where T : HelmUpgradeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateNamespace = createNamespace;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="HelmUpgradeSettings.CreateNamespace"/></em></p>
+        ///   <p>If --install is set, create the release namespace if not present.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetCreateNamespace<T>(this T toolSettings) where T : HelmUpgradeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateNamespace = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="HelmUpgradeSettings.CreateNamespace"/></em></p>
+        ///   <p>If --install is set, create the release namespace if not present.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableCreateNamespace<T>(this T toolSettings) where T : HelmUpgradeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateNamespace = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="HelmUpgradeSettings.CreateNamespace"/></em></p>
+        ///   <p>If --install is set, create the release namespace if not present.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableCreateNamespace<T>(this T toolSettings) where T : HelmUpgradeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateNamespace = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="HelmUpgradeSettings.CreateNamespace"/></em></p>
+        ///   <p>If --install is set, create the release namespace if not present.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleCreateNamespace<T>(this T toolSettings) where T : HelmUpgradeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.CreateNamespace = !toolSettings.CreateNamespace;
             return toolSettings;
         }
         #endregion

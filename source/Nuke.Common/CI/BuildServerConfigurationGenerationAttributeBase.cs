@@ -12,8 +12,6 @@ namespace Nuke.Common.CI
 {
     public class BuildServerConfigurationGenerationAttributeBase : BuildExtensionAttributeBase
     {
-        public const string ConfigurationParameterName = "generate-configuration";
-
         protected static IEnumerable<IConfigurationGenerator> GetGenerators(NukeBuild build)
         {
             return build.GetType().GetCustomAttributes<ConfigurationAttributeBase>();

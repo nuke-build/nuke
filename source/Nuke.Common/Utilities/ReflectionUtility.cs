@@ -185,6 +185,12 @@ namespace Nuke.Common.Utilities
                     }
                 }
 
+                // if (filterQuasiOverridden && classMember != null && classMember.IsPublic())
+                // {
+                //     removeMembers.AddRange(interfaceMembers);
+                //     continue;
+                // }
+
                 Assert.True(allowAmbiguity || interfaceMembers.Count() == 1 || classMember != null,
                     new[] { $"{memberType} '{memberName}' must be implemented explicitly because it is inherited from multiple interfaces:" }
                         .Concat(interfaceMembers.Select(x => $" - {x.DeclaringType.NotNull().Name}"))

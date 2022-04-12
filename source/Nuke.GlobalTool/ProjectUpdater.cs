@@ -29,7 +29,7 @@ namespace Nuke.GlobalTool
 
         private static void UpdateTargetFramework(Microsoft.Build.Evaluation.Project buildProject)
         {
-            buildProject.SetProperty("TargetFramework", "net5.0");
+            buildProject.SetProperty("TargetFramework", "net6.0");
         }
 
         private static void UpdateNukeCommonPackage(Microsoft.Build.Evaluation.Project buildProject, out FloatRange previousPackageVersion)

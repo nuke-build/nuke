@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
+using Nuke.Common.CI;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
@@ -21,8 +22,6 @@ namespace Nuke.Common.Execution
     [PublicAPI]
     public class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        private bool GenerationMode { get; } = EnvironmentInfo.GetParameter<string>(ConfigurationParameterName) != null;
-
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             // TODO: probably remove
@@ -34,12 +33,14 @@ namespace Nuke.Common.Execution
 
             IEnumerable<string> ConvertToArguments(string profile, string name, string[] values)
             {
-                var member = parameterMembers.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(name));
+                var member = parameterMembers.SingleOrDefault(x => ParameterService.GetParameterMemberName(x).EqualsOrdinalIgnoreCase(name));
                 var scalarType = member?.GetMemberType().GetScalarType();
-                var mustDecrypt = (member?.HasCustomAttribute<SecretAttribute>() ?? false) && !GenerationMode;
+                var mustDecrypt = (member?.HasCustomAttribute<SecretAttribute>() ?? false) && !BuildServerConfigurationGeneration.IsActive;
                 var decryptedValues = values.Select(x => mustDecrypt ? DecryptValue(profile, name, x) : x);
-                var convertedValues = decryptedValues.Select(x => ConvertValue(scalarType, x));
-                Log.Verbose("Passing {PropertyName} for member {MemberName} ...", name, member?.GetDisplayText());
+                var convertedValues = decryptedValues.Select(x => ConvertValue(scalarType, x)).ToList();
+                Log.Verbose("Passing value for {Member} ({Value})",
+                    member?.GetDisplayName() ?? "<unresolved>",
+                    !mustDecrypt ? convertedValues.JoinComma() : "secret");
                 return new[] { $"--{ParameterService.GetParameterDashedName(name)}" }.Concat(convertedValues);
             }
 

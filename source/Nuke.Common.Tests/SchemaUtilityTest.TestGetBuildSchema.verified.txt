@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "Build Schema",
   "$ref": "#/definitions/build",
@@ -71,7 +71,7 @@
         },
         "Secret": {
           "type": "string",
-          "default": "Secrets must be entered via 'nuke :secret [profile]'"
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
         "Skip": {
           "type": "array",

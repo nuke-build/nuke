@@ -72,7 +72,10 @@ namespace Nuke.Common.Execution
             catch (Exception exception)
             {
                 if (exception is not TargetExecutionException)
-                    Log.Error(exception, "Unhandled exception: {Message}", exception.Message);
+                {
+                    Log.Verbose(exception, "Target-unrelated exception occurred");
+                    Host.Error(exception.Message);
+                }
 
                 return build.ExitCode ??= ErrorExitCode;
             }
