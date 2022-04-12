@@ -106,7 +106,9 @@ namespace Nuke.Common.Execution
                     string.Empty
                 }.JoinNewLine();
 
-            if (action != null)
+            if (action != null &&
+                Environment.UserInteractive &&
+                !Console.IsInputRedirected)
             {
                 Host.Information(disclosure);
                 Thread.Sleep(2000);
@@ -116,6 +118,7 @@ namespace Nuke.Common.Execution
             else
             {
                 Host.Warning(disclosure);
+                Host.Warning("Run in interactive console to fix this warning");
             }
         }
 
