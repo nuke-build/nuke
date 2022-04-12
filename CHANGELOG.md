@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [6.0.2] / 2022-04-13
 - Fixed `Update` command to use `net6.0`
 - Fixed handling of common errors
 - Fixed assertion messages to only include argument expression when message is `null`
@@ -902,7 +904,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.0.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.0.2...HEAD
+[6.0.2]: https://github.com/nuke-build/nuke/compare/6.0.1...6.0.2
 [6.0.1]: https://github.com/nuke-build/nuke/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/nuke-build/nuke/compare/5.3.0...6.0.0
 [5.3.0]: https://github.com/nuke-build/nuke/compare/5.2.1...5.3.0
