@@ -120,7 +120,7 @@ namespace Nuke.Common.Tooling
                             .Concat(
                                 new[]
                                 {
-                                    EmbeddedPackagesDirectory == null
+                                    EmbeddedPackagesDirectory != null
                                         ? $"Embedded packages directory at '{EmbeddedPackagesDirectory}'"
                                         : null,
                                     NuGetAssetsConfigFile != null
@@ -136,7 +136,7 @@ namespace Nuke.Common.Tooling
             }
             catch (Exception exception)
             {
-                if (!NuGetPackagesConfigFile.EndsWithOrdinalIgnoreCase(".csproj"))
+                if (NuGetPackagesConfigFile != null && !NuGetPackagesConfigFile.EndsWithOrdinalIgnoreCase(".csproj"))
                     throw;
 
                 var packageCombinations =
