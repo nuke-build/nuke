@@ -23,11 +23,11 @@ namespace Nuke.Common.Execution
         // https://docs.microsoft.com/en-us/azure/azure-monitor/app/console
         // https://docs.microsoft.com/en-us/azure/azure-monitor/app/ip-collection
 
+        public const string OptOutEnvironmentKey = "NUKE_TELEMETRY_OPTOUT";
         public const int CurrentVersion = 1;
 
         // private const string InstrumentationKey = "310c87d7-60e1-48c1-b452-19e8f4801fba";
         private const string InstrumentationKey = "4b987be9-f807-4846-b777-4291f3a5ad8b";
-        private const string OptOutEnvironmentKey = "NUKE_TELEMETRY_OPTOUT";
         private const string VersionPropertyName = "NukeTelemetryVersion";
 
         private static readonly TelemetryClient s_client;
@@ -109,7 +109,9 @@ namespace Nuke.Common.Execution
                     string.Empty
                 }.JoinNewLine();
 
-            if (action != null)
+            if (action != null &&
+                Environment.UserInteractive &&
+                !Console.IsInputRedirected)
             {
                 Host.Information(disclosure);
                 Thread.Sleep(2000);
@@ -119,6 +121,7 @@ namespace Nuke.Common.Execution
             else
             {
                 Host.Warning(disclosure);
+                Host.Warning("Run in interactive console to fix this warning");
             }
         }
 

@@ -14,7 +14,7 @@ namespace Nuke.SourceGenerators.Tests
         public static void Initialize()
         {
             Environment.SetEnvironmentVariable("DiffEngine_Disabled", "true");
-            VerifierSettings.DisableClipboard();
+            Environment.SetEnvironmentVariable("Verify_DisableClipboard", "true");
             VerifyDiffPlex.Initialize();
             VerifySourceGenerators.Enable();
         }

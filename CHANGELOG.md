@@ -8,6 +8,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added GitHub Actions support for submodules and fetch-depth
 - Added AppVeyor support for submodules
 
+## [6.0.2] / 2022-04-13
+- Fixed `Update` command to use `net6.0`
+- Fixed handling of common errors
+- Fixed assertion messages to only include argument expression when message is `null`
+- Fixed log file pattern to use `-` instead of `:` for time
+- Fixed padding of target names in logging
+- Fixed logging to use `ExecutingTarget` instead of `Target` to reduce clashing
+- Fixed concurrent writing of shell-completion files
+- Fixed telemetry to check for interactive console
+- Fixed passing build instance for value injection in components
+- Fixed `ValueInjectionAttributeBase.GetMemberValue` to consider members from components
+- Fixed resolution of members from parameter files
+- Fixed reporting of exceptions in summary when not thrown from targets
+- Fixed naming for .NET SDK in bootstrapping scripts
+- Fixed GitHub Actions to use `GITHUB_TOKEN` instead of `GITHUB_CONTEXT`
+- Fixed GitHub Actions assertion messages
+- Fixed missing output types for `ReportGeneratorTasks`
+- Fixed missing arguments for `HelmTasks`
+- Fixed missing arguments for `SonarScannerTasks`
+- Fixed missing command for `KubernetesTasks`
+- Fixed path resolution in `PowerShellTasks` to use PowerShell Core on non-Windows systems
+- Fixed missing runtime types in `NSwagTasks`
+
 ## [6.0.1] / 2022-01-10
 - Fixed invisible output for `SystemConsoleHostTheme`
 - Fixed `GetRelativePath` for same parts in different places
@@ -883,7 +906,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.0.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.0.2...HEAD
+[6.0.2]: https://github.com/nuke-build/nuke/compare/6.0.1...6.0.2
 [6.0.1]: https://github.com/nuke-build/nuke/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/nuke-build/nuke/compare/5.3.0...6.0.0
 [5.3.0]: https://github.com/nuke-build/nuke/compare/5.2.1...5.3.0

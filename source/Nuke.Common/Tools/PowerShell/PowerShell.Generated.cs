@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.PowerShell
         /// </summary>
         public static string PowerShellPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("POWERSHELL_EXE") ??
-            ToolPathResolver.GetPathExecutable("powershell");
+            GetToolPath();
         public static Action<OutputType, string> PowerShellLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
@@ -152,7 +152,7 @@ namespace Nuke.Common.Tools.PowerShell
         /// <summary>
         ///   Path to the PowerShell executable.
         /// </summary>
-        public override string ProcessToolPath => base.ProcessToolPath ?? PowerShellTasks.PowerShellPath;
+        public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
         public override Action<OutputType, string> ProcessCustomLogger => PowerShellTasks.PowerShellLogger;
         /// <summary>
         ///   Loads the specified PowerShell console file. Enter the path and name of the console file. To create a console file, use the Export-Console cmdlet in PowerShell.

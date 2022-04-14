@@ -11,7 +11,7 @@ namespace Nuke.Common
 {
     public partial class Host
     {
-        private const string SevereMessagesOutputTemplate = "[{Level:u3}] {Target}: {Message:l}{NewLine}";
+        private const string SevereMessagesOutputTemplate = "[{Level:u3}] {ExecutingTarget}: {Message:l}{NewLine}";
 
         internal static IHostTheme DefaultTheme { get; } =
             Environment.GetEnvironmentVariable("TERM") is { } term && term.StartsWithOrdinalIgnoreCase("xterm")

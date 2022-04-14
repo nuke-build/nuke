@@ -50,7 +50,11 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>/d</c> via <see cref="SonarScannerBeginSettings.AdditionalParameters"/></li>
+        ///     <li><c>/d:sonar.analysis.</c> via <see cref="SonarScannerBeginSettings.AdditionalAnalysisParameters"/></li>
         ///     <li><c>/d:sonar.branch.name</c> via <see cref="SonarScannerBeginSettings.BranchName"/></li>
+        ///     <li><c>/d:sonar.clientcert.password</c> via <see cref="SonarScannerBeginSettings.ClientCertificatePassword"/></li>
+        ///     <li><c>/d:sonar.clientcert.path</c> via <see cref="SonarScannerBeginSettings.ClientCertificatePath"/></li>
         ///     <li><c>/d:sonar.coverage.exclusions</c> via <see cref="SonarScannerBeginSettings.CoverageExclusions"/></li>
         ///     <li><c>/d:sonar.coverageReportPaths</c> via <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cpd.exclusions</c> via <see cref="SonarScannerBeginSettings.DuplicationExclusions"/></li>
@@ -60,6 +64,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.cs.vscoveragexml.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cs.vstest.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VSTestReports"/></li>
         ///     <li><c>/d:sonar.cs.xunit.reportsPaths</c> via <see cref="SonarScannerBeginSettings.XUnitTestReports"/></li>
+        ///     <li><c>/d:sonar.dotnet.excludeTestProjects</c> via <see cref="SonarScannerBeginSettings.ExcludeTestProjects"/></li>
         ///     <li><c>/d:sonar.exclusions</c> via <see cref="SonarScannerBeginSettings.SourceExclusions"/></li>
         ///     <li><c>/d:sonar.host.url</c> via <see cref="SonarScannerBeginSettings.Server"/></li>
         ///     <li><c>/d:sonar.inclusions</c> via <see cref="SonarScannerBeginSettings.SourceInclusions"/></li>
@@ -73,6 +78,12 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.pullrequest.base</c> via <see cref="SonarScannerBeginSettings.PullRequestBase"/></li>
         ///     <li><c>/d:sonar.pullrequest.branch</c> via <see cref="SonarScannerBeginSettings.PullRequestBranch"/></li>
         ///     <li><c>/d:sonar.pullrequest.key</c> via <see cref="SonarScannerBeginSettings.PullRequestKey"/></li>
+        ///     <li><c>/d:sonar.qualitygate.timeout</c> via <see cref="SonarScannerBeginSettings.QualityGateTimeout"/></li>
+        ///     <li><c>/d:sonar.qualitygate.wait</c> via <see cref="SonarScannerBeginSettings.QualityGateWait"/></li>
+        ///     <li><c>/d:sonar.scm.exclusions.disabled</c> via <see cref="SonarScannerBeginSettings.ScmExclusionsDisabled"/></li>
+        ///     <li><c>/d:sonar.scm.forceReloadAll</c> via <see cref="SonarScannerBeginSettings.ScmForceReloadAll"/></li>
+        ///     <li><c>/d:sonar.scm.provider</c> via <see cref="SonarScannerBeginSettings.ScmProvider"/></li>
+        ///     <li><c>/d:sonar.scm.revision</c> via <see cref="SonarScannerBeginSettings.ScmRevision"/></li>
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
         ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
         ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
@@ -98,7 +109,11 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>/d</c> via <see cref="SonarScannerBeginSettings.AdditionalParameters"/></li>
+        ///     <li><c>/d:sonar.analysis.</c> via <see cref="SonarScannerBeginSettings.AdditionalAnalysisParameters"/></li>
         ///     <li><c>/d:sonar.branch.name</c> via <see cref="SonarScannerBeginSettings.BranchName"/></li>
+        ///     <li><c>/d:sonar.clientcert.password</c> via <see cref="SonarScannerBeginSettings.ClientCertificatePassword"/></li>
+        ///     <li><c>/d:sonar.clientcert.path</c> via <see cref="SonarScannerBeginSettings.ClientCertificatePath"/></li>
         ///     <li><c>/d:sonar.coverage.exclusions</c> via <see cref="SonarScannerBeginSettings.CoverageExclusions"/></li>
         ///     <li><c>/d:sonar.coverageReportPaths</c> via <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cpd.exclusions</c> via <see cref="SonarScannerBeginSettings.DuplicationExclusions"/></li>
@@ -108,6 +123,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.cs.vscoveragexml.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cs.vstest.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VSTestReports"/></li>
         ///     <li><c>/d:sonar.cs.xunit.reportsPaths</c> via <see cref="SonarScannerBeginSettings.XUnitTestReports"/></li>
+        ///     <li><c>/d:sonar.dotnet.excludeTestProjects</c> via <see cref="SonarScannerBeginSettings.ExcludeTestProjects"/></li>
         ///     <li><c>/d:sonar.exclusions</c> via <see cref="SonarScannerBeginSettings.SourceExclusions"/></li>
         ///     <li><c>/d:sonar.host.url</c> via <see cref="SonarScannerBeginSettings.Server"/></li>
         ///     <li><c>/d:sonar.inclusions</c> via <see cref="SonarScannerBeginSettings.SourceInclusions"/></li>
@@ -121,6 +137,12 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.pullrequest.base</c> via <see cref="SonarScannerBeginSettings.PullRequestBase"/></li>
         ///     <li><c>/d:sonar.pullrequest.branch</c> via <see cref="SonarScannerBeginSettings.PullRequestBranch"/></li>
         ///     <li><c>/d:sonar.pullrequest.key</c> via <see cref="SonarScannerBeginSettings.PullRequestKey"/></li>
+        ///     <li><c>/d:sonar.qualitygate.timeout</c> via <see cref="SonarScannerBeginSettings.QualityGateTimeout"/></li>
+        ///     <li><c>/d:sonar.qualitygate.wait</c> via <see cref="SonarScannerBeginSettings.QualityGateWait"/></li>
+        ///     <li><c>/d:sonar.scm.exclusions.disabled</c> via <see cref="SonarScannerBeginSettings.ScmExclusionsDisabled"/></li>
+        ///     <li><c>/d:sonar.scm.forceReloadAll</c> via <see cref="SonarScannerBeginSettings.ScmForceReloadAll"/></li>
+        ///     <li><c>/d:sonar.scm.provider</c> via <see cref="SonarScannerBeginSettings.ScmProvider"/></li>
+        ///     <li><c>/d:sonar.scm.revision</c> via <see cref="SonarScannerBeginSettings.ScmRevision"/></li>
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
         ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
         ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
@@ -143,7 +165,11 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>/d</c> via <see cref="SonarScannerBeginSettings.AdditionalParameters"/></li>
+        ///     <li><c>/d:sonar.analysis.</c> via <see cref="SonarScannerBeginSettings.AdditionalAnalysisParameters"/></li>
         ///     <li><c>/d:sonar.branch.name</c> via <see cref="SonarScannerBeginSettings.BranchName"/></li>
+        ///     <li><c>/d:sonar.clientcert.password</c> via <see cref="SonarScannerBeginSettings.ClientCertificatePassword"/></li>
+        ///     <li><c>/d:sonar.clientcert.path</c> via <see cref="SonarScannerBeginSettings.ClientCertificatePath"/></li>
         ///     <li><c>/d:sonar.coverage.exclusions</c> via <see cref="SonarScannerBeginSettings.CoverageExclusions"/></li>
         ///     <li><c>/d:sonar.coverageReportPaths</c> via <see cref="SonarScannerBeginSettings.GenericCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cpd.exclusions</c> via <see cref="SonarScannerBeginSettings.DuplicationExclusions"/></li>
@@ -153,6 +179,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.cs.vscoveragexml.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VisualStudioCoveragePaths"/></li>
         ///     <li><c>/d:sonar.cs.vstest.reportsPaths</c> via <see cref="SonarScannerBeginSettings.VSTestReports"/></li>
         ///     <li><c>/d:sonar.cs.xunit.reportsPaths</c> via <see cref="SonarScannerBeginSettings.XUnitTestReports"/></li>
+        ///     <li><c>/d:sonar.dotnet.excludeTestProjects</c> via <see cref="SonarScannerBeginSettings.ExcludeTestProjects"/></li>
         ///     <li><c>/d:sonar.exclusions</c> via <see cref="SonarScannerBeginSettings.SourceExclusions"/></li>
         ///     <li><c>/d:sonar.host.url</c> via <see cref="SonarScannerBeginSettings.Server"/></li>
         ///     <li><c>/d:sonar.inclusions</c> via <see cref="SonarScannerBeginSettings.SourceInclusions"/></li>
@@ -166,6 +193,12 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.pullrequest.base</c> via <see cref="SonarScannerBeginSettings.PullRequestBase"/></li>
         ///     <li><c>/d:sonar.pullrequest.branch</c> via <see cref="SonarScannerBeginSettings.PullRequestBranch"/></li>
         ///     <li><c>/d:sonar.pullrequest.key</c> via <see cref="SonarScannerBeginSettings.PullRequestKey"/></li>
+        ///     <li><c>/d:sonar.qualitygate.timeout</c> via <see cref="SonarScannerBeginSettings.QualityGateTimeout"/></li>
+        ///     <li><c>/d:sonar.qualitygate.wait</c> via <see cref="SonarScannerBeginSettings.QualityGateWait"/></li>
+        ///     <li><c>/d:sonar.scm.exclusions.disabled</c> via <see cref="SonarScannerBeginSettings.ScmExclusionsDisabled"/></li>
+        ///     <li><c>/d:sonar.scm.forceReloadAll</c> via <see cref="SonarScannerBeginSettings.ScmForceReloadAll"/></li>
+        ///     <li><c>/d:sonar.scm.provider</c> via <see cref="SonarScannerBeginSettings.ScmProvider"/></li>
+        ///     <li><c>/d:sonar.scm.revision</c> via <see cref="SonarScannerBeginSettings.ScmRevision"/></li>
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
         ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
         ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
@@ -188,6 +221,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>/d:sonar.clientcert.password</c> via <see cref="SonarScannerEndSettings.ClientCertificatePassword"/></li>
         ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerEndSettings.Login"/></li>
         ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerEndSettings.Password"/></li>
         ///   </ul>
@@ -206,6 +240,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>/d:sonar.clientcert.password</c> via <see cref="SonarScannerEndSettings.ClientCertificatePassword"/></li>
         ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerEndSettings.Login"/></li>
         ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerEndSettings.Password"/></li>
         ///   </ul>
@@ -221,6 +256,7 @@ namespace Nuke.Common.Tools.SonarScanner
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>/d:sonar.clientcert.password</c> via <see cref="SonarScannerEndSettings.ClientCertificatePassword"/></li>
         ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerEndSettings.Login"/></li>
         ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerEndSettings.Password"/></li>
         ///   </ul>
@@ -385,6 +421,52 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   The branch into which the Pull Request will be merged. Default: <c>master</c>. e.g.: <c>sonar.pullrequest.base=master</c>
         /// </summary>
         public virtual string PullRequestBase { get; internal set; }
+        /// <summary>
+        ///   Excludes Test Projects from analysis. Add this argument to improve build performance when issues should not be detected in Test Projects.
+        /// </summary>
+        public virtual bool? ExcludeTestProjects { get; internal set; }
+        /// <summary>
+        ///   This property can be used to explicitly tell SonarQube which SCM you're using on the project (in case auto-detection doesn't work). The value of this property is always lowercase and depends on the SCM (ex. "git" if you're using Git).
+        /// </summary>
+        public virtual string ScmProvider { get; internal set; }
+        /// <summary>
+        ///   By default, blame information is only retrieved for changed files. Set this property to true to load blame information for all files. This can be useful is you feel that some SCM data is outdated but SonarQube does not get the latest information from the SCM engine.
+        /// </summary>
+        public virtual bool? ScmForceReloadAll { get; internal set; }
+        /// <summary>
+        ///   For supported engines, files ignored by the SCM, i.e. files listed in .gitignore, will automatically be ignored by analysis too. Set this property to true to disable that feature. SCM exclusions are always disabled if sonar.scm.disabled is set to true.
+        /// </summary>
+        public virtual bool? ScmExclusionsDisabled { get; internal set; }
+        /// <summary>
+        ///   Overrides the revision, for instance the Git sha1, displayed in analysis results. By default value is provided by the CI environment or guessed by the checked-out sources.
+        /// </summary>
+        public virtual string ScmRevision { get; internal set; }
+        /// <summary>
+        ///   Forces the analysis step to poll the SonarQube instance and wait for the Quality Gate status. If there are no other options, you can use this to fail a pipeline build when the Quality Gate is failing.
+        /// </summary>
+        public virtual bool? QualityGateWait { get; internal set; }
+        /// <summary>
+        ///   Sets the number of seconds that the scanner should wait for a report to be processed. Default: <c>300</c>. e.g.: <c>sonar.qualitygate.timeout=300</c>
+        /// </summary>
+        public virtual int? QualityGateTimeout { get; internal set; }
+        /// <summary>
+        ///   This property stub allows you to insert custom key/value pairs into the analysis context, which will also be passed forward to webhooks.
+        /// </summary>
+        public virtual IReadOnlyDictionary<string, string> AdditionalAnalysisParameters => AdditionalAnalysisParametersInternal.AsReadOnly();
+        internal Dictionary<string, string> AdditionalAnalysisParametersInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        /// <summary>
+        ///   Specifies an additional SonarQube analysis parameter, you can add this argument multiple times.
+        /// </summary>
+        public virtual IReadOnlyDictionary<string, string> AdditionalParameters => AdditionalParametersInternal.AsReadOnly();
+        internal Dictionary<string, string> AdditionalParametersInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        /// <summary>
+        ///   Specifies the path to a client certificate used to access SonarQube. The certificate must be password protected.
+        /// </summary>
+        public virtual string ClientCertificatePath { get; internal set; }
+        /// <summary>
+        ///   Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used.
+        /// </summary>
+        public virtual string ClientCertificatePassword { get; internal set; }
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -421,7 +503,18 @@ namespace Nuke.Common.Tools.SonarScanner
               .Add("/d:sonar.branch.name={value}", BranchName)
               .Add("/d:sonar.pullrequest.key={value}", PullRequestKey)
               .Add("/d:sonar.pullrequest.branch={value}", PullRequestBranch)
-              .Add("/d:sonar.pullrequest.base={value}", PullRequestBase);
+              .Add("/d:sonar.pullrequest.base={value}", PullRequestBase)
+              .Add("/d:sonar.dotnet.excludeTestProjects={value}", ExcludeTestProjects)
+              .Add("/d:sonar.scm.provider={value}", ScmProvider)
+              .Add("/d:sonar.scm.forceReloadAll={value}", ScmForceReloadAll)
+              .Add("/d:sonar.scm.exclusions.disabled={value}", ScmExclusionsDisabled)
+              .Add("/d:sonar.scm.revision={value}", ScmRevision)
+              .Add("/d:sonar.qualitygate.wait={value}", QualityGateWait)
+              .Add("/d:sonar.qualitygate.timeout={value}", QualityGateTimeout)
+              .Add("/d:sonar.analysis.{value}", AdditionalAnalysisParameters, "{key}={value}")
+              .Add("/d:{value}", AdditionalParameters, "{key}={value}")
+              .Add("/d:sonar.clientcert.path={value}", ClientCertificatePath)
+              .Add("/d:sonar.clientcert.password={value}", ClientCertificatePassword);
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -448,13 +541,18 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
         public virtual string Password { get; internal set; }
+        /// <summary>
+        ///   Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used.
+        /// </summary>
+        public virtual string ClientCertificatePassword { get; internal set; }
         public virtual string Framework { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
               .Add("end")
               .Add("/d:sonar.login={value}", Login, secret: true)
-              .Add("/d:sonar.password={value}", Password, secret: true);
+              .Add("/d:sonar.password={value}", Password, secret: true)
+              .Add("/d:sonar.clientcert.password={value}", ClientCertificatePassword);
             return base.ConfigureProcessArguments(arguments);
         }
     }
@@ -2009,6 +2107,468 @@ namespace Nuke.Common.Tools.SonarScanner
             return toolSettings;
         }
         #endregion
+        #region ExcludeTestProjects
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.ExcludeTestProjects"/></em></p>
+        ///   <p>Excludes Test Projects from analysis. Add this argument to improve build performance when issues should not be detected in Test Projects.</p>
+        /// </summary>
+        [Pure]
+        public static T SetExcludeTestProjects<T>(this T toolSettings, bool? excludeTestProjects) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeTestProjects = excludeTestProjects;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.ExcludeTestProjects"/></em></p>
+        ///   <p>Excludes Test Projects from analysis. Add this argument to improve build performance when issues should not be detected in Test Projects.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetExcludeTestProjects<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeTestProjects = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="SonarScannerBeginSettings.ExcludeTestProjects"/></em></p>
+        ///   <p>Excludes Test Projects from analysis. Add this argument to improve build performance when issues should not be detected in Test Projects.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableExcludeTestProjects<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeTestProjects = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="SonarScannerBeginSettings.ExcludeTestProjects"/></em></p>
+        ///   <p>Excludes Test Projects from analysis. Add this argument to improve build performance when issues should not be detected in Test Projects.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableExcludeTestProjects<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeTestProjects = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SonarScannerBeginSettings.ExcludeTestProjects"/></em></p>
+        ///   <p>Excludes Test Projects from analysis. Add this argument to improve build performance when issues should not be detected in Test Projects.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleExcludeTestProjects<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ExcludeTestProjects = !toolSettings.ExcludeTestProjects;
+            return toolSettings;
+        }
+        #endregion
+        #region ScmProvider
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.ScmProvider"/></em></p>
+        ///   <p>This property can be used to explicitly tell SonarQube which SCM you're using on the project (in case auto-detection doesn't work). The value of this property is always lowercase and depends on the SCM (ex. "git" if you're using Git).</p>
+        /// </summary>
+        [Pure]
+        public static T SetScmProvider<T>(this T toolSettings, string scmProvider) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmProvider = scmProvider;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.ScmProvider"/></em></p>
+        ///   <p>This property can be used to explicitly tell SonarQube which SCM you're using on the project (in case auto-detection doesn't work). The value of this property is always lowercase and depends on the SCM (ex. "git" if you're using Git).</p>
+        /// </summary>
+        [Pure]
+        public static T ResetScmProvider<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmProvider = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ScmForceReloadAll
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.ScmForceReloadAll"/></em></p>
+        ///   <p>By default, blame information is only retrieved for changed files. Set this property to true to load blame information for all files. This can be useful is you feel that some SCM data is outdated but SonarQube does not get the latest information from the SCM engine.</p>
+        /// </summary>
+        [Pure]
+        public static T SetScmForceReloadAll<T>(this T toolSettings, bool? scmForceReloadAll) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmForceReloadAll = scmForceReloadAll;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.ScmForceReloadAll"/></em></p>
+        ///   <p>By default, blame information is only retrieved for changed files. Set this property to true to load blame information for all files. This can be useful is you feel that some SCM data is outdated but SonarQube does not get the latest information from the SCM engine.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetScmForceReloadAll<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmForceReloadAll = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="SonarScannerBeginSettings.ScmForceReloadAll"/></em></p>
+        ///   <p>By default, blame information is only retrieved for changed files. Set this property to true to load blame information for all files. This can be useful is you feel that some SCM data is outdated but SonarQube does not get the latest information from the SCM engine.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableScmForceReloadAll<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmForceReloadAll = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="SonarScannerBeginSettings.ScmForceReloadAll"/></em></p>
+        ///   <p>By default, blame information is only retrieved for changed files. Set this property to true to load blame information for all files. This can be useful is you feel that some SCM data is outdated but SonarQube does not get the latest information from the SCM engine.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableScmForceReloadAll<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmForceReloadAll = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SonarScannerBeginSettings.ScmForceReloadAll"/></em></p>
+        ///   <p>By default, blame information is only retrieved for changed files. Set this property to true to load blame information for all files. This can be useful is you feel that some SCM data is outdated but SonarQube does not get the latest information from the SCM engine.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleScmForceReloadAll<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmForceReloadAll = !toolSettings.ScmForceReloadAll;
+            return toolSettings;
+        }
+        #endregion
+        #region ScmExclusionsDisabled
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.ScmExclusionsDisabled"/></em></p>
+        ///   <p>For supported engines, files ignored by the SCM, i.e. files listed in .gitignore, will automatically be ignored by analysis too. Set this property to true to disable that feature. SCM exclusions are always disabled if sonar.scm.disabled is set to true.</p>
+        /// </summary>
+        [Pure]
+        public static T SetScmExclusionsDisabled<T>(this T toolSettings, bool? scmExclusionsDisabled) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmExclusionsDisabled = scmExclusionsDisabled;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.ScmExclusionsDisabled"/></em></p>
+        ///   <p>For supported engines, files ignored by the SCM, i.e. files listed in .gitignore, will automatically be ignored by analysis too. Set this property to true to disable that feature. SCM exclusions are always disabled if sonar.scm.disabled is set to true.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetScmExclusionsDisabled<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmExclusionsDisabled = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="SonarScannerBeginSettings.ScmExclusionsDisabled"/></em></p>
+        ///   <p>For supported engines, files ignored by the SCM, i.e. files listed in .gitignore, will automatically be ignored by analysis too. Set this property to true to disable that feature. SCM exclusions are always disabled if sonar.scm.disabled is set to true.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableScmExclusionsDisabled<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmExclusionsDisabled = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="SonarScannerBeginSettings.ScmExclusionsDisabled"/></em></p>
+        ///   <p>For supported engines, files ignored by the SCM, i.e. files listed in .gitignore, will automatically be ignored by analysis too. Set this property to true to disable that feature. SCM exclusions are always disabled if sonar.scm.disabled is set to true.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableScmExclusionsDisabled<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmExclusionsDisabled = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SonarScannerBeginSettings.ScmExclusionsDisabled"/></em></p>
+        ///   <p>For supported engines, files ignored by the SCM, i.e. files listed in .gitignore, will automatically be ignored by analysis too. Set this property to true to disable that feature. SCM exclusions are always disabled if sonar.scm.disabled is set to true.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleScmExclusionsDisabled<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmExclusionsDisabled = !toolSettings.ScmExclusionsDisabled;
+            return toolSettings;
+        }
+        #endregion
+        #region ScmRevision
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.ScmRevision"/></em></p>
+        ///   <p>Overrides the revision, for instance the Git sha1, displayed in analysis results. By default value is provided by the CI environment or guessed by the checked-out sources.</p>
+        /// </summary>
+        [Pure]
+        public static T SetScmRevision<T>(this T toolSettings, string scmRevision) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmRevision = scmRevision;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.ScmRevision"/></em></p>
+        ///   <p>Overrides the revision, for instance the Git sha1, displayed in analysis results. By default value is provided by the CI environment or guessed by the checked-out sources.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetScmRevision<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ScmRevision = null;
+            return toolSettings;
+        }
+        #endregion
+        #region QualityGateWait
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.QualityGateWait"/></em></p>
+        ///   <p>Forces the analysis step to poll the SonarQube instance and wait for the Quality Gate status. If there are no other options, you can use this to fail a pipeline build when the Quality Gate is failing.</p>
+        /// </summary>
+        [Pure]
+        public static T SetQualityGateWait<T>(this T toolSettings, bool? qualityGateWait) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.QualityGateWait = qualityGateWait;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.QualityGateWait"/></em></p>
+        ///   <p>Forces the analysis step to poll the SonarQube instance and wait for the Quality Gate status. If there are no other options, you can use this to fail a pipeline build when the Quality Gate is failing.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetQualityGateWait<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.QualityGateWait = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="SonarScannerBeginSettings.QualityGateWait"/></em></p>
+        ///   <p>Forces the analysis step to poll the SonarQube instance and wait for the Quality Gate status. If there are no other options, you can use this to fail a pipeline build when the Quality Gate is failing.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableQualityGateWait<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.QualityGateWait = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="SonarScannerBeginSettings.QualityGateWait"/></em></p>
+        ///   <p>Forces the analysis step to poll the SonarQube instance and wait for the Quality Gate status. If there are no other options, you can use this to fail a pipeline build when the Quality Gate is failing.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableQualityGateWait<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.QualityGateWait = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="SonarScannerBeginSettings.QualityGateWait"/></em></p>
+        ///   <p>Forces the analysis step to poll the SonarQube instance and wait for the Quality Gate status. If there are no other options, you can use this to fail a pipeline build when the Quality Gate is failing.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleQualityGateWait<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.QualityGateWait = !toolSettings.QualityGateWait;
+            return toolSettings;
+        }
+        #endregion
+        #region QualityGateTimeout
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.QualityGateTimeout"/></em></p>
+        ///   <p>Sets the number of seconds that the scanner should wait for a report to be processed. Default: <c>300</c>. e.g.: <c>sonar.qualitygate.timeout=300</c></p>
+        /// </summary>
+        [Pure]
+        public static T SetQualityGateTimeout<T>(this T toolSettings, int? qualityGateTimeout) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.QualityGateTimeout = qualityGateTimeout;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.QualityGateTimeout"/></em></p>
+        ///   <p>Sets the number of seconds that the scanner should wait for a report to be processed. Default: <c>300</c>. e.g.: <c>sonar.qualitygate.timeout=300</c></p>
+        /// </summary>
+        [Pure]
+        public static T ResetQualityGateTimeout<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.QualityGateTimeout = null;
+            return toolSettings;
+        }
+        #endregion
+        #region AdditionalAnalysisParameters
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.AdditionalAnalysisParameters"/> to a new dictionary</em></p>
+        ///   <p>This property stub allows you to insert custom key/value pairs into the analysis context, which will also be passed forward to webhooks.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAdditionalAnalysisParameters<T>(this T toolSettings, IDictionary<string, string> additionalAnalysisParameters) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AdditionalAnalysisParametersInternal = additionalAnalysisParameters.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="SonarScannerBeginSettings.AdditionalAnalysisParameters"/></em></p>
+        ///   <p>This property stub allows you to insert custom key/value pairs into the analysis context, which will also be passed forward to webhooks.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearAdditionalAnalysisParameters<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AdditionalAnalysisParametersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds a new key-value-pair <see cref="SonarScannerBeginSettings.AdditionalAnalysisParameters"/></em></p>
+        ///   <p>This property stub allows you to insert custom key/value pairs into the analysis context, which will also be passed forward to webhooks.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAdditionalAnalysisParameter<T>(this T toolSettings, string additionalAnalysisParameterKey, string additionalAnalysisParameterValue) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AdditionalAnalysisParametersInternal.Add(additionalAnalysisParameterKey, additionalAnalysisParameterValue);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes a key-value-pair from <see cref="SonarScannerBeginSettings.AdditionalAnalysisParameters"/></em></p>
+        ///   <p>This property stub allows you to insert custom key/value pairs into the analysis context, which will also be passed forward to webhooks.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveAdditionalAnalysisParameter<T>(this T toolSettings, string additionalAnalysisParameterKey) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AdditionalAnalysisParametersInternal.Remove(additionalAnalysisParameterKey);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets a key-value-pair in <see cref="SonarScannerBeginSettings.AdditionalAnalysisParameters"/></em></p>
+        ///   <p>This property stub allows you to insert custom key/value pairs into the analysis context, which will also be passed forward to webhooks.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAdditionalAnalysisParameter<T>(this T toolSettings, string additionalAnalysisParameterKey, string additionalAnalysisParameterValue) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AdditionalAnalysisParametersInternal[additionalAnalysisParameterKey] = additionalAnalysisParameterValue;
+            return toolSettings;
+        }
+        #endregion
+        #region AdditionalParameters
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.AdditionalParameters"/> to a new dictionary</em></p>
+        ///   <p>Specifies an additional SonarQube analysis parameter, you can add this argument multiple times.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAdditionalParameters<T>(this T toolSettings, IDictionary<string, string> additionalParameters) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AdditionalParametersInternal = additionalParameters.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="SonarScannerBeginSettings.AdditionalParameters"/></em></p>
+        ///   <p>Specifies an additional SonarQube analysis parameter, you can add this argument multiple times.</p>
+        /// </summary>
+        [Pure]
+        public static T ClearAdditionalParameters<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AdditionalParametersInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds a new key-value-pair <see cref="SonarScannerBeginSettings.AdditionalParameters"/></em></p>
+        ///   <p>Specifies an additional SonarQube analysis parameter, you can add this argument multiple times.</p>
+        /// </summary>
+        [Pure]
+        public static T AddAdditionalParameter<T>(this T toolSettings, string additionalParameterKey, string additionalParameterValue) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AdditionalParametersInternal.Add(additionalParameterKey, additionalParameterValue);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes a key-value-pair from <see cref="SonarScannerBeginSettings.AdditionalParameters"/></em></p>
+        ///   <p>Specifies an additional SonarQube analysis parameter, you can add this argument multiple times.</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveAdditionalParameter<T>(this T toolSettings, string additionalParameterKey) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AdditionalParametersInternal.Remove(additionalParameterKey);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets a key-value-pair in <see cref="SonarScannerBeginSettings.AdditionalParameters"/></em></p>
+        ///   <p>Specifies an additional SonarQube analysis parameter, you can add this argument multiple times.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAdditionalParameter<T>(this T toolSettings, string additionalParameterKey, string additionalParameterValue) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AdditionalParametersInternal[additionalParameterKey] = additionalParameterValue;
+            return toolSettings;
+        }
+        #endregion
+        #region ClientCertificatePath
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.ClientCertificatePath"/></em></p>
+        ///   <p>Specifies the path to a client certificate used to access SonarQube. The certificate must be password protected.</p>
+        /// </summary>
+        [Pure]
+        public static T SetClientCertificatePath<T>(this T toolSettings, string clientCertificatePath) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCertificatePath = clientCertificatePath;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.ClientCertificatePath"/></em></p>
+        ///   <p>Specifies the path to a client certificate used to access SonarQube. The certificate must be password protected.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetClientCertificatePath<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCertificatePath = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ClientCertificatePassword
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.ClientCertificatePassword"/></em></p>
+        ///   <p>Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used.</p>
+        /// </summary>
+        [Pure]
+        public static T SetClientCertificatePassword<T>(this T toolSettings, string clientCertificatePassword) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCertificatePassword = clientCertificatePassword;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.ClientCertificatePassword"/></em></p>
+        ///   <p>Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetClientCertificatePassword<T>(this T toolSettings) where T : SonarScannerBeginSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCertificatePassword = null;
+            return toolSettings;
+        }
+        #endregion
         #region Framework
         /// <summary>
         ///   <p><em>Sets <see cref="SonarScannerBeginSettings.Framework"/></em></p>
@@ -2086,6 +2646,30 @@ namespace Nuke.Common.Tools.SonarScanner
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region ClientCertificatePassword
+        /// <summary>
+        ///   <p><em>Sets <see cref="SonarScannerEndSettings.ClientCertificatePassword"/></em></p>
+        ///   <p>Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used.</p>
+        /// </summary>
+        [Pure]
+        public static T SetClientCertificatePassword<T>(this T toolSettings, string clientCertificatePassword) where T : SonarScannerEndSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCertificatePassword = clientCertificatePassword;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="SonarScannerEndSettings.ClientCertificatePassword"/></em></p>
+        ///   <p>Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetClientCertificatePassword<T>(this T toolSettings) where T : SonarScannerEndSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.ClientCertificatePassword = null;
             return toolSettings;
         }
         #endregion

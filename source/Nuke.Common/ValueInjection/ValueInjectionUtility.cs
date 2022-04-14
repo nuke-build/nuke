@@ -37,7 +37,8 @@ namespace Nuke.Common.ValueInjection
             object GetValue()
             {
                 var attribute = parameter.GetCustomAttribute<ValueInjectionAttributeBase>().NotNull();
-                return attribute.TryGetValue(parameter, instance: null);
+                var instance = lambdaExpression.GetTarget();
+                return attribute.TryGetValue(parameter, instance);
             }
 
             return (T) (s_valueCache[parameter] = s_valueCache.GetValueOrDefault(parameter) ?? GetValue());

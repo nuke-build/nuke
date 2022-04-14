@@ -290,14 +290,12 @@ namespace Nuke.Common.Execution
         private PropertyInfo GetSingleTargetProperty<T>()
         {
             var interfaceTargets = typeof(T).GetProperties(ReflectionUtility.Instance).Where(x => x.PropertyType == typeof(Target)).ToList();
-            Assert.HasSingleItem(interfaceTargets,
-                new[]
-                {
-                    $"Target '{Target.DeclaringType}.{Target.Name}' cannot have a shorthand dependency on component '{typeof(T).Name}'.",
-                    interfaceTargets.Count > 1
-                        ? "Available targets are:"
-                        : "No targets available."
-                }.Concat(interfaceTargets.Select(x => $"  - {x.Name}")).JoinNewLine());
+            if (interfaceTargets.Count != 1)
+            {
+                Assert.Fail($"Target '{Target.DeclaringType}.{Target.Name}' cannot have a shorthand dependency on component '{typeof(T).Name}'."
+                    .Concat(new[] { interfaceTargets.Count > 1 ? "Available targets are:" : "No targets available." })
+                    .Concat(interfaceTargets.Select(x => $"  - {x.Name}")).JoinNewLine());
+            }
 
             return interfaceTargets.Single();
         }
