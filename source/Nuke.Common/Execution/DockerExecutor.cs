@@ -22,6 +22,11 @@ namespace Nuke.Common.Execution
 {
     internal class DockerExecutor
     {
+        public static bool ShouldRunStepInDocker(NukeBuild build, ExecutableTarget target)
+        {
+            return IsDockerStep(build, target) && NukeBuild.Host is not NukeInDocker;
+        }
+
         public static bool IsDockerStep(NukeBuild build, ExecutableTarget target)
         {
             var attribute = GetRunInDockerContainerAttribute(build, target);

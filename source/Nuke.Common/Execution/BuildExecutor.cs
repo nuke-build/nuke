@@ -108,7 +108,7 @@ namespace Nuke.Common.Execution
                 build.ExecuteExtension<IOnTargetRunning>(x => x.OnTargetRunning(build, target));
                 try
                 {
-                    if (DockerExecutor.IsDockerStep(build, target) && NukeBuild.Host is not NukeInDocker)
+                    if (DockerExecutor.ShouldRunStepInDocker(build, target))
                         DockerExecutor.Execute(build, target);
                     else
                         target.Actions.ForEach(x => x());
