@@ -55,9 +55,7 @@ namespace Nuke.Common.Execution
                 .ConfigureHost(build)
                 .ConfigureConsole(build)
                 .ConfigureInMemory(build)
-                //todo: if the file is locked, then nuke silently fails.
-                //      this happens when calling nuke-in-docker, as it tries to write to the same log file
-                //.ConfigureFiles(build)
+                .ConfigureFiles(build)
                 .ConfigureLevel()
                 .ConfigureFilter()
                 .CreateLogger();
@@ -104,6 +102,10 @@ namespace Nuke.Common.Execution
         public static LoggerConfiguration ConfigureFiles(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
         {
             if (build == null || NukeBuild.Host is IBuildServer)
+                return configuration;
+
+            // when nuke runs a target in docker, the file is locked by the outer invocation and nuke silently fails
+            if (NukeBuild.Host is NukeInDocker)
                 return configuration;
 
             var buildLogFile = NukeBuild.TemporaryDirectory / "build.log";
