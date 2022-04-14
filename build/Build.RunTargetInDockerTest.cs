@@ -10,7 +10,7 @@ using Nuke.Common.Execution;
 partial class Build
 {
     [UsedImplicitly]
-    [RunInDockerContainer("mcr.microsoft.com/dotnet/sdk:5.0", PlatformFamily.Windows)]
+    [RunInDockerContainer("mcr.microsoft.com/dotnet/sdk:6.0", PlatformFamily.Windows)]
     Target RunTargetInWindowsDockerImageTest => _ => _
         .Executes(() =>
         {
@@ -18,7 +18,7 @@ partial class Build
         });
 
     [UsedImplicitly]
-    [RunInDockerContainer("mcr.microsoft.com/dotnet/sdk:5.0", PlatformFamily.Linux)]
+    [RunInDockerContainer("mcr.microsoft.com/dotnet/sdk:6.0", PlatformFamily.Linux)]
     Target RunTargetInLinuxDockerImageTest => _ => _
         .Executes(() =>
         {
