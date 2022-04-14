@@ -41,7 +41,7 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
@@ -57,7 +57,7 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   macOS-latest:
     name: macOS-latest
     runs-on: macOS-latest
@@ -73,4 +73,4 @@ jobs:
       - name: Run './build.cmd Test Pack'
         run: ./build.cmd Test Pack
         env:
-          GITHUB_CONTEXT: ${{ toJSON(github) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

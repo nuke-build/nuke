@@ -11,6 +11,7 @@ using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 using Xunit;
 
 namespace Nuke.Common.Tests
@@ -37,7 +38,7 @@ namespace Nuke.Common.Tests
                     .SetConfiguration("Release")
                     .DisableNodeReuse()
                     .EnableNoLogo(),
-                $"{projectFile} /nodeReuse:False /nologo /p:Platform=AnyCPU /p:Configuration=Release");
+                $"{projectFile.ToString().DoubleQuoteIfNeeded()} /nodeReuse:False /nologo /p:Platform=AnyCPU /p:Configuration=Release");
 
             Assert<MSBuildSettings>(x => x
                     .SetProjectFile(solutionFile)
@@ -45,7 +46,7 @@ namespace Nuke.Common.Tests
                     .EnableNodeReuse()
                     .DisableNoLogo()
                     .ToggleRunCodeAnalysis(),
-                $"{solutionFile} /nodeReuse:True /p:Platform=\"Any CPU\" /p:RunCodeAnalysis=True");
+                $"{solutionFile.ToString().DoubleQuoteIfNeeded()} /nodeReuse:True /p:Platform=\"Any CPU\" /p:RunCodeAnalysis=True");
         }
 
         [Fact]
@@ -77,7 +78,7 @@ namespace Nuke.Common.Tests
                     .SetTargetPath(projectFile)
                     .AddFilters("+[*]*", "-[xunit.*]*", "-[NUnit.*]*")
                     .SetTargetArguments("-diagnostics -HTML \"new folder\\data.xml\""),
-                $"-target:{projectFile} -targetargs:\"-diagnostics -HTML \\\"new folder\\data.xml\\\"\" -filter:\"+[*]* -[xunit.*]* -[NUnit.*]*\"");
+                $"-target:{projectFile.ToString().DoubleQuoteIfNeeded()} -targetargs:\"-diagnostics -HTML \\\"new folder\\data.xml\\\"\" -filter:\"+[*]* -[xunit.*]* -[NUnit.*]*\"");
         }
     }
 }

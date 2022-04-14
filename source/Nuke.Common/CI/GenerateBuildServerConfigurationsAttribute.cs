@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities.Collections;
+using static Nuke.Common.CI.BuildServerConfigurationGeneration;
 
 namespace Nuke.Common.CI
 {
