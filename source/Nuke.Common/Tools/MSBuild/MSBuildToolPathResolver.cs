@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.MSBuild
@@ -37,13 +38,14 @@ namespace Nuke.Common.Tools.MSBuild
             }
 
             var instances = new List<Instance>();
-            var editions = new[] { "Enterprise", "Professional", "Community", "BuildTools", "Preview" };
 
             instances.AddRange(
                 from version in new[] { MSBuildVersion.VS2022, MSBuildVersion.VS2019, MSBuildVersion.VS2017 }
                 from platform in s_platforms
-                from edition in editions
-                let folder = version == MSBuildVersion.VS2022 && edition != "BuildTools" ? SpecialFolders.ProgramFiles : SpecialFolders.ProgramFilesX86
+                from edition in typeof(VisualStudioEdition).GetEnumValues<VisualStudioEdition>()
+                let folder = version == MSBuildVersion.VS2022 && edition != VisualStudioEdition.BuildTools
+                    ? SpecialFolders.ProgramFiles
+                    : SpecialFolders.ProgramFilesX86
                 select GetFromVs2017Instance(version, platform, edition, folder));
 
             instances.AddRange(
@@ -120,6 +122,16 @@ namespace Nuke.Common.Tools.MSBuild
             public MSBuildPlatform Platform { get; }
             public MSBuildVersion Version { get; }
             public string ToolPath { get; }
+        }
+
+        [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
+        private enum VisualStudioEdition
+        {
+            Enterprise,
+            Professional,
+            Community,
+            BuildTools,
+            Preview
         }
     }
 }
