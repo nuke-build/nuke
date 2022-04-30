@@ -43,7 +43,7 @@ namespace Nuke.Common.CI.AzurePipelines
             AzurePipelinesImage image,
             params AzurePipelinesImage[] images)
         {
-            _suffix = suffix;
+            _suffix = suffix?.Replace(oldChar: ' ', newChar: '_');
             _images = new[] { image }.Concat(images).ToArray();
         }
 
