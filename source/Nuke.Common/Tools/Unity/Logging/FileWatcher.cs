@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.Unity.Logging
         public void Start()
         {
             _logResetEvent = new AutoResetEvent(initialState: false);
-            _fileSystemWatcher = new FileSystemWatcher(Path.GetPathRoot(_file).NotNull("Path.GetPathRoot(_file)"))
+            _fileSystemWatcher = new FileSystemWatcher(Path.GetPathRoot(_file).NotNull())
                                  {
                                      Filter = Path.GetFileName(_file),
                                      EnableRaisingEvents = true,

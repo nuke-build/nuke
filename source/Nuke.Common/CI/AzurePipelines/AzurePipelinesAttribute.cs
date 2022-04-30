@@ -240,7 +240,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
             if (CacheKeyFiles.Any())
             {
-                foreach (var cachePath in CachePaths.NotNull("CachePaths != null"))
+                foreach (var cachePath in CachePaths.NotNull())
                 {
                     yield return new AzurePipelinesCacheStep
                                  {

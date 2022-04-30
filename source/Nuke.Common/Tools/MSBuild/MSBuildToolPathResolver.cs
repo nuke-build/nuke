@@ -71,7 +71,7 @@ namespace Nuke.Common.Tools.MSBuild
         {
             var versionDirectoryName = version.ToString().TrimStart("VS");
             var basePath = Path.Combine(
-                EnvironmentInfo.SpecialFolder(specialFolder).NotNull("path1 != null"),
+                EnvironmentInfo.SpecialFolder(specialFolder).NotNull(),
                 $@"Microsoft Visual Studio\{versionDirectoryName}\{edition}\MSBuild\{GetVersionFolder(version)}\Bin");
 
             return new Instance(

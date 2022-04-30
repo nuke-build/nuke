@@ -39,7 +39,7 @@ namespace Nuke.Common.IO
 
         public static RelativePath operator /(RelativePath left, [CanBeNull] string right)
         {
-            var separator = left.NotNull("left != null")._separator;
+            var separator = left.NotNull()._separator;
             return new RelativePath(NormalizePath(Combine(left, (RelativePath) right, separator), separator), separator);
         }
 

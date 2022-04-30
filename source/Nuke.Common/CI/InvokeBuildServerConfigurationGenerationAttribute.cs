@@ -45,7 +45,7 @@ namespace Nuke.Common.CI
                 .Where(File.Exists)
                 .ToDictionary(x => x, FileSystemTasks.GetFileHash);
 
-            var assembly = Assembly.GetEntryAssembly().NotNull("assembly != null");
+            var assembly = Assembly.GetEntryAssembly().NotNull();
             ProcessTasks.StartProcess(
                     assembly.Location,
                     $"--{ConfigurationParameterName} {generator.Id} --host {generator.HostName}",

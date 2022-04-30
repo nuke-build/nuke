@@ -151,7 +151,7 @@ namespace Nuke.Common.Git
         {
             var regex = new Regex(
                 @"^(?'protocol'\w+)?(\:\/\/)?(?>(?'user'.*)@)?(?'endpoint'[^\/:]+)(?>\:(?'port'\d+))?[\/:](?'identifier'.*?)\/?(?>\.git)?$");
-            var match = regex.Match(url.NotNull("url != null").Trim());
+            var match = regex.Match(url.NotNull().Trim());
 
             Assert.True(match.Success, $"Url '{url}' could not be parsed.");
             var protocol = match.Groups["protocol"].Value.EqualsOrdinalIgnoreCase(GitProtocol.Https.ToString())
