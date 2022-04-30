@@ -65,6 +65,7 @@ namespace Nuke.Common.Execution
         private IEnumerable<(string Profile, string Name, string[] Values)> GetParameters()
         {
             IEnumerable<string> GetValues(JProperty property)
+            // TODO: if property is object || property is array && array contains objects => base64
                 => property.Value is JArray array
                     ? array.Values<string>()
                     : property.Values<string>();
@@ -74,6 +75,7 @@ namespace Nuke.Common.Execution
                 try
                 {
                     var jobject = JObject.Parse(File.ReadAllText(file));
+                    // TODO: use NukeBuild instance to match members and walk through structure to replace secrets and absolute-paths
                     return jobject.Properties()
                         .Where(x => x.Name != "$schema")
                         .Select(x => (x.Name, GetValues(x).ToArray()));
