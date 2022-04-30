@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed exception handling in various places
+- Fixed shell-completion file to be written after parameter resolution
+- Fixed `SpecialFolders.UserProfile` on Docker
+- Fixed `SolutionSerializer` to work on sanitized content
+- Fixed `GitRepository` branch extensions to consider plurals
+- Fixed handling of spaces in GitHub Actions and Azure Pipeline generation
+- Fixed resolution of MSBuild for Visual Studio Build Tools edition
 
 ## [6.0.2] / 2022-04-13
 - Fixed `Update` command to use `net6.0`
