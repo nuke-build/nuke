@@ -76,7 +76,7 @@ namespace Nuke.Common.IO
 
         public static AbsolutePath operator /(AbsolutePath left, [CanBeNull] string right)
         {
-            return new AbsolutePath(Combine(left.NotNull("left != null"), right));
+            return new AbsolutePath(Combine(left.NotNull(), right));
         }
 
         public static bool operator ==(AbsolutePath a, AbsolutePath b)

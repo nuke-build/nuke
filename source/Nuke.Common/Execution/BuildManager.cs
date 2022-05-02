@@ -71,9 +71,10 @@ namespace Nuke.Common.Execution
             }
             catch (Exception exception)
             {
+                exception = exception.Unwrap();
                 if (exception is not TargetExecutionException)
                 {
-                    Log.Verbose(exception, "Target-unrelated exception occurred");
+                    Log.Verbose(exception, "Target-unrelated exception was thrown");
                     Host.Error(exception.Message);
                 }
 
