@@ -84,7 +84,7 @@ namespace Nuke.Common.Tooling
 
         public override string ToString()
         {
-            return Value.NotNull("Value != null");
+            return Value.NotNull();
         }
 
         public class TypeConverter<T> : TypeConverter

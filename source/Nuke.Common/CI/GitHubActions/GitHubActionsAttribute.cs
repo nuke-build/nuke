@@ -31,7 +31,7 @@ namespace Nuke.Common.CI.GitHubActions
             GitHubActionsImage image,
             params GitHubActionsImage[] images)
         {
-            _name = name;
+            _name = name.Replace(oldChar: ' ', newChar: '_');
             _images = new[] { image }.Concat(images).ToArray();
         }
 

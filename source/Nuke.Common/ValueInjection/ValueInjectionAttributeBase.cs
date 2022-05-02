@@ -8,6 +8,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.ValueInjection
 {
@@ -19,7 +20,15 @@ namespace Nuke.Common.ValueInjection
         [CanBeNull]
         public object TryGetValue(MemberInfo member, object instance)
         {
-            return ControlFlow.SuppressErrors(() => GetValue(member, instance), includeStackTrace: true);
+            try
+            {
+                return GetValue(member, instance);
+            }
+            catch (Exception exception)
+            {
+                Log.Warning(exception.Unwrap(), "Could not inject value for {Member}", member.GetDisplayName());
+                return null;
+            }
         }
 
         [CanBeNull]

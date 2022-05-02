@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common
 {
@@ -21,12 +22,18 @@ namespace Nuke.Common
         UserProfile = Environment.SpecialFolder.UserProfile
     }
 
-    public static partial class EnvironmentInfo
+    partial class EnvironmentInfo
     {
         [CanBeNull]
         public static string SpecialFolder(SpecialFolders folder)
         {
-            return Environment.GetFolderPath((Environment.SpecialFolder) folder);
+            var path = Environment.GetFolderPath((Environment.SpecialFolder)folder);
+
+            // https://github.com/nuke-build/nuke/pull/825#discussion_r848954724
+            if (path.IsNullOrEmpty() && folder == SpecialFolders.UserProfile)
+                path = Environment.GetEnvironmentVariable("USERPROFILE");
+
+            return path;
         }
     }
 }

@@ -223,8 +223,8 @@ namespace Nuke.Common.Execution
         public ITargetDefinition Base()
         {
             Assert.True(_baseMembers.Count > 0,
-                $"Target '{Target.DeclaringType}.{Target.Name}' does not have any base members,"
-                + $" to inherit from a interface default implementation, use {nameof(Inherit)}");
+                $"Target '{Target.DeclaringType}.{Target.Name}' does not have any base members."
+                + $" To inherit from an interface default implementation, use {nameof(Inherit)}<T> instead.");
             Inherit(_baseMembers.Pop().GetValueNonVirtual<Target>(Build));
             return this;
         }

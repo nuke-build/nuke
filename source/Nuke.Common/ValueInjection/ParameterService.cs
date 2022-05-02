@@ -118,11 +118,19 @@ namespace Nuke.Common.ValueInjection
                     : null;
             }
 
-            return (attribute.GetValueSet(member, instance) ??
-                    TryGetFromValueProvider() ??
-                    TryGetFromEnumerationClass() ??
-                    TryGetFromEnum())
-                ?.OrderBy(x => x.Item1);
+            try
+            {
+                return (attribute.GetValueSet(member, instance) ??
+                        TryGetFromValueProvider() ??
+                        TryGetFromEnumerationClass() ??
+                        TryGetFromEnum())
+                    ?.OrderBy(x => x.Item1);
+            }
+            catch (Exception exception)
+            {
+                Log.Warning(exception.Unwrap(), "Could not resolve value-set for {Parameter}", member.GetDisplayName());
+                return null;
+            }
         }
 
         [CanBeNull]

@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [6.0.3] / 2022-05-02
+- Fixed exception handling in various places
+- Fixed shell-completion file to be written after parameter resolution
+- Fixed `SpecialFolders.UserProfile` on Docker
+- Fixed `SolutionSerializer` to work on sanitized content
+- Fixed `GitRepository` branch extensions to consider plurals
+- Fixed handling of spaces in GitHub Actions and Azure Pipeline generation
+- Fixed resolution of MSBuild for Visual Studio Build Tools edition
+
 ## [6.0.2] / 2022-04-13
 - Fixed `Update` command to use `net6.0`
 - Fixed handling of common errors
@@ -904,7 +913,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.0.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.0.3...HEAD
+[6.0.3]: https://github.com/nuke-build/nuke/compare/6.0.2...6.0.3
 [6.0.2]: https://github.com/nuke-build/nuke/compare/6.0.1...6.0.2
 [6.0.1]: https://github.com/nuke-build/nuke/compare/6.0.0...6.0.1
 [6.0.0]: https://github.com/nuke-build/nuke/compare/5.3.0...6.0.0

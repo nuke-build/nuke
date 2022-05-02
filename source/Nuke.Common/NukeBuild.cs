@@ -45,9 +45,9 @@ namespace Nuke.Common
     /// </example>
     [PublicAPI]
     // Before logo
-    [HandleShellCompletion(Priority = 200)]
     [ArgumentsFromParametersFile(Priority = 150)]
     [InjectParameterValues(Priority = 100)]
+    [HandleShellCompletion(Priority = 75)]
     [GenerateBuildServerConfigurations(Priority = 50)]
     [InvokeBuildServerConfigurationGeneration(Priority = 45)]
     [UnsetVisualStudioEnvironmentVariables]
