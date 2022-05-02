@@ -391,7 +391,11 @@ namespace Nuke.Common.Tooling
             public InstalledPackage(string fileName)
             {
                 FileName = fileName;
-                Metadata = new PackageArchiveReader(fileName).NuspecReader;
+
+                var directory = new DirectoryInfo(Path.GetDirectoryName(fileName));
+                Metadata = directory.GetFiles("*.nuspec").Length == 1
+                    ? new PackageFolderReader(directory).NuspecReader
+                    : new PackageArchiveReader(fileName).NuspecReader;
             }
 
             public string FileName { get; }
