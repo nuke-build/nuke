@@ -140,7 +140,8 @@
               "Restore",
               "SignPackages",
               "Test",
-              "UpdateContributors"
+              "UpdateContributors",
+              "UpdateStargazers"
             ]
           }
         },
@@ -182,7 +183,8 @@
               "Restore",
               "SignPackages",
               "Test",
-              "UpdateContributors"
+              "UpdateContributors",
+              "UpdateStargazers"
             ]
           }
         },
