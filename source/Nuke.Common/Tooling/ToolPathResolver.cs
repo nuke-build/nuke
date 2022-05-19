@@ -19,6 +19,7 @@ namespace Nuke.Common.Tooling
         public static string NuGetPackagesConfigFile;
         public static string NuGetAssetsConfigFile;
         public static string PaketPackagesConfigFile;
+        public static string PaketCliToolGroup;
 
         internal const string MissingPackageDefaultVersion = "latest";
 
@@ -105,7 +106,7 @@ namespace Nuke.Common.Tooling
                                 ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetPackagesConfigFile, version)?.Directory
                                 : null,
                             () => PaketPackagesConfigFile != null
-                                ? PaketPackageResolver.GetLocalInstalledPackageDirectory(x, PaketPackagesConfigFile)
+                                ? PaketPackageResolver.GetLocalInstalledPackageDirectory(x, PaketPackagesConfigFile, PaketCliToolGroup)
                                 : null
                         })
                     .Select(x => x.Invoke())
@@ -131,6 +132,9 @@ namespace Nuke.Common.Tooling
                                         : null,
                                     PaketPackagesConfigFile != null
                                         ? $"Paket packages config '{PaketPackagesConfigFile}'"
+                                        : null,
+                                    PaketCliToolGroup != null
+                                        ? $"Paket cli tool group '{PaketCliToolGroup}'"
                                         : null
                                 }.WhereNotNull().Select(x => $" - {x}")).JoinNewLine());
             }
