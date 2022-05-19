@@ -34,18 +34,7 @@ namespace Nuke.Common
         internal const string GlobalToolStartTimeEnvironmentKey = "NUKE_GLOBAL_TOOL_START_TIME";
 
         internal static AbsolutePath GlobalTemporaryDirectory => (AbsolutePath) Path.GetTempPath();
-
-        [CanBeNull]
-        internal static AbsolutePath GlobalNukeDirectory
-        {
-            get
-            {
-                var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-                if (string.IsNullOrEmpty(folderPath))
-                    folderPath = Environment.GetEnvironmentVariable("USERPROFILE");
-                return (AbsolutePath)folderPath / ".nuke";
-            }
-        }
+        internal static AbsolutePath GlobalNukeDirectory => (AbsolutePath) EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) / ".nuke";
 
         [CanBeNull]
         internal static AbsolutePath TryGetRootDirectoryFrom(string startDirectory, bool includeLegacy = true)

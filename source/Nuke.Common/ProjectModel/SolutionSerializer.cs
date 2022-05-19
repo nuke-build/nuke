@@ -31,14 +31,14 @@ namespace Nuke.Common.ProjectModel
             var solution = new T
                            {
                                Path = (AbsolutePath) solutionFile,
-                               Header = content.TakeWhile(x => !x.StartsWith("Project")).ToArray(),
+                               Header = trimmedContent.TakeWhile(x => !x.StartsWith("Project")).ToArray(),
                                Properties = trimmedContent.GetGlobalSection("SolutionProperties", solutionFile),
                                ExtensibilityGlobals = trimmedContent.GetGlobalSection("ExtensibilityGlobals", solutionFile),
                                Configurations = trimmedContent.GetGlobalSection("SolutionConfigurationPlatforms", solutionFile)
                            };
 
-            var configurations = (content.GetGlobalSection("ProjectConfigurationPlatforms", solutionFile) ??
-                                  content.GetGlobalSection("ProjectConfiguration", solutionFile) ??
+            var configurations = (trimmedContent.GetGlobalSection("ProjectConfigurationPlatforms", solutionFile) ??
+                                  trimmedContent.GetGlobalSection("ProjectConfiguration", solutionFile) ??
                                   new Dictionary<string, string>())
                 .Select(x => new
                              {

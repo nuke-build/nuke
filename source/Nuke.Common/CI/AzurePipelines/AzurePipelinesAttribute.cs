@@ -43,7 +43,7 @@ namespace Nuke.Common.CI.AzurePipelines
             AzurePipelinesImage image,
             params AzurePipelinesImage[] images)
         {
-            _suffix = suffix;
+            _suffix = suffix?.Replace(oldChar: ' ', newChar: '_');
             _images = new[] { image }.Concat(images).ToArray();
         }
 
@@ -240,7 +240,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
             if (CacheKeyFiles.Any())
             {
-                foreach (var cachePath in CachePaths.NotNull("CachePaths != null"))
+                foreach (var cachePath in CachePaths.NotNull())
                 {
                     yield return new AzurePipelinesCacheStep
                                  {

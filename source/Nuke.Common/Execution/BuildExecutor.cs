@@ -120,6 +120,7 @@ namespace Nuke.Common.Execution
                 }
                 catch (Exception exception)
                 {
+                    exception = exception.Unwrap();
                     if (!target.SummaryInformation.Any())
                     {
                         build.ReportSummary(
@@ -127,7 +128,7 @@ namespace Nuke.Common.Execution
                             _ => _.AddPair(exception.GetType().Name, exception.Message.SplitLineBreaks().First()));
                     }
 
-                    Log.Error(exception, "Running target {TargetName} failed", target.Name);
+                    Log.Error(exception, "Target {TargetName} has thrown an exception", target.Name);
 
                     target.Stopwatch.Stop();
                     target.Status = ExecutionStatus.Failed;

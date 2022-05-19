@@ -119,7 +119,7 @@ namespace Nuke.Common
             catch (Exception exception)
             {
                 if (logWarning)
-                    Log.Warning(exception, exception.Message);
+                    Log.Warning(exception.Unwrap(), "Exception was suppressed");
 
                 return defaultValue;
             }
