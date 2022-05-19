@@ -44,7 +44,8 @@ namespace Nuke.Common.Git
 
         public static bool IsOnFeatureBranch(this GitRepository repository)
         {
-            return repository.Branch?.StartsWithOrdinalIgnoreCase("feature/") ?? false;
+            return (repository.Branch?.StartsWithOrdinalIgnoreCase("feature/") ?? false) ||
+                   (repository.Branch?.StartsWithOrdinalIgnoreCase("features/") ?? false);
         }
 
         // public static bool IsOnBugfixBranch(this GitRepository repository)
@@ -54,12 +55,14 @@ namespace Nuke.Common.Git
 
         public static bool IsOnReleaseBranch(this GitRepository repository)
         {
-            return repository.Branch?.StartsWithOrdinalIgnoreCase("release/") ?? false;
+            return (repository.Branch?.StartsWithOrdinalIgnoreCase("release/") ?? false) ||
+                   (repository.Branch?.StartsWithOrdinalIgnoreCase("releases/") ?? false);
         }
 
         public static bool IsOnHotfixBranch(this GitRepository repository)
         {
-            return repository.Branch?.StartsWithOrdinalIgnoreCase("hotfix/") ?? false;
+            return (repository.Branch?.StartsWithOrdinalIgnoreCase("hotfix/") ?? false) ||
+                   (repository.Branch?.StartsWithOrdinalIgnoreCase("hotfixes/") ?? false);
         }
     }
 }

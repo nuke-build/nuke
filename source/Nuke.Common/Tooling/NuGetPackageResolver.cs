@@ -272,8 +272,7 @@ namespace Nuke.Common.Tooling
             string TryGetDefaultGlobalDirectory()
                 => packagesConfigFile == null || !IsLegacyFile(packagesConfigFile)
                     ? Path.Combine(
-                        EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile)
-                            .NotNull("EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) != null"),
+                        EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
                         ".nuget",
                         "packages")
                     : null;

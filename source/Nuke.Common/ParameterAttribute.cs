@@ -48,7 +48,7 @@ namespace Nuke.Common
         public string Separator { get; set; }
 
         public virtual bool List { get; set; } = true;
-        
+
         [CanBeNull]
         public Type ValueProviderType { get; set; }
 

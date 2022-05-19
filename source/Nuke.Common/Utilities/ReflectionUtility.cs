@@ -38,6 +38,11 @@ namespace Nuke.Common.Utilities
                        .Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IEnumerable<>));
         }
 
+        public static T[] GetEnumValues<T>(this Type type)
+        {
+            return type.GetEnumValues().Cast<T>().ToArray();
+        }
+
         public static bool HasCustomAttribute<T>(this MemberInfo member)
             where T : Attribute
         {
