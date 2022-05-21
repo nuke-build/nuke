@@ -365,6 +365,8 @@ namespace Nuke.Common.Tooling
         // TODO: move out of class
         public class InstalledPackage
         {
+            private readonly Lazy<NuspecReader> _metadata;
+
             public sealed class Comparer : IEqualityComparer<InstalledPackage>
             {
                 public static readonly Comparer Instance = new Comparer();
@@ -391,12 +393,16 @@ namespace Nuke.Common.Tooling
             public InstalledPackage(string fileName)
             {
                 FileName = fileName;
-                Metadata = new PackageArchiveReader(fileName).NuspecReader;
+                
+                //mattr: note to self: this is to prevent a 300mb allocation that we often dont use
+                _metadata = new Lazy<NuspecReader>(() => new PackageArchiveReader(fileName).NuspecReader);
             }
 
             public string FileName { get; }
             public AbsolutePath Directory => (AbsolutePath) Path.GetDirectoryName(FileName).NotNull();
-            public NuspecReader Metadata { get; }
+
+            public NuspecReader Metadata => _metadata.Value;
+
             public string Id => Metadata.GetIdentity().Id;
             public NuGetVersion Version => Metadata.GetIdentity().Version;
 

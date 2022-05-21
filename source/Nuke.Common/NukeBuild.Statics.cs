@@ -89,8 +89,10 @@ namespace Nuke.Common
         public static string[] LoadedLocalProfiles { get; }
 
         public static bool IsLocalBuild => !IsServerBuild;
-        public static bool IsServerBuild => Host is IBuildServer or NukeInDocker;
+        public static bool IsServerBuild => Host is IBuildServer;
 
+        internal static bool IsLocalAndEntryExecution => IsLocalBuild && !IsDockerExecution;
+        
         private static AbsolutePath GetRootDirectory()
         {
             var parameterValue = EnvironmentInfo.GetParameter(() => RootDirectory);

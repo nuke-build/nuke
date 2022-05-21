@@ -7,6 +7,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Docker;
 
 namespace Nuke.Common
 {
@@ -223,6 +225,11 @@ namespace Nuke.Common
         ///   Defines the partition size. Default is <c>1</c>.
         /// </summary>
         ITargetDefinition Partition(int size);
+
+        /// <summary>
+        /// Execute this step within a docker container
+        /// </summary>
+        ITargetDefinition DockerRun(Configure<ExecuteInDockerSettings> configure);
     }
 
     /// <summary>

@@ -50,11 +50,14 @@ namespace Nuke.Common.Execution
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
                 ToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
 
-                if (!build.NoLogo)
-                    NukeBuild.Host.WriteLogo();
-
-                Host.Information($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
-                Host.Information();
+                if (!NukeBuild.IsDockerExecution)
+                {
+                    if (!build.NoLogo)
+                        NukeBuild.Host.WriteLogo();
+                    
+                    Host.Information($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
+                    Host.Information();
+                }
 
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,

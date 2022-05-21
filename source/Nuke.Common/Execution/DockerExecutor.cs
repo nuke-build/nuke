@@ -4,77 +4,66 @@
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
-using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Docker;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Utilities;
 using Serilog;
 
 namespace Nuke.Common.Execution
 {
     internal class DockerExecutor
     {
-        public static bool ShouldRunStepInDocker(NukeBuild build, ExecutableTarget target)
+        public static bool ShouldRunStepInDocker(ExecutableTarget target)
         {
-            return IsDockerStep(build, target) && NukeBuild.Host is not NukeInDocker;
+            return IsDockerStep(target) && !NukeBuild.IsDockerExecution;
         }
 
-        public static bool IsDockerStep(NukeBuild build, ExecutableTarget target)
+        public static bool IsDockerStep(ExecutableTarget target)
         {
-            var attribute = GetRunInDockerContainerAttribute(build, target);
-            return attribute != null;
-        }
-
-        [CanBeNull]
-        private static RunInDockerContainerAttribute GetRunInDockerContainerAttribute(NukeBuild nukeBuild, ExecutableTarget target)
-        {
-            var targetProperty = ExecutableTargetFactory.GetTargetProperties(nukeBuild.GetType()).FirstOrDefault(x => x.Name == target.Name);
-            return targetProperty?.GetCustomAttribute<RunInDockerContainerAttribute>();
+            return target.ExecuteInDockerSettings != null;
         }
 
         public static void Execute(NukeBuild build, ExecutableTarget target)
         {
-            var attribute = GetRunInDockerContainerAttribute(build, target)!;
+            PullImageIfRequired(target);
 
-            PullImageIfRequired(attribute);
-
-            PublishBuildProject(attribute);
+            PublishBuildProject(target);
 
             CopyPackageReferences();
 
-            RunDocker(target, attribute);
+            RunDocker(target);
         }
 
-        private static void RunDocker(ExecutableTarget target, RunInDockerContainerAttribute attribute)
+        private static void RunDocker(ExecutableTarget target)
         {
-            var workingDirectory = GetWorkingDirectory(attribute);
-            var path = GetPath(attribute);
+            var workingDirectory = GetWorkingDirectory(target.ExecuteInDockerSettings.DockerPlatform);
+            var path = GetPath(target.ExecuteInDockerSettings.DockerPlatform);
             var args = GetArgs(target, path, workingDirectory);
-            var tempFile = GetEnvFile(workingDirectory);
+            var envFile = GetEnvFile(workingDirectory);
             var volumes = new[] { $"{NukeBuild.RootDirectory}:{workingDirectory}" };
 
             try
             {
+                Log.Information("Executing target {Target} in a new docker container based on {Image}", target.Name, target.ExecuteInDockerSettings.Image);
+
                 DockerTasks.DockerRun(settings => settings
                     .EnableRm()
-                    .SetImage(attribute.Image)
+                    .SetImage(target.ExecuteInDockerSettings.Image)
                     .SetVolume(volumes)
                     .SetCommand("dotnet")
+                    .SetPlatform(target.ExecuteInDockerSettings.DockerPlatform)
                     .SetWorkdir(workingDirectory)
-                    .SetEnvFile(tempFile)
-                    .SetArgs(args.Concat(attribute.Args)));
+                    .SetEnvFile(envFile)
+                    .SetArgs(args.Concat(target.ExecuteInDockerSettings.Args))); 
             }
             finally
             {
-                File.Delete(tempFile);
+                File.Delete(envFile);
             }
         }
 
@@ -85,45 +74,54 @@ namespace Nuke.Common.Execution
                        path,
                        "--nologo",
                        "--skip",
-                       "--host", "NukeInDocker",
                        "--target", $"\"{target.Name}\"",
                        "--root", workingDirectory
                    };
         }
 
-        private static string GetPath(RunInDockerContainerAttribute attribute)
+        private static string GetPath(string platform)
         {
-            return attribute.Platform == PlatformFamily.Windows
-                ? $"c:\\build\\{NukeBuild.RootDirectory.GetWinRelativePathTo(NukeBuild.TemporaryDirectory)}\\nukebuild\\{Path.GetFileName(NukeBuild.BuildAssembly)}"
-                : $"/build/{NukeBuild.RootDirectory.GetUnixRelativePathTo(NukeBuild.TemporaryDirectory)}/nukebuild/{Path.GetFileName(NukeBuild.BuildAssembly)}";
+            //todo: mattr: use more native nuke stuff here
+            var isWin = IsWindowsContainer(platform);
+            var workingDirectory = GetWorkingDirectory(platform);
+            var temporaryDirectory = isWin 
+                ? (RelativePath)NukeBuild.RootDirectory.GetWinRelativePathTo(NukeBuild.TemporaryDirectory) 
+                : (RelativePath)NukeBuild.RootDirectory.GetUnixRelativePathTo(NukeBuild.TemporaryDirectory);
+
+            var separator = isWin ? "\\" : "/"; 
+             
+            return $"{workingDirectory}{separator}{temporaryDirectory}{separator}nukebuild{separator}{Path.GetFileName(NukeBuild.BuildAssembly)}"; 
         }
 
-        private static string GetWorkingDirectory(RunInDockerContainerAttribute attribute)
+        private static string GetWorkingDirectory(string platform)
         {
-            return attribute.Platform == PlatformFamily.Windows ? "c:\\Build" : "/build";
+            return IsWindowsContainer(platform) ? "c:\\Build" : "/build";
+        }
+
+        private static bool IsWindowsContainer(string platform)
+        {
+            return platform.StartsWith("win", StringComparison.OrdinalIgnoreCase);
         }
 
         private static void CopyPackageReferences()
         {
+            //todo: Matthias to investigate if we can influence the publish self-contained to include this - see #822
+            //todo: mattr: figure out if can we map the folder in instead
             Log.Information("Inlining PackageDownload references from build project");
             var buildProject = ProjectModelTasks.ParseProject(NukeBuild.BuildProjectFile).NotNull();
-            foreach (var item in buildProject.Items)
+            foreach (var item in buildProject.Items.Where(x => x.ItemType == "PackageDownload"))
             {
-                if (item.ItemType == "PackageDownload")
-                {
-                    var version = item.Metadata.First(x => x.Name == "Version").EvaluatedValue.Replace("[", "").Replace("]", "");
-                    var packageId = item.EvaluatedInclude;
-                    Log.Information("Inlining {PackageId} {Version} reference from build project", packageId, version);
-                    var package = NuGetPackageResolver.GetLocalInstalledPackage(packageId, NukeBuild.BuildProjectFile, version);
-                    FileSystemTasks.CopyDirectoryRecursively(package.Directory, NukeBuild.TemporaryDirectory / "nukebuild" / packageId);
-                }
+                var version = item.Metadata.First(x => x.Name == "Version").EvaluatedValue.Replace("[", "").Replace("]", "");
+                var packageId = item.EvaluatedInclude;
+                Log.Information("Inlining {PackageId} {Version} reference from build project", packageId, version);
+                var package = NuGetPackageResolver.GetLocalInstalledPackage(packageId, NukeBuild.BuildProjectFile, version);
+                FileSystemTasks.CopyDirectoryRecursively(package.Directory, NukeBuild.TemporaryDirectory / "nukebuild" / packageId);
             }
         }
 
-        private static void PublishBuildProject(RunInDockerContainerAttribute attribute)
+        private static void PublishBuildProject(ExecutableTarget target)
         {
-            var runtime = attribute.Platform == PlatformFamily.Windows ? "win-x64" : "linux-x64";
-            Log.Information("Publishing a temporary copy of the build project (targeting {Platform}) for use within the docker container", runtime);
+            Log.Information("Publishing a temporary copy of the build project (targeting {Platform}) for use within the docker container", target.ExecuteInDockerSettings.DotNetPublishRuntime);
             FileSystemTasks.EnsureCleanDirectory(NukeBuild.TemporaryDirectory / "nukebuild");
             DotNetTasks.DotNetPublish(p => p
                 .SetProject(NukeBuild.BuildProjectFile)
@@ -131,18 +129,18 @@ namespace Nuke.Common.Execution
                 .SetConfiguration("Release")
                 .SetVerbosity(DotNetVerbosity.Quiet)
                 .EnableNoLogo()
-                .SetRuntime(runtime)
+                .SetRuntime(target.ExecuteInDockerSettings.DotNetPublishRuntime)
                 .EnableSelfContained()
             );
         }
 
-        private static void PullImageIfRequired(RunInDockerContainerAttribute attribute)
+        private static void PullImageIfRequired(ExecutableTarget target)
         {
-            if (attribute.PullImage)
+            if (target.ExecuteInDockerSettings.PullImage)
             {
-                Log.Information("Pulling image {Image}", attribute.Image);
+                Log.Information("Pulling image {Image}", target.ExecuteInDockerSettings.Image);
                 DockerTasks.DockerPull(settings => settings
-                    .SetName(attribute.Image));
+                    .SetName(target.ExecuteInDockerSettings.Image));
             }
         }
 
@@ -174,10 +172,18 @@ namespace Nuke.Common.Execution
             stringBuilder.AppendLine($"DOTNET_CLI_HOME={workingDirectory}");
             stringBuilder.AppendLine($"TEMP=/build/{NukeBuild.RootDirectory.GetUnixRelativePathTo(NukeBuild.TemporaryDirectory)}");
             stringBuilder.AppendLine($"TMP=/build/{NukeBuild.RootDirectory.GetUnixRelativePathTo(NukeBuild.TemporaryDirectory)}");
+            stringBuilder.AppendLine($"{RunningInDockerEnvironmentVariable}=1");
+            
+            //without this, errors crash the process (on an m1 mac at least) with 
+            //Failed to create CoreCLR, HRESULT: 0x80004005
+            //https://github.com/PowerShell/PowerShell/issues/13166#issuecomment-713034137
+            stringBuilder.AppendLine($"COMPlus_EnableDiagnostics=0"); 
 
             var tempFile = Path.GetTempFileName();
             File.WriteAllText(tempFile, stringBuilder.ToString());
             return tempFile;
         }
+
+        public static string RunningInDockerEnvironmentVariable = "NUKE_RUNNING_IN_DOCKER";
     }
 }

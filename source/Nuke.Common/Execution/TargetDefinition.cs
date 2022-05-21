@@ -8,6 +8,9 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
+using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Docker;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -45,6 +48,7 @@ namespace Nuke.Common.Execution
         internal int? PartitionSize { get; private set; }
         internal List<string> ArtifactProducts { get; } = new List<string>();
         internal LookupTable<Target, string[]> ArtifactDependencies { get; } = new LookupTable<Target, string[]>();
+        internal ExecuteInDockerSettings ExecuteInDockerSettings { get; private set; }
 
         ITargetDefinition ITargetDefinition.Description(string description)
         {
@@ -279,6 +283,12 @@ namespace Nuke.Common.Execution
         {
             Assert.True(size > 1);
             PartitionSize = size;
+            return this;
+        }
+
+        public ITargetDefinition DockerRun(Configure<ExecuteInDockerSettings> configure)
+        {
+            ExecuteInDockerSettings = configure.InvokeSafe(new ExecuteInDockerSettings());
             return this;
         }
 

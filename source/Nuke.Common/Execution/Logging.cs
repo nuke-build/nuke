@@ -105,7 +105,7 @@ namespace Nuke.Common.Execution
                 return configuration;
 
             // when nuke runs a target in docker, the file is locked by the outer invocation and nuke silently fails
-            if (NukeBuild.Host is NukeInDocker)
+            if (NukeBuild.IsDockerExecution)
                 return configuration;
 
             var buildLogFile = NukeBuild.TemporaryDirectory / "build.log";

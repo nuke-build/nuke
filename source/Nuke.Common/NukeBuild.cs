@@ -186,6 +186,8 @@ namespace Nuke.Common
         /// </summary>
         public int? ExitCode { get; set; }
 
+        internal static bool IsDockerExecution => Environment.GetEnvironmentVariable(DockerExecutor.RunningInDockerEnvironmentVariable) == "1";
+
         public void ReportSummary(Configure<IDictionary<string, string>> configurator = null)
         {
             var target = ExecutionPlan.Single(x => x.Status == ExecutionStatus.Running);

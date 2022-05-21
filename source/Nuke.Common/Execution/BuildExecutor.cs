@@ -108,10 +108,8 @@ namespace Nuke.Common.Execution
                 build.ExecuteExtension<IOnTargetRunning>(x => x.OnTargetRunning(build, target));
                 try
                 {
-                    if (DockerExecutor.ShouldRunStepInDocker(build, target))
-                        DockerExecutor.Execute(build, target);
-                    else
-                        target.Actions.ForEach(x => x());
+                    Execute(build, target);
+                    
                     target.Stopwatch.Stop();
                     target.Status = ExecutionStatus.Succeeded;
                     build.ExecuteExtension<IOnTargetSucceeded>(x => x.OnTargetSucceeded(build, target));
@@ -138,6 +136,14 @@ namespace Nuke.Common.Execution
                         throw new TargetExecutionException(target.Name, exception);
                 }
             }
+        }
+
+        private static void Execute(NukeBuild build, ExecutableTarget target)
+        {
+            if (DockerExecutor.ShouldRunStepInDocker(target))
+                DockerExecutor.Execute(build, target);
+            else
+                target.Actions.ForEach(x => x());
         }
 
         private static void MarkSkippedTargets(NukeBuild build, IReadOnlyCollection<string> skippedTargets)

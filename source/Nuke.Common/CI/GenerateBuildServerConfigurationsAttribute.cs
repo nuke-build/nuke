@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 using static Nuke.Common.CI.BuildServerConfigurationGeneration;
 
 namespace Nuke.Common.CI
@@ -16,6 +17,9 @@ namespace Nuke.Common.CI
     {
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
+            if (NukeBuild.IsDockerExecution)
+                return;
+            
             var configurationId = EnvironmentInfo.GetParameter<string>(ConfigurationParameterName);
             if (configurationId == null)
                 return;

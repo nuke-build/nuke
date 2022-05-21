@@ -54,5 +54,7 @@ namespace Nuke.Common.Execution
             get => SummaryInformation.GetValueOrDefault(nameof(SkipReason));
             set => SummaryInformation = new Dictionary<string, string> { [nameof(SkipReason)] = value };
         }
+        
+        public ExecuteInDockerSettings ExecuteInDockerSettings { get; set; }
     }
 }

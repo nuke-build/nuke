@@ -56,7 +56,8 @@ namespace Nuke.Common.Execution
                                  Actions = definition.Actions,
                                  Listed = !definition.IsInternal,
                                  PartitionSize = definition.PartitionSize,
-                                 ArtifactProducts = definition.ArtifactProducts
+                                 ArtifactProducts = definition.ArtifactProducts,
+                                 ExecuteInDockerSettings = definition.ExecuteInDockerSettings
                              };
             }
 

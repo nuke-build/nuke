@@ -17,7 +17,7 @@ namespace Nuke.Common.Execution
     {
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            if (NukeBuild.IsLocalBuild && ShouldNotify)
+            if (NukeBuild.IsLocalAndEntryExecution && ShouldNotify)
             {
                 Notify();
                 Host.Information("Press any key to continue without update ...");
