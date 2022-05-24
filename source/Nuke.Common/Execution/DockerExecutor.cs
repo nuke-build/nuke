@@ -28,7 +28,7 @@ namespace Nuke.Common.Execution
             return target.ExecuteInDockerSettings != null;
         }
 
-        public static void Execute(NukeBuild build, ExecutableTarget target)
+        public static void Execute(ExecutableTarget target)
         {
             PullImageIfRequired(target);
 

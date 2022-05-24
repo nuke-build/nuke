@@ -141,7 +141,7 @@ namespace Nuke.Common.Execution
         private static void Execute(NukeBuild build, ExecutableTarget target)
         {
             if (DockerExecutor.ShouldRunStepInDocker(target))
-                DockerExecutor.Execute(build, target);
+                DockerExecutor.Execute(target);
             else
                 target.Actions.ForEach(x => x());
         }
