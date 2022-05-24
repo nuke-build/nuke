@@ -42,7 +42,7 @@ namespace Nuke.Common.Execution
         private static void RunDocker(ExecutableTarget target)
         {
             var workingDirectory = GetWorkingDirectory(target.ExecuteInDockerSettings.DockerPlatform);
-            var path = GetPath(target.ExecuteInDockerSettings.DockerPlatform);
+            var path = GetPathToPublishedBuildProject(target.ExecuteInDockerSettings.DockerPlatform);
             var args = GetArgs(target, path, workingDirectory);
             var envFile = GetEnvFile(workingDirectory);
             var volumes = new[] { $"{NukeBuild.RootDirectory}:{workingDirectory}" };
@@ -79,18 +79,18 @@ namespace Nuke.Common.Execution
                    };
         }
 
-        private static string GetPath(string platform)
+        private static string GetPathToPublishedBuildProject(string platform)
         {
-            //todo: mattr: use more native nuke stuff here
-            var isWin = IsWindowsContainer(platform);
-            var workingDirectory = GetWorkingDirectory(platform);
-            var temporaryDirectory = isWin 
-                ? (RelativePath)NukeBuild.RootDirectory.GetWinRelativePathTo(NukeBuild.TemporaryDirectory) 
-                : (RelativePath)NukeBuild.RootDirectory.GetUnixRelativePathTo(NukeBuild.TemporaryDirectory);
+            return PathConstruction.Combine(
+                GetWorkingDirectory(platform), 
+                GetRelativePathToPublishedBuildProject(platform));
+        }
 
-            var separator = isWin ? "\\" : "/"; 
-             
-            return $"{workingDirectory}{separator}{temporaryDirectory}{separator}nukebuild{separator}{Path.GetFileName(NukeBuild.BuildAssembly)}"; 
+        private static RelativePath GetRelativePathToPublishedBuildProject(string platform)
+        {
+            return IsWindowsContainer(platform)
+                ? (RelativePath) NukeBuild.RootDirectory.GetWinRelativePathTo(PublishedBuildDirectory / Path.GetFileName(NukeBuild.BuildAssembly))
+                : (RelativePath) NukeBuild.RootDirectory.GetUnixRelativePathTo(PublishedBuildDirectory / Path.GetFileName(NukeBuild.BuildAssembly));
         }
 
         private static string GetWorkingDirectory(string platform)
@@ -115,17 +115,17 @@ namespace Nuke.Common.Execution
                 var packageId = item.EvaluatedInclude;
                 Log.Information("Inlining {PackageId} {Version} reference from build project", packageId, version);
                 var package = NuGetPackageResolver.GetLocalInstalledPackage(packageId, NukeBuild.BuildProjectFile, version);
-                FileSystemTasks.CopyDirectoryRecursively(package.Directory, NukeBuild.TemporaryDirectory / "nukebuild" / packageId);
+                FileSystemTasks.CopyDirectoryRecursively(package.Directory, PublishedBuildDirectory / packageId);
             }
         }
 
         private static void PublishBuildProject(ExecutableTarget target)
         {
             Log.Information("Publishing a temporary copy of the build project (targeting {Platform}) for use within the docker container", target.ExecuteInDockerSettings.DotNetPublishRuntime);
-            FileSystemTasks.EnsureCleanDirectory(NukeBuild.TemporaryDirectory / "nukebuild");
+            FileSystemTasks.EnsureCleanDirectory(PublishedBuildDirectory);
             DotNetTasks.DotNetPublish(p => p
                 .SetProject(NukeBuild.BuildProjectFile)
-                .SetOutput(NukeBuild.TemporaryDirectory / "nukebuild")
+                .SetOutput(PublishedBuildDirectory)
                 .SetConfiguration("Release")
                 .SetVerbosity(DotNetVerbosity.Quiet)
                 .EnableNoLogo()
@@ -185,5 +185,6 @@ namespace Nuke.Common.Execution
         }
 
         public static string RunningInDockerEnvironmentVariable = "NUKE_RUNNING_IN_DOCKER";
+        private static AbsolutePath PublishedBuildDirectory = NukeBuild.TemporaryDirectory / "nukebuild";
     }
 }
