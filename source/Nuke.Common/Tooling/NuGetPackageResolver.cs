@@ -393,8 +393,6 @@ namespace Nuke.Common.Tooling
             public InstalledPackage(string fileName)
             {
                 FileName = fileName;
-                
-                //mattr: note to self: this is to prevent a 300mb allocation that we often dont use
                 _metadata = new Lazy<NuspecReader>(() => new PackageArchiveReader(fileName).NuspecReader);
             }
 
