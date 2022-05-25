@@ -67,7 +67,7 @@ namespace Nuke.Common.Tooling
         {
             return packagesConfigFile.EndsWithOrdinalIgnoreCase("json")
                 ? GetLocalInstalledPackagesFromAssetsFile(packagesConfigFile, resolveDependencies, preFilter)
-                : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies);
+                : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies, preFilter);
         }
 
         private static IEnumerable<(string PackageId, string Version)> GetLocalInstalledPackagesFromAssetsFileWithoutLoading(
@@ -127,7 +127,8 @@ namespace Nuke.Common.Tooling
         [ItemNotNull]
         private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromConfigFile(
             string packagesConfigFile,
-            bool resolveDependencies = true)
+            bool resolveDependencies = true,
+            Func<(string PackageId, string Version), bool> preFilter = null)
         {
             var packageIds = XmlTasks.XmlPeek(
                     packagesConfigFile,
@@ -148,7 +149,7 @@ namespace Nuke.Common.Tooling
                             : $".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload'][@Include='{packageId}']/@Version")
                     .SelectMany(x => x.Split(';'));
 
-                foreach (var version in versions)
+                foreach (var version in versions.Where(x => preFilter == null || preFilter.Invoke((packageId, x))))
                 {
                     var package = GetGlobalInstalledPackage(packageId, version, packagesConfigFile);
                     if (package == null)
