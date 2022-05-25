@@ -81,7 +81,7 @@ namespace Nuke.Common
 
         internal virtual void WriteSummary(NukeBuild build)
         {
-            if (!NukeBuild.IsDockerExecution)
+            if (NukeBuild.IsDockerExecution)
                 return;
             
             WriteSevereLogEvents(Logging.InMemorySink.Instance.LogEvents);
