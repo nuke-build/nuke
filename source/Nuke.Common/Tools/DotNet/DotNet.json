@@ -402,6 +402,12 @@
             "help": "Directory in which to place the built binaries. You also need to define <c>--framework</c> when you specify this option."
           },
           {
+            "name": "SelfContained",
+            "type": "bool",
+            "format": "--self-contained {value}",
+            "help": "Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>true</c> if a runtime identifier is specified. Available since .NET 6 SDK"
+          },
+          {
             "name": "Runtime",
             "type": "string",
             "format": "--runtime {value}",
