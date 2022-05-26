@@ -15,12 +15,16 @@ using NuGet.Versioning;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
 
 namespace Nuke.Common.Tooling
 {
     [PublicAPI]
     public static class NuGetPackageResolver
     {
+        //TODO: matthias - does this need to be a concurrent dictionary? 
+        private static Dictionary<string, InstalledPackage> cache = new();
+
         [ItemCanBeNull]
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, bool includeUnlisted = false)
         {
@@ -67,7 +71,7 @@ namespace Nuke.Common.Tooling
         {
             return packagesConfigFile.EndsWithOrdinalIgnoreCase("json")
                 ? GetLocalInstalledPackagesFromAssetsFile(packagesConfigFile, resolveDependencies, preFilter)
-                : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies, preFilter);
+                : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies);
         }
 
         private static IEnumerable<(string PackageId, string Version)> GetLocalInstalledPackagesFromAssetsFileWithoutLoading(
@@ -127,8 +131,7 @@ namespace Nuke.Common.Tooling
         [ItemNotNull]
         private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromConfigFile(
             string packagesConfigFile,
-            bool resolveDependencies = true,
-            Func<(string PackageId, string Version), bool> preFilter = null)
+            bool resolveDependencies = true)
         {
             var packageIds = XmlTasks.XmlPeek(
                     packagesConfigFile,
@@ -149,7 +152,7 @@ namespace Nuke.Common.Tooling
                             : $".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload'][@Include='{packageId}']/@Version")
                     .SelectMany(x => x.Split(';'));
 
-                foreach (var version in versions.Where(x => preFilter == null || preFilter.Invoke((packageId, x))))
+                foreach (var version in versions)
                 {
                     var package = GetGlobalInstalledPackage(packageId, version, packagesConfigFile);
                     if (package == null)
@@ -212,6 +215,10 @@ namespace Nuke.Common.Tooling
             [CanBeNull] string packagesConfigFile,
             bool? includePrereleases = null)
         {
+            var cacheKey = $"{packageId}-{versionRange}-{packagesConfigFile}-{includePrereleases}";
+            if (cache.ContainsKey(cacheKey))
+                return cache[cacheKey];
+            
             packageId = packageId.ToLowerInvariant();
             var packagesDirectory = GetPackagesDirectory(packagesConfigFile);
             if (packagesDirectory == null)
@@ -235,9 +242,11 @@ namespace Nuke.Common.Tooling
                 .OrderByDescending(x => x.Version)
                 .ToList();
 
-            return versionRange == null
+            var result = versionRange == null
                 ? candidatePackages.FirstOrDefault()
                 : candidatePackages.SingleOrDefault(x => x.Version == versionRange.FindBestMatch(candidatePackages.Select(y => y.Version)));
+            cache.Add(cacheKey, result);
+            return result;
         }
 
         [CanBeNull]

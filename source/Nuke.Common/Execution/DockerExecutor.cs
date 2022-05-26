@@ -114,7 +114,7 @@ namespace Nuke.Common.Execution
                 var version = item.Metadata.First(x => x.Name == "Version").EvaluatedValue.Replace("[", "").Replace("]", "");
                 var packageId = item.EvaluatedInclude;
                 Log.Information("Inlining {PackageId} {Version} reference from build project", packageId, version);
-                var package = NuGetPackageResolver.GetLocalInstalledPackage(packageId, NukeBuild.BuildProjectFile, version);
+                var package = NuGetPackageResolver.GetLocalInstalledPackage(packageId, NukeBuild.BuildProjectFile, version)!;
                 FileSystemTasks.CopyDirectoryRecursively(package.Directory, PublishedBuildDirectory / packageId);
             }
         }
