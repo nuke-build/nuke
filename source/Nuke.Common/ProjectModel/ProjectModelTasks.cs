@@ -37,11 +37,21 @@ namespace Nuke.Common.ProjectModel
                 var _ = new ProjectCollection();
             }
 
-            MSBuildLocator.RegisterDefaults();
-            TriggerAssemblyResolution();
-            Environment.SetEnvironmentVariable("MSBuildExtensionsPath", msbuildExtensionPath);
-            Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", msbuildExePath);
-            Environment.SetEnvironmentVariable("MSBuildSDKsPath", msbuildSdkPath);
+            try
+            {
+                MSBuildLocator.RegisterDefaults();
+                TriggerAssemblyResolution();
+            }
+            catch (Exception exception)
+            {
+                Log.Warning("Could not register MSBuild: {Message}", exception.Message);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("MSBuildExtensionsPath", msbuildExtensionPath);
+                Environment.SetEnvironmentVariable("MSBUILD_EXE_PATH", msbuildExePath);
+                Environment.SetEnvironmentVariable("MSBuildSDKsPath", msbuildSdkPath);
+            }
         }
 
         public static Solution CreateSolution(string fileName = null, params Solution[] solutions)
