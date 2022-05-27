@@ -8,6 +8,8 @@ using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Locator;
+using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Serilog;
@@ -32,6 +34,31 @@ namespace Nuke.Common.ProjectModel
             var msbuildExePath = Environment.GetEnvironmentVariable("MSBUILD_EXE_PATH");
             var msbuildSdkPath = Environment.GetEnvironmentVariable("MSBuildSDKsPath");
 
+            static void RegisterMSBuildFromDotNet()
+            {
+                var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
+                             ToolPathResolver.GetPathExecutable("dotnet");
+
+                string TryFromBasePath()
+                {
+                    var output = ProcessTasks.StartProcess(dotnet, "--info", logInvocation: false, logOutput: false).AssertZeroExitCode().Output;
+                    return output
+                        .Select(x => x.Text.Trim())
+                        .SingleOrDefault(x => x.StartsWith("Base Path:"))
+                        ?.TrimStart("Base Path:").Trim();
+                }
+
+                string TryFromSdkList()
+                {
+                    var output = ProcessTasks.StartProcess(dotnet, "--list-sdks", logInvocation: false, logOutput: false).AssertZeroExitCode().Output;
+                    var latestInstalledSdkParts = output.Last().Text.Split(' ');
+                    return (AbsolutePath)latestInstalledSdkParts.ElementAt(1).Trim('[', ']') / latestInstalledSdkParts.ElementAt(0);
+                }
+
+                var sdkDirectory = (AbsolutePath)(TryFromBasePath() ?? TryFromSdkList());
+                MSBuildLocator.RegisterMSBuildPath(sdkDirectory);
+            }
+
             static void TriggerAssemblyResolution()
             {
                 var _ = new ProjectCollection();
@@ -39,7 +66,16 @@ namespace Nuke.Common.ProjectModel
 
             try
             {
-                MSBuildLocator.RegisterDefaults();
+                try
+                {
+                    MSBuildLocator.RegisterDefaults();
+                }
+                catch (Exception)
+                {
+                    Log.Warning($"Attempting second-chance registration of MSBuild after {nameof(MSBuildLocator.RegisterDefaults)} failed");
+                    RegisterMSBuildFromDotNet();
+                }
+
                 TriggerAssemblyResolution();
             }
             catch (Exception exception)
