@@ -115,7 +115,7 @@ namespace Nuke.Common
         [AssertionMethod]
         public static void NotEmpty<T>(
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
-            ICollection<T> collection,
+            IReadOnlyCollection<T> collection,
             string message = null,
             [CallerArgumentExpression("collection")]
             string argumentExpression = null)
@@ -127,7 +127,7 @@ namespace Nuke.Common
         [AssertionMethod]
         public static void Empty<T>(
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
-            ICollection<T> collection,
+            IReadOnlyCollection<T> collection,
             string message = null,
             [CallerArgumentExpression("collection")]
             string argumentExpression = null)
@@ -139,7 +139,7 @@ namespace Nuke.Common
         [AssertionMethod]
         public static void Count<T>(
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
-            ICollection<T> collection,
+            IReadOnlyCollection<T> collection,
             int length,
             string message = null,
             [CallerArgumentExpression("collection")]
@@ -152,7 +152,7 @@ namespace Nuke.Common
         [AssertionMethod]
         public static void HasSingleItem<T>(
             [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
-            ICollection<T> collection,
+            IReadOnlyCollection<T> collection,
             string message = null,
             [CallerArgumentExpression("collection")]
             string argumentExpression = null)
