@@ -1836,6 +1836,12 @@
         "baseClass": "KubernetesToolSettings",
         "properties": [
           {
+            "name": "Kustomize",
+            "type": "string",
+            "format": "{value}",
+            "help": "Set the target folder of the kustomize files."
+          },
+          {
             "name": "All",
             "type": "bool",
             "format": "--all={value}",
