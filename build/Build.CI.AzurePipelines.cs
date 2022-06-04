@@ -17,6 +17,7 @@ using Nuke.Components;
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.MacOsLatest,
     PullRequestsDisabled = true,
+    Submodules = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(DownloadLicenses), nameof(ICompile.Compile), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) },

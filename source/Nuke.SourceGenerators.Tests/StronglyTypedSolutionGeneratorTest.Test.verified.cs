@@ -15,6 +15,7 @@ internal class Solution : Nuke.Common.ProjectModel.Solution
     public Project Nuke_Components => SolutionFolder.GetProject("Nuke.Components");
     public Project Nuke_SourceGenerators => SolutionFolder.GetProject("Nuke.SourceGenerators");
     public Project Nuke_SourceGenerators_Tests => SolutionFolder.GetProject("Nuke.SourceGenerators.Tests");
+    public Project Spectre_Console => SolutionFolder.GetProject("Spectre.Console");
     public _misc misc => new(SolutionFolder.GetSolutionFolder("misc"));
     internal class _misc
     {

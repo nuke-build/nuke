@@ -8,6 +8,7 @@ using Nuke.Components;
 [AppVeyor(
     suffix: null,
     AppVeyorImage.VisualStudio2022,
+    Submodules = true,
     BranchesOnly = new[] { MasterBranch, $"/{ReleaseBranchPrefix}\\/*/" },
     SkipTags = true,
     InvokedTargets = new[] { nameof(IPack.Pack), nameof(ITest.Test), nameof(ISignPackages.SignPackages), nameof(IPublish.Publish) },
@@ -28,6 +29,7 @@ using Nuke.Components;
     AppVeyorImage.VisualStudioLatest,
     AppVeyorImage.UbuntuLatest,
     AppVeyorImage.MacOsLatest,
+    Submodules = true,
     BranchesExcept = new[] { MasterBranch, $"/{ReleaseBranchPrefix}\\/*/" },
     SkipTags = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
