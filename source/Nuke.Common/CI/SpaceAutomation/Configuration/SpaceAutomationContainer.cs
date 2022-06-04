@@ -19,6 +19,7 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
         public Dictionary<string, string> Imports { get; set; }
         public string BuildScript { get; set; }
         public string[] InvokedTargets { get; set; }
+        public bool Submodules { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
@@ -29,7 +30,13 @@ namespace Nuke.Common.CI.SpaceAutomation.Configuration
 
                 using (writer.WriteBlock("shellScript"))
                 {
-                    writer.WriteLine($"content = {$"./{BuildScript} {InvokedTargets.JoinSpace()}".DoubleQuote()}");
+                    var scriptContent = new List<string>();
+                    if (Submodules)
+                        scriptContent.Add("git submodule update --init --recursive");
+
+                    scriptContent.Add($"./{BuildScript} {InvokedTargets.JoinSpace()}");
+
+                    writer.WriteArray("content", scriptContent.ToArray());
                 }
             }
         }
