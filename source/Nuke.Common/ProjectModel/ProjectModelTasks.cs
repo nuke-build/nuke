@@ -24,6 +24,7 @@ namespace Nuke.Common.ProjectModel
             Initialize();
         }
 
+        // TODO: Remove usages
         // https://docs.microsoft.com/en-us/visualstudio/msbuild/updating-an-existing-application?view=vs-2019#use-microsoftbuildlocator
         public static void Initialize()
         {
