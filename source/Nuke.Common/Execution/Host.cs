@@ -28,7 +28,7 @@ namespace Nuke.Common
             Instance = this;
         }
 
-        internal virtual IHostTheme Theme => DefaultTheme;
+        internal virtual IHostTheme Theme => Logging.DefaultTheme;
 
         internal virtual string OutputTemplate => DefaultOutputTemplate;
 

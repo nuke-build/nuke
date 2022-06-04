@@ -9,6 +9,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using Nuke.Common;
+using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
@@ -22,6 +23,9 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int Update(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
+            PrintInfo();
+            Logging.Configure();
+
             Assert.NotNull(rootDirectory);
 
             if (buildScript != null)

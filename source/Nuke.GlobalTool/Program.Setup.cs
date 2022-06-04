@@ -42,6 +42,7 @@ namespace Nuke.GlobalTool
         public static int Setup(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
             PrintInfo();
+            Logging.Configure();
             Telemetry.SetupBuild();
 
             AnsiConsole.WriteLine();

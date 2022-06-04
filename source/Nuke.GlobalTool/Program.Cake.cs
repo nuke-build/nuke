@@ -29,6 +29,8 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int CakeConvert(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
+            PrintInfo();
+            Logging.Configure();
             Telemetry.ConvertCake();
             ProjectModelTasks.Initialize();
 
