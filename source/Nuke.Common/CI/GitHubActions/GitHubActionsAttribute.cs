@@ -77,7 +77,7 @@ namespace Nuke.Common.CI.GitHubActions
             get => throw new NotSupportedException();
         }
 
-        public uint? FetchDepth
+        public uint FetchDepth
         {
             set => _fetchDepth = value;
             get => throw new NotSupportedException();
