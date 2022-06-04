@@ -47,12 +47,12 @@ namespace Nuke.GlobalTool
                 }.JoinNewLine());
 
             Host.Debug();
-            if (!UserConfirms("Continue?"))
+            if (!PromptForConfirmation("Continue?"))
                 return 0;
             Host.Debug();
 
             if (buildScript == null &&
-                UserConfirms("Should a NUKE project be created for better results?"))
+                PromptForConfirmation("Should a NUKE project be created for better results?"))
             {
                 Setup(args, rootDirectory: null, buildScript: null);
             }
@@ -86,7 +86,7 @@ namespace Nuke.GlobalTool
             Host.Information("Found .cake files:");
             cakeFiles.ForEach(x => Host.Debug($"  - {x}"));
 
-            if (UserConfirms("Delete?"))
+            if (PromptForConfirmation("Delete?"))
                 cakeFiles.ForEach(FileSystemTasks.DeleteFile);
 
             return 0;

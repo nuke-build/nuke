@@ -11,6 +11,7 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
+using Spectre.Console;
 
 namespace Nuke.GlobalTool
 {
@@ -43,7 +44,7 @@ namespace Nuke.GlobalTool
 
         private static void PrintInfo()
         {
-            Host.Information($"NUKE Global Tool {typeof(Program).Assembly.GetInformationalText()}");
+            Host.Information($"NUKE Global Tool 🌐 {typeof(Program).Assembly.GetInformationalText()}");
         }
 
         [CanBeNull]
@@ -86,7 +87,7 @@ namespace Nuke.GlobalTool
                     ? $"{Constants.NukeDirectoryName} directory/file"
                     : "build.ps1/sh files";
 
-                return UserConfirms($"Could not find {missingItem}. Do you want to setup a build?")
+                return PromptForConfirmation($"Could not find {missingItem}. Do you want to setup a build?")
                     ? Setup(new string[0], rootDirectory, buildScript: null)
                     : 0;
             }
@@ -116,16 +117,74 @@ namespace Nuke.GlobalTool
             return Process.Start(startInfo).NotNull();
         }
 
-        private static bool UserConfirms(string question)
+        private static void ShowInput(string emoji, string title, string value)
         {
-            ConsoleKey response;
-            do
-            {
-                Host.Debug($"{question} [y/n]");
-                response = Console.ReadKey(intercept: true).Key;
-            } while (response != ConsoleKey.Y && response != ConsoleKey.N);
+            AnsiConsole.MarkupLine($":{emoji}:  {$"{title}:",-25} [turquoise2 bold]{value}[/]");
+        }
 
-            return response == ConsoleKey.Y;
+        private static void ShowCompletion(string title)
+        {
+            AnsiConsole.WriteLine();
+            AnsiConsole.MarkupLine($"[bold green]{title} completed![/] :party_popper:");
+        }
+
+        private static void ClearPreviousLine()
+        {
+            AnsiConsole.Cursor.MoveUp();
+            Console.WriteLine(new string(c: ' ', Console.WindowWidth));
+            AnsiConsole.Cursor.MoveUp();
+        }
+
+        private static bool PromptForConfirmation(string question)
+        {
+            return AnsiConsole.Confirm(question);
+        }
+
+        private static string PromptForInput(string question, string defaultValue = null)
+        {
+            return AnsiConsole.Prompt(
+                new TextPrompt<string>(question)
+                    .DefaultValue(defaultValue));
+        }
+
+        private static string PromptForSecret(string title, int? minLength = null)
+        {
+            Assert.False(title.EndsWith(':'));
+
+            return AnsiConsole.Prompt(
+                new TextPrompt<string>($"{title}:")
+                    .Secret()
+                    .Validate(x => minLength == null || x.Length >= minLength,
+                        message: $"Secret must be at least {minLength} characters long"));
+        }
+
+        private static T PromptForChoice<T>(string question, params (T Value, string Description)[] choices)
+        {
+            var choice = AnsiConsole.Prompt(
+                new SelectionPrompt<T>()
+                    .Title(question)
+                    .HighlightStyle(new Style(Color.Turquoise2))
+                    .UseConverter(x => choices.Single(y => Equals(x, y.Value)).Description)
+                    .AddChoices(choices.Select(x => x.Value)));
+            return choice;
+        }
+
+        private static void ConfirmExecution(string title, Action action)
+        {
+            Assert.False(title.EndsWith('?'));
+
+            var confirmation = PromptForConfirmation($"{title}?");
+            ClearPreviousLine();
+
+            if (confirmation)
+            {
+                AnsiConsole.MarkupLine($":hourglass_not_done:  {title} ...");
+                action.Invoke();
+                ClearPreviousLine();
+            }
+
+            var (emoji, color) = confirmation ? ("check_mark", "green") : ("multiply", "red");
+            AnsiConsole.MarkupLine($"[{color}]:{emoji}:[/]  {title}");
         }
     }
 }

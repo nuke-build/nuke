@@ -89,7 +89,7 @@ namespace Nuke.GlobalTool
                     .Select(x => (x, EnvironmentInfo.WorkingDirectory.GetRelativePathTo(x).ToString()))
                     .OrderBy(x => x.Item2).ToArray();
 
-                return ConsoleUtility.PromptForChoice("Where to go next?", directories);
+                return PromptForChoice("Where to go next?", directories);
             });
         }
 

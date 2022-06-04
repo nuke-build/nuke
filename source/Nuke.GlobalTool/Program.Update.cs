@@ -2,6 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,18 +26,14 @@ namespace Nuke.GlobalTool
 
             if (buildScript != null)
             {
-                if (UserConfirms("Update build scripts?"))
-                    UpdateBuildScripts(rootDirectory, buildScript);
-
-                if (UserConfirms("Update build project?"))
-                    UpdateBuildProject(buildScript);
+                ConfirmExecution("Update build scripts", () => UpdateBuildScripts(rootDirectory, buildScript));
+                ConfirmExecution("Update build project", () => UpdateBuildProject(buildScript));
             }
 
-            if (UserConfirms("Update configuration file?"))
-                UpdateConfigurationFile(rootDirectory);
+            ConfirmExecution("Update configuration file", () => UpdateConfigurationFile(rootDirectory));
+            ConfirmExecution("Update global.json", () => UpdateGlobalJsonFile(rootDirectory));
 
-            if (UserConfirms("Update global.json?"))
-                UpdateGlobalJsonFile(rootDirectory);
+            ShowCompletion("Updates");
 
             return 0;
         }

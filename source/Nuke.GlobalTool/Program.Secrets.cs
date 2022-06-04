@@ -51,7 +51,7 @@ namespace Nuke.GlobalTool
 
             if (EnvironmentInfo.IsOsx && existingSecrets.Count == 0 && !fromCredentialStore)
             {
-                if (generatedPassword || UserConfirms($"Save password to keychain? (associated with '{rootDirectory}')"))
+                if (generatedPassword || PromptForConfirmation($"Save password to keychain? (associated with '{rootDirectory}')"))
                     SavePasswordToCredentialStore(credentialStoreName, password);
             }
 
@@ -62,14 +62,13 @@ namespace Nuke.GlobalTool
             var addedSecrets = new Dictionary<string, string>();
             while (true)
             {
-                var choice = ConsoleUtility.PromptForChoice(
+                var choice = PromptForChoice(
                     "Choose secret parameter to enter value:",
                     options.Select(x => (x, addedSecrets.ContainsKey(x) || existingSecrets.ContainsKey(x) ? $"* {x}" : x)).ToArray());
 
                 if (!choice.EqualsAnyOrdinalIgnoreCase(SaveAndExit, DiscardAndExit, DeletePasswordAndExit))
                 {
-                    Host.Information($"Enter secret for {choice}:");
-                    addedSecrets[choice] = ConsoleUtility.ReadSecret();
+                    addedSecrets[choice] = PromptForSecret(choice);
                 }
                 else
                 {

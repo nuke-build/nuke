@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
+    <ProjectReference Include="..\..\external\spectre.console\src\Spectre.Console\Spectre.Console.csproj" />
   </ItemGroup>
 
   <ItemGroup>
