@@ -90,7 +90,7 @@ namespace Nuke.Components
                 .SetCoverletOutputFormat(CoverletOutputFormat.cobertura)
                 .SetExcludeByFile("*.Generated.cs")
                 .When(TeamCity.Instance is not null, _ => _
-                    .SetCoverletOutputFormat((CoverletOutputFormat) $"\\\"{CoverletOutputFormat.cobertura},{CoverletOutputFormat.teamcity}\\\""))
+                    .SetCoverletOutputFormat($"\\\"{CoverletOutputFormat.cobertura},{CoverletOutputFormat.teamcity}\\\""))
                 .When(IsServerBuild, _ => _
                     .EnableUseSourceLink()));
 

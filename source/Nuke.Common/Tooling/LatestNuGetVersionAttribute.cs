@@ -30,7 +30,7 @@ namespace Nuke.Common.Tooling
             var result = NuGetPackageResolver.GetLatestPackageVersion(_packageId, IncludePrerelease, IncludeUnlisted)
                 .GetAwaiter().GetResult();
             return member.GetMemberType() == typeof(string)
-                ? (object) result
+                ? result
                 : NuGetVersion.Parse(result);
         }
     }
