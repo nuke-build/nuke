@@ -57,21 +57,22 @@ namespace Nuke.Common
         /// <summary>
         /// Returns whether the operating system is running under Windows Subsystem for Linux.
         /// </summary>
-        public static bool IsWsl { get; } = GetIsWsl();
-
-        private static bool GetIsWsl()
+        public static bool IsWsl
         {
-            if (!IsLinux)
-                return false;
+            get
+            {
+                if (!IsLinux)
+                    return false;
 
-            try
-            {
-                var version = File.ReadAllText("/proc/version");
-                return version.ContainsOrdinalIgnoreCase("Microsoft");
-            }
-            catch (IOException)
-            {
-                return false;
+                try
+                {
+                    var version = File.ReadAllText("/proc/version");
+                    return version.ContainsOrdinalIgnoreCase("Microsoft");
+                }
+                catch (IOException)
+                {
+                    return false;
+                }
             }
         }
 
