@@ -42,7 +42,7 @@ namespace Nuke.Common.Execution
             var builder = new StringBuilder();
 
             var parameters = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false);
-            var padRightParameter = Math.Max(parameters.Max(x => x.Name.Length), val2: 16);
+            var padRightParameter = Math.Max(parameters.Max(x => ParameterService.GetParameterDashedName(x).Length), val2: 16);
 
             void PrintParameter(MemberInfo parameter)
             {
