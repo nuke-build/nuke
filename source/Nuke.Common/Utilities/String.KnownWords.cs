@@ -16,7 +16,8 @@ namespace Nuke.Common.Utilities
             "ReSharper",
             "AppVeyor",
             "TeamCity",
-            "GitLab"
+            "GitLab",
+            "SignPath"
         };
     }
 }
