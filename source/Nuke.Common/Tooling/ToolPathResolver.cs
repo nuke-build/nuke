@@ -165,6 +165,9 @@ namespace Nuke.Common.Tooling
 
         public static string GetPathExecutable(string pathExecutable)
         {
+            if (EnvironmentInfo.IsLinux && pathExecutable == "bash")
+                return "/bin/bash";
+
             var locateExecutable = EnvironmentInfo.IsWin
                 ? @"C:\Windows\System32\where.exe"
                 : "/usr/bin/which";
