@@ -15,8 +15,14 @@
   <PropertyGroup>
     <NukeTasksEnabled Condition="'$(NukeTasksEnabled)' == ''">False</NukeTasksEnabled>
     <NukeTasksDirectory>$(MSBuildThisFileDirectory)\..\source\Nuke.MSBuildTasks\bin\Debug\netcoreapp2.1\publish</NukeTasksDirectory>
+
 <!--    <PackAsTool>True</PackAsTool>-->
 <!--    <ToolCommandName>build</ToolCommandName>-->
+
+<!--    <PublishSingleFile>True</PublishSingleFile>-->
+<!--    <SelfContained>True</SelfContained>-->
+<!--    <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>-->
+<!--    <InvariantGlobalization>True</InvariantGlobalization>-->
   </PropertyGroup>
 
   <!-- Test properties for external files -->
