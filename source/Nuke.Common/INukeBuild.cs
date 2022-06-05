@@ -35,6 +35,7 @@ namespace Nuke.Common
 
         AbsolutePath RootDirectory { get; }
         AbsolutePath TemporaryDirectory { get; }
+        AbsolutePath BuildAssemblyFile { get; }
         AbsolutePath BuildAssemblyDirectory { get; }
         [CanBeNull] AbsolutePath BuildProjectDirectory { get; }
         [CanBeNull] AbsolutePath BuildProjectFile { get; }

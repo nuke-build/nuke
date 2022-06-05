@@ -13,6 +13,7 @@ namespace Nuke.Common
     {
         AbsolutePath INukeBuild.RootDirectory => RootDirectory;
         AbsolutePath INukeBuild.TemporaryDirectory => TemporaryDirectory;
+        AbsolutePath INukeBuild.BuildAssemblyFile => BuildAssemblyFile;
         AbsolutePath INukeBuild.BuildAssemblyDirectory => BuildAssemblyDirectory;
         AbsolutePath INukeBuild.BuildProjectDirectory => BuildProjectDirectory;
         AbsolutePath INukeBuild.BuildProjectFile => BuildProjectFile;
