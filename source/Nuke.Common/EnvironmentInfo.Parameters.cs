@@ -23,6 +23,11 @@ namespace Nuke.Common
             Environment.SetEnvironmentVariable(name, value);
         }
 
+        public static void SetVariable<T>(string name, T value)
+        {
+            SetVariable(name, value.ToString());
+        }
+
         [CanBeNull]
         public static T GetParameter<T>(string name, char? separator = null)
         {
