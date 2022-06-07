@@ -160,7 +160,7 @@ namespace Nuke.Common.Git
             return (protocol, match.Groups["endpoint"].Value, match.Groups["identifier"].Value);
         }
 
-        private static (GitProtocol Protocol, string Endpoint, string Identifier) GetRemoteConnectionFromConfig(string gitDirectory, string remote)
+        private static (GitProtocol? Protocol, string Endpoint, string Identifier) GetRemoteConnectionFromConfig(string gitDirectory, string remote)
         {
             var configFile = Path.Combine(gitDirectory, "config");
             var configFileContent = File.ReadAllLines(configFile);
@@ -173,11 +173,14 @@ namespace Nuke.Common.Git
                 ?.Split('=').ElementAt(1)
                 .Trim();
 
+            if (url == null)
+                return (null, null, null);
+
             return GetRemoteConnectionFromUrl(url);
         }
 
         public GitRepository(
-            GitProtocol protocol,
+            GitProtocol? protocol,
             string endpoint,
             string identifier,
             string branch,
@@ -201,7 +204,7 @@ namespace Nuke.Common.Git
         }
 
         /// <summary>Default protocol for the repository.</summary>
-        public GitProtocol Protocol { get; private set; }
+        public GitProtocol? Protocol { get; private set; }
 
         /// <summary>Endpoint for the repository. For instance <em>github.com</em>.</summary>
         public string Endpoint { get; private set; }
