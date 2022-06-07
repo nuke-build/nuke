@@ -38,24 +38,32 @@ namespace Nuke.Common.CI.TeamCity
             var lines = File.ReadAllLines(file);
             var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-            for (var i = 0; i < lines.Length; i++)
+            try
             {
-                var line = lines[i]
-                    .Replace("\\:", ":")
-                    .Replace("\\=", "=")
-                    .Replace("\\\\", "\\");
-                if (string.IsNullOrWhiteSpace(line) || line[index: 0] == '#')
-                    continue;
+                for (var i = 0; i < lines.Length; i++)
+                {
+                    var line = lines[i]
+                        .Replace("\\:", ":")
+                        .Replace("\\=", "=")
+                        .Replace("\\\\", "\\");
+                    if (string.IsNullOrWhiteSpace(line) || line[index: 0] == '#')
+                        continue;
 
-                var index = line.IndexOfRegex(@"[^\.]=") + 1;
-                var key = line.Substring(startIndex: 0, length: index)
-                    .Replace("secure:", string.Empty);
-                var value = line.Substring(index + 1);
+                    var index = line.IndexOfRegex(@"[^\.]=") + 1;
+                    var key = line.Substring(startIndex: 0, length: index)
+                        .Replace("secure:", string.Empty);
+                    var value = line.Substring(index + 1);
 
-                dictionary.Add(key, value);
+                    dictionary.Add(key, value);
+                }
+
+                return dictionary;
             }
-
-            return dictionary;
+            catch (Exception exception)
+            {
+                Log.Warning(exception, "Could not parse dictionary from {File}", file);
+                return null;
+            }
         }
 
         private readonly Action<string> _messageSink;
