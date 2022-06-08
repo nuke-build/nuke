@@ -49,10 +49,7 @@ namespace Nuke.Common.Execution
                 ToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
 
                 if (!build.NoLogo)
-                    NukeBuild.Host.WriteLogo();
-
-                Host.Information($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
-                Host.Information();
+                    build.WriteLogo();
 
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,
@@ -99,7 +96,7 @@ namespace Nuke.Common.Execution
                     };
                 }
 
-                NukeBuild.Host.WriteSummary(build);
+                build.WriteSummary();
                 build.ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
             }
         }

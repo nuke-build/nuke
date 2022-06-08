@@ -101,7 +101,7 @@ namespace Nuke.Common.Execution
             }
 
             using (Logging.SetTarget(target.Name))
-            using (NukeBuild.Host.WriteBlock(target.Name))
+            using (build.WriteTarget(target.Name))
             {
                 target.Stopwatch.Start();
                 target.Status = ExecutionStatus.Running;
