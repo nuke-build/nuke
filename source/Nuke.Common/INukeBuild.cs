@@ -45,8 +45,8 @@ namespace Nuke.Common
         bool Plan { get; }
         bool Help { get; }
         bool NoLogo { get; }
-        bool IsLocalBuild {get;}
-        bool IsServerBuild {get;}
+        bool IsLocalBuild { get; }
+        bool IsServerBuild { get; }
         bool Continue { get; }
         Partition Partition { get; }
 
