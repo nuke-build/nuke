@@ -80,7 +80,7 @@ namespace Nuke.Common
             {
                 throw new ArgumentException(
                     message ?? $"Expected object of type '{typeof(T).FullName}' to be not null",
-                    argumentExpression);
+                    message == null ? argumentExpression : null);
             }
 
             return obj;
@@ -146,7 +146,7 @@ namespace Nuke.Common
             string argumentExpression = null)
         {
             if (collection.NotNull(argumentExpression: argumentExpression).Count != length)
-                throw new ArgumentException(message ?? $"Expected collection to have length of {length}");
+                throw new ArgumentException(message ?? $"Expected collection to have length of {length}", message == null ? argumentExpression : null);
         }
 
         [AssertionMethod]
@@ -163,13 +163,13 @@ namespace Nuke.Common
         public static void FileExists(string path, string message = null, [CallerArgumentExpression("path")] string argumentExpression = null)
         {
             if (!File.Exists(path.NotNull(argumentExpression)))
-                throw new ArgumentException(message ?? $"Expected file to exist: {path}");
+                throw new ArgumentException(message ?? $"Expected file to exist: {path}", message == null ? argumentExpression : null);
         }
 
         public static void DirectoryExists(string path, string message = null, [CallerArgumentExpression("path")] string argumentExpression = null)
         {
             if (!Directory.Exists(path.NotNull(argumentExpression)))
-                throw new ArgumentException(message ?? $"Expected directory to exist: {path}");
+                throw new ArgumentException(message ?? $"Expected directory to exist: {path}", message == null ? argumentExpression : null);
         }
     }
 }
