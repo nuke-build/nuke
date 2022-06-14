@@ -17,8 +17,8 @@ namespace Nuke.Common.Execution
         {
             if (build.Help || executionPlan.Count == 0)
             {
-                Host.Information(HelpTextService.GetTargetsText(build.ExecutableTargets));
-                Host.Information(HelpTextService.GetParametersText(build));
+                Host.Debug(HelpTextService.GetTargetsText(build.ExecutableTargets));
+                Host.Debug(HelpTextService.GetParametersText(build));
             }
 
             if (build.Plan)

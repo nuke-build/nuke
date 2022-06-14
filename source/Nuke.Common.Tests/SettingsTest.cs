@@ -11,6 +11,7 @@ using Nuke.Common.Tools.OpenCover;
 using Nuke.Common.Tools.Xunit;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities;
 using Xunit;
 
@@ -24,6 +25,23 @@ namespace Nuke.Common.Tests
             where T : ToolSettings, new()
         {
             configurator.Invoke(new T()).GetProcessArguments().RenderForOutput().Should().Be(arguments);
+        }
+
+        [Fact]
+        public void TestCommon()
+        {
+            var settings = new DotNetRunSettings()
+                .SetProcessToolPath("/path/to/dotnet")
+                .SetProcessEnvironmentVariable("key", "value")
+                .SetProcessExecutionTimeout(1_000)
+                .SetProcessArgumentConfigurator(_ => _
+                    .Add("/switch"))
+                .EnableProcessLogInvocation();
+
+            settings.ProcessToolPath.Should().Be("/path/to/dotnet");
+            settings.ProcessEnvironmentVariables.Should().ContainSingle(x => x.Key == "key" && x.Value == "value");
+            settings.ProcessExecutionTimeout.Should().Be(1_000);
+            settings.ProcessArgumentConfigurator.Invoke(new Arguments()).RenderForOutput().Should().Be("/switch");
         }
 
         [Fact]

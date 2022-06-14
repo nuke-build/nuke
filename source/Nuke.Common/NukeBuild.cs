@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.Execution;
@@ -51,6 +52,7 @@ namespace Nuke.Common
     [GenerateBuildServerConfigurations(Priority = 50)]
     [InvokeBuildServerConfigurationGeneration(Priority = 45)]
     [UnsetVisualStudioEnvironmentVariables]
+    [HandleSingleFileExecution(Priority = -50)]
     // [SaveBuildProfile(Priority = 30)]
     // [LoadBuildProfiles(Priority = 25)]
     // After logo
@@ -162,6 +164,14 @@ namespace Nuke.Common
         protected internal virtual string NuGetAssetsConfigFile =>
             BuildProjectDirectory != null
                 ? BuildProjectDirectory / "obj" / "project.assets.json"
+                : null;
+
+        [CanBeNull]
+        protected internal virtual string EmbeddedPackagesDirectory =>
+            BuildProjectFile == null
+                ? Assembly.GetEntryAssembly().NotNull().Location != string.Empty
+                    ? BuildAssemblyDirectory
+                    : GlobalNukeDirectory / "packages"
                 : null;
 
         internal IEnumerable<string> TargetNames => ExecutableTargetFactory.GetTargetProperties(GetType()).Select(x => x.GetDisplayShortName());

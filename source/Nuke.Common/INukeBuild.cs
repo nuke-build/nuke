@@ -35,6 +35,7 @@ namespace Nuke.Common
 
         AbsolutePath RootDirectory { get; }
         AbsolutePath TemporaryDirectory { get; }
+        AbsolutePath BuildAssemblyFile { get; }
         AbsolutePath BuildAssemblyDirectory { get; }
         [CanBeNull] AbsolutePath BuildProjectDirectory { get; }
         [CanBeNull] AbsolutePath BuildProjectFile { get; }
@@ -44,8 +45,8 @@ namespace Nuke.Common
         bool Plan { get; }
         bool Help { get; }
         bool NoLogo { get; }
-        bool IsLocalBuild {get;}
-        bool IsServerBuild {get;}
+        bool IsLocalBuild { get; }
+        bool IsServerBuild { get; }
         bool Continue { get; }
         Partition Partition { get; }
 

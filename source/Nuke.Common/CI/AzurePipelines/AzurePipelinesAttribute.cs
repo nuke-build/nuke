@@ -254,7 +254,7 @@ namespace Nuke.Common.CI.AzurePipelines
             static string GetArtifactPath(AbsolutePath path)
                 => NukeBuild.RootDirectory.Contains(path)
                     ? NukeBuild.RootDirectory.GetUnixRelativePathTo(path)
-                    : (string) path;
+                    : path;
 
             var publishedArtifacts = executableTarget.ArtifactProducts
                 .Select(x => (AbsolutePath) x)

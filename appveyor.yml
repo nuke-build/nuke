@@ -24,6 +24,9 @@ branches:
 
 skip_tags: true
 
+install:
+  - git submodule update --init --recursive
+
 build_script:
   - cmd: .\build.cmd Pack Test SignPackages Publish
   - sh: ./build.cmd Pack Test SignPackages Publish

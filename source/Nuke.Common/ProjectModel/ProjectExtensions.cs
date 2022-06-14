@@ -13,6 +13,11 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public static class ProjectExtensions
     {
+        static ProjectExtensions()
+        {
+            ProjectModelTasks.Initialize();
+        }
+
         public static Microsoft.Build.Evaluation.Project GetMSBuildProject(
             this Project project,
             string configuration = null,

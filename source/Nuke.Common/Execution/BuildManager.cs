@@ -44,17 +44,12 @@ namespace Nuke.Common.Execution
                 build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
                 build.ExecuteExtension<IOnBuildCreated>(x => x.OnBuildCreated(build, build.ExecutableTargets));
 
-                ToolPathResolver.EmbeddedPackagesDirectory = NukeBuild.BuildProjectFile == null
-                    ? Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
-                    : null;
+                ToolPathResolver.EmbeddedPackagesDirectory = build.EmbeddedPackagesDirectory;
                 ToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
                 ToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
 
                 if (!build.NoLogo)
-                    NukeBuild.Host.WriteLogo();
-
-                Host.Information($"NUKE Execution Engine {typeof(BuildManager).Assembly.GetInformationalText()}");
-                Host.Information();
+                    build.WriteLogo();
 
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,
@@ -101,7 +96,7 @@ namespace Nuke.Common.Execution
                     };
                 }
 
-                NukeBuild.Host.WriteSummary(build);
+                build.WriteSummary();
                 build.ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
             }
         }

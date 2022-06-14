@@ -15,6 +15,9 @@ using Serilog;
 namespace Nuke.Common.Execution
 {
     [PublicAPI]
+    [Obsolete("This attribute solely checks whether solutions have active build configurations for the build project, " +
+              "which leads to an error because the build project cannot be compiled again while executing. " +
+              $"The sanity check is now integrated in the {nameof(SolutionAttribute)}")]
     public class CheckBuildProjectConfigurationsAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
         public int TimeoutInMilliseconds { get; set; } = 500;

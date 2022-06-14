@@ -1,4 +1,5 @@
-<img width="400px" src="https://github.com/nuke-build/nuke/raw/develop/images/logo-black.png" />
+<img width="400px" src="https://github.com/nuke-build/nuke/raw/develop/images/logo-black.png#gh-light-mode-only" />
+<img width="400px" src="https://github.com/nuke-build/nuke/raw/develop/images/logo-white.png#gh-dark-mode-only" />
 
 > The AKEless Build System for C#/.NET
 
@@ -70,7 +71,7 @@ NUKE builds and tests itself on several different CI servers, which helps ensuri
 
 - [ASP.NET Boilerplate](https://aspnetboilerplate.com/) <sup><a href="https://github.com/aspnetboilerplate/aspnetboilerplate">1</a></sup>
 - [AvaloniaUI](https://avaloniaui.net/) <sup><a href="https://github.com/AvaloniaUI/Avalonia">1</a></sup>
-- **[Aviva Solutions Inc.](https://www.avivasolutions.com/)** <sup><a href="https://github.com/avivasolutionsnl/sitecore-commerce-docker">1</a> <a href="https://github.com/avivasolutionsnl/sitecore-docker">2</a></sup>
+- **[Aviva Solutions B.V.](https://www.avivasolutions.nl/)** <sup><a href="https://github.com/avivasolutionsnl/sitecore-commerce-docker">1</a> <a href="https://github.com/avivasolutionsnl/sitecore-docker">2</a></sup>
 - [ChilliCream](https://chillicream.com/) <sup><a href="https://github.com/ChilliCream/hotchocolate">1</a></sup>
 - [CsvHelper](https://joshclose.github.io/CsvHelper/) <sup><a href="https://github.com/JoshClose/CsvHelper">1</a></sup>
 - [DNN Community](https://dnncommunity.org/) <sup><a href="https://github.com/DNNCommunity/Dnn.ModuleCreator">1</a></sup>
@@ -101,6 +102,7 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Anton Wieslander](https://avatars.githubusercontent.com/T0shik?s=60&v=4)](https://github.com/T0shik)
 [![Chase Florell](https://avatars.githubusercontent.com/ChaseFlorell?s=60&v=4)](https://github.com/ChaseFlorell)
 [![business//acts](https://avatars.githubusercontent.com/BusinessActs?s=60&v=4)](https://github.com/BusinessActs)
+[![xsegno GmbH](https://avatars.githubusercontent.com/xsegno?s=60&v=4)](https://github.com/xsegno)
 
 [![Stephan Müller](https://avatars.githubusercontent.com/chaquotay?s=45&v=4)](https://github.com/chaquotay)
 [![Bitbonk](https://avatars.githubusercontent.com/bitbonk?s=45&v=4)](https://github.com/bitbonk)
@@ -112,11 +114,9 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Martin Gill](https://avatars.githubusercontent.com/MartinSGill?s=45&v=4)](https://github.com/MartinSGill)
 [![Trey Cook](https://avatars.githubusercontent.com/hfcook3?s=45&v=4)](https://github.com/hfcook3)
 [![Todor Todorov](https://avatars.githubusercontent.com/totollygeek?s=45&v=4)](https://github.com/totollygeek)
-[![Christian Sindberg](https://avatars.githubusercontent.com/chrsin?s=45&v=4)](https://github.com/chrsin)
-[![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
 [![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=45&v=4)](https://github.com/stevenkuhn)
-[![Jesus Rodriguez Valencia](https://avatars.githubusercontent.com/jrodrigv?s=45&v=4)](https://github.com/jrodrigv)
-[![Влалислав Лищина](https://avatars.githubusercontent.com/Duskone39?s=45&v=4)](https://github.com/Duskone39)
+[![Adam Renaud](https://avatars.githubusercontent.com/rena0157?s=45&v=4)](https://github.com/rena0157)
+[![Vezel](https://avatars.githubusercontent.com/vezel-dev?s=45&v=4)](https://github.com/vezel-dev)
 
 ## Technology Sponsors
 

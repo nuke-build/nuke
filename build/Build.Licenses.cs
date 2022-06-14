@@ -29,6 +29,7 @@ partial class Build
                ("NuGet", "https://raw.githubusercontent.com/NuGet/NuGet.Client/dev/LICENSE.txt"),
                ("Octokit", "https://raw.githubusercontent.com/octokit/octokit.net/main/LICENSE.txt"),
                ("Serilog", "https://raw.githubusercontent.com/serilog/serilog/dev/LICENSE"),
+               ("Spectre.Console", "https://raw.githubusercontent.com/matkoch/spectre.console/main/LICENSE.md"),
                ("YamlDotNet", "https://raw.githubusercontent.com/aaubry/YamlDotNet/master/LICENSE.txt")
            };
 

@@ -9,6 +9,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using Serilog;
 
 namespace Nuke.Common.ProjectModel
 {
@@ -46,6 +47,7 @@ namespace Nuke.Common.ProjectModel
 
         public override bool List { get; set; }
         public bool GenerateProjects { get; set; }
+        public bool SuppressBuildProjectCheck { get; set; }
 
         public override object GetValue(MemberInfo member, object instance)
         {
@@ -53,7 +55,26 @@ namespace Nuke.Common.ProjectModel
                                GetSolutionFileFromParametersFile(member);
             var deserializer = typeof(SolutionSerializer).GetMethod(nameof(SolutionSerializer.DeserializeFromFile)).NotNull()
                 .MakeGenericMethod(member.GetMemberType());
-            return deserializer.Invoke(obj: null, new object[] { solutionFile });
+            var solution = (Solution) deserializer.Invoke(obj: null, new object[] { solutionFile });
+
+            if (!SuppressBuildProjectCheck)
+            {
+                var buildProject = solution.AllProjects.SingleOrDefault(x => x.Directory.Equals(NukeBuild.BuildProjectDirectory));
+                var buildProjectConfigurations = buildProject?.Configurations.Where(x => x.Key.Contains("Build")).ToList();
+
+                if (buildProject != null && buildProjectConfigurations.Any())
+                {
+                    Log.Warning(
+                        "Solution {Solution} has active build configurations for the build project.\n" +
+                        $"Either enable {nameof(SuppressBuildProjectCheck)} on {{Member}} or remove the following entries from the solution file:\n" +
+                        "{Entries}",
+                        solution,
+                        member.GetDisplayName(),
+                        buildProjectConfigurations.Select(x => $"  - {buildProject.ProjectId.ToString("B").ToUpper()}.{x.Key} = {x.Value}").JoinNewLine());
+                }
+            }
+
+            return solution;
         }
 
         // TODO: allow wildcard matching? [Solution("nuke-*.sln")] -- no globbing?

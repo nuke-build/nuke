@@ -10,9 +10,11 @@ using Nuke.Components;
     GitHubActionsImage.WindowsLatest,
     GitHubActionsImage.UbuntuLatest,
     GitHubActionsImage.MacOsLatest,
+    Submodules = GitHubActionsSubmodules.Recursive,
+    FetchDepth = 0,
     OnPushBranchesIgnore = new[] { MasterBranch, $"{ReleaseBranchPrefix}/*" },
     OnPullRequestBranches = new[] { DevelopBranch },
-    PublishArtifacts = false,
+    PublishArtifacts = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" },
     EnableGitHubToken = true)]

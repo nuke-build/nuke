@@ -38,18 +38,35 @@ namespace Nuke.Common.Execution
 
         public static string GetParametersText(NukeBuild build)
         {
-            var defaultTarget = build.ExecutableTargets.SingleOrDefault(x => x.IsDefault);
+            var defaultTargets = build.ExecutableTargets.Where(x => x.IsDefault).Select(x => x.Name).ToList();
             var builder = new StringBuilder();
 
             var parameters = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false);
-            var padRightParameter = Math.Max(parameters.Max(x => x.Name.Length), val2: 16);
+            var padRightParameter = Math.Max(parameters.Max(x => ParameterService.GetParameterDashedName(x).Length), val2: 16);
+
+            List<string> SplitLines(string text)
+            {
+                var words = new Queue<string>(text.Split(' ').ToList());
+                var lines = new List<string> { string.Empty };
+                foreach (var word in words)
+                {
+                    var nextLength = padRightParameter + 6 + lines.Last().Length + word.Length;
+                    if (nextLength >= Console.BufferWidth || nextLength > 90)
+                        lines.Add(string.Empty);
+
+                    lines[lines.Count - 1] = $"{lines.Last()} {word}";
+                }
+
+                return lines;
+            }
 
             void PrintParameter(MemberInfo parameter)
             {
                 var description = SplitLines(
                     // TODO: remove
                     ParameterService.GetParameterDescription(parameter)
-                        ?.Replace("{default_target}", defaultTarget?.Name).Append(".")
+                        ?.Replace("{default_target}", defaultTargets.Count > 0 ? defaultTargets.JoinCommaSpace() : "<none>")
+                        .TrimEnd(".").Append(".")
                     ?? "<no description>");
                 var parameterName = ParameterService.GetParameterDashedName(parameter);
                 builder.AppendLine($"  --{parameterName.PadRight(padRightParameter)}  {description.First()}");
@@ -72,21 +89,6 @@ namespace Nuke.Common.Execution
                 PrintParameter(parameter);
 
             return builder.ToString();
-        }
-
-        private static List<string> SplitLines(string text)
-        {
-            var words = new Queue<string>(text.Split(' ').ToList());
-            var lines = new List<string> { string.Empty };
-            foreach (var word in words)
-            {
-                if (lines.Last().Length + word.Length > 60)
-                    lines.Add(string.Empty);
-
-                lines[lines.Count - 1] = $"{lines.Last()} {word}";
-            }
-
-            return lines;
         }
     }
 }

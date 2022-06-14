@@ -20,6 +20,7 @@ namespace Nuke.Common.CI.SpaceAutomation
         private readonly string _name;
         private readonly string _image;
 
+        private bool _submodules;
         private bool? _onPush;
         private int? _timeoutInMinutes;
 
@@ -40,6 +41,12 @@ namespace Nuke.Common.CI.SpaceAutomation
         public string ResourcesCpu { get; set; }
         public string ResourcesMemory { get; set; }
         public string[] RefSpec { get; set; } = { "refs/heads/*:refs/heads/*" };
+
+        public bool Submodules
+        {
+            set => _submodules = value;
+            get => throw new NotSupportedException();
+        }
 
         public string[] InvokedTargets { get; set; } = new string[0];
 
@@ -90,6 +97,7 @@ namespace Nuke.Common.CI.SpaceAutomation
                        Image = _image,
                        Resources = GetResources(),
                        Imports = GetImports().ToDictionary(x => x.Key, x => x.Value),
+                       Submodules = _submodules,
                        BuildScript = BuildCmdPath.Replace(".cmd", ".sh"),
                        InvokedTargets = InvokedTargets
                    };

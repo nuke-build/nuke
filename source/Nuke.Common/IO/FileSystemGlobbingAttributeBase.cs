@@ -69,11 +69,11 @@ namespace Nuke.Common.IO
 
                 return memberType == typeof(AbsolutePath)
                     ? parameterValue.Single()
-                    : (object) parameterValue;
+                    : parameterValue;
             }
 
             return memberType == typeof(AbsolutePath[])
-                ? (object) globbedElements
+                ? globbedElements
                 : globbedElements.Length == 1
                     ? globbedElements.Single()
                     : null;

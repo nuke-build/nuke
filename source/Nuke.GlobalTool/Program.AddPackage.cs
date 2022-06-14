@@ -22,6 +22,8 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int AddPackage(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
+            PrintInfo();
+            Logging.Configure();
             Telemetry.AddPackage();
             ProjectModelTasks.Initialize();
 

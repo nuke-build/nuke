@@ -2,12 +2,14 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using Nuke.Common;
+using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
@@ -21,22 +23,21 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         public static int Update(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
+            PrintInfo();
+            Logging.Configure();
+
             Assert.NotNull(rootDirectory);
 
             if (buildScript != null)
             {
-                if (UserConfirms("Update build scripts?"))
-                    UpdateBuildScripts(rootDirectory, buildScript);
-
-                if (UserConfirms("Update build project?"))
-                    UpdateBuildProject(buildScript);
+                ConfirmExecution("Update build scripts", () => UpdateBuildScripts(rootDirectory, buildScript));
+                ConfirmExecution("Update build project", () => UpdateBuildProject(buildScript));
             }
 
-            if (UserConfirms("Update configuration file?"))
-                UpdateConfigurationFile(rootDirectory);
+            ConfirmExecution("Update configuration file", () => UpdateConfigurationFile(rootDirectory));
+            ConfirmExecution("Update global.json", () => UpdateGlobalJsonFile(rootDirectory));
 
-            if (UserConfirms("Update global.json?"))
-                UpdateGlobalJsonFile(rootDirectory);
+            ShowCompletion("Updates");
 
             return 0;
         }

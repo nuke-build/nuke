@@ -15,8 +15,14 @@
   <PropertyGroup>
     <NukeTasksEnabled Condition="'$(NukeTasksEnabled)' == ''">False</NukeTasksEnabled>
     <NukeTasksDirectory>$(MSBuildThisFileDirectory)\..\source\Nuke.MSBuildTasks\bin\Debug\netcoreapp2.1\publish</NukeTasksDirectory>
+
 <!--    <PackAsTool>True</PackAsTool>-->
 <!--    <ToolCommandName>build</ToolCommandName>-->
+
+<!--    <PublishSingleFile>True</PublishSingleFile>-->
+<!--    <SelfContained>True</SelfContained>-->
+<!--    <RuntimeIdentifier>linux-arm64</RuntimeIdentifier>-->
+<!--    <InvariantGlobalization>True</InvariantGlobalization>-->
   </PropertyGroup>
 
   <!-- Test properties for external files -->
@@ -45,7 +51,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta13" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta14" />
     <PackageDownload Include="Codecov.Tool" Version="[1.12.3]" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.8.0]" />
     <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.3.2]" />

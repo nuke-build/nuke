@@ -7,6 +7,7 @@
   <UsingTask TaskName="$(MSBuildThisFileName).CodeGenerationTask" AssemblyFile="$(NukeTasksAssembly)" />
   <UsingTask TaskName="$(MSBuildThisFileName).ExternalFilesTask" AssemblyFile="$(NukeTasksAssembly)" />
   <UsingTask TaskName="$(MSBuildThisFileName).PackPackageToolsTask" AssemblyFile="$(NukeTasksAssembly)" />
+  <UsingTask TaskName="$(MSBuildThisFileName).EmbedPackagesForSelfContainedTask" AssemblyFile="$(NukeTasksAssembly)" />
 
   <PropertyGroup>
     <NukeContinueOnError Condition="'$(NukeContinueOnError)' == ''">False</NukeContinueOnError>
@@ -34,6 +35,17 @@
     </PackPackageToolsTask>
     <ItemGroup>
       <_PackageFiles Include="@(_PackageToolFiles)" />
+    </ItemGroup>
+  </Target>
+
+  <Target Name="NukeEmbedPackagesForSelfContained" BeforeTargets="PrepareForBuild" Condition="'$(SelfContained)' == 'True' AND '$(PublishSingleFile)' == 'True'">
+    <EmbedPackagesForSelfContainedTask
+      TargetFramework="$(TargetFramework)"
+      ProjectAssetsFile="$(ProjectAssetsFile)">
+      <Output TaskParameter="TargetOutputs" ItemName="_PackageEmbeddedResources" />
+    </EmbedPackagesForSelfContainedTask>
+    <ItemGroup>
+      <EmbeddedResource Include="@(_PackageEmbeddedResources)" />
     </ItemGroup>
   </Target>
 

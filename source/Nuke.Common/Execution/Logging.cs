@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
+using Nuke.Common.Execution.Theming;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -22,6 +23,13 @@ namespace Nuke.Common.Execution
     public static class Logging
     {
         public static readonly LoggingLevelSwitch LevelSwitch = new LoggingLevelSwitch();
+
+        internal static IHostTheme DefaultTheme { get; } =
+            Environment.GetEnvironmentVariable("TERM") is { } term && term.StartsWithOrdinalIgnoreCase("xterm")
+                ? AnsiConsoleHostTheme.Default256AnsiColorTheme
+                : SystemConsoleHostTheme.DefaultSystemColorTheme;
+
+        internal static string DefaultOutputTemplate => "[{Level:u3}] {Message:l}{NewLine}{Exception}";
 
         private const int TargetNameLength = 20;
 
@@ -75,8 +83,8 @@ namespace Nuke.Common.Execution
         {
             return configuration
                 .WriteTo.Console(
-                    outputTemplate: build != null ? NukeBuild.Host.OutputTemplate : Host.DefaultOutputTemplate,
-                    theme: (ConsoleTheme)(build != null ? NukeBuild.Host.Theme : Host.DefaultTheme),
+                    outputTemplate: build != null ? NukeBuild.Host.OutputTemplate : DefaultOutputTemplate,
+                    theme: (ConsoleTheme)(build != null ? NukeBuild.Host.Theme : DefaultTheme),
                     applyThemeToRedirectedOutput: true,
                     levelSwitch: LevelSwitch);
         }

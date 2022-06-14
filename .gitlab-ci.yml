@@ -2,6 +2,7 @@ image: mcr.microsoft.com/dotnet/sdk:5.0
 
 variables:
   GIT_DEPTH: 0
+  GIT_SUBMODULE_STRATEGY: recursive
 
 stages:
   - build

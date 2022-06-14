@@ -50,6 +50,7 @@
             "AppVeyor",
             "AzurePipelines",
             "Bamboo",
+            "Bitbucket",
             "Bitrise",
             "GitHubActions",
             "GitLab",
@@ -140,7 +141,8 @@
               "Restore",
               "SignPackages",
               "Test",
-              "UpdateContributors"
+              "UpdateContributors",
+              "UpdateStargazers"
             ]
           }
         },
@@ -182,7 +184,8 @@
               "Restore",
               "SignPackages",
               "Test",
-              "UpdateContributors"
+              "UpdateContributors",
+              "UpdateStargazers"
             ]
           }
         },

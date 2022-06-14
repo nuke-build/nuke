@@ -25,7 +25,6 @@ using static Nuke.Common.Tools.DotNet.DotNetTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 
-[CheckBuildProjectConfigurations]
 [DotNetVerbosityMapping]
 [ShutdownDotNetAfterServerBuild]
 partial class Build
@@ -83,11 +82,11 @@ partial class Build
         });
 
     Configure<DotNetBuildSettings> ICompile.CompileSettings => _ => _
-        .When(!ScheduledTargets.Contains(((IPublish)this).Publish), _ => _
+        .When(!ScheduledTargets.Contains(((IPublish)this).Publish) && !ScheduledTargets.Contains(Install), _ => _
             .ClearProperties());
 
     Configure<DotNetPublishSettings> ICompile.PublishSettings => _ => _
-        .When(!ScheduledTargets.Contains(((IPublish)this).Publish), _ => _
+        .When(!ScheduledTargets.Contains(((IPublish)this).Publish) && !ScheduledTargets.Contains(Install), _ => _
             .ClearProperties());
 
     IEnumerable<(Project Project, string Framework)> ICompile.PublishConfigurations =>

@@ -42,7 +42,7 @@ partial class Build
             FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last()));
             FontArchives.ForEach(x => Uncompress(x, FontDirectory / Path.GetFileNameWithoutExtension(x)));
 
-            FontFiles.ForEach(x => FontCollection.Install(x));
+            FontFiles.ForEach(x => FontCollection.Add(x));
             FontCollection.Families.ForEach(x => Log.Information("Installed font {Font}", x.Name));
         });
 
@@ -59,37 +59,34 @@ partial class Build
 
             var thinFont = FontCollection.Families.Single(x => x.Name == "JetBrains Mono Thin");
             var boldFont = FontCollection.Families.Single(x => x.Name == "JetBrains Mono ExtraBold");
-            var graphicsOptions =
-                new DrawingOptions
-                {
-                    TextOptions = new TextOptions
-                                  {
-                                      HorizontalAlignment = HorizontalAlignment.Center,
-                                      VerticalAlignment = VerticalAlignment.Center
-                                  }
-                };
 
             const int width = 1200;
             const int height = 675;
             var image = new Image<Rgba64>(width: width, height: height);
             image.Mutate(x => x
-                .BackgroundColor(Color.FromRgb(r: 25, g: 25, b: 25))
-                // .DrawImage(
-                //     logo,
-                //     location: new Point(image.Width / 2 - logo.Width / 2, image.Height / 2 - logo.Height / 2),
-                //     opacity: 0.05f)
+                .BackgroundColor(color: Color.FromRgb(r: 25, g: 25, b: 25))
+                .DrawImage(
+                    image: logo,
+                    location: new Point(image.Width / 2 - logo.Width / 2, image.Height / 2 - logo.Height / 2),
+                    opacity: 0.05f)
                 .DrawText(
                     text: "New Release".ToUpperInvariant(),
-                    font: thinFont.CreateFont(100),
                     color: Color.WhiteSmoke,
-                    location: new PointF(image.Width / 2f, image.Height / 2f - 120),
-                    options: graphicsOptions)
+                    textOptions: new TextOptions(thinFont.CreateFont(100))
+                                 {
+                                     Origin = new PointF(image.Width / 2f, image.Height / 2f - 120),
+                                     HorizontalAlignment = HorizontalAlignment.Center,
+                                     VerticalAlignment = VerticalAlignment.Center
+                                 })
                 .DrawText(
                     text: MajorMinorPatchVersion,
-                    font: boldFont.CreateFont(230),
                     color: Color.WhiteSmoke,
-                    location: new PointF(image.Width / 2f, image.Height / 2f + 60),
-                    options: graphicsOptions));
+                    textOptions: new TextOptions(boldFont.CreateFont(230))
+                                 {
+                                     Origin = new PointF(image.Width / 2f, image.Height / 2f + 60),
+                                     HorizontalAlignment = HorizontalAlignment.Center,
+                                     VerticalAlignment = VerticalAlignment.Center
+                                 }));
 
             using var fileStream = new FileStream(ReleaseImageFile, FileMode.Create);
             image.SaveAsPng(fileStream);
