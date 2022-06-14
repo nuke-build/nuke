@@ -30,7 +30,7 @@ $env:NUKE_TELEMETRY_OPTOUT = 1
 # EXECUTION
 ###########################################################################
 
-function ExecSafe([scriptblock] $cmd, [int]$maxRetries = 0 ) {
+function ExecSafe([scriptblock] $cmd, [int]$maxRetries = 0) {
     $tryCount = 0
     while ($true) {
         $tryCount++
