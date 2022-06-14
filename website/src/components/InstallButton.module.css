@@ -1,0 +1,18 @@
+/* Install plugin/extension button */
+
+.installButton {
+    position: relative;
+    float: right;
+}
+
+.installButton > a {
+    position: absolute;
+    top: -75px;
+    right: 0;
+}
+
+@media only screen and (max-width: 768px) {
+    .installButton > a {
+        display: none;
+    }
+}

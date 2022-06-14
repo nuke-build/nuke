@@ -1,0 +1,15 @@
+# [[ ! -f ~/.p10k.zsh && "$ASCIINEMA_REC" == "1" ]] || source ~/.p10k.zsh
+# [[ "$ASCIINEMA_REC" != "1" ]] || source ~/.p10k.asciinema.zsh
+
+if [[ $# -eq 0 ]] ; then
+    echo 'Name missing'
+    exit 0
+fi
+
+pushd ./static/casts
+
+pushd ~/code/nuke-demo
+asciinema rec --cols 90 --rows 27 --append --env "SHELL,TERM" --idle-time 1 $(dirs -l +1)/$1.cast
+popd
+
+popd

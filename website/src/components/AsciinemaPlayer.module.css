@@ -1,0 +1,17 @@
+.controlInfo {
+    margin-top: 2px;
+    text-align: center;
+    opacity: 0.5;
+    font-style: italic;
+    font-size: small;
+}
+
+article .controlInfo {
+    text-align: left;
+}
+
+@media only screen and (max-width: 768px) {
+    .controlInfo {
+        display: none;
+    }
+}

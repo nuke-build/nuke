@@ -1,0 +1,80 @@
+/**
+ * Copyright (c) Facebook, Inc. and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+.footerLogoLink {
+  opacity: 0.5;
+  transition: opacity var(--ifm-transition-fast)
+    var(--ifm-transition-timing-default);
+}
+
+.footerLogoLink:hover {
+  opacity: 1;
+}
+
+.footerStack {
+  flex-wrap: wrap-reverse;
+  gap: 2rem 0;
+}
+
+.footerText {
+  font-size: small;
+  margin-bottom: 0.5rem;
+}
+
+.footerLinks {
+  margin-bottom: 0.5rem;
+}
+
+.footerLinks a {
+  display: inline-block;
+  padding: var(--ifm-navbar-item-padding-vertical)
+  var(--ifm-navbar-item-padding-horizontal);
+}
+
+.footerLinks a:first-of-type {
+  padding-left: 0;
+}
+
+.copyright {
+  font-size: x-small;
+}
+
+.sponsorContainer {
+  gap: 1.2rem 2rem;
+  margin: 0;
+}
+
+.sponsor {
+  background-color: white;
+  border-radius: 0.5rem;
+  display: flex;
+  /*margin: 0 1rem;*/
+  /*flex-direction: row;*/
+}
+
+.sponsor a {
+  transition: transform .25s ease-out,-webkit-transform .25s ease-out;
+  flex-grow: 1;
+  line-height: 0;
+  margin: 2rem 0;
+  text-align: center;
+}
+
+.sponsor a:hover, .sponsor a:focus {
+  transform: scale(1.17);
+}
+
+.sponsor img {
+  height: 4rem;
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  .sponsorContainer :global .col {
+    flex-basis: 0 !important;
+  }
+}
