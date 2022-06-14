@@ -116,6 +116,7 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Todor Todorov](https://avatars.githubusercontent.com/totollygeek?s=45&v=4)](https://github.com/totollygeek)
 [![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=45&v=4)](https://github.com/stevenkuhn)
 [![Adam Renaud](https://avatars.githubusercontent.com/rena0157?s=45&v=4)](https://github.com/rena0157)
+[![Vezel](https://avatars.githubusercontent.com/vezel-dev?s=45&v=4)](https://github.com/vezel-dev)
 
 ## Technology Sponsors
 
