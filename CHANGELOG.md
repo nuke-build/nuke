@@ -5,8 +5,26 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
-- Added GitHub Actions support for submodules and fetch-depth
-- Added AppVeyor support for submodules
+- Removed extended setup wizard
+- Changed `Nuke.GlobalTool` to use `Spectre.Console`
+- Deprecated `CheckBuildProjectConfigurationsAttribute`
+- Added single-file packaging and execution
+- Added output customization via `NukeBuild.WriteLogo`, `WriteTarget`, and `WriteSummary`
+- Added second-chance registration for MSBuild from .NET CLI
+- Added submodule support in GitHub Actions, Space Automation, and AppVeyor
+- Added `NukeBuild.BuildAssemblyFile` property
+- Added generic `EnvironmentInfo.SetVariable`
+- Added support for Bitbucket
+- Added GitHub Actions support for `fetch-depth`
+- Fixed `default_target` replacement in help text
+- Fixed parameter padding and line breaks in help text
+- Fixed `Assert` methods to accept `IReadOnlyCollection`
+- Fixed fatal failure of `MSBuildLocator`
+- Fixed missing MSBuild registration when using `ProjectExtensions`
+- Fixed `NuGetPackageResolver` performance by reading metadata from `.nuspec` files
+- Fixed `GitRepository` initialization when remote is not set
+- Fixed exception for duplicated keys in TeamCity property files
+- Fixed missing arguments for `DotNetTasks`
 
 ## [6.0.3] / 2022-05-02
 - Fixed exception handling in various places
