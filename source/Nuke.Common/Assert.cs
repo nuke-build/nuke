@@ -19,7 +19,7 @@ namespace Nuke.Common
         [ContractAnnotation("=> halt")]
         public static void Fail(string message, Exception exception = null)
         {
-            throw new ApplicationException(message, exception);
+            throw new Exception(message, exception);
         }
 
         [AssertionMethod]
