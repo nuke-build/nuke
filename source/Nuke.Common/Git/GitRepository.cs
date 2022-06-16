@@ -237,10 +237,10 @@ namespace Nuke.Common.Git
         public string Branch { get; private set; }
 
         /// <summary>Url in the form of <c>https://endpoint/identifier.git</c></summary>
-        public string HttpsUrl => $"https://{Endpoint}/{Identifier}.git";
+        public string HttpsUrl => Endpoint != null ? $"https://{Endpoint}/{Identifier}.git" : null;
 
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
-        public string SshUrl => $"git@{Endpoint}:{Identifier}.git";
+        public string SshUrl => Endpoint != null ? $"git@{Endpoint}:{Identifier}.git" : null;
 
         public GitRepository SetBranch(string branch)
         {
