@@ -1,0 +1,21 @@
+# [[ ! -f ~/.p10k.zsh && "$ASCIINEMA_REC" == "1" ]] || source ~/.p10k.zsh
+# [[ "$ASCIINEMA_REC" != "1" ]] || source ~/.p10k.asciinema.zsh
+
+if [[ $# -eq 0 ]] ; then
+    echo 'Name missing'
+    exit 0
+fi
+
+pushd ./static/casts
+
+pushd ~/code/nuke-demo
+asciinema rec --cols 80 --rows 18 --overwrite --env "SHELL,TERM" $(dirs -l +1)/$1.cast
+popd
+
+export GIFSICLE_OPTS="--loopcount"
+asciicast2gif -S 2 $1.cast $1.gif
+
+mkdir $1
+convert -coalesce $1.gif $1/$1_%05d.png
+
+popd

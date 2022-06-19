@@ -1,5 +1,5 @@
 {
-  "name": "my-website",
+  "name": "nuke-website",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -14,14 +14,20 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
-    "@docusaurus/core": "0.0.0-4570",
-    "@docusaurus/plugin-client-redirects": "0.0.0-4570",
-    "@docusaurus/preset-classic": "0.0.0-4570",
+    "@docusaurus/core": "0.0.0-4982",
+    "@docusaurus/plugin-client-redirects": "0.0.0-4982",
+    "@docusaurus/plugin-ideal-image": "0.0.0-4982",
+    "@docusaurus/plugin-pwa": "0.0.0-4982",
+    "@docusaurus/preset-classic": "0.0.0-4982",
     "@mdx-js/react": "^1.6.21",
     "clsx": "^1.1.1",
+    "mdx-mermaid": "^1.2.1",
+    "mermaid": "^9.1.2",
     "prism-react-renderer": "^1.2.1",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "react-lite-youtube-embed": "^2.2.2",
+    "react-twitter-widgets": "^1.10.0"
   },
   "browserslist": {
     "production": [
@@ -34,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "asciinema-player": "^3.0.0"
   }
 }

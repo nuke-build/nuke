@@ -7,7 +7,7 @@ export default (function () {
 
     return {
         onRouteUpdate({ location }) {
-            setTimeout(() => fathom.trackPageview(), 1000);
+            setTimeout(() => fathom.trackPageview(), 3000);
         }
     }
 })()

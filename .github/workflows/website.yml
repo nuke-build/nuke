@@ -2,7 +2,7 @@ name: website
 
 on:
   push:
-    branches: [develop]
+    branches: [website]
     paths:
       - 'website/**'
 

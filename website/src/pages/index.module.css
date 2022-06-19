@@ -3,13 +3,38 @@
  * and scoped locally.
  */
 
-div {
+.section {
+  padding: 70px 0;
+}
+
+.sectionAlt {
+  background-color: var(--ifm-color-emphasis-100);
+}
+
+.toolLogo {
+  background-color: transparent !important;
+  border-bottom: 0 !important;
+}
+.toolLogo img {
+  height: 50px;
+  margin: 0 25px 15px 0;
+
+}
+.toolLogo img:hover {
+  opacity: 0.5;
+}
+
+.videoContainer {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  /*max-width: 700px;*/
+  margin: 0 auto;
+}
+.videoIframe {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  text-align: center;
-  vertical-align: middle;
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  flex-flow: column;
 }

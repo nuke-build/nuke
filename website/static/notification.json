@@ -1,0 +1,13 @@
+{
+  "filter": [
+  ],
+  "title": "NUKE",
+  "message": "Brand-new website just released. Check it out!",
+  "links": [
+    {
+      "caption": "Visit nuke.build",
+      "url": "https://nuke.build/",
+      "campaign": "new-website"
+    }
+  ]
+}
