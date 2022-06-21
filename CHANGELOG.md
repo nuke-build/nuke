@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed output encoding in `Nuke.GlobalTool` to be UTF-8
+- Fixed telemetry to handle Git repositories without remote
+- Fixed `GitRepository.HttpsUrl` and `SshUrl` when `Endpoint` is null
+- Fixed `ShutdownDotNetServerBuildAttribute` to timeout after 15 seconds
 
 ## [6.1.0] / 2022-06-14
 - Removed extended setup wizard
