@@ -90,7 +90,7 @@ partial class Build
                                     ? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/wrapped-gift_1f381.png"
                                     : "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/package_1f4e6.png")
                         .SetText(new StringBuilder()
-                            .Append($"This release includes *<{comparisonUrl}|{commitsText}>*")
+                            .Append($"<!channel>, this release includes *<{comparisonUrl}|{commitsText}>*")
                             .AppendLine(notableCommitters.Count > 0
                                 ? $" with notable contributions from {notableCommitters.JoinCommaAnd()}. A round of applause for them! :clap:"
                                 : ". No contributions this time. :sweat_smile:")
