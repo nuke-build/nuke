@@ -23,7 +23,7 @@ namespace Nuke.Common.CI
         public void OnBuildFinished(NukeBuild build)
         {
             if (NukeBuild.IsServerBuild)
-                DotNetTasks.DotNet("build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging);
+                DotNetTasks.DotNet("build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging, timeout: 15_000);
         }
     }
 }

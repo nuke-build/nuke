@@ -6,6 +6,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.IO;
@@ -23,6 +24,8 @@ namespace Nuke.GlobalTool
 
         private static int Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.UTF8;
+
             try
             {
                 var rootDirectory = TryGetRootDirectory();
