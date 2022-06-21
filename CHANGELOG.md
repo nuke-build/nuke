@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [6.1.1] / 2022-06-21
 - Fixed output encoding in `Nuke.GlobalTool` to be UTF-8
 - Fixed telemetry to handle Git repositories without remote
 - Fixed `GitRepository.HttpsUrl` and `SshUrl` when `Endpoint` is null
@@ -939,7 +941,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.1.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.1.1...HEAD
+[6.1.1]: https://github.com/nuke-build/nuke/compare/6.1.0...6.1.1
 [6.1.0]: https://github.com/nuke-build/nuke/compare/6.0.3...6.1.0
 [6.0.3]: https://github.com/nuke-build/nuke/compare/6.0.2...6.0.3
 [6.0.2]: https://github.com/nuke-build/nuke/compare/6.0.1...6.0.2
