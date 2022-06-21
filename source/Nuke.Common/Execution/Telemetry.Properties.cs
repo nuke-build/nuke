@@ -48,11 +48,11 @@ namespace Nuke.Common.Execution
             var providers =
                 new List<(Func<bool>, string)>
                 {
-                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("github.com"), "GitHub"),
-                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("gitlab.com"), "GitLab"),
-                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("bitbucket.org"), "Bitbucket"),
-                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("jetbrains.space"), "JetBrains"),
-                    (() => repository.Endpoint.ContainsOrdinalIgnoreCase("visualstudio.com"), "Azure")
+                    (() => repository.Endpoint?.ContainsOrdinalIgnoreCase("github.com") ?? false, "GitHub"),
+                    (() => repository.Endpoint?.ContainsOrdinalIgnoreCase("gitlab.com") ?? false, "GitLab"),
+                    (() => repository.Endpoint?.ContainsOrdinalIgnoreCase("bitbucket.org") ?? false, "Bitbucket"),
+                    (() => repository.Endpoint?.ContainsOrdinalIgnoreCase("jetbrains.space") ?? false, "JetBrains"),
+                    (() => repository.Endpoint?.ContainsOrdinalIgnoreCase("visualstudio.com") ?? false, "Azure")
                 };
 
             var branches =
