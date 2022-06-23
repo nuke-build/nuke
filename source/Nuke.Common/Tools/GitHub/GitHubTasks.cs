@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -111,6 +111,21 @@ namespace Nuke.Common.Tools.GitHub
                 repository.GetGitHubName(),
                 milestone.Number,
                 new MilestoneUpdate { State = ItemState.Closed });
+        }
+
+        public static async Task<Release> CreateRelease(this GitRepository repository, string tagName, string targetCommitish = null, string name = null, string body = null, bool draft = false, bool preRelease = false)
+        {
+            Assert.True(repository.IsGitHubRepository());
+            var newRelease = new NewRelease(tagName)
+            {
+                TargetCommitish = targetCommitish ?? null,
+                Name = name ?? null,
+                Body = body ?? null,
+                Draft = draft,
+                Prerelease = preRelease,
+            };
+
+            return await GitHubClient.Repository.Release.Create(repository.GetGitHubOwner(), repository.GetGitHubName(), newRelease);
         }
 
         public static bool IsGitHubRepository(this GitRepository repository)
