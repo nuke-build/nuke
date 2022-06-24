@@ -113,7 +113,7 @@ namespace Nuke.Common.Tools.GitHub
                 new MilestoneUpdate { State = ItemState.Closed });
         }
 
-        public static async Task<Release> CreateRelease(this GitRepository repository, string tagName, string targetCommitish = null, string name = null, string body = null, bool draft = false, bool preRelease = false)
+        public static async Task CreateRelease(this GitRepository repository, string tagName, string targetCommitish = null, string name = null, string body = null, bool draft = false, bool preRelease = false, List<string> artifactsDirectories = null)
         {
             Assert.True(repository.IsGitHubRepository());
             var newRelease = new NewRelease(tagName)
@@ -125,7 +125,22 @@ namespace Nuke.Common.Tools.GitHub
                 Prerelease = preRelease,
             };
 
-            return await GitHubClient.Repository.Release.Create(repository.GetGitHubOwner(), repository.GetGitHubName(), newRelease);
+            var release = await GitHubClient.Repository.Release.Create(repository.GetGitHubOwner(), repository.GetGitHubName(), newRelease);
+
+            foreach (var artifactPath in artifactsDirectories ?? Enumerable.Empty<string>())
+            {
+                using (var artifactStream = File.OpenRead(artifactPath))
+                {
+                    var releaseAssetUpload = new ReleaseAssetUpload
+                    {
+                        ContentType = "application/octet-stream",
+                        FileName = Path.GetFileName(artifactPath),
+                        RawData = artifactStream
+                    };
+
+                    await GitHubClient.Repository.Release.UploadAsset(release, releaseAssetUpload);
+                }
+            }
         }
 
         public static bool IsGitHubRepository(this GitRepository repository)
