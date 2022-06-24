@@ -113,7 +113,7 @@ namespace Nuke.Common.Tools.GitHub
                 new MilestoneUpdate { State = ItemState.Closed });
         }
 
-        public static async Task CreateRelease(this GitRepository repository, string tagName, string targetCommitish = null, string name = null, string body = null, bool draft = false, bool preRelease = false, List<string> artifactsDirectories = null)
+        public static async Task CreateRelease(this GitRepository repository, string tagName, string targetCommitish = null, string name = null, string body = null, bool draft = false, bool preRelease = false, List<string> artifactsPaths = null)
         {
             Assert.True(repository.IsGitHubRepository());
             var newRelease = new NewRelease(tagName)
@@ -127,7 +127,7 @@ namespace Nuke.Common.Tools.GitHub
 
             var release = await GitHubClient.Repository.Release.Create(repository.GetGitHubOwner(), repository.GetGitHubName(), newRelease);
 
-            foreach (var artifactPath in artifactsDirectories ?? Enumerable.Empty<string>())
+            foreach (var artifactPath in artifactsPaths ?? Enumerable.Empty<string>())
             {
                 using (var artifactStream = File.OpenRead(artifactPath))
                 {
