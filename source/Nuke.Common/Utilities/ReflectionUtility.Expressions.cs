@@ -35,7 +35,8 @@ namespace Nuke.Common.Utilities
 
         public static object GetTarget(this LambdaExpression expression)
         {
-            var memberExpression = expression.Body as MemberExpression;
+            var invocationExpression = expression.Body as InvocationExpression;
+            var memberExpression = invocationExpression?.Expression as MemberExpression;
             var constantExpression = memberExpression?.Expression as ConstantExpression;
             return constantExpression?.Value;
         }
