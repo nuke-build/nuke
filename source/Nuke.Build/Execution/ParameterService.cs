@@ -17,7 +17,8 @@ namespace Nuke.Common;
 
 internal partial class ParameterService
 {
-    internal ArgumentParser ArgumentsFromFilesService;
+    // internal ArgumentParser ArgumentsFromFilesService;
+    internal Func<string, Type, object> ArgumentsFromFilesService;
     internal ArgumentParser ArgumentsFromCommitMessageService;
 
     private readonly Func<ArgumentParser> _argumentParserProvider;
@@ -154,7 +155,8 @@ internal partial class ParameterService
 
         // TODO: nuke <target> ?
         object TryFromProfileArguments() =>
-            ArgumentsFromFilesService?.GetNamedArgument(parameterName, destinationType, separator);
+            // ArgumentsFromFilesService?.GetNamedArgument(parameterName, destinationType, separator);
+            ArgumentsFromFilesService?.Invoke(parameterName, destinationType);
 
         object TryFromCommitMessageArguments() =>
             ArgumentsFromCommitMessageService?.GetNamedArgument(parameterName, destinationType, separator);
