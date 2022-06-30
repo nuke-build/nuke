@@ -50,6 +50,20 @@ partial class Build
     ///   - Microsoft VSCode           https://nuke.build/vscode
     public static int Main() => Execute<Build>(x => ((IPack)x).Pack);
 
+    public class Data
+    {
+        public string FirstName;
+        public Data Nested;
+    }
+
+    [Parameter] readonly Data[] Data2;
+
+    Target Foo => _ => _
+        .Executes(() =>
+        {
+            Console.WriteLine(Data2);
+        });
+
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
     [CI] readonly AppVeyor AppVeyor;
