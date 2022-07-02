@@ -17,9 +17,10 @@ namespace Nuke.Common.Execution
         {
             TrackEvent(
                 eventName: nameof(BuildStarted),
-                properties: GetCommonProperties(build)
-                    .AddDictionary(GetBuildProperties(build))
-                    .AddDictionary(GetRepositoryProperties(NukeBuild.RootDirectory)));
+                propertiesProvider: () =>
+                    GetCommonProperties(build)
+                        .AddDictionary(GetBuildProperties(build))
+                        .AddDictionary(GetRepositoryProperties(NukeBuild.RootDirectory)));
         }
 
         public static void TargetSucceeded(ExecutableTarget target, NukeBuild build)
@@ -29,10 +30,11 @@ namespace Nuke.Common.Execution
             {
                 TrackEvent(
                     eventName: nameof(TargetSucceeded),
-                    properties: GetCommonProperties(build)
-                        .AddDictionary(GetTargetProperties(build, target))
-                        .AddDictionary(GetBuildProperties(build))
-                        .AddDictionary(GetRepositoryProperties(NukeBuild.RootDirectory)));
+                    propertiesProvider: () =>
+                        GetCommonProperties(build)
+                            .AddDictionary(GetTargetProperties(build, target))
+                            .AddDictionary(GetBuildProperties(build))
+                            .AddDictionary(GetRepositoryProperties(NukeBuild.RootDirectory)));
             }
         }
 
@@ -40,41 +42,46 @@ namespace Nuke.Common.Execution
         {
             TrackEvent(
                 eventName: nameof(ConfigurationGenerated),
-                properties: GetCommonProperties(build)
-                    .AddDictionary(GetGeneratorProperties(hostType, generatorId))
-                    .AddDictionary(GetBuildProperties(build))
-                    .AddDictionary(GetRepositoryProperties(EnvironmentInfo.WorkingDirectory)));
+                propertiesProvider: () =>
+                    GetCommonProperties(build)
+                        .AddDictionary(GetGeneratorProperties(hostType, generatorId))
+                        .AddDictionary(GetBuildProperties(build))
+                        .AddDictionary(GetRepositoryProperties(EnvironmentInfo.WorkingDirectory)));
         }
 
         public static void SetupBuild()
         {
             TrackEvent(
                 eventName: nameof(SetupBuild),
-                properties: GetCommonProperties()
-                    .AddDictionary(GetRepositoryProperties(EnvironmentInfo.WorkingDirectory)));
+                propertiesProvider: () =>
+                    GetCommonProperties()
+                        .AddDictionary(GetRepositoryProperties(EnvironmentInfo.WorkingDirectory)));
         }
 
         public static void ConvertCake()
         {
             TrackEvent(
                 eventName: nameof(ConvertCake),
-                properties: GetCommonProperties()
-                    .AddDictionary(GetRepositoryProperties(EnvironmentInfo.WorkingDirectory)));
+                propertiesProvider: () =>
+                    GetCommonProperties()
+                        .AddDictionary(GetRepositoryProperties(EnvironmentInfo.WorkingDirectory)));
         }
 
         public static void AddPackage()
         {
             TrackEvent(
                 eventName: nameof(AddPackage),
-                properties: GetCommonProperties()
-                    .AddDictionary(GetRepositoryProperties(EnvironmentInfo.WorkingDirectory)));
+                propertiesProvider: () =>
+                    GetCommonProperties()
+                        .AddDictionary(GetRepositoryProperties(EnvironmentInfo.WorkingDirectory)));
         }
 
-        private static void TrackEvent(string eventName, IDictionary<string, string> properties)
+        private static void TrackEvent(string eventName, Func<IDictionary<string, string>> propertiesProvider)
         {
             if (s_client == null)
                 return;
 
+            var properties = propertiesProvider.Invoke();
             // TODO: logging additional
             Log.Verbose("Sending {EventName} telemetry event ...", eventName);
             var longestPropertyName = properties.Keys.Max(x => x.Length);
