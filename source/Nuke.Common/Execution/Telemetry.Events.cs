@@ -25,17 +25,17 @@ namespace Nuke.Common.Execution
 
         public static void TargetSucceeded(ExecutableTarget target, NukeBuild build)
         {
-            if (target.Name.EqualsAnyOrdinalIgnoreCase(s_knownTargets) &&
-                target.Status == ExecutionStatus.Succeeded)
-            {
-                TrackEvent(
-                    eventName: nameof(TargetSucceeded),
-                    propertiesProvider: () =>
-                        GetCommonProperties(build)
-                            .AddDictionary(GetTargetProperties(build, target))
-                            .AddDictionary(GetBuildProperties(build))
-                            .AddDictionary(GetRepositoryProperties(NukeBuild.RootDirectory)));
-            }
+            if (!target.Name.EqualsAnyOrdinalIgnoreCase(s_knownTargets) ||
+                target.Status != ExecutionStatus.Succeeded)
+                return;
+
+            TrackEvent(
+                eventName: nameof(TargetSucceeded),
+                propertiesProvider: () =>
+                    GetCommonProperties(build)
+                        .AddDictionary(GetTargetProperties(build, target))
+                        .AddDictionary(GetBuildProperties(build))
+                        .AddDictionary(GetRepositoryProperties(NukeBuild.RootDirectory)));
         }
 
         public static void ConfigurationGenerated(Type hostType, string generatorId, NukeBuild build)
