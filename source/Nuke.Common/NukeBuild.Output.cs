@@ -16,8 +16,7 @@ namespace Nuke.Common
             if (IsInterceptorExecution)
                 return;
 
-            Host.WriteLogo();
-            if (IsOutputDisabled(DefaultOutputKind.Logo))
+            if (IsOutputDisabled(DefaultOutput.Logo))
                 return;
 
             Host.WriteLogo();
@@ -31,11 +30,11 @@ namespace Nuke.Common
             if (IsInterceptorExecution)
                 return DelegateDisposable.CreateBracket();
 
-            bool HasCustomWriteBlock() =>
+            bool CanCollape() =>
                 Host.GetType().GetMethod(nameof(Host.WriteBlock), BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic) != null;
 
-            if (IsOutputDisabled(DefaultOutputKind.TargetHeader) && !HasCustomWriteBlock() ||
-                IsOutputDisabled(DefaultOutputKind.TargetCollapse) && HasCustomWriteBlock())
+            if (IsOutputDisabled(DefaultOutput.TargetHeader) && !CanCollape() ||
+                IsOutputDisabled(DefaultOutput.TargetCollapse) && CanCollape())
                 return DelegateDisposable.CreateBracket();
 
             return Host.WriteBlock(target);
@@ -43,7 +42,7 @@ namespace Nuke.Common
 
         protected internal virtual void WriteErrorsAndWarnings()
         {
-            if (IsOutputDisabled(DefaultOutputKind.ErrorsAndWarnings))
+            if (IsOutputDisabled(DefaultOutput.RepeatedErrorsAndWarnings))
                 return;
 
             Host.WriteErrorsAndWarnings();
@@ -54,7 +53,7 @@ namespace Nuke.Common
             if (IsInterceptorExecution)
                 return;
 
-            if (IsOutputDisabled(DefaultOutputKind.TargetOutcome))
+            if (IsOutputDisabled(DefaultOutput.TargetOutcome))
                 return;
 
             Host.WriteTargetOutcome(this);
@@ -62,17 +61,17 @@ namespace Nuke.Common
 
         protected internal virtual void WriteBuildOutcome()
         {
-            if (IsOutputDisabled(DefaultOutputKind.BuildOutcome))
+            if (IsOutputDisabled(DefaultOutput.BuildOutcome))
                 return;
 
             Host.WriteBuildOutcome(this);
         }
 
-        internal bool IsOutputDisabled(DefaultOutputKind outputKind)
+        internal bool IsOutputDisabled(DefaultOutput output)
         {
             return GetType()
                 .GetCustomAttribute<DisableDefaultOutputAttribute>()
-                ?.DisabledOutputs.Contains(outputKind)
+                ?.DisabledOutputs.Contains(output)
                 ?? false;
         }
     }

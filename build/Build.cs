@@ -27,7 +27,6 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 
 [DotNetVerbosityMapping]
 [ShutdownDotNetAfterServerBuild]
-[DisableDefaultOutput(DefaultOutputKind.ErrorsAndWarnings, DefaultOutputKind.BuildOutcome, DefaultOutputKind.TargetOutcome, DefaultOutputKind.TargetHeader)]
 partial class Build
     : NukeBuild,
         IHazTwitterCredentials,
