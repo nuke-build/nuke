@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [6.1.2] / 2022-07-02
 - Removed `Newtonsoft.Json.Schema` dependency
 - Fixed `Nuke.GlobalTool` to target `net6.0`
 - Fixed telemetry to calculate properties only on demand
@@ -946,7 +948,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.1.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.1.2...HEAD
+[6.1.2]: https://github.com/nuke-build/nuke/compare/6.1.1...6.1.2
 [6.1.1]: https://github.com/nuke-build/nuke/compare/6.1.0...6.1.1
 [6.1.0]: https://github.com/nuke-build/nuke/compare/6.0.3...6.1.0
 [6.0.3]: https://github.com/nuke-build/nuke/compare/6.0.2...6.0.3
