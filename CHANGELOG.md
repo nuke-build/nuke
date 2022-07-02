@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Removed `Newtonsoft.Json.Schema` dependency
+- Fixed `Nuke.GlobalTool` to target `net6.0`
+- Fixed telemetry to calculate properties only on demand
+- Fixed missing `Framework` in `MinVerTasks` and `MinVerAttribute`
+- Fixed missing arguments in `DotNetTasks`
 
 ## [6.1.1] / 2022-06-21
 - Fixed output encoding in `Nuke.GlobalTool` to be UTF-8
@@ -1031,4 +1036,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
-
