@@ -524,6 +524,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li>
+        ///     <li><c>--self-contained</c> via <see cref="DotNetBuildSettings.SelfContained"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetBuildSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
@@ -564,6 +565,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li>
+        ///     <li><c>--self-contained</c> via <see cref="DotNetBuildSettings.SelfContained"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetBuildSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
@@ -601,6 +603,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li>
         ///     <li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li>
+        ///     <li><c>--self-contained</c> via <see cref="DotNetBuildSettings.SelfContained"/></li>
         ///     <li><c>--source</c> via <see cref="DotNetBuildSettings.Sources"/></li>
         ///     <li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li>
         ///     <li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li>
@@ -1879,6 +1882,10 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual string OutputDirectory { get; internal set; }
         /// <summary>
+        ///   Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>true</c> if a runtime identifier is specified. Available since .NET 6 SDK
+        /// </summary>
+        public virtual bool? SelfContained { get; internal set; }
+        /// <summary>
         ///   Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
         /// </summary>
         public virtual string Runtime { get; internal set; }
@@ -1963,6 +1970,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--no-incremental", NoIncremental)
               .Add("--no-restore", NoRestore)
               .Add("--output {value}", OutputDirectory)
+              .Add("--self-contained {value}", SelfContained)
               .Add("--runtime {value}", Runtime)
               .Add("--verbosity {value}", Verbosity)
               .Add("--version-suffix {value}", VersionSuffix)
@@ -11105,6 +11113,63 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.OutputDirectory = null;
+            return toolSettings;
+        }
+        #endregion
+        #region SelfContained
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetBuildSettings.SelfContained"/></em></p>
+        ///   <p>Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>true</c> if a runtime identifier is specified. Available since .NET 6 SDK</p>
+        /// </summary>
+        [Pure]
+        public static T SetSelfContained<T>(this T toolSettings, bool? selfContained) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SelfContained = selfContained;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetBuildSettings.SelfContained"/></em></p>
+        ///   <p>Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>true</c> if a runtime identifier is specified. Available since .NET 6 SDK</p>
+        /// </summary>
+        [Pure]
+        public static T ResetSelfContained<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SelfContained = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetBuildSettings.SelfContained"/></em></p>
+        ///   <p>Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>true</c> if a runtime identifier is specified. Available since .NET 6 SDK</p>
+        /// </summary>
+        [Pure]
+        public static T EnableSelfContained<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SelfContained = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetBuildSettings.SelfContained"/></em></p>
+        ///   <p>Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>true</c> if a runtime identifier is specified. Available since .NET 6 SDK</p>
+        /// </summary>
+        [Pure]
+        public static T DisableSelfContained<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SelfContained = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetBuildSettings.SelfContained"/></em></p>
+        ///   <p>Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>true</c> if a runtime identifier is specified. Available since .NET 6 SDK</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleSelfContained<T>(this T toolSettings) where T : DotNetBuildSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.SelfContained = !toolSettings.SelfContained;
             return toolSettings;
         }
         #endregion

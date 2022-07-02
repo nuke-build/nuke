@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [6.1.2] / 2022-07-02
+- Removed `Newtonsoft.Json.Schema` dependency
+- Fixed `Nuke.GlobalTool` to target `net6.0`
+- Fixed telemetry to calculate properties only on demand
+- Fixed missing `Framework` in `MinVerTasks` and `MinVerAttribute`
+- Fixed missing arguments in `DotNetTasks`
+
 ## [6.1.1] / 2022-06-21
 - Fixed output encoding in `Nuke.GlobalTool` to be UTF-8
 - Fixed telemetry to handle Git repositories without remote
@@ -941,7 +948,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.1.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.1.2...HEAD
+[6.1.2]: https://github.com/nuke-build/nuke/compare/6.1.1...6.1.2
 [6.1.1]: https://github.com/nuke-build/nuke/compare/6.1.0...6.1.1
 [6.1.0]: https://github.com/nuke-build/nuke/compare/6.0.3...6.1.0
 [6.0.3]: https://github.com/nuke-build/nuke/compare/6.0.2...6.0.3
@@ -1031,4 +1039,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
-

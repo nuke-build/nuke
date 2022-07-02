@@ -6,8 +6,7 @@
   "name": "MinVer",
   "officialUrl": "https://github.com/adamralph/minver",
   "help": "Minimalistic versioning using Git tags.",
-  "packageId": "minver-cli",
-  "packageExecutable": "minver-cli.dll",
+  "customExecutable": true,
   "tasks": [
     {
       "returnType": "MinVer",
@@ -42,6 +41,11 @@
             "name": "Verbosity",
             "type": "MinVerVerbosity",
             "format": "--verbosity {value}"
+          },
+          {
+            "name": "Framework",
+            "type": "string",
+            "noArgument": true
           }
         ]
       }

@@ -10,6 +10,14 @@ namespace Nuke.Common.Tools.MinVer
 {
     public static partial class MinVerTasks
     {
+        internal static string GetToolPath(string framework = null)
+        {
+            return ToolPathResolver.GetPackageExecutable(
+                packageId: "minver-cli",
+                packageExecutable: "minver-cli.dll",
+                framework: framework);
+        }
+
         private static MinVer GetResult(IProcess process, MinVerSettings toolSettings)
         {
             var versionString = process.Output.Select(x => x.Text).Single(x => !x.StartsWith("MinVer:"));
@@ -30,6 +38,14 @@ namespace Nuke.Common.Tools.MinVer
             version.Version = versionString;
 
             return version;
+        }
+    }
+
+    partial class MinVerSettings
+    {
+        private string GetProcessToolPath()
+        {
+            return MinVerTasks.GetToolPath(Framework);
         }
     }
 }
