@@ -15,8 +15,6 @@ using JetBrains.Annotations;
 [AttributeUsage(AttributeTargets.Class)]
 public class DisableDefaultOutputAttribute : Attribute
 {
-    private readonly DefaultOutputKind[] _disabledOutputs;
-
     /// <summary>
     /// Initializes a new instance of the <see cref="DisableDefaultOutputAttribute"/> class.
     /// </summary>
@@ -25,21 +23,12 @@ public class DisableDefaultOutputAttribute : Attribute
     /// </param>
     public DisableDefaultOutputAttribute(params DefaultOutputKind[] disabledOutputs)
     {
-        _disabledOutputs = disabledOutputs;
+        DisabledOutputs = disabledOutputs.Length > 0
+            ? disabledOutputs
+            : Enum.GetValues(typeof(DefaultOutputKind)).Cast<DefaultOutputKind>().ToArray();
     }
 
-    /// <summary>
-    ///     Indicates whether the specified output kind should not be displayed by the host.
-    /// </summary>
-    /// <param name="outputKind">The output kind to check.</param>
-    /// <returns>
-    ///     <see langword="true"/> if the output kind specified by <paramref name="outputKind"/> should not be output,
-    ///     <see langword="false"/> otherwise.
-    /// </returns>
-    public bool IsOutputDisabled(DefaultOutputKind outputKind)
-    {
-        return _disabledOutputs.Length == 0 || _disabledOutputs.Contains(outputKind);
-    }
+    public DefaultOutputKind[] DisabledOutputs { get; }
 }
 
 /// <summary>
@@ -57,15 +46,15 @@ public enum DefaultOutputKind
     ///     (only applicable for hosts that output a target header).
     /// </summary>
     TargetHeader,
-    
+
     /// <summary>
     ///     The expand and collapse markup that surrounds whole target output
     ///     (only applicable for hosts that support expand and collapse).
     /// </summary>
     TargetCollapse,
 
-    /// <summary>
-    ///     The build summary at the end of the build.
-    /// </summary>
-    Summary
+    ErrorsAndWarnings,
+    TargetOutcome,
+    BuildOutcome,
+    Timestamps
 }

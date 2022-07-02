@@ -93,8 +93,9 @@ namespace Nuke.Common.Execution
         public static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
         {
             return configuration
-                .WriteTo.Console(
-                    outputTemplate: build != null ? NukeBuild.Host.OutputTemplate : StandardOutputTemplate,
+                .WriteTo.Console(outputTemplate: build != null && !build.IsOutputDisabled(DefaultOutputKind.Timestamps)
+                        ? NukeBuild.Host.OutputTemplate
+                        : StandardOutputTemplate,
                     theme: (ConsoleTheme)(build != null ? NukeBuild.Host.Theme : DefaultTheme),
                     applyThemeToRedirectedOutput: true,
                     levelSwitch: LevelSwitch);

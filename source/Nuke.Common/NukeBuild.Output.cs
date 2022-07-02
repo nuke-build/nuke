@@ -11,32 +11,16 @@ namespace Nuke.Common
 {
     partial class NukeBuild
     {
-        /// <summary>
-        ///     Indicates whether the specified output kind should not be displayed by the host
-        ///     for the current build.
-        /// </summary>
-        /// <param name="outputKind">The output kind to check.</param>
-        /// <returns>
-        ///     <see langword="true"/> if the output kind specified by <paramref name="outputKind"/> should not be output
-        ///     for the current build, <see langword="false"/> otherwise.
-        /// </returns>
-        protected bool IsOutputDisabled(DefaultOutputKind outputKind)
-        {
-            return GetType()
-                .GetCustomAttributes<DisableDefaultOutputAttribute>()
-                .Any(a => a.IsOutputDisabled(outputKind));
-        }
-
         protected internal virtual void WriteLogo()
         {
             if (IsInterceptorExecution)
                 return;
 
             Host.WriteLogo();
-            if (!IsOutputDisabled(DefaultOutputKind.Logo))
-            {
-                Host.WriteLogo();
-            }
+            if (IsOutputDisabled(DefaultOutputKind.Logo))
+                return;
+
+            Host.WriteLogo();
 
             Host.Information($"NUKE Execution Engine {typeof(NukeBuild).Assembly.GetInformationalText()}");
             Host.Information();
@@ -47,43 +31,49 @@ namespace Nuke.Common
             if (IsInterceptorExecution)
                 return DelegateDisposable.CreateBracket();
 
-            if (IsHostWriteBlockOverridden() && IsOutputDisabled(DefaultOutputKind.TargetCollapse))
-            {
-                // All hosts that override WriteBlock do it to support expand/collapse and it is disabled,
-                // so do not call WriteBlock at all.
-                return DelegateDisposable.CreateBracket();
-            }
+            bool HasCustomWriteBlock() =>
+                Host.GetType().GetMethod(nameof(Host.WriteBlock), BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic) != null;
 
-            if (!IsHostWriteBlockOverridden() && IsOutputDisabled(DefaultOutputKind.TargetHeader))
-            {
+            if (IsOutputDisabled(DefaultOutputKind.TargetHeader) && !HasCustomWriteBlock() ||
+                IsOutputDisabled(DefaultOutputKind.TargetCollapse) && HasCustomWriteBlock())
                 return DelegateDisposable.CreateBracket();
-            }
 
             return Host.WriteBlock(target);
         }
 
-        private bool IsHostWriteBlockOverridden()
+        protected internal virtual void WriteErrorsAndWarnings()
         {
-            return Host.GetType().GetMethod(
-                       nameof(Host.WriteBlock),
-                       BindingFlags.Instance | BindingFlags.NonPublic,
-                       Type.DefaultBinder,
-                       new[] { typeof(string) },
-                       modifiers: null)!.DeclaringType !=
-                   typeof(Host);
+            if (IsOutputDisabled(DefaultOutputKind.ErrorsAndWarnings))
+                return;
+
+            Host.WriteErrorsAndWarnings();
         }
 
-        protected internal virtual void WriteSummary()
+        protected internal virtual void WriteTargetOutcome()
         {
             if (IsInterceptorExecution)
                 return;
 
-            if (!IsOutputDisabled(DefaultOutputKind.Summary))
-            {
+            if (IsOutputDisabled(DefaultOutputKind.TargetOutcome))
                 return;
-            }
 
-            Host.WriteSummary(this);
+            Host.WriteTargetOutcome(this);
+        }
+
+        protected internal virtual void WriteBuildOutcome()
+        {
+            if (IsOutputDisabled(DefaultOutputKind.BuildOutcome))
+                return;
+
+            Host.WriteBuildOutcome(this);
+        }
+
+        internal bool IsOutputDisabled(DefaultOutputKind outputKind)
+        {
+            return GetType()
+                .GetCustomAttribute<DisableDefaultOutputAttribute>()
+                ?.DisabledOutputs.Contains(outputKind)
+                ?? false;
         }
     }
 }
