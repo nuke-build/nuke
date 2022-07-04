@@ -65,6 +65,16 @@ namespace Nuke.Common.Tooling
             return newToolSettings;
         }
 
+        ///<summary>Sets <see cref="ToolSettings.ProcessExecutionTimeout"/> -- <inheritdoc cref="ToolSettings.ProcessExecutionTimeout" /></summary>
+        [Pure]
+        public static T SetProcessExecutionTimeout<T>(this T toolSettings, [CanBeNull] TimeSpan? executionTimeout)
+            where T : ToolSettings
+        {
+            var newToolSettings = toolSettings.NewInstance();
+            newToolSettings.ProcessExecutionTimeout = (int?)executionTimeout?.TotalMilliseconds;
+            return newToolSettings;
+        }
+
         ///<summary>Sets <see cref="ToolSettings.ProcessLogOutput"/> -- <inheritdoc cref="ToolSettings.ProcessLogOutput" /></summary>
         [Pure]
         public static T SetProcessLogOutput<T>(this T toolSettings, bool enableOutput)
