@@ -33,7 +33,7 @@ namespace Nuke.Common.Tests
             var settings = new DotNetRunSettings()
                 .SetProcessToolPath("/path/to/dotnet")
                 .SetProcessEnvironmentVariable("key", "value")
-                .SetProcessExecutionTimeout(1_000)
+                .SetProcessExecutionTimeout(TimeSpan.FromMilliseconds(1_000))
                 .SetProcessArgumentConfigurator(_ => _
                     .Add("/switch"))
                 .EnableProcessLogInvocation();
@@ -42,10 +42,6 @@ namespace Nuke.Common.Tests
             settings.ProcessEnvironmentVariables.Should().ContainSingle(x => x.Key == "key" && x.Value == "value");
             settings.ProcessExecutionTimeout.Should().Be(1_000);
             settings.ProcessArgumentConfigurator.Invoke(new Arguments()).RenderForOutput().Should().Be("/switch");
-
-            settings = settings.SetProcessExecutionTimeout(TimeSpan.FromMilliseconds(500));
-
-            settings.ProcessExecutionTimeout.Should().Be(500);
         }
 
         [Fact]
