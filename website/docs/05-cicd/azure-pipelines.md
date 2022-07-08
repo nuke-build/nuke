@@ -253,3 +253,14 @@ You can customize the caching tasks by overwriting the following properties:
     })]
 class Build : NukeBuild { /* ... */ }
 ```
+
+To disable the caching in scanarios where you already have everything installed or you know what you are doing, you can disable it by leaving the CacheKeyFiles empty:
+
+```
+csharp title="Build.cs"
+[AzurePipelines(
+    // ...
+    CacheKeyFiles = new[] {}
+    )]
+class Build : NukeBuild { /* ... */ }
+```
