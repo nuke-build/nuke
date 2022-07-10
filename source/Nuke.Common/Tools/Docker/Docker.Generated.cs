@@ -23416,6 +23416,45 @@ namespace Nuke.Common.Tools.Docker
         }
     }
     #endregion
+    #region DockerRunTargetSettings
+    /// <summary>
+    ///   Used within <see cref="DockerTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    [Serializable]
+    public partial class DockerRunTargetSettings : DockerRunSettings
+    {
+        /// <summary>
+        ///   Whether to execute a <c>docker pull</c> before running the container.
+        /// </summary>
+        public virtual bool? PullImage { get; internal set; }
+        /// <summary>
+        ///   The .NET Runtime Identifier (<a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID</a>) to use to publish the build project. For example, <c>linux-x64</c>, <c>linux-arm64</c>, <c>win-x64</c>.
+        /// </summary>
+        public virtual string DotNetRuntime { get; internal set; }
+        /// <summary>
+        ///   Enables caching of the build executable.
+        /// </summary>
+        public virtual bool? BuildCaching { get; internal set; }
+        /// <summary>
+        ///   Whether to keep the <c>.env.&lt;target&gt;</c> file located under <c>build/bin/&lt;rid&gt;</c> after the target is complete.
+        /// </summary>
+        public virtual bool? KeepEnvFile { get; internal set; }
+        /// <summary>
+        ///   The username for <c>docker login</c>.
+        /// </summary>
+        public virtual string Username { get; internal set; }
+        /// <summary>
+        ///   The password for <c>docker login</c>.
+        /// </summary>
+        public virtual string Password { get; internal set; }
+        /// <summary>
+        ///   The server for <c>docker login</c>.
+        /// </summary>
+        public virtual string Server { get; internal set; }
+    }
+    #endregion
     #region CliSettings
     /// <summary>
     ///   Used within <see cref="DockerTasks"/>.
@@ -81413,6 +81452,283 @@ namespace Nuke.Common.Tools.Docker
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Path = null;
+            return toolSettings;
+        }
+        #endregion
+    }
+    #endregion
+    #region DockerRunTargetSettingsExtensions
+    /// <summary>
+    ///   Used within <see cref="DockerTasks"/>.
+    /// </summary>
+    [PublicAPI]
+    [ExcludeFromCodeCoverage]
+    public static partial class DockerRunTargetSettingsExtensions
+    {
+        #region PullImage
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerRunTargetSettings.PullImage"/></em></p>
+        ///   <p>Whether to execute a <c>docker pull</c> before running the container.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPullImage<T>(this T toolSettings, bool? pullImage) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullImage = pullImage;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerRunTargetSettings.PullImage"/></em></p>
+        ///   <p>Whether to execute a <c>docker pull</c> before running the container.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPullImage<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullImage = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerRunTargetSettings.PullImage"/></em></p>
+        ///   <p>Whether to execute a <c>docker pull</c> before running the container.</p>
+        /// </summary>
+        [Pure]
+        public static T EnablePullImage<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullImage = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerRunTargetSettings.PullImage"/></em></p>
+        ///   <p>Whether to execute a <c>docker pull</c> before running the container.</p>
+        /// </summary>
+        [Pure]
+        public static T DisablePullImage<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullImage = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerRunTargetSettings.PullImage"/></em></p>
+        ///   <p>Whether to execute a <c>docker pull</c> before running the container.</p>
+        /// </summary>
+        [Pure]
+        public static T TogglePullImage<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.PullImage = !toolSettings.PullImage;
+            return toolSettings;
+        }
+        #endregion
+        #region DotNetRuntime
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerRunTargetSettings.DotNetRuntime"/></em></p>
+        ///   <p>The .NET Runtime Identifier (<a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID</a>) to use to publish the build project. For example, <c>linux-x64</c>, <c>linux-arm64</c>, <c>win-x64</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetDotNetRuntime<T>(this T toolSettings, string dotNetRuntime) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DotNetRuntime = dotNetRuntime;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerRunTargetSettings.DotNetRuntime"/></em></p>
+        ///   <p>The .NET Runtime Identifier (<a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID</a>) to use to publish the build project. For example, <c>linux-x64</c>, <c>linux-arm64</c>, <c>win-x64</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetDotNetRuntime<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.DotNetRuntime = null;
+            return toolSettings;
+        }
+        #endregion
+        #region BuildCaching
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerRunTargetSettings.BuildCaching"/></em></p>
+        ///   <p>Enables caching of the build executable.</p>
+        /// </summary>
+        [Pure]
+        public static T SetBuildCaching<T>(this T toolSettings, bool? buildCaching) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildCaching = buildCaching;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerRunTargetSettings.BuildCaching"/></em></p>
+        ///   <p>Enables caching of the build executable.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetBuildCaching<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildCaching = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerRunTargetSettings.BuildCaching"/></em></p>
+        ///   <p>Enables caching of the build executable.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableBuildCaching<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildCaching = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerRunTargetSettings.BuildCaching"/></em></p>
+        ///   <p>Enables caching of the build executable.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableBuildCaching<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildCaching = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerRunTargetSettings.BuildCaching"/></em></p>
+        ///   <p>Enables caching of the build executable.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleBuildCaching<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.BuildCaching = !toolSettings.BuildCaching;
+            return toolSettings;
+        }
+        #endregion
+        #region KeepEnvFile
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerRunTargetSettings.KeepEnvFile"/></em></p>
+        ///   <p>Whether to keep the <c>.env.&lt;target&gt;</c> file located under <c>build/bin/&lt;rid&gt;</c> after the target is complete.</p>
+        /// </summary>
+        [Pure]
+        public static T SetKeepEnvFile<T>(this T toolSettings, bool? keepEnvFile) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepEnvFile = keepEnvFile;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerRunTargetSettings.KeepEnvFile"/></em></p>
+        ///   <p>Whether to keep the <c>.env.&lt;target&gt;</c> file located under <c>build/bin/&lt;rid&gt;</c> after the target is complete.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetKeepEnvFile<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepEnvFile = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerRunTargetSettings.KeepEnvFile"/></em></p>
+        ///   <p>Whether to keep the <c>.env.&lt;target&gt;</c> file located under <c>build/bin/&lt;rid&gt;</c> after the target is complete.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableKeepEnvFile<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepEnvFile = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerRunTargetSettings.KeepEnvFile"/></em></p>
+        ///   <p>Whether to keep the <c>.env.&lt;target&gt;</c> file located under <c>build/bin/&lt;rid&gt;</c> after the target is complete.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableKeepEnvFile<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepEnvFile = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerRunTargetSettings.KeepEnvFile"/></em></p>
+        ///   <p>Whether to keep the <c>.env.&lt;target&gt;</c> file located under <c>build/bin/&lt;rid&gt;</c> after the target is complete.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleKeepEnvFile<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.KeepEnvFile = !toolSettings.KeepEnvFile;
+            return toolSettings;
+        }
+        #endregion
+        #region Username
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerRunTargetSettings.Username"/></em></p>
+        ///   <p>The username for <c>docker login</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetUsername<T>(this T toolSettings, string username) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = username;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerRunTargetSettings.Username"/></em></p>
+        ///   <p>The username for <c>docker login</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetUsername<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Username = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Password
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerRunTargetSettings.Password"/></em></p>
+        ///   <p>The password for <c>docker login</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetPassword<T>(this T toolSettings, string password) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = password;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerRunTargetSettings.Password"/></em></p>
+        ///   <p>The password for <c>docker login</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetPassword<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Password = null;
+            return toolSettings;
+        }
+        #endregion
+        #region Server
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerRunTargetSettings.Server"/></em></p>
+        ///   <p>The server for <c>docker login</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T SetServer<T>(this T toolSettings, string server) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Server = server;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerRunTargetSettings.Server"/></em></p>
+        ///   <p>The server for <c>docker login</c>.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetServer<T>(this T toolSettings) where T : DockerRunTargetSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Server = null;
             return toolSettings;
         }
         #endregion
