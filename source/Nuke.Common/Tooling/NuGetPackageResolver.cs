@@ -251,7 +251,7 @@ namespace Nuke.Common.Tooling
 
         // TODO: check for config ( repositoryPath / globalPackagesFolder )
         [CanBeNull]
-        private static string GetPackagesDirectory([CanBeNull] string packagesConfigFile)
+        public static string GetPackagesDirectory([CanBeNull] string packagesConfigFile)
         {
             string TryGetFromEnvironmentVariable()
                 => EnvironmentInfo.GetVariable<string>("NUGET_PACKAGES");
