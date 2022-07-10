@@ -2,10 +2,12 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using Nuke.Common.Execution;
+
 namespace Nuke.Common.CI.SpaceAutomation
 {
     public partial class SpaceAutomation
     {
-        internal override string OutputTemplate => "[{Level:u3}] {Message:l}{NewLine}{Exception}";
+        internal override string OutputTemplate => Logging.StandardOutputTemplate;
     }
 }

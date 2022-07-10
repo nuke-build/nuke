@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using Nuke.Common.Execution;
 using Nuke.Common.Execution.Theming;
 using Nuke.Common.Utilities;
 
@@ -11,7 +12,7 @@ namespace Nuke.Common.CI.TeamCity
     public partial class TeamCity
     {
         internal override IHostTheme Theme => AnsiConsoleHostTheme.Default256AnsiColorTheme;
-        internal override string OutputTemplate => "[{Level:u3}] {Message:l}{NewLine}{Exception}";
+        internal override string OutputTemplate => Logging.StandardOutputTemplate;
 
         protected internal override IDisposable WriteBlock(string text)
         {

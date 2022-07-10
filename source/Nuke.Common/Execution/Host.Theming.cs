@@ -12,10 +12,6 @@ namespace Nuke.Common
 {
     public partial class Host
     {
-        private const string SevereMessagesOutputTemplate = "[{Level:u3}] {ExecutingTarget}: {Message:l}{NewLine}";
-
-        internal static string DefaultOutputTemplate => "{Timestamp:HH:mm:ss} [{Level:u3}] {Message:l}{NewLine}{Exception}";
-
         internal static void Success(string text = null)
         {
             (Instance?.Theme ?? Logging.DefaultTheme).WriteSuccess(text);
