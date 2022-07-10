@@ -20,6 +20,15 @@ namespace Nuke.Common.Utilities.Collections
             return dictionary;
         }
 
+        public static IDictionary<TKey, string> AddPair<TKey, TValue>(
+            this IDictionary<TKey, string> dictionary,
+            TKey key,
+            [CanBeNull] TValue value = default)
+        {
+            dictionary.Add(key, value.ToString());
+            return dictionary;
+        }
+
         public static IDictionary<TKey, TValue> AddPairWhenKeyNotNull<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
             [CanBeNull] TKey key,
