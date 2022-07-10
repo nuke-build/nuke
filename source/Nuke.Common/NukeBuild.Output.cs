@@ -11,6 +11,9 @@ namespace Nuke.Common
     {
         protected internal virtual void WriteLogo()
         {
+            if (IsInterceptorExecution)
+                return;
+
             Host.WriteLogo();
 
             Host.Information($"NUKE Execution Engine {typeof(NukeBuild).Assembly.GetInformationalText()}");
@@ -19,11 +22,17 @@ namespace Nuke.Common
 
         protected internal virtual IDisposable WriteTarget(string target)
         {
+            if (IsInterceptorExecution)
+                return DelegateDisposable.CreateBracket();
+
             return Host.WriteBlock(target);
         }
 
         protected internal virtual void WriteSummary()
         {
+            if (IsInterceptorExecution)
+                return;
+
             Host.WriteSummary(this);
         }
     }

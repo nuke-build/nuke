@@ -18,6 +18,7 @@ namespace Nuke.Common.Execution
     {
         internal TargetDefinition Definition { get; set; }
         internal Stopwatch Stopwatch { get; } = new Stopwatch();
+        internal Func<bool> Intercept { get; set; }
 
         public MemberInfo Member { get; set; }
         public string Name { get; set; }

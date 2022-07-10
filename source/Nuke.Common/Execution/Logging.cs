@@ -15,6 +15,7 @@ using Nuke.Common.Utilities.Collections;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using Serilog.Formatting.Compact;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Nuke.Common.Execution
@@ -57,6 +58,14 @@ namespace Nuke.Common.Execution
 
         public static void Configure(NukeBuild build = null)
         {
+            if (NukeBuild.IsInterceptorExecution)
+            {
+                Log.Logger = new LoggerConfiguration()
+                    .WriteTo.Console(new CompactJsonFormatter())
+                    .CreateLogger();
+                return;
+            }
+
             if (build != null)
                 DeleteOldLogFiles();
 

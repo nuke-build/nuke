@@ -25,7 +25,10 @@ namespace Nuke.Common.Execution
         }
 
         public PropertyInfo Target { get; }
+        public string Name => Target.GetDisplayShortName();
         public NukeBuild Build { get; }
+
+        internal Func<bool> Intercept { get; set; }
 
         internal string Description { get; set; }
         internal List<Expression<Func<bool>>> DynamicConditions { get; } = new List<Expression<Func<bool>>>();

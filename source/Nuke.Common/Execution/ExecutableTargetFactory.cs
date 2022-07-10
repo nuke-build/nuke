@@ -41,9 +41,10 @@ namespace Nuke.Common.Execution
 
                 return new ExecutableTarget
                              {
-                                 Name = property.GetDisplayShortName(),
+                                 Name = definition.Name,
                                  Member = property,
                                  Definition = definition,
+                                 Intercept = definition.Intercept,
                                  Description = definition.Description,
                                  Factory = factory,
                                  IsDefault = defaultTargets.Contains(factory),
