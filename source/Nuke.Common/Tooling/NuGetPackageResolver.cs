@@ -388,19 +388,23 @@ namespace Nuke.Common.Tooling
                 }
             }
 
+            private readonly Lazy<NuspecReader> _metadata;
+
             public InstalledPackage(string fileName)
             {
                 FileName = fileName;
-
-                var directory = new DirectoryInfo(Path.GetDirectoryName(fileName));
-                Metadata = directory.GetFiles("*.nuspec").Length == 1
-                    ? new PackageFolderReader(directory).NuspecReader
-                    : new PackageArchiveReader(fileName).NuspecReader;
+                _metadata = new Lazy<NuspecReader>(() =>
+                {
+                    var directory = new DirectoryInfo(Path.GetDirectoryName(fileName));
+                    return directory.GetFiles("*.nuspec").Length == 1
+                        ? new PackageFolderReader(directory).NuspecReader
+                        : new PackageArchiveReader(fileName).NuspecReader;
+                });
             }
 
             public string FileName { get; }
             public AbsolutePath Directory => (AbsolutePath) Path.GetDirectoryName(FileName).NotNull();
-            public NuspecReader Metadata { get; }
+            public NuspecReader Metadata => _metadata.Value;
             public string Id => Metadata.GetIdentity().Id;
             public NuGetVersion Version => Metadata.GetIdentity().Version;
 
