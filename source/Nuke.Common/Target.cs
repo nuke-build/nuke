@@ -23,12 +23,26 @@ namespace Nuke.Common
     /// </example>
     public delegate ITargetDefinition Target(ITargetDefinition definition);
 
+    public delegate ITargetDefinition Setup(ITargetDefinition definition);
+
+    public delegate ITargetDefinition Cleanup(ITargetDefinition definition);
+
     [PublicAPI]
     public static class ExecutableTargetExtensions
     {
         public static bool Contains(this IEnumerable<ExecutableTarget> targets, Target target)
         {
-            return targets.Any(x => x.Factory == target);
+            return targets.Any(x => x.Factory.Equals(target));
+        }
+
+        public static bool Contains(this IEnumerable<ExecutableTarget> targets, Setup target)
+        {
+            return targets.Any(x => x.Factory.Equals(target));
+        }
+
+        public static bool Contains(this IEnumerable<ExecutableTarget> targets, Cleanup target)
+        {
+            return targets.Any(x => x.Factory.Equals(target));
         }
     }
 }
