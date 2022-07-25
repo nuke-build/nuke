@@ -36,29 +36,29 @@ namespace Nuke.Common.Execution
                     .Reverse().ToList();
                 var definition = new TargetDefinition(property, build, new Stack<PropertyInfo>(baseMembers));
 
-                var factory = (Target) property.GetValue(build);
-                factory.Invoke(definition);
+                var factory = (Delegate) property.GetValue(build);
+                factory.DynamicInvokeUnwrap(definition);
 
                 return new ExecutableTarget
-                             {
-                                 Name = definition.Name,
-                                 Member = property,
-                                 Definition = definition,
-                                 Intercept = definition.Intercept,
-                                 Description = definition.Description,
-                                 Factory = factory,
-                                 IsDefault = defaultTargets.Contains(factory),
-                                 DynamicConditions = definition.DynamicConditions,
-                                 StaticConditions = definition.StaticConditions,
-                                 DependencyBehavior = definition.DependencyBehavior,
-                                 ProceedAfterFailure = definition.IsProceedAfterFailure,
-                                 AssuredAfterFailure = definition.IsAssuredAfterFailure,
-                                 Requirements = definition.Requirements,
-                                 Actions = definition.Actions,
-                                 Listed = !definition.IsInternal,
-                                 PartitionSize = definition.PartitionSize,
-                                 ArtifactProducts = definition.ArtifactProducts
-                             };
+                       {
+                           Name = definition.Name,
+                           Member = property,
+                           Definition = definition,
+                           Intercept = definition.Intercept,
+                           Description = definition.Description,
+                           Factory = factory,
+                           IsDefault = defaultTargets.Contains(factory),
+                           DynamicConditions = definition.DynamicConditions,
+                           StaticConditions = definition.StaticConditions,
+                           DependencyBehavior = definition.DependencyBehavior,
+                           ProceedAfterFailure = definition.IsProceedAfterFailure,
+                           AssuredAfterFailure = definition.IsAssuredAfterFailure || factory is Cleanup,
+                           Requirements = definition.Requirements,
+                           Actions = definition.Actions,
+                           Listed = !definition.IsInternal,
+                           PartitionSize = definition.PartitionSize,
+                           ArtifactProducts = definition.ArtifactProducts
+                       };
             }
 
             var executables = targetProperties.Select(Create).ToList();
@@ -70,8 +70,8 @@ namespace Nuke.Common.Execution
         private static void ApplyDependencies(ExecutableTarget executable, IReadOnlyCollection<ExecutableTarget> executables)
         {
             IEnumerable<ExecutableTarget> GetDependencies(
-                Func<TargetDefinition, IReadOnlyList<Target>> directDependenciesSelector,
-                Func<TargetDefinition, IReadOnlyList<Target>> indirectDependenciesSelector)
+                Func<TargetDefinition, IReadOnlyList<Delegate>> directDependenciesSelector,
+                Func<TargetDefinition, IReadOnlyList<Delegate>> indirectDependenciesSelector)
             {
                 foreach (var factoryDependency in directDependenciesSelector(executable.Definition))
                     yield return executables.Single(x => x.Factory == factoryDependency);
@@ -89,9 +89,18 @@ namespace Nuke.Common.Execution
             executable.TriggerDependencies.AddRange(GetDependencies(x => x.TriggeredByTargets, x => x.TriggersTargets));
             executable.Triggers.AddRange(GetDependencies(x => x.TriggersTargets, x => x.TriggeredByTargets));
 
+            if (executable.Factory is Setup)
+            {
+                var cleanup = executables
+                    .Where(x => x.Factory is Cleanup)
+                    .Single(x => x.Member.DeclaringType == executable.Member.DeclaringType);
+                executable.Triggers.Add(cleanup);
+                cleanup.TriggerDependencies.Add(executable);
+            }
+
             foreach (var artifactDependency in executable.Definition.ArtifactDependencies)
             {
-                var dependency = executables.Single(x => x.Factory == artifactDependency.Key);
+                var dependency = executables.Single(x => x.Factory.Equals(artifactDependency.Key));
                 foreach (var artifacts in artifactDependency)
                     executable.ArtifactDependencies.AddRange(dependency, artifacts.Length > 0 ? artifacts : dependency.ArtifactProducts);
             }
@@ -101,7 +110,7 @@ namespace Nuke.Common.Execution
         {
             // TODO: static targets?
             return buildType.GetAllMembers(
-                x => x is PropertyInfo property && property.PropertyType == typeof(Target),
+                x => x is PropertyInfo property && new[] { typeof(Target), typeof(Setup), typeof(Cleanup) }.Contains(property.PropertyType),
                 bindingFlags: ReflectionUtility.Instance,
                 allowAmbiguity: false,
                 filterQuasiOverridden: true).Cast<PropertyInfo>();

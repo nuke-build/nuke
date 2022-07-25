@@ -218,6 +218,8 @@ namespace Nuke.Common
         /// </summary>
         ITargetDefinition Consumes<T>(params string[] artifacts);
 
+        ITargetDefinition DependsOnContext<T>()
+            where T : INukeBuild;
 
         /// <summary>
         ///   Defines the partition size. Default is <c>1</c>.
