@@ -163,6 +163,18 @@ namespace Nuke.Common.Tooling
             }
         }
 
+        public static string GetNpmExecutable(string npmExecutable)
+        {
+            return ProcessTasks.StartProcess(
+                    toolPath: GetPathExecutable("npx"),
+                    arguments: $"which {npmExecutable}",
+                    workingDirectory: NukeBuild.TemporaryDirectory / "node_modules",
+                    logInvocation: false,
+                    logOutput: false)
+                .AssertZeroExitCode()
+                .Output.StdToText();
+        }
+
         public static string GetPathExecutable(string pathExecutable)
         {
             if (File.Exists(pathExecutable))
