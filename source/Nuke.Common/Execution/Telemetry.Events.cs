@@ -81,14 +81,21 @@ namespace Nuke.Common.Execution
             if (s_client == null)
                 return;
 
-            var properties = propertiesProvider.Invoke();
-            // TODO: logging additional
-            Log.Verbose("Sending {EventName} telemetry event ...", eventName);
-            var longestPropertyName = properties.Keys.Max(x => x.Length);
-            properties.OrderBy(x => x.Key).ForEach(x => Log.Verbose("  {Key} = {Value}", x.Key.PadRight(longestPropertyName), x.Value ?? "<null>"));
+            try
+            {
+                var properties = propertiesProvider.Invoke();
+                // TODO: logging additional
+                Log.Verbose("Sending {EventName} telemetry event ...", eventName);
+                var longestPropertyName = properties.Keys.Max(x => x.Length);
+                properties.OrderBy(x => x.Key).ForEach(x => Log.Verbose("  {Key} = {Value}", x.Key.PadRight(longestPropertyName), x.Value ?? "<null>"));
 
-            s_client.TrackEvent(eventName, properties);
-            s_client.Flush();
+                s_client.TrackEvent(eventName, properties);
+                s_client.Flush();
+            }
+            catch (Exception exception)
+            {
+                Log.Verbose(exception, "Failed to sent {EventName} telemetry event", eventName);
+            }
         }
     }
 }
