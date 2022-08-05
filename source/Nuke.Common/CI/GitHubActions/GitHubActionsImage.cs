@@ -10,7 +10,7 @@ using Nuke.Common.Tooling;
 namespace Nuke.Common.CI.GitHubActions
 {
     /// <summary>
-    /// See <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners#supported-runners-and-hardware-resources">Virtual environments for GitHub Actions</a>
+    /// See <a href="https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners">Virtual environments for GitHub Actions</a>
     /// </summary>
     [PublicAPI]
     public enum GitHubActionsImage
