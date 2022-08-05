@@ -67,11 +67,11 @@ namespace Nuke.Common.Tooling
 
         ///<summary>Sets <see cref="ToolSettings.ProcessExecutionTimeout"/> -- <inheritdoc cref="ToolSettings.ProcessExecutionTimeout" /></summary>
         [Pure]
-        public static T SetProcessExecutionTimeout<T>(this T toolSettings, [CanBeNull] TimeSpan? executionTimeout)
+        public static T SetProcessExecutionTimeout<T>(this T toolSettings, TimeSpan executionTimeout)
             where T : ToolSettings
         {
             var newToolSettings = toolSettings.NewInstance();
-            newToolSettings.ProcessExecutionTimeout = (int?)executionTimeout?.TotalMilliseconds;
+            newToolSettings.ProcessExecutionTimeout = (int?)executionTimeout.TotalMilliseconds;
             return newToolSettings;
         }
 
