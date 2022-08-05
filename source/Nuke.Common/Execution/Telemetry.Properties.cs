@@ -68,8 +68,8 @@ namespace Nuke.Common.Execution
                    {
                        ["repo_provider"] = providers.FirstOrDefault(x => x.Item1.Invoke()).Item2,
                        ["repo_branch"] = branches.FirstOrDefault(x => x.Item1.Invoke()).Item2,
-                       ["repo_url"] = repository.SshUrl.GetSHA256Hash().Substring(startIndex: 0, length: 6),
-                       ["repo_commit"] = repository.Commit.GetSHA256Hash().Substring(startIndex: 0, length: 6)
+                       ["repo_url"] = repository.SshUrl?.GetSHA256Hash().Substring(startIndex: 0, length: 6),
+                       ["repo_commit"] = repository.Commit?.GetSHA256Hash().Substring(startIndex: 0, length: 6)
                    };
         }
 
