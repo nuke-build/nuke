@@ -221,15 +221,18 @@ namespace Nuke.Common.Git
         public string Head { get; private set; }
 
         /// <summary>Current commit; <c>null</c> if parsed from URL.</summary>
+        [CanBeNull]
         public string Commit { get; }
 
         /// <summary>List of tags; <c>null</c> if parsed from URL.</summary>
         public IReadOnlyCollection<string> Tags { get; }
 
         /// <summary>Name of the remote.</summary>
+        [CanBeNull]
         public string RemoteName { get; }
 
         /// <summary>Name of the remote branch.</summary>
+        [CanBeNull]
         public string RemoteBranch { get; }
 
         /// <summary>Current branch; <c>null</c> if head is detached.</summary>
@@ -237,9 +240,11 @@ namespace Nuke.Common.Git
         public string Branch { get; private set; }
 
         /// <summary>Url in the form of <c>https://endpoint/identifier.git</c></summary>
+        [CanBeNull]
         public string HttpsUrl => Endpoint != null ? $"https://{Endpoint}/{Identifier}.git" : null;
 
         /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
+        [CanBeNull]
         public string SshUrl => Endpoint != null ? $"git@{Endpoint}:{Identifier}.git" : null;
 
         public GitRepository SetBranch(string branch)
