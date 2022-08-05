@@ -19,9 +19,9 @@ name: test
 on: [push, pull_request]
 
 jobs:
-  macOS-latest:
-    name: macOS-latest
-    runs-on: macOS-latest
+  macos-latest:
+    name: macos-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
       - name: Cache .nuke/temp, ~/.nuget/packages
