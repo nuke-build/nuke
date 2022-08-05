@@ -16,7 +16,7 @@ namespace Nuke.Common.Tools.Git
 
         public static bool GitIsDetached(string workingDirectory)
         {
-            return !Git("symbolic-ref --short -q HEAD", workingDirectory, logOutput: false).Any();
+            return !Git("branch --show-current", workingDirectory, logOutput: false).Any();
         }
 
         public static bool GitHasCleanWorkingCopy()
