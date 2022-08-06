@@ -77,20 +77,9 @@ namespace Nuke.Common
             return false;
         }
 
-        internal virtual void WriteSummary(NukeBuild build)
+        protected internal virtual void WriteErrorsAndWarnings()
         {
-            WriteSevereLogEvents(Logging.InMemorySink.Instance.LogEvents);
-            WriteSummaryTable(build);
-
-            if (build.IsSuccessful)
-                WriteSuccessfulBuild(build);
-            else
-                WriteFailedBuild();
-        }
-
-        protected virtual void WriteSevereLogEvents(IReadOnlyCollection<LogEvent> instanceLogEvents)
-        {
-            if (instanceLogEvents.Count == 0)
+            if (Logging.InMemorySink.Instance.LogEvents.Count == 0)
                 return;
 
             // TODO: move to Logging
@@ -108,7 +97,7 @@ namespace Nuke.Common
             }
         }
 
-        protected virtual void WriteSummaryTable(NukeBuild build)
+        protected internal virtual void WriteTargetOutcome(NukeBuild build)
         {
             var firstColumn = Math.Max(build.ExecutionPlan.Max(x => x.Name.Length) + 4, val2: 19);
             var secondColumn = 10;
@@ -170,17 +159,15 @@ namespace Nuke.Common
             Debug(new string(c: '─', count: allColumns));
             Information(CreateLine("Total", string.Empty, GetDuration(totalDuration)));
             Debug(new string(c: '═', count: allColumns));
+        }
+
+        protected internal virtual void WriteBuildOutcome(NukeBuild build)
+        {
             Debug();
-        }
-
-        protected virtual void WriteSuccessfulBuild(NukeBuild build)
-        {
-            Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. ＼（＾ᴗ＾）／");
-        }
-
-        protected virtual void WriteFailedBuild()
-        {
-            Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. (╯°□°）╯︵ ┻━┻");
+            if (build.IsSuccessful)
+                Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. ＼（＾ᴗ＾）／");
+            else
+                Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. (╯°□°）╯︵ ┻━┻");
         }
 
         internal class LogEventSink : ILogEventSink

@@ -96,7 +96,9 @@ namespace Nuke.Common.Execution
                     };
                 }
 
-                build.WriteSummary();
+                build.WriteErrorsAndWarnings();
+                build.WriteTargetOutcome();
+                build.WriteBuildOutcome();
                 build.ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
             }
         }
