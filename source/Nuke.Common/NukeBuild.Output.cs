@@ -11,68 +11,63 @@ namespace Nuke.Common
 {
     partial class NukeBuild
     {
-        protected internal virtual void WriteLogo()
+        internal void WriteLogo()
         {
             if (IsInterceptorExecution)
                 return;
 
-            if (IsOutputDisabled(DefaultOutput.Logo))
-                return;
-
-            Host.WriteLogo();
+            if (IsOutputEnabled(DefaultOutput.Logo))
+                Host.WriteLogo();
 
             Host.Information($"NUKE Execution Engine {typeof(NukeBuild).Assembly.GetInformationalText()}");
             Host.Information();
         }
 
-        protected internal virtual IDisposable WriteTarget(string target)
+        internal IDisposable WriteTarget(string target)
         {
+            bool CanCollapse() =>
+                Host.GetType().GetMethod(nameof(Host.WriteBlock), ReflectionUtility.Instance | BindingFlags.DeclaredOnly) != null;
+
             if (IsInterceptorExecution)
                 return DelegateDisposable.CreateBracket();
 
-            bool CanCollape() =>
-                Host.GetType().GetMethod(nameof(Host.WriteBlock), BindingFlags.Instance | BindingFlags.DeclaredOnly | BindingFlags.NonPublic) != null;
+            if (IsOutputEnabled(DefaultOutput.TargetHeader) && !CanCollapse() ||
+                IsOutputEnabled(DefaultOutput.TargetCollapse) && CanCollapse())
+                return Host.WriteBlock(target);
 
-            if (IsOutputDisabled(DefaultOutput.TargetHeader) && !CanCollape() ||
-                IsOutputDisabled(DefaultOutput.TargetCollapse) && CanCollape())
-                return DelegateDisposable.CreateBracket();
-
-            return Host.WriteBlock(target);
+            return DelegateDisposable.CreateBracket();
         }
 
-        protected internal virtual void WriteErrorsAndWarnings()
-        {
-            if (IsOutputDisabled(DefaultOutput.RepeatedErrorsAndWarnings))
-                return;
-
-            Host.WriteErrorsAndWarnings();
-        }
-
-        protected internal virtual void WriteTargetOutcome()
+        internal void WriteErrorsAndWarnings()
         {
             if (IsInterceptorExecution)
                 return;
 
-            if (IsOutputDisabled(DefaultOutput.TargetOutcome))
-                return;
-
-            Host.WriteTargetOutcome(this);
+            if (IsOutputEnabled(DefaultOutput.ErrorsAndWarnings))
+                Host.WriteErrorsAndWarnings();
         }
 
-        protected internal virtual void WriteBuildOutcome()
+        internal void WriteTargetOutcome()
         {
-            if (IsOutputDisabled(DefaultOutput.BuildOutcome))
+            if (IsInterceptorExecution)
                 return;
 
-            Host.WriteBuildOutcome(this);
+            if (IsOutputEnabled(DefaultOutput.TargetOutcome))
+                Host.WriteTargetOutcome(this);
         }
 
-        internal bool IsOutputDisabled(DefaultOutput output)
+        internal void WriteBuildOutcome()
         {
-            return GetType()
-                .GetCustomAttribute<DisableDefaultOutputAttribute>()
-                ?.DisabledOutputs.Contains(output)
-                ?? false;
+            if (IsInterceptorExecution)
+                return;
+
+            if (IsOutputEnabled(DefaultOutput.BuildOutcome))
+                Host.WriteBuildOutcome(this);
+        }
+
+        internal bool IsOutputEnabled(DefaultOutput output)
+        {
+            return !(GetType().GetCustomAttribute<DisableDefaultOutputAttribute>()?.DisabledOutputs.Contains(output) ?? false);
         }
     }
 }
