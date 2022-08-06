@@ -2,6 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using System.ComponentModel;
 using JetBrains.Annotations;
 
@@ -30,7 +31,14 @@ namespace Nuke.Common.Utilities
             }
             catch
             {
-                Assert.Fail($"Value '{value}' could not be converted to '{GetDisplayShortName(destinationType)}'");
+                var errorMessage = $"Value '{value}' could not be converted to '{GetDisplayShortName(destinationType)}'.";
+
+                // Check if we have an enum type, if so list the possible values in the error message.
+                var enumType = Nullable.GetUnderlyingType(destinationType) ?? destinationType;
+                if (enumType.IsEnum)
+                    errorMessage += $" Accepted values are: {string.Join(", ", Enum.GetNames(enumType))}";
+
+                Assert.Fail(errorMessage);
                 // ReSharper disable once HeuristicUnreachableCode
                 return null;
             }
