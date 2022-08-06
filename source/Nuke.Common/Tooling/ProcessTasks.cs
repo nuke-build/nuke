@@ -10,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
+using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Serilog;
@@ -243,7 +244,7 @@ namespace Nuke.Common.Tooling
 
         public static void CheckPathEnvironmentVariable()
         {
-            if (Logger.LogLevel >= LogLevel.Normal)
+            if (Logging.Level >= LogLevel.Normal)
                 return;
 
             EnvironmentInfo.Variables
