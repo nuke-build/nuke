@@ -3,37 +3,71 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Linq;
+using System.Reflection;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common
 {
     partial class NukeBuild
     {
-        protected internal virtual void WriteLogo()
+        internal void WriteLogo()
         {
             if (IsInterceptorExecution)
                 return;
 
-            Host.WriteLogo();
+            if (IsOutputEnabled(DefaultOutput.Logo))
+                Host.WriteLogo();
 
             Host.Information($"NUKE Execution Engine {typeof(NukeBuild).Assembly.GetInformationalText()}");
             Host.Information();
         }
 
-        protected internal virtual IDisposable WriteTarget(string target)
+        internal IDisposable WriteTarget(string target)
         {
+            bool CanCollapse() =>
+                Host.GetType().GetMethod(nameof(Host.WriteBlock), ReflectionUtility.Instance | BindingFlags.DeclaredOnly) != null;
+
             if (IsInterceptorExecution)
                 return DelegateDisposable.CreateBracket();
 
-            return Host.WriteBlock(target);
+            if (IsOutputEnabled(DefaultOutput.TargetHeader) && !CanCollapse() ||
+                IsOutputEnabled(DefaultOutput.TargetCollapse) && CanCollapse())
+                return Host.WriteBlock(target);
+
+            return DelegateDisposable.CreateBracket();
         }
 
-        protected internal virtual void WriteSummary()
+        internal void WriteErrorsAndWarnings()
         {
             if (IsInterceptorExecution)
                 return;
 
-            Host.WriteSummary(this);
+            if (IsOutputEnabled(DefaultOutput.ErrorsAndWarnings))
+                Host.WriteErrorsAndWarnings();
+        }
+
+        internal void WriteTargetOutcome()
+        {
+            if (IsInterceptorExecution)
+                return;
+
+            if (IsOutputEnabled(DefaultOutput.TargetOutcome))
+                Host.WriteTargetOutcome(this);
+        }
+
+        internal void WriteBuildOutcome()
+        {
+            if (IsInterceptorExecution)
+                return;
+
+            if (IsOutputEnabled(DefaultOutput.BuildOutcome))
+                Host.WriteBuildOutcome(this);
+        }
+
+        internal bool IsOutputEnabled(DefaultOutput output)
+        {
+            return !(GetType().GetCustomAttribute<DisableDefaultOutputAttribute>()?.DisabledOutputs.Contains(output) ?? false);
         }
     }
 }
