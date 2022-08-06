@@ -116,5 +116,29 @@ namespace Nuke.Common.Utilities
         {
             return (T) type.InvokeMember(memberName, target, bindingFlags, args);
         }
+
+        public static void DynamicInvokeUnwrap(this Delegate @delegate)
+        {
+            try
+            {
+                @delegate.DynamicInvoke();
+            }
+            catch (Exception exception)
+            {
+                throw exception.Unwrap();
+            }
+        }
+
+        public static T DynamicInvokeUnwrap<T>(this Delegate @delegate)
+        {
+            try
+            {
+                return (T)@delegate.DynamicInvoke();
+            }
+            catch (Exception exception)
+            {
+                throw exception.Unwrap();
+            }
+        }
     }
 }
