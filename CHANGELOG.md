@@ -5,6 +5,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Added support for intercepted targets
+- Added target interception for Docker
+- Added support for context components
+- Added `DisableDefaultOutputAttribute`
+- Added `InstallNpmToolsAttribute` and `NpmExecutableAttribute`
+- Added `EnvironmentInfo.IsArm64`
+- Added `SetProcessExecutionTimeout` overload for `TimeSpan`
+- Added `DotNetRuntimeIdentifiers`
+- Fixed telemetry
+- Fixed `GetPathExecutable` to manually search `PATH` environment variable if locator executable is not available
+- Fixed resolution of surrogate arguments in Visual Studio
+- Fixed performance of `NuGetPackageResolver`
+- Fixed `GitTasks.GitIsDetached`
+- Fixed missing members in `GitHubActionsImage`
+- Fixed missing members in `AzurePipelinesRepositoryType`
+- Fixed detection for Bamboo
+- Fixed missing arguments in `KubernetesTasks`
+- Fixed missing arguments in `DockerTasks`
 
 ## [6.1.2] / 2022-07-02
 - Removed `Newtonsoft.Json.Schema` dependency
