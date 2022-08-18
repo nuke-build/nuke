@@ -5033,6 +5033,7 @@ namespace Nuke.Common.Tools.Docker
         ///   <ul>
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerImagePushSettings.CliSettings"/></li>
         ///     <li><c>&lt;name&gt;</c> via <see cref="DockerImagePushSettings.Name"/></li>
+        ///     <li><c>--all-tags</c> via <see cref="DockerImagePushSettings.AllTags"/></li>
         ///     <li><c>--disable-content-trust</c> via <see cref="DockerImagePushSettings.DisableContentTrust"/></li>
         ///   </ul>
         /// </remarks>
@@ -5052,6 +5053,7 @@ namespace Nuke.Common.Tools.Docker
         ///   <ul>
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerImagePushSettings.CliSettings"/></li>
         ///     <li><c>&lt;name&gt;</c> via <see cref="DockerImagePushSettings.Name"/></li>
+        ///     <li><c>--all-tags</c> via <see cref="DockerImagePushSettings.AllTags"/></li>
         ///     <li><c>--disable-content-trust</c> via <see cref="DockerImagePushSettings.DisableContentTrust"/></li>
         ///   </ul>
         /// </remarks>
@@ -5068,6 +5070,7 @@ namespace Nuke.Common.Tools.Docker
         ///   <ul>
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerImagePushSettings.CliSettings"/></li>
         ///     <li><c>&lt;name&gt;</c> via <see cref="DockerImagePushSettings.Name"/></li>
+        ///     <li><c>--all-tags</c> via <see cref="DockerImagePushSettings.AllTags"/></li>
         ///     <li><c>--disable-content-trust</c> via <see cref="DockerImagePushSettings.DisableContentTrust"/></li>
         ///   </ul>
         /// </remarks>
@@ -7445,6 +7448,7 @@ namespace Nuke.Common.Tools.Docker
         ///   <ul>
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerPushSettings.CliSettings"/></li>
         ///     <li><c>&lt;name&gt;</c> via <see cref="DockerPushSettings.Name"/></li>
+        ///     <li><c>--all-tags</c> via <see cref="DockerPushSettings.AllTags"/></li>
         ///     <li><c>--disable-content-trust</c> via <see cref="DockerPushSettings.DisableContentTrust"/></li>
         ///   </ul>
         /// </remarks>
@@ -7464,6 +7468,7 @@ namespace Nuke.Common.Tools.Docker
         ///   <ul>
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerPushSettings.CliSettings"/></li>
         ///     <li><c>&lt;name&gt;</c> via <see cref="DockerPushSettings.Name"/></li>
+        ///     <li><c>--all-tags</c> via <see cref="DockerPushSettings.AllTags"/></li>
         ///     <li><c>--disable-content-trust</c> via <see cref="DockerPushSettings.DisableContentTrust"/></li>
         ///   </ul>
         /// </remarks>
@@ -7480,6 +7485,7 @@ namespace Nuke.Common.Tools.Docker
         ///   <ul>
         ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerPushSettings.CliSettings"/></li>
         ///     <li><c>&lt;name&gt;</c> via <see cref="DockerPushSettings.Name"/></li>
+        ///     <li><c>--all-tags</c> via <see cref="DockerPushSettings.AllTags"/></li>
         ///     <li><c>--disable-content-trust</c> via <see cref="DockerPushSettings.DisableContentTrust"/></li>
         ///   </ul>
         /// </remarks>
@@ -17057,6 +17063,10 @@ namespace Nuke.Common.Tools.Docker
         public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
         public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
+        ///   Push all tagged images in the repository.
+        /// </summary>
+        public virtual bool? AllTags { get; internal set; }
+        /// <summary>
         ///   Skip image signing.
         /// </summary>
         public virtual bool? DisableContentTrust { get; internal set; }
@@ -17068,6 +17078,7 @@ namespace Nuke.Common.Tools.Docker
         {
             arguments
               .Add("image push")
+              .Add("--all-tags", AllTags)
               .Add("--disable-content-trust", DisableContentTrust)
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -19153,6 +19164,10 @@ namespace Nuke.Common.Tools.Docker
         public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
         public override Action<OutputType, string> ProcessCustomLogger => DockerTasks.DockerLogger;
         /// <summary>
+        ///   Push all tagged images in the repository.
+        /// </summary>
+        public virtual bool? AllTags { get; internal set; }
+        /// <summary>
         ///   Skip image signing.
         /// </summary>
         public virtual bool? DisableContentTrust { get; internal set; }
@@ -19164,6 +19179,7 @@ namespace Nuke.Common.Tools.Docker
         {
             arguments
               .Add("push")
+              .Add("--all-tags", AllTags)
               .Add("--disable-content-trust", DisableContentTrust)
               .Add("{value}", Name)
               .Add("{value}", GetCliSettings(), customValue: true);
@@ -49187,6 +49203,63 @@ namespace Nuke.Common.Tools.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerImagePushSettingsExtensions
     {
+        #region AllTags
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerImagePushSettings.AllTags"/></em></p>
+        ///   <p>Push all tagged images in the repository.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAllTags<T>(this T toolSettings, bool? allTags) where T : DockerImagePushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllTags = allTags;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerImagePushSettings.AllTags"/></em></p>
+        ///   <p>Push all tagged images in the repository.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetAllTags<T>(this T toolSettings) where T : DockerImagePushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllTags = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerImagePushSettings.AllTags"/></em></p>
+        ///   <p>Push all tagged images in the repository.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableAllTags<T>(this T toolSettings) where T : DockerImagePushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllTags = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerImagePushSettings.AllTags"/></em></p>
+        ///   <p>Push all tagged images in the repository.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableAllTags<T>(this T toolSettings) where T : DockerImagePushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllTags = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerImagePushSettings.AllTags"/></em></p>
+        ///   <p>Push all tagged images in the repository.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleAllTags<T>(this T toolSettings) where T : DockerImagePushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllTags = !toolSettings.AllTags;
+            return toolSettings;
+        }
+        #endregion
         #region DisableContentTrust
         /// <summary>
         ///   <p><em>Sets <see cref="DockerImagePushSettings.DisableContentTrust"/></em></p>
@@ -59749,6 +59822,63 @@ namespace Nuke.Common.Tools.Docker
     [ExcludeFromCodeCoverage]
     public static partial class DockerPushSettingsExtensions
     {
+        #region AllTags
+        /// <summary>
+        ///   <p><em>Sets <see cref="DockerPushSettings.AllTags"/></em></p>
+        ///   <p>Push all tagged images in the repository.</p>
+        /// </summary>
+        [Pure]
+        public static T SetAllTags<T>(this T toolSettings, bool? allTags) where T : DockerPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllTags = allTags;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DockerPushSettings.AllTags"/></em></p>
+        ///   <p>Push all tagged images in the repository.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetAllTags<T>(this T toolSettings) where T : DockerPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllTags = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DockerPushSettings.AllTags"/></em></p>
+        ///   <p>Push all tagged images in the repository.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableAllTags<T>(this T toolSettings) where T : DockerPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllTags = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DockerPushSettings.AllTags"/></em></p>
+        ///   <p>Push all tagged images in the repository.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableAllTags<T>(this T toolSettings) where T : DockerPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllTags = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DockerPushSettings.AllTags"/></em></p>
+        ///   <p>Push all tagged images in the repository.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleAllTags<T>(this T toolSettings) where T : DockerPushSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.AllTags = !toolSettings.AllTags;
+            return toolSettings;
+        }
+        #endregion
         #region DisableContentTrust
         /// <summary>
         ///   <p><em>Sets <see cref="DockerPushSettings.DisableContentTrust"/></em></p>

@@ -74,6 +74,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetTestSettings.NoDependencies"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetTestSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetTestSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetTestSettings.Output"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetTestSettings.PackageDirectory"/></li>
         ///     <li><c>--results-directory</c> via <see cref="DotNetTestSettings.ResultsDirectory"/></li>
@@ -126,6 +127,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetTestSettings.NoDependencies"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetTestSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetTestSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetTestSettings.Output"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetTestSettings.PackageDirectory"/></li>
         ///     <li><c>--results-directory</c> via <see cref="DotNetTestSettings.ResultsDirectory"/></li>
@@ -175,6 +177,7 @@ namespace Nuke.Common.Tools.DotNet
         ///     <li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li>
         ///     <li><c>--no-dependencies</c> via <see cref="DotNetTestSettings.NoDependencies"/></li>
         ///     <li><c>--no-restore</c> via <see cref="DotNetTestSettings.NoRestore"/></li>
+        ///     <li><c>--nologo</c> via <see cref="DotNetTestSettings.NoLogo"/></li>
         ///     <li><c>--output</c> via <see cref="DotNetTestSettings.Output"/></li>
         ///     <li><c>--packages</c> via <see cref="DotNetTestSettings.PackageDirectory"/></li>
         ///     <li><c>--results-directory</c> via <see cref="DotNetTestSettings.ResultsDirectory"/></li>
@@ -1372,6 +1375,10 @@ namespace Nuke.Common.Tools.DotNet
         /// </summary>
         public virtual string BlameHangTimeout { get; internal set; }
         /// <summary>
+        ///   Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK.
+        /// </summary>
+        public virtual bool? NoLogo { get; internal set; }
+        /// <summary>
         ///   Disables restoring multiple projects in parallel.
         /// </summary>
         public virtual bool? DisableParallel { get; internal set; }
@@ -1449,6 +1456,7 @@ namespace Nuke.Common.Tools.DotNet
               .Add("--blame-hang", BlameHang)
               .Add("--blame-hang-dump-type {value}", BlameHangDumpType)
               .Add("--blame-hang-timeout {value}", BlameHangTimeout)
+              .Add("--nologo", NoLogo)
               .Add("--disable-parallel", DisableParallel)
               .Add("--force", Force)
               .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -3524,6 +3532,63 @@ namespace Nuke.Common.Tools.DotNet
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.BlameHangTimeout = null;
+            return toolSettings;
+        }
+        #endregion
+        #region NoLogo
+        /// <summary>
+        ///   <p><em>Sets <see cref="DotNetTestSettings.NoLogo"/></em></p>
+        ///   <p>Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T SetNoLogo<T>(this T toolSettings, bool? noLogo) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = noLogo;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="DotNetTestSettings.NoLogo"/></em></p>
+        ///   <p>Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetNoLogo<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = null;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Enables <see cref="DotNetTestSettings.NoLogo"/></em></p>
+        ///   <p>Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T EnableNoLogo<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = true;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Disables <see cref="DotNetTestSettings.NoLogo"/></em></p>
+        ///   <p>Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T DisableNoLogo<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = false;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Toggles <see cref="DotNetTestSettings.NoLogo"/></em></p>
+        ///   <p>Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK.</p>
+        /// </summary>
+        [Pure]
+        public static T ToggleNoLogo<T>(this T toolSettings) where T : DotNetTestSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.NoLogo = !toolSettings.NoLogo;
             return toolSettings;
         }
         #endregion
