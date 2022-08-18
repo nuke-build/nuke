@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [6.2.0] / 2022-08-19
 - Added support for intercepted targets
 - Added target interception for Docker
 - Added support for context components
@@ -966,7 +968,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.1.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.2.0...HEAD
+[6.2.0]: https://github.com/nuke-build/nuke/compare/6.1.2...6.2.0
 [6.1.2]: https://github.com/nuke-build/nuke/compare/6.1.1...6.1.2
 [6.1.1]: https://github.com/nuke-build/nuke/compare/6.1.0...6.1.1
 [6.1.0]: https://github.com/nuke-build/nuke/compare/6.0.3...6.1.0
@@ -1057,3 +1060,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
+
