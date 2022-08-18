@@ -27,6 +27,9 @@ namespace Nuke.Common.Execution
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
+            if (NukeBuild.IsInterceptorExecution)
+                return;
+
             if (!Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds))
                 Log.Warning("Could not complete checking build configurations within {Timeout} milliseconds", TimeoutInMilliseconds);
 

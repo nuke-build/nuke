@@ -163,14 +163,39 @@ namespace Nuke.Common.Tooling
             }
         }
 
+        public static string GetNpmExecutable(string npmExecutable)
+        {
+            return ProcessTasks.StartProcess(
+                    toolPath: GetPathExecutable("npx"),
+                    arguments: $"which {npmExecutable}",
+                    workingDirectory: NukeBuild.TemporaryDirectory / "node_modules",
+                    logInvocation: false,
+                    logOutput: false)
+                .AssertZeroExitCode()
+                .Output.StdToText();
+        }
+
         public static string GetPathExecutable(string pathExecutable)
         {
-            if (EnvironmentInfo.IsLinux && pathExecutable == "bash")
-                return "/bin/bash";
+            if (File.Exists(pathExecutable))
+                return Path.GetFullPath(pathExecutable);
 
             var locateExecutable = EnvironmentInfo.IsWin
                 ? @"C:\Windows\System32\where.exe"
                 : "/usr/bin/which";
+
+            if (!File.Exists(locateExecutable))
+            {
+                string GetExecutableFullPath(string path)
+                    => Path.Combine(path,
+                        Path.GetExtension(pathExecutable).IsNullOrEmpty() && EnvironmentInfo.IsWin
+                            ? $"{pathExecutable}.exe"
+                            : pathExecutable);
+
+                var environmentVariable = Environment.GetEnvironmentVariable("PATH").NotNullOrEmpty("PATH variable not available");
+                var paths = environmentVariable.Split(new[] { Path.PathSeparator }, StringSplitOptions.RemoveEmptyEntries);
+                return paths.Select(GetExecutableFullPath).FirstOrDefault(File.Exists).NotNull($"Could not find '{pathExecutable}' on the PATH.");
+            }
 
             var locateProcess = ProcessTasks.StartProcess(
                 locateExecutable,

@@ -86,7 +86,7 @@ namespace Nuke.Common
             }
 
             var splittedArguments = ParseCommandLineArguments(argumentLines.Single());
-            return new[] { NukeBuild.BuildAssemblyFile.ToString() }.Concat(splittedArguments).ToArray();
+            return new[] { entryAssemblyLocation }.Concat(splittedArguments).ToArray();
         }
 
         internal static string[] ParseCommandLineArguments(string commandLine)

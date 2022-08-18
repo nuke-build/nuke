@@ -21,7 +21,7 @@ namespace Nuke.Common.CI
     {
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            if (NukeBuild.IsServerBuild)
+            if (NukeBuild.IsServerBuild || NukeBuild.IsInterceptorExecution)
                 return;
 
             var hasConfigurationChanged = GetGenerators(build)

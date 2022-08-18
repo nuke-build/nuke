@@ -108,7 +108,9 @@ namespace Nuke.Common.Execution
                 build.ExecuteExtension<IOnTargetRunning>(x => x.OnTargetRunning(build, target));
                 try
                 {
-                    target.Actions.ForEach(x => x());
+                    if (target.Intercept == null || !target.Intercept.Invoke())
+                        target.Actions.ForEach(x => x());
+
                     target.Stopwatch.Stop();
                     target.Status = ExecutionStatus.Succeeded;
                     build.ExecuteExtension<IOnTargetSucceeded>(x => x.OnTargetSucceeded(build, target));

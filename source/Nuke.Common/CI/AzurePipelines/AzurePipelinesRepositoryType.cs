@@ -34,6 +34,8 @@ namespace Nuke.Common.CI.AzurePipelines
         /// <summary>
         /// Subversion.
         /// </summary>
-        Svn
+        Svn,
+
+        TfsGit
     }
 }

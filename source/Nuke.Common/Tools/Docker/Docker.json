@@ -4402,6 +4402,12 @@
         "baseClass": "DockerSettings",
         "properties": [
           {
+            "name": "AllTags",
+            "type": "bool",
+            "format": "--all-tags",
+            "help": "Push all tagged images in the repository."
+          },
+          {
             "name": "DisableContentTrust",
             "type": "bool",
             "format": "--disable-content-trust",
@@ -6193,6 +6199,12 @@
       "settingsClass": {
         "baseClass": "DockerSettings",
         "properties": [
+          {
+            "name": "AllTags",
+            "type": "bool",
+            "format": "--all-tags",
+            "help": "Push all tagged images in the repository."
+          },
           {
             "name": "DisableContentTrust",
             "type": "bool",
@@ -9886,6 +9898,55 @@
     }
   ],
   "dataClasses": [
+    {
+      "name": "DockerRunTargetSettings",
+      "baseClass": "DockerRunSettings",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "PullImage",
+          "type": "bool",
+          "noArgument": true,
+          "help": "Whether to execute a <c>docker pull</c> before running the container."
+        },
+        {
+          "name": "DotNetRuntime",
+          "type": "string",
+          "noArgument": true,
+          "help": "The .NET Runtime Identifier (<a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID</a>) to use to publish the build project. For example, <c>linux-x64</c>, <c>linux-arm64</c>, <c>win-x64</c>."
+        },
+        {
+          "name": "BuildCaching",
+          "type": "bool",
+          "noArgument": true,
+          "help": "Enables caching of the build executable."
+        },
+        {
+          "name": "KeepEnvFile",
+          "type": "bool",
+          "noArgument": true,
+          "help": "Whether to keep the <c>.env.&lt;target&gt;</c> file located under <c>build/bin/&lt;rid&gt;</c> after the target is complete."
+        },
+        {
+          "name": "Username",
+          "type": "string",
+          "noArgument": true,
+          "help": "The username for <c>docker login</c>."
+        },
+        {
+          "name": "Password",
+          "type": "string",
+          "noArgument": true,
+          "help": "The password for <c>docker login</c>."
+        },
+        {
+          "name": "Server",
+          "type": "string",
+          "noArgument": true,
+          "help": "The server for <c>docker login</c>."
+        }
+      ]
+    },
     {
       "name": "CliSettings",
       "properties": [

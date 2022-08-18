@@ -18,11 +18,17 @@ namespace Nuke.Common.Execution
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
+            if (NukeBuild.IsInterceptorExecution)
+                return;
+
             Telemetry.BuildStarted(build);
         }
 
         public void OnTargetSucceeded(NukeBuild build, ExecutableTarget target)
         {
+            if (NukeBuild.IsInterceptorExecution)
+                return;
+
             Telemetry.TargetSucceeded(target, build);
         }
     }

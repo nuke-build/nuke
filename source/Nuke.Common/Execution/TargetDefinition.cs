@@ -25,23 +25,26 @@ namespace Nuke.Common.Execution
         }
 
         public PropertyInfo Target { get; }
+        public string Name => Target.GetDisplayShortName();
         public NukeBuild Build { get; }
+
+        internal Func<bool> Intercept { get; set; }
 
         internal string Description { get; set; }
         internal List<Expression<Func<bool>>> DynamicConditions { get; } = new List<Expression<Func<bool>>>();
         internal List<Expression<Func<bool>>> StaticConditions { get; } = new List<Expression<Func<bool>>>();
         internal List<LambdaExpression> Requirements { get; } = new List<LambdaExpression>();
-        internal List<Target> DependsOnTargets { get; } = new List<Target>();
-        internal List<Target> DependentForTargets { get; } = new List<Target>();
+        internal List<Delegate> DependsOnTargets { get; } = new List<Delegate>();
+        internal List<Delegate> DependentForTargets { get; } = new List<Delegate>();
         internal List<Action> Actions { get; } = new List<Action>();
         internal DependencyBehavior DependencyBehavior { get; private set; }
         internal bool IsProceedAfterFailure { get; private set; }
         internal bool IsAssuredAfterFailure { get; private set; }
         internal bool IsInternal { get; private set; }
-        internal List<Target> BeforeTargets { get; } = new List<Target>();
-        internal List<Target> AfterTargets { get; } = new List<Target>();
-        internal List<Target> TriggersTargets { get; } = new List<Target>();
-        internal List<Target> TriggeredByTargets { get; } = new List<Target>();
+        internal List<Delegate> BeforeTargets { get; } = new List<Delegate>();
+        internal List<Delegate> AfterTargets { get; } = new List<Delegate>();
+        internal List<Delegate> TriggersTargets { get; } = new List<Delegate>();
+        internal List<Delegate> TriggeredByTargets { get; } = new List<Delegate>();
         internal int? PartitionSize { get; private set; }
         internal List<string> ArtifactProducts { get; } = new List<string>();
         internal LookupTable<Target, string[]> ArtifactDependencies { get; } = new LookupTable<Target, string[]>();
@@ -76,7 +79,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition DependsOn<T>(params Func<T, Target>[] targets)
         {
-            return DependsOn(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return DependsOn(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryDependsOn<T>(params Func<T, Target>[] targets)
@@ -92,7 +95,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition DependentFor<T>(params Func<T, Target>[] targets)
         {
-            return DependentFor(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return DependentFor(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryDependentFor<T>(params Func<T, Target>[] targets)
@@ -146,7 +149,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Before<T>(params Func<T, Target>[] targets)
         {
-            return Before(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return Before(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryBefore<T>(params Func<T, Target>[] targets)
@@ -162,7 +165,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition After<T>(params Func<T, Target>[] targets)
         {
-            return After(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return After(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryAfter<T>(params Func<T, Target>[] targets)
@@ -178,7 +181,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Triggers<T>(params Func<T, Target>[] targets)
         {
-            return Triggers(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return Triggers(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryTriggers<T>(params Func<T, Target>[] targets)
@@ -194,7 +197,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition TriggeredBy<T>(params Func<T, Target>[] targets)
         {
-            return TriggeredBy(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return TriggeredBy(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition TryTriggeredBy<T>(params Func<T, Target>[] targets)
@@ -237,7 +240,9 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Inherit<T>(params Expression<Func<T, Target>>[] targets)
         {
-            var properties = targets.Length > 0 ? targets.Select(x => x.GetMemberInfo()) : new[] { GetSingleTargetProperty<T>() };
+            var properties = targets.Length > 0
+                ? targets.Select(x => x.GetMemberInfo())
+                : new[] { GetSingleTargetProperty<T>("shorthand inheritance") };
             Inherit(properties.Select(x => x.GetValueNonVirtual<Target>(Build)).ToArray());
             return this;
         }
@@ -256,7 +261,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Consumes<T>(params Func<T, Target>[] targets)
         {
-            return Consumes(GetTargetsOrSingleOf<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return Consumes(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
         }
 
         public ITargetDefinition Consumes(Target target, params string[] artifacts)
@@ -272,7 +277,18 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Consumes<T>(params string[] artifacts)
         {
-            return Consumes(GetTargetsOrSingleOf<T>().Single(), artifacts);
+            return Consumes(GetTargetsOrShorthand<T>().Single(), artifacts);
+        }
+
+        public ITargetDefinition DependsOnContext<T>()
+            where T : INukeBuild
+        {
+            Assert.True(Build is T, $"'{Build.GetType().Name}' must implement context '{typeof(T).Name}'");
+            var setup = (Setup) GetSingleTargetProperty<T>("context dependency (missing setup)", targetType: typeof(Setup)).GetValue(Build);
+            var cleanup = (Cleanup) GetSingleTargetProperty<T>("context dependency (missing cleanup)", targetType: typeof(Cleanup)).GetValue(Build);
+            DependsOnTargets.Add(setup);
+            BeforeTargets.Add(cleanup);
+            return this;
         }
 
         public ITargetDefinition Partition(int size)
@@ -282,18 +298,21 @@ namespace Nuke.Common.Execution
             return this;
         }
 
-        private Target[] GetTargetsOrSingleOf<T>(params Target[] targets)
+        private Target[] GetTargetsOrShorthand<T>(params Target[] targets)
         {
-            return targets.Length > 0 ? targets : new[] { (Target) GetSingleTargetProperty<T>().GetValue(Build) };
+            return targets.Length > 0
+                ? targets
+                : new[] { (Target) GetSingleTargetProperty<T>("shorthand dependency").GetValue(Build) };
         }
 
-        private PropertyInfo GetSingleTargetProperty<T>()
+        private PropertyInfo GetSingleTargetProperty<T>(string kind, Type targetType = null)
         {
-            var interfaceTargets = typeof(T).GetProperties(ReflectionUtility.Instance).Where(x => x.PropertyType == typeof(Target)).ToList();
+            var interfaceTargets = typeof(T).GetProperties(ReflectionUtility.Instance)
+                .Where(x => x.PropertyType == (targetType ?? typeof(Target))).ToList();
             if (interfaceTargets.Count != 1)
             {
-                Assert.Fail($"Target '{Target.DeclaringType}.{Target.Name}' cannot have a shorthand dependency on component '{typeof(T).Name}'."
-                    .Concat(new[] { interfaceTargets.Count > 1 ? "Available targets are:" : "No targets available." })
+                Assert.Fail($"Target '{Target.DeclaringType}.{Target.Name}' cannot have {kind} on component '{typeof(T).Name}'."
+                    .Concat(new[] { interfaceTargets.Count > 1 ? "Too many relevant targets:" : "No relevant targets." })
                     .Concat(interfaceTargets.Select(x => $"  - {x.Name}")).JoinNewLine());
             }
 

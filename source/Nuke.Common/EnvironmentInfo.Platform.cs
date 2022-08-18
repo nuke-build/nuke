@@ -23,13 +23,18 @@ namespace Nuke.Common
     partial class EnvironmentInfo
     {
         /// <summary>
-        /// Returns whether the operating system is x64 or not.
+        /// Returns whether the operating system is arm64 or not.
+        /// </summary>
+        public static bool IsArm64 => RuntimeInformation.OSArchitecture == Architecture.Arm64;
+
+        /// <summary>
+        /// Returns whether the operating system is 64-bit or not.
         /// </summary>
         public static bool Is64Bit => RuntimeInformation.OSArchitecture == Architecture.X64 ||
                                       RuntimeInformation.OSArchitecture == Architecture.Arm64;
 
         /// <summary>
-        /// Returns whether the operating system is x86 or not.
+        /// Returns whether the operating system is 32-bit or not.
         /// </summary>
         public static bool Is32Bit => !Is64Bit;
 

@@ -19,6 +19,12 @@ namespace Nuke.Common.Tooling
             return new ToolExecutor(toolPath).Execute;
         }
 
+        public static Tool GetNpmTool(string npmExecutable)
+        {
+            var toolPath = ToolPathResolver.GetNpmExecutable(npmExecutable);
+            return new ToolExecutor(toolPath).Execute;
+        }
+
         [CanBeNull]
         public static Tool TryGetEnvironmentTool(string name)
         {

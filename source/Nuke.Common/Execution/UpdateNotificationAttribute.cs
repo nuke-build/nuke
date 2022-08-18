@@ -31,7 +31,8 @@ namespace Nuke.Common.Execution
                 Notify();
         }
 
-        private bool ShouldNotify => !Directory.Exists(GetNukeDirectory(NukeBuild.RootDirectory));
+        private bool ShouldNotify => !Directory.Exists(GetNukeDirectory(NukeBuild.RootDirectory)) &&
+                                     !NukeBuild.IsInterceptorExecution;
 
         private static void Notify()
         {

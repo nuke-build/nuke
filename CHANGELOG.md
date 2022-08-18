@@ -6,6 +6,26 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [6.2.0] / 2022-08-19
+- Added support for intercepted targets
+- Added target interception for Docker
+- Added support for context components
+- Added `DisableDefaultOutputAttribute`
+- Added `InstallNpmToolsAttribute` and `NpmExecutableAttribute`
+- Added `EnvironmentInfo.IsArm64`
+- Added `SetProcessExecutionTimeout` overload for `TimeSpan`
+- Added `DotNetRuntimeIdentifiers`
+- Fixed telemetry
+- Fixed `GetPathExecutable` to manually search `PATH` environment variable if locator executable is not available
+- Fixed resolution of surrogate arguments in Visual Studio
+- Fixed performance of `NuGetPackageResolver`
+- Fixed `GitTasks.GitIsDetached`
+- Fixed missing members in `GitHubActionsImage`
+- Fixed missing members in `AzurePipelinesRepositoryType`
+- Fixed detection for Bamboo
+- Fixed missing arguments in `KubernetesTasks`
+- Fixed missing arguments in `DockerTasks`
+
 ## [6.1.2] / 2022-07-02
 - Removed `Newtonsoft.Json.Schema` dependency
 - Fixed `Nuke.GlobalTool` to target `net6.0`
@@ -948,7 +968,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.1.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.2.0...HEAD
+[6.2.0]: https://github.com/nuke-build/nuke/compare/6.1.2...6.2.0
 [6.1.2]: https://github.com/nuke-build/nuke/compare/6.1.1...6.1.2
 [6.1.1]: https://github.com/nuke-build/nuke/compare/6.1.0...6.1.1
 [6.1.0]: https://github.com/nuke-build/nuke/compare/6.0.3...6.1.0
@@ -1039,3 +1060,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
+

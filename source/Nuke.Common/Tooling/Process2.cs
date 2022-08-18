@@ -33,6 +33,10 @@ namespace Nuke.Common.Tooling
 
         public int ExitCode => _process.ExitCode;
 
+        public bool HasExited => _process.HasExited;
+
+        public int Id => _process.Id;
+
         public void Dispose()
         {
             _process.Dispose();

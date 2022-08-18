@@ -44,11 +44,14 @@ namespace Nuke.GlobalTool.Rewriting.Cake
                 return node;
 
             var str = node.ToString();
-            var index = str.IndexOf("*");
+            var index = str.IndexOf('*');
             if (index == -1)
                 return CreateAbsolutePathExpression(new[] { SyntaxFactory.ParseExpression(str.Replace("/", "\" / $\"")) });
 
             var lastPathSeparatorIndex = str.Substring(0, index).LastIndexOf('/');
+            if (lastPathSeparatorIndex < 0)
+                return node;
+
             var absolutePart = str.Substring(0, lastPathSeparatorIndex) + "\"";
             var wildcardPart = "\"" + str.Substring(lastPathSeparatorIndex + 1);
 

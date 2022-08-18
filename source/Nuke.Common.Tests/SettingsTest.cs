@@ -33,7 +33,7 @@ namespace Nuke.Common.Tests
             var settings = new DotNetRunSettings()
                 .SetProcessToolPath("/path/to/dotnet")
                 .SetProcessEnvironmentVariable("key", "value")
-                .SetProcessExecutionTimeout(1_000)
+                .SetProcessExecutionTimeout(TimeSpan.FromMilliseconds(1_000))
                 .SetProcessArgumentConfigurator(_ => _
                     .Add("/switch"))
                 .EnableProcessLogInvocation();

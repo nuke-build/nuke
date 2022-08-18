@@ -32,6 +32,7 @@ namespace Nuke.Common
 
         internal const string GlobalToolVersionEnvironmentKey = "NUKE_GLOBAL_TOOL_VERSION";
         internal const string GlobalToolStartTimeEnvironmentKey = "NUKE_GLOBAL_TOOL_START_TIME";
+        internal const string InterceptorEnvironmentKey = "NUKE_INTERNAL_INTERCEPTOR";
 
         internal static AbsolutePath GlobalTemporaryDirectory => (AbsolutePath) Path.GetTempPath();
         internal static AbsolutePath GlobalNukeDirectory => (AbsolutePath) EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile) / ".nuke";

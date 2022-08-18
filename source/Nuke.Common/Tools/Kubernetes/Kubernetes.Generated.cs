@@ -1929,6 +1929,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;kustomize&gt;</c> via <see cref="KubernetesApplyKustomizeSettings.Kustomize"/></li>
         ///     <li><c>--all</c> via <see cref="KubernetesApplyKustomizeSettings.All"/></li>
         ///     <li><c>--allow-missing-template-keys</c> via <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></li>
         ///     <li><c>--cascade</c> via <see cref="KubernetesApplyKustomizeSettings.Cascade"/></li>
@@ -1965,6 +1966,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;kustomize&gt;</c> via <see cref="KubernetesApplyKustomizeSettings.Kustomize"/></li>
         ///     <li><c>--all</c> via <see cref="KubernetesApplyKustomizeSettings.All"/></li>
         ///     <li><c>--allow-missing-template-keys</c> via <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></li>
         ///     <li><c>--cascade</c> via <see cref="KubernetesApplyKustomizeSettings.Cascade"/></li>
@@ -1998,6 +2000,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;kustomize&gt;</c> via <see cref="KubernetesApplyKustomizeSettings.Kustomize"/></li>
         ///     <li><c>--all</c> via <see cref="KubernetesApplyKustomizeSettings.All"/></li>
         ///     <li><c>--allow-missing-template-keys</c> via <see cref="KubernetesApplyKustomizeSettings.AllowMissingTemplateKeys"/></li>
         ///     <li><c>--cascade</c> via <see cref="KubernetesApplyKustomizeSettings.Cascade"/></li>
@@ -4978,6 +4981,10 @@ namespace Nuke.Common.Tools.Kubernetes
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
         public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
         /// <summary>
+        ///   Set the target folder of the kustomize files.
+        /// </summary>
+        public virtual string Kustomize { get; internal set; }
+        /// <summary>
         ///   Select all resources in the namespace of the specified resource types.
         /// </summary>
         public virtual bool? All { get; internal set; }
@@ -5063,6 +5070,7 @@ namespace Nuke.Common.Tools.Kubernetes
         {
             arguments
               .Add("apply -k")
+              .Add("{value}", Kustomize)
               .Add("--all={value}", All)
               .Add("--allow-missing-template-keys={value}", AllowMissingTemplateKeys)
               .Add("--cascade={value}", Cascade)
@@ -17658,6 +17666,30 @@ namespace Nuke.Common.Tools.Kubernetes
     [ExcludeFromCodeCoverage]
     public static partial class KubernetesApplyKustomizeSettingsExtensions
     {
+        #region Kustomize
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.Kustomize"/></em></p>
+        ///   <p>Set the target folder of the kustomize files.</p>
+        /// </summary>
+        [Pure]
+        public static T SetKustomize<T>(this T toolSettings, string kustomize) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Kustomize = kustomize;
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Resets <see cref="KubernetesApplyKustomizeSettings.Kustomize"/></em></p>
+        ///   <p>Set the target folder of the kustomize files.</p>
+        /// </summary>
+        [Pure]
+        public static T ResetKustomize<T>(this T toolSettings) where T : KubernetesApplyKustomizeSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.Kustomize = null;
+            return toolSettings;
+        }
+        #endregion
         #region All
         /// <summary>
         ///   <p><em>Sets <see cref="KubernetesApplyKustomizeSettings.All"/></em></p>

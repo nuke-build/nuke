@@ -176,6 +176,12 @@
             "itemFormat": "{key}={value}",
             "separator": " ",
             "isTailArgument": true
+          },
+          {
+            "name": "NoLogo",
+            "type": "bool",
+            "format": "--nologo",
+            "help": "Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK."
           }
         ]
       }

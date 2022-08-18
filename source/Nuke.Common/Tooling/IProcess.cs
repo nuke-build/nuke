@@ -42,6 +42,16 @@ namespace Nuke.Common.Tooling
         int ExitCode { get; }
 
         /// <summary>
+        /// Returns <see cref="Process.HasExited"/>.
+        /// </summary>
+        bool HasExited { get; }
+
+        /// <summary>
+        /// Returns <see cref="Process.Id"/>.
+        /// </summary>
+        int Id { get; }
+
+        /// <summary>
         /// Calls <see cref="Process.Kill()"/>.
         /// </summary>
         void Kill();

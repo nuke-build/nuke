@@ -22,7 +22,9 @@ namespace Nuke.Common.CI
 
         public void OnBuildFinished(NukeBuild build)
         {
-            if (NukeBuild.IsServerBuild)
+            if (NukeBuild.IsServerBuild &&
+                // NOTE: this should only be necessary if the interceptor build has no .NET CLI installed
+                !NukeBuild.IsInterceptorExecution)
                 DotNetTasks.DotNet("build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging, timeout: 15_000);
         }
     }
