@@ -58,16 +58,18 @@ namespace Nuke.Common.Execution
 
         public static void Configure(NukeBuild build = null)
         {
-            if (NukeBuild.IsInterceptorExecution)
-            {
-                Log.Logger = new LoggerConfiguration()
-                    .WriteTo.Console(new CompactJsonFormatter())
-                    .CreateLogger();
-                return;
-            }
-
             if (build != null)
+            {
+                if (NukeBuild.IsInterceptorExecution)
+                {
+                    Log.Logger = new LoggerConfiguration()
+                        .WriteTo.Console(new CompactJsonFormatter())
+                        .CreateLogger();
+                    return;
+                }
+
                 DeleteOldLogFiles();
+            }
 
             Log.Logger = new LoggerConfiguration()
                 .Enrich.With<ExecutingTargetLogEventEnricher>()
