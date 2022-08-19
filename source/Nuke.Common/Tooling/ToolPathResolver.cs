@@ -168,7 +168,7 @@ namespace Nuke.Common.Tooling
             return ProcessTasks.StartProcess(
                     toolPath: GetPathExecutable("npx"),
                     arguments: $"which {npmExecutable}",
-                    workingDirectory: NukeBuild.TemporaryDirectory / "node_modules",
+                    workingDirectory: NukeBuild.BuildProjectDirectory.NotNull() / "node_modules",
                     logInvocation: false,
                     logOutput: false)
                 .AssertZeroExitCode()

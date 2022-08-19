@@ -27,7 +27,7 @@ namespace Nuke.Common.Execution
             Log.Information("Installing npm tools...");
             var npmExecutable = ToolPathResolver.GetPathExecutable("npm");
             // Use NPM_CONFIG_PREFIX environment variable instead?
-            ProcessTasks.StartProcess(npmExecutable, $"install --prefix {NukeBuild.TemporaryDirectory}", logInvocation: false, logOutput: false)
+            ProcessTasks.StartProcess(npmExecutable, "install", workingDirectory: packageJsonFile.Parent, logInvocation: false, logOutput: false)
                 .AssertZeroExitCode();
         }
     }
