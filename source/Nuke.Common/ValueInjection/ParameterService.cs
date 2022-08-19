@@ -14,14 +14,10 @@ using Nuke.Common.Utilities.Collections;
 using Serilog;
 using static Nuke.Common.Utilities.ReflectionUtility;
 
-namespace Nuke.Common.ValueInjection
+namespace Nuke.Common
 {
-    internal class ParameterService
+    internal partial class ParameterService
     {
-        internal static ParameterService Instance = new ParameterService(
-            () => EnvironmentInfo.CommandLineArguments.Skip(count: 1),
-            () => EnvironmentInfo.Variables);
-
         internal ParameterService ArgumentsFromFilesService;
         internal ParameterService ArgumentsFromCommitMessageService;
 

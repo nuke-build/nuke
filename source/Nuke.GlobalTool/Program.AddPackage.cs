@@ -29,7 +29,7 @@ namespace Nuke.GlobalTool
 
             var packageId = args.ElementAt(0);
             var packageVersion =
-                (EnvironmentInfo.GetParameter<string>("version") ??
+                (ParameterService.GetParameter<string>("version") ??
                  args.ElementAtOrDefault(1) ??
                  NuGetPackageResolver.GetLatestPackageVersion(packageId, includePrereleases: false).GetAwaiter().GetResult() ??
                  NuGetPackageResolver.GetGlobalInstalledPackage(packageId, version: null, packagesConfigFile: null)?.Version.ToString())

@@ -21,7 +21,7 @@ namespace Nuke.Common.CI
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            var part = EnvironmentInfo.GetParameter<int?>(member);
+            var part = ParameterService.GetParameter<int?>(member);
             return part.HasValue
                 ? new Partition { Part = part.Value, Total = Total }
                 : Partition.Single;

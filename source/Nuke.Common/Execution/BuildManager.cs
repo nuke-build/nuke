@@ -12,6 +12,7 @@ using System.Text;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Common.ValueInjection;
 using Serilog;
 
 namespace Nuke.Common.Execution
@@ -53,14 +54,14 @@ namespace Nuke.Common.Execution
 
                 build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                     build.ExecutableTargets,
-                    EnvironmentInfo.GetParameter<string[]>(() => build.InvokedTargets));
+                    ParameterService.GetParameter<string[]>(() => build.InvokedTargets));
 
                 build.ExecuteExtension<IOnBuildInitialized>(x => x.OnBuildInitialized(build, build.ExecutableTargets, build.ExecutionPlan));
 
                 CancellationHandler += Finish;
                 BuildExecutor.Execute(
                     build,
-                    EnvironmentInfo.GetParameter<string[]>(() => build.SkippedTargets));
+                    ParameterService.GetParameter<string[]>(() => build.SkippedTargets));
 
                 return build.ExitCode ??= build.IsSuccessful ? 0 : ErrorExitCode;
             }

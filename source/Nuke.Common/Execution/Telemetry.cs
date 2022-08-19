@@ -35,7 +35,7 @@ namespace Nuke.Common.Execution
 
         static Telemetry()
         {
-            var optoutParameter = EnvironmentInfo.GetParameter<string>(OptOutEnvironmentKey) ?? string.Empty;
+            var optoutParameter = ParameterService.GetParameter<string>(OptOutEnvironmentKey) ?? string.Empty;
             if (optoutParameter == "1" || optoutParameter.EqualsOrdinalIgnoreCase(bool.TrueString))
                 return;
 

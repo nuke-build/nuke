@@ -63,7 +63,7 @@ namespace Nuke.Common.Execution
             while (graphAsList.Any())
             {
                 var independents = graphAsList.Where(x => !graphAsList.Any(y => y.Dependencies.Contains(x))).ToList();
-                if (EnvironmentInfo.GetNamedArgument<bool>("strict") && independents.Count > 1)
+                if (ParameterService.GetNamedArgument<bool>("strict") && independents.Count > 1)
                 {
                     // TODO: logging additional
                     Assert.Fail("Incomplete target definition order:"

@@ -20,6 +20,7 @@ using static Nuke.Common.Constants;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.IO.TextTasks;
+using static Nuke.Common.ParameterService;
 using static Nuke.Common.Tooling.ProcessTasks;
 using static Nuke.Common.Utilities.TemplateUtility;
 

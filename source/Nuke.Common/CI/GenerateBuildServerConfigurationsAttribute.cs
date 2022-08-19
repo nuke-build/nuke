@@ -16,7 +16,7 @@ namespace Nuke.Common.CI
     {
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            var configurationId = EnvironmentInfo.GetParameter<string>(ConfigurationParameterName);
+            var configurationId = ParameterService.GetParameter<string>(ConfigurationParameterName);
             if (configurationId == null)
                 return;
 

@@ -29,7 +29,7 @@ namespace Nuke.Common.Execution
                 SchemaUtility.WriteBuildSchemaFile(build);
                 SchemaUtility.WriteDefaultParametersFile();
             }
-            else if (EnvironmentInfo.GetPositionalArgument<string>(0) == ":complete")
+            else if (ParameterService.GetPositionalArgument<string>(0) == ":complete")
             {
                 var schema = SchemaUtility.GetBuildSchema(build);
                 var profileNames = GetProfileNames(NukeBuild.RootDirectory);
@@ -43,7 +43,7 @@ namespace Nuke.Common.Execution
                 Environment.Exit(exitCode: 0);
             }
 
-            if (EnvironmentInfo.GetParameter<bool>(CompletionParameterName))
+            if (ParameterService.GetParameter<bool>(CompletionParameterName))
                 Environment.Exit(exitCode: 0);
         }
 

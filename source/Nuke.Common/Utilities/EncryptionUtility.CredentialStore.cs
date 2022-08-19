@@ -76,7 +76,7 @@ namespace Nuke.Common.Utilities
             var credentialStoreName = Constants.GetCredentialStoreName(NukeBuild.RootDirectory, profile);
             var passwordParameterName = Constants.GetProfilePasswordParameterName(profile);
             return TryGetPasswordFromCredentialStore(credentialStoreName) ??
-                   EnvironmentInfo.GetParameter<string>(passwordParameterName) ??
+                   ParameterService.GetParameter<string>(passwordParameterName) ??
                    PromptForPassword();
         }
 

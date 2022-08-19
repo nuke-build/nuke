@@ -30,9 +30,9 @@ namespace Nuke.Common
             BuildProjectFile = GetBuildProjectFile(BuildAssemblyDirectory);
             BuildProjectDirectory = BuildProjectFile?.Parent;
 
-            Verbosity = EnvironmentInfo.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
-            Host = EnvironmentInfo.GetParameter(() => Host) ?? Host.Default;
-            LoadedLocalProfiles = EnvironmentInfo.GetParameter(() => LoadedLocalProfiles) ?? new string[0];
+            Verbosity = ParameterService.GetParameter<Verbosity?>(() => Verbosity) ?? Verbosity.Normal;
+            Host = ParameterService.GetParameter(() => Host) ?? Host.Default;
+            LoadedLocalProfiles = ParameterService.GetParameter(() => LoadedLocalProfiles) ?? new string[0];
         }
 
         /// <summary>
@@ -94,11 +94,11 @@ namespace Nuke.Common
 
         private static AbsolutePath GetRootDirectory()
         {
-            var parameterValue = EnvironmentInfo.GetParameter(() => RootDirectory);
+            var parameterValue = ParameterService.GetParameter(() => RootDirectory);
             if (parameterValue != null)
                 return parameterValue;
 
-            if (EnvironmentInfo.GetParameter<bool>(() => RootDirectory))
+            if (ParameterService.GetParameter<bool>(() => RootDirectory))
                 return EnvironmentInfo.WorkingDirectory;
 
             return TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory)

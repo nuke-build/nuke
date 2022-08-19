@@ -21,7 +21,7 @@ namespace Nuke.Common.Execution
             NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            if (!EnvironmentInfo.GetParameter<bool>(Constants.VisualStudioDebugParameterName))
+            if (!ParameterService.GetParameter<bool>(Constants.VisualStudioDebugParameterName))
                 return;
 
             File.WriteAllText(Constants.GetVisualStudioDebugFile(NukeBuild.RootDirectory),

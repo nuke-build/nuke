@@ -129,7 +129,7 @@ namespace Nuke.Common.Tools.AzureKeyVault.Attributes
             }
 
             if (string.IsNullOrWhiteSpace(result))
-                result = EnvironmentInfo.GetParameter<string>(memberName);
+                result = ParameterService.GetParameter<string>(memberName);
 
             return result;
         }

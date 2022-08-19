@@ -83,7 +83,7 @@ namespace Nuke.Common.ProjectModel
         {
             return _relativePath != null
                 ? PathConstruction.Combine(NukeBuild.RootDirectory, _relativePath)
-                : EnvironmentInfo.GetParameter<AbsolutePath>(member).NotNull($"No solution file defined for '{member.Name}'.");
+                : ParameterService.GetParameter<AbsolutePath>(member).NotNull($"No solution file defined for '{member.Name}'.");
         }
 
         private string TryGetSolutionFileFromNukeFile()

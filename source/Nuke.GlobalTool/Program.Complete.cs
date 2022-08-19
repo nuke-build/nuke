@@ -39,7 +39,7 @@ namespace Nuke.GlobalTool
                 return 1;
             }
 
-            var position = EnvironmentInfo.GetParameter<int?>("position");
+            var position = ParameterService.GetParameter<int?>("position");
             var completionItems = IsLegacy(rootDirectory)
                 ? SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(completionFile)
                 : SchemaUtility.GetCompletionItems(buildSchemaFile, GetProfileNames(rootDirectory));
