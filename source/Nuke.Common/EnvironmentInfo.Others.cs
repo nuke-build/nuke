@@ -42,30 +42,5 @@ namespace Nuke.Common
                 () => WorkingDirectory = (AbsolutePath) workingDirectory,
                 () => WorkingDirectory = previousWorkingDirectory);
         }
-
-        public static string[] CommandLineArguments { get; internal set; } = Environment.GetCommandLineArgs();
-
-        internal static string[] ParseCommandLineArguments(string commandLine)
-        {
-            var inSingleQuotes = false;
-            var inDoubleQuotes = false;
-            var escaped = false;
-            return commandLine.Split((c, _) =>
-                    {
-                        if (c == '\"' && !inSingleQuotes && !escaped)
-                            inDoubleQuotes = !inDoubleQuotes;
-
-                        if (c == '\'' && !inDoubleQuotes && !escaped)
-                            inSingleQuotes = !inSingleQuotes;
-
-                        escaped = c == '\\' && !escaped;
-
-                        return c == ' ' && !(inDoubleQuotes || inSingleQuotes);
-                    },
-                    includeSplitCharacter: true)
-                .Select(x => x.Trim().TrimMatchingDoubleQuotes().TrimMatchingQuotes().Replace("\\\"", "\"").Replace("\\\'", "'"))
-                .Where(x => !string.IsNullOrEmpty(x))
-                .ToArray();
-        }
     }
 }
