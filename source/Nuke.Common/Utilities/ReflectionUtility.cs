@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Utilities
@@ -17,6 +18,12 @@ namespace Nuke.Common.Utilities
 
         public const BindingFlags Instance = BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic;
         public const BindingFlags Static = BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
+
+        [CanBeNull]
+        public static object GetDefaultValue(this Type type)
+        {
+            return type.IsNullableType() ? null : Activator.CreateInstance(type);
+        }
 
         public static bool IsNullableType(this Type type)
         {

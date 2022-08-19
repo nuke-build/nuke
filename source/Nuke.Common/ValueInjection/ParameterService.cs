@@ -176,7 +176,7 @@ namespace Nuke.Common.ValueInjection
         {
             var index = GetCommandLineArgumentIndex(argumentName);
             if (index == -1)
-                return GetDefaultValue(destinationType);
+                return destinationType.GetDefaultValue();
 
             var values = Arguments.Skip(index + 1).TakeUntil(IsParameter).ToArray();
             return ConvertCommandLineArguments(argumentName, values, destinationType, Arguments, separator);
@@ -205,7 +205,7 @@ namespace Nuke.Common.ValueInjection
         {
             var positionalArguments = Arguments.TakeUntil(IsParameter).ToArray();
             if (positionalArguments.Length == 0)
-                return GetDefaultValue(destinationType);
+                return destinationType.GetDefaultValue();
 
             return ConvertCommandLineArguments(
                 "$all-positional",
@@ -281,7 +281,7 @@ namespace Nuke.Common.ValueInjection
                 if (alternativeValues.Count == 1)
                     value = alternativeValues.Single().Value;
                 else
-                    return GetDefaultValue(destinationType);
+                    return destinationType.GetDefaultValue();
             }
 
             try
@@ -297,17 +297,11 @@ namespace Nuke.Common.ValueInjection
         }
 
         [CanBeNull]
-        private object GetDefaultValue(Type type)
-        {
-            return type.IsNullableType() ? null : Activator.CreateInstance(type);
-        }
-
-        [CanBeNull]
         private object ConvertValues(string parameterName, IReadOnlyCollection<string> values, Type destinationType)
         {
             try
             {
-                return ConvertValues(values, destinationType);
+                return Convert(values, destinationType);
             }
             catch (Exception ex)
             {
@@ -315,40 +309,6 @@ namespace Nuke.Common.ValueInjection
                 // ReSharper disable once HeuristicUnreachableCode
                 return null;
             }
-        }
-
-        [CanBeNull]
-        private object ConvertValues(IReadOnlyCollection<string> values, Type destinationType)
-        {
-            Assert.True(!destinationType.IsArray || destinationType.GetArrayRank() == 1, "Arrays must have a rank of 1");
-            var elementType = (destinationType.IsArray ? destinationType.GetElementType() : destinationType).NotNull();
-            Assert.True(values.Count < 2 || elementType != null, "values.Count < 2 || elementType != null");
-
-            if (values.Count == 0)
-            {
-                if (destinationType.IsArray)
-                    return Array.CreateInstance(elementType, length: 0);
-
-                if (destinationType == typeof(bool) || destinationType == typeof(bool?))
-                    return true;
-
-                return null;
-            }
-
-            var convertedValues = values.Select(x => Convert(x, elementType)).ToList();
-            if (!destinationType.IsArray)
-            {
-                Assert.HasSingleItem(convertedValues,
-                    $"Value [ {values.JoinCommaSpace()} ] cannot be assigned to '{destinationType.GetDisplayShortName()}'");
-                return convertedValues.Single();
-            }
-
-            var array = Array.CreateInstance(elementType, convertedValues.Count);
-            convertedValues.ForEach((x, i) => array.SetValue(x, i));
-            Assert.True(destinationType.IsInstanceOfType(array),
-                $"Type '{array.GetType().GetDisplayShortName()}' is not an instance of '{destinationType.GetDisplayShortName()}'.");
-
-            return array;
         }
 
         private void CheckNames(string name, IEnumerable<string> candidates)
