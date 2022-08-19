@@ -40,6 +40,13 @@ namespace Nuke.Common.Utilities
             }
         }
 
+        // TODO: rename overloads?
+        [CanBeNull]
+        public static object Convert(string value, Type destinationType, char? separator)
+        {
+            return Convert(separator.HasValue ? value.Split(separator.Value) : new[] { value }, destinationType);
+        }
+
         [CanBeNull]
         public static object Convert(IReadOnlyCollection<string> values, Type destinationType)
         {
