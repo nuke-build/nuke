@@ -49,7 +49,7 @@
     <Compile Include="..\Nuke.Common\Utilities\String.*.cs" LinkBase=".\Linked\Utilities" />
 
     <Compile Remove="..\Nuke.Common\ProjectModel\SolutionAttribute.cs" LinkBase=".\Linked\ProjectModel" />
-    <Compile Remove="..\Nuke.Common\ProjectModel\ProjectExtensions.cs" LinkBase=".\Linked\ProjectModel" />
+    <Compile Remove="..\Nuke.Common\ProjectModel\Project.*.cs" LinkBase=".\Linked\ProjectModel" />
     <Compile Remove="..\Nuke.Common\ProjectModel\ProjectModelTasks.cs" LinkBase=".\Linked\ProjectModel" />
   </ItemGroup>
 
