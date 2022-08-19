@@ -25,9 +25,15 @@ namespace Nuke.Common
             => Environment.GetEnvironmentVariables().ToGeneric<string, string>(StringComparer.CurrentCulture);
 
         [CanBeNull]
+        public static string GetVariable(string name)
+        {
+            return Environment.GetEnvironmentVariable(name);
+        }
+
+        [CanBeNull]
         public static T GetVariable<T>(string name)
         {
-            return ReflectionUtility.Convert<T>(Environment.GetEnvironmentVariable(name));
+            return ReflectionUtility.Convert<T>(GetVariable(name));
         }
 
         public static void SetVariable(string name, string value)
@@ -38,6 +44,11 @@ namespace Nuke.Common
         public static void SetVariable<T>(string name, T value)
         {
             SetVariable(name, value.ToString());
+        }
+
+        public static void RemoveVariable(string name)
+        {
+            SetVariable(name, value: null);
         }
 
         public static string ExpandVariables(string value)
