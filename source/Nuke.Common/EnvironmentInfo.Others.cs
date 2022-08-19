@@ -43,21 +43,6 @@ namespace Nuke.Common
                 () => WorkingDirectory = previousWorkingDirectory);
         }
 
-        public static string ExpandVariables(string value)
-        {
-            string ExpandUnixEnvironmentVariables()
-                => value
-                    .ReplaceRegex("^~", _ => Environment.GetEnvironmentVariable("HOME"))
-                    .ReplaceRegex(@"\$([a-z_][a-z0-9_]*)", x => Environment.GetEnvironmentVariable(x.Groups[1].Value), RegexOptions.IgnoreCase);
-
-            return IsWin
-                ? Environment.ExpandEnvironmentVariables(value)
-                : ExpandUnixEnvironmentVariables();
-        }
-
-        public static IReadOnlyDictionary<string, string> Variables
-            => Environment.GetEnvironmentVariables().ToGeneric<string, string>(StringComparer.CurrentCulture);
-
         public static string[] CommandLineArguments { get; } = GetSurrogateArguments() ?? Environment.GetCommandLineArgs();
 
         private const string c_nukeTmpFileName = "nuke.tmp";
