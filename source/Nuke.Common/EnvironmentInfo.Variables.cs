@@ -24,6 +24,13 @@ namespace Nuke.Common
         public static IReadOnlyDictionary<string, string> Variables
             => Environment.GetEnvironmentVariables().ToGeneric<string, string>(StringComparer.CurrentCulture);
 
+        public static IReadOnlyCollection<string> Paths
+            => GetVariable<string[]>(s_pathVariableName, s_pathVariableSeparator).NotNull()
+                .Select(ExpandVariables).ToList();
+
+        private static readonly string s_pathVariableName = Variables.Single(x => x.Key.EqualsOrdinalIgnoreCase("PATH")).Key;
+        private static readonly char s_pathVariableSeparator = IsWin ? ';' : ':';
+
         [CanBeNull]
         public static string GetVariable(string name)
         {
@@ -31,9 +38,9 @@ namespace Nuke.Common
         }
 
         [CanBeNull]
-        public static T GetVariable<T>(string name)
+        public static T GetVariable<T>(string name, char? separator = null)
         {
-            return ReflectionUtility.Convert<T>(GetVariable(name));
+            return (T)ReflectionUtility.Convert(GetVariable(name), typeof(T), separator);
         }
 
         public static void SetVariable(string name, string value)

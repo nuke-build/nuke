@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using FluentAssertions;
+using Nuke.Common.IO;
 using Xunit;
 
 namespace Nuke.Common.Tests
@@ -27,6 +28,14 @@ namespace Nuke.Common.Tests
             var arguments = EnvironmentInfo.ParseCommandLineArguments(commandLine);
 
             arguments.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public void TestPaths()
+        {
+            var paths = EnvironmentInfo.Paths;
+            paths.Should().HaveCountGreaterThan(1);
+            paths.Should().OnlyContain(x => PathConstruction.HasPathRoot(x));
         }
     }
 }
