@@ -43,36 +43,7 @@ namespace Nuke.Common
                 () => WorkingDirectory = previousWorkingDirectory);
         }
 
-        public static string[] CommandLineArguments { get; } = GetSurrogateArguments() ?? Environment.GetCommandLineArgs();
-
-        private const string c_nukeTmpFileName = "nuke.tmp";
-
-        [CanBeNull]
-        private static string[] GetSurrogateArguments()
-        {
-            var entryAssemblyLocation = Assembly.GetEntryAssembly()?.Location;
-            if (entryAssemblyLocation.IsNullOrEmpty())
-                return null;
-
-            var assemblyDirectory = Path.GetDirectoryName(entryAssemblyLocation).NotNull();
-            var argumentsFile = Path.Combine(assemblyDirectory, c_nukeTmpFileName);
-            if (!File.Exists(argumentsFile))
-                return null;
-
-            var argumentLines = File.ReadAllLines(argumentsFile);
-            var lastWriteTime = File.GetLastWriteTime(argumentsFile);
-
-            Assert.HasSingleItem(argumentLines, $"{c_nukeTmpFileName} must have only one single line");
-            File.Delete(argumentsFile);
-            if (lastWriteTime.AddMinutes(value: 1) < DateTime.Now)
-            {
-                Log.Warning("Last write time of {File} was {LastWriteTime}. Skipping ...", c_nukeTmpFileName, lastWriteTime);
-                return null;
-            }
-
-            var splittedArguments = ParseCommandLineArguments(argumentLines.Single());
-            return new[] { entryAssemblyLocation }.Concat(splittedArguments).ToArray();
-        }
+        public static string[] CommandLineArguments { get; internal set; } = Environment.GetCommandLineArgs();
 
         internal static string[] ParseCommandLineArguments(string commandLine)
         {

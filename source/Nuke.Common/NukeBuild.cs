@@ -47,6 +47,7 @@ namespace Nuke.Common
     [PublicAPI]
     // Before logo
     [ArgumentsFromParametersFile(Priority = 150)]
+    [HandleReSharperSurrogateArguments(Priority = 150)]
     [InjectParameterValues(Priority = 100)]
     [HandleShellCompletion(Priority = 75)]
     [GenerateBuildServerConfigurations(Priority = 50)]
