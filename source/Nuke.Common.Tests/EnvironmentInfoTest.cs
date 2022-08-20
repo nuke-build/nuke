@@ -12,24 +12,6 @@ namespace Nuke.Common.Tests
 {
     public class EnvironmentInfoTest
     {
-        [Theory]
-        [InlineData("arg0 arg1 arg2", new[] { "arg0", "arg1", "arg2" })]
-        [InlineData("\"arg0 arg1\" arg2", new[] { "arg0 arg1", "arg2" })]
-        [InlineData("'arg0 arg1' arg2", new[] { "arg0 arg1", "arg2" })]
-        [InlineData("'arg0 \"arg1' arg2", new[] { "arg0 \"arg1", "arg2" })]
-        [InlineData("'arg0 \"arg1\"' arg2", new[] { "arg0 \"arg1\"", "arg2" })]
-        [InlineData("\"arg0 'arg1\" arg2", new[] { "arg0 'arg1", "arg2" })]
-        [InlineData("\"arg0 'arg1'\" arg2", new[] { "arg0 'arg1'", "arg2" })]
-        [InlineData("\"arg0 \\\"arg1\\\"\" arg2", new[] { "arg0 \"arg1\"", "arg2" })]
-        [InlineData("'arg0 \\'arg1\\'' arg2", new[] { "arg0 'arg1'", "arg2" })]
-        [InlineData("\\\\ \\ \\\\", new[] { "\\\\", "\\", "\\\\" })]
-        public void TestParseCommandLineArguments(string commandLine, string[] expected)
-        {
-            var arguments = EnvironmentInfo.ParseCommandLineArguments(commandLine);
-
-            arguments.Should().BeEquivalentTo(expected);
-        }
-
         [Fact]
         public void TestPaths()
         {

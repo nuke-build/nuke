@@ -59,7 +59,7 @@ namespace Nuke.Common.Execution
                     : value;
 
             var arguments = GetParameters().SelectMany(x => ConvertToArguments(x.Profile, x.Name, x.Values)).ToArray();
-            ParameterService.Instance.ArgumentsFromFilesService = new ParameterService(() => arguments, () => throw new NotSupportedException());
+            ParameterService.Instance.ArgumentsFromFilesService = new ArgumentParser(arguments);
         }
 
         private IEnumerable<(string Profile, string Name, string[] Values)> GetParameters()

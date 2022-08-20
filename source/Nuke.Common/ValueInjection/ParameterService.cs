@@ -18,21 +18,21 @@ namespace Nuke.Common
 {
     internal partial class ParameterService
     {
-        internal ParameterService ArgumentsFromFilesService;
-        internal ParameterService ArgumentsFromCommitMessageService;
+        internal ArgumentParser ArgumentsFromFilesService;
+        internal ArgumentParser ArgumentsFromCommitMessageService;
 
-        private readonly Func<IEnumerable<string>> _commandLineArgumentsProvider;
+        private readonly Func<ArgumentParser> _argumentParserProvider;
         private readonly Func<IReadOnlyDictionary<string, string>> _environmentVariablesProvider;
 
         public ParameterService(
-            [CanBeNull] Func<IEnumerable<string>> commandLineArgumentsProvider,
+            [CanBeNull] Func<ArgumentParser> argumentParserProvider,
             [CanBeNull] Func<IReadOnlyDictionary<string, string>> environmentVariablesProvider)
         {
-            _commandLineArgumentsProvider = commandLineArgumentsProvider;
+            _argumentParserProvider = argumentParserProvider;
             _environmentVariablesProvider = environmentVariablesProvider;
         }
 
-        private string[] Arguments => _commandLineArgumentsProvider.Invoke().ToArray();
+        private ArgumentParser ArgumentsParser => _argumentParserProvider.Invoke();
         private IReadOnlyDictionary<string, string> Variables => _environmentVariablesProvider.Invoke();
 
         public static bool IsParameter(string value)
@@ -155,10 +155,10 @@ namespace Nuke.Common
 
             // TODO: nuke <target> ?
             object TryFromProfileArguments() =>
-                ArgumentsFromFilesService?.GetCommandLineArgument(parameterName, destinationType, separator);
+                ArgumentsFromFilesService?.GetNamedArgument(parameterName, destinationType, separator);
 
             object TryFromCommitMessageArguments() =>
-                ArgumentsFromCommitMessageService?.GetCommandLineArgument(parameterName, destinationType, separator);
+                ArgumentsFromCommitMessageService?.GetNamedArgument(parameterName, destinationType, separator);
 
             return TryFromCommitMessageArguments() ??
                    TryFromCommandLineArguments() ??
@@ -170,93 +170,24 @@ namespace Nuke.Common
         [CanBeNull]
         public object GetCommandLineArgument(string argumentName, Type destinationType, char? separator)
         {
-            var index = GetCommandLineArgumentIndex(argumentName);
-            if (index == -1)
-                return destinationType.GetDefaultValue();
-
-            var values = Arguments.Skip(index + 1).TakeUntil(IsParameter).ToArray();
-            return ConvertCommandLineArguments(argumentName, values, destinationType, Arguments, separator);
+            return ArgumentsParser.GetNamedArgument(argumentName, destinationType, separator);
         }
 
         [CanBeNull]
         public object GetCommandLineArgument(int position, Type destinationType, char? separator)
         {
-            var positionalParametersCount = Arguments.TakeUntil(IsParameter).Count();
-            if (position < 0)
-                position = positionalParametersCount + position % positionalParametersCount;
-
-            if (positionalParametersCount <= position)
-                return null;
-
-            return ConvertCommandLineArguments(
-                $"$positional[{position}]",
-                new[] { Arguments[position] },
-                destinationType,
-                Arguments,
-                separator);
+            return ArgumentsParser.GetPositionalArgument(position, destinationType, separator);
         }
 
         [CanBeNull]
         public object GetPositionalCommandLineArguments(Type destinationType, char? separator = null)
         {
-            var positionalArguments = Arguments.TakeUntil(IsParameter).ToArray();
-            if (positionalArguments.Length == 0)
-                return destinationType.GetDefaultValue();
-
-            return ConvertCommandLineArguments(
-                "$all-positional",
-                positionalArguments,
-                destinationType,
-                Arguments,
-                separator);
-        }
-
-        [CanBeNull]
-        private object ConvertCommandLineArguments(
-            string argumentName,
-            string[] values,
-            Type destinationType,
-            string[] commandLineArguments,
-            char? separator = null)
-        {
-            Assert.True(values.Length == 1 || !separator.HasValue || values.All(x => !x.Contains(separator.Value)),
-                $"Command-line argument '{argumentName}' with value [ {values.JoinCommaSpace()} ] cannot be split with separator '{separator}'");
-            values = separator.HasValue && values.Any(x => x.Contains(separator.Value))
-                ? values.SingleOrDefault()?.Split(separator.Value) ?? new string[0]
-                : values;
-
-            try
-            {
-                return ConvertValues(argumentName, values, destinationType);
-            }
-            catch (Exception ex)
-            {
-                Assert.Fail(
-                    new[] { ex.Message, "Command-line arguments were:" }
-                        .Concat(commandLineArguments.Select((x, i) => $"  [{i}] = {x}"))
-                        .JoinNewLine());
-                // ReSharper disable once HeuristicUnreachableCode
-                return null;
-            }
+            return ArgumentsParser.GetAllPositionalArguments(destinationType, separator);
         }
 
         public bool HasCommandLineArgument(string argumentName)
         {
-            return GetCommandLineArgumentIndex(argumentName) != -1;
-        }
-
-        private int GetCommandLineArgumentIndex(string argumentName)
-        {
-            var index = Array.FindLastIndex(Arguments,
-                x => IsParameter(x) && GetParameterMemberName(x).EqualsOrdinalIgnoreCase(GetParameterMemberName(argumentName)));
-
-            // if (index == -1 && checkNames)
-            // {
-            //     var candidates = Arguments.Where(x => x.StartsWith("-")).Select(x => x.Replace("-", string.Empty));
-            //     CheckNames(argumentName, candidates);
-            // }
-
-            return index;
+            return ArgumentsParser.HasArgument(argumentName);
         }
 
         [CanBeNull]

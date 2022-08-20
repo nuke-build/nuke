@@ -23,51 +23,8 @@ namespace Nuke.Common.Tests
             environmentVariables ??= new Dictionary<string, string>();
 
             return new ParameterService(
-                () => commandLineArguments,
+                () => new ArgumentParser(commandLineArguments),
                 () => environmentVariables.AsReadOnly());
-        }
-
-        [Theory]
-        [InlineData("configuration", typeof(string), "release")]
-        [InlineData("AMOUNT", typeof(int), 5)]
-        [InlineData("noLogo", typeof(bool), true)]
-        [InlineData("NoDeps", typeof(bool), false)]
-        [InlineData("root", typeof(AbsolutePath), null)]
-        public void TestConversion(string argument, Type destinationType, object expectedValue)
-        {
-            GetService(
-                new[]
-                {
-                    "-nologo",
-                    "-configuration",
-                    "release",
-                    "-files",
-                    "C:\\new folder\\file.txt",
-                    "C:\\file.txt",
-                    "-amount",
-                    "5",
-                    "--no-deps",
-                    "false",
-                    "--root"
-                }).GetCommandLineArgument(argument, destinationType, separator: null).Should().Be(expectedValue);
-        }
-
-        [Theory]
-        [InlineData("MSBuildConfiguration", typeof(string), "msbcfg")]
-        [InlineData("dockerConfiguration", typeof(string), "dkrcfg")]
-        [InlineData("publish-dir", typeof(string), "dir")]
-        public void TestSplitted(string argument, Type destinationType, object expectedValue)
-        {
-            GetService(
-                new[]
-                {
-                    "-msbuild-configuration",
-                    "msbcfg",
-                    "-docker-configuration",
-                    "dkrcfg",
-                    "--publish-dir",
-                    "dir"
-                }).GetCommandLineArgument(argument, destinationType, separator: null).Should().Be(expectedValue);
         }
 
         [Theory]
@@ -80,7 +37,7 @@ namespace Nuke.Common.Tests
         [InlineData(typeof(AbsolutePath), null)]
         public void TestNotSupplied(Type destinationType, object expectedValue)
         {
-            GetService().GetCommandLineArgument("notsupplied", destinationType, separator: null).Should().Be(expectedValue);
+            GetService().GetParameter("notsupplied", destinationType, separator: null).Should().Be(expectedValue);
         }
 
         [Theory]
@@ -107,72 +64,6 @@ namespace Nuke.Common.Tests
                     { "switch3", "false" }
                 });
             service.GetParameter(parameter, destinationType, separator: null).Should().Be(expectedValue);
-        }
-
-        [Fact]
-        public void TestConversionSpecial()
-        {
-            var dateTime = DateTime.Now;
-            var guid = Guid.NewGuid();
-            var service = GetService(
-                new[]
-                {
-                    "-guid",
-                    $"{guid}",
-                    "-datetime",
-                    $"{dateTime.ToString(CultureInfo.InvariantCulture)}",
-                    "--root",
-                    "/bin/etc"
-                });
-
-            service.GetParameter("datetime", destinationType: typeof(DateTime), separator: null)
-                .Should().BeOfType<DateTime>().Subject.Should().BeCloseTo(dateTime, TimeSpan.FromSeconds(1));
-
-            service.GetParameter("guid", destinationType: typeof(Guid), separator: null)
-                .Should().BeOfType<Guid>().Subject.Should().Be(guid);
-
-            service.GetParameter("root", destinationType: typeof(AbsolutePath), separator: null)
-                .Should().BeOfType<AbsolutePath>().Subject.ToString().Should().Be("/bin/etc");
-        }
-
-        [Fact]
-        public void TestConversionCollections()
-        {
-            var service = GetService(
-                new[]
-                {
-                    "-files",
-                    "C:\\new folder\\file.txt",
-                    "C:\\file.txt",
-                    "-amount",
-                    "5"
-                },
-                new Dictionary<string, string>
-                {
-                    { "values", "A+B+C" }
-                });
-
-            service.GetParameter("files", destinationType: typeof(string[]), separator: null)
-                .Should().BeOfType<string[]>().Subject.Should().BeEquivalentTo("C:\\new folder\\file.txt", "C:\\file.txt");
-
-            service.GetParameter("values", destinationType: typeof(string[]), separator: '+')
-                .Should().BeOfType<string[]>().Subject.Should().BeEquivalentTo("A", "B", "C");
-        }
-
-        [Theory]
-        [InlineData(new[] { "arg1" }, 0, typeof(string), "arg1")]
-        [InlineData(new[] { "true" }, 0, typeof(bool), true)]
-        [InlineData(new[] { "arg1" }, 1, typeof(string), null)]
-        [InlineData(new[] { "arg1", "arg2" }, 1, typeof(string), "arg2")]
-        [InlineData(new[] { "posArg", "-NamedArg", "value" }, 0, typeof(string), "posArg")]
-        [InlineData(new[] { "posArg", "-NamedArg", "value" }, 1, typeof(string), null)]
-        [InlineData(new[] { "posArg", "-NamedArg", "value" }, 2, typeof(string), null)]
-        [InlineData(new[] { "arg1", "arg2", "arg3" }, -1, typeof(string), "arg3")]
-        [InlineData(new[] { "arg1", "arg2", "arg3" }, -2, typeof(string), "arg2")]
-        public void TestPositionalCommandLineArguments(string[] commandLineArgs, int position, Type destinationType, object expectedValue)
-        {
-            var service = GetService(commandLineArgs);
-            service.GetCommandLineArgument(position, destinationType, separator: null).Should().Be(expectedValue);
         }
 
         [Fact]
@@ -219,6 +110,37 @@ namespace Nuke.Common.Tests
                 .Should().BeEquivalentTo(verbosities);
             ParameterService.GetParameterValueSet(GetMemberInfo(() => build.Verbosities), instance: null)
                 .Should().BeEquivalentTo(verbosities);
+        }
+
+        [Fact]
+        public void TestPrecedence()
+        {
+            var emptyArguments = new ArgumentParser(string.Empty);
+            var emptyEnvironmentVariables = new Dictionary<string, string>();
+
+            var environmentVariables = new Dictionary<string, string> { ["string"] = "environmentVariables" };
+            var commandLineArguments = new ArgumentParser("--string commandLine");
+            var parameterFileArguments = new ArgumentParser("--string parameterFile");
+            var commitMessageArguments = new ArgumentParser("--string commitMessage");
+
+            var service = new ParameterService(() => emptyArguments, () => emptyEnvironmentVariables)
+                          {
+                              ArgumentsFromFilesService = parameterFileArguments
+                          };
+            service.GetParameter("string", typeof(string), separator: null).Should().Be("parameterFile");
+
+            service = new ParameterService(() => emptyArguments, () => environmentVariables) { ArgumentsFromFilesService = parameterFileArguments };
+            service.GetParameter("string", typeof(string), separator: null).Should().Be("environmentVariables");
+
+            service = new ParameterService(() => commandLineArguments, () => environmentVariables);
+            service.GetParameter("string", typeof(string), separator: null).Should().Be("commandLine");
+
+            service = new ParameterService(() => emptyArguments, () => emptyEnvironmentVariables)
+                      {
+                          ArgumentsFromFilesService = parameterFileArguments,
+                          ArgumentsFromCommitMessageService = commitMessageArguments
+                      };
+            service.GetParameter("string", typeof(string), separator: null).Should().Be("commitMessage");
         }
 
 #pragma warning disable CS0649

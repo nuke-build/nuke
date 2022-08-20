@@ -36,8 +36,8 @@ namespace Nuke.Common.Execution
             if (!lastLine?.StartsWithOrdinalIgnoreCase(Prefix) ?? true)
                 return;
 
-            var arguments = EnvironmentInfo.ParseCommandLineArguments(lastLine.Substring(Prefix.Length).TrimStart());
-            ParameterService.Instance.ArgumentsFromCommitMessageService = new ParameterService(() => arguments, () => throw new NotSupportedException());
+            var arguments = lastLine.Substring(Prefix.Length).TrimStart();
+            ParameterService.Instance.ArgumentsFromCommitMessageService = new ArgumentParser(arguments);
         }
     }
 }

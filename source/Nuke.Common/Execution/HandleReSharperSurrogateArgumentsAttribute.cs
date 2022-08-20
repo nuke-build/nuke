@@ -35,10 +35,8 @@ namespace Nuke.Common.Execution
                 return;
             }
 
-            var splittedArguments = EnvironmentInfo.ParseCommandLineArguments(argumentLines.Single());
-            var surrogateArguments = new[] { NukeBuild.BuildAssemblyFile.NotNull().ToString() }.Concat(splittedArguments).ToArray();
-
-            EnvironmentInfo.CommandLineArguments = surrogateArguments;
+            var arguments = argumentLines.Single();
+            EnvironmentInfo.ArgumentParser = new ArgumentParser(arguments);
         }
     }
 }

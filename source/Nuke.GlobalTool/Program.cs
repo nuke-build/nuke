@@ -54,11 +54,11 @@ namespace Nuke.GlobalTool
         private static AbsolutePath TryGetRootDirectory()
         {
             // TODO: copied in NukeBuild.GetRootDirectory
-            var parameterValue = ParameterService.GetParameter(() => NukeBuild.RootDirectory);
+            var parameterValue = EnvironmentInfo.GetNamedArgument<AbsolutePath>(Constants.RootDirectoryParameterName);
             if (parameterValue != null)
                 return parameterValue;
 
-            if (ParameterService.GetParameter<bool>(() => NukeBuild.RootDirectory))
+            if (EnvironmentInfo.GetNamedArgument<bool>(Constants.RootDirectoryParameterName))
                 return EnvironmentInfo.WorkingDirectory;
 
             return Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory());

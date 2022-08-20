@@ -20,7 +20,6 @@ using static Nuke.Common.Constants;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.IO.TextTasks;
-using static Nuke.Common.ParameterService;
 using static Nuke.Common.Tooling.ProcessTasks;
 using static Nuke.Common.Utilities.TemplateUtility;
 
@@ -72,7 +71,7 @@ namespace Nuke.GlobalTool
             }
             ShowInput("deciduous_tree", "Root directory", rootDirectory);
 
-            var targetPlatform = !GetParameter<bool>("boot")
+            var targetPlatform = !GetNamedArgument<bool>("boot")
                 ? PLATFORM_NETCORE
                 : PromptForChoice("What runtime should be used?",
                     (PLATFORM_NETCORE, ".NET Core SDK"),
