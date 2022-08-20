@@ -12,19 +12,26 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     [PublicAPI]
     public class AzurePipelinesDownloadStep : AzurePipelinesStep
     {
-        public string ArtifactName { get; set; }
-        public string DownloadPath { get; set; }
+        public string Artifact { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
-            using (writer.WriteBlock("- task: DownloadBuildArtifacts@0"))
+            using (writer.WriteBlock("- task: DownloadPipelineArtifact@2"))
             {
-                // writer.WriteLine("displayName: Download Artifacts");
+                writer.WriteLine("displayName: Download Artifacts");
                 using (writer.WriteBlock("inputs:"))
                 {
-                    writer.WriteLine($"artifactName: {ArtifactName}");
-                    writer.WriteLine($"downloadPath: {DownloadPath.SingleQuote()}");
+                    if (!String.IsNullOrEmpty(Artifact))
+                    {
+                        writer.WriteLine($"artifactName: {Artifact.Split('/', '\\').Last().SingleQuoteIfNeeded()}");
+                    }
+
+                    writer.WriteLine($"targetPath: '$(Build.SourcesDirectory)/{Artifact}'"); //test
                 }
+            }
+            using (writer.WriteBlock($"- task: NuGetAuthenticate@0"))
+            {
+
             }
         }
     }

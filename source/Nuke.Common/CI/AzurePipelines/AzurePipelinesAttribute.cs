@@ -43,7 +43,7 @@ namespace Nuke.Common.CI.AzurePipelines
             AzurePipelinesImage image,
             params AzurePipelinesImage[] images)
         {
-            _suffix = suffix?.Replace(oldChar: ' ', newChar: '_');
+            _suffix = suffix;
             _images = new[] { image }.Concat(images).ToArray();
         }
 
@@ -60,6 +60,8 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] InvokedTargets { get; set; } = new string[0];
 
         public bool TriggerDisabled { get; set; }
+
+        public string[] NugetAuthenticateTargets { get; set; } = new string[0];
 
         public bool Submodules
         {
@@ -126,12 +128,12 @@ namespace Nuke.Common.CI.AzurePipelines
         public override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return new AzurePipelinesConfiguration
-                   {
-                       VariableGroups = ImportVariableGroups,
-                       VcsPushTrigger = GetVcsPushTrigger(),
-                       VcsPullRequestTrigger = GetVcsPullRequestTrigger(),
-                       Stages = _images.Select(x => GetStage(x, relevantTargets)).ToArray()
-                   };
+            {
+                VariableGroups = ImportVariableGroups,
+                VcsPushTrigger = GetVcsPushTrigger(),
+                VcsPullRequestTrigger = GetVcsPullRequestTrigger(),
+                Stages = _images.Select(x => GetStage(x, relevantTargets)).ToArray()
+            };
         }
 
         [CanBeNull]
@@ -148,16 +150,16 @@ namespace Nuke.Common.CI.AzurePipelines
                 return null;
 
             return new AzurePipelinesVcsPushTrigger
-                   {
-                       Disabled = TriggerDisabled,
-                       Batch = _triggerBatch,
-                       BranchesInclude = TriggerBranchesInclude,
-                       BranchesExclude = TriggerBranchesExclude,
-                       TagsInclude = TriggerTagsInclude,
-                       TagsExclude = TriggerTagsExclude,
-                       PathsInclude = TriggerPathsInclude,
-                       PathsExclude = TriggerPathsExclude,
-                   };
+            {
+                Disabled = TriggerDisabled,
+                Batch = _triggerBatch,
+                BranchesInclude = TriggerBranchesInclude,
+                BranchesExclude = TriggerBranchesExclude,
+                TagsInclude = TriggerTagsInclude,
+                TagsExclude = TriggerTagsExclude,
+                PathsInclude = TriggerPathsInclude,
+                PathsExclude = TriggerPathsExclude,
+            };
         }
 
         [CanBeNull]
@@ -172,16 +174,16 @@ namespace Nuke.Common.CI.AzurePipelines
                 return null;
 
             return new AzurePipelinesVcsPushTrigger
-                   {
-                       Disabled = PullRequestsDisabled,
-                       AutoCancel = _pullRequestsAutoCancel,
-                       BranchesInclude = PullRequestsBranchesInclude,
-                       BranchesExclude = PullRequestsBranchesExclude,
-                       TagsInclude = new string[0],
-                       TagsExclude = new string[0],
-                       PathsInclude = PullRequestsPathsInclude,
-                       PathsExclude = PullRequestsPathsExclude,
-                   };
+            {
+                Disabled = PullRequestsDisabled,
+                AutoCancel = _pullRequestsAutoCancel,
+                BranchesInclude = PullRequestsBranchesInclude,
+                BranchesExclude = PullRequestsBranchesExclude,
+                TagsInclude = new string[0],
+                TagsExclude = new string[0],
+                PathsInclude = PullRequestsPathsInclude,
+                PathsExclude = PullRequestsPathsExclude,
+            };
         }
 
         protected virtual AzurePipelinesStage GetStage(
@@ -195,13 +197,13 @@ namespace Nuke.Common.CI.AzurePipelines
                 .Select(x => x.Job).ToArray();
 
             return new AzurePipelinesStage
-                   {
-                       Name = image.GetValue().Replace("-", "_").Replace(".", "_"),
-                       DisplayName = image.GetValue(),
-                       Image = image,
-                       Dependencies = new AzurePipelinesStage[0],
-                       Jobs = jobs
-                   };
+            {
+                Name = image.GetValue().Replace("-", "_").Replace(".", "_"),
+                DisplayName = image.GetValue(),
+                Image = image,
+                Dependencies = new AzurePipelinesStage[0],
+                Jobs = jobs
+            };
         }
 
         protected virtual AzurePipelinesJob GetJob(
@@ -213,13 +215,13 @@ namespace Nuke.Common.CI.AzurePipelines
             var totalPartitions = executableTarget.PartitionSize ?? 0;
             var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
             return new AzurePipelinesJob
-                   {
-                       Name = executableTarget.Name,
-                       DisplayName = executableTarget.Name,
-                       Dependencies = dependencies,
-                       Parallel = totalPartitions,
-                       Steps = GetSteps(executableTarget, relevantTargets, image).ToArray(),
-                   };
+            {
+                Name = executableTarget.Name,
+                DisplayName = executableTarget.Name,
+                Dependencies = dependencies,
+                Parallel = totalPartitions,
+                Steps = GetSteps(executableTarget, relevantTargets, image).ToArray(),
+            };
         }
 
         protected virtual IEnumerable<AzurePipelinesStep> GetSteps(
@@ -227,71 +229,91 @@ namespace Nuke.Common.CI.AzurePipelines
             IReadOnlyCollection<ExecutableTarget> relevantTargets,
             AzurePipelinesImage image)
         {
+            if (NugetAuthenticateTargets.Contains(executableTarget.Name))
+            {
+                yield return new AzurePipelinesNugetAuthenticateStep();
+            }
+            foreach (var downloadStep in AddDownloadStep(executableTarget))
+            {
+                yield return downloadStep;
+            }
+
             if (_submodules.HasValue || _largeFileStorage.HasValue || _fetchDepth.HasValue || _clean.HasValue)
             {
                 yield return new AzurePipelineCheckoutStep
-                             {
-                                 InclueSubmodules = _submodules,
-                                 IncludeLargeFileStorage = _largeFileStorage,
-                                 FetchDepth = _fetchDepth,
-                                 Clean = _clean
-                             };
+                {
+                    InclueSubmodules = _submodules,
+                    IncludeLargeFileStorage = _largeFileStorage,
+                    FetchDepth = _fetchDepth,
+                    Clean = _clean
+                };
             }
 
             if (CacheKeyFiles.Any())
             {
-                foreach (var cachePath in CachePaths.NotNull())
+                foreach (var cachePath in CachePaths.NotNull("CachePaths != null"))
                 {
                     yield return new AzurePipelinesCacheStep
-                                 {
-                                     Image = image,
-                                     KeyFiles = CacheKeyFiles,
-                                     Path = cachePath
-                                 };
+                    {
+                        Image = image,
+                        KeyFiles = CacheKeyFiles,
+                        Path = cachePath
+                    };
                 }
             }
 
-            static string GetArtifactPath(AbsolutePath path)
-                => NukeBuild.RootDirectory.Contains(path)
-                    ? NukeBuild.RootDirectory.GetUnixRelativePathTo(path)
-                    : path;
-
-            var publishedArtifacts = executableTarget.ArtifactProducts
-                .Select(x => (AbsolutePath) x)
-                .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
-                .Distinct()
-                .Select(GetArtifactPath).ToArray();
-
-            // var artifactDependencies = (
-            //     from artifactDependency in ArtifactExtensions.ArtifactDependencies[executableTarget.Definition]
-            //     let dependency = executableTarget.ExecutionDependencies.Single(x => x.Factory == artifactDependency.Item1)
-            //     let rules = (artifactDependency.Item2.Any()
-            //             ? artifactDependency.Item2
-            //             : ArtifactExtensions.ArtifactProducts[dependency.Definition])
-            //         .Select(GetArtifactRule).ToArray()
-            //     select new TeamCityArtifactDependency
-            //            {
-            //                BuildType = buildTypes[dependency].Single(x => x.Partition == null),
-            //                ArtifactRules = rules
-            //            }).ToArray<TeamCityDependency>();
-
             var chainLinkTargets = GetInvokedTargets(executableTarget, relevantTargets).ToArray();
             yield return new AzurePipelinesCmdStep
-                         {
-                             BuildCmdPath = BuildCmdPath,
-                             PartitionSize = executableTarget.PartitionSize,
-                             InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
-                             Imports = GetImports().ToDictionary(x => x.Key, x => x.Value)
-                         };
+            {
+                BuildCmdPath = BuildCmdPath,
+                PartitionSize = executableTarget.PartitionSize,
+                InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
+                Imports = GetImports().ToDictionary(x => x.Key, x => x.Value)
+            };
 
+            foreach (var publishStep in AddPublishStep(executableTarget))
+            {
+                yield return publishStep;
+            }
+        }
+
+        private static IEnumerable<AzurePipelinesStep> AddDownloadStep(ExecutableTarget downloadTarget)
+        {
+            foreach (var publishTargetCollection in downloadTarget.ArtifactDependencies.ToArray())
+            {
+                var publishTarget = publishTargetCollection.Key;
+                foreach (var consumedArtifact in publishTarget.ArtifactProducts)
+                {
+                    yield return new AzurePipelinesDownloadStep
+                    {
+                        Artifact = GetArtifactPath((AbsolutePath)consumedArtifact)
+                    };
+                }
+            }
+        }
+
+        private static IEnumerable<AzurePipelinesStep> AddPublishStep(ExecutableTarget executableTarget)
+        {
+            var publishedArtifacts = executableTarget.ArtifactProducts
+                .Select(x => (AbsolutePath)x)
+                .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
+                .Distinct()
+                .ToArray();
             foreach (var publishedArtifact in publishedArtifacts)
             {
                 yield return new AzurePipelinesPublishStep
-                             {
-                                 ArtifactName = publishedArtifact.Split('/').Last(),
-                                 PathToPublish = publishedArtifact
-                             };
+                {
+                    PathToPublish = GetArtifactPath(publishedArtifact),
+                    ArtifactName = publishedArtifact.Name
+                };
             }
+        }
+
+        private static string GetArtifactPath(AbsolutePath path)
+        {
+            return NukeBuild.RootDirectory.Contains(path)
+                ? NukeBuild.RootDirectory.GetUnixRelativePathTo(path)
+                : (string)path;
         }
 
         protected virtual IEnumerable<(string Key, string Value)> GetImports()
@@ -312,7 +334,7 @@ namespace Nuke.Common.CI.AzurePipelines
 
             return HasPathRoot(artifact)
                 ? artifact
-                : (UnixRelativePath) artifact;
+                : (UnixRelativePath)artifact;
         }
     }
 }
