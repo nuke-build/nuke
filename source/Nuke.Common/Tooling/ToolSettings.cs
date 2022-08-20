@@ -16,10 +16,12 @@ namespace Nuke.Common.Tooling
     [ExcludeFromCodeCoverage]
     public abstract class ToolSettings : ISettingsEntity
     {
+        internal static event EventHandler Created;
+
         protected ToolSettings()
         {
             ProcessEnvironmentVariablesInternal = EnvironmentInfo.Variables.ToDictionary(x => x.Key, x => x.Value);
-            VerbosityMapping.Apply(this);
+            Created?.Invoke(this, EventArgs.Empty);
         }
 
         public virtual string ProcessToolPath { get; internal set; }
