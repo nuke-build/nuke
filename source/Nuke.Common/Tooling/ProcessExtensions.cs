@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tooling
@@ -58,7 +58,7 @@ namespace Nuke.Common.Tooling
 
         public static T StdToJson<T>(this IEnumerable<Output> output)
         {
-            return SerializationTasks.JsonDeserialize<T>(output.StdToText());
+            return JsonConvert.DeserializeObject<T>(output.StdToText());
         }
 
         public static JObject StdToJson(this IEnumerable<Output> output)

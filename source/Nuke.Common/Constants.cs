@@ -9,6 +9,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common
 {
@@ -40,12 +41,13 @@ namespace Nuke.Common
         [CanBeNull]
         internal static AbsolutePath TryGetRootDirectoryFrom(string startDirectory, bool includeLegacy = true)
         {
-            var rootDirectory = (AbsolutePath) FileSystemTasks.FindParentDirectory(
-                startDirectory,
-                predicate: x =>
-                    x.GetDirectories(NukeDirectoryName).Any() ||
-                    includeLegacy && x.GetFiles(NukeFileName).Any());
-            return rootDirectory != GlobalNukeDirectory.Parent ? rootDirectory : null;
+            var rootDirectory = new DirectoryInfo(startDirectory)
+                .DescendantsAndSelf(x => x.Parent)
+                .WhereNotNull()
+                .FirstOrDefault(x => x.GetDirectories(NukeDirectoryName).Any() ||
+                                     includeLegacy && x.GetFiles(NukeFileName).Any())
+                ?.FullName;
+            return rootDirectory != GlobalNukeDirectory.Parent ? (AbsolutePath) rootDirectory : null;
         }
 
         internal static bool IsLegacy(AbsolutePath rootDirectory)
@@ -95,7 +97,8 @@ namespace Nuke.Common
 
         internal static IEnumerable<AbsolutePath> GetParametersProfileFiles(AbsolutePath rootDirectory)
         {
-            return GetNukeDirectory(rootDirectory).GlobFiles($"{ParametersFilePrefix}.*.json");
+            return new DirectoryInfo(GetNukeDirectory(rootDirectory)).GetFiles($"{ParametersFilePrefix}.*.json", SearchOption.TopDirectoryOnly)
+                .Select(x => (AbsolutePath)x.FullName);
         }
 
         internal static AbsolutePath GetParametersProfileFile(AbsolutePath rootDirectory, string profile)

@@ -51,7 +51,7 @@ namespace Nuke.CodeGeneration
 
         public static void GenerateCode(Tool tool, string outputFile)
         {
-            FileSystemTasks.EnsureExistingDirectory(Path.GetDirectoryName(outputFile));
+            Directory.CreateDirectory(Path.GetDirectoryName(outputFile).NotNull());
 
             using (var fileStream = File.Open(outputFile, FileMode.Create))
             using (var streamWriter = new StreamWriter(fileStream))

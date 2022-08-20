@@ -6,7 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -21,6 +23,8 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetPackageResolver
     {
+        private static readonly HttpClient s_client = new HttpClient();
+
         [ItemCanBeNull]
         public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, bool includeUnlisted = false)
         {
@@ -29,7 +33,7 @@ namespace Nuke.Common.Tooling
                 var url = includeUnlisted
                     ? $"https://api.nuget.org/v3/flatcontainer/{packageId.ToLowerInvariant()}/index.json"
                     : $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
-                var jsonString = await HttpTasks.HttpDownloadStringAsync(url);
+                var jsonString = await s_client.GetStringAsync(url);
                 var jsonObject = JsonConvert.DeserializeObject<JObject>(jsonString);
                 return includeUnlisted
                     ? jsonObject.First.NotNull().First.NotNull().Children()
@@ -74,7 +78,8 @@ namespace Nuke.Common.Tooling
             string packagesConfigFile,
             bool resolveDependencies = true)
         {
-            var assetsObject = SerializationTasks.JsonDeserializeFromFile<JObject>(packagesConfigFile);
+            var assetsContent = File.ReadAllText(packagesConfigFile);
+            var assetsObject = JObject.Parse(assetsContent);
 
             // ReSharper disable HeapView.BoxingAllocation
             var directPackageReferences =
@@ -129,8 +134,8 @@ namespace Nuke.Common.Tooling
             string packagesConfigFile,
             bool resolveDependencies = true)
         {
-            var packageIds = XmlTasks.XmlPeek(
-                    packagesConfigFile,
+            var document = XDocument.Load(packagesConfigFile);
+            var packageIds = document.XPathSelectAttributeValues(
                     IsLegacyFile(packagesConfigFile)
                         ? ".//package/@id"
                         : ".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload']/@Include")
@@ -141,8 +146,7 @@ namespace Nuke.Common.Tooling
             {
                 // TODO: use xml namespaces
                 // TODO: version as tag
-                var versions = XmlTasks.XmlPeek(
-                        packagesConfigFile,
+                var versions = document.XPathSelectAttributeValues(
                         IsLegacyFile(packagesConfigFile)
                             ? $".//package[@id='{packageId}']/@version"
                             : $".//*[local-name() = 'PackageReference' or local-name() = 'PackageDownload'][@Include='{packageId}']/@Version")
@@ -261,7 +265,7 @@ namespace Nuke.Common.Tooling
                     .Select(x => new
                                  {
                                      File = x,
-                                     Setting = XmlTasks.XmlPeekSingle(x, ".//add[@key='globalPackagesFolder']/@value")
+                                     Setting = XDocument.Load(x).XPathSelectAttributeValues(".//add[@key='globalPackagesFolder']/@value").SingleOrDefault()
                                  })
                     .Where(x => x.Setting != null)
                     .Select(x => Path.IsPathRooted(x.Setting)

@@ -20,7 +20,7 @@ namespace Nuke.Common.ProjectModel
         public static T DeserializeFromFile<T>(string solutionFile)
             where T : Solution, new()
         {
-            return DeserializeFromContent<T>(TextTasks.ReadAllLines(solutionFile), solutionFile);
+            return DeserializeFromContent<T>(File.ReadAllLines(solutionFile), solutionFile);
         }
 
         public static T DeserializeFromContent<T>(string[] content, string solutionFile = null)
