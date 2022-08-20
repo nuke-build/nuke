@@ -40,7 +40,7 @@ namespace Nuke.Common.Execution
                     .Concat(rootDirectory.EnumerateDirectories("*", SearchOption.AllDirectories).Where(x => !x.Name.StartsWith(".")))
                     .SelectMany(x => x.GetFiles("*.sln", SearchOption.TopDirectoryOnly))
                     .Select(x => x.FullName)
-                    .Select(ProjectModelTasks.ParseSolution)
+                    .Select(SolutionModelTasks.ParseSolution)
                     .SelectMany(x => x.Projects)
                     .Where(x => x.Directory.Equals(NukeBuild.BuildProjectDirectory))
                     .Where(x => x.Configurations.Any(y => y.Key.Contains("Build")))
