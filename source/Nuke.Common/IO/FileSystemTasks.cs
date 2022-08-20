@@ -374,7 +374,7 @@ namespace Nuke.Common.IO
 
             var files = (fileGlobPatterns.Length == 0
                     ? Directory.GetFiles(directory, "*", SearchOption.AllDirectories)
-                    : PathConstruction.GlobFiles(directory, fileGlobPatterns))
+                    : Globbing.GlobFiles(directory, fileGlobPatterns))
                 .OrderBy(x => x).ToList();
 
             using var md5 = MD5.Create();

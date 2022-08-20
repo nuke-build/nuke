@@ -21,7 +21,7 @@ namespace Nuke.Common.IO
         {
             Log.Information("Uploading directory {Directory} to {HostRoot} ...", directory, hostRoot);
 
-            var files = PathConstruction.GlobFiles(directory, "**/*").ToList();
+            var files = Globbing.GlobFiles(directory, "**/*").ToList();
             for (var index = 0; index < files.Count; index++)
             {
                 var file = files[index];

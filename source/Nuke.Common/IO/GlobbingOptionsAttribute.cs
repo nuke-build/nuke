@@ -25,7 +25,7 @@ namespace Nuke.Common.IO
 
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            PathConstruction.GlobbingCaseSensitivity = _caseSensitivity;
+            Globbing.GlobbingCaseSensitivity = _caseSensitivity;
         }
     }
 }

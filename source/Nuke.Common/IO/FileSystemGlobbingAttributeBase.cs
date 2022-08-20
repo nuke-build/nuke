@@ -18,7 +18,7 @@ namespace Nuke.Common.IO
     public class FileGlobbingAttribute : FileSystemGlobbingAttributeBase
     {
         public FileGlobbingAttribute(params string[] patterns)
-            : base(patterns, PathConstruction.GlobFiles)
+            : base(patterns, Globbing.GlobFiles)
         {
         }
     }
@@ -29,7 +29,7 @@ namespace Nuke.Common.IO
     public class DirectoryGlobbingAttribute : FileSystemGlobbingAttributeBase
     {
         public DirectoryGlobbingAttribute(params string[] patterns)
-            : base(patterns, PathConstruction.GlobDirectories)
+            : base(patterns, Globbing.GlobDirectories)
         {
         }
     }

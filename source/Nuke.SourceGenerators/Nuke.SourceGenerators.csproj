@@ -40,6 +40,7 @@
     <Compile Include="..\Nuke.Common\EnvironmentInfo.Platform.cs" LinkBase=".\Linked" />
     <Compile Include="..\Nuke.Common\EnvironmentInfo.SpecialFolder.cs" LinkBase=".\Linked" />
     <Compile Include="..\Nuke.Common\IO\AbsolutePath.cs" LinkBase=".\Linked\IO" />
+    <Compile Include="..\Nuke.Common\IO\Globbing.cs" LinkBase=".\Linked\IO" />
     <Compile Include="..\Nuke.Common\IO\PathConstruction.cs" LinkBase=".\Linked\IO" />
     <Compile Include="..\Nuke.Common\IO\RelativePath.cs" LinkBase=".\Linked\IO" />
     <Compile Include="..\Nuke.Common\IO\WinRelativePath.cs" LinkBase=".\Linked\IO" />
