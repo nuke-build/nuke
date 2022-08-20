@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_config_rm.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_load.yaml",

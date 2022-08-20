@@ -58,6 +58,9 @@ namespace Nuke.CodeGeneration
                 {
                     var propertyInfo = (PropertyInfo) member;
 
+                    if (property.DeclaringType == typeof(Tool) && propertyInfo.Name == nameof(Tool.Schema))
+                        return true;
+
                     if (propertyInfo.GetSetMethod(nonPublic: true) == null)
                         return false;
 

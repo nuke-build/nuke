@@ -8,7 +8,7 @@ internal class Solution : Nuke.Common.ProjectModel.Solution
     public Project Nuke_Common => SolutionFolder.GetProject("Nuke.Common");
     public Project Nuke_Common_Tests => SolutionFolder.GetProject("Nuke.Common.Tests");
     public Project Nuke_MSBuildLocator => SolutionFolder.GetProject("Nuke.MSBuildLocator");
-    public Project Nuke_CodeGeneration => SolutionFolder.GetProject("Nuke.CodeGeneration");
+    public Project Nuke_CodeGeneration => SolutionFolder.GetProject("Nuke.Tooling.Generator");
     public Project Nuke_GlobalTool => SolutionFolder.GetProject("Nuke.GlobalTool");
     public Project Nuke_GlobalTool_Tests => SolutionFolder.GetProject("Nuke.GlobalTool.Tests");
     public Project Nuke_MSBuildTasks => SolutionFolder.GetProject("Nuke.MSBuildTasks");

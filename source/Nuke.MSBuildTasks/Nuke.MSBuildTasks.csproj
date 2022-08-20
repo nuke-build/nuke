@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
+    <ProjectReference Include="..\Nuke.Tooling.Generator\Nuke.Tooling.Generator.csproj" />
   </ItemGroup>
 
   <ItemGroup>

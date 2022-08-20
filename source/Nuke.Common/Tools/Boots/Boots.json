@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://github.com/jonathanpeppers/boots#systemcommandline"
   ],

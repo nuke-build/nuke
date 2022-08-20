@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-pack.md",
     "https://raw.githubusercontent.com/NuGet/docs.microsoft.com-nuget/live/docs/tools/cli-ref-push.md",

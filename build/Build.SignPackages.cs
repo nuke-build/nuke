@@ -20,7 +20,7 @@ partial class Build : ISignPackages
                 .StartsWithAnyOrdinalIgnoreCase(
                     Solution.Nuke_Common.Name,
                     Solution.Nuke_Components.Name,
-                    Solution.Nuke_CodeGeneration.Name,
+                    Solution.Nuke_Tooling_Generator.Name,
                     Solution.Nuke_GlobalTool.Name));
 
     public Target SignPackages => _ => _
