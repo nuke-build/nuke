@@ -68,7 +68,6 @@ namespace Nuke.CodeGeneration.Generators
                        "JetBrains.Annotations",
                        "Newtonsoft.Json",
                        "Nuke.Common",
-                       "Nuke.Common.Execution",
                        "Nuke.Common.Tooling",
                        "Nuke.Common.Tools",
                        "Nuke.Common.Utilities.Collections",
