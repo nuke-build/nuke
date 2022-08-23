@@ -21,7 +21,7 @@ namespace Nuke.Common.Execution
         public static IReadOnlyCollection<ExecutableTarget> CreateAll<T>(
             T build,
             params Expression<Func<T, Target>>[] defaultTargetExpressions)
-            where T : NukeBuild
+            where T : INukeBuild
         {
             var buildType = build.GetType();
             var targetProperties = GetTargetProperties(build.GetType()).ToList();

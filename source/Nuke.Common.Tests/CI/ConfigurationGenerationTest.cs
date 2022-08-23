@@ -32,8 +32,9 @@ namespace Nuke.Common.Tests.CI
             var relevantTargets = ExecutableTargetFactory.CreateAll(build, x => x.Compile);
 
             var stream = new MemoryStream();
+            ((ConfigurationAttributeBase)attribute).Build = build;
             attribute.Stream = new StreamWriter(stream, leaveOpen: true);
-            attribute.Generate(build, relevantTargets);
+            attribute.Generate(relevantTargets);
 
             stream.Seek(offset: 0, SeekOrigin.Begin);
             var reader = new StreamReader(stream);

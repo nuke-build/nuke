@@ -27,7 +27,6 @@ namespace Nuke.Common.Tooling
         public string Verbose { get; set; }
 
         public void OnBuildInitialized(
-            NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {

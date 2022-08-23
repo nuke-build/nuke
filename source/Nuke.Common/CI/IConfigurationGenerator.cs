@@ -20,7 +20,7 @@ namespace Nuke.Common.CI
         Type HostType { get; }
         IEnumerable<AbsolutePath> GeneratedFiles { get; }
 
-        void Generate(NukeBuild targets, IReadOnlyCollection<ExecutableTarget> executableTargets);
+        void Generate(IReadOnlyCollection<ExecutableTarget> executableTargets);
         void SerializeState();
     }
 }

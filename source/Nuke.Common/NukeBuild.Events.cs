@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -17,12 +18,14 @@ namespace Nuke.Common
     [EventInvoker(Priority = float.MinValue)]
     public abstract partial class NukeBuild
     {
-        internal List<IBuildExtension> BuildExtensions { get; }
+        private IReadOnlyCollection<IBuildExtension> BuildExtensions { get; }
+        IReadOnlyCollection<IBuildExtension> INukeBuild.BuildExtensions => BuildExtensions;
 
         protected NukeBuild()
         {
             BuildExtensions ??= GetType()
                 .GetCustomAttributes<BuildExtensionAttributeBase>()
+                .ForEachLazy(x => x.Build = this)
                 .Cast<IBuildExtension>()
                 .OrderByDescending(x => x.Priority).ToList();
         }

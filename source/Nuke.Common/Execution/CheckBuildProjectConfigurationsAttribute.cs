@@ -23,26 +23,25 @@ namespace Nuke.Common.Execution
         public int TimeoutInMilliseconds { get; set; } = 500;
 
         public void OnBuildInitialized(
-            NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            if (NukeBuild.IsInterceptorExecution)
+            if (Build.IsInterceptorExecution)
                 return;
 
             if (!Task.Run(CheckConfiguration).Wait(TimeoutInMilliseconds))
                 Log.Warning("Could not complete checking build configurations within {Timeout} milliseconds", TimeoutInMilliseconds);
 
-            static Task CheckConfiguration()
+            Task CheckConfiguration()
             {
-                var rootDirectory = new DirectoryInfo(NukeBuild.RootDirectory);
+                var rootDirectory = new DirectoryInfo(Build.RootDirectory);
                 new[] { rootDirectory }
                     .Concat(rootDirectory.EnumerateDirectories("*", SearchOption.AllDirectories).Where(x => !x.Name.StartsWith(".")))
                     .SelectMany(x => x.GetFiles("*.sln", SearchOption.TopDirectoryOnly))
                     .Select(x => x.FullName)
                     .Select(SolutionModelTasks.ParseSolution)
                     .SelectMany(x => x.Projects)
-                    .Where(x => x.Directory.Equals(NukeBuild.BuildProjectDirectory))
+                    .Where(x => x.Directory.Equals(Build.BuildProjectDirectory))
                     .Where(x => x.Configurations.Any(y => y.Key.Contains("Build")))
                     .ForEach(x => Log.Warning("Solution {Solution} has an active build configuration for {Project}", x.Solution, x));
 

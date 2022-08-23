@@ -14,22 +14,21 @@ namespace Nuke.Common.Execution
             IOnTargetSucceeded
     {
         public void OnBuildInitialized(
-            NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            if (NukeBuild.IsInterceptorExecution)
+            if (Build.IsInterceptorExecution)
                 return;
 
-            Telemetry.BuildStarted(build);
+            Telemetry.BuildStarted(Build);
         }
 
-        public void OnTargetSucceeded(NukeBuild build, ExecutableTarget target)
+        public void OnTargetSucceeded(ExecutableTarget target)
         {
-            if (NukeBuild.IsInterceptorExecution)
+            if (Build.IsInterceptorExecution)
                 return;
 
-            Telemetry.TargetSucceeded(target, build);
+            Telemetry.TargetSucceeded(target, Build);
         }
     }
 }

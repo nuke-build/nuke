@@ -21,13 +21,13 @@ namespace Nuke.Common.Execution
     [PublicAPI]
     public class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             // TODO: probably remove
-            if (!Directory.Exists(Constants.GetNukeDirectory(NukeBuild.RootDirectory)))
+            if (!Directory.Exists(Constants.GetNukeDirectory(Build.RootDirectory)))
                 return;
 
-            var parameterMembers = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: true);
+            var parameterMembers = ValueInjectionUtility.GetParameterMembers(Build.GetType(), includeUnlisted: true);
             var passwords = new Dictionary<string, string>();
 
             IEnumerable<string> ConvertToArguments(string profile, string name, string[] values)
@@ -46,7 +46,7 @@ namespace Nuke.Common.Execution
             string DecryptValue(string profile, string name, string value)
                 => EncryptionUtility.Decrypt(
                     value,
-                    passwords[profile] = passwords.GetValueOrDefault(profile) ?? EncryptionUtility.GetPassword(profile),
+                    passwords[profile] = passwords.GetValueOrDefault(profile) ?? EncryptionUtility.GetPassword(profile, Build.RootDirectory),
                     name);
 
             // TODO: Abstract AbsolutePath/Solution/Project etc.
@@ -54,7 +54,7 @@ namespace Nuke.Common.Execution
                 => scalarType == typeof(AbsolutePath) ||
                    typeof(Solution).IsAssignableFrom(scalarType) ||
                    scalarType == typeof(Project)
-                    ? EnvironmentInfo.WorkingDirectory.GetUnixRelativePathTo(NukeBuild.RootDirectory / value)
+                    ? EnvironmentInfo.WorkingDirectory.GetUnixRelativePathTo(Build.RootDirectory / value)
                     : value;
 
             var arguments = GetParameters().SelectMany(x => ConvertToArguments(x.Profile, x.Name, x.Values)).ToArray();
@@ -85,9 +85,9 @@ namespace Nuke.Common.Execution
                 }
             }
 
-            return new[] { (File: Constants.GetDefaultParametersFile(NukeBuild.RootDirectory), Profile: Constants.DefaultProfileName) }
+            return new[] { (File: Constants.GetDefaultParametersFile(Build.RootDirectory), Profile: Constants.DefaultProfileName) }
                 .Where(x => x.File.Exists())
-                .Concat(NukeBuild.LoadedLocalProfiles.Select(x => (File: Constants.GetParametersProfileFile(NukeBuild.RootDirectory, x), Profile: x)))
+                .Concat(Build.LoadedLocalProfiles.Select(x => (File: Constants.GetParametersProfileFile(Build.RootDirectory, x), Profile: x)))
                 .ForEachLazy(x => Assert.FileExists(x.File))
                 .SelectMany(x => Load(x.File), (x, r) => (x.Profile, r.Name, r.Values));
         }

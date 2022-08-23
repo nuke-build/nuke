@@ -18,9 +18,9 @@ namespace Nuke.Common.Execution
     {
         private const string SurrogateFileName = "nuke.tmp";
 
-        private AbsolutePath SurrogateFile => NukeBuild.BuildAssemblyDirectory / SurrogateFileName;
+        private AbsolutePath SurrogateFile => Build.BuildAssemblyDirectory / SurrogateFileName;
 
-        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             if (!SurrogateFile.Exists())
                 return;

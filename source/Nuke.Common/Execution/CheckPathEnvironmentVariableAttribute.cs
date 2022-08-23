@@ -14,7 +14,6 @@ namespace Nuke.Common.Execution
     public class CheckPathEnvironmentVariableAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
         public void OnBuildInitialized(
-            NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {

@@ -39,7 +39,7 @@ namespace Nuke.Common.CI.GitHubActions
 
         public override string IdPostfix => _name;
         public override Type HostType => typeof(GitHubActions);
-        public override AbsolutePath ConfigurationFile => NukeBuild.RootDirectory / ".github" / "workflows" / $"{_name}.yml";
+        public override AbsolutePath ConfigurationFile => Build.RootDirectory / ".github" / "workflows" / $"{_name}.yml";
         public override IEnumerable<AbsolutePath> GeneratedFiles => new[] { ConfigurationFile };
 
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
@@ -88,9 +88,7 @@ namespace Nuke.Common.CI.GitHubActions
             return new CustomFileWriter(streamWriter, indentationFactor: 2, commentPrefix: "#");
         }
 
-        public override ConfigurationEntity GetConfiguration(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        public override ConfigurationEntity GetConfiguration(IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             var configuration = new GitHubActionsConfiguration
                                 {
@@ -156,7 +154,7 @@ namespace Nuke.Common.CI.GitHubActions
                     yield return new GitHubActionsArtifactStep
                                  {
                                      Name = artifact.ToString().TrimStart(artifact.Parent.ToString()).TrimStart('/', '\\'),
-                                     Path = NukeBuild.RootDirectory.GetUnixRelativePathTo(artifact)
+                                     Path = Build.RootDirectory.GetUnixRelativePathTo(artifact)
                                  };
                 }
             }

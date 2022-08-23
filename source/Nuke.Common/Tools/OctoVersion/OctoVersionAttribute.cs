@@ -147,7 +147,7 @@ namespace Nuke.Common.Tools.OctoVersion
                 $"Branch cannot be specified via {nameof(Branch)} or {nameof(BranchMember)} properties when {nameof(AutoDetectBranch)} is enabled");
             Assert.True(autoDetectBranch.HasValue && autoDetectBranch.Value || !branch.IsNullOrEmpty(),
                 $"Branch must either be provided via {nameof(Branch)} or {nameof(BranchMember)} properties, or {nameof(AutoDetectBranch)} must be enabled");
-            branch ??= GitRepository.FromLocalDirectory(NukeBuild.RootDirectory).Branch;
+            branch ??= GitRepository.FromLocalDirectory(Build.RootDirectory).Branch;
 
             var outputFile = NukeBuild.TemporaryDirectory / $"octoversion.{Guid.NewGuid()}.json";
             var version = OctoVersionTasks.OctoVersionGetVersion(_ => _

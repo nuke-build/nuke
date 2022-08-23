@@ -16,6 +16,8 @@ namespace Nuke.Common.ValueInjection
     [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
     public abstract class ValueInjectionAttributeBase : Attribute
     {
+        public INukeBuild Build { get; internal set; }
+
         [CanBeNull]
         public object TryGetValue(MemberInfo member, object instance)
         {

@@ -11,11 +11,11 @@ namespace Nuke.Common.CI
     public class SerializeBuildServerStateAttribute
         : BuildServerConfigurationGenerationAttributeBase, IOnBuildFinished
     {
-        public void OnBuildFinished(NukeBuild build)
+        public void OnBuildFinished()
         {
-            GetGenerators(build)
+            GetGenerators(Build)
                 // TODO: bool IsRunning
-                .FirstOrDefault(x => x.HostType == NukeBuild.Host.GetType())
+                .FirstOrDefault(x => x.HostType == Build.Host.GetType())
                 ?.SerializeState();
         }
     }

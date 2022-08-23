@@ -17,14 +17,12 @@ namespace Nuke.Common.Execution
     {
         public int TimeoutInMilliseconds { get; } = 10_000;
 
-        public void OnBuildCreated(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             if (!ParameterService.GetParameter<bool>(Constants.VisualStudioDebugParameterName))
                 return;
 
-            File.WriteAllText(Constants.GetVisualStudioDebugFile(NukeBuild.RootDirectory),
+            File.WriteAllText(Constants.GetVisualStudioDebugFile(Build.RootDirectory),
                 Process.GetCurrentProcess().Id.ToString());
             Assert.True(SpinWait.SpinUntil(() => Debugger.IsAttached, millisecondsTimeout: TimeoutInMilliseconds),
                 $"VisualStudio debugger was not attached within {TimeoutInMilliseconds} milliseconds");

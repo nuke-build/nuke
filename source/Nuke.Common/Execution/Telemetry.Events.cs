@@ -13,17 +13,17 @@ namespace Nuke.Common.Execution
 {
     internal partial class Telemetry
     {
-        public static void BuildStarted(NukeBuild build)
+        public static void BuildStarted(INukeBuild build)
         {
             TrackEvent(
                 eventName: nameof(BuildStarted),
                 propertiesProvider: () =>
                     GetCommonProperties(build)
                         .AddDictionary(GetBuildProperties(build))
-                        .AddDictionary(GetRepositoryProperties(NukeBuild.RootDirectory)));
+                        .AddDictionary(GetRepositoryProperties(build.RootDirectory)));
         }
 
-        public static void TargetSucceeded(ExecutableTarget target, NukeBuild build)
+        public static void TargetSucceeded(ExecutableTarget target, INukeBuild build)
         {
             if (!target.Name.EqualsAnyOrdinalIgnoreCase(s_knownTargets) ||
                 target.Status != ExecutionStatus.Succeeded)
@@ -35,10 +35,10 @@ namespace Nuke.Common.Execution
                     GetCommonProperties(build)
                         .AddDictionary(GetTargetProperties(build, target))
                         .AddDictionary(GetBuildProperties(build))
-                        .AddDictionary(GetRepositoryProperties(NukeBuild.RootDirectory)));
+                        .AddDictionary(GetRepositoryProperties(build.RootDirectory)));
         }
 
-        public static void ConfigurationGenerated(Type hostType, string generatorId, NukeBuild build)
+        public static void ConfigurationGenerated(Type hostType, string generatorId, INukeBuild build)
         {
             TrackEvent(
                 eventName: nameof(ConfigurationGenerated),

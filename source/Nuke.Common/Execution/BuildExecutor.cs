@@ -21,6 +21,7 @@ namespace Nuke.Common.Execution
     /// </summary>
     internal static class BuildExecutor
     {
+        // NOTE: no INukeBuild because of BuildAttemptFile + WriteTarget
         private static AbsolutePath BuildAttemptFile => Constants.GetBuildAttemptFile(NukeBuild.RootDirectory);
 
         public static void Execute(NukeBuild build, [CanBeNull] IReadOnlyCollection<string> skippedTargets)
@@ -87,7 +88,7 @@ namespace Nuke.Common.Execution
                 HasSkippingCondition(target, target.DynamicConditions))
             {
                 target.Status = ExecutionStatus.Skipped;
-                build.ExecuteExtension<IOnTargetSkipped>(x => x.OnTargetSkipped(build, target));
+                build.ExecuteExtension<IOnTargetSkipped>(x => x.OnTargetSkipped(target));
                 AppendToBuildAttemptFile(target.Name);
                 return;
             }
@@ -103,7 +104,7 @@ namespace Nuke.Common.Execution
             {
                 target.Stopwatch.Start();
                 target.Status = ExecutionStatus.Running;
-                build.ExecuteExtension<IOnTargetRunning>(x => x.OnTargetRunning(build, target));
+                build.ExecuteExtension<IOnTargetRunning>(x => x.OnTargetRunning(target));
                 try
                 {
                     if (target.Intercept == null || !target.Intercept.Invoke())
@@ -111,7 +112,7 @@ namespace Nuke.Common.Execution
 
                     target.Stopwatch.Stop();
                     target.Status = ExecutionStatus.Succeeded;
-                    build.ExecuteExtension<IOnTargetSucceeded>(x => x.OnTargetSucceeded(build, target));
+                    build.ExecuteExtension<IOnTargetSucceeded>(x => x.OnTargetSucceeded(target));
 
                     AppendToBuildAttemptFile(target.Name);
                 }
@@ -129,7 +130,7 @@ namespace Nuke.Common.Execution
 
                     target.Stopwatch.Stop();
                     target.Status = ExecutionStatus.Failed;
-                    build.ExecuteExtension<IOnTargetFailed>(x => x.OnTargetFailed(build, target));
+                    build.ExecuteExtension<IOnTargetFailed>(x => x.OnTargetFailed(target));
 
                     if (!target.ProceedAfterFailure && !failureMode)
                         throw new TargetExecutionException(target.Name, exception);

@@ -36,28 +36,30 @@ namespace Nuke.Common.Tools.Docker
         public static ITargetDefinition DockerRun(this ITargetDefinition targetDefinition, Configure<DockerRunTargetSettings> configurator)
         {
             var definition = (TargetDefinition)targetDefinition;
+            var build = definition.Build;
+
             definition.Intercept = () =>
             {
-                if (NukeBuild.IsInterceptorExecution)
+                if (build.IsInterceptorExecution)
                     return false;
 
                 var settings = configurator.InvokeSafe(new DockerRunTargetSettings());
                 settings.DotNetRuntime.NotNull();
                 settings.Platform.NotNull();
 
-                var buildAssemblyDirectory = NukeBuild.BuildAssemblyDirectory.NotNull().Parent / settings.DotNetRuntime;
-                var buildAssembly = buildAssemblyDirectory / NukeBuild.BuildAssemblyFile.NotNull().NameWithoutExtension;
+                var buildAssemblyDirectory = build.BuildAssemblyDirectory.NotNull().Parent / settings.DotNetRuntime;
+                var buildAssembly = buildAssemblyDirectory / build.BuildAssemblyFile.NotNull().NameWithoutExtension;
 
-                bool IsUpToDate() => NukeBuild.BuildAssemblyDirectory.GlobFiles("*.dll")
-                    .Select(x => NukeBuild.BuildAssemblyDirectory.GetRelativePathTo(x))
+                bool IsUpToDate() => build.BuildAssemblyDirectory.GlobFiles("*.dll")
+                    .Select(x => build.BuildAssemblyDirectory.GetRelativePathTo(x))
                     .All(x => File.Exists(buildAssemblyDirectory / x) &&
-                              File.GetLastWriteTime(buildAssemblyDirectory / x) >= File.GetLastWriteTime(NukeBuild.BuildAssemblyDirectory / x));
+                              File.GetLastWriteTime(buildAssemblyDirectory / x) >= File.GetLastWriteTime(build.BuildAssemblyDirectory / x));
 
                 if ((!settings.BuildCaching ?? true) || !IsUpToDate())
                 {
                     Log.Information("Preparing build executable for {DotNetRuntime}...", settings.DotNetRuntime);
                     DotNetPublish(p => p
-                        .SetProject(NukeBuild.BuildProjectFile)
+                        .SetProject(build.BuildProjectFile)
                         .SetOutput(buildAssemblyDirectory)
                         .SetRuntime(settings.DotNetRuntime)
                         .EnableSelfContained()
@@ -78,8 +80,8 @@ namespace Nuke.Common.Tools.Docker
                 var (rootDirectory, nugetDirectory) = settings.Platform.StartsWithOrdinalIgnoreCase("win")
                     ? (WindowsRootDirectory, WindowsNuGetDirectory)
                     : (UnixRootDirectory, UnixNuGetDirectory);
-                var localTempDirectory = NukeBuild.TemporaryDirectory / "docker" / definition.Name;
-                var tempDirectory = rootDirectory / NukeBuild.RootDirectory.GetRelativePathTo(localTempDirectory);
+                var localTempDirectory = build.TemporaryDirectory / "docker" / definition.Name;
+                var tempDirectory = rootDirectory / build.RootDirectory.GetRelativePathTo(localTempDirectory);
                 var envFile = buildAssemblyDirectory / $".env.{definition.Name}";
                 var environmentVariables = GetEnvironmentVariables(settings, rootDirectory, tempDirectory);
 
@@ -110,12 +112,12 @@ namespace Nuke.Common.Tools.Docker
                         DockerTasks.DockerRun(_ => settings
                             .When(!settings.Rm.HasValue, _ => _
                                 .EnableRm())
-                            .AddVolume($"{NukeBuild.RootDirectory}:{rootDirectory}")
+                            .AddVolume($"{build.RootDirectory}:{rootDirectory}")
                             .AddVolume($"{NuGetPackageResolver.GetPackagesDirectory(NuGetToolPathResolver.NuGetPackagesConfigFile)}:{nugetDirectory}")
                             .SetPlatform(settings.Platform)
                             .SetWorkdir(rootDirectory)
                             .SetEnvFile(envFile)
-                            .SetEntrypoint(rootDirectory / NukeBuild.RootDirectory.GetRelativePathTo(buildAssembly))
+                            .SetEntrypoint(rootDirectory / build.RootDirectory.GetRelativePathTo(buildAssembly))
                             .SetArgs(new[]
                             {
                                 definition.Target.Name,

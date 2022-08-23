@@ -13,12 +13,12 @@ namespace Nuke.Common.Execution
 {
     internal class HandleShellCompletionAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             if (BuildServerConfigurationGeneration.IsActive)
                 return;
 
-            if (IsLegacy(NukeBuild.RootDirectory))
+            if (IsLegacy(Build.RootDirectory))
             {
                 Host.Error(
                     new[]
@@ -29,15 +29,15 @@ namespace Nuke.Common.Execution
                     }.JoinNewLine());
                 Environment.Exit(exitCode: -1);
             }
-            else if (NukeBuild.BuildProjectFile != null)
+            else if (Build.BuildProjectFile != null)
             {
-                SchemaUtility.WriteBuildSchemaFile(build);
-                SchemaUtility.WriteDefaultParametersFile(build);
+                SchemaUtility.WriteBuildSchemaFile(Build);
+                SchemaUtility.WriteDefaultParametersFile(Build);
             }
             else if (ParameterService.GetPositionalArgument<string>(0) == ":complete")
             {
-                var schema = SchemaUtility.GetBuildSchema(build);
-                var profileNames = GetProfileNames(NukeBuild.RootDirectory);
+                var schema = SchemaUtility.GetBuildSchema(Build);
+                var profileNames = GetProfileNames(Build.RootDirectory);
                 var completionItems = CompletionUtility.GetItemsFromSchema(schema, profileNames);
 
                 var words = EnvironmentInfo.CommandLineArguments.Skip(2).JoinSpace();

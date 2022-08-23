@@ -3,7 +3,9 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ValueInjection;
 
@@ -11,6 +13,11 @@ namespace Nuke.Common
 {
     public abstract partial class NukeBuild
     {
+        IReadOnlyCollection<ExecutableTarget> INukeBuild.ExecutableTargets => ExecutableTargets;
+        bool INukeBuild.IsInterceptorExecution => IsInterceptorExecution;
+        string[] INukeBuild.LoadedLocalProfiles => LoadedLocalProfiles;
+        bool INukeBuild.IsOutputEnabled(DefaultOutput output) => IsOutputEnabled(output);
+
         AbsolutePath INukeBuild.RootDirectory => RootDirectory;
         AbsolutePath INukeBuild.TemporaryDirectory => TemporaryDirectory;
         AbsolutePath INukeBuild.BuildAssemblyFile => BuildAssemblyFile;

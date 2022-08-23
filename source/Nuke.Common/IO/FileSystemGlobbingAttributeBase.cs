@@ -81,13 +81,13 @@ namespace Nuke.Common.IO
 
         public override IEnumerable<(string, object)> GetValueSet(MemberInfo member, object instance)
         {
-            return GetGlobbedElements(member).Select(x => (PathConstruction.GetRelativePath(NukeBuild.RootDirectory, x), (object) x));
+            return GetGlobbedElements(member).Select(x => (PathConstruction.GetRelativePath(Build.RootDirectory, x), (object) x));
         }
 
         private AbsolutePath[] GetGlobbedElements(MemberInfo member)
         {
             Assert.NotEmpty(_patterns, $"Member '{member.Name}' has no globbing patterns defined");
-            return _globber(NukeBuild.RootDirectory, _patterns).ToArray();
+            return _globber(Build.RootDirectory, _patterns).ToArray();
         }
     }
 }

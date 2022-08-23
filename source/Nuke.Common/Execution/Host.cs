@@ -96,7 +96,7 @@ namespace Nuke.Common
             }
         }
 
-        protected internal virtual void WriteTargetOutcome(NukeBuild build)
+        protected internal virtual void WriteTargetOutcome(INukeBuild build)
         {
             var firstColumn = Math.Max(build.ExecutionPlan.Max(x => x.Name.Length) + 4, val2: 19);
             var secondColumn = 10;
@@ -160,7 +160,7 @@ namespace Nuke.Common
             Debug(new string(c: '═', count: allColumns));
         }
 
-        protected internal virtual void WriteBuildOutcome(NukeBuild build)
+        protected internal virtual void WriteBuildOutcome(INukeBuild build)
         {
             Debug();
             if (build.IsSuccessful)
@@ -171,12 +171,19 @@ namespace Nuke.Common
 
         internal class LogEventSink : ILogEventSink
         {
+            private readonly Host _host;
+
+            public LogEventSink(Host host)
+            {
+                _host = host;
+            }
+
             public void Emit(LogEvent logEvent)
             {
                 if (logEvent.Level == LogEventLevel.Warning)
-                    NukeBuild.Host.ReportWarning(logEvent.RenderMessage());
+                    _host.ReportWarning(logEvent.RenderMessage());
                 else if (logEvent.Level == LogEventLevel.Error)
-                    NukeBuild.Host.ReportError(logEvent.RenderMessage());
+                    _host.ReportError(logEvent.RenderMessage());
             }
         }
     }

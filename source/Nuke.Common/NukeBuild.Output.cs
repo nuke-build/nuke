@@ -65,7 +65,7 @@ namespace Nuke.Common
                 Host.WriteBuildOutcome(this);
         }
 
-        internal bool IsOutputEnabled(DefaultOutput output)
+        private bool IsOutputEnabled(DefaultOutput output)
         {
             return !(GetType().GetCustomAttribute<DisableDefaultOutputAttribute>()?.DisabledOutputs.Contains(output) ?? false);
         }

@@ -17,39 +17,41 @@ namespace Nuke.Common.Execution
         IOnTargetFailed,
         IOnBuildFinished
     {
-        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            build.OnBuildCreated();
+            ((NukeBuild)Build).OnBuildCreated();
         }
 
-        public void OnBuildInitialized(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets, IReadOnlyCollection<ExecutableTarget> executionPlan)
+        public void OnBuildInitialized(
+            IReadOnlyCollection<ExecutableTarget> executableTargets,
+            IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            build.OnBuildInitialized();
+            ((NukeBuild)Build).OnBuildInitialized();
         }
 
-        public void OnTargetRunning(NukeBuild build, ExecutableTarget target)
+        public void OnTargetRunning(ExecutableTarget target)
         {
-            build.OnTargetRunning(target.Name);
+            ((NukeBuild)Build).OnTargetRunning(target.Name);
         }
 
-        public void OnTargetSkipped(NukeBuild build, ExecutableTarget target)
+        public void OnTargetSkipped(ExecutableTarget target)
         {
-            build.OnTargetSkipped(target.Name);
+            ((NukeBuild)Build).OnTargetSkipped(target.Name);
         }
 
-        public void OnTargetSucceeded(NukeBuild build, ExecutableTarget target)
+        public void OnTargetSucceeded(ExecutableTarget target)
         {
-            build.OnTargetSucceeded(target.Name);
+            ((NukeBuild)Build).OnTargetSucceeded(target.Name);
         }
 
-        public void OnTargetFailed(NukeBuild build, ExecutableTarget target)
+        public void OnTargetFailed(ExecutableTarget target)
         {
-            build.OnTargetFailed(target.Name);
+            ((NukeBuild)Build).OnTargetFailed(target.Name);
         }
 
-        public void OnBuildFinished(NukeBuild build)
+        public void OnBuildFinished()
         {
-            build.OnBuildFinished();
+            ((NukeBuild)Build).OnBuildFinished();
         }
     }
 }

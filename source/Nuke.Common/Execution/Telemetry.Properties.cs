@@ -20,7 +20,7 @@ namespace Nuke.Common.Execution
     {
         private static readonly string[] s_knownTargets = { "Restore", "Compile", "Test" };
 
-        private static IDictionary<string, string> GetCommonProperties(NukeBuild build = null)
+        private static IDictionary<string, string> GetCommonProperties(INukeBuild build = null)
         {
             var process = ControlFlow.SuppressErrors(
                 () => ProcessTasks.StartProcess("dotnet", "--version", logInvocation: false, logOutput: false).AssertWaitForExit(),
@@ -72,7 +72,7 @@ namespace Nuke.Common.Execution
                    };
         }
 
-        private static IDictionary<string, string> GetBuildProperties(NukeBuild build)
+        private static IDictionary<string, string> GetBuildProperties(INukeBuild build)
         {
             var startTimeString = EnvironmentInfo.Variables.GetValueOrDefault(Constants.GlobalToolStartTimeEnvironmentKey);
             var compileTime = startTimeString != null
@@ -83,8 +83,8 @@ namespace Nuke.Common.Execution
                    {
                        ["compile_time"] = compileTime?.TotalSeconds.ToString("F0"),
                        ["target_framework"] = EnvironmentInfo.Framework.ToString(),
-                       ["host"] = GetTypeName(NukeBuild.Host),
-                       ["build_type"] = NukeBuild.BuildProjectFile != null ? "Project" : "Global Tool",
+                       ["host"] = GetTypeName(build.Host),
+                       ["build_type"] = build.BuildProjectFile != null ? "Project" : "Global Tool",
                        ["num_targets"] = build.ExecutableTargets.Count.ToString(),
                        ["num_custom_extensions"] = build.BuildExtensions.Select(x => x.GetType()).Count(IsCustomType).ToString(),
                        ["num_custom_components"] = build.GetType().GetInterfaces().Count(IsCustomType).ToString(),
@@ -98,7 +98,7 @@ namespace Nuke.Common.Execution
                    };
         }
 
-        private static IDictionary<string, string> GetTargetProperties(NukeBuild build, ExecutableTarget target)
+        private static IDictionary<string, string> GetTargetProperties(INukeBuild build, ExecutableTarget target)
         {
             return new Dictionary<string, string>
                    {

@@ -40,7 +40,7 @@ namespace Nuke.Common.Tooling
         {
             var toolPath = PathConstruction.HasPathRoot(_absoluteOrRelativePath)
                 ? _absoluteOrRelativePath
-                : Path.Combine(NukeBuild.RootDirectory, _absoluteOrRelativePath);
+                : Path.Combine(Build.RootDirectory, _absoluteOrRelativePath);
             return ToolResolver.GetTool(toolPath);
         }
     }

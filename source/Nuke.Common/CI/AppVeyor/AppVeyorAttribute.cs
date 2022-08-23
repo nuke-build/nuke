@@ -45,7 +45,7 @@ namespace Nuke.Common.CI.AppVeyor
         public override string IdPostfix => _suffix;
 
         public override Type HostType => typeof(AppVeyor);
-        public override AbsolutePath ConfigurationFile => NukeBuild.RootDirectory / ConfigurationFileName;
+        public override AbsolutePath ConfigurationFile => Build.RootDirectory / ConfigurationFileName;
         public override IEnumerable<AbsolutePath> GeneratedFiles => new[] { ConfigurationFile };
         private string ConfigurationFileName => _suffix != null ? $"appveyor.{_suffix}.yml" : "appveyor.yml";
 
@@ -72,9 +72,7 @@ namespace Nuke.Common.CI.AppVeyor
             return new CustomFileWriter(streamWriter, indentationFactor: 2, "#");
         }
 
-        public override ConfigurationEntity GetConfiguration(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        public override ConfigurationEntity GetConfiguration(IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return new AppVeyorConfiguration
                    {
@@ -92,7 +90,7 @@ namespace Nuke.Common.CI.AppVeyor
                        Init = Init,
                        Cache = Cache,
                        Artifacts = GetArtifacts(relevantTargets).ToArray(),
-                       Secrets = GetSecrets(build),
+                       Secrets = GetSecrets(),
                        Submodules = Submodules
                    };
         }
@@ -102,7 +100,7 @@ namespace Nuke.Common.CI.AppVeyor
             return relevantTargets
                 .Select(x => x.ArtifactProducts)
                 .SelectMany(x => x)
-                .Select(x => NukeBuild.RootDirectory.GetUnixRelativePathTo(x).ToString());
+                .Select(x => Build.RootDirectory.GetUnixRelativePathTo(x).ToString());
         }
 
         protected AppVeyorBranches GetBranches()
@@ -117,9 +115,9 @@ namespace Nuke.Common.CI.AppVeyor
                    };
         }
 
-        private Dictionary<string, string> GetSecrets(NukeBuild build)
+        private Dictionary<string, string> GetSecrets()
         {
-            return build.GetType().GetCustomAttributes<AppVeyorSecretAttribute>()
+            return Build.GetType().GetCustomAttributes<AppVeyorSecretAttribute>()
                 .Where(x => Secrets == null || Secrets.Contains(x.Parameter))
                 .ToDictionary(x => x.Parameter, x => x.Value);
         }

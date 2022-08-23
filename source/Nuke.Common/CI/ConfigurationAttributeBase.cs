@@ -18,6 +18,8 @@ namespace Nuke.Common.CI
     [AttributeUsage(AttributeTargets.Class)]
     public abstract class ConfigurationAttributeBase : Attribute, IConfigurationGenerator
     {
+        public INukeBuild Build { get; internal set; }
+
         public string DisplayName => HostType.Name + (string.IsNullOrEmpty(IdPostfix) ? string.Empty : $" ({IdPostfix})");
         public string HostName => HostType.Name;
         public string Id => HostName + (string.IsNullOrEmpty(IdPostfix) ? string.Empty : $"_{IdPostfix}");
@@ -32,20 +34,20 @@ namespace Nuke.Common.CI
         public abstract IEnumerable<string> IrrelevantTargetNames { get; }
 
         public abstract CustomFileWriter CreateWriter(StreamWriter streamWriter);
-        public abstract ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets);
+        public abstract ConfigurationEntity GetConfiguration(IReadOnlyCollection<ExecutableTarget> relevantTargets);
 
         protected virtual string BuildCmdPath =>
-            NukeBuild.RootDirectory.GlobFiles("build.cmd", "*/build.cmd")
-                .Select(x => NukeBuild.RootDirectory.GetUnixRelativePathTo(x))
+            Build.RootDirectory.GlobFiles("build.cmd", "*/build.cmd")
+                .Select(x => Build.RootDirectory.GetUnixRelativePathTo(x))
                 .FirstOrDefault().NotNull("BuildCmdPath != null");
 
-        public void Generate(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void Generate(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var relevantTargets = RelevantTargetNames
                 .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
                 .Distinct()
                 .Where(x => !IrrelevantTargetNames.Contains(x.Name)).ToList();
-            var configuration = GetConfiguration(build, relevantTargets);
+            var configuration = GetConfiguration(relevantTargets);
 
             using var stream = CreateStream();
             var writer = CreateWriter(stream);

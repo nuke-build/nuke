@@ -22,7 +22,7 @@ namespace Nuke.Common.Execution
     {
         private const string ScriptUrl = "https://dot.net/v1/dotnet-install.sh";
 
-        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             if (!IsSingleFileExecution)
                 return;
@@ -105,9 +105,9 @@ namespace Nuke.Common.Execution
         private AbsolutePath ScriptFile => Constants.GlobalNukeDirectory / ScriptFileName;
 
         [CanBeNull]
-        private static string GetDotNetRuntimeVersion()
+        private string GetDotNetRuntimeVersion()
         {
-            var globalJsonFile = NukeBuild.RootDirectory / "global.json";
+            var globalJsonFile = Build.RootDirectory / "global.json";
             var jobject = globalJsonFile.Existing()?.ReadJson() ?? new JObject();
             return jobject["sdk"]?["version"]?.Value<string>().Substring(startIndex: 0, length: 5);
         }

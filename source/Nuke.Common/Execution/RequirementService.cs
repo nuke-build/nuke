@@ -17,7 +17,7 @@ namespace Nuke.Common.Execution
     /// </summary>
     internal static class RequirementService
     {
-        public static void ValidateRequirements(NukeBuild build, IReadOnlyCollection<ExecutableTarget> scheduledTargets)
+        public static void ValidateRequirements(INukeBuild build, IReadOnlyCollection<ExecutableTarget> scheduledTargets)
         {
             foreach (var target in scheduledTargets)
             foreach (var requirement in target.Requirements)
@@ -39,7 +39,7 @@ namespace Nuke.Common.Execution
             }
         }
 
-        private static bool IsMemberNull(MemberInfo member, NukeBuild build, ExecutableTarget target = null)
+        private static bool IsMemberNull(MemberInfo member, INukeBuild build, ExecutableTarget target = null)
         {
             member = member.DeclaringType != build.GetType()
                 ? build.GetType().GetMember(member.Name).SingleOrDefault() ?? member
@@ -49,13 +49,13 @@ namespace Nuke.Common.Execution
             Assert.True(member.HasCustomAttribute<ValueInjectionAttributeBase>(),
                 $"Member '{GetMemberName(member)}' is required {from}but not marked with an injection attribute.");
 
-            if (NukeBuild.Host is Terminal)
+            if (build.Host is Terminal)
                 TryInjectValueInteractive(member, build);
 
             return member.GetValue(build) == null;
         }
 
-        private static void TryInjectValueInteractive(MemberInfo member, NukeBuild build)
+        private static void TryInjectValueInteractive(MemberInfo member, INukeBuild build)
         {
             if (!member.HasCustomAttribute<ParameterAttribute>())
                 return;

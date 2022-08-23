@@ -32,7 +32,7 @@ namespace Nuke.Common.CI.SpaceAutomation
         }
 
         public override Type HostType => typeof(SpaceAutomation);
-        public override AbsolutePath ConfigurationFile => NukeBuild.RootDirectory / ".space.kts";
+        public override AbsolutePath ConfigurationFile => Build.RootDirectory / ".space.kts";
         public override IEnumerable<AbsolutePath> GeneratedFiles => new[] { ConfigurationFile };
 
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
@@ -78,7 +78,7 @@ namespace Nuke.Common.CI.SpaceAutomation
             return new CustomFileWriter(streamWriter, indentationFactor: 4, commentPrefix: "//");
         }
 
-        public override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        public override ConfigurationEntity GetConfiguration(IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return new SpaceAutomationConfiguration
                    {

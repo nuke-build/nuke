@@ -23,7 +23,7 @@ namespace Nuke.Common.IO
             _caseSensitivity = caseSensitivity;
         }
 
-        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             Globbing.GlobbingCaseSensitivity = _caseSensitivity;
         }

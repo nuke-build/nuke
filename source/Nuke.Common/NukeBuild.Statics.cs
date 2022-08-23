@@ -83,7 +83,7 @@ namespace Nuke.Common
         /// Gets the host for execution. Default is <em>automatic</em>.
         /// </summary>
         [Parameter("Host for execution. Default is 'automatic'.", ValueProviderMember = nameof(HostNames))]
-        public static Host Host { get; internal set; }
+        public static Host Host { get; set; }
 
         [Parameter("Defines the profiles to load.", Name = LoadedLocalProfilesParameterName)]
         public static string[] LoadedLocalProfiles { get; }

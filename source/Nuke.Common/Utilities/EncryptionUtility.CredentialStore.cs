@@ -65,7 +65,7 @@ namespace Nuke.Common.Utilities
 
         private static string Security => ToolPathResolver.GetPathExecutable("security");
 
-        public static string GetPassword(string profile)
+        public static string GetPassword(string profile, string rootDirectory)
         {
             string PromptForPassword()
             {
@@ -73,7 +73,7 @@ namespace Nuke.Common.Utilities
                 return ConsoleUtility.ReadSecret();
             }
 
-            var credentialStoreName = Constants.GetCredentialStoreName(NukeBuild.RootDirectory, profile);
+            var credentialStoreName = Constants.GetCredentialStoreName(rootDirectory, profile);
             var passwordParameterName = Constants.GetProfilePasswordParameterName(profile);
             return TryGetPasswordFromCredentialStore(credentialStoreName) ??
                    ParameterService.GetParameter<string>(passwordParameterName) ??

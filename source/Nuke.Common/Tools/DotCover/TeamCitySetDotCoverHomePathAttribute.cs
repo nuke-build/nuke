@@ -15,7 +15,6 @@ namespace Nuke.Common.Tools.DotCover
     public class TeamCitySetDotCoverHomePathAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
         public void OnBuildInitialized(
-            NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {

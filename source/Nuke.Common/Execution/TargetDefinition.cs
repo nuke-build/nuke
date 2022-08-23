@@ -17,7 +17,7 @@ namespace Nuke.Common.Execution
     {
         private readonly Stack<PropertyInfo> _baseMembers;
 
-        public TargetDefinition(PropertyInfo target, NukeBuild build, Stack<PropertyInfo> baseMembers)
+        public TargetDefinition(PropertyInfo target, INukeBuild build, Stack<PropertyInfo> baseMembers)
         {
             Target = target;
             Build = build;
@@ -26,7 +26,7 @@ namespace Nuke.Common.Execution
 
         public PropertyInfo Target { get; }
         public string Name => Target.GetDisplayShortName();
-        public NukeBuild Build { get; }
+        public INukeBuild Build { get; }
 
         internal Func<bool> Intercept { get; set; }
 

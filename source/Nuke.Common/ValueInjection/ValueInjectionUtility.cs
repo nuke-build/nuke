@@ -38,6 +38,7 @@ namespace Nuke.Common.ValueInjection
             {
                 var attribute = parameter.GetCustomAttribute<ValueInjectionAttributeBase>().NotNull();
                 var instance = lambdaExpression.GetTarget();
+                attribute.Build = instance as INukeBuild;
                 return attribute.TryGetValue(parameter, instance);
             }
 
@@ -75,6 +76,7 @@ namespace Nuke.Common.ValueInjection
                 if (member.ReflectedType.NotNull().IsInterface)
                     continue;
 
+                attribute.Build = instance as INukeBuild;
                 var value = attribute.TryGetValue(member, instance);
                 if (value == null)
                     continue;

@@ -15,9 +15,9 @@ namespace Nuke.Common.Execution
         IOnBuildCreated,
         IOnBuildFinished
     {
-        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            if (NukeBuild.IsLocalBuild && ShouldNotify)
+            if (Build.IsLocalBuild && ShouldNotify)
             {
                 Notify();
                 Host.Information("Press any key to continue without update ...");
@@ -25,14 +25,14 @@ namespace Nuke.Common.Execution
             }
         }
 
-        public void OnBuildFinished(NukeBuild build)
+        public void OnBuildFinished()
         {
-            if (NukeBuild.IsServerBuild && ShouldNotify)
+            if (Build.IsServerBuild && ShouldNotify)
                 Notify();
         }
 
-        private bool ShouldNotify => !Directory.Exists(GetNukeDirectory(NukeBuild.RootDirectory)) &&
-                                     !NukeBuild.IsInterceptorExecution;
+        private bool ShouldNotify => !Directory.Exists(GetNukeDirectory(Build.RootDirectory)) &&
+                                     !Build.IsInterceptorExecution;
 
         private static void Notify()
         {

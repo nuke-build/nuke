@@ -27,7 +27,7 @@ namespace Nuke.Common.CI.TeamCity
         public override Type HostType => typeof(TeamCity);
         public override AbsolutePath ConfigurationFile => TeamcityDirectory / "settings.kts";
         public override IEnumerable<AbsolutePath> GeneratedFiles => new[] { PomFile, ConfigurationFile };
-        private AbsolutePath TeamcityDirectory => NukeBuild.RootDirectory / ".teamcity";
+        private AbsolutePath TeamcityDirectory => Build.RootDirectory / ".teamcity";
         private AbsolutePath PomFile => TeamcityDirectory / "pom.xml";
 
         public override IEnumerable<string> RelevantTargetNames => new string[0]
@@ -65,12 +65,12 @@ namespace Nuke.Common.CI.TeamCity
             return new CustomFileWriter(streamWriter, indentationFactor: 4, commentPrefix: "//");
         }
 
-        public override ConfigurationEntity GetConfiguration(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        public override ConfigurationEntity GetConfiguration(IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
             return new TeamCityConfiguration
                    {
                        Version = Version,
-                       Project = GetProject(build, relevantTargets)
+                       Project = GetProject(relevantTargets)
                    };
         }
 
@@ -84,16 +84,16 @@ namespace Nuke.Common.CI.TeamCity
             // TeamCity.Instance.PublishArtifacts($"+:{stateFile} => .teamcity/states");
         }
 
-        protected virtual TeamCityProject GetProject(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected virtual TeamCityProject GetProject(IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            var vcsRoot = GetVcsRoot(build);
+            var vcsRoot = GetVcsRoot();
             var lookupTable = new LookupTable<ExecutableTarget, TeamCityBuildType>();
             var buildTypes = relevantTargets
-                .SelectMany(x => GetBuildTypes(build, x, vcsRoot, lookupTable, relevantTargets), (x, y) => (ExecutableTarget: x, BuildType: y))
+                .SelectMany(x => GetBuildTypes(x, vcsRoot, lookupTable, relevantTargets), (x, y) => (ExecutableTarget: x, BuildType: y))
                 .ForEachLazy(x => lookupTable.Add(x.ExecutableTarget, x.BuildType))
                 .Select(x => x.BuildType).ToArray();
 
-            var parameters = GetGlobalParameters(build, relevantTargets);
+            var parameters = GetGlobalParameters(relevantTargets);
 
             return new TeamCityProject
                    {
@@ -104,7 +104,6 @@ namespace Nuke.Common.CI.TeamCity
         }
 
         protected virtual IEnumerable<TeamCityBuildType> GetBuildTypes(
-            NukeBuild build,
             ExecutableTarget executableTarget,
             TeamCityVcsRoot vcsRoot,
             LookupTable<ExecutableTarget, TeamCityBuildType> buildTypes,
@@ -171,7 +170,7 @@ namespace Nuke.Common.CI.TeamCity
 
             var parameters = executableTarget.Requirements
                 .Where(x => x is not Expression<Func<bool>>)
-                .Select(x => GetParameter(x.GetMemberInfo(), build, required: true))
+                .Select(x => GetParameter(x.GetMemberInfo(), required: true))
                 .Concat(new TeamCityKeyValueParameter(
                     "teamcity.ui.runButton.caption",
                     executableTarget.Name.SplitCamelHumpsWithKnownWords().JoinSpace())).ToArray();
@@ -233,28 +232,28 @@ namespace Nuke.Common.CI.TeamCity
             }
         }
 
-        protected virtual TeamCityVcsRoot GetVcsRoot(NukeBuild build)
+        protected virtual TeamCityVcsRoot GetVcsRoot()
         {
             return new TeamCityVcsRoot();
         }
 
-        protected virtual IEnumerable<TeamCityParameter> GetGlobalParameters(NukeBuild build, IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        protected virtual IEnumerable<TeamCityParameter> GetGlobalParameters(IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            return ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false)
+            return ValueInjectionUtility.GetParameterMembers(Build.GetType(), includeUnlisted: false)
                 // TODO: except build.ExecutableTargets ?
                 .Except(relevantTargets.SelectMany(x => x.Requirements
                     .Where(y => y is not Expression<Func<bool>>)
                     .Select(y => y.GetMemberInfo())))
                 .Where(x => !x.HasCustomAttribute<SecretAttribute>())
                 .Where(x => x.DeclaringType != typeof(NukeBuild) || x.Name == nameof(NukeBuild.Verbosity))
-                .Select(x => GetParameter(x, build, required: false))
-                .Concat(GetSecretParameters(build))
+                .Select(x => GetParameter(x, required: false))
+                .Concat(GetSecretParameters())
                 .Concat(GetDefaultParameters());
         }
 
-        protected virtual IEnumerable<TeamCityParameter> GetSecretParameters(NukeBuild build)
+        protected virtual IEnumerable<TeamCityParameter> GetSecretParameters()
         {
-            var guids = build.GetType().GetCustomAttributes<TeamCityTokenAttribute>()
+            var guids = Build.GetType().GetCustomAttributes<TeamCityTokenAttribute>()
                 .ToDictionary(x => x.Name, x => $"credentialsJSON:{Guid.Parse(x.Guid):D}");
             return ImportSecrets.Select(x =>
                 new TeamCityConfigurationParameter
@@ -272,20 +271,20 @@ namespace Nuke.Common.CI.TeamCity
             yield return new TeamCityKeyValueParameter("teamcity.git.fetchAllHeads", "true");
         }
 
-        protected virtual TeamCityParameter GetParameter(MemberInfo member, NukeBuild build, bool required)
+        protected virtual TeamCityParameter GetParameter(MemberInfo member, bool required)
         {
             var attribute = member.GetCustomAttribute<ParameterAttribute>();
-            var valueSet = ParameterService.GetParameterValueSet(member, build);
+            var valueSet = ParameterService.GetParameterValueSet(member, Build);
             var valueSeparator = attribute.Separator ?? " ";
 
             // TODO: Abstract AbsolutePath/Solution/Project etc.
-            var defaultValue = !member.HasCustomAttribute<SecretAttribute>() ? member.GetValue(build) : default(string);
+            var defaultValue = !member.HasCustomAttribute<SecretAttribute>() ? member.GetValue(Build) : default(string);
             // TODO: enumerables of ...
             if (defaultValue != null &&
                 (member.GetMemberType() == typeof(AbsolutePath) ||
                  member.GetMemberType() == typeof(Solution) ||
                  member.GetMemberType() == typeof(Project)))
-                defaultValue = (UnixRelativePath) GetRelativePath(NukeBuild.RootDirectory, defaultValue.ToString());
+                defaultValue = (UnixRelativePath) GetRelativePath(Build.RootDirectory, defaultValue.ToString());
 
             TeamCityParameterType GetParameterType()
             {
@@ -316,10 +315,10 @@ namespace Nuke.Common.CI.TeamCity
 
         protected virtual string GetArtifactRule(string source)
         {
-            if (!NukeBuild.RootDirectory.Contains(source))
+            if (!Build.RootDirectory.Contains(source))
                 return source;
 
-            var relativeSource = (string) GetUnixRelativePath(NukeBuild.RootDirectory, source);
+            var relativeSource = (string) GetUnixRelativePath(Build.RootDirectory, source);
             var target = relativeSource.TakeWhile(x => x != '*').Reverse().SkipWhile(x => x != '/').Reverse();
             return $"{relativeSource} => {new string(target.ToArray()).TrimEnd('/')}";
         }

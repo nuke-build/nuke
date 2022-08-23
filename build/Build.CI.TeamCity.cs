@@ -36,13 +36,12 @@ partial class Build
     public class TeamCityAttribute : Nuke.Common.CI.TeamCity.TeamCityAttribute
     {
         protected override IEnumerable<TeamCityBuildType> GetBuildTypes(
-            NukeBuild build,
             ExecutableTarget executableTarget,
             TeamCityVcsRoot vcsRoot,
             LookupTable<ExecutableTarget, TeamCityBuildType> buildTypes,
             IReadOnlyCollection<ExecutableTarget> relevantTargets)
         {
-            return base.GetBuildTypes(build, executableTarget, vcsRoot, buildTypes, relevantTargets)
+            return base.GetBuildTypes(executableTarget, vcsRoot, buildTypes, relevantTargets)
                 .ForEachLazy(x =>
                 {
                     var symbol = CustomNames.GetValueOrDefault(x.InvokedTargets.Last());

@@ -15,7 +15,7 @@ namespace Nuke.Components
     [PublicAPI]
     public interface IGlobalTool : INukeBuild
     {
-        string GlobalToolPackageName => Path.GetFileNameWithoutExtension(NukeBuild.BuildProjectFile);
+        string GlobalToolPackageName => Path.GetFileNameWithoutExtension(BuildProjectFile);
         string GlobalToolVersion => "1.0.0";
 
         Target PackGlobalTool => _ => _

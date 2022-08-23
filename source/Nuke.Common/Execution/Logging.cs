@@ -56,11 +56,11 @@ namespace Nuke.Common.Execution
             };
         }
 
-        public static void Configure(NukeBuild build = null)
+        public static void Configure(INukeBuild build = null)
         {
             if (build != null)
             {
-                if (NukeBuild.IsInterceptorExecution)
+                if (build.IsInterceptorExecution)
                 {
                     Log.Logger = new LoggerConfiguration()
                         .WriteTo.Console(new CompactJsonFormatter())
@@ -68,7 +68,7 @@ namespace Nuke.Common.Execution
                     return;
                 }
 
-                DeleteOldLogFiles();
+                DeleteOldLogFiles(build);
             }
 
             Log.Logger = new LoggerConfiguration()
@@ -78,7 +78,7 @@ namespace Nuke.Common.Execution
                 .ConfigureInMemory(build)
                 .ConfigureFiles(build)
                 .ConfigureLevel()
-                .ConfigureFilter()
+                .ConfigureFilter(build)
                 .CreateLogger();
         }
 
@@ -87,32 +87,35 @@ namespace Nuke.Common.Execution
             return configuration.MinimumLevel.Verbose();
         }
 
-        public static LoggerConfiguration ConfigureFilter(this LoggerConfiguration configuration)
+        public static LoggerConfiguration ConfigureFilter(this LoggerConfiguration configuration, [CanBeNull] INukeBuild build)
         {
-            return configuration.Filter.ByExcluding(x => NukeBuild.Host.FilterMessage(x.MessageTemplate.Text));
+            if (build == null)
+                return configuration;
+
+            return configuration.Filter.ByExcluding(x => build.Host.FilterMessage(x.MessageTemplate.Text));
         }
 
-        public static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
+        public static LoggerConfiguration ConfigureConsole(this LoggerConfiguration configuration, [CanBeNull] INukeBuild build)
         {
             return configuration
                 .WriteTo.Console(outputTemplate: build != null && build.IsOutputEnabled(DefaultOutput.Timestamps)
-                        ? NukeBuild.Host.OutputTemplate
+                        ? build.Host.OutputTemplate
                         : StandardOutputTemplate,
-                    theme: (ConsoleTheme)(build != null ? NukeBuild.Host.Theme : DefaultTheme),
+                    theme: (ConsoleTheme)(build != null ? build.Host.Theme : DefaultTheme),
                     applyThemeToRedirectedOutput: true,
                     levelSwitch: LevelSwitch);
         }
 
-        public static LoggerConfiguration ConfigureHost(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
+        public static LoggerConfiguration ConfigureHost(this LoggerConfiguration configuration, [CanBeNull] INukeBuild build)
         {
             if (build == null)
                 return configuration;
 
             return configuration
-                .WriteTo.Sink<Host.LogEventSink>(restrictedToMinimumLevel: LogEventLevel.Warning);
+                .WriteTo.Sink(new Host.LogEventSink(build.Host), restrictedToMinimumLevel: LogEventLevel.Warning);
         }
 
-        public static LoggerConfiguration ConfigureInMemory(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
+        public static LoggerConfiguration ConfigureInMemory(this LoggerConfiguration configuration, [CanBeNull] INukeBuild build)
         {
             if (build == null)
                 return configuration;
@@ -121,12 +124,12 @@ namespace Nuke.Common.Execution
                 .WriteTo.Sink(InMemorySink.Instance, LogEventLevel.Warning);
         }
 
-        public static LoggerConfiguration ConfigureFiles(this LoggerConfiguration configuration, [CanBeNull] NukeBuild build)
+        public static LoggerConfiguration ConfigureFiles(this LoggerConfiguration configuration, [CanBeNull] INukeBuild build)
         {
-            if (build == null || NukeBuild.Host is IBuildServer)
+            if (build == null || build.Host is IBuildServer)
                 return configuration;
 
-            var buildLogFile = NukeBuild.TemporaryDirectory / "build.log";
+            var buildLogFile = build.TemporaryDirectory / "build.log";
             return configuration
                 .WriteTo.File(
                     path: buildLogFile,
@@ -136,15 +139,15 @@ namespace Nuke.Common.Execution
                     outputTemplate: $"{{Level:u1}} | {{ExecutingTarget,-{TargetNameLength}}} | {{Message:l}}{{NewLine}}{{Exception}}");
         }
 
-        private static void DeleteOldLogFiles()
+        private static void DeleteOldLogFiles(INukeBuild build)
         {
             if (BuildServerConfigurationGeneration.IsActive)
                 return;
 
-            NukeBuild.TemporaryDirectory.GlobFiles("build.*.log").OrderByDescending(x => x.ToString()).Skip(5)
+            build.TemporaryDirectory.GlobFiles("build.*.log").OrderByDescending(x => x.ToString()).Skip(5)
                 .ForEach(x => x.DeleteFile());
 
-            var buildLogFile = NukeBuild.TemporaryDirectory / "build.log";
+            var buildLogFile = build.TemporaryDirectory / "build.log";
             if (buildLogFile.Exists())
             {
                 using var filestream = File.OpenWrite(buildLogFile);

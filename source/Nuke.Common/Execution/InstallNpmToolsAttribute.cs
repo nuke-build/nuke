@@ -16,7 +16,9 @@ namespace Nuke.Common.Execution
     [PublicAPI]
     public class InstallNpmToolsAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
-        public void OnBuildInitialized(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets, IReadOnlyCollection<ExecutableTarget> executionPlan)
+        public void OnBuildInitialized(
+            IReadOnlyCollection<ExecutableTarget> executableTargets,
+            IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
             if (NpmToolPathResolver.NpmPackageJsonFile?.Exists() ?? true)
                 return;

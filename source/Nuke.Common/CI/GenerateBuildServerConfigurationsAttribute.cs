@@ -14,20 +14,20 @@ namespace Nuke.Common.CI
     public class GenerateBuildServerConfigurationsAttribute
         : BuildServerConfigurationGenerationAttributeBase, IOnBuildCreated
     {
-        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             var configurationId = ParameterService.GetParameter<string>(ConfigurationParameterName);
             if (configurationId == null)
                 return;
 
-            Assert.NotNull(NukeBuild.RootDirectory);
+            Assert.NotNull(Build.RootDirectory);
 
-            var generator = GetGenerators(build)
+            var generator = GetGenerators(Build)
                 .Where(x => x.Id == configurationId)
                 .SingleOrDefaultOrError($"Found multiple {nameof(IConfigurationGenerator)} with same ID '{configurationId}'.")
                 .NotNull("generator != null");
 
-            generator.Generate(build, executableTargets);
+            generator.Generate(executableTargets);
 
             Environment.Exit(0);
         }

@@ -20,11 +20,11 @@ namespace Nuke.Common.CI
 
         public bool EnableLogging { get; set; }
 
-        public void OnBuildFinished(NukeBuild build)
+        public void OnBuildFinished()
         {
-            if (NukeBuild.IsServerBuild &&
+            if (Build.IsServerBuild &&
                 // NOTE: this should only be necessary if the interceptor build has no .NET CLI installed
-                !NukeBuild.IsInterceptorExecution)
+                !Build.IsInterceptorExecution)
             {
                 ProcessTasks.StartProcess("dotnet", "build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging, timeout: 15_000)
                     .AssertZeroExitCode();

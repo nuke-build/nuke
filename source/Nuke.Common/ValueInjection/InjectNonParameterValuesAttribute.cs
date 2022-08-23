@@ -12,11 +12,10 @@ namespace Nuke.Common.ValueInjection
     public class InjectNonParameterValuesAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
         public void OnBuildInitialized(
-            NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            ValueInjectionUtility.InjectValues(build, x => x is not ParameterAttribute);
+            ValueInjectionUtility.InjectValues(Build, x => x is not ParameterAttribute);
         }
     }
 }

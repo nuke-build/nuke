@@ -41,7 +41,7 @@ namespace Nuke.Common.Execution
                 Logging.Configure(build);
 
                 build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
-                build.ExecuteExtension<IOnBuildCreated>(x => x.OnBuildCreated(build, build.ExecutableTargets));
+                build.ExecuteExtension<IOnBuildCreated>(x => x.OnBuildCreated(build.ExecutableTargets));
 
                 NuGetToolPathResolver.EmbeddedPackagesDirectory = build.EmbeddedPackagesDirectory;
                 NuGetToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
@@ -55,7 +55,7 @@ namespace Nuke.Common.Execution
                     build.ExecutableTargets,
                     ParameterService.GetParameter<string[]>(() => build.InvokedTargets));
 
-                build.ExecuteExtension<IOnBuildInitialized>(x => x.OnBuildInitialized(build, build.ExecutableTargets, build.ExecutionPlan));
+                build.ExecuteExtension<IOnBuildInitialized>(x => x.OnBuildInitialized(build.ExecutableTargets, build.ExecutionPlan));
 
                 CancellationHandler += Finish;
                 BuildExecutor.Execute(
@@ -99,7 +99,7 @@ namespace Nuke.Common.Execution
                 build.WriteErrorsAndWarnings();
                 build.WriteTargetOutcome();
                 build.WriteBuildOutcome();
-                build.ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
+                build.ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished());
             }
         }
     }

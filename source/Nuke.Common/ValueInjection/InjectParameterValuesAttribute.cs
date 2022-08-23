@@ -11,9 +11,9 @@ namespace Nuke.Common.ValueInjection
 {
     public class InjectParameterValuesAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            ValueInjectionUtility.InjectValues(build, x => x is ParameterAttribute);
+            ValueInjectionUtility.InjectValues(Build, x => x is ParameterAttribute);
         }
     }
 }

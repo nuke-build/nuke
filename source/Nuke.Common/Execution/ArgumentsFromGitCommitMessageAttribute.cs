@@ -18,7 +18,7 @@ namespace Nuke.Common.Execution
     {
         public string Prefix { get; set; } = "[nuke++]";
 
-        public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             if (BuildServerConfigurationGeneration.IsActive)
                 return;

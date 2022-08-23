@@ -19,7 +19,7 @@ namespace Nuke.Common.Git
     {
         public override object GetValue(MemberInfo member, object instance)
         {
-            return GitRepository.FromLocalDirectory(NukeBuild.RootDirectory);
+            return GitRepository.FromLocalDirectory(Build.RootDirectory);
         }
     }
 }

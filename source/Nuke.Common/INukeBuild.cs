@@ -18,6 +18,12 @@ namespace Nuke.Common
     {
         void ReportSummary(Configure<IDictionary<string, string>> configurator = null);
 
+        internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; }
+        internal IReadOnlyCollection<IBuildExtension> BuildExtensions { get; }
+        internal bool IsInterceptorExecution { get; }
+        internal string[] LoadedLocalProfiles { get; }
+        internal bool IsOutputEnabled(DefaultOutput output);
+
         IReadOnlyCollection<ExecutableTarget> ExecutionPlan { get; }
         IReadOnlyCollection<ExecutableTarget> InvokedTargets { get; }
         IReadOnlyCollection<ExecutableTarget> SkippedTargets { get; }

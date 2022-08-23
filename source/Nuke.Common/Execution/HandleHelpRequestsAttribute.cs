@@ -15,27 +15,26 @@ namespace Nuke.Common.Execution
     internal class HandleHelpRequestsAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
         public void OnBuildInitialized(
-            NukeBuild build,
             IReadOnlyCollection<ExecutableTarget> executableTargets,
             IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            if (build.Help || executionPlan.Count == 0)
+            if (Build.Help || executionPlan.Count == 0)
             {
-                Host.Debug(GetTargetsText(build));
-                Host.Debug(GetParametersText(build));
+                Host.Debug(GetTargetsText());
+                Host.Debug(GetParametersText());
                 Environment.Exit(exitCode: 0);
             }
         }
 
-        public string GetTargetsText(NukeBuild build)
+        public string GetTargetsText()
         {
             var builder = new StringBuilder();
 
-            var longestTargetName = build.ExecutableTargets.Select(x => x.Name.Length).OrderByDescending(x => x).First();
+            var longestTargetName = Build.ExecutableTargets.Select(x => x.Name.Length).OrderByDescending(x => x).First();
             var padRightTargets = Math.Max(longestTargetName, val2: 20);
             builder.AppendLine("Targets (with their direct dependencies):");
             builder.AppendLine();
-            foreach (var target in build.ExecutableTargets.Where(x => x.Listed))
+            foreach (var target in Build.ExecutableTargets.Where(x => x.Listed))
             {
                 var dependencies = target.ExecutionDependencies.Count > 0
                     ? $" -> {target.ExecutionDependencies.Select(x => x.Name).JoinCommaSpace()}"
@@ -49,12 +48,12 @@ namespace Nuke.Common.Execution
             return builder.ToString();
         }
 
-        public string GetParametersText(NukeBuild build)
+        public string GetParametersText()
         {
-            var defaultTargets = build.ExecutableTargets.Where(x => x.IsDefault).Select(x => x.Name).ToList();
+            var defaultTargets = Build.ExecutableTargets.Where(x => x.IsDefault).Select(x => x.Name).ToList();
             var builder = new StringBuilder();
 
-            var parameters = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false);
+            var parameters = ValueInjectionUtility.GetParameterMembers(Build.GetType(), includeUnlisted: false);
             var padRightParameter = Math.Max(parameters.Max(x => ParameterService.GetParameterDashedName(x).Length), val2: 16);
 
             List<string> SplitLines(string text)

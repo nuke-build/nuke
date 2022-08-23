@@ -13,9 +13,7 @@ namespace Nuke.Common.Execution
     [PublicAPI]
     public class UnsetVisualStudioEnvironmentVariablesAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        public void OnBuildCreated(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
             new[]
             {
