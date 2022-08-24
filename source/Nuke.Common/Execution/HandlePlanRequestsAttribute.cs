@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2022 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,16 +13,28 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
-    internal class ExecutionPlanHtmlService
+    internal class HandlePlanRequestsAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
         private const string HtmlFileName = "execution-plan.html";
 
-        public static void ShowPlan(IReadOnlyCollection<ExecutableTarget> executableTargets)
+        public void OnBuildInitialized(
+            NukeBuild build,
+            IReadOnlyCollection<ExecutableTarget> executableTargets,
+            IReadOnlyCollection<ExecutableTarget> executionPlan)
         {
-            var resourceText = ResourceUtility.GetResourceAllText<ExecutionPlanHtmlService>(HtmlFileName);
+            if (build.Plan)
+            {
+                ShowPlan(build);
+                Environment.Exit(exitCode: 0);
+            }
+        }
+
+        public void ShowPlan(NukeBuild build)
+        {
+            var resourceText = ResourceUtility.GetResourceAllText<HandlePlanRequestsAttribute>(HtmlFileName);
             var contents = resourceText
-                .Replace("__GRAPH__", GetGraphDefinition(executableTargets))
-                .Replace("__EVENTS__", GetEvents(executableTargets));
+                .Replace("__GRAPH__", GetGraphDefinition(build))
+                .Replace("__EVENTS__", GetEvents(build));
 
             var path = Path.Combine(NukeBuild.TemporaryDirectory, HtmlFileName);
             File.WriteAllText(path, contents);
@@ -36,12 +48,12 @@ namespace Nuke.Common.Execution
         }
 
         // ReSharper disable once CognitiveComplexity
-        private static string GetGraphDefinition(IReadOnlyCollection<ExecutableTarget> executableTargets)
+        private string GetGraphDefinition(NukeBuild build)
         {
             var builder = new StringBuilder();
-            foreach (var executableTarget in executableTargets)
+            foreach (var executableTarget in build.ExecutableTargets)
             {
-                var dependencies = executableTargets.Where(x => x.AllDependencies.Contains(executableTarget)).ToList();
+                var dependencies = build.ExecutableTargets.Where(x => x.AllDependencies.Contains(executableTarget)).ToList();
                 if (dependencies.Count == 0)
                     builder.AppendLine(executableTarget.Name);
                 else
@@ -64,8 +76,9 @@ namespace Nuke.Common.Execution
             return builder.ToString();
         }
 
-        private static string GetEvents(IReadOnlyCollection<ExecutableTarget> executableTargets)
+        private string GetEvents(NukeBuild build)
         {
+            var executableTargets = build.ExecutableTargets;
             var builder = new StringBuilder();
 
             // When not hovering anything, highlight the default plan
