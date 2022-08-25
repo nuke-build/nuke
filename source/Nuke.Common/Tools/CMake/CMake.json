@@ -1,0 +1,122 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://cmake.org/cmake/help/latest/manual/cmake.1.html"
+  ],
+  "name": "CMake",
+  "officialUrl": "https://cmake.org/cmake/help/latest/manual/cmake.1.html",
+  "help": "The cmake executable is the command-line interface of the cross-platform build system generator CMake.",
+  "pathExecutable": "cmake",
+  "tasks": [
+    {
+      "help": "Generates a build project using cmake.",
+      "postfix": "Generate",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Generator",
+            "type": "CMakeGenerator",
+            "format": "-G {value}",
+            "default": "CMakeGenerator.Visual_Studio_16_2019",
+            "help": "Specify the build system to generate."
+          },
+          {
+            "name": "Platform",
+            "type": "CMakePlatform",
+            "format": "-A {value}",
+            "default": "CMakePlatform.x64",
+            "help": "Specify the platform to build for."
+          },
+          {
+            "name": "RootDirectory",
+            "type": "string",
+            "format": "-S {value}",
+            "default": "\".\"",
+            "help": "Specify the root directory of the 'CMakeLists.txt' file."
+          },
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "-B {value}",
+            "default": "\"./out\"",
+            "help": "Specify the configuration to use when running the install script."
+          },
+          {
+            "name": "ToolChain",
+            "type": "string",
+            "format": "-DCMAKE_TOOLCHAIN_FILE:FILEPATH={value}",
+            "help": "Specify the path to a toolchain file to use."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Runs the `cmake --install` command on a project generated with cmake.",
+      "postfix": "Install",
+      "definiteArgument": "--install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "RootDirectory",
+            "type": "string",
+            "format": "{value}",
+            "default": "\".\"",
+            "help": "Specify the root directory of the cmake install script."
+          },
+          {
+            "name": "Configuration",
+            "type": "CMakeConfiguration",
+            "format": "--config {value}",
+            "default": "CMakeConfiguration.Debug",
+            "help": "Specify the root directory of the 'CMakeLists.txt' file."
+          },
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "--prefix {value}",
+            "help": "Specify the output directory of the install script."
+          },
+          {
+            "name": "Component",
+            "type": "string",
+            "format": "--component {value}",
+            "help": "Specify the component to install."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "CMakeGenerator",
+      "values": [
+        "Visual Studio 15 2017",
+        "Visual Studio 16 2019",
+        "Visual Studio 17 2022",
+        "Ninja",
+        "Xcode"
+      ]
+    },
+    {
+      "name": "CMakePlatform",
+      "values": [
+        "Win32",
+        "x64",
+        "ARM",
+        "ARM64",
+        "Gaming.Desktop.x64",
+        "Gaming.Xbox.XboxOne.x64",
+        "Gaming.Xbox.Scarlett.x64"
+      ]
+    },
+    {
+      "name": "CMakeConfiguration",
+      "values": [
+        "Debug",
+        "RelWithDebInfo",
+        "Release",
+        "MinSizeRel"
+      ]
+    }
+  ]
+}
