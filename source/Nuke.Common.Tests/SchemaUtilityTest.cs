@@ -2,13 +2,17 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using System.Threading.Tasks;
 using FluentAssertions;
-using Newtonsoft.Json.Linq;
 using Nuke.Common.Execution;
 using VerifyXunit;
 using Xunit;
+using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Tests
 {
@@ -19,13 +23,15 @@ namespace Nuke.Common.Tests
         public Task TestGetBuildSchema()
         {
             var schema = SchemaUtility.GetBuildSchema(new TestBuild());
-            return Verifier.Verify(schema.ToString());
+            var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+            var json = JsonSerializer.Serialize(schema, options);
+            return Verifier.Verify(json);
         }
 
         [Fact]
         public void TestGetCompletionItemsFromSchema()
         {
-            var schema = JObject.Parse(@"
+            var schema = JsonDocument.Parse(@"
 {
   ""$schema"": ""http://json-schema.org/draft-04/schema#"",
   ""title"": ""Build Schema"",
@@ -69,7 +75,7 @@ namespace Nuke.Common.Tests
                     ["NoLogo"] = null,
                     ["Configuration"] = new[] { "Debug", "Release" },
                     ["Target"] = new[] { "Restore", "Compile" },
-                    [Constants.LoadedLocalProfilesParameterName] = profileNames
+                    [LoadedLocalProfilesParameterName] = profileNames
                 });
         }
 

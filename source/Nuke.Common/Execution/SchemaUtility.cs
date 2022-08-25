@@ -6,7 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Json;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
@@ -16,15 +17,17 @@ namespace Nuke.Common.Execution
 {
     public class SchemaUtility
     {
-        public static void WriteBuildSchemaFile(NukeBuild build)
+        public static void WriteBuildSchemaFile(INukeBuild build)
         {
-            var buildSchemaFile = GetBuildSchemaFile(NukeBuild.RootDirectory);
+            var buildSchemaFile = GetBuildSchemaFile(build.RootDirectory);
             var buildSchema = GetBuildSchema(build);
-            File.WriteAllText(buildSchemaFile, buildSchema.ToString());
+            var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
+            var json = JsonSerializer.Serialize(buildSchema, options);
+            File.WriteAllText(buildSchemaFile, json);
         }
 
         // ReSharper disable once CognitiveComplexity
-        public static JObject GetBuildSchema(NukeBuild build)
+        public static JsonDocument GetBuildSchema(INukeBuild build)
         {
             var parameters = ValueInjectionUtility
                 .GetParameterMembers(build.GetType(), includeUnlisted: true)
@@ -50,25 +53,10 @@ namespace Nuke.Common.Execution
                             ? "boolean"
                             : "string";
 
-            var schema = JObject.Parse(@"
-{
-  ""$schema"": ""http://json-schema.org/draft-04/schema#"",
-  ""title"": ""Build Schema"",
-  ""$ref"": ""#/definitions/build"",
-  ""definitions"": {
-    ""build"": {
-      ""type"": ""object"",
-      ""properties"": {
-      }
-    }
-  }
-}
-");
-
-            var properties = schema["definitions"].NotNull()["build"].NotNull()["properties"].NotNull();
+            var properties = new Dictionary<string, object>();
             foreach (var parameter in parameters)
             {
-                var property = properties[parameter.Name] = new JObject();
+                var property = new Dictionary<string, object>();
                 property["type"] = GetJsonType(parameter.MemberType);
 
                 if (parameter.Description != null)
@@ -78,23 +66,35 @@ namespace Nuke.Common.Execution
                     property["default"] = "Secrets must be entered via 'nuke :secrets [profile]'";
 
                 if (parameter.EnumValues != null && !parameter.MemberType.IsCollectionLike())
-                    property["enum"] = new JArray(parameter.EnumValues);
+                    property["enum"] = parameter.EnumValues;
 
                 if (parameter.MemberType.IsCollectionLike())
                 {
-                    property["items"] = new JObject();
-                    property["items"].NotNull()["type"] = GetJsonType(parameter.ScalarType);
+                    var items = new Dictionary<string, object>();
+                    items["type"] = GetJsonType(parameter.ScalarType);
                     if (parameter.EnumValues != null)
-                        property["items"].NotNull()["enum"] = new JArray(parameter.EnumValues);
+                        items["enum"] = parameter.EnumValues;
+                    property["items"] = items;
                 }
+
+                properties[parameter.Name] = property;
             }
 
-            return schema;
+            var build2 = new Dictionary<string, object> { ["type"] = "object", ["properties"] = properties };
+            var definitions = new Dictionary<string, object> { ["build"] = build2 };
+            var jsonDictionary = new Dictionary<string, object>
+                              {
+                                  ["$schema"] = "http://json-schema.org/draft-04/schema#",
+                                  ["$ref"] = "#/definitions/build",
+                                  ["title"] = "Build Schema",
+                                  ["definitions"] = definitions
+                              };
+            return JsonDocument.Parse(JsonSerializer.Serialize(jsonDictionary));
         }
 
-        public static void WriteDefaultParametersFile()
+        public static void WriteDefaultParametersFile(INukeBuild build)
         {
-            var parametersFile = GetDefaultParametersFile(NukeBuild.RootDirectory);
+            var parametersFile = GetDefaultParametersFile(build.RootDirectory);
             if (File.Exists(parametersFile))
                 return;
 
@@ -109,21 +109,22 @@ namespace Nuke.Common.Execution
 
         public static IReadOnlyDictionary<string, string[]> GetCompletionItems(string buildSchemaFile, IEnumerable<string> profileNames)
         {
-            var schema = JObject.Parse(File.ReadAllText(buildSchemaFile));
+            var schema = JsonDocument.Parse(File.ReadAllText(buildSchemaFile));
             return GetCompletionItems(schema, profileNames);
         }
 
-        public static IReadOnlyDictionary<string, string[]> GetCompletionItems(JObject schema, IEnumerable<string> profileNames)
+        public static IReadOnlyDictionary<string, string[]> GetCompletionItems(JsonDocument schema, IEnumerable<string> profileNames)
         {
-            string[] GetEnumValues(JObject property)
-                => property["enum"] is { } enumProperty
-                    ? enumProperty.Values<string>().ToArray()
-                    : property["items"]?["enum"] is { } arrayEnumProperty
-                        ? arrayEnumProperty.Values<string>().ToArray()
+            string[] GetEnumValues(JsonElement property)
+                => property.TryGetProperty("enum", out var enumProperty)
+                    ? enumProperty.EnumerateArray().Select(x => x.GetString()).ToArray()
+                    : property.TryGetProperty("items", out var itemsProperty)
+                        ? itemsProperty.GetProperty("enum").EnumerateArray().Select(x => x.GetString()).ToArray()
                         : null;
 
-            var properties = schema["definitions"].NotNull()["build"].NotNull()["properties"].NotNull().Value<JObject>().Properties();
-            return properties.ToDictionary(x => x.Name, x => GetEnumValues((JObject)x.Value))
+            var properties = schema.RootElement.GetProperty("definitions").GetProperty("build").GetProperty("properties")
+                .EnumerateObject().OfType<JsonProperty>();
+            return properties.ToDictionary(x => x.Name, x => GetEnumValues(x.Value))
                 .SetKeyValue(LoadedLocalProfilesParameterName, profileNames.ToArray()).AsReadOnly();
         }
     }

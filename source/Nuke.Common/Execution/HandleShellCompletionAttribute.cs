@@ -27,7 +27,7 @@ namespace Nuke.Common.Execution
             else if (NukeBuild.BuildProjectFile != null)
             {
                 SchemaUtility.WriteBuildSchemaFile(build);
-                SchemaUtility.WriteDefaultParametersFile();
+                SchemaUtility.WriteDefaultParametersFile(build);
             }
             else if (ParameterService.GetPositionalArgument<string>(0) == ":complete")
             {
