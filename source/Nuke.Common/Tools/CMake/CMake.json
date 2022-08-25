@@ -103,10 +103,7 @@
         "Win32",
         "x64",
         "ARM",
-        "ARM64",
-        "Gaming.Desktop.x64",
-        "Gaming.Xbox.XboxOne.x64",
-        "Gaming.Xbox.Scarlett.x64"
+        "ARM64"
       ]
     },
     {

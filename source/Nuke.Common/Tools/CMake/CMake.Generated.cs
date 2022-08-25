@@ -514,9 +514,6 @@ namespace Nuke.Common.Tools.CMake
         public static CMakePlatform x64 = (CMakePlatform) "x64";
         public static CMakePlatform ARM = (CMakePlatform) "ARM";
         public static CMakePlatform ARM64 = (CMakePlatform) "ARM64";
-        public static CMakePlatform Gaming_Desktop_x64 = (CMakePlatform) "Gaming.Desktop.x64";
-        public static CMakePlatform Gaming_Xbox_XboxOne_x64 = (CMakePlatform) "Gaming.Xbox.XboxOne.x64";
-        public static CMakePlatform Gaming_Xbox_Scarlett_x64 = (CMakePlatform) "Gaming.Xbox.Scarlett.x64";
         public static implicit operator CMakePlatform(string value)
         {
             return new CMakePlatform { Value = value };
