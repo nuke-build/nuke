@@ -3,16 +3,13 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
-using FluentAssertions;
 using Nuke.Common.Execution;
 using VerifyXunit;
 using Xunit;
-using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Tests
 {
@@ -26,57 +23,6 @@ namespace Nuke.Common.Tests
             var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
             var json = JsonSerializer.Serialize(schema, options);
             return Verifier.Verify(json);
-        }
-
-        [Fact]
-        public void TestGetCompletionItemsFromSchema()
-        {
-            var schema = JsonDocument.Parse(@"
-{
-  ""$schema"": ""http://json-schema.org/draft-04/schema#"",
-  ""title"": ""Build Schema"",
-  ""definitions"": {
-    ""build"": {
-      ""type"": ""object"",
-      ""properties"": {
-        ""NoLogo"": {
-          ""type"": ""boolean"",
-          ""description"": ""Disables displaying the NUKE logo""
-        },
-        ""Configuration"": {
-          ""type"": ""string"",
-          ""description"": ""Configuration to build - Default is 'Debug' (local) or 'Release' (server)"",
-          ""enum"": [
-            ""Debug"",
-            ""Release""
-          ]
-        },
-        ""Target"": {
-          ""type"": ""array"",
-          ""description"": ""List of targets to be invoked. Default is '{default_target}'"",
-          ""items"": {
-            ""type"": ""string"",
-            ""enum"": [
-              ""Restore"",
-              ""Compile""
-            ]
-          }
-        }
-      }
-    }
-  }
-}
-");
-            var profileNames = new[] { "dev" };
-            var items = SchemaUtility.GetCompletionItems(schema, profileNames);
-            items.Should().BeEquivalentTo(
-                new Dictionary<string, string[]>
-                {
-                    ["NoLogo"] = null,
-                    ["Configuration"] = new[] { "Debug", "Release" },
-                    ["Target"] = new[] { "Restore", "Compile" },
-                    [LoadedLocalProfilesParameterName] = profileNames
-                });
         }
 
 #pragma warning disable CS0649

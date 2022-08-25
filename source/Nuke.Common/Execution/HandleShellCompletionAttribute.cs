@@ -33,10 +33,10 @@ namespace Nuke.Common.Execution
             {
                 var schema = SchemaUtility.GetBuildSchema(build);
                 var profileNames = GetProfileNames(NukeBuild.RootDirectory);
-                var completionItems = SchemaUtility.GetCompletionItems(schema, profileNames);
+                var completionItems = CompletionUtility.GetItemsFromSchema(schema, profileNames);
 
                 var words = EnvironmentInfo.CommandLineArguments.Skip(2).JoinSpace();
-                var relevantCompletionItems = CompletionUtility.GetRelevantCompletionItems(words, completionItems);
+                var relevantCompletionItems = CompletionUtility.GetRelevantItems(words, completionItems);
                 foreach (var item in relevantCompletionItems)
                     Console.WriteLine(item);
 
@@ -47,7 +47,7 @@ namespace Nuke.Common.Execution
                 Environment.Exit(exitCode: 0);
         }
 
-        private static void WriteCompletionFile(NukeBuild build)
+        private void WriteCompletionFile(NukeBuild build)
         {
             var completionItems = new SortedDictionary<string, string[]>();
 

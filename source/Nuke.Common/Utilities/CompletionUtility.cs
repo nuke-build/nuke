@@ -4,7 +4,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using Nuke.Common.Utilities.Collections;
 
@@ -12,8 +14,29 @@ namespace Nuke.Common.Utilities
 {
     public static class CompletionUtility
     {
+        public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(string schemaFile, IEnumerable<string> profileNames)
+        {
+            var schema = JsonDocument.Parse(File.ReadAllText(schemaFile));
+            return GetItemsFromSchema(schema, profileNames);
+        }
+
+        public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(JsonDocument schema, IEnumerable<string> profileNames)
+        {
+            string[] GetEnumValues(JsonElement property)
+                => property.TryGetProperty("enum", out var enumProperty)
+                    ? enumProperty.EnumerateArray().Select(x => x.GetString()).ToArray()
+                    : property.TryGetProperty("items", out var itemsProperty)
+                        ? itemsProperty.GetProperty("enum").EnumerateArray().Select(x => x.GetString()).ToArray()
+                        : null;
+
+            var properties = schema.RootElement.GetProperty("definitions").GetProperty("build").GetProperty("properties")
+                .EnumerateObject().OfType<JsonProperty>();
+            return properties.ToDictionary(x => x.Name, x => GetEnumValues(x.Value))
+                .SetKeyValue(Constants.LoadedLocalProfilesParameterName, profileNames.ToArray()).AsReadOnly();
+        }
+
         // ReSharper disable once CognitiveComplexity
-        public static IEnumerable<string> GetRelevantCompletionItems(
+        public static IEnumerable<string> GetRelevantItems(
             string words,
             IReadOnlyDictionary<string, string[]> completionItems)
         {

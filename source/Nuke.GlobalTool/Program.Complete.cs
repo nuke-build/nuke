@@ -42,8 +42,8 @@ namespace Nuke.GlobalTool
             var position = EnvironmentInfo.GetNamedArgument<int?>("position");
             var completionItems = IsLegacy(rootDirectory)
                 ? SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string[]>>(completionFile)
-                : SchemaUtility.GetCompletionItems(buildSchemaFile, GetProfileNames(rootDirectory));
-            foreach (var item in CompletionUtility.GetRelevantCompletionItems(words, completionItems))
+                : CompletionUtility.GetItemsFromSchema(buildSchemaFile, GetProfileNames(rootDirectory));
+            foreach (var item in CompletionUtility.GetRelevantItems(words, completionItems))
                 Console.WriteLine(item);
 
             return 0;

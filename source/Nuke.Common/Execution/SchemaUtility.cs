@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
 
@@ -105,27 +104,6 @@ namespace Nuke.Common.Execution
                     $"  \"$schema\": \"./{BuildSchemaFileName}\"",
                     "}"
                 });
-        }
-
-        public static IReadOnlyDictionary<string, string[]> GetCompletionItems(string buildSchemaFile, IEnumerable<string> profileNames)
-        {
-            var schema = JsonDocument.Parse(File.ReadAllText(buildSchemaFile));
-            return GetCompletionItems(schema, profileNames);
-        }
-
-        public static IReadOnlyDictionary<string, string[]> GetCompletionItems(JsonDocument schema, IEnumerable<string> profileNames)
-        {
-            string[] GetEnumValues(JsonElement property)
-                => property.TryGetProperty("enum", out var enumProperty)
-                    ? enumProperty.EnumerateArray().Select(x => x.GetString()).ToArray()
-                    : property.TryGetProperty("items", out var itemsProperty)
-                        ? itemsProperty.GetProperty("enum").EnumerateArray().Select(x => x.GetString()).ToArray()
-                        : null;
-
-            var properties = schema.RootElement.GetProperty("definitions").GetProperty("build").GetProperty("properties")
-                .EnumerateObject().OfType<JsonProperty>();
-            return properties.ToDictionary(x => x.Name, x => GetEnumValues(x.Value))
-                .SetKeyValue(LoadedLocalProfilesParameterName, profileNames.ToArray()).AsReadOnly();
         }
     }
 }
