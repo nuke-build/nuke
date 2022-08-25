@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Nuke.Common.Utilities.Collections;
-using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Utilities
 {
@@ -23,7 +22,7 @@ namespace Nuke.Common.Utilities
 
             var parts = words.Split(separator: ' ');
             var currentWord = parts.Last() != string.Empty ? parts.Last() : null;
-            var parameters = parts.Where(ParameterService.IsParameter).Select(ParameterService.GetParameterMemberName).ToList();
+            var parameters = parts.Where(ArgumentParser.IsArgument).Select(ArgumentParser.GetArgumentMemberName).ToList();
             var lastParameter = parameters.LastOrDefault();
 
             void AddParameters()
@@ -34,7 +33,7 @@ namespace Nuke.Common.Utilities
                 var items = completionItems.Keys
                     .Except(parameters, StringComparer.InvariantCultureIgnoreCase)
                     .Select(x => useDashes
-                        ? $"--{ParameterService.GetParameterDashedName(x)}"
+                        ? $"--{ArgumentParser.GetParameterDashedName(x)}"
                         : $"-{x}");
 
                 AddItems(items);
@@ -44,8 +43,8 @@ namespace Nuke.Common.Utilities
             {
                 var passedItems = parts
                     .Reverse()
-                    .TakeUntil(ParameterService.IsParameter)
-                    .Select(ParameterService.GetParameterMemberName);
+                    .TakeUntil(ArgumentParser.IsArgument)
+                    .Select(ArgumentParser.GetArgumentMemberName);
 
                 var items = completionItems.GetValueOrDefault(parameter)?.Except(passedItems, StringComparer.OrdinalIgnoreCase) ??
                             new string[0];
@@ -84,7 +83,7 @@ namespace Nuke.Common.Utilities
             else if (currentWord != lastParameter)
                 AddTargetsOrValues(lastParameter);
 
-            if (currentWord == null || ParameterService.IsParameter(currentWord))
+            if (currentWord == null || ArgumentParser.IsArgument(currentWord))
                 AddParameters();
 
             return suggestedItems;
