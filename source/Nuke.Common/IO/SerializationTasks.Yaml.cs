@@ -20,14 +20,17 @@ namespace Nuke.Common.IO
         public static DeserializerBuilder DefaultYamlDeserializerBuilder = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance);
 
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(WriteYaml)} as {nameof(AbsolutePath)} extension method")]
         public static void YamlSerializeToFile<T>(T obj, string path, Configure<SerializerBuilder> configurator = null)
         {
             TextTasks.WriteAllText(path, YamlSerialize(obj, configurator));
         }
 
         [Pure]
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(ReadYaml)} as {nameof(AbsolutePath)} extension method")]
         public static T YamlDeserializeFromFile<T>(string path, Configure<DeserializerBuilder> configurator = null)
         {
+            Assert.FileExists(path);
             return YamlDeserialize<T>(File.ReadAllText(path), configurator);
         }
 
@@ -45,6 +48,7 @@ namespace Nuke.Common.IO
             return deserializer.Deserialize<T>(content);
         }
 
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(UpdateYaml)} as {nameof(AbsolutePath)} extension method")]
         public static void YamlUpdateFile<T>(
             string path,
             Action<T> update,

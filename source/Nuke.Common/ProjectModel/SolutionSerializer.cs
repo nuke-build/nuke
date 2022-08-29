@@ -20,6 +20,7 @@ namespace Nuke.Common.ProjectModel
         public static T DeserializeFromFile<T>(string solutionFile)
             where T : Solution, new()
         {
+            Assert.FileExists(solutionFile);
             return DeserializeFromContent<T>(File.ReadAllLines(solutionFile), solutionFile);
         }
 

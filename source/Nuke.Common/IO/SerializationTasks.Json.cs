@@ -23,14 +23,37 @@ namespace Nuke.Common.IO
                 DefaultValueHandling = DefaultValueHandling.Ignore
             };
 
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(WriteJson)} as {nameof(AbsolutePath)} extension method")]
+        [CodeTemplate(
+            searchTemplate: "JsonSerializeToFile($arg$, $expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.WriteJson($arg$)",
+            ReplaceMessage = "Replace with $expr$.WriteJson($arg$)",
+            Message = $"WARNING: {nameof(JsonSerializeToFile)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "SerializationTasks.JsonSerializeToFile($arg$, $expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.WriteJson($arg$)",
+            ReplaceMessage = "Replace with $expr$.WriteJson($arg$)",
+            Message = $"WARNING: {nameof(JsonSerializeToFile)} is obsolete")]
         public static void JsonSerializeToFile<T>(T obj, string path, Configure<JsonSerializerSettings> configurator = null)
         {
             TextTasks.WriteAllText(path, JsonSerialize(obj, configurator));
         }
 
         [Pure]
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(ReadJson)} as {nameof(AbsolutePath)} extension method")]
+        [CodeTemplate(
+            searchTemplate: "JsonDeserializeFromFile<$type$>($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.ReadJson<$type$>($args$)",
+            ReplaceMessage = "Replace with $expr$.ReadJson<$type$>($args$)",
+            Message = $"WARNING: {nameof(JsonDeserializeFromFile)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "SerializationTasks.JsonDeserializeFromFile<$type$>($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.ReadJson<$type$>($args$)",
+            ReplaceMessage = "Replace with $expr$.ReadJson<$type$>($args$)",
+            Message = $"WARNING: {nameof(JsonDeserializeFromFile)} is obsolete")]
         public static T JsonDeserializeFromFile<T>(string path, Configure<JsonSerializerSettings> configurator = null)
         {
+            Assert.FileExists(path);
             return JsonDeserialize<T>(File.ReadAllText(path), configurator);
         }
 
@@ -46,6 +69,17 @@ namespace Nuke.Common.IO
             return JsonConvert.DeserializeObject<T>(content, configurator.InvokeSafe(DefaultJsonSerializerSettings));
         }
 
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(UpdateJson)} as {nameof(AbsolutePath)} extension method")]
+        [CodeTemplate(
+            searchTemplate: "JsonUpdateFile<$type$>($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.UpdateJson<$type$>($args$)",
+            ReplaceMessage = "Replace with $expr$.UpdateJson<$type$>($args$)",
+            Message = $"WARNING: {nameof(JsonUpdateFile)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "SerializationTasks.JsonUpdateFile<$type$>($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.UpdateJson<$type$>($args$)",
+            ReplaceMessage = "Replace with $expr$.UpdateJson<$type$>($args$)",
+            Message = $"WARNING: {nameof(JsonUpdateFile)} is obsolete")]
         public static void JsonUpdateFile<T>(string path, Action<T> update, Configure<JsonSerializerSettings> configurator = null)
         {
             var obj = JsonDeserializeFromFile<T>(path, configurator);
@@ -53,6 +87,17 @@ namespace Nuke.Common.IO
             JsonSerializeToFile(obj, path, configurator);
         }
 
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(UpdateJson)} as {nameof(AbsolutePath)} extension method")]
+        [CodeTemplate(
+            searchTemplate: "JsonDeserializeFromFile($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.ReadJson($args$)",
+            ReplaceMessage = "Replace with $expr$.ReadJson($args$)",
+            Message = $"WARNING: {nameof(JsonDeserializeFromFile)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "SerializationTasks.JsonDeserializeFromFile($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.ReadJson($args$)",
+            ReplaceMessage = "Replace with $expr$.ReadJson($args$)",
+            Message = $"WARNING: {nameof(JsonDeserializeFromFile)} is obsolete")]
         public static JObject JsonDeserializeFromFile(string path, Configure<JsonSerializerSettings> configurator = null)
         {
             return JsonDeserializeFromFile<JObject>(path, configurator);
@@ -63,6 +108,17 @@ namespace Nuke.Common.IO
             return JsonDeserialize<JObject>(content, configurator);
         }
 
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(UpdateJson)} as {nameof(AbsolutePath)} extension method")]
+        [CodeTemplate(
+            searchTemplate: "JsonUpdateFile($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.UpdateJson($args$)",
+            ReplaceMessage = "Replace with $expr$.UpdateJson($args$)",
+            Message = $"WARNING: {nameof(JsonUpdateFile)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "SerializationTasks.JsonUpdateFile($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.UpdateJson($args$)",
+            ReplaceMessage = "Replace with $expr$.UpdateJson($args$)",
+            Message = $"WARNING: {nameof(JsonUpdateFile)} is obsolete")]
         public static void JsonUpdateFile(string path, Action<JObject> update, Configure<JsonSerializerSettings> configurator = null)
         {
             JsonUpdateFile<JObject>(path, update, configurator);

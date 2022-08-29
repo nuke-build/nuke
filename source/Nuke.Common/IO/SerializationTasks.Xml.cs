@@ -13,14 +13,17 @@ namespace Nuke.Common.IO
 {
     public static partial class SerializationTasks
     {
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(WriteXml)} as {nameof(AbsolutePath)} extension method")]
         public static void XmlSerializeToFile<T>(T obj, string path, SaveOptions options = SaveOptions.None)
         {
             TextTasks.WriteAllText(path, XmlSerialize(obj, options));
         }
 
         [Pure]
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(ReadXml)} as {nameof(AbsolutePath)} extension method")]
         public static T XmlDeserializeFromFile<T>(string path, LoadOptions options = LoadOptions.PreserveWhitespace)
         {
+            Assert.FileExists(path);
             return XmlDeserialize<T>(File.ReadAllText(path), options);
         }
 
@@ -48,6 +51,7 @@ namespace Nuke.Common.IO
             return (T) xmlSerializer.Deserialize(reader);
         }
 
+        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(UpdateXml)} as {nameof(AbsolutePath)} extension method")]
         public static void XmlUpdateFile<T>(
             string path,
             Action<T> update,

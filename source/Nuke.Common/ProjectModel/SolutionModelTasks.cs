@@ -61,5 +61,10 @@ namespace Nuke.Common.ProjectModel
         {
             return SolutionSerializer.DeserializeFromFile<Solution>(solutionFile);
         }
+
+        public static Solution ReadSolution([NotNull] this AbsolutePath path)
+        {
+            return ParseSolution(path);
+        }
     }
 }

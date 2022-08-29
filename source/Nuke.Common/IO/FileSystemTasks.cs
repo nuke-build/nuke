@@ -35,36 +35,45 @@ namespace Nuke.Common.IO
             return directory.Name.StartsWith(".");
         }
 
-        public static bool Exists(this AbsolutePath path)
-        {
-            return path.FileExists() || path.DirectoryExists();
-        }
-
-        public static bool FileExists(this AbsolutePath path)
-        {
-            return File.Exists(path);
-        }
-
-        public static bool DirectoryExists(this AbsolutePath path)
-        {
-            return Directory.Exists(path);
-        }
-
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePath.Parent)}.{nameof(AbsolutePathExtensions.CreateDirectory)}")]
+        [CodeTemplate(
+            searchTemplate: "EnsureExistingParentDirectory($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.Parent.CreateDirectory()",
+            ReplaceMessage = "Replace with $expr$.Parent.CreateDirectory()",
+            Message = $"WARNING: {nameof(EnsureExistingParentDirectory)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "FileSystemTasks.EnsureExistingParentDirectory($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.Parent.CreateDirectory()",
+            ReplaceMessage = "Replace with $expr$.Parent.CreateDirectory()",
+            Message = $"WARNING: {nameof(EnsureExistingParentDirectory)} is obsolete")]
         public static void EnsureExistingParentDirectory(AbsolutePath file)
         {
             EnsureExistingParentDirectory((string) file);
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePath.Parent)}.{nameof(AbsolutePathExtensions.CreateDirectory)}")]
         public static void EnsureExistingParentDirectory(string file)
         {
             EnsureExistingDirectory(Path.GetDirectoryName(file).NotNull($"Path.GetDirectoryName({file}) != null"));
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.CreateDirectory)}")]
+        [CodeTemplate(
+            searchTemplate: "EnsureExistingDirectory($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.CreateDirectory()",
+            ReplaceMessage = "Replace with $expr$.CreateDirectory()",
+            Message = $"WARNING: {nameof(EnsureExistingDirectory)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "FileSystemTasks.EnsureExistingDirectory($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.CreateDirectory()",
+            ReplaceMessage = "Replace with $expr$.CreateDirectory()",
+            Message = $"WARNING: {nameof(EnsureExistingDirectory)} is obsolete")]
         public static void EnsureExistingDirectory(AbsolutePath directory)
         {
             EnsureExistingDirectory((string) directory);
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.CreateDirectory)}")]
         public static void EnsureExistingDirectory(string directory)
         {
             if (Directory.Exists(directory))
@@ -74,11 +83,23 @@ namespace Nuke.Common.IO
             Directory.CreateDirectory(directory);
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.CreateOrCleanDirectory)}")]
+        [CodeTemplate(
+            searchTemplate: "EnsureCleanDirectory($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.CreateOrCleanDirectory()",
+            ReplaceMessage = "Replace with $expr$.CreateOrCleanDirectory()",
+            Message = $"WARNING: {nameof(EnsureCleanDirectory)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "FileSystemTasks.EnsureCleanDirectory($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.CreateOrCleanDirectory()",
+            ReplaceMessage = "Replace with $expr$.CreateOrCleanDirectory()",
+            Message = $"WARNING: {nameof(EnsureCleanDirectory)} is obsolete")]
         public static void EnsureCleanDirectory(AbsolutePath directory)
         {
             EnsureCleanDirectory((string) directory);
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.CreateOrCleanDirectory)}")]
         public static void EnsureCleanDirectory(string directory)
         {
             if (Directory.Exists(directory))
@@ -93,11 +114,23 @@ namespace Nuke.Common.IO
             }
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.DeleteDirectory)}")]
+        [CodeTemplate(
+            searchTemplate: "DeleteDirectory($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.DeleteDirectory()",
+            ReplaceMessage = "Replace with $expr$.DeleteDirectory()",
+            Message = $"WARNING: {nameof(DeleteDirectory)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "FileSystemTasks.DeleteDirectory($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.DeleteDirectory()",
+            ReplaceMessage = "Replace with $expr$.DeleteDirectory()",
+            Message = $"WARNING: {nameof(DeleteDirectory)} is obsolete")]
         public static void DeleteDirectory(AbsolutePath directory)
         {
             DeleteDirectory((string) directory);
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.DeleteDirectory)}")]
         public static void DeleteDirectory(string directory)
         {
             if (!Directory.Exists(directory))
@@ -130,11 +163,23 @@ namespace Nuke.Common.IO
             File.Delete(file);
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.DeleteFile)}")]
+        [CodeTemplate(
+            searchTemplate: "DeleteFile($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.DeleteFile()",
+            ReplaceMessage = "Replace with $expr$.DeleteFile()",
+            Message = $"WARNING: {nameof(DeleteFile)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "FileSystemTasks.DeleteFile($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.DeleteFile()",
+            ReplaceMessage = "Replace with $expr$.DeleteFile()",
+            Message = $"WARNING: {nameof(DeleteFile)} is obsolete")]
         public static void DeleteFile(AbsolutePath file)
         {
             DeleteFile((string) file);
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.DeleteFile)}")]
         public static void DeleteFile(string file)
         {
             if (!File.Exists(file))
@@ -311,6 +356,17 @@ namespace Nuke.Common.IO
             };
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.TouchFile)}")]
+        [CodeTemplate(
+            searchTemplate: "Touch($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.TouchFile()",
+            ReplaceMessage = "Replace with $expr$.TouchFile()",
+            Message = $"WARNING: {nameof(Touch)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "FileSystemTasks.Touch($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.TouchFile()",
+            ReplaceMessage = "Replace with $expr$.TouchFile()",
+            Message = $"WARNING: {nameof(Touch)} is obsolete")]
         public static void Touch(string path, DateTime? time = null, bool createDirectories = true)
         {
             Log.Information("Touching file {Path}...", path);
@@ -343,12 +399,24 @@ namespace Nuke.Common.IO
                 : File.GetLastWriteTimeUtc(path);
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.FindParentOrSelf)}")]
+        [CodeTemplate(
+            searchTemplate: "FindParentDirectory($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.FindParentOrSelf($args$)",
+            ReplaceMessage = "Replace with $expr$.FindParentOrSelf($args$)",
+            Message = $"WARNING: {nameof(FindParentDirectory)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "FileSystemTasks.FindParentDirectory($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
+            ReplaceTemplate = "$expr$.FindParentOrSelf($args$)",
+            ReplaceMessage = "Replace with $expr$.FindParentOrSelf($args$)",
+            Message = $"WARNING: {nameof(FindParentDirectory)} is obsolete")]
         [CanBeNull]
         public static string FindParentDirectory(string start, Func<DirectoryInfo, bool> predicate)
         {
             return FindParentDirectory(new DirectoryInfo(start), predicate)?.FullName;
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.FindParentOrSelf)}")]
         [CanBeNull]
         public static DirectoryInfo FindParentDirectory(DirectoryInfo start, Func<DirectoryInfo, bool> predicate)
         {
@@ -358,6 +426,17 @@ namespace Nuke.Common.IO
                 .FirstOrDefault(predicate);
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.GetFileHash)}")]
+        [CodeTemplate(
+            searchTemplate: "GetFileHash($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.GetFileHash()",
+            ReplaceMessage = "Replace with $expr$.GetFileHash()",
+            Message = $"WARNING: {nameof(GetFileHash)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "FileSystemTasks.GetFileHash($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.GetFileHash()",
+            ReplaceMessage = "Replace with $expr$.GetFileHash()",
+            Message = $"WARNING: {nameof(GetFileHash)} is obsolete")]
         public static string GetFileHash(string file)
         {
             Assert.FileExists(file);
@@ -368,6 +447,17 @@ namespace Nuke.Common.IO
             return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
 
+        [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.GetDirectoryHash)}")]
+        [CodeTemplate(
+            searchTemplate: "GetDirectoryHash($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.GetDirectoryHash()",
+            ReplaceMessage = "Replace with $expr$.GetDirectoryHash()",
+            Message = $"WARNING: {nameof(GetDirectoryHash)} is obsolete")]
+        [CodeTemplate(
+            searchTemplate: "FileSystemTasks.GetDirectoryHash($expr{'Nuke.Common.IO.AbsolutePath', true}$)",
+            ReplaceTemplate = "$expr$.GetDirectoryHash()",
+            ReplaceMessage = "Replace with $expr$.GetDirectoryHash()",
+            Message = $"WARNING: {nameof(GetDirectoryHash)} is obsolete")]
         public static string GetDirectoryHash(string directory, params string[] fileGlobPatterns)
         {
             Assert.DirectoryExists(directory);
