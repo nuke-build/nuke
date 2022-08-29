@@ -22,9 +22,8 @@ namespace Nuke.Common
             throw new Exception(message, exception);
         }
 
-        [AssertionMethod]
+        [ContractAnnotation("condition: false => halt")]
         public static void True(
-            [AssertionCondition(AssertionConditionType.IS_TRUE)]
             bool condition,
             string message = null,
             [CallerArgumentExpression("condition")]
@@ -34,9 +33,8 @@ namespace Nuke.Common
                 throw new ArgumentException(message ?? "Expected condition to be true", message == null ? argumentExpression : null);
         }
 
-        [AssertionMethod]
+        [ContractAnnotation("condition: true => halt")]
         public static void False(
-            [AssertionCondition(AssertionConditionType.IS_FALSE)]
             bool condition,
             string message = null,
             [CallerArgumentExpression("condition")]
@@ -46,10 +44,9 @@ namespace Nuke.Common
                 throw new ArgumentException(message ?? "Expected condition to be false", message == null ? argumentExpression : null);
         }
 
-        [AssertionMethod]
         [ContractAnnotation("obj: null => halt; => notnull")]
         public static T NotNull<T>(
-            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            [CanBeNull]
             this T obj,
             string message = null,
             [CallerArgumentExpression("obj")]
@@ -66,10 +63,9 @@ namespace Nuke.Common
             return obj;
         }
 
-        [AssertionMethod]
         [ContractAnnotation("obj: null => halt; => notnull")]
         public static T? NotNull<T>(
-            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            [CanBeNull]
             this T? obj,
             string message = null,
             [CallerArgumentExpression("obj")]
@@ -86,9 +82,9 @@ namespace Nuke.Common
             return obj;
         }
 
-        [AssertionMethod]
+        [ContractAnnotation("str: null => halt")]
         public static string NotNullOrEmpty(
-            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            [CanBeNull]
             this string str,
             string message = null,
             [CallerArgumentExpression("str")]
@@ -99,9 +95,9 @@ namespace Nuke.Common
             return str;
         }
 
-        [AssertionMethod]
+        [ContractAnnotation("str: null => halt")]
         public static string NotNullOrWhiteSpace(
-            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            [CanBeNull]
             this string str,
             string message = null,
             [CallerArgumentExpression("str")]
@@ -112,9 +108,9 @@ namespace Nuke.Common
             return str;
         }
 
-        [AssertionMethod]
+        [ContractAnnotation("collection: null => halt")]
         public static void NotEmpty<T>(
-            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            [CanBeNull]
             IReadOnlyCollection<T> collection,
             string message = null,
             [CallerArgumentExpression("collection")]
@@ -124,9 +120,9 @@ namespace Nuke.Common
                 throw new ArgumentException(message ?? "Expected collection to be not empty", message == null ? argumentExpression : null);
         }
 
-        [AssertionMethod]
+        [ContractAnnotation("collection: null => halt")]
         public static void Empty<T>(
-            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            [CanBeNull]
             IReadOnlyCollection<T> collection,
             string message = null,
             [CallerArgumentExpression("collection")]
@@ -136,9 +132,9 @@ namespace Nuke.Common
                 throw new ArgumentException(message ?? "Expected collection to be empty", message == null ? argumentExpression : null);
         }
 
-        [AssertionMethod]
+        [ContractAnnotation("collection: null => halt")]
         public static void Count<T>(
-            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            [CanBeNull]
             IReadOnlyCollection<T> collection,
             int length,
             string message = null,
@@ -149,9 +145,9 @@ namespace Nuke.Common
                 throw new ArgumentException(message ?? $"Expected collection to have length of {length}", message == null ? argumentExpression : null);
         }
 
-        [AssertionMethod]
+        [ContractAnnotation("collection: null => halt")]
         public static void HasSingleItem<T>(
-            [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [CanBeNull]
+            [CanBeNull]
             IReadOnlyCollection<T> collection,
             string message = null,
             [CallerArgumentExpression("collection")]
@@ -160,13 +156,15 @@ namespace Nuke.Common
             Count(collection, length: 1, message, argumentExpression);
         }
 
-        public static void FileExists(string path, string message = null, [CallerArgumentExpression("path")] string argumentExpression = null)
+        [ContractAnnotation("path: null => stop")]
+        public static void FileExists([CanBeNull] string path, string message = null, [CallerArgumentExpression("path")] string argumentExpression = null)
         {
             if (!File.Exists(path.NotNull(argumentExpression)))
                 throw new ArgumentException(message ?? $"Expected file to exist: {path}", message == null ? argumentExpression : null);
         }
 
-        public static void DirectoryExists(string path, string message = null, [CallerArgumentExpression("path")] string argumentExpression = null)
+        [ContractAnnotation("path: null => stop")]
+        public static void DirectoryExists([CanBeNull] string path, string message = null, [CallerArgumentExpression("path")] string argumentExpression = null)
         {
             if (!Directory.Exists(path.NotNull(argumentExpression)))
                 throw new ArgumentException(message ?? $"Expected directory to exist: {path}", message == null ? argumentExpression : null);
