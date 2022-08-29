@@ -10,6 +10,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
 using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.IO
@@ -18,8 +19,14 @@ namespace Nuke.Common.IO
     [Serializable]
     [TypeConverter(typeof(TypeConverter))]
     [DebuggerDisplay("{" + nameof(_path) + "}")]
-    public class AbsolutePath
+    public class AbsolutePath : IFormattable
     {
+        public const string DoubleQuote = "d";
+        public const string DoubleQuoteIfNeeded = "dn";
+        public const string SingleQuote = "s";
+        public const string SingleQuoteIfNeeded = "sn";
+        public const string NoQuotes = "nq";
+
         public class TypeConverter : System.ComponentModel.TypeConverter
         {
             public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
@@ -43,6 +50,11 @@ namespace Nuke.Common.IO
             }
         }
 
+        public static AbsolutePath Create(string path)
+        {
+            return new AbsolutePath(path);
+        }
+
         private readonly string _path;
 
         private AbsolutePath(string path)
@@ -50,7 +62,7 @@ namespace Nuke.Common.IO
             _path = NormalizePath(path);
         }
 
-        [CanBeNull]
+        [ContractAnnotation("null => null")]
         public static explicit operator AbsolutePath([CanBeNull] string path)
         {
             if (path is null)
@@ -113,8 +125,25 @@ namespace Nuke.Common.IO
 
         public override string ToString()
         {
-            // TODO: DoubleQuoteIfNeeded ?
-            return _path;
+            return ((IFormattable)this).ToString(format: null, formatProvider: null);
+        }
+
+        public string ToString(string format)
+        {
+            return ((IFormattable)this).ToString(format, formatProvider: null);
+        }
+
+        string IFormattable.ToString(string format, IFormatProvider formatProvider)
+        {
+            return format switch
+            {
+                DoubleQuote => _path.DoubleQuote(),
+                DoubleQuoteIfNeeded => _path.DoubleQuoteIfNeeded(),
+                SingleQuote => _path.SingleQuote(),
+                SingleQuoteIfNeeded => _path.SingleQuoteIfNeeded(),
+                null or NoQuotes => _path,
+                _ => throw new ArgumentException($"Format '{format}' is not recognized")
+            };
         }
     }
 }
