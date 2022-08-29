@@ -79,7 +79,7 @@ namespace Nuke.Components
             .Requires(() => PolicySlug)
             .Executes(async () =>
             {
-                EnsureCleanDirectory(SignPathRequestDirectory);
+                SignPathRequestDirectory.CreateOrCleanDirectory();
                 SignPathPackages.ForEach(x => CopyFileToDirectory(x, SignPathRequestDirectory));
                 CompressZip(SignPathRequestDirectory, SignPathRequestArchive);
 

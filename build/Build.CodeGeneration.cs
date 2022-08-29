@@ -16,13 +16,13 @@ using static Nuke.Common.Tools.Git.GitTasks;
 partial class Build
 {
     AbsolutePath SpecificationsDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
-    string ReferencesDirectory => BuildProjectDirectory / "references";
+    AbsolutePath ReferencesDirectory => BuildProjectDirectory / "references";
 
     Target References => _ => _
         .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
-            EnsureCleanDirectory(ReferencesDirectory);
+            ReferencesDirectory.CreateOrCleanDirectory();
 
             UpdateReferences(SpecificationsDirectory, ReferencesDirectory);
         });

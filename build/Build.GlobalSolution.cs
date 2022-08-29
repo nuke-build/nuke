@@ -22,7 +22,7 @@ partial class Build
 {
     [Parameter] readonly bool UseHttps;
 
-    [Solution("nuke-global.sln")] readonly Nuke.Common.ProjectModel.Solution GlobalSolution;
+    Nuke.Common.ProjectModel.Solution GlobalSolution = (RootDirectory / "nuke-global.sln").ExistingFile()?.ReadSolution();
 
     AbsolutePath ExternalRepositoriesDirectory => RootDirectory / "external";
     AbsolutePath ExternalRepositoriesFile => ExternalRepositoriesDirectory / "repositories.yml";
@@ -31,7 +31,7 @@ partial class Build
         => ExternalRepositoriesDirectory.GlobFiles("*/*.sln").Select(x => ParseSolution(x));
 
     IEnumerable<GitRepository> ExternalRepositories
-        => YamlDeserializeFromFile<string[]>(ExternalRepositoriesFile).Select(x => GitRepository.FromUrl(x));
+        => ExternalRepositoriesFile.ReadYaml<string[]>().Select(x => GitRepository.FromUrl(x));
 
     Target CheckoutExternalRepositories => _ => _
         .Executes(() =>
@@ -57,12 +57,12 @@ partial class Build
         .Executes(() =>
         {
             var global = CreateSolution(
-                fileName: GlobalSolution,
+                solutionFile: GlobalSolution,
                 solutions: new[] { Solution }.Concat(ExternalSolutions),
                 folderNameProvider: x => x == Solution ? null : x.Name);
             global.Save();
 
-            if (File.Exists(RootDirectory / $"{Solution.FileName}.DotSettings"))
+            if ((RootDirectory / $"{Solution.FileName}.DotSettings").FileExists())
             {
                 CopyFile(
                     source: RootDirectory / $"{Solution.FileName}.DotSettings",
@@ -70,7 +70,7 @@ partial class Build
                     FileExistsPolicy.Overwrite);
             }
 
-            if (File.Exists(RootDirectory / $"{Solution.FileName}.DotSettings.user"))
+            if ((RootDirectory / $"{Solution.FileName}.DotSettings.user").FileExists())
             {
                 CopyFile(
                     source: RootDirectory / $"{Solution.FileName}.DotSettings.user",

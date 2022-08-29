@@ -39,8 +39,8 @@ namespace Nuke.Common.CI.GitHubActions
 
         public override string IdPostfix => _name;
         public override Type HostType => typeof(GitHubActions);
-        public override string ConfigurationFile => NukeBuild.RootDirectory / ".github" / "workflows" / $"{_name}.yml";
-        public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        public override AbsolutePath ConfigurationFile => NukeBuild.RootDirectory / ".github" / "workflows" / $"{_name}.yml";
+        public override IEnumerable<AbsolutePath> GeneratedFiles => new[] { ConfigurationFile };
 
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
         public override IEnumerable<string> IrrelevantTargetNames => new string[0];

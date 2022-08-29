@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ProjectModel
@@ -13,13 +14,13 @@ namespace Nuke.Common.ProjectModel
     [PublicAPI]
     public static class SolutionModelTasks
     {
-        public static Solution CreateSolution(string fileName = null, params Solution[] solutions)
+        public static Solution CreateSolution(AbsolutePath solutionFile = null, params Solution[] solutions)
         {
-            return CreateSolution(fileName, solutions, folderNameProvider: null);
+            return CreateSolution(solutionFile, solutions, folderNameProvider: null);
         }
 
         public static Solution CreateSolution(
-            string fileName = null,
+            AbsolutePath solutionFile = null,
             IEnumerable<Solution> solutions = null,
             Func<Solution, string> folderNameProvider = null,
             bool randomizeProjectIds = true)
@@ -34,7 +35,7 @@ namespace Nuke.Common.ProjectModel
                     "VisualStudioVersion = 15.0.26124.0",
                     "MinimumVisualStudioVersion = 15.0.26124.0"
                 },
-                fileName);
+                solutionFile);
 
             solution.Configurations = new Dictionary<string, string>
                                       {
@@ -57,7 +58,7 @@ namespace Nuke.Common.ProjectModel
             return solution;
         }
 
-        public static Solution ParseSolution(string solutionFile)
+        public static Solution ParseSolution(AbsolutePath solutionFile)
         {
             return SolutionSerializer.DeserializeFromFile<Solution>(solutionFile);
         }

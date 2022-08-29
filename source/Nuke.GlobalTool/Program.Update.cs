@@ -68,11 +68,11 @@ namespace Nuke.GlobalTool
         private static void UpdateConfigurationFile(AbsolutePath rootDirectory)
         {
             var configurationFile = rootDirectory / NukeDirectoryName;
-            if (!File.Exists(configurationFile))
+            if (!configurationFile.Exists())
                 return;
 
-            var solutionFile = rootDirectory / File.ReadLines(configurationFile).FirstOrDefault(x => !x.IsNullOrEmpty());
-            File.Delete(configurationFile);
+            var solutionFile = rootDirectory / configurationFile.ReadAllLines().FirstOrDefault(x => !x.IsNullOrEmpty());
+            configurationFile.DeleteFile();
 
             WriteConfigurationFile(rootDirectory, solutionFile);
             Host.Warning("The previous .nuke file was transformed to a .nuke directory.");
@@ -89,12 +89,10 @@ namespace Nuke.GlobalTool
                 return;
 
             var globalJsonFile = rootDirectory / "global.json";
-            var jobject = File.Exists(globalJsonFile)
-                ? SerializationTasks.JsonDeserializeFromFile<JObject>(globalJsonFile)
-                : new JObject();
+            var jobject = globalJsonFile.Existing()?.ReadJson() ?? new JObject();
             jobject["sdk"] ??= new JObject();
             jobject["sdk"].NotNull()["version"] = latestInstalledSdk;
-            SerializationTasks.JsonSerializeToFile(jobject, globalJsonFile);
+            globalJsonFile.WriteJson(jobject);
         }
     }
 }

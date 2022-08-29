@@ -24,11 +24,12 @@ namespace Nuke.Common.IO
                 GlobbingCaseSensitivity.CaseInsensitive => GlobOptions.CaseInsensitive,
                 _ => EnvironmentInfo.IsWin ? GlobOptions.CaseInsensitive : GlobOptions.None
             };
+
         [Pure]
         public static IReadOnlyCollection<string> GlobFiles(string directory, params string[] patterns)
         {
             if (patterns.Length == 0)
-                (directory, patterns) = GetGlobFromSingleDefinition((AbsolutePath) directory);
+                (directory, patterns) = GetGlobFromSingleDefinition(directory);
 
             var directoryInfo = new DirectoryInfo(directory);
             return patterns.SelectMany(x => Glob.Files(directoryInfo, x, GlobOptions)).Select(x => x.FullName).ToList();
@@ -43,7 +44,7 @@ namespace Nuke.Common.IO
         public static IReadOnlyCollection<string> GlobDirectories(string directory, params string[] patterns)
         {
             if (patterns.Length == 0)
-                (directory, patterns) = GetGlobFromSingleDefinition((AbsolutePath) directory);
+                (directory, patterns) = GetGlobFromSingleDefinition(directory);
 
             var directoryInfo = new DirectoryInfo(directory);
             return patterns.SelectMany(x => Glob.Directories(directoryInfo, x, GlobOptions)).Select(x => x.FullName).ToList();

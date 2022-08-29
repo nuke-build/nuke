@@ -10,9 +10,9 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AppVeyor.Configuration;
 using Nuke.Common.Execution;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.CI.AppVeyor
 {
@@ -45,8 +45,8 @@ namespace Nuke.Common.CI.AppVeyor
         public override string IdPostfix => _suffix;
 
         public override Type HostType => typeof(AppVeyor);
-        public override string ConfigurationFile => NukeBuild.RootDirectory / ConfigurationFileName;
-        public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        public override AbsolutePath ConfigurationFile => NukeBuild.RootDirectory / ConfigurationFileName;
+        public override IEnumerable<AbsolutePath> GeneratedFiles => new[] { ConfigurationFile };
         private string ConfigurationFileName => _suffix != null ? $"appveyor.{_suffix}.yml" : "appveyor.yml";
 
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;

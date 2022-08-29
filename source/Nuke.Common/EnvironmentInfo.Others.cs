@@ -24,10 +24,10 @@ namespace Nuke.Common
         public static AbsolutePath WorkingDirectory
         {
 #if NETCORE
-            get => (AbsolutePath) Directory.GetCurrentDirectory();
+            get => Directory.GetCurrentDirectory();
             set => Directory.SetCurrentDirectory(value);
 #else
-            get => (AbsolutePath) Environment.CurrentDirectory;
+            get => Environment.CurrentDirectory;
             set => Environment.CurrentDirectory = value;
 #endif
         }
@@ -39,7 +39,7 @@ namespace Nuke.Common
 
             var previousWorkingDirectory = WorkingDirectory;
             return DelegateDisposable.CreateBracket(
-                () => WorkingDirectory = (AbsolutePath) workingDirectory,
+                () => WorkingDirectory = workingDirectory,
                 () => WorkingDirectory = previousWorkingDirectory);
         }
     }

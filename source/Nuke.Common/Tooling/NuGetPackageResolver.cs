@@ -381,7 +381,7 @@ namespace Nuke.Common.Tooling
             }
 
             public string FileName { get; }
-            public AbsolutePath Directory => (AbsolutePath) Path.GetDirectoryName(FileName).NotNull();
+            public AbsolutePath Directory => Path.GetDirectoryName(FileName).NotNull();
             public NuspecReader Metadata => _metadata.Value;
             public string Id => Metadata.GetIdentity().Id;
             public NuGetVersion Version => Metadata.GetIdentity().Version;

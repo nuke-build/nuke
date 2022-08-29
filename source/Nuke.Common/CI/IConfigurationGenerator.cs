@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Execution;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.CI
 {
@@ -17,7 +18,7 @@ namespace Nuke.Common.CI
 
         bool AutoGenerate { get; }
         Type HostType { get; }
-        IEnumerable<string> GeneratedFiles { get; }
+        IEnumerable<AbsolutePath> GeneratedFiles { get; }
 
         void Generate(NukeBuild targets, IReadOnlyCollection<ExecutableTarget> executableTargets);
         void SerializeState();

@@ -12,7 +12,7 @@ using Nuke.Common.Utilities;
 
 partial class Build
 {
-    string StargazersFile => TemporaryDirectory / "stargazers.csv";
+    AbsolutePath StargazersFile => TemporaryDirectory / "stargazers.csv";
 
     [UsedImplicitly]
     Target UpdateStargazers => _ => _
@@ -37,8 +37,7 @@ partial class Build
 
             await Task.WhenAll(stargazerEntries);
 
-            TextTasks.WriteAllLines(
-                StargazersFile,
+            StargazersFile.WriteAllLines(
                 new[] { new[] { "Login", "Name", "Company", "Location", "Email", "Blog" } }
                     .Concat(stargazerEntries.Select(x => x.Result).OrderBy(x => x.First()))
                     .Select(x => x.JoinComma()));

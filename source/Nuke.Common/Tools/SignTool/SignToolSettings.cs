@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.Tools.SignTool
 {
@@ -23,15 +24,15 @@ namespace Nuke.Common.Tools.SignTool
 
             return new[]
                    {
-                       Path.Combine(programDirectory, "Windows Kits", "10", "bin", "10.0.15063.0"),
-                       Path.Combine(programDirectory, "Windows Kits", "10", "App Certification Kit"),
-                       Path.Combine(programDirectory, "Windows Kits", "10", "bin", platformIdentifier),
-                       Path.Combine(programDirectory, "Windows Kits", "8.1", "bin", platformIdentifier),
-                       Path.Combine(programDirectory, "Windows Kits", "8.0", "bin", platformIdentifier),
-                       Path.Combine(programDirectory, "Microsoft SDKs", "Windows", "v7.1A", "Bin")
+                       programDirectory / "Windows Kits" / "10" / "bin" / "10.0.15063.0",
+                       programDirectory / "Windows Kits" / "10" / "App Certification Kit",
+                       programDirectory / "Windows Kits" / "10" / "bin" / platformIdentifier,
+                       programDirectory / "Windows Kits" / "8.1" / "bin" / platformIdentifier,
+                       programDirectory / "Windows Kits" / "8.0" / "bin" / platformIdentifier,
+                       programDirectory / "Microsoft SDKs" / "Windows" / "v7.1A" / "Bin"
                    }
-                .Select(x => Path.Combine(x, "signtool.exe"))
-                .FirstOrDefault(File.Exists);
+                .Select(x => x / "signtool.exe")
+                .FirstOrDefault(x => x.FileExists());
         }
     }
 }

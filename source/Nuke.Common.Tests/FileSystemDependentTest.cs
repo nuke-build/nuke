@@ -15,10 +15,10 @@ namespace Nuke.Common.Tests
     {
         public ITestOutputHelper TestOutputHelper { get; }
         public string TestName { get; }
-        public string ExecutionDirectory { get; }
-        public string TestProjectDirectory { get; }
-        public string RootDirectory { get; }
-        public string TestTempDirectory { get; }
+        public AbsolutePath ExecutionDirectory { get; }
+        public AbsolutePath TestProjectDirectory { get; }
+        public AbsolutePath RootDirectory { get; }
+        public AbsolutePath TestTempDirectory { get; }
 
         protected FileSystemDependentTest(ITestOutputHelper testOutputHelper)
         {
@@ -26,14 +26,14 @@ namespace Nuke.Common.Tests
 
             TestName = ((ITest) testOutputHelper.GetType()
                 .GetField("test", BindingFlags.NonPublic | BindingFlags.Instance).NotNull()
-                .GetValue(testOutputHelper)).TestCase.TestMethod.Method.Name;
+                .GetValue(testOutputHelper).NotNull()).TestCase.TestMethod.Method.Name;
 
             ExecutionDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).NotNull();
-            RootDirectory = FileSystemTasks.FindParentDirectory(ExecutionDirectory, x => x.GetFiles(".nuke").Any());
-            TestProjectDirectory = FileSystemTasks.FindParentDirectory(ExecutionDirectory, x => x.GetFiles("*.csproj").Any());
-            TestTempDirectory = Path.Combine(ExecutionDirectory, "temp", $"{GetType().Name}.{TestName}");
+            RootDirectory = Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory);
+            TestProjectDirectory = ExecutionDirectory.FindParentOrSelf(x => x.ContainsFile("*.csproj"));
+            TestTempDirectory = ExecutionDirectory / "temp"  / $"{GetType().Name}.{TestName}";
 
-            FileSystemTasks.EnsureCleanDirectory(TestTempDirectory);
+            TestTempDirectory.CreateOrCleanDirectory();
         }
     }
 }

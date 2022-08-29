@@ -210,7 +210,7 @@ namespace Nuke.Common.Tools.GitHub
                 return path;
 
             var localDirectory = repository.LocalDirectory.NotNull();
-            Assert.True(IsDescendantPath(localDirectory, path), $"Path {path.SingleQuote()} must be descendant of {localDirectory.SingleQuote()}");
+            Assert.True(IsDescendantPath(localDirectory, path), $"Path {path.SingleQuote()} must be descendant of {localDirectory:s}");
             return GetRelativePath(localDirectory, path).Replace(oldChar: '\\', newChar: '/');
         }
     }

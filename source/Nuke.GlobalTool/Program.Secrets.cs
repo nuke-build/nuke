@@ -83,27 +83,27 @@ namespace Nuke.GlobalTool
             }
         }
 
-        private static Dictionary<string, string> LoadSecrets(IReadOnlyCollection<string> secretParameters, string password, string parametersFile)
+        private static Dictionary<string, string> LoadSecrets(IReadOnlyCollection<string> secretParameters, string password, AbsolutePath parametersFile)
         {
-            var jobject = SerializationTasks.JsonDeserializeFromFile<JObject>(parametersFile);
+            var jobject = parametersFile.ReadJson();
             return jobject.Properties()
                 .Where(x => secretParameters.Contains(x.Name))
                 .ToDictionary(x => x.Name, x => Decrypt(x.Value.Value<string>(), password, x.Name));
         }
 
-        private static void SaveSecrets(Dictionary<string, string> secrets, string password, string parametersFile)
+        private static void SaveSecrets(Dictionary<string, string> secrets, string password, AbsolutePath parametersFile)
         {
-            var jobject = SerializationTasks.JsonDeserializeFromFile<JObject>(parametersFile);
-            foreach (var (name, secret) in secrets)
-                jobject[name] = Encrypt(secret, password);
-
-            SerializationTasks.JsonSerializeToFile(jobject, parametersFile);
+            parametersFile.UpdateJson(obj =>
+            {
+                foreach (var (name, secret) in secrets)
+                    obj[name] = Encrypt(secret, password);
+            });
         }
 
         private static IEnumerable<string> GetSecretParameters(AbsolutePath rootDirectory)
         {
             var buildSchemaFile = GetBuildSchemaFile(rootDirectory);
-            var jobject = SerializationTasks.JsonDeserializeFromFile<JObject>(buildSchemaFile);
+            var jobject = buildSchemaFile.ReadJson();
             return jobject
                 .GetPropertyValue("definitions")
                 .GetPropertyValue("build")

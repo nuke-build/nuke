@@ -9,6 +9,7 @@ using System.Text;
 using Nuke.Common;
 using Nuke.Common.ChangeLog;
 using Nuke.Common.Git;
+using Nuke.Common.IO;
 using Nuke.Common.Tools.Discord;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Tools.GitHub;
@@ -20,7 +21,6 @@ using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 using static Nuke.Common.Gitter.GitterTasks;
-using static Nuke.Common.IO.TextTasks;
 using static Nuke.Common.Tools.Discord.DiscordTasks;
 using static Nuke.Common.Tools.Mastodon.MastodonTasks;
 using static Nuke.Common.Tools.Slack.SlackTasks;
@@ -93,7 +93,7 @@ partial class Build
                     TwitterCredentials.AccessTokenSecret));
 
             var media = await client.Upload.UploadTweetImageAsync(
-                new UploadTweetImageParameters(ReadAllBytes(ReleaseImageFile))
+                new UploadTweetImageParameters(ReleaseImageFile.ReadAllBytes())
                 {
                     MediaCategory = MediaCategory.Image
                 });

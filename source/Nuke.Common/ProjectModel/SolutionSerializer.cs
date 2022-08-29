@@ -17,21 +17,21 @@ namespace Nuke.Common.ProjectModel
 {
     internal static class SolutionSerializer
     {
-        public static T DeserializeFromFile<T>(string solutionFile)
+        public static T DeserializeFromFile<T>(AbsolutePath solutionFile)
             where T : Solution, new()
         {
             Assert.FileExists(solutionFile);
             return DeserializeFromContent<T>(File.ReadAllLines(solutionFile), solutionFile);
         }
 
-        public static T DeserializeFromContent<T>(string[] content, string solutionFile = null)
+        public static T DeserializeFromContent<T>(string[] content, AbsolutePath solutionFile = null)
             where T : Solution, new()
         {
             var trimmedContent = content.Where(x => !string.IsNullOrWhiteSpace(x)).Select(x => x.Trim()).ToArray();
 
             var solution = new T
                            {
-                               Path = (AbsolutePath) solutionFile,
+                               Path = solutionFile,
                                Header = trimmedContent.TakeWhile(x => !x.StartsWith("Project")).ToArray(),
                                Properties = trimmedContent.GetGlobalSection("SolutionProperties", solutionFile),
                                ExtensibilityGlobals = trimmedContent.GetGlobalSection("ExtensibilityGlobals", solutionFile),
@@ -57,7 +57,7 @@ namespace Nuke.Common.ProjectModel
                 .ToDictionarySafe(
                     x => x.ProjectId,
                     x => x,
-                    duplicationMessage: $"Solution {solutionFile?.SingleQuote()} contains duplicated project ids".TrimToOne(" "));
+                    duplicationMessage: $"Solution {solutionFile?.ToString("s")} contains duplicated project ids".TrimToOne(" "));
             foreach (var primitiveProject in primitiveProjects.Values)
                 solution.AddPrimitiveProject(primitiveProject);
 

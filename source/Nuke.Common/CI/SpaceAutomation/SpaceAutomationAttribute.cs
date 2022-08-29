@@ -9,6 +9,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.CI.SpaceAutomation.Configuration;
 using Nuke.Common.Execution;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.CI.SpaceAutomation
@@ -31,8 +32,8 @@ namespace Nuke.Common.CI.SpaceAutomation
         }
 
         public override Type HostType => typeof(SpaceAutomation);
-        public override string ConfigurationFile => NukeBuild.RootDirectory / ".space.kts";
-        public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        public override AbsolutePath ConfigurationFile => NukeBuild.RootDirectory / ".space.kts";
+        public override IEnumerable<AbsolutePath> GeneratedFiles => new[] { ConfigurationFile };
 
         public override IEnumerable<string> RelevantTargetNames => InvokedTargets;
         public override IEnumerable<string> IrrelevantTargetNames => new string[0];

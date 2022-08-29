@@ -77,7 +77,7 @@ namespace Nuke.MSBuildTasks
                                  Identity = externalFileIdentity,
                                  Uri = GetUri(x.UriString),
                                  Tokens = tokens,
-                                 OutputPath = Path.Combine(externalFileBasePath, x.RelativePath)
+                                 OutputFile = externalFileBasePath / x.RelativePath
                              });
         }
 
@@ -85,14 +85,14 @@ namespace Nuke.MSBuildTasks
         {
             try
             {
-                var previousHash = File.Exists(data.OutputPath) ? FileSystemTasks.GetFileHash(data.OutputPath) : null;
+                var previousHash = File.Exists(data.OutputFile) ? data.OutputFile.GetFileHash() : null;
 
                 var template = (await HttpTasks.HttpDownloadStringAsync(data.Uri.OriginalString)).SplitLineBreaks();
-                TextTasks.WriteAllLines(data.OutputPath, TemplateUtility.FillTemplate(template, data.Tokens));
+                data.OutputFile.WriteAllLines(TemplateUtility.FillTemplate(template, data.Tokens));
 
-                var newHash = FileSystemTasks.GetFileHash(data.OutputPath);
+                var newHash = data.OutputFile.GetFileHash();
                 if (newHash != previousHash)
-                    LogWarning(message: $"External file '{data.OutputPath}' has been updated.", file: data.Identity);
+                    LogWarning(message: $"External file '{data.OutputFile}' has been updated.", file: data.Identity);
 
                 return true;
             }
@@ -133,7 +133,7 @@ namespace Nuke.MSBuildTasks
             public string Identity { get; set; }
             public Uri Uri { get; set; }
             public Dictionary<string, string> Tokens { get; set; }
-            public string OutputPath { get; set; }
+            public AbsolutePath OutputFile { get; set; }
         }
     }
 }

@@ -87,7 +87,7 @@ namespace Nuke.Common.Execution
             }
 
             return new[] { (File: Constants.GetDefaultParametersFile(NukeBuild.RootDirectory), Profile: Constants.DefaultProfileName) }
-                .Where(x => File.Exists(x.File))
+                .Where(x => x.File.Exists())
                 .Concat(NukeBuild.LoadedLocalProfiles.Select(x => (File: Constants.GetParametersProfileFile(NukeBuild.RootDirectory, x), Profile: x)))
                 .ForEachLazy(x => Assert.FileExists(x.File))
                 .SelectMany(x => Load(x.File), (x, r) => (x.Profile, r.Name, r.Values));

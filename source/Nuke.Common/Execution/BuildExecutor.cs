@@ -59,11 +59,10 @@ namespace Nuke.Common.Execution
 
             IReadOnlyCollection<string> GetPreviouslyExecutedTargets()
             {
-                if (!build.Continue ||
-                    !File.Exists(BuildAttemptFile))
+                if (!build.Continue || !BuildAttemptFile.Exists())
                     return new string[0];
 
-                var previousBuild = File.ReadAllLines(BuildAttemptFile);
+                var previousBuild = BuildAttemptFile.ReadAllLines();
                 if (previousBuild.FirstOrDefault() != invocationHash)
                 {
                     Log.Warning("Build invocation changed. Restarting ...");
@@ -74,7 +73,7 @@ namespace Nuke.Common.Execution
             }
 
             var previouslyExecutedTargets = GetPreviouslyExecutedTargets();
-            File.WriteAllLines(BuildAttemptFile, new[] { invocationHash });
+            BuildAttemptFile.WriteAllLines(new[] { invocationHash });
             return previouslyExecutedTargets;
         }
 

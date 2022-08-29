@@ -25,11 +25,11 @@ namespace Nuke.Common.Tools.Docker
     [PublicAPI]
     public static class DockerTargetDefinitionExtensions
     {
-        private static readonly AbsolutePath WindowsRootDirectory = (AbsolutePath)@"C:\nuke";
-        private static readonly AbsolutePath WindowsNuGetDirectory = (AbsolutePath)@"C:\nuget";
+        private static readonly AbsolutePath WindowsRootDirectory = @"C:\nuke";
+        private static readonly AbsolutePath WindowsNuGetDirectory = @"C:\nuget";
 
-        private static readonly AbsolutePath UnixRootDirectory = (AbsolutePath)@"/nuke";
-        private static readonly AbsolutePath UnixNuGetDirectory = (AbsolutePath)@"/nuget";
+        private static readonly AbsolutePath UnixRootDirectory = @"/nuke";
+        private static readonly AbsolutePath UnixNuGetDirectory = @"/nuget";
 
         /// <summary>
         /// Execute this target within a Docker container
@@ -84,8 +84,8 @@ namespace Nuke.Common.Tools.Docker
                 var envFile = buildAssemblyDirectory / $".env.{definition.Name}";
                 var environmentVariables = GetEnvironmentVariables(settings, rootDirectory, tempDirectory);
 
-                File.WriteAllLines(envFile, environmentVariables.Select(x => $"{x.Key}={x.Value}"));
-                FileSystemTasks.EnsureCleanDirectory(localTempDirectory);
+                envFile.WriteAllLines(environmentVariables.Select(x => $"{x.Key}={x.Value}"));
+                localTempDirectory.CreateOrCleanDirectory();
 
                 if (!settings.Username.IsNullOrEmpty())
                 {

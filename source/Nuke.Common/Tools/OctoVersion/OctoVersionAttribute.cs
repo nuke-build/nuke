@@ -163,7 +163,7 @@ namespace Nuke.Common.Tools.OctoVersion
                     .SetMinor(minorVersion)
                     .SetPatch(patchVersion))
                 .Result;
-            FileSystemTasks.DeleteFile(outputFile);
+            outputFile.DeleteFile();
 
             if (UpdateBuildNumber)
             {

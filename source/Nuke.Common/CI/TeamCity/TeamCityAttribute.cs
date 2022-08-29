@@ -25,10 +25,10 @@ namespace Nuke.Common.CI.TeamCity
     public class TeamCityAttribute : ChainedConfigurationAttributeBase
     {
         public override Type HostType => typeof(TeamCity);
-        public override string ConfigurationFile => TeamcityDirectory / "settings.kts";
-        public override IEnumerable<string> GeneratedFiles => new[] { PomFile, ConfigurationFile };
+        public override AbsolutePath ConfigurationFile => TeamcityDirectory / "settings.kts";
+        public override IEnumerable<AbsolutePath> GeneratedFiles => new[] { PomFile, ConfigurationFile };
         private AbsolutePath TeamcityDirectory => NukeBuild.RootDirectory / ".teamcity";
-        private string PomFile => TeamcityDirectory / "pom.xml";
+        private AbsolutePath PomFile => TeamcityDirectory / "pom.xml";
 
         public override IEnumerable<string> RelevantTargetNames => new string[0]
             .Concat(VcsTriggeredTargets)
@@ -55,9 +55,7 @@ namespace Nuke.Common.CI.TeamCity
 
         protected override StreamWriter CreateStream()
         {
-            TextTasks.WriteAllLines(
-                PomFile,
-                ResourceUtility.GetResourceAllLines<TeamCityConfiguration>("pom.xml"));
+            PomFile.WriteAllLines(ResourceUtility.GetResourceAllLines<TeamCityConfiguration>("pom.xml"));
 
             return base.CreateStream();
         }

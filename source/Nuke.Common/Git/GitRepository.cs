@@ -45,10 +45,10 @@ namespace Nuke.Common.Git
         /// <summary>
         /// Obtains information from a local git repository. Auto-injection can be utilized via <see cref="GitRepositoryAttribute"/>.
         /// </summary>
-        public static GitRepository FromLocalDirectory(string directory)
+        public static GitRepository FromLocalDirectory(AbsolutePath directory)
         {
-            var rootDirectory = FileSystemTasks.FindParentDirectory(directory, x => x.GetDirectories(".git").Any());
-            var gitDirectory = Path.Combine(rootDirectory.NotNull($"No parent Git directory for '{directory}'"), ".git");
+            var rootDirectory = directory.FindParentOrSelf(x => x.ContainsDirectory(".git")).NotNull($"No parent Git directory for '{directory}'");
+            var gitDirectory = rootDirectory / ".git";
 
             var head = GetHead(gitDirectory);
             var branch = (GetBranchFromCI() ?? GetHeadIfAttached(head))?.TrimStart("refs/heads/").TrimStart("origin/");
@@ -70,13 +70,13 @@ namespace Nuke.Common.Git
                 remoteBranch);
         }
 
-        private static (string Name, string Branch) GetRemoteNameAndBranch(string gitDirectory, [CanBeNull] string branch)
+        private static (string Name, string Branch) GetRemoteNameAndBranch(AbsolutePath gitDirectory, [CanBeNull] string branch)
         {
             if (branch == null)
                 return (null, null);
 
-            var configFile = Path.Combine(gitDirectory, "config");
-            var configFileContent = File.ReadAllLines(configFile);
+            var configFile = gitDirectory / "config";
+            var configFileContent = configFile.ReadAllLines();
             var data = configFileContent
                 .Select(x => x.Trim())
                 .SkipWhile(x => x != $"[branch {branch.DoubleQuote()}]")
@@ -94,21 +94,21 @@ namespace Nuke.Common.Git
             return head.StartsWith("refs/heads/") ? head : null;
         }
 
-        internal static string GetCommitFromHead(string gitDirectory, string head)
+        internal static string GetCommitFromHead(AbsolutePath gitDirectory, string head)
         {
             if (!head.StartsWith("refs/heads/"))
                 return head;
 
-            var headRefFile = Path.Combine(gitDirectory, head);
+            var headRefFile = gitDirectory / head;
             Assert.FileExists(headRefFile);
-            return File.ReadAllLines(headRefFile).First();
+            return headRefFile.ReadAllLines().First();
         }
 
-        private static string GetHead(string gitDirectory)
+        private static string GetHead(AbsolutePath gitDirectory)
         {
-            var headFile = Path.Combine(gitDirectory, "HEAD");
+            var headFile = gitDirectory / "HEAD";
             Assert.FileExists(headFile);
-            return File.ReadAllText(headFile).TrimStart("ref: ").Trim();
+            return headFile.ReadAllText().TrimStart("ref: ").Trim();
         }
 
         [CanBeNull]
@@ -123,14 +123,14 @@ namespace Nuke.Common.Git
             return (Host.Instance as IBuildServer)?.Commit;
         }
 
-        private static IReadOnlyCollection<string> GetTagsFromCommit(string gitDirectory, string commit)
+        private static IReadOnlyCollection<string> GetTagsFromCommit(AbsolutePath gitDirectory, string commit)
         {
             if (commit == null)
                 return new string[0];
 
-            var packedRefsFile = (AbsolutePath) gitDirectory / "packed-refs";
-            var packedTags = File.Exists(packedRefsFile)
-                ? File.ReadAllLines(packedRefsFile)
+            var packedRefsFile = gitDirectory / "packed-refs";
+            var packedTags = packedRefsFile.Exists()
+                ? packedRefsFile.ReadAllLines()
                     .Where(x => !x.StartsWith("#") && !x.StartsWith("^"))
                     .Select(x => x.Split(' '))
                     .Select(x => (Commit: x[0], Reference: x[1]))
@@ -138,10 +138,10 @@ namespace Nuke.Common.Git
                     .Select(x => x.Reference.TrimStart("refs/tags/"))
                 : new string[0];
 
-            var tagsDirectory = (AbsolutePath) gitDirectory / "refs" / "tags";
+            var tagsDirectory = gitDirectory / "refs" / "tags";
             var localTags = tagsDirectory
                 .GlobFiles("**/*")
-                .Where(x => File.ReadAllText(x).Trim() == commit)
+                .Where(x => x.ReadAllText().Trim() == commit)
                 .Select(x => tagsDirectory.GetUnixRelativePathTo(x).ToString());
 
             return localTags.Concat(packedTags).ToList();
@@ -160,10 +160,12 @@ namespace Nuke.Common.Git
             return (protocol, match.Groups["endpoint"].Value, match.Groups["identifier"].Value);
         }
 
-        private static (GitProtocol? Protocol, string Endpoint, string Identifier) GetRemoteConnectionFromConfig(string gitDirectory, string remote)
+        private static (GitProtocol? Protocol, string Endpoint, string Identifier) GetRemoteConnectionFromConfig(
+            AbsolutePath gitDirectory,
+            string remote)
         {
-            var configFile = Path.Combine(gitDirectory, "config");
-            var configFileContent = File.ReadAllLines(configFile);
+            var configFile = gitDirectory / "config";
+            var configFileContent = configFile.ReadAllLines();
             var url = configFileContent
                 .Select(x => x.Trim())
                 .SkipWhile(x => x != $"[remote {remote.DoubleQuote()}]")
@@ -184,7 +186,7 @@ namespace Nuke.Common.Git
             string endpoint,
             string identifier,
             string branch,
-            string localDirectory,
+            AbsolutePath localDirectory,
             string head,
             string commit,
             IReadOnlyCollection<string> tags,
@@ -214,7 +216,7 @@ namespace Nuke.Common.Git
 
         /// <summary>Local path from which the repository was parsed.</summary>
         [CanBeNull]
-        public string LocalDirectory { get; private set; }
+        public AbsolutePath LocalDirectory { get; private set; }
 
         /// <summary>Current head; <c>null</c> if parsed from URL.</summary>
         [CanBeNull]

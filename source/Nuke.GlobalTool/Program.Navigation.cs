@@ -29,12 +29,12 @@ namespace Nuke.GlobalTool
                 _ => throw new NotSupportedException($"{EnvironmentInfo.Platform} has no session id selector.")
             };
 
-        private static string SessionFile => GlobalTemporaryDirectory / $"nuke-{SessionId}.dat";
+        private static AbsolutePath SessionFile => GlobalTemporaryDirectory / $"nuke-{SessionId}.dat";
 
         [UsedImplicitly]
         private static int GetNextDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
-            var content = File.Exists(SessionFile) ? File.ReadAllLines(SessionFile) : null;
+            var content = SessionFile.Existing()?.ReadAllLines();
             if (content == null || string.IsNullOrWhiteSpace(content[0]))
             {
                 Console.WriteLine(EnvironmentInfo.WorkingDirectory);
@@ -43,7 +43,7 @@ namespace Nuke.GlobalTool
 
             var nextDirectory = content[0];
             content[0] = string.Empty;
-            File.WriteAllLines(SessionFile, content);
+            SessionFile.WriteAllLines(content);
             Console.WriteLine(nextDirectory);
             return 0;
         }
@@ -51,7 +51,7 @@ namespace Nuke.GlobalTool
         [UsedImplicitly]
         private static int PopDirectory(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
         {
-            var content = File.Exists(SessionFile) ? File.ReadAllLines(SessionFile).ToList() : null;
+            var content = SessionFile.Existing()?.ReadAllLines().ToList();
             if (content == null || content.Count <= 1)
             {
                 Console.Error.WriteLine("No previous directory");
@@ -60,7 +60,7 @@ namespace Nuke.GlobalTool
 
             content[0] = content[1];
             content.RemoveAt(1);
-            File.WriteAllLines(SessionFile, content);
+            SessionFile.WriteAllLines(content);
             return 0;
         }
 
@@ -97,10 +97,10 @@ namespace Nuke.GlobalTool
         {
             try
             {
-                var content = File.Exists(SessionFile) ? File.ReadAllLines(SessionFile).ToList() : new List<string> { null };
+                var content = SessionFile.Existing()?.ReadAllLines().ToList() ?? new List<string> { null };
                 content[0] = directoryProvider.Invoke();
                 content.Insert(index: 1, EnvironmentInfo.WorkingDirectory);
-                File.WriteAllLines(SessionFile, content);
+                SessionFile.WriteAllLines(content);
                 return 0;
             }
             catch (Exception exception)

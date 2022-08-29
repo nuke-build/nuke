@@ -25,8 +25,8 @@ namespace Nuke.Common.CI
 
         public bool AutoGenerate { get; set; } = true;
         public abstract Type HostType { get; }
-        public abstract string ConfigurationFile { get; }
-        public abstract IEnumerable<string> GeneratedFiles { get; }
+        public abstract AbsolutePath ConfigurationFile { get; }
+        public abstract IEnumerable<AbsolutePath> GeneratedFiles { get; }
 
         public abstract IEnumerable<string> RelevantTargetNames { get; }
         public abstract IEnumerable<string> IrrelevantTargetNames { get; }

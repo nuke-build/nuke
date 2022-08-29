@@ -42,14 +42,14 @@ namespace Nuke.Components
                 var tweetDirectory = tweetDirectories.Last();
 
                 var sentTweets = new List<ITweet>();
-                var sortedTweets = tweetDirectory.GlobFiles("*.md").Select(x => x.ToString()).OrderBy(x => x);
+                var sortedTweets = tweetDirectory.GlobFiles("*.md").OrderBy(x => (string) x);
                 foreach (var tweetFile in sortedTweets)
                 {
                     var part = Path.GetFileNameWithoutExtension(tweetFile);
-                    var text = ReadAllText(tweetFile);
+                    var text = tweetFile.ReadAllText();
                     var media = tweetDirectory.GlobFiles($"{part}*.png", $"{part}*.jpeg", $"{part}*.jpg", $"{part}*.gif")
                         .Select(async x => await client.Upload.UploadTweetImageAsync(
-                            new UploadTweetImageParameters(ReadAllBytes(x))
+                            new UploadTweetImageParameters(x.ReadAllBytes())
                             {
                                 MediaCategory = x.ToString().EndsWithOrdinalIgnoreCase("gif")
                                     ? MediaCategory.Gif

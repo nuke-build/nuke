@@ -77,7 +77,7 @@ namespace Nuke.Common.Execution
             var installLocation = Constants.GlobalNukeDirectory / "dotnet-runtime" / (version ?? "current");
             var dotnetExecutable = installLocation / (EnvironmentInfo.IsWin ? "dotnet.exe" : "dotnet");
 
-            if (version == null || !File.Exists(dotnetExecutable))
+            if (version == null || !dotnetExecutable.Exists())
             {
                 if (EnvironmentInfo.IsLinux)
                 {
@@ -108,9 +108,7 @@ namespace Nuke.Common.Execution
         private static string GetDotNetRuntimeVersion()
         {
             var globalJsonFile = NukeBuild.RootDirectory / "global.json";
-            var jobject = File.Exists(globalJsonFile)
-                ? SerializationTasks.JsonDeserializeFromFile<JObject>(globalJsonFile)
-                : new JObject();
+            var jobject = globalJsonFile.Existing()?.ReadJson() ?? new JObject();
             return jobject["sdk"]?["version"]?.Value<string>().Substring(startIndex: 0, length: 5);
         }
     }

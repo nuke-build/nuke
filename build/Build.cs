@@ -77,8 +77,8 @@ partial class Build
         .Before<IRestore>()
         .Executes(() =>
         {
-            SourceDirectory.GlobDirectories("*/bin", "*/obj").ForEach(DeleteDirectory);
-            EnsureCleanDirectory(OutputDirectory);
+            SourceDirectory.GlobDirectories("*/bin", "*/obj").DeleteDirectories();
+            OutputDirectory.CreateOrCleanDirectory();
         });
 
     Configure<DotNetBuildSettings> ICompile.CompileSettings => _ => _

@@ -157,9 +157,9 @@ namespace Nuke.Common.ProjectModel
             PrimitiveProjectParents[primitiveProject] = solutionFolder;
         }
 
-        public void SaveAs(string fileName)
+        public void SaveAs(AbsolutePath solutionFile)
         {
-            Path = (AbsolutePath) fileName;
+            Path = solutionFile;
             Save();
         }
 

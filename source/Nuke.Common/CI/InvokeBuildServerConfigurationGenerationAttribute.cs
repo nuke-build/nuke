@@ -42,10 +42,12 @@ namespace Nuke.Common.CI
 
         private bool HasConfigurationChanged(IConfigurationGenerator generator, NukeBuild build)
         {
-            generator.GeneratedFiles.ForEach(FileSystemTasks.EnsureExistingParentDirectory);
-            var previousHashes = generator.GeneratedFiles
-                .Where(File.Exists)
-                .ToDictionary(x => x, FileSystemTasks.GetFileHash);
+            var generatedFiles = generator.GeneratedFiles.ToList();
+            generatedFiles.ForEach(x => x.Parent.CreateDirectory());
+
+            var previousHashes = generatedFiles
+                .Where(x => x.FileExists())
+                .ToDictionary(x => x, x => x.GetFileHash());
 
             ProcessTasks.StartProcess(
                     NukeBuild.BuildAssemblyFile,
@@ -54,8 +56,8 @@ namespace Nuke.Common.CI
                     logOutput: false)
                 .AssertZeroExitCode();
 
-            var changedFiles = generator.GeneratedFiles
-                .Where(x => FileSystemTasks.GetFileHash(x) != previousHashes.GetValueOrDefault(x))
+            var changedFiles = generatedFiles
+                .Where(x => x.GetFileHash() != previousHashes.GetValueOrDefault(x))
                 .Select(x => NukeBuild.RootDirectory.GetRelativePathTo(x)).ToList();
 
             if (changedFiles.Count == 0)

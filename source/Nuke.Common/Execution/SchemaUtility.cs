@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
@@ -94,10 +95,10 @@ namespace Nuke.Common.Execution
         public static void WriteDefaultParametersFile(INukeBuild build)
         {
             var parametersFile = GetDefaultParametersFile(build.RootDirectory);
-            if (File.Exists(parametersFile))
+            if (parametersFile.Exists())
                 return;
 
-            File.WriteAllLines(parametersFile,
+            parametersFile.WriteAllLines(
                 new[]
                 {
                     "{",

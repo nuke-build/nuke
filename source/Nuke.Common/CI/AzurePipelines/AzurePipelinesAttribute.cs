@@ -50,8 +50,8 @@ namespace Nuke.Common.CI.AzurePipelines
         public override string IdPostfix => _suffix;
 
         public override Type HostType => typeof(AzurePipelines);
-        public override string ConfigurationFile => ConfigurationDirectory / ConfigurationFileName;
-        public override IEnumerable<string> GeneratedFiles => new[] { ConfigurationFile };
+        public override AbsolutePath ConfigurationFile => ConfigurationDirectory / ConfigurationFileName;
+        public override IEnumerable<AbsolutePath> GeneratedFiles => new[] { ConfigurationFile };
         protected virtual AbsolutePath ConfigurationDirectory => NukeBuild.RootDirectory;
         private string ConfigurationFileName => _suffix != null ? $"azure-pipelines.{_suffix}.yml" : "azure-pipelines.yml";
 

@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Serilog;
 
@@ -18,17 +19,18 @@ namespace Nuke.Common.Execution
     {
         private const string SurrogateFileName = "nuke.tmp";
 
+        private AbsolutePath SurrogateFile => NukeBuild.BuildAssemblyDirectory / SurrogateFileName;
+
         public void OnBuildCreated(NukeBuild build, IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            var surrogateFile = NukeBuild.BuildAssemblyDirectory / SurrogateFileName;
-            if (!File.Exists(surrogateFile))
+            if (!SurrogateFile.Exists())
                 return;
 
-            var argumentLines = File.ReadAllLines(surrogateFile);
-            var lastWriteTime = File.GetLastWriteTime(surrogateFile);
+            var argumentLines = SurrogateFile.ReadAllLines();
+            var lastWriteTime = File.GetLastWriteTime(SurrogateFile);
 
             Assert.HasSingleItem(argumentLines, $"{SurrogateFileName} must have only one single line");
-            File.Delete(surrogateFile);
+            SurrogateFile.DeleteFile();
             if (lastWriteTime.AddMinutes(value: 1) < DateTime.Now)
             {
                 Log.Warning("Last write time of {File} was {LastWriteTime}. Skipping ...", SurrogateFileName, lastWriteTime);

@@ -31,9 +31,7 @@ namespace Nuke.GlobalTool
                 var rootDirectory = TryGetRootDirectory();
 
                 var buildScript = rootDirectory != null
-                    ? (AbsolutePath)new DirectoryInfo(rootDirectory)
-                        .EnumerateFiles(CurrentBuildScriptName, maxDepth: 2)
-                        .FirstOrDefault()?.FullName
+                    ? rootDirectory.GetFiles(CurrentBuildScriptName, depth: 2).FirstOrDefault()
                     : null;
 
                 return Handle(args, rootDirectory, buildScript);

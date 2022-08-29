@@ -5,9 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -16,6 +16,8 @@ namespace Nuke.Common.Execution
     internal class HandlePlanRequestsAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
     {
         private const string HtmlFileName = "execution-plan.html";
+
+        private AbsolutePath HtmlFile => NukeBuild.TemporaryDirectory / HtmlFileName;
 
         public void OnBuildInitialized(
             NukeBuild build,
@@ -36,13 +38,12 @@ namespace Nuke.Common.Execution
                 .Replace("__GRAPH__", GetGraphDefinition(build))
                 .Replace("__EVENTS__", GetEvents(build));
 
-            var path = Path.Combine(NukeBuild.TemporaryDirectory, HtmlFileName);
-            File.WriteAllText(path, contents);
+            HtmlFile.WriteAllText(contents);
 
             // Workaround for https://github.com/dotnet/corefx/issues/10361
             Process.Start(new ProcessStartInfo
                           {
-                              FileName = path,
+                              FileName = HtmlFile,
                               UseShellExecute = true
                           });
         }

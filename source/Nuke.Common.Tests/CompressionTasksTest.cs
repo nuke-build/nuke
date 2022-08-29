@@ -14,6 +14,9 @@ namespace Nuke.Common.Tests
 {
     public class CompressionTasksTest : FileSystemDependentTest
     {
+        private AbsolutePath RootFile => TestTempDirectory / "root-file";
+        private AbsolutePath NestedFile => TestTempDirectory / "a" / "b" / "c" / "nested-file";
+
         public CompressionTasksTest(ITestOutputHelper testOutputHelper)
             : base(testOutputHelper)
         {
@@ -25,25 +28,22 @@ namespace Nuke.Common.Tests
         [InlineData("archive.tar.bz2")]
         public void Test(string archiveFile)
         {
-            var rootFile = Path.Combine(TestTempDirectory, "rootfile.txt");
-            var nestedFile = Path.Combine(TestTempDirectory, "a", "b", "c", "nestedfile.txt");
-
-            TextTasks.WriteAllText(rootFile, "root");
-            TextTasks.WriteAllText(nestedFile, "nested");
+            RootFile.WriteAllText("root");
+            NestedFile.WriteAllText("nested");
 
             var archive = Path.Combine(TestTempDirectory, archiveFile);
             CompressionTasks.Compress(TestTempDirectory, archive);
             File.Exists(archive).Should().BeTrue();
 
-            File.Delete(rootFile);
-            File.Delete(nestedFile);
+            File.Delete(RootFile);
+            File.Delete(NestedFile);
             Directory.GetFiles(TestTempDirectory, "*").Should().HaveCount(1);
 
             CompressionTasks.Uncompress(archive, TestTempDirectory);
-            File.Exists(rootFile).Should().BeTrue();
-            File.ReadAllText(rootFile).Should().Be("root");
-            File.Exists(nestedFile).Should().BeTrue();
-            File.ReadAllText(nestedFile).Should().Be("nested");
+            File.Exists(RootFile).Should().BeTrue();
+            File.ReadAllText(RootFile).Should().Be("root");
+            File.Exists(NestedFile).Should().BeTrue();
+            File.ReadAllText(NestedFile).Should().Be("nested");
         }
     }
 }

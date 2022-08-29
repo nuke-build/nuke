@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common
@@ -25,7 +26,7 @@ namespace Nuke.Common
     partial class EnvironmentInfo
     {
         [CanBeNull]
-        public static string SpecialFolder(SpecialFolders folder)
+        public static AbsolutePath SpecialFolder(SpecialFolders folder)
         {
             var path = Environment.GetFolderPath((Environment.SpecialFolder)folder);
 

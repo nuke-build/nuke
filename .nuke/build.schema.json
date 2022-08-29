@@ -39,10 +39,6 @@
         "GitterRoomId": {
           "type": "string"
         },
-        "GlobalSolution": {
-          "type": "string",
-          "description": "Path to a solution file that is automatically loaded. Default is nuke-global.sln"
-        },
         "Help": {
           "type": "boolean",
           "description": "Shows the help text for this build assembly"

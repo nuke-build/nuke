@@ -30,12 +30,12 @@ namespace Nuke.Common.CI.TeamCity
         internal static bool IsRunningTeamCity => !Environment.GetEnvironmentVariable("TEAMCITY_VERSION").IsNullOrEmpty();
 
         [CanBeNull]
-        private static IReadOnlyDictionary<string, string> ParseDictionary([CanBeNull] string file)
+        private static IReadOnlyDictionary<string, string> ParseDictionary([CanBeNull] AbsolutePath file)
         {
             if (file == null)
                 return null;
 
-            var lines = File.ReadAllLines(file);
+            var lines = file.ReadAllLines();
             var dictionary = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
             try
@@ -87,9 +87,9 @@ namespace Nuke.Common.CI.TeamCity
             _runnerProperties = Lazy.Create(() => ParseDictionary(SystemProperties?["teamcity.runner.properties.file"]));
             _recentlyFailedTests = Lazy.Create(() =>
             {
-                var file = SystemProperties?["teamcity.tests.recentlyFailedTests.file"];
-                return File.Exists(file)
-                    ? TextTasks.ReadAllLines(file).ToImmutableList() as IReadOnlyCollection<string>
+                var file = (AbsolutePath) SystemProperties?["teamcity.tests.recentlyFailedTests.file"];
+                return file.FileExists()
+                    ? file.ReadAllLines().ToImmutableList() as IReadOnlyCollection<string>
                     : new string[0];
             });
         }

@@ -53,7 +53,7 @@ namespace Nuke.Common.Execution
 
         private static int? CheckAwareness()
         {
-            string GetCookieFile(string name, int version)
+            AbsolutePath GetCookieFile(string name, int version)
                 => Constants.GlobalNukeDirectory / "telemetry-awareness" / $"v{version}" / name;
 
             // Check for calls from Nuke.GlobalTool and custom global tools
@@ -61,10 +61,10 @@ namespace Nuke.Common.Execution
             {
                 var cookieName = Assembly.GetEntryAssembly().NotNull().GetName().Name;
                 var cookieFile = GetCookieFile(cookieName, CurrentVersion);
-                if (!File.Exists(cookieFile))
+                if (!cookieFile.Exists())
                 {
                     PrintDisclosure($"create awareness cookie for {cookieName.SingleQuote()}");
-                    FileSystemTasks.Touch(cookieFile);
+                    cookieFile.TouchFile();
                 }
 
                 return CurrentVersion;
@@ -87,7 +87,8 @@ namespace Nuke.Common.Execution
 
             for (var version = CurrentVersion; version > 0; version--)
             {
-                if (File.Exists(GetCookieFile("Nuke.GlobalTool", version)))
+                var cookieFile = GetCookieFile("Nuke.GlobalTool", version);
+                if (cookieFile.FileExists())
                     return version;
             }
 

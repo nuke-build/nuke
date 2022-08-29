@@ -11,6 +11,6 @@ namespace Nuke.Common
 {
     internal partial class EnvironmentInfo
     {
-        public static AbsolutePath WorkingDirectory => (AbsolutePath) Directory.GetCurrentDirectory();
+        public static AbsolutePath WorkingDirectory => Directory.GetCurrentDirectory();
     }
 }

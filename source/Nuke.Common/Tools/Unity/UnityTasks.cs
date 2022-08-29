@@ -33,7 +33,7 @@ namespace Nuke.Common.Tools.Unity
                 : GetToolPathViaManualInstallation();
         }
 
-        private static string GetToolPathViaManualInstallation()
+        private static AbsolutePath GetToolPathViaManualInstallation()
         {
             return EnvironmentInfo.Platform switch
             {
@@ -43,7 +43,7 @@ namespace Nuke.Common.Tools.Unity
             };
         }
 
-        private static string GetToolPathViaHubVersion(string version)
+        private static AbsolutePath GetToolPathViaHubVersion(string version)
         {
             return EnvironmentInfo.Platform switch
             {
@@ -77,14 +77,14 @@ namespace Nuke.Common.Tools.Unity
                 return;
 
             var editorVersion = ReadUnityEditorVersion(unitySettings.ProjectPath);
-            var hubToolPath = (AbsolutePath)GetToolPathViaHubVersion(editorVersion);
+            var hubToolPath = GetToolPathViaHubVersion(editorVersion);
             if (hubToolPath.Exists())
             {
                 unitySettings.HubVersion = editorVersion;
                 return;
             }
 
-            var manualInstallationToolPath = (AbsolutePath)GetToolPathViaManualInstallation();
+            var manualInstallationToolPath = GetToolPathViaManualInstallation();
             Assert.FileExists(manualInstallationToolPath, $"Required Unity Hub installation for version '{editorVersion}' was not found");
         }
 

@@ -38,7 +38,7 @@ partial class Build
         .DependentFor<IPack>()
         .Executes(() =>
         {
-            EnsureCleanDirectory(LicensesDirectory);
+            LicensesDirectory.CreateOrCleanDirectory();
 
             var downloadTasks = Licenses.Select(async x =>
             {

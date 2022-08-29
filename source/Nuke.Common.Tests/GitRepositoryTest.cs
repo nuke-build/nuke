@@ -55,7 +55,7 @@ namespace Nuke.Common.Tests
             var repository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory()).NotNull();
             repository.Endpoint.Should().NotBeNullOrEmpty();
             repository.Identifier.Should().NotBeNullOrEmpty();
-            repository.LocalDirectory.Should().NotBeNullOrEmpty();
+            repository.LocalDirectory.Should().NotBeNull();
             repository.Head.Should().NotBeNullOrEmpty();
             repository.Commit.Should().NotBeNullOrEmpty();
             repository.Tags.Should().NotBeNull();

@@ -123,7 +123,7 @@ namespace Nuke.Common.Tools.SignPath
         public static async Task DownloadSignedArtifactFromUrl(
             string apiToken,
             string signingRequestUrl,
-            string outputPath)
+            AbsolutePath outputPath)
         {
             using (SwitchSecurityProtocol())
             {
@@ -135,7 +135,7 @@ namespace Nuke.Common.Tools.SignPath
                 using var response = SendGetRequestWithRetry(downloadHttpClient, downloadUrl);
                 var downloadStream = await response.Content.ReadAsStreamAsync();
 
-                FileSystemTasks.EnsureExistingParentDirectory(outputPath);
+                outputPath.Parent.CreateDirectory();
                 using var fileStream = File.Open(outputPath, FileMode.Create);
                 await downloadStream.CopyToAsync(fileStream);
                 Log.Information("Signed artifact downloaded to: {OutputPath}", outputPath);
