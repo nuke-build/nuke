@@ -9,13 +9,6 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Git
 {
-    public enum GitHubItemType
-    {
-        Automatic,
-        File,
-        Directory
-    }
-
     [PublicAPI]
     public static class GitRepositoryExtensions
     {

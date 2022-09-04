@@ -15,6 +15,13 @@ using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.Tools.GitHub
 {
+    public enum GitHubItemType
+    {
+        Automatic,
+        File,
+        Directory
+    }
+
     [PublicAPI]
     public static class GitHubTasks
     {
