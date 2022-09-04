@@ -30,14 +30,14 @@ namespace Nuke.Common.Execution
         }
 
         public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
-            where T : NukeBuild
+            where T : NukeBuild, new()
         {
             Console.OutputEncoding = Encoding.UTF8;
             Console.InputEncoding = Encoding.UTF8;
             Console.CancelKeyPress += (_, _) => s_cancellationHandlers.ForEach(x => x());
             ToolSettings.Created += (settings, _) => VerbosityMapping.Apply(settings);
 
-            var build = Create<T>();
+            var build = new T();
 
             try
             {
@@ -104,16 +104,6 @@ namespace Nuke.Common.Execution
                 build.WriteBuildOutcome();
                 build.ExecuteExtension<IOnBuildFinished>(x => x.OnBuildFinished(build));
             }
-        }
-
-        public static T Create<T>()
-            where T : NukeBuild
-        {
-            var constructors = typeof(T).GetConstructors();
-            Assert.True(constructors.Length == 1 && constructors.Single().GetParameters().Length == 0,
-                $"Type '{typeof(T).Name}' must declare a single parameterless constructor");
-
-            return Activator.CreateInstance<T>();
         }
     }
 }

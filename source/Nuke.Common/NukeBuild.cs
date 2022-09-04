@@ -73,7 +73,7 @@ namespace Nuke.Common
         /// if no targets have been specified via command-line arguments.
         /// </summary>
         protected static int Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
-            where T : NukeBuild
+            where T : NukeBuild, new()
         {
             return BuildManager.Execute(defaultTargetExpressions);
         }
