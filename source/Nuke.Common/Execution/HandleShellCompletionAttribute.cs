@@ -6,9 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.CI;
-using Nuke.Common.IO;
 using Nuke.Common.Utilities;
-using Nuke.Common.ValueInjection;
+using Serilog;
 using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Execution
@@ -22,7 +21,14 @@ namespace Nuke.Common.Execution
 
             if (IsLegacy(NukeBuild.RootDirectory))
             {
-                WriteCompletionFile(build);
+                Host.Error(
+                    new[]
+                    {
+                        "The old-style .nuke configuration is no longer supported.",
+                        "You can convert to the new-style .nuke directory by calling:",
+                        "   nuke :update"
+                    }.JoinNewLine());
+                Environment.Exit(exitCode: -1);
             }
             else if (NukeBuild.BuildProjectFile != null)
             {
@@ -45,28 +51,6 @@ namespace Nuke.Common.Execution
 
             if (ParameterService.GetParameter<bool>(CompletionParameterName))
                 Environment.Exit(exitCode: 0);
-        }
-
-        private void WriteCompletionFile(NukeBuild build)
-        {
-            var completionItems = new SortedDictionary<string, string[]>();
-
-            var targets = build.ExecutableTargets.OrderBy(x => x.Name).ToList();
-            completionItems[InvokedTargetsParameterName] = targets.Where(x => x.Listed).Select(x => x.Name).ToArray();
-            completionItems[SkippedTargetsParameterName] = targets.Select(x => x.Name).ToArray();
-
-            var parameters = ValueInjectionUtility.GetParameterMembers(build.GetType(), includeUnlisted: false);
-            foreach (var parameter in parameters)
-            {
-                var parameterName = ParameterService.GetParameterMemberName(parameter);
-                if (completionItems.ContainsKey(parameterName))
-                    continue;
-
-                var subItems = ParameterService.GetParameterValueSet(parameter, build)?.Select(x => x.Text);
-                completionItems[parameterName] = subItems?.ToArray();
-            }
-
-            SerializationTasks.YamlSerializeToFile(completionItems, GetCompletionFile(NukeBuild.RootDirectory));
         }
     }
 }
