@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.CI;
 using Nuke.Common.Utilities;
-using Serilog;
 using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Execution

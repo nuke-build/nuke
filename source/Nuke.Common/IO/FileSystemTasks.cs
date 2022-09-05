@@ -5,8 +5,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities.Collections;
 using Serilog;

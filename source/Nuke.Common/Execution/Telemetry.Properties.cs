@@ -10,7 +10,6 @@ using System.Runtime.InteropServices;
 using Nuke.Common.CI;
 using Nuke.Common.Git;
 using Nuke.Common.Tooling;
-using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;

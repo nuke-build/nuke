@@ -15,7 +15,6 @@ using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
 using Serilog;
-using static Nuke.Common.CI.BuildServerConfigurationGenerationAttributeBase;
 
 namespace Nuke.Common.Execution
 {

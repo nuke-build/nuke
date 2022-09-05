@@ -14,7 +14,6 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using Nuke.Common.ValueInjection;
 using Serilog;
 using Serilog.Formatting.Compact.Reader;
 using static Nuke.Common.Tools.Docker.DockerTasks;

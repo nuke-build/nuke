@@ -7,7 +7,6 @@ using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 using Serilog;
 
 namespace Nuke.Common.ValueInjection

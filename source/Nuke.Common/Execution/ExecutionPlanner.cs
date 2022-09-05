@@ -9,7 +9,6 @@ using JetBrains.Annotations;
 using NuGet.Packaging;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using Serilog;
 
 namespace Nuke.Common.Execution
 {
