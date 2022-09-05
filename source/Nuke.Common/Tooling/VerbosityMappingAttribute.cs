@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tooling
 {
@@ -44,6 +45,28 @@ namespace Nuke.Common.Tooling
                 VerbosityMapping.Mappings.Add(_targetType, (Verbosity.Normal, GetMappedValue(Normal)));
             if (Verbose != null)
                 VerbosityMapping.Mappings.Add(_targetType, (Verbosity.Verbose, GetMappedValue(Verbose)));
+        }
+    }
+
+    internal static class VerbosityMapping
+    {
+        public static readonly LookupTable<Type, (Verbosity Verbosity, object MappedVerbosity)> Mappings
+            = new LookupTable<Type, (Verbosity Verbosity, object MappedVerbosity)>();
+
+        public static void Apply(object obj)
+        {
+            foreach (var property in obj.GetType().GetProperties())
+            {
+                if (!Mappings.Contains(property.PropertyType))
+                    continue;
+
+                var mappings = Mappings[property.PropertyType];
+                foreach (var (verbosity, mappedVerbosity) in mappings)
+                {
+                    if (verbosity == NukeBuild.Verbosity)
+                        property.SetValue(obj, mappedVerbosity);
+                }
+            }
         }
     }
 }
