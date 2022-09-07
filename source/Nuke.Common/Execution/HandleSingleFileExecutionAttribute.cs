@@ -18,7 +18,8 @@ using Serilog;
 
 namespace Nuke.Common.Execution
 {
-    internal class HandleSingleFileExecutionAttribute : BuildExtensionAttributeBase, IOnBuildCreated
+    [PublicAPI]
+    public class HandleSingleFileExecutionAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
         private const string ScriptUrl = "https://dot.net/v1/dotnet-install.sh";
 
