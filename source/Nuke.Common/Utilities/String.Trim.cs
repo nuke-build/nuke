@@ -34,7 +34,19 @@ namespace Nuke.Common.Utilities
         }
 
         [Pure]
-        public static string TrimMatchingQuotes(this string str, char quote)
+        public static string TrimMatchingDoubleQuotes(this string str)
+        {
+            return TrimMatchingQuotes(str, quote: '"');
+        }
+
+        [Pure]
+        public static string TrimMatchingSingleQuotes(this string str)
+        {
+            return TrimMatchingQuotes(str, quote: '\'');
+        }
+
+        [Pure]
+        internal static string TrimMatchingQuotes(this string str, char quote)
         {
             if (str.Length < 2)
                 return str;
@@ -43,18 +55,6 @@ namespace Nuke.Common.Utilities
                 return str;
 
             return str.Substring(startIndex: 1, str.Length - 2);
-        }
-
-        [Pure]
-        public static string TrimMatchingDoubleQuotes(this string str)
-        {
-            return TrimMatchingQuotes(str, quote: '"');
-        }
-
-        [Pure]
-        public static string TrimMatchingQuotes(this string str)
-        {
-            return TrimMatchingQuotes(str, quote: '\'');
         }
     }
 }
