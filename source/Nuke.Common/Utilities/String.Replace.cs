@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -11,9 +10,6 @@ using JetBrains.Annotations;
 
 namespace Nuke.Common.Utilities
 {
-    [PublicAPI]
-    [DebuggerNonUserCode]
-    [DebuggerStepThrough]
     public static partial class StringExtensions
     {
         [Pure]

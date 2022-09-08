@@ -10,7 +10,7 @@ namespace Nuke.Common.Utilities
     public static partial class StringExtensions
     {
         [Pure]
-        public static int IndexOfRegex(this string text, string expression)
+        public static int IndexOfRegex(this string text, [RegexPattern] string expression)
         {
             var regex = new Regex(expression, RegexOptions.Compiled);
             return regex.Match(text).Index;

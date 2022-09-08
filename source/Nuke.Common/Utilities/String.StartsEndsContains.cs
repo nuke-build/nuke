@@ -64,16 +64,19 @@ namespace Nuke.Common.Utilities
             return str.StartsWithAny(others.AsEnumerable());
         }
 
+        [Pure]
         public static bool StartsWithAny(this string str, IEnumerable<string> others)
         {
             return others.Any(str.StartsWith);
         }
 
+        [Pure]
         public static bool StartsWithAnyOrdinalIgnoreCase(this string str, params string[] others)
         {
             return str.StartsWithAnyOrdinalIgnoreCase(others.AsEnumerable());
         }
 
+        [Pure]
         public static bool StartsWithAnyOrdinalIgnoreCase(this string str, IEnumerable<string> others)
         {
             return others.Any(str.StartsWithOrdinalIgnoreCase);
@@ -84,16 +87,19 @@ namespace Nuke.Common.Utilities
             return str.EndsWithAny(others.AsEnumerable());
         }
 
+        [Pure]
         public static bool EndsWithAny(this string str, IEnumerable<string> others)
         {
             return others.Any(str.EndsWith);
         }
 
+        [Pure]
         public static bool EndsWithAnyOrdinalIgnoreCase(this string str, params string[] others)
         {
             return str.EndsWithAnyOrdinalIgnoreCase(others.AsEnumerable());
         }
 
+        [Pure]
         public static bool EndsWithAnyOrdinalIgnoreCase(this string str, IEnumerable<string> others)
         {
             return others.Any(str.EndsWithOrdinalIgnoreCase);

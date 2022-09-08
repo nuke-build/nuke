@@ -8,12 +8,14 @@ namespace Nuke.Common.Utilities
 {
     public static partial class StringExtensions
     {
+        [Pure]
         [ContractAnnotation("null => halt")]
         public static bool IsNullOrEmpty(this string str)
         {
             return string.IsNullOrEmpty(str);
         }
 
+        [Pure]
         [ContractAnnotation("null => halt")]
         public static bool IsNullOrWhiteSpace(this string str)
         {

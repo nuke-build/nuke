@@ -17,40 +17,47 @@ namespace Nuke.Common
 
         public static IReadOnlyCollection<string> CommandLineArguments => ArgumentParser.Arguments;
 
+        [Pure]
         public static bool HasArgument(string name)
         {
             return ArgumentParser.HasArgument(name);
         }
 
+        [Pure]
         public static bool HasArgument<T>(Expression<Func<T>> expression)
         {
             return HasArgument(expression.GetMemberInfo().Name);
         }
 
+        [Pure]
         [CanBeNull]
         public static T GetNamedArgument<T>(string parameterName, char? separator = null)
         {
             return (T)ArgumentParser.GetNamedArgument(parameterName, typeof(T), separator);
         }
 
+        [Pure]
         [CanBeNull]
         public static T GetNamedArgument<T>(Expression<Func<T>> expression, char? separator = null)
         {
             return GetNamedArgument<T>(expression.GetMemberInfo().Name, separator);
         }
 
+        [Pure]
         [CanBeNull]
         public static T GetNamedArgument<T>(Expression<Func<object>> expression, char? separator = null)
         {
             return GetNamedArgument<T>(expression.GetMemberInfo().Name, separator);
         }
 
+        [Pure]
         [CanBeNull]
         public static T GetPositionalArgument<T>(int position, char? separator = null)
         {
             return (T)ArgumentParser.GetPositionalArgument(position, typeof(T), separator);
         }
 
+        [Pure]
         [CanBeNull]
         public static T[] GetAllPositionalArguments<T>(char? separator = null)
         {

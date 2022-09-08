@@ -57,11 +57,13 @@ namespace Nuke.Common.Utilities
                 includeSplitCharacter: true);
         }
 
+        [Pure]
         public static string[] SplitLineBreaks(this string str)
         {
             return str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
         }
 
+        [Pure]
         public static string[] SplitSpace(this string str)
         {
             return str.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);

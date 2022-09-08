@@ -6,11 +6,13 @@ using System;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.Utilities
 {
     public static partial class StringExtensions
     {
+        [Pure]
         public static string GetMD5Hash(this string str)
         {
             using var algorithm = MD5.Create();
@@ -18,6 +20,7 @@ namespace Nuke.Common.Utilities
             return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
 
+        [Pure]
         public static string GetSHA256Hash(this string str)
         {
             using var algorithm = SHA256.Create();
