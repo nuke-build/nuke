@@ -12,6 +12,9 @@ namespace Nuke.Common.Utilities.Net
 {
     public static partial class HttpResponseExtensions
     {
+        /// <summary>
+        /// Asserts the status code of an HTTP response.
+        /// </summary>
         public static HttpResponseInspector AssertStatusCode(
             this HttpResponseInspector inspector,
             HttpStatusCode status,
@@ -29,6 +32,9 @@ namespace Nuke.Common.Utilities.Net
             return inspector;
         }
 
+        /// <summary>
+        /// Asserts the status code of an HTTP response.
+        /// </summary>
         public static HttpResponseInspector AssertStatusCode(this HttpResponseInspector inspector, Func<HttpStatusCode, string> errorSelector)
         {
             var response = inspector.Response;
@@ -38,12 +44,18 @@ namespace Nuke.Common.Utilities.Net
             return inspector;
         }
 
+        /// <summary>
+        /// Asserts a successful status code for an HTTP response.
+        /// </summary>
         public static HttpResponseInspector AssertSuccessfulStatusCode(this HttpResponseInspector inspector)
         {
             inspector.Response.EnsureSuccessStatusCode();
             return inspector;
         }
 
+        /// <summary>
+        /// Asserts an HTTP response.
+        /// </summary>
         public static HttpResponseInspector AssertResponse(this HttpResponseInspector inspector, Func<HttpResponseMessage, string> errorSelector)
         {
             var response = inspector.Response;

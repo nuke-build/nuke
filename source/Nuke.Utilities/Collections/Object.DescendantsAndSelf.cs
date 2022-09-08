@@ -11,6 +11,9 @@ namespace Nuke.Common.Utilities.Collections
 {
     public static partial class EnumerableExtensions
     {
+        /// <summary>
+        /// Recursively traverses an object. The starting object is the first of the collection.
+        /// </summary>
         public static IEnumerable<T> DescendantsAndSelf<T>(
             this T obj,
             Func<T, T> selector,
@@ -22,6 +25,9 @@ namespace Nuke.Common.Utilities.Collections
                 yield return p;
         }
 
+        /// <summary>
+        /// Recursively traverses an object. The starting object is not part of the collection.
+        /// </summary>
         public static IEnumerable<T> Descendants<T>(
             this T obj,
             Func<T, T> selector,
@@ -38,6 +44,9 @@ namespace Nuke.Common.Utilities.Collections
                 yield return nextOrDescendant;
         }
 
+        /// <summary>
+        /// Recursively traverses an object. The starting object is the first of the collection.
+        /// </summary>
         public static IEnumerable<T> DescendantsAndSelf<T>(
             this T obj,
             Func<T, IEnumerable<T>> selector,
@@ -49,6 +58,9 @@ namespace Nuke.Common.Utilities.Collections
                 yield return p;
         }
 
+        /// <summary>
+        /// Recursively traverses an object. The starting object is not part of the collection.
+        /// </summary>
         public static IEnumerable<T> Descendants<T>(
             this T obj,
             Func<T, IEnumerable<T>> selector,

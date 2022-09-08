@@ -10,6 +10,9 @@ using Newtonsoft.Json.Serialization;
 
 namespace Nuke.Common.Tooling
 {
+    /// <summary>
+    /// Treats all properties as writable.
+    /// </summary>
     internal class AllWritableContractResolver : DefaultContractResolver
     {
         protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)

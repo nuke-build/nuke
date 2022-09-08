@@ -16,6 +16,9 @@ namespace Nuke.Common.Utilities
     [DebuggerStepThrough]
     public static class ObjectExtensions
     {
+        /// <summary>
+        /// Clones an object via <see cref="DataContractSerializer"/>.
+        /// </summary>
         public static T Clone<T>(this T obj)
         {
             var serializer = new DataContractSerializer(typeof(T));

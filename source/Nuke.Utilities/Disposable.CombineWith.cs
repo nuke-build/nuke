@@ -10,6 +10,9 @@ namespace Nuke.Common.Utilities
 {
     public static class DisposableExtensions
     {
+        /// <summary>
+        /// Combines an existing <see cref="IDisposable"/> with another setup and cleanup delegate.
+        /// </summary>
         public static IDisposable CombineWith(this IDisposable disposable, [InstantHandle] Action setup = null, [InstantHandle] Action cleanup = null)
         {
             return DelegateDisposable.CreateBracket(
@@ -21,6 +24,9 @@ namespace Nuke.Common.Utilities
                 });
         }
 
+        /// <summary>
+        /// Combines an existing <see cref="IDisposable"/> with another <see cref="IDisposable"/>.
+        /// </summary>
         public static IDisposable CombineWith(this IDisposable disposable, IDisposable otherDisposable)
         {
             return disposable.CombineWith(cleanup: otherDisposable.Dispose);

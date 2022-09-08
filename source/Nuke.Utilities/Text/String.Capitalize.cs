@@ -13,6 +13,9 @@ namespace Nuke.Common.Utilities
     [DebuggerStepThrough]
     public static partial class StringExtensions
     {
+        /// <summary>
+        /// Converts the first character of a given string to upper-case.
+        /// </summary>
         [Pure]
         public static string Capitalize(this string text)
         {

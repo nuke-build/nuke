@@ -10,6 +10,9 @@ namespace Nuke.Common.Utilities
 {
     public static partial class StringExtensions
     {
+        /// <summary>
+        /// Trims any multi-occurrence of a string in another string to a single-occurrence.
+        /// </summary>
         [Pure]
         public static string TrimToOne(this string str, string trim)
         {
@@ -21,24 +24,36 @@ namespace Nuke.Common.Utilities
             return str;
         }
 
+        /// <summary>
+        /// Trims the occurrence of a string from the end of another string.
+        /// </summary>
         [Pure]
         public static string TrimEnd(this string str, string trim)
         {
             return str.EndsWith(trim) ? str.Substring(startIndex: 0, str.Length - trim.Length) : str;
         }
 
+        /// <summary>
+        /// Trims the occurrence of a string from the start of another string.
+        /// </summary>
         [Pure]
         public static string TrimStart(this string str, string trim)
         {
             return str.StartsWith(trim) ? str.Substring(trim.Length) : str;
         }
 
+        /// <summary>
+        /// Trims matching double-quotes from the start and end of a string.
+        /// </summary>
         [Pure]
         public static string TrimMatchingDoubleQuotes(this string str)
         {
             return TrimMatchingQuotes(str, quote: '"');
         }
 
+        /// <summary>
+        /// Trims matching double-quotes from the start and end of a string.
+        /// </summary>
         [Pure]
         public static string TrimMatchingSingleQuotes(this string str)
         {

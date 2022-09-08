@@ -13,21 +13,36 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.ProjectModel
 {
+    /// <summary>
+    /// Represents a solution file (<c>*.sln</c>).
+    /// </summary>
     [PublicAPI]
     public class Solution
     {
         internal List<PrimitiveProject> PrimitiveProjects { get; } = new List<PrimitiveProject>();
         internal Dictionary<PrimitiveProject, SolutionFolder> PrimitiveProjectParents { get; } = new Dictionary<PrimitiveProject, SolutionFolder>();
 
+        /// <summary>
+        /// File the solution was loaded from or saved to.
+        /// </summary>
         [CanBeNull]
         public AbsolutePath Path { get; internal set; }
 
+        /// <summary>
+        /// Name (without <c>*.sln</c>) of the file the solution was loaded from or saved to.
+        /// </summary>
         [CanBeNull]
         public string Name => System.IO.Path.GetFileNameWithoutExtension(Path);
 
+        /// <summary>
+        /// File name (including <c>*.sln</c>) of the file the solution was loaded from or saved to.
+        /// </summary>
         [CanBeNull]
         public string FileName => System.IO.Path.GetFileName(Path);
 
+        /// <summary>
+        /// Directory the solution was loaded from or saved to.
+        /// </summary>
         [CanBeNull]
         public AbsolutePath Directory => Path?.Parent;
 
@@ -36,10 +51,24 @@ namespace Nuke.Common.ProjectModel
         public IDictionary<string, string> ExtensibilityGlobals { get; set; }
         public IDictionary<string, string> Configurations { get; set; }
 
+        /// <summary>
+        /// All projects that are descendants of the solution.
+        /// </summary>
         public IReadOnlyCollection<Project> AllProjects => PrimitiveProjects.OfType<Project>().ToList();
+
+        /// <summary>
+        /// All solution folders that are descendants of the solution.
+        /// </summary>
         public IReadOnlyCollection<SolutionFolder> AllSolutionFolders => PrimitiveProjects.OfType<SolutionFolder>().ToList();
 
+        /// <summary>
+        /// All projects that are direct descendants of the solution.
+        /// </summary>
         public IReadOnlyCollection<Project> Projects => AllProjects.Where(x => x.SolutionFolder == null).ToList();
+
+        /// <summary>
+        /// All solution folders that are direct descendants of the solution.
+        /// </summary>
         public IReadOnlyCollection<SolutionFolder> SolutionFolders => AllSolutionFolders.Where(x => x.SolutionFolder == null).ToList();
 
         public static implicit operator string(Solution solution)
@@ -57,22 +86,34 @@ namespace Nuke.Common.ProjectModel
             return Path ?? "<in-memory solution>";
         }
 
+        /// <summary>
+        /// Finds a solution folder by its project ID.
+        /// </summary>
         public SolutionFolder GetSolutionFolder(Guid projectId)
         {
             return AllSolutionFolders.Single(x => x.ProjectId == projectId);
         }
 
+        /// <summary>
+        /// Finds a project by its project ID.
+        /// </summary>
         public Project GetProject(Guid projectId)
         {
             return AllProjects.Single(x => x.ProjectId == projectId);
         }
 
+        /// <summary>
+        /// Finds a solution folder by its name.
+        /// </summary>
         [CanBeNull]
         public SolutionFolder GetSolutionFolder(string name)
         {
             return AllSolutionFolders.SingleOrDefault(x => name.Equals(x.Name, StringComparison.Ordinal));
         }
 
+        /// <summary>
+        /// Finds a project by its name or full path.
+        /// </summary>
         [CanBeNull]
         public Project GetProject(string nameOrFullPath)
         {
@@ -80,6 +121,9 @@ namespace Nuke.Common.ProjectModel
                    AllProjects.SingleOrDefault(x => x.Path.ToString().EqualsOrdinalIgnoreCase(nameOrFullPath));
         }
 
+        /// <summary>
+        /// Finds all projects matching a wildcard pattern.
+        /// </summary>
         public IEnumerable<Project> GetProjects(string wildcardPattern)
         {
             wildcardPattern = $"^{wildcardPattern}$";
@@ -89,14 +133,21 @@ namespace Nuke.Common.ProjectModel
             return AllProjects.Where(x => regex.IsMatch(x.Name));
         }
 
+        /// <summary>
+        /// Adds a solution folder to the solution.
+        /// </summary>
         public SolutionFolder AddSolutionFolder(string name, Guid? projectId = null, SolutionFolder solutionFolder = null)
         {
+            // TODO: rename to parent folder
             projectId ??= Guid.NewGuid();
             var project = new SolutionFolder(this, projectId.Value, name, items: new Dictionary<string, string>());
             AddPrimitiveProject(project, solutionFolder);
             return project;
         }
 
+        /// <summary>
+        /// Adds a project to the solution.
+        /// </summary>
         public Project AddProject(
             string name,
             Guid typeId,
@@ -105,6 +156,7 @@ namespace Nuke.Common.ProjectModel
             IDictionary<string, string> configurationPlatforms = null,
             SolutionFolder solutionFolder = null)
         {
+            // TODO: rename to parent folder
             projectId ??= Guid.NewGuid();
             var project = new Project(this, projectId.Value, name, () => path, typeId, configurationPlatforms ?? new Dictionary<string, string>());
             AddPrimitiveProject(project, solutionFolder);
@@ -121,6 +173,9 @@ namespace Nuke.Common.ProjectModel
             PrimitiveProjectParents.Add(primitiveProject, solutionFolder);
         }
 
+        /// <summary>
+        /// Removes a solution folder from the solution. Containing items are moved to the parent folder.
+        /// </summary>
         public IReadOnlyCollection<PrimitiveProject> RemoveSolutionFolder(SolutionFolder solutionFolder)
         {
             var children = GetNestedPrimitiveProjects(solutionFolder);
@@ -137,6 +192,9 @@ namespace Nuke.Common.ProjectModel
             return PrimitiveProjectParents.Where(x => x.Value == solutionFolder).Select(x => x.Key).ToList();
         }
 
+        /// <summary>
+        /// Removes a project from the solution.
+        /// </summary>
         public void RemoveProject(Project project)
         {
             PrimitiveProjects.Remove(project);
@@ -157,17 +215,26 @@ namespace Nuke.Common.ProjectModel
             PrimitiveProjectParents[primitiveProject] = solutionFolder;
         }
 
+        /// <summary>
+        /// Saves the solution to the specified file.
+        /// </summary>
         public void SaveAs(AbsolutePath solutionFile)
         {
             Path = solutionFile;
             Save();
         }
 
+        /// <summary>
+        /// Saves the solution to the file it was loaded from.
+        /// </summary>
         public void Save()
         {
             SolutionSerializer.Serialize(this);
         }
 
+        /// <summary>
+        /// Adds another solution to the current solution with an optional parent solution folder.
+        /// </summary>
         public void AddSolution(Solution solution, SolutionFolder folder = null)
         {
             SolutionFolder GetParentFolder(PrimitiveProject solutionFolder) =>
@@ -183,6 +250,9 @@ namespace Nuke.Common.ProjectModel
             solution.AllProjects.ForEach(x => AddProject(x.Name, x.TypeId, x.Path, x.ProjectId, x.Configurations, GetParentFolder(x) ?? folder));
         }
 
+        /// <summary>
+        /// Randomizes all project IDs in the solution.
+        /// </summary>
         public void RandomizeProjectIds()
         {
             AllSolutionFolders.ForEach(x => x.ProjectId = Guid.NewGuid());

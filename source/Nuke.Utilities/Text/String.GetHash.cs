@@ -12,6 +12,9 @@ namespace Nuke.Common.Utilities
 {
     public static partial class StringExtensions
     {
+        /// <summary>
+        /// Calculates the MD5 hash for a given string.
+        /// </summary>
         [Pure]
         public static string GetMD5Hash(this string str)
         {
@@ -20,6 +23,9 @@ namespace Nuke.Common.Utilities
             return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
 
+        /// <summary>
+        /// Calculates the SHA256 hash for a given string.
+        /// </summary>
         [Pure]
         public static string GetSHA256Hash(this string str)
         {

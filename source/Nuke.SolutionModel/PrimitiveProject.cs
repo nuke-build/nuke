@@ -8,6 +8,9 @@ using JetBrains.Annotations;
 
 namespace Nuke.Common.ProjectModel
 {
+    /// <summary>
+    /// Abstraction for <see cref="Project"/> and <see cref="SolutionFolder"/>.
+    /// </summary>
     [PublicAPI]
     public abstract class PrimitiveProject
     {
@@ -28,6 +31,9 @@ namespace Nuke.Common.ProjectModel
         public string Name { get; set; }
         public Guid TypeId { get; set; }
 
+        /// <summary>
+        /// Returns the parent <see cref="SolutionFolder"/>.
+        /// </summary>
         public SolutionFolder SolutionFolder
         {
             get => Solution.GetSolutionFolder(this);

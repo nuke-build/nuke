@@ -10,6 +10,9 @@ using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.IO
 {
+    /// <summary>
+    /// Represents a relative path with the separator of the current operating system.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [DebuggerDisplay("{" + nameof(_path) + "}")]

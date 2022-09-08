@@ -9,6 +9,9 @@ using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.IO
 {
+    /// <summary>
+    /// Represents a relative path with the UNIX separator (forward slash).
+    /// </summary>
     [PublicAPI]
     [Serializable]
     public class UnixRelativePath : RelativePath

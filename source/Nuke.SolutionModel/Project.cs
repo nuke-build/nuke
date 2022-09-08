@@ -10,6 +10,9 @@ using Nuke.Common.IO;
 
 namespace Nuke.Common.ProjectModel
 {
+    /// <summary>
+    /// Represents a project.
+    /// </summary>
     [PublicAPI]
     public class Project : PrimitiveProject
     {

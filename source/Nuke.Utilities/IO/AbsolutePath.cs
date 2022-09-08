@@ -15,6 +15,9 @@ using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.IO
 {
+    /// <summary>
+    /// Represents an absolute path without distinction between files and directories.
+    /// </summary>
     [PublicAPI]
     [Serializable]
     [TypeConverter(typeof(TypeConverter))]
@@ -77,9 +80,19 @@ namespace Nuke.Common.IO
             return path?.ToString();
         }
 
+        /// <summary>
+        /// Returns the name of the file or directory.
+        /// </summary>
         public string Name => Path.GetFileName(_path);
+
+        /// <summary>
+        /// Returns the name of the file without extension.
+        /// </summary>
         public string NameWithoutExtension => Path.GetFileNameWithoutExtension(_path);
 
+        /// <summary>
+        /// Returns the parent path (directory).
+        /// </summary>
         [CanBeNull]
         public AbsolutePath Parent =>
             !IsWinRoot(_path.TrimEnd(WinSeparator)) && !IsUncRoot(_path) && !IsUnixRoot(_path)
@@ -133,6 +146,21 @@ namespace Nuke.Common.IO
             return ((IFormattable)this).ToString(format: null, formatProvider: null);
         }
 
+        /// <summary>
+        /// <para>
+        /// Returns a string representation of the path.
+        /// </para>
+        /// <para>
+        /// Available formats are:
+        /// <ul>
+        /// <li><c>d</c> – <see cref="StringExtensions.DoubleQuote"/></li>
+        /// <li><c>dn</c> – <see cref="StringExtensions.DoubleQuoteIfNeeded(string)"/></li>
+        /// <li><c>s</c> – <see cref="StringExtensions.SingleQuote"/></li>
+        /// <li><c>sn</c> – <see cref="StringExtensions.SingleQuoteIfNeeded(string)"/></li>
+        /// <li><c>nq</c> – no quoting</li>
+        /// </ul>
+        /// </para>
+        /// </summary>
         public string ToString(string format)
         {
             return ((IFormattable)this).ToString(format, formatProvider: null);

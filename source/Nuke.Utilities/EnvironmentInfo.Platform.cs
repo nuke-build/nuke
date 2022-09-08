@@ -23,44 +23,44 @@ namespace Nuke.Common
     partial class EnvironmentInfo
     {
         /// <summary>
-        /// Returns whether the operating system is arm64 or not.
+        /// Indicates whether the operating-system is arm64.
         /// </summary>
         public static bool IsArm64 => RuntimeInformation.OSArchitecture == Architecture.Arm64;
 
         /// <summary>
-        /// Returns whether the operating system is 64-bit or not.
+        /// Indicates whether the operating-system is 64bit.
         /// </summary>
         public static bool Is64Bit => RuntimeInformation.OSArchitecture == Architecture.X64 ||
                                       RuntimeInformation.OSArchitecture == Architecture.Arm64;
 
         /// <summary>
-        /// Returns whether the operating system is 32-bit or not.
+        /// Indicates whether the operating-system is 32bit.
         /// </summary>
         public static bool Is32Bit => !Is64Bit;
 
         /// <summary>
-        /// Returns whether the operating system is a UNIX system.
+        /// Indicates whether the operating-system is UNIX.
         /// </summary>
         public static bool IsUnix => Platform == PlatformFamily.Linux ||
                                      Platform == PlatformFamily.OSX;
 
         /// <summary>
-        /// Returns whether the operating system is a Windows system.
+        /// Indicates whether the operating-system is Windows.
         /// </summary>
         public static bool IsWin => !IsUnix;
 
         /// <summary>
-        /// Returns whether the operating system is a Linux system.
+        /// Indicates whether the operating-system is Linux.
         /// </summary>
         public static bool IsLinux => Platform == PlatformFamily.Linux;
 
         /// <summary>
-        /// Returns whether the operating system is a OSX system.
+        /// Indicates whether the operating-system is OSX.
         /// </summary>
         public static bool IsOsx => Platform == PlatformFamily.OSX;
 
         /// <summary>
-        /// Returns whether the operating system is running under Windows Subsystem for Linux.
+        /// Indicates whether the current process is running under Windows Subsystem for Linux.
         /// </summary>
         public static bool IsWsl
         {
@@ -82,13 +82,13 @@ namespace Nuke.Common
         }
 
         /// <summary>
-        /// Returns the framework the build is running on.
+        /// Indicates the target framework of the current process.
         /// </summary>
         public static FrameworkName Framework
             => new FrameworkName(Assembly.GetEntryAssembly().NotNull().GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName);
 
         /// <summary>
-        /// Returns the platform the build is running on.
+        /// Indicates the operating-system platform.
         /// </summary>
         public static PlatformFamily Platform
         {

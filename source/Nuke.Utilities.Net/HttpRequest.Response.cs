@@ -10,6 +10,9 @@ namespace Nuke.Common.Utilities.Net
 {
     public static partial class HttpRequestExtensions
     {
+        /// <summary>
+        /// Executes the HTTP request and returns the response.
+        /// </summary>
         public static async Task<HttpResponseInspector> GetResponseAsync(
             this HttpRequestBuilder builder,
             CancellationToken cancellationToken = default)
@@ -18,6 +21,9 @@ namespace Nuke.Common.Utilities.Net
             return new HttpResponseInspector(response);
         }
 
+        /// <summary>
+        /// Executes the HTTP request and returns the response.
+        /// </summary>
         public static HttpResponseInspector GetResponse(this HttpRequestBuilder builder)
         {
             return builder.GetResponseAsync().GetAwaiter().GetResult();

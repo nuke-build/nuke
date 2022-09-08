@@ -14,6 +14,9 @@ namespace Nuke.Common.IO
 {
     partial class AbsolutePathExtensions
     {
+        /// <summary>
+        /// Calculates the MD5 hash of a file.
+        /// </summary>
         [Pure]
         public static string GetFileHash(this AbsolutePath path)
         {
@@ -25,6 +28,9 @@ namespace Nuke.Common.IO
             return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
         }
 
+        /// <summary>
+        /// Calculates the MD5 hash of a directory using <see cref="SearchOption.AllDirectories"/>.
+        /// </summary>
         [Pure]
         public static string GetDirectoryHash(this AbsolutePath path, Func<AbsolutePath, bool> includeFile = null)
         {
@@ -37,6 +43,9 @@ namespace Nuke.Common.IO
                 .GetFileSetHash(path);
         }
 
+        /// <summary>
+        /// Calculates the MD5 hash for a set of files in relation to a base directory.
+        /// </summary>
         [Pure]
         public static string GetFileSetHash(this IEnumerable<AbsolutePath> paths, string baseDirectory)
         {

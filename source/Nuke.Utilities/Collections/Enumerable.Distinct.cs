@@ -11,6 +11,9 @@ namespace Nuke.Common.Utilities.Collections
 {
     public static partial class EnumerableExtensions
     {
+        /// <summary>
+        /// Filters a collection to distinct/unique elements.
+        /// </summary>
         public static IEnumerable<TSource> Distinct<TSource, TValue>(this IEnumerable<TSource> enumerable, Func<TSource, TValue> selector)
         {
             return enumerable.Distinct(new DelegateEqualityComparer<TSource, TValue>(selector));

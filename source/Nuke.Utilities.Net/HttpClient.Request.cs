@@ -10,11 +10,17 @@ namespace Nuke.Common.Utilities.Net
 {
     public static partial class HttpClientExtensions
     {
+        /// <summary>
+        /// Creates an HTTP request.
+        /// </summary>
         public static HttpRequestBuilder CreateRequest(this HttpClient client, HttpMethod method, string relativeUri)
         {
             return new HttpRequestBuilder(client, new HttpRequestMessage(method, relativeUri));
         }
 
+        /// <summary>
+        /// Creates an HTTP request.
+        /// </summary>
         public static HttpRequestBuilder CreateRequest(this HttpClient client, HttpMethod method, string baseAddress, string relativeUri)
         {
             return new HttpRequestBuilder(client, new HttpRequestMessage(method, new Uri(new Uri(baseAddress), relativeUri)));

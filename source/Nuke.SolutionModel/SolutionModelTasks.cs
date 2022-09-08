@@ -63,6 +63,9 @@ namespace Nuke.Common.ProjectModel
             return SolutionSerializer.DeserializeFromFile<Solution>(solutionFile);
         }
 
+        /// <summary>
+        /// Reads the solution (*.sln) structure from a file.
+        /// </summary>
         public static Solution ReadSolution([NotNull] this AbsolutePath path)
         {
             return ParseSolution(path);

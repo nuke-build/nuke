@@ -29,6 +29,9 @@ namespace Nuke.Common.Utilities
             yield return str.Substring(next);
         }
 
+        /// <summary>
+        /// Splits a given string by camel-humps while treating exclusions as single items.
+        /// </summary>
         [Pure]
         public static IEnumerable<string> SplitCamelHumps(this string str, params string[] exclusions)
         {
@@ -57,18 +60,27 @@ namespace Nuke.Common.Utilities
                 includeSplitCharacter: true);
         }
 
+        /// <summary>
+        /// Splits a given string by new-lines with empty entries preserved.
+        /// </summary>
         [Pure]
         public static string[] SplitLineBreaks(this string str)
         {
             return str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
         }
 
+        /// <summary>
+        /// Splits a given string by spaces with empty entries removed.
+        /// </summary>
         [Pure]
         public static string[] SplitSpace(this string str)
         {
             return str.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
+        /// <summary>
+        /// Splits a given string by camel-humps while treating known-words (e.g., <em>MSBuild</em> or <em>NuGet</em>) as single items.
+        /// </summary>
         [Pure]
         public static IEnumerable<string> SplitCamelHumpsWithKnownWords(this string str)
         {

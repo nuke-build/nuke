@@ -17,29 +17,45 @@ namespace Nuke.Common.ProjectModel
             ProjectModelTasks.Initialize();
         }
 
+        /// <summary>
+        /// Returns the <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-target-framework-and-target-platform">
+        /// target frameworks</a> of the project.
+        /// </summary>
         [CanBeNull]
         public static IReadOnlyCollection<string> GetTargetFrameworks(this Project project)
         {
             return project.GetSplittedPropertyValue("TargetFramework", "TargetFrameworks");
         }
 
+        /// <summary>
+        /// Returns the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">runtime identifiers</a> of the project.
+        /// </summary>
         [CanBeNull]
         public static IReadOnlyCollection<string> GetRuntimeIdentifiers(this Project project)
         {
             return project.GetSplittedPropertyValue("RuntimeIdentifier", "RuntimeIdentifiers");
         }
 
+        /// <summary>
+        /// Returns the output type (<c>library</c>, <c>exe</c>, <c>module</c>, ...) of the project.
+        /// </summary>
         public static string GetOutputType(this Project project)
         {
             var msbuildProject = project.GetMSBuildProject();
             return msbuildProject.GetProperty("OutputType").EvaluatedValue;
         }
 
+        /// <summary>
+        /// Indicates whether the project references a package ID.
+        /// </summary>
         public static bool HasPackageReference(this Project project, string packageId)
         {
             return project.GetItems("PackageReference").Contains(packageId);
         }
 
+        /// <summary>
+        /// Returns the version of the referenced package ID.
+        /// </summary>
         public static string GetPackageReferenceVersion(this Project project, string packageId)
         {
             return project.GetItemMetadataSingleOrDefault("PackageReference", packageId, "Version");

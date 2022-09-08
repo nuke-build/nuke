@@ -13,6 +13,10 @@ namespace Nuke.Common.IO
 {
     public static partial class AbsolutePathExtensions
     {
+        /// <summary>
+        /// Indicates whether a file or directory exists. The variable or member should indicate whether it is a file (<c>*file</c>,
+        /// <c>*executable</c>, <c>*exe</c>, <c>*script</c>), or a directory (<c>*directory</c>, <c>*dir</c>, <c>*folder</c>).
+        /// </summary>
         [Pure]
         public static bool Exists(this AbsolutePath path, [CallerArgumentExpression("path")] string expression = null)
         {
@@ -24,18 +28,27 @@ namespace Nuke.Common.IO
             throw new ArgumentException($"Cannot infer from argument '{expression}' if either file or directory must exist");
         }
 
+        /// <summary>
+        /// Indicates whether the directory exists.
+        /// </summary>
         [Pure]
         public static bool FileExists(this AbsolutePath path)
         {
             return File.Exists(path);
         }
 
+        /// <summary>
+        /// Indicates whether the directory exists.
+        /// </summary>
         [Pure]
         public static bool DirectoryExists(this AbsolutePath path)
         {
             return Directory.Exists(path);
         }
 
+        /// <summary>
+        /// Indicates whether the directory contains a file (<c>*</c> as wildcard) using <see cref="SearchOption.TopDirectoryOnly"/>.
+        /// </summary>
         [Pure]
         public static bool ContainsFile(this AbsolutePath path, string pattern, SearchOption options = SearchOption.TopDirectoryOnly)
         {
@@ -43,6 +56,9 @@ namespace Nuke.Common.IO
             return path.ToDirectoryInfo().GetFiles(pattern, options).Any();
         }
 
+        /// <summary>
+        /// Indicates whether the directory contains a directory (<c>*</c> as wildcard) using <see cref="SearchOption.TopDirectoryOnly"/>.
+        /// </summary>
         [Pure]
         public static bool ContainsDirectory(this AbsolutePath path, string pattern, SearchOption options = SearchOption.TopDirectoryOnly)
         {
@@ -50,6 +66,10 @@ namespace Nuke.Common.IO
             return path.ToDirectoryInfo().GetDirectories(pattern, SearchOption.TopDirectoryOnly).Any();
         }
 
+        /// <summary>
+        /// Returns the path if a file or directory exists. The variable or member should indicate whether it is a file (<c>*file</c>,
+        /// <c>*executable</c>, <c>*exe</c>, <c>*script</c>), or a directory (<c>*directory</c>, <c>*dir</c>, <c>*folder</c>).
+        /// </summary>
         [Pure]
         [CanBeNull]
         public static AbsolutePath Existing(this AbsolutePath path, [CallerArgumentExpression("path")] string expression = null)
@@ -57,6 +77,9 @@ namespace Nuke.Common.IO
             return path.Exists(expression) ? path : null;
         }
 
+        /// <summary>
+        /// Returns the path if the file exists.
+        /// </summary>
         [Pure]
         [CanBeNull]
         public static AbsolutePath ExistingFile(this AbsolutePath path)
@@ -64,6 +87,9 @@ namespace Nuke.Common.IO
             return path.FileExists() ? path : null;
         }
 
+        /// <summary>
+        /// Returns the path if the directory exists.
+        /// </summary>
         [Pure]
         [CanBeNull]
         public static AbsolutePath ExistingDirectory(this AbsolutePath path)

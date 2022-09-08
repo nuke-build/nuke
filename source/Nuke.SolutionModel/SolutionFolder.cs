@@ -9,6 +9,9 @@ using JetBrains.Annotations;
 
 namespace Nuke.Common.ProjectModel
 {
+    /// <summary>
+    /// Represents a solution folder.
+    /// </summary>
     [PublicAPI]
     public class SolutionFolder : PrimitiveProject
     {

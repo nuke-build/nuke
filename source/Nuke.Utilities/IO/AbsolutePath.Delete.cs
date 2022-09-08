@@ -10,6 +10,9 @@ namespace Nuke.Common.IO
 {
     partial class AbsolutePathExtensions
     {
+        /// <summary>
+        /// Deletes the file when existent.
+        /// </summary>
         public static void DeleteFile(this AbsolutePath path)
         {
             if (!path.FileExists())
@@ -19,6 +22,9 @@ namespace Nuke.Common.IO
             File.Delete(path);
         }
 
+        /// <summary>
+        /// Deletes the directory recursively when existent.
+        /// </summary>
         public static void DeleteDirectory(this AbsolutePath path)
         {
             if (!path.DirectoryExists())

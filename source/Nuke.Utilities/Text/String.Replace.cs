@@ -12,6 +12,9 @@ namespace Nuke.Common.Utilities
 {
     public static partial class StringExtensions
     {
+        /// <summary>
+        /// Replaces matches of regular expressions.
+        /// </summary>
         [Pure]
         public static string ReplaceRegex(
             this string str,
