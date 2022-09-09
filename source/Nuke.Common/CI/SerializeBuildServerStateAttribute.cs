@@ -8,8 +8,7 @@ using Nuke.Common.Execution;
 
 namespace Nuke.Common.CI
 {
-    public class SerializeBuildServerStateAttribute
-        : BuildServerConfigurationGenerationAttributeBase, IOnBuildFinished
+    internal class SerializeBuildServerStateAttribute : BuildServerConfigurationGenerationAttributeBase, IOnBuildFinished
     {
         public void OnBuildFinished()
         {

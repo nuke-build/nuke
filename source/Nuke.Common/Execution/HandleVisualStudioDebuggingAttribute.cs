@@ -12,10 +12,9 @@ using JetBrains.Annotations;
 
 namespace Nuke.Common.Execution
 {
-    [PublicAPI]
-    public class HandleVisualStudioDebuggingAttribute : BuildExtensionAttributeBase, IOnBuildCreated
+    internal class HandleVisualStudioDebuggingAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        public int TimeoutInMilliseconds { get; } = 10_000;
+        private const int TimeoutInMilliseconds = 10_000;
 
         public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {

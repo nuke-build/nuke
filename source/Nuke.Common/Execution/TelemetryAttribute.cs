@@ -8,10 +8,7 @@ using System.Linq;
 
 namespace Nuke.Common.Execution
 {
-    internal class TelemetryAttribute
-        : BuildExtensionAttributeBase,
-            IOnBuildInitialized,
-            IOnTargetSucceeded
+    internal class TelemetryAttribute : BuildExtensionAttributeBase, IOnBuildInitialized, IOnTargetSucceeded
     {
         public void OnBuildInitialized(
             IReadOnlyCollection<ExecutableTarget> executableTargets,

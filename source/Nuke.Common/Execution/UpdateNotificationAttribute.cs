@@ -11,9 +11,7 @@ using static Nuke.Common.Constants;
 
 namespace Nuke.Common.Execution
 {
-    internal class UpdateNotificationAttribute : BuildExtensionAttributeBase,
-        IOnBuildCreated,
-        IOnBuildFinished
+    internal class UpdateNotificationAttribute : BuildExtensionAttributeBase, IOnBuildCreated, IOnBuildFinished
     {
         public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {

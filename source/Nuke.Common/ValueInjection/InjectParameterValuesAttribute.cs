@@ -9,7 +9,7 @@ using Nuke.Common.Execution;
 
 namespace Nuke.Common.ValueInjection
 {
-    public class InjectParameterValuesAttribute : BuildExtensionAttributeBase, IOnBuildCreated
+    internal class InjectParameterValuesAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
         public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {

@@ -18,8 +18,7 @@ using Serilog;
 
 namespace Nuke.Common.Execution
 {
-    [PublicAPI]
-    public class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBase, IOnBuildCreated
+    internal class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
         public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
