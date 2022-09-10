@@ -5,6 +5,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using JetBrains.Annotations;
 
@@ -12,41 +13,50 @@ namespace Nuke.Common.IO
 {
     public static partial class SerializationTasks
     {
-        public static void XmlSerializeToFile<T>(T obj, string path)
+        public static void XmlSerializeToFile<T>(T obj, string path, SaveOptions options = SaveOptions.None)
         {
-            TextTasks.WriteAllText(path, XmlSerialize(obj));
+            TextTasks.WriteAllText(path, XmlSerialize(obj, options));
         }
 
         [Pure]
-        public static T XmlDeserializeFromFile<T>(string path)
+        public static T XmlDeserializeFromFile<T>(string path, LoadOptions options = LoadOptions.PreserveWhitespace)
         {
-            return XmlDeserialize<T>(File.ReadAllText(path));
+            return XmlDeserialize<T>(File.ReadAllText(path), options);
         }
 
         [Pure]
-        public static string XmlSerialize<T>(T obj)
+        public static string XmlSerialize<T>(T obj, SaveOptions options = SaveOptions.None)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));
+            var xmlDocument = new XDocument();
 
-            using var streamWriter = new StringWriter();
-            xmlSerializer.Serialize(streamWriter, obj);
-            return streamWriter.ToString();
+            using (var writer = xmlDocument.CreateWriter())
+            {
+                xmlSerializer.Serialize(writer, obj);
+            }
+
+            return xmlDocument.ToString(options);
         }
 
         [Pure]
-        public static T XmlDeserialize<T>(string content)
+        public static T XmlDeserialize<T>(string content, LoadOptions options = LoadOptions.PreserveWhitespace)
         {
             var xmlSerializer = new XmlSerializer(typeof(T));
+            var xmlDocument = XDocument.Parse(content, options);
 
-            using var memoryStream = new StringReader(content);
-            return (T) xmlSerializer.Deserialize(memoryStream);
+            using var reader = xmlDocument.Root.NotNull().CreateReader();
+            return (T) xmlSerializer.Deserialize(reader);
         }
 
-        public static void XmlUpdateFile<T>(string path, Action<T> update)
+        public static void XmlUpdateFile<T>(
+            string path,
+            Action<T> update,
+            LoadOptions loadOptions = LoadOptions.PreserveWhitespace,
+            SaveOptions saveOptions = SaveOptions.None)
         {
-            var obj = XmlDeserializeFromFile<T>(path);
+            var obj = XmlDeserializeFromFile<T>(path, loadOptions);
             update.Invoke(obj);
-            XmlSerializeToFile(obj, path);
+            XmlSerializeToFile(obj, path, saveOptions);
         }
     }
 }
