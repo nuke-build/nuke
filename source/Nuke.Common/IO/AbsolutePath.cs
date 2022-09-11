@@ -91,6 +91,11 @@ namespace Nuke.Common.IO
             return new AbsolutePath(Combine(left.NotNull(), right));
         }
 
+        public static AbsolutePath operator +(AbsolutePath left, [CanBeNull] string right)
+        {
+            return new AbsolutePath(left.ToString() + right);
+        }
+
         public static bool operator ==(AbsolutePath a, AbsolutePath b)
         {
             return EqualityComparer<AbsolutePath>.Default.Equals(a, b);
