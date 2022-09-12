@@ -91,84 +91,224 @@ namespace Nuke.Common
         }
 
         [Obsolete("Use Serilog.Log.Verbose instead")]
+        [CodeTemplate(
+            searchTemplate: "Trace($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Verbose($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Trace($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Verbose($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Trace(string format, params object[] args)
         {
             Serilog.Log.Verbose(format, args);
         }
 
         [Obsolete("Use Serilog.Log.Verbose instead")]
+        [CodeTemplate(
+            searchTemplate: "Trace($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Verbose($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Trace($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Verbose($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Trace(object value)
         {
             Serilog.Log.Verbose("{Object}", value);
         }
 
         [Obsolete("Use Serilog.Log.Verbose instead")]
+        [CodeTemplate(
+            searchTemplate: "Trace($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Verbose($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Trace($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Verbose($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Trace(string text = null)
         {
             Serilog.Log.Verbose(text);
         }
 
         [Obsolete("Use Serilog.Log.Information instead")]
+        [CodeTemplate(
+            searchTemplate: "Info($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Information($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Info($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Information($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Info(string format, params object[] args)
         {
             Serilog.Log.Information(format, args);
         }
 
         [Obsolete("Use Serilog.Log.Information instead")]
+        [CodeTemplate(
+            searchTemplate: "Info($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Information($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Info($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Information($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Info(object value)
         {
             Serilog.Log.Information("{Object}", value);
         }
 
         [Obsolete("Use Serilog.Log.Information instead")]
+        [CodeTemplate(
+            searchTemplate: "Info($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Information($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Info($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Information($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Info(string text = null)
         {
             Serilog.Log.Information(text);
         }
 
         [Obsolete("Use Serilog.Log.Warning instead")]
+        [CodeTemplate(
+            searchTemplate: "Warn($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Warning($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Warn($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Warning($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Warn(string format, params object[] args)
         {
             Serilog.Log.Warning(format, args);
         }
 
         [Obsolete("Use Serilog.Log.Warning instead")]
+        [CodeTemplate(
+            searchTemplate: "Warn($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Warning($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Warn($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Warning($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Warn(object value)
         {
             Serilog.Log.Warning("{Object}", value);
         }
 
         [Obsolete("Use Serilog.Log.Warning instead")]
+        [CodeTemplate(
+            searchTemplate: "Warn($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Warning($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Warn($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Warning($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Warn(string text = null)
         {
             Serilog.Log.Warning(text);
         }
 
         [Obsolete("Use Serilog.Log.Warning instead")]
+        [CodeTemplate(
+            searchTemplate: "Warn($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Warning($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Warn($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Warning($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Warn(Exception exception)
         {
             Serilog.Log.Warning(exception, exception.Message);
         }
 
         [Obsolete("Use Serilog.Log.Error instead")]
+        [CodeTemplate(
+            searchTemplate: "Error($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Error($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Error($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Error($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Error(string format, params object[] args)
         {
             Serilog.Log.Error(format, args);
         }
 
         [Obsolete("Use Serilog.Log.Error instead")]
+        [CodeTemplate(
+            searchTemplate: "Error($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Error($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Error($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Error($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Error(object value)
         {
             Serilog.Log.Error("{Object}", value);
         }
 
         [Obsolete("Use Serilog.Log.Error instead")]
+        [CodeTemplate(
+            searchTemplate: "Error($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Error($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Error($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Error($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Error(string text = null)
         {
             Serilog.Log.Error(text);
         }
 
         [Obsolete("Use Serilog.Log.Error instead")]
+        [CodeTemplate(
+            searchTemplate: "Error($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Error($args$)",
+            ReplaceMessage = "Replace with Serilog")]
+        [CodeTemplate(
+            searchTemplate: "Logger.Error($args$)",
+            Message = $"WARNING: {nameof(Logger)} is obsolete",
+            ReplaceTemplate = "Serilog.Log.Error($args$)",
+            ReplaceMessage = "Replace with Serilog")]
         public static void Error(Exception exception)
         {
             Serilog.Log.Error(exception, exception.Message);
