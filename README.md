@@ -103,6 +103,7 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Chase Florell](https://avatars.githubusercontent.com/ChaseFlorell?s=60&v=4)](https://github.com/ChaseFlorell)
 [![business//acts](https://avatars.githubusercontent.com/BusinessActs?s=60&v=4)](https://github.com/BusinessActs)
 [![xsegno GmbH](https://avatars.githubusercontent.com/xsegno?s=60&v=4)](https://github.com/xsegno)
+[![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=60&v=4)](https://github.com/stevenkuhn)
 
 [![Stephan Müller](https://avatars.githubusercontent.com/chaquotay?s=45&v=4)](https://github.com/chaquotay)
 [![Bitbonk](https://avatars.githubusercontent.com/bitbonk?s=45&v=4)](https://github.com/bitbonk)
@@ -114,9 +115,11 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Martin Gill](https://avatars.githubusercontent.com/MartinSGill?s=45&v=4)](https://github.com/MartinSGill)
 [![Trey Cook](https://avatars.githubusercontent.com/hfcook3?s=45&v=4)](https://github.com/hfcook3)
 [![Todor Todorov](https://avatars.githubusercontent.com/totollygeek?s=45&v=4)](https://github.com/totollygeek)
-[![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=45&v=4)](https://github.com/stevenkuhn)
-[![Adam Renaud](https://avatars.githubusercontent.com/rena0157?s=45&v=4)](https://github.com/rena0157)
 [![Vezel](https://avatars.githubusercontent.com/vezel-dev?s=45&v=4)](https://github.com/vezel-dev)
+[![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
+[![Rich Bryant](https://avatars.githubusercontent.com/richbryant?s=45&v=4)](https://github.com/richbryant)
+[<img height="45px" src="https://images.opencollective.com/archon-systems-inc/85fa9b1/logo/256.png" alt="Archon Systems Inc." />](https://opencollective.com/archon-systems-inc/)
+[<img height="45px" src="https://images.opencollective.com/bitzer-electronics-as/39862ac/logo/256.png" alt="BITZER Electronics A/S" />](https://opencollective.com/bitzer-electronics-as)
 
 ## Technology Sponsors
 
