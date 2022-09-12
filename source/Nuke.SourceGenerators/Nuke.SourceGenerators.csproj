@@ -34,24 +34,16 @@
   </Target>
 
   <ItemGroup>
-    <Compile Include="..\Nuke.Common\Assert.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Common\CallerArgumentExpressionAttribute.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Common\Constants.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Common\EnvironmentInfo.Platform.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Common\EnvironmentInfo.SpecialFolder.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Common\IO\AbsolutePath.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\IO\Globbing.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\IO\PathConstruction.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\IO\RelativePath.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\IO\WinRelativePath.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\IO\UnixRelativePath.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\ProjectModel\*.cs" LinkBase=".\Linked\ProjectModel" />
-    <Compile Include="..\Nuke.Common\Utilities\Collections\*.cs" LinkBase=".\Linked\Utilities" />
-    <Compile Include="..\Nuke.Common\Utilities\String.*.cs" LinkBase=".\Linked\Utilities" />
-
-    <Compile Remove="..\Nuke.Common\ProjectModel\SolutionAttribute.cs" LinkBase=".\Linked\ProjectModel" />
-    <Compile Remove="..\Nuke.Common\ProjectModel\Project.*.cs" LinkBase=".\Linked\ProjectModel" />
-    <Compile Remove="..\Nuke.Common\ProjectModel\ProjectModelTasks.cs" LinkBase=".\Linked\ProjectModel" />
+    <Compile Include="..\Nuke.Build.Shared\Constants.cs" LinkBase=".\Linked" />
+    <Compile Include="..\Nuke.SolutionModel\*.cs" LinkBase=".\Linked\SolutionModel" />
+    <Compile Include="..\Nuke.Utilities\Assert.cs" LinkBase=".\Linked" />
+    <Compile Include="..\Nuke.Utilities\Collections\*.cs" LinkBase=".\Linked\Utilities" />
+    <Compile Include="..\Nuke.Utilities\EnvironmentInfo.Platform.cs" LinkBase=".\Linked" />
+    <Compile Include="..\Nuke.Utilities\EnvironmentInfo.SpecialFolder.cs" LinkBase=".\Linked" />
+    <Compile Include="..\Nuke.Utilities\IO\*.cs" LinkBase=".\Linked\IO" />
+    <Compile Include="..\Nuke.Utilities\Shims\CallerArgumentExpressionAttribute.cs" LinkBase=".\Linked" />
+    <Compile Include="..\Nuke.Utilities\Text\*.cs" LinkBase=".\Linked\Utilities" />
+    <Compile Include="..\Nuke.Utilities.IO.Globbing\Globbing.cs" LinkBase=".\Linked\IO" />
   </ItemGroup>
 
 </Project>

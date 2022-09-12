@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Nuke.Common;
 using Nuke.Common.ProjectModel;
 using VerifyXunit;
 using Xunit;
@@ -84,8 +85,9 @@ partial class Build : NukeBuild
         {
             return CSharpCompilation.Create("compilation",
                 new[] { CSharpSyntaxTree.ParseText(source) },
-                new[] { MetadataReference.CreateFromFile(typeof(SolutionAttribute).Assembly.Location) }
-                    .Concat(Basic.Reference.Assemblies.NetStandard20.All),
+                Basic.Reference.Assemblies.NetStandard20.All
+                    .Concat(new[] { typeof(NukeBuild), typeof(SolutionAttribute) }
+                        .Select(x => MetadataReference.CreateFromFile(x.Assembly.Location))),
                 new CSharpCompilationOptions(OutputKind.ConsoleApplication));
         }
     }

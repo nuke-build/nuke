@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nuke.Build.Shared\Nuke.Build.Shared.csproj" />
+    <ProjectReference Include="..\Nuke.Tooling\Nuke.Tooling.csproj" />
+  </ItemGroup>
+
+</Project>

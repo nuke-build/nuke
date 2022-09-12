@@ -17,9 +17,7 @@ using Nuke.Common.Gitter;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
-#if NETCORE
 using Nuke.Common.Utilities.Net;
-#endif
 
 namespace Nuke.Common.Tools.Slack
 {
@@ -28,7 +26,6 @@ namespace Nuke.Common.Tools.Slack
     {
         private static HttpClient s_client = new HttpClient();
 
-#if NETCORE
         public static void SendSlackMessage(Configure<SlackMessage> configurator, string webhook)
         {
             SendSlackMessageAsync(configurator, webhook).Wait();
@@ -46,7 +43,6 @@ namespace Nuke.Common.Tools.Slack
             var responseText = await response.GetBodyAsync();
             Assert.True(responseText == "ok");
         }
-#endif
 
         public static async Task<string> SendOrUpdateSlackMessage(Configure<SlackMessage> configurator, string accessToken)
         {

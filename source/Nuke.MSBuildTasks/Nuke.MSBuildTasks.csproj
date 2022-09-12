@@ -6,7 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nuke.Tooling\Nuke.Tooling.csproj" />
     <ProjectReference Include="..\Nuke.Tooling.Generator\Nuke.Tooling.Generator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NuGet.Packaging" Version="5.11.0" />
   </ItemGroup>
 
   <ItemGroup>

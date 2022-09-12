@@ -1,28 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;net472</TargetFrameworks>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="CI\TeamCity\Configuration\pom.xml" />
     <!--<None Remove="execution-plan.html" />-->
-    <EmbeddedResource Include="Execution\execution-plan.html" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Nuke.Build\Nuke.Build.csproj" />
+    <ProjectReference Include="..\Nuke.Build.Shared\Nuke.Build.Shared.csproj" />
+    <ProjectReference Include="..\Nuke.ProjectModel\Nuke.ProjectModel.csproj" />
+    <ProjectReference Include="..\Nuke.SolutionModel\Nuke.SolutionModel.csproj" />
+    <ProjectReference Include="..\Nuke.Tooling\Nuke.Tooling.csproj" />
+    <ProjectReference Include="..\Nuke.Utilities\Nuke.Utilities.csproj" />
+    <ProjectReference Include="..\Nuke.Utilities.IO.Globbing\Nuke.Utilities.IO.Globbing.csproj" />
+    <ProjectReference Include="..\Nuke.Utilities.Net\Nuke.Utilities.Net.csproj" />
+    <ProjectReference Include="..\Nuke.Utilities.Text.Json\Nuke.Utilities.Text.Json.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Glob" Version="1.1.8" />
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.20.0" />
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.4" />
-    <PackageReference Include="Microsoft.Build" Version="16.9.0" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="16.9.0" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.Build.Locator" Version="1.4.1" />
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="16.9.0" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.9.0" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.4" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NuGet.Packaging" Version="5.11.0" />
     <PackageReference Include="Octokit" Version="4.0.2" />
     <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
     <PackageReference Include="Serilog.Formatting.Compact.Reader" Version="1.0.5" />

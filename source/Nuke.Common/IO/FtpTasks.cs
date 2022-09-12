@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using JetBrains.Annotations;
 using Serilog;
+#pragma warning disable SYSLIB0014
 
 namespace Nuke.Common.IO
 {
