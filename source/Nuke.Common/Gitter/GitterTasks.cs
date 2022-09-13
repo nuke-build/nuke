@@ -3,13 +3,10 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading;
 using System.Threading.Tasks;
-using JetBrains.Annotations;
+using Nuke.Common.Utilities.Net;
 
 namespace Nuke.Common.Gitter
 {
@@ -23,6 +20,8 @@ namespace Nuke.Common.Gitter
 
     public static class GitterTasks
     {
+        private static HttpClient s_client = new HttpClient();
+
         public static void SendGitterMessage(string message, string roomId, string token)
         {
             SendGitterMessageAsync(message, roomId, token).Wait();
@@ -30,27 +29,11 @@ namespace Nuke.Common.Gitter
 
         public static async Task SendGitterMessageAsync(string message, string roomId, string token)
         {
-            // TODO: consolidate response check from Gitter, Slack and Twitter
-            using var client = new HttpClient(new AuthenticatedHttpClientHandler(token));
-            await client.PostAsync(
-                $"https://api.gitter.im/v1/rooms/{roomId}/chatMessages",
-                new FormUrlEncodedContent(new Dictionary<string, string> { { "text", message } }));
-        }
+            var response = await s_client.CreateRequest(HttpMethod.Post, $"https://api.gitter.im/v1/rooms/{roomId}/chatMessages")
+                .WithBearerAuthentication(token)
+                .GetResponseAsync();
 
-        internal class AuthenticatedHttpClientHandler : HttpClientHandler
-        {
-            private readonly string _token;
-
-            public AuthenticatedHttpClientHandler(string token)
-            {
-                _token = token;
-            }
-
-            protected override async Task<HttpResponseMessage> SendAsync([NotNull] HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _token);
-                return await base.SendAsync(request, cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
-            }
+            response.AssertSuccessfulStatusCode();
         }
     }
 }

@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net;
@@ -17,8 +18,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 #if NETCORE
-using System.Collections.Specialized;
-using System.Web;
+using Nuke.Common.Utilities.Net;
 #endif
 
 namespace Nuke.Common.Tools.Slack
@@ -26,6 +26,8 @@ namespace Nuke.Common.Tools.Slack
     [PublicAPI]
     public static class SlackTasks
     {
+        private static HttpClient s_client = new HttpClient();
+
 #if NETCORE
         public static void SendSlackMessage(Configure<SlackMessage> configurator, string webhook)
         {
@@ -36,29 +38,12 @@ namespace Nuke.Common.Tools.Slack
         {
             var message = configurator(new SlackMessage());
             var payload = JsonConvert.SerializeObject(message);
-            var data = new NameValueCollection { ["payload"] = payload };
 
-            using var client = new WebClient();
+            var response = await s_client.CreateRequest(HttpMethod.Post, webhook)
+                .WithFormUrlEncodedContent(new Dictionary<string, string> { ["payload"] = payload })
+                .GetResponseAsync();
 
-            client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
-
-            var stringBuilder = new StringBuilder();
-            var str = string.Empty;
-            foreach (var key in data.AllKeys)
-            {
-                stringBuilder
-                    .Append(str)
-                    .Append(HttpUtility.UrlEncode(key))
-                    .Append(value: '=')
-                    .Append(HttpUtility.UrlEncode(data[key]));
-
-                str = "&";
-            }
-
-            var bytes = Encoding.ASCII.GetBytes(stringBuilder.ToString());
-
-            var response = await client.UploadDataTaskAsync(webhook, "POST", bytes);
-            var responseText = Encoding.UTF8.GetString(response);
+            var responseText = await response.GetBodyAsync();
             Assert.True(responseText == "ok");
         }
 #endif
@@ -66,29 +51,21 @@ namespace Nuke.Common.Tools.Slack
         public static async Task<string> SendOrUpdateSlackMessage(Configure<SlackMessage> configurator, string accessToken)
         {
             var message = configurator(new SlackMessage());
-            var response = await PostMessage(
-                message.Timestamp == null
-                    ? "https://slack.com/api/chat.postMessage"
-                    : "https://slack.com/api/chat.update",
-                message,
-                accessToken);
-            return response.GetPropertyStringValue("ts");
-        }
 
-        private static async Task<JObject> PostMessage(string url, object message, string accessToken)
-        {
-            var httpHandler = new GitterTasks.AuthenticatedHttpClientHandler(accessToken);
-            using var client = new HttpClient(httpHandler);
+            var response = await s_client.CreateRequest(
+                    HttpMethod.Post,
+                    message.Timestamp == null
+                        ? "https://slack.com/api/chat.postMessage"
+                        : "https://slack.com/api/chat.update")
+                .WithBearerAuthentication(accessToken)
+                .WithJsonContent(message)
+                .GetResponseAsync();
 
-            var payload = JsonConvert.SerializeObject(message, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-            var response = await client.PostAsync(url, new StringContent(payload, Encoding.UTF8, "application/json"));
-            var responseContent = await response.Content.ReadAsStringAsync();
-            Assert.True(response.StatusCode == HttpStatusCode.OK, responseContent);
-
-            var jobject = SerializationTasks.JsonDeserialize<JObject>(responseContent);
+            var jobject = await response.GetBodyAsJson();
             var error = jobject.GetPropertyValueOrNull<string>("error");
             Assert.True(error == null, error);
-            return jobject;
+
+            return jobject.GetPropertyStringValue("ts");
         }
     }
 

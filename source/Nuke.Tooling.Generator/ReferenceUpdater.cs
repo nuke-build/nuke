@@ -7,12 +7,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
 using JetBrains.Annotations;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common;
+using Nuke.Common.Utilities.Net;
 using Serilog;
 
 namespace Nuke.CodeGeneration
@@ -20,6 +22,8 @@ namespace Nuke.CodeGeneration
     [PublicAPI]
     public static class ReferenceUpdater
     {
+        private static HttpClient s_client = new HttpClient();
+
         public static void UpdateReferences(string specificationsDirectory, string referencesDirectory = null)
         {
             UpdateReferences(Directory.GetFiles(specificationsDirectory, "*.json", SearchOption.TopDirectoryOnly), referencesDirectory);
@@ -57,12 +61,11 @@ namespace Nuke.CodeGeneration
         private static async Task<string> GetReferenceContent(string reference)
         {
             var referenceValues = reference.Split('#');
-
             var tempFile = Path.GetTempFileName();
-            using (var webClient = new AutomaticDecompressingWebClient())
-            {
-                await webClient.DownloadFileTaskAsync(referenceValues[0], tempFile);
-            }
+
+            var response = await s_client.CreateRequest(HttpMethod.Get, referenceValues[0])
+                .GetResponseAsync();
+            await response.WriteToFile(tempFile);
 
             if (referenceValues.Length == 1)
                 return File.ReadAllText(tempFile, Encoding.UTF8);
@@ -73,18 +76,18 @@ namespace Nuke.CodeGeneration
             return selectedNode.NotNull().InnerText;
         }
 
-        private class AutomaticDecompressingWebClient : WebClient
-        {
-            [CanBeNull]
-            protected override WebRequest GetWebRequest(Uri address)
-            {
-                var request = base.GetWebRequest(address) as HttpWebRequest;
-
-                if (request != null)
-                    request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
-
-                return request;
-            }
-        }
+        // private class AutomaticDecompressingWebClient : WebClient
+        // {
+        //     [CanBeNull]
+        //     protected override WebRequest GetWebRequest(Uri address)
+        //     {
+        //         var request = base.GetWebRequest(address) as HttpWebRequest;
+        //
+        //         if (request != null)
+        //             request.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+        //
+        //         return request;
+        //     }
+        // }
     }
 }
