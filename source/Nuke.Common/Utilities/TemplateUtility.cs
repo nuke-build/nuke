@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
@@ -59,35 +58,37 @@ namespace Nuke.Common.Utilities
         }
 
         public static void FillTemplateDirectoryRecursively(
-            string directory,
+            AbsolutePath directory,
             IReadOnlyDictionary<string, string> tokens = null,
-            Func<DirectoryInfo, bool> excludeDirectory = null,
-            Func<FileInfo, bool> excludeFile = null)
+            Func<AbsolutePath, bool> excludeDirectory = null,
+            Func<AbsolutePath, bool> excludeFile = null)
         {
             Log.Information("Recursively filling out template directory {Directory} ...", directory);
-            FillTemplateDirectoryRecursivelyInternal(new DirectoryInfo(directory), tokens, excludeDirectory, excludeFile);
+            FillTemplateDirectoryRecursivelyInternal(directory, tokens, excludeDirectory, excludeFile);
         }
 
         private static void FillTemplateDirectoryRecursivelyInternal(
-            DirectoryInfo directory,
+            AbsolutePath directory,
             [CanBeNull] IReadOnlyDictionary<string, string> tokens,
-            [CanBeNull] Func<DirectoryInfo, bool> excludeDirectory,
-            [CanBeNull] Func<FileInfo, bool> excludeFile = null)
+            [CanBeNull] Func<AbsolutePath, bool> excludeDirectory,
+            [CanBeNull] Func<AbsolutePath, bool> excludeFile = null)
         {
+            Assert.DirectoryExists(directory);
+
             if (excludeDirectory != null && excludeDirectory(directory))
                 return;
 
-            bool ShouldMove(FileSystemInfo file) => tokens?.Keys.Any(x => file.Name.Contains(x)) ?? false;
+            bool ShouldMove(AbsolutePath file) => tokens?.Keys.Any(x => file.Name.Contains(x)) ?? false;
 
             foreach (var file in directory.GetFiles())
             {
                 if (excludeFile != null && excludeFile(file))
                     continue;
 
-                FillTemplateFile(file.FullName, tokens);
+                FillTemplateFile(file, tokens);
 
                 if (ShouldMove(file))
-                    FileSystemTasks.RenameFile(file.FullName, file.Name.Replace(tokens), FileExistsPolicy.OverwriteIfNewer);
+                    FileSystemTasks.RenameFile(file, file.Name.Replace(tokens), FileExistsPolicy.OverwriteIfNewer);
             }
 
             directory.GetDirectories()
@@ -96,7 +97,7 @@ namespace Nuke.Common.Utilities
             if (ShouldMove(directory))
             {
                 FileSystemTasks.RenameDirectory(
-                    directory.FullName,
+                    directory,
                     directory.Name.Replace(tokens),
                     DirectoryExistsPolicy.Merge,
                     FileExistsPolicy.OverwriteIfNewer);
@@ -104,10 +105,10 @@ namespace Nuke.Common.Utilities
         }
 
         public static void FillTemplateFile(
-            string file,
+            AbsolutePath file,
             IReadOnlyDictionary<string, string> tokens = null)
         {
-            TextTasks.WriteAllLines(file, FillTemplate(TextTasks.ReadAllLines(file), tokens));
+            file.WriteAllLines(FillTemplate(file.ReadAllLines(), tokens));
         }
 
         public static string[] FillTemplate(
