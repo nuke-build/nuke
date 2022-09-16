@@ -63,7 +63,7 @@ namespace Nuke.Common.IO
         }
 
         [ContractAnnotation("null => null")]
-        public static explicit operator AbsolutePath([CanBeNull] string path)
+        public static implicit operator AbsolutePath([CanBeNull] string path)
         {
             if (path is null)
                 return null;
