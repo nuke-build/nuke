@@ -47,6 +47,11 @@ namespace Nuke.Common.ProjectModel
             return solution.Path;
         }
 
+        public static implicit operator AbsolutePath(Solution solution)
+        {
+            return solution.Path;
+        }
+
         public override string ToString()
         {
             return Path ?? "<in-memory solution>";
