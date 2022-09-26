@@ -46,15 +46,12 @@ namespace Nuke.GlobalTool
         {
             var configuration = GetConfiguration(buildScript, evaluate: true);
             var buildProjectFile = (AbsolutePath) configuration[BUILD_PROJECT_FILE];
-            var solutionDirectory = (AbsolutePath) configuration.GetValueOrDefault(SOLUTION_DIRECTORY);
 
             WriteBuildScripts(
                 scriptDirectory: buildScript.Parent,
                 rootDirectory,
-                solutionDirectory,
                 buildDirectory: buildProjectFile.NotNull().Parent,
-                buildProjectName: Path.GetFileNameWithoutExtension(buildProjectFile),
-                solutionDirectory == null ? PLATFORM_NETCORE : PLATFORM_NETFX);
+                buildProjectName: Path.GetFileNameWithoutExtension(buildProjectFile));
         }
 
         private static void UpdateBuildProject(AbsolutePath buildScript)

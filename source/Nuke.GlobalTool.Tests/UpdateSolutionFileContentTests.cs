@@ -4,16 +4,20 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Nuke.Common.Utilities;
+using VerifyXunit;
 using Xunit;
 
 namespace Nuke.GlobalTool.Tests
 {
+    [UsesVerify]
     public class UpdateSolutionFileContentTests
     {
         [Theory]
         [InlineData(
+            1,
             @"
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
@@ -71,6 +75,7 @@ Global
 EndGlobal
 ")]
         [InlineData(
+            2,
             @"
 Microsoft Visual Studio Solution File, Format Version 12.00
 Global
@@ -104,6 +109,7 @@ Global
 EndGlobal
 ")]
         [InlineData(
+            3,
             @"
 Microsoft Visual Studio Solution File, Format Version 12.00
 Global
@@ -128,12 +134,13 @@ Global
 	EndGlobalSection
 EndGlobal
 ")]
-        public void Test(string input, string expected)
+        public Task Test(int number, string input, string expected)
         {
             var content = input.SplitLineBreaks().ToList();
-            Program.UpdateSolutionFileContent(content, "RELATIVE", "GUID", "KIND", "NAME");
+            Program.UpdateSolutionFileContent(content, "RELATIVE", "GUID", "NAME");
 
-            content.Should().BeEquivalentTo(expected.SplitLineBreaks());
+            return Verifier.Verify(expected)
+                .UseParameters(number);
         }
     }
 }

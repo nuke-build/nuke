@@ -18,7 +18,6 @@ namespace Nuke.GlobalTool
     {
         private const string BUILD_PROJECT_FILE = nameof(BUILD_PROJECT_FILE);
         private const string TEMP_DIRECTORY = nameof(TEMP_DIRECTORY);
-        private const string SOLUTION_DIRECTORY = nameof(SOLUTION_DIRECTORY);
         private const string DOTNET_GLOBAL_FILE = nameof(DOTNET_GLOBAL_FILE);
         private const string DOTNET_INSTALL_URL = nameof(DOTNET_INSTALL_URL);
         private const string DOTNET_CHANNEL = nameof(DOTNET_CHANNEL);
