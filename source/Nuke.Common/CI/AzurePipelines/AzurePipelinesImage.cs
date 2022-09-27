@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,6 +26,7 @@ namespace Nuke.Common.CI.AzurePipelines
         [EnumValue("macOS-latest")] MacOsLatest,
         [EnumValue("macOS-11")] MacOs11,
         [EnumValue("macOS-10.15")] MacOs1015,
-        [EnumValue("macOS-10.14")] MacOs1014
+        [EnumValue("macOS-10.14")] MacOs1014,
+        [EnumValue("OnPrem")] OnPrem
     }
 }

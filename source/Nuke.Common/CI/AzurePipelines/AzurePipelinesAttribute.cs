@@ -117,6 +117,7 @@ namespace Nuke.Common.CI.AzurePipelines
         public string[] ImportVariableGroups { get; set; } = new string[0];
         public string[] ImportSecrets { get; set; } = new string[0];
         public bool EnableAccessToken { get; set; }
+        public string[] OnPremPools { get; set; } = new string[0];
 
         public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
         {
@@ -130,7 +131,8 @@ namespace Nuke.Common.CI.AzurePipelines
                        VariableGroups = ImportVariableGroups,
                        VcsPushTrigger = GetVcsPushTrigger(),
                        VcsPullRequestTrigger = GetVcsPullRequestTrigger(),
-                       Stages = _images.Select(x => GetStage(x, relevantTargets)).ToArray()
+                       Stages = _images.Where(x => !x.Equals(AzurePipelinesImage.OnPrem)).Select(x => GetStage(x, relevantTargets))
+                                        .Concat(OnPremPools.Select(x => GetStage(x, relevantTargets))).ToArray()
                    };
         }
 
@@ -204,6 +206,26 @@ namespace Nuke.Common.CI.AzurePipelines
                    };
         }
 
+        protected virtual AzurePipelinesStage GetStage(
+            string onpremPoolName,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets)
+        {
+            var lookupTable = new LookupTable<ExecutableTarget, AzurePipelinesJob>();
+            var jobs = relevantTargets
+                .Select(x => (ExecutableTarget: x, Job: GetJob(x, lookupTable, relevantTargets, onpremPoolName)))
+                .ForEachLazy(x => lookupTable.Add(x.ExecutableTarget, x.Job))
+                .Select(x => x.Job).ToArray();
+
+            return new AzurePipelinesStage
+            {
+                Name = onpremPoolName.Replace("-", "_").Replace(".", "_"),
+                DisplayName = onpremPoolName,
+                PoolName = onpremPoolName,
+                Dependencies = new AzurePipelinesStage[0],
+                Jobs = jobs
+            };
+        }
+
         protected virtual AzurePipelinesJob GetJob(
             ExecutableTarget executableTarget,
             LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
@@ -220,6 +242,24 @@ namespace Nuke.Common.CI.AzurePipelines
                        Parallel = totalPartitions,
                        Steps = GetSteps(executableTarget, relevantTargets, image).ToArray(),
                    };
+        }
+
+        protected virtual AzurePipelinesJob GetJob(
+            ExecutableTarget executableTarget,
+            LookupTable<ExecutableTarget, AzurePipelinesJob> jobs,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets,
+            string onpremPoolName)
+        {
+            var totalPartitions = executableTarget.PartitionSize ?? 0;
+            var dependencies = GetTargetDependencies(executableTarget).SelectMany(x => jobs[x]).ToArray();
+            return new AzurePipelinesJob
+            {
+                Name = executableTarget.Name,
+                DisplayName = executableTarget.Name,
+                Dependencies = dependencies,
+                Parallel = totalPartitions,
+                Steps = GetSteps(executableTarget, relevantTargets, onpremPoolName).ToArray(),
+            };
         }
 
         protected virtual IEnumerable<AzurePipelinesStep> GetSteps(
@@ -291,6 +331,78 @@ namespace Nuke.Common.CI.AzurePipelines
                                  ArtifactName = publishedArtifact.Split('/').Last(),
                                  PathToPublish = publishedArtifact
                              };
+            }
+        }
+
+        protected virtual IEnumerable<AzurePipelinesStep> GetSteps(
+            ExecutableTarget executableTarget,
+            IReadOnlyCollection<ExecutableTarget> relevantTargets,
+            string onPremPoolName)
+        {
+            if (_submodules.HasValue || _largeFileStorage.HasValue || _fetchDepth.HasValue || _clean.HasValue)
+            {
+                yield return new AzurePipelineCheckoutStep
+                {
+                    InclueSubmodules = _submodules,
+                    IncludeLargeFileStorage = _largeFileStorage,
+                    FetchDepth = _fetchDepth,
+                    Clean = _clean
+                };
+            }
+
+            if (CacheKeyFiles.Any())
+            {
+                foreach (var cachePath in CachePaths.NotNull())
+                {
+                    yield return new AzurePipelinesCacheStep
+                    {
+                        OnPremPoolName = onPremPoolName,
+                        KeyFiles = CacheKeyFiles,
+                        Path = cachePath
+                    };
+                }
+            }
+
+            static string GetArtifactPath(AbsolutePath path)
+                => NukeBuild.RootDirectory.Contains(path)
+                    ? NukeBuild.RootDirectory.GetUnixRelativePathTo(path)
+                    : path;
+
+            var publishedArtifacts = executableTarget.ArtifactProducts
+                .Select(x => (AbsolutePath)x)
+                .Select(x => x.DescendantsAndSelf(y => y.Parent).FirstOrDefault(y => !y.ToString().ContainsOrdinalIgnoreCase("*")))
+                .Distinct()
+                .Select(GetArtifactPath).ToArray();
+
+            // var artifactDependencies = (
+            //     from artifactDependency in ArtifactExtensions.ArtifactDependencies[executableTarget.Definition]
+            //     let dependency = executableTarget.ExecutionDependencies.Single(x => x.Factory == artifactDependency.Item1)
+            //     let rules = (artifactDependency.Item2.Any()
+            //             ? artifactDependency.Item2
+            //             : ArtifactExtensions.ArtifactProducts[dependency.Definition])
+            //         .Select(GetArtifactRule).ToArray()
+            //     select new TeamCityArtifactDependency
+            //            {
+            //                BuildType = buildTypes[dependency].Single(x => x.Partition == null),
+            //                ArtifactRules = rules
+            //            }).ToArray<TeamCityDependency>();
+
+            var chainLinkTargets = GetInvokedTargets(executableTarget, relevantTargets).ToArray();
+            yield return new AzurePipelinesCmdStep
+            {
+                BuildCmdPath = BuildCmdPath,
+                PartitionSize = executableTarget.PartitionSize,
+                InvokedTargets = chainLinkTargets.Select(x => x.Name).ToArray(),
+                Imports = GetImports().ToDictionary(x => x.Key, x => x.Value)
+            };
+
+            foreach (var publishedArtifact in publishedArtifacts)
+            {
+                yield return new AzurePipelinesPublishStep
+                {
+                    ArtifactName = publishedArtifact.Split('/').Last(),
+                    PathToPublish = publishedArtifact
+                };
             }
         }
 

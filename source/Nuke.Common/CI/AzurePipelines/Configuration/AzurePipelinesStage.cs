@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2021 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,6 +16,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
+        public string PoolName { get; set; }
         public AzurePipelinesImage? Image { get; set; }
         public AzurePipelinesStage[] Dependencies { get; set; }
         public AzurePipelinesJob[] Jobs { get; set; }
@@ -33,6 +34,11 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                     {
                         writer.WriteLine($"vmImage: {Image.Value.GetValue().SingleQuote()}");
                     }
+                }
+
+                if (PoolName != string.Empty)
+                {
+                    writer.WriteLine($"pool: {PoolName.SingleQuote()}");
                 }
 
                 using (writer.WriteBlock("jobs:"))
