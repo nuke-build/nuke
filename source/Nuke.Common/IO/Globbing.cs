@@ -15,7 +15,7 @@ namespace Nuke.Common.IO
 {
     public static class Globbing
     {
-        internal static GlobbingCaseSensitivity GlobbingCaseSensitivity;
+        public static GlobbingCaseSensitivity GlobbingCaseSensitivity;
 
         private static GlobOptions GlobOptions
             => GlobbingCaseSensitivity switch
