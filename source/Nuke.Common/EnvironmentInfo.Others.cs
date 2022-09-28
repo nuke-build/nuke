@@ -26,15 +26,14 @@ namespace Nuke.Common
 #endif
         }
 
-        public static IDisposable SwitchWorkingDirectory(string workingDirectory, bool allowCreate = true)
+        public static IDisposable SwitchWorkingDirectory(this AbsolutePath path)
         {
-            if (allowCreate)
-                FileSystemTasks.EnsureExistingDirectory(workingDirectory);
+            Assert.DirectoryExists(path);
 
-            var previousWorkingDirectory = WorkingDirectory;
+            var previousPath = WorkingDirectory;
             return DelegateDisposable.CreateBracket(
-                () => WorkingDirectory = workingDirectory,
-                () => WorkingDirectory = previousWorkingDirectory);
+                () => WorkingDirectory = path,
+                () => WorkingDirectory = previousPath);
         }
     }
 }
