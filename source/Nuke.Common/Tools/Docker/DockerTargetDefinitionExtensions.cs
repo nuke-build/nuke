@@ -99,14 +99,9 @@ namespace Nuke.Common.Tools.Docker
                         .DisableProcessLogOutput());
                 }
 
-                IDisposable AdaptLogging(Action<OutputType, string> previousLogger)
-                    => DelegateDisposable.CreateBracket(
-                        () => DockerLogger = (_, message) => Log.Write(LogEventReader.ReadFromString(message)),
-                        () => DockerLogger = previousLogger);
-
                 try
                 {
-                    using (AdaptLogging(previousLogger: DockerLogger))
+                    using (DelegateDisposable.SetAndRestore(() => DockerLogger, (_, message) => Log.Write(LogEventReader.ReadFromString(message))))
                     {
                         Log.Information("Launching target in {Image}...", settings.Image);
                         DockerTasks.DockerRun(_ => settings

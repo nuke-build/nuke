@@ -29,11 +29,7 @@ namespace Nuke.Common
         public static IDisposable SwitchWorkingDirectory(this AbsolutePath path)
         {
             Assert.DirectoryExists(path);
-
-            var previousPath = WorkingDirectory;
-            return DelegateDisposable.CreateBracket(
-                () => WorkingDirectory = path,
-                () => WorkingDirectory = previousPath);
+            return DelegateDisposable.SetAndRestore(() => WorkingDirectory, path);
         }
     }
 }

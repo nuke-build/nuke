@@ -105,23 +105,10 @@ namespace Nuke.Common.Execution.Theming
             return text;
         }
 
-
         private void Write(string text, SystemConsoleThemeStyle style)
         {
-            var previousForeground = Console.ForegroundColor;
-            var previousBackground = Console.BackgroundColor;
-
-            using (DelegateDisposable.CreateBracket(
-                () =>
-                {
-                    Console.ForegroundColor = style.Foreground ?? previousForeground;
-                    Console.BackgroundColor = style.Background ?? previousBackground;
-                },
-                () =>
-                {
-                    Console.ForegroundColor = previousForeground;
-                    Console.BackgroundColor = previousBackground;
-                }))
+            using (DelegateDisposable.SetAndRestore(() => Console.ForegroundColor, style.Foreground))
+            using (DelegateDisposable.SetAndRestore(() => Console.BackgroundColor, style.Background))
             {
                 Console.WriteLine(!text.IsNullOrWhiteSpace() ? text : "​");
             }

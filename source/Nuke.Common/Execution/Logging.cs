@@ -240,13 +240,13 @@ namespace Nuke.Common.Execution
             public static LogEventProperty Current => s_property ?? s_defaultProperty;
 
             private static readonly LogEventProperty s_defaultProperty = GetTargetEventProperty(string.Empty);
+#pragma warning disable CS0649
             private static LogEventProperty s_property;
+#pragma warning restore CS0649
 
             public static IDisposable SetTargetEventProperty(string name)
             {
-                return DelegateDisposable.CreateBracket(
-                    () => s_property = GetTargetEventProperty(name),
-                    () => s_property = null);
+                return DelegateDisposable.SetAndRestore(() => s_property, GetTargetEventProperty(name));
             }
 
             private static LogEventProperty GetTargetEventProperty(string name)
