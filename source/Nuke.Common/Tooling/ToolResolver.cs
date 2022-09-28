@@ -13,16 +13,22 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class ToolResolver
     {
+        public static Tool GetTool(string toolPath)
+        {
+            Assert.FileExists(toolPath);
+            return new ToolExecutor(toolPath).Execute;
+        }
+
         public static Tool GetNuGetTool(string packageId, string packageExecutable, string version = null, string framework = null)
         {
             var toolPath = NuGetToolPathResolver.GetPackageExecutable(packageId, packageExecutable, version, framework);
-            return new ToolExecutor(toolPath).Execute;
+            return GetTool(toolPath);
         }
 
         public static Tool GetNpmTool(string npmExecutable)
         {
             var toolPath = NpmToolPathResolver.GetNpmExecutable(npmExecutable);
-            return new ToolExecutor(toolPath).Execute;
+            return GetTool(toolPath);
         }
 
         [CanBeNull]
@@ -32,22 +38,13 @@ namespace Nuke.Common.Tooling
             if (toolPath == null)
                 return null;
 
-            return new ToolExecutor(toolPath).Execute;
-        }
-
-        public static Tool GetLocalTool(string absoluteOrRelativePath)
-        {
-            var toolPath = PathConstruction.HasPathRoot(absoluteOrRelativePath)
-                ? absoluteOrRelativePath
-                : Path.Combine(NukeBuild.RootDirectory, absoluteOrRelativePath);
-            Assert.FileExists(toolPath);
-            return new ToolExecutor(toolPath).Execute;
+            return GetTool(toolPath);
         }
 
         public static Tool GetPathTool(string name)
         {
             var toolPath = ToolPathResolver.GetPathExecutable(name);
-            return new ToolExecutor(toolPath).Execute;
+            return GetTool(toolPath);
         }
     }
 }

@@ -3,9 +3,11 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
+using Nuke.Common.IO;
 using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tooling
@@ -36,7 +38,10 @@ namespace Nuke.Common.Tooling
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            return ToolResolver.GetLocalTool(_absoluteOrRelativePath);
+            var toolPath = PathConstruction.HasPathRoot(_absoluteOrRelativePath)
+                ? _absoluteOrRelativePath
+                : Path.Combine(NukeBuild.RootDirectory, _absoluteOrRelativePath);
+            return ToolResolver.GetTool(toolPath);
         }
     }
 
