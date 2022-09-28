@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.NUnit
         /// </summary>
         public static string NUnitPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("NUNIT_EXE") ??
-            ToolPathResolver.GetPackageExecutable("NUnit.ConsoleRunner", "nunit3-console.exe");
+            NuGetToolPathResolver.GetPackageExecutable("NUnit.ConsoleRunner", "nunit3-console.exe");
         public static Action<OutputType, string> NUnitLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p>

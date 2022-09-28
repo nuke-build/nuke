@@ -50,7 +50,7 @@ namespace Nuke.Common.Tools.Octopus
     {
         internal static string GetToolPath(string framework = null)
         {
-            return ToolPathResolver.GetPackageExecutable(
+            return NuGetToolPathResolver.GetPackageExecutable(
                 packageId: "OctopusTools|Octopus.DotNet.Cli",
                 packageExecutable: "Octo.exe|dotnet-octo.dll",
                 framework: framework);

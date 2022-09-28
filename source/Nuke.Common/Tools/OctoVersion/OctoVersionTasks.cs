@@ -29,7 +29,7 @@ namespace Nuke.Common.Tools.OctoVersion
     {
         internal static string GetToolPath(string framework = null)
         {
-            return ToolPathResolver.GetPackageExecutable(
+            return NuGetToolPathResolver.GetPackageExecutable(
                 packageId: "OctoVersion.Tool",
                 packageExecutable: "OctoVersion.Tool.dll",
                 framework: framework);

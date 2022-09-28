@@ -15,7 +15,7 @@ namespace Nuke.Common.Tooling
     {
         public static Tool GetPackageTool(string packageId, string packageExecutable, string version = null, string framework = null)
         {
-            var toolPath = ToolPathResolver.GetPackageExecutable(packageId, packageExecutable, version, framework);
+            var toolPath = NuGetToolPathResolver.GetPackageExecutable(packageId, packageExecutable, version, framework);
             return new ToolExecutor(toolPath).Execute;
         }
 

@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.Fixie
         /// </summary>
         public static string FixiePath =>
             ToolPathResolver.TryGetEnvironmentExecutable("FIXIE_EXE") ??
-            ToolPathResolver.GetPackageExecutable("fixie.console", "dotnet-fixie.dll");
+            NuGetToolPathResolver.GetPackageExecutable("fixie.console", "dotnet-fixie.dll");
         public static Action<OutputType, string> FixieLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Fixie is a .NET modern test framework similar to NUnit and xUnit, but with an emphasis on low-ceremony defaults and flexible customization.</p>

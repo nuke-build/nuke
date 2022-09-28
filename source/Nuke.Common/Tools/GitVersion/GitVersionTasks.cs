@@ -24,7 +24,7 @@ namespace Nuke.Common.Tools.GitVersion
     {
         internal static string GetToolPath(string framework = null)
         {
-            return ToolPathResolver.GetPackageExecutable(
+            return NuGetToolPathResolver.GetPackageExecutable(
                 packageId: "GitVersion.Tool|GitVersion.CommandLine",
                 packageExecutable: "GitVersion.dll|GitVersion.exe",
                 framework: framework);

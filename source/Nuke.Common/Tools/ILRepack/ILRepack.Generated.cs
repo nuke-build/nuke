@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.ILRepack
         /// </summary>
         public static string ILRepackPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("ILREPACK_EXE") ??
-            ToolPathResolver.GetPackageExecutable("ILRepack", "ILRepack.exe");
+            NuGetToolPathResolver.GetPackageExecutable("ILRepack", "ILRepack.exe");
         public static Action<OutputType, string> ILRepackLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>ILRepack is meant at replacing <a href="https://github.com/dotnet/ILMerge">ILMerge</a> / <a href="https://evain.net/blog/articles/2006/11/06/an-introduction-to-mono-merge">Mono.Merge</a>.<para/>The former being closed-source (<a href="https://github.com/Microsoft/ILMerge">now open-sourced</a>), impossible to customize, slow, resource consuming and many more. The later being deprecated, unsupported, and based on an old version of Mono.Cecil.<para/>Here we're using latest (slightly modified) Cecil sources (0.9), you can find the fork <a href="https://github.com/gluck/cecil">here</a>. Mono.Posix is also required (build only, it gets merged afterwards) for executable bit set on target file.</p>

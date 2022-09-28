@@ -12,7 +12,7 @@ namespace Nuke.Common.Tools.MSpec
     {
         internal static string GetToolPath()
         {
-            return ToolPathResolver.GetPackageExecutable(
+            return NuGetToolPathResolver.GetPackageExecutable(
                 "machine.specifications.runner.console",
                 EnvironmentInfo.Is64Bit ? "mspec-clr4.exe" : "mspec-x86-clr4.exe");
         }

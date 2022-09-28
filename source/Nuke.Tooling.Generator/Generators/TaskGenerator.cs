@@ -161,7 +161,7 @@ namespace Nuke.CodeGeneration.Generators
 
             if (tool.PackageId != null)
             {
-                resolvers.Add("ToolPathResolver.GetPackageExecutable(" +
+                resolvers.Add("NuGetToolPathResolver.GetPackageExecutable(" +
                               $"{tool.PackageId.DoubleQuote()}, " +
                               $"{tool.PackageExecutable?.DoubleQuote() ?? "GetPackageExecutable()"})");
             }

@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         /// </summary>
         public static string BenchmarkDotNetPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("BENCHMARKDOTNET_EXE") ??
-            ToolPathResolver.GetPackageExecutable("benchmarkdotnet.tool", "BenchmarkDotNet.Tool.dll");
+            NuGetToolPathResolver.GetPackageExecutable("benchmarkdotnet.tool", "BenchmarkDotNet.Tool.dll");
         public static Action<OutputType, string> BenchmarkDotNetLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Powerful .NET library for benchmarking</p>

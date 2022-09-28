@@ -112,7 +112,7 @@ namespace Nuke.Common.Tools.Docker
                             .When(!settings.Rm.HasValue, _ => _
                                 .EnableRm())
                             .AddVolume($"{NukeBuild.RootDirectory}:{rootDirectory}")
-                            .AddVolume($"{NuGetPackageResolver.GetPackagesDirectory(ToolPathResolver.NuGetPackagesConfigFile)}:{nugetDirectory}")
+                            .AddVolume($"{NuGetPackageResolver.GetPackagesDirectory(NuGetToolPathResolver.NuGetPackagesConfigFile)}:{nugetDirectory}")
                             .SetPlatform(settings.Platform)
                             .SetWorkdir(rootDirectory)
                             .SetEnvFile(envFile)

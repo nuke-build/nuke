@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.NuGet
         /// </summary>
         public static string NuGetPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("NUGET_EXE") ??
-            ToolPathResolver.GetPackageExecutable("NuGet.CommandLine", "NuGet.exe");
+            NuGetToolPathResolver.GetPackageExecutable("NuGet.CommandLine", "NuGet.exe");
         public static Action<OutputType, string> NuGetLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>

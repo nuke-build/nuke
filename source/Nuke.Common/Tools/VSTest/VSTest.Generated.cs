@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.VSTest
         /// </summary>
         public static string VSTestPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("VSTEST_EXE") ??
-            ToolPathResolver.GetPackageExecutable("Microsoft.TestPlatform", "vstest.console.exe");
+            NuGetToolPathResolver.GetPackageExecutable("Microsoft.TestPlatform", "vstest.console.exe");
         public static Action<OutputType, string> VSTestLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>

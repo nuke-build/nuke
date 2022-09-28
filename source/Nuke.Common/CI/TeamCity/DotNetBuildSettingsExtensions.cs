@@ -17,7 +17,7 @@ namespace Nuke.Common.CI.TeamCity
         {
             Assert.True(TeamCity.Instance != null);
             var teamcityPackage = NuGetPackageResolver
-                .GetLocalInstalledPackage("TeamCity.Dotnet.Integration", ToolPathResolver.NuGetPackagesConfigFile)
+                .GetLocalInstalledPackage("TeamCity.Dotnet.Integration", NuGetToolPathResolver.NuGetPackagesConfigFile)
                 .NotNull("teamcityPackage != null");
             var loggerAssembly = teamcityPackage.Directory / "build" / "_common" / "msbuild15" / "TeamCity.MSBuild.Logger.dll";
             Assert.FileExists(loggerAssembly);

@@ -10,7 +10,7 @@ namespace Nuke.Common.Tools.DotCover
     {
         internal static string GetToolPath()
         {
-            return ToolPathResolver.GetPackageExecutable(
+            return NuGetToolPathResolver.GetPackageExecutable(
                 "JetBrains.dotCover.DotNetCliTool|JetBrains.dotCover.CommandLineTools",
                 EnvironmentInfo.IsWin ? "dotCover.exe" : "dotCover.sh|dotCover.exe");
         }

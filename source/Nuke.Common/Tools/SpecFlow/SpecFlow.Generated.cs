@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.SpecFlow
         /// </summary>
         public static string SpecFlowPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SPECFLOW_EXE") ??
-            ToolPathResolver.GetPackageExecutable("SpecFlow", "specflow.exe");
+            NuGetToolPathResolver.GetPackageExecutable("SpecFlow", "specflow.exe");
         public static Action<OutputType, string> SpecFlowLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.</p>

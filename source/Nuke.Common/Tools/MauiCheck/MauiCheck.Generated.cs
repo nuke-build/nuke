@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.MauiCheck
         /// </summary>
         public static string MauiCheckPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("MAUICHECK_EXE") ??
-            ToolPathResolver.GetPackageExecutable("Redth.Net.Maui.Check", "MauiCheck.dll");
+            NuGetToolPathResolver.GetPackageExecutable("Redth.Net.Maui.Check", "MauiCheck.dll");
         public static Action<OutputType, string> MauiCheckLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>A dotnet tool for helping set up your .NET MAUI environment.</p>

@@ -21,7 +21,7 @@ namespace Nuke.Common.Tools.Xunit
     {
         internal static string GetToolPath(string framework = null)
         {
-            return ToolPathResolver.GetPackageExecutable(
+            return NuGetToolPathResolver.GetPackageExecutable(
                 packageId: "xunit.runner.console",
                 packageExecutable: EnvironmentInfo.Is64Bit ? "xunit.console.exe" : "xunit.console.x86.exe",
                 framework: framework);

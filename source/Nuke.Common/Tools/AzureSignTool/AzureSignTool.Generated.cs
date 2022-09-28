@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.AzureSignTool
         /// </summary>
         public static string AzureSignToolPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("AZURESIGNTOOL_EXE") ??
-            ToolPathResolver.GetPackageExecutable("AzureSignTool", "AzureSignTool.dll");
+            NuGetToolPathResolver.GetPackageExecutable("AzureSignTool", "AzureSignTool.dll");
         public static Action<OutputType, string> AzureSignToolLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Azure Sign Tool is similar to <c>signtool</c> in the Windows SDK, with the major difference being that it uses Azure Key Vault for performing the signing process. The usage is like <c>signtool</c>, except with a limited set of options for signing and options for authenticating to Azure Key Vault.</p>

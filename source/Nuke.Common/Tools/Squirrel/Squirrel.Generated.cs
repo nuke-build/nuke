@@ -30,7 +30,7 @@ namespace Nuke.Common.Tools.Squirrel
         /// </summary>
         public static string SquirrelPath =>
             ToolPathResolver.TryGetEnvironmentExecutable("SQUIRREL_EXE") ??
-            ToolPathResolver.GetPackageExecutable("Squirrel.Windows", "Squirrel.exe");
+            NuGetToolPathResolver.GetPackageExecutable("Squirrel.Windows", "Squirrel.exe");
         public static Action<OutputType, string> SquirrelLogger { get; set; } = ProcessTasks.DefaultLogger;
         /// <summary>
         ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
