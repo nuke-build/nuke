@@ -362,7 +362,8 @@ namespace Nuke.Common.Tooling
 
             return directories
                 .Where(Directory.Exists)
-                .SelectMany(x => Directory.GetFiles(x, "nuget.config", SearchOption.TopDirectoryOnly))
+                .SelectMany(x => new[] { Path.Combine(x, "nuget.config"), Path.Combine(x, "NuGet.config") })
+                .Distinct(EnvironmentInfo.IsLinux ? StringComparer.Ordinal : StringComparer.OrdinalIgnoreCase)
                 .Where(File.Exists);
         }
 
