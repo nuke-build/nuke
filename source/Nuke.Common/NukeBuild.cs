@@ -10,6 +10,7 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.Execution;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
@@ -165,6 +166,12 @@ namespace Nuke.Common
         protected internal virtual string NuGetAssetsConfigFile =>
             BuildProjectDirectory != null
                 ? BuildProjectDirectory / "obj" / "project.assets.json"
+                : null;
+
+        [CanBeNull]
+        protected internal virtual AbsolutePath NpmPackageJsonFile =>
+            BuildProjectDirectory != null
+                ? BuildProjectDirectory / "package.json"
                 : null;
 
         [CanBeNull]

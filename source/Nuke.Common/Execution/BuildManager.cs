@@ -49,6 +49,7 @@ namespace Nuke.Common.Execution
                 NuGetToolPathResolver.EmbeddedPackagesDirectory = build.EmbeddedPackagesDirectory;
                 NuGetToolPathResolver.NuGetPackagesConfigFile = build.NuGetPackagesConfigFile;
                 NuGetToolPathResolver.NuGetAssetsConfigFile = build.NuGetAssetsConfigFile;
+                NpmToolPathResolver.NpmPackageJsonFile = build.NpmPackageJsonFile;
 
                 if (!build.NoLogo)
                     build.WriteLogo();
