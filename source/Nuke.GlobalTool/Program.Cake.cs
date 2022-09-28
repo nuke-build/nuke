@@ -13,12 +13,12 @@ using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.GlobalTool.Rewriting.Cake;
 using static Nuke.Common.Constants;
 using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.Tooling.NuGetPackageResolver;
 
 namespace Nuke.GlobalTool
 {
@@ -133,7 +133,7 @@ namespace Nuke.GlobalTool
                     var packageId = match.Groups["packageId"].Value;
                     var packageVersion = match.Groups["version"].Value;
                     if (packageVersion.IsNullOrEmpty())
-                        packageVersion = GetLatestPackageVersion(packageId, includePrereleases: false).GetAwaiter().GetResult();
+                        packageVersion = NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: false).GetAwaiter().GetResult();
                     yield return new(packageType, packageId, packageVersion);
                 }
             }

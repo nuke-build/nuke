@@ -20,8 +20,6 @@ namespace Nuke.Common.Tooling
         public static string NuGetAssetsConfigFile;
         public static string PaketPackagesConfigFile;
 
-        internal const string MissingPackageDefaultVersion = "latest";
-
         public static string GetPackageExecutable(string packageId, string packageExecutable, string version = null, string framework = null)
         {
             Assert.True(packageId != null && packageExecutable != null);
@@ -132,8 +130,8 @@ namespace Nuke.Common.Tooling
                     from packageVersion in
                         new[]
                         {
-                            NuGetPackageResolver.GetLatestPackageVersion(packageId, includePrereleases: false).GetAwaiter().GetResult(),
-                            NuGetPackageResolver.GetLatestPackageVersion(packageId, includePrereleases: true).GetAwaiter().GetResult(),
+                            NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: false).GetAwaiter().GetResult(),
+                            NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: true).GetAwaiter().GetResult(),
                             NuGetPackageResolver.GetGlobalInstalledPackage(packageId, version: null, packagesConfigFile: null)?.Version.ToString()
                         }
                     where packageVersion != null

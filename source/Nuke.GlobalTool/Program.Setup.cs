@@ -51,8 +51,8 @@ namespace Nuke.GlobalTool
 
             #region Basic
 
-            var nukeLatestReleaseVersion = NuGetPackageResolver.GetLatestPackageVersion(NukeCommonPackageId, includePrereleases: false);
-            var nukeLatestPrereleaseVersion = NuGetPackageResolver.GetLatestPackageVersion(NukeCommonPackageId, includePrereleases: true);
+            var nukeLatestReleaseVersion = NuGetVersionResolver.GetLatestVersion(NukeCommonPackageId, includePrereleases: false);
+            var nukeLatestPrereleaseVersion = NuGetVersionResolver.GetLatestVersion(NukeCommonPackageId, includePrereleases: true);
             var nukeLatestLocalVersion = NuGetPackageResolver.GetGlobalInstalledPackage(NukeCommonPackageId, version: null, packagesConfigFile: null)
                 ?.Version.ToString();
 

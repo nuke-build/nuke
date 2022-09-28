@@ -6,11 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NuGet.Packaging;
 using NuGet.Versioning;
@@ -23,30 +20,6 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NuGetPackageResolver
     {
-        private static readonly HttpClient s_client = new HttpClient();
-
-        [ItemCanBeNull]
-        public static async Task<string> GetLatestPackageVersion(string packageId, bool includePrereleases, bool includeUnlisted = false)
-        {
-            try
-            {
-                var url = includeUnlisted
-                    ? $"https://api.nuget.org/v3/flatcontainer/{packageId.ToLowerInvariant()}/index.json"
-                    : $"https://api-v2v3search-0.nuget.org/query?q=packageid:{packageId}&prerelease={includePrereleases}";
-                var jsonString = await s_client.GetStringAsync(url);
-                var jsonObject = JsonConvert.DeserializeObject<JObject>(jsonString);
-                return includeUnlisted
-                    ? jsonObject.First.NotNull().First.NotNull().Children()
-                        .Select(x => x.Value<string>())
-                        .Last(x => includePrereleases || !x.Contains("-"))
-                    : jsonObject["data"].NotNull().Single()["version"].NotNull().ToString();
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
         [CanBeNull]
         public static InstalledPackage GetLocalInstalledPackage(
             string packageId,

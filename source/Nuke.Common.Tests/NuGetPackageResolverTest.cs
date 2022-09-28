@@ -29,7 +29,7 @@ namespace Nuke.Common.Tests
         [InlineData("PathConstruction", false, false, "0.1.0")]
         public async Task TestGetLatestPackageVersion(string packageId, bool includePrereleases, bool includeUnlisted, string expected)
         {
-            var result = await NuGetPackageResolver.GetLatestPackageVersion(packageId, includePrereleases, includeUnlisted);
+            var result = await NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases, includeUnlisted);
             result.Should().Be(expected);
         }
 
