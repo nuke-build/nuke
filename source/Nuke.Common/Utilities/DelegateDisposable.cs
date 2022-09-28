@@ -4,6 +4,7 @@
 
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using JetBrains.Annotations;
 
 namespace Nuke.Common.Utilities
@@ -14,6 +15,15 @@ namespace Nuke.Common.Utilities
         {
             setup?.Invoke();
             return new DelegateDisposable(cleanup);
+        }
+
+        public static IDisposable SetAndRestore<T>(Expression<Func<T>> memberProvider, T value)
+        {
+            var member = memberProvider.GetMemberInfo();
+            var target = memberProvider.GetTarget();
+            var previousValue = member.GetValue<T>(target);
+            member.SetValue(target, value);
+            return new DelegateDisposable(() => member.SetValue(target, previousValue));
         }
 
         [CanBeNull] private readonly Action _cleanup;
