@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tooling
@@ -19,7 +20,7 @@ namespace Nuke.Common.Tooling
     /// </summary>
     /// <example>
     ///     <code>
-    /// [PathExecutable] readonly Tool Echo;
+    /// [PathTool] readonly Tool Echo;
     /// Target FooBar => _ => _
     ///     .Executes(() =>
     ///     {
@@ -27,11 +28,13 @@ namespace Nuke.Common.Tooling
     ///     });
     ///     </code>
     /// </example>
-    public class PathExecutableAttribute : ValueInjectionAttributeBase
+    [PublicAPI]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    public class PathVariableAttribute : ValueInjectionAttributeBase
     {
         private readonly string _name;
 
-        public PathExecutableAttribute(string name = null)
+        public PathVariableAttribute(string name = null)
         {
             _name = name;
         }
@@ -41,6 +44,15 @@ namespace Nuke.Common.Tooling
             var name = _name ?? member.Name;
             return ToolResolver.TryGetEnvironmentTool(name) ??
                    ToolResolver.GetPathTool(name);
+        }
+    }
+
+    [Obsolete($"Use {nameof(PathVariableAttribute)} instead")]
+    public class PathExecutableAttribute : PathVariableAttribute
+    {
+        public PathExecutableAttribute(string name = null)
+            : base(name)
+        {
         }
     }
 }

@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tooling
@@ -14,7 +15,7 @@ namespace Nuke.Common.Tooling
     /// </summary>
     /// <example>
     ///     <code>
-    /// [LocalExecutable("./tools/custom.exe")] readonly Tool Custom;
+    /// [LocalTool("./tools/custom.exe")] readonly Tool Custom;
     /// Target FooBar => _ => _
     ///     .Executes(() =>
     ///     {
@@ -22,11 +23,13 @@ namespace Nuke.Common.Tooling
     ///     });
     ///     </code>
     /// </example>
-    public class LocalExecutableAttribute : ValueInjectionAttributeBase
+    [PublicAPI]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    public class LocalPathAttribute : ValueInjectionAttributeBase
     {
         private readonly string _absoluteOrRelativePath;
 
-        public LocalExecutableAttribute(string absoluteOrRelativePath)
+        public LocalPathAttribute(string absoluteOrRelativePath)
         {
             _absoluteOrRelativePath = absoluteOrRelativePath;
         }
@@ -34,6 +37,15 @@ namespace Nuke.Common.Tooling
         public override object GetValue(MemberInfo member, object instance)
         {
             return ToolResolver.GetLocalTool(_absoluteOrRelativePath);
+        }
+    }
+
+    [Obsolete($"Use {nameof(LocalPathAttribute)} instead")]
+    public class LocalExecutableAttribute : LocalPathAttribute
+    {
+        public LocalExecutableAttribute(string absoluteOrRelativePath)
+            : base(absoluteOrRelativePath)
+        {
         }
     }
 }

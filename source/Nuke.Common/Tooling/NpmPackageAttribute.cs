@@ -11,11 +11,11 @@ using Nuke.Common.ValueInjection;
 namespace Nuke.Common.Tooling
 {
     [PublicAPI]
-    public class NpmExecutableAttribute : ValueInjectionAttributeBase
+    public class NpmPackageAttribute : ValueInjectionAttributeBase
     {
         private readonly string _name;
 
-        public NpmExecutableAttribute(string name = null)
+        public NpmPackageAttribute(string name = null)
         {
             _name = name;
         }

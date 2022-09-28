@@ -22,7 +22,7 @@ namespace Nuke.Common.Tooling
     /// </summary>
     /// <example>
     ///     <code>
-    /// [PackageExecutable("NuGet.CommandLine", "nuget.exe")] readonly Tool NuGet;
+    /// [NuGetTool("NuGet.CommandLine", "nuget.exe")] readonly Tool NuGet;
     /// Target FooBar => _ => _
     ///     .Executes(() =>
     ///     {
@@ -30,7 +30,9 @@ namespace Nuke.Common.Tooling
     ///     });
     ///     </code>
     /// </example>
-    public class PackageExecutableAttribute : ValueInjectionAttributeBase
+    [PublicAPI]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+    public class NuGetPackageAttribute : ValueInjectionAttributeBase
     {
         private readonly string _packageId;
         private readonly string _packageExecutable;
@@ -41,12 +43,12 @@ namespace Nuke.Common.Tooling
         [CanBeNull]
         public string Version { get; set; }
 
-        public PackageExecutableAttribute(string packageId, string packageExecutable)
+        public NuGetPackageAttribute(string packageId, string packageExecutable)
             : this(packageId, packageExecutable32: packageExecutable, packageExecutable64: packageExecutable)
         {
         }
 
-        public PackageExecutableAttribute(string packageId, string packageExecutable32, string packageExecutable64)
+        public NuGetPackageAttribute(string packageId, string packageExecutable32, string packageExecutable64)
         {
             _packageId = packageId;
             _packageExecutable = EnvironmentInfo.Is32Bit ? packageExecutable32 : packageExecutable64;
@@ -55,7 +57,21 @@ namespace Nuke.Common.Tooling
         public override object GetValue(MemberInfo member, object instance)
         {
             return ToolResolver.TryGetEnvironmentTool(member.Name) ??
-                   ToolResolver.GetPackageTool(_packageId, _packageExecutable, Version, Framework);
+                   ToolResolver.GetNuGetTool(_packageId, _packageExecutable, Version, Framework);
+        }
+    }
+
+    [Obsolete($"Use {nameof(NuGetPackageAttribute)} instead")]
+    public class PackageExecutableAttribute : NuGetPackageAttribute
+    {
+        public PackageExecutableAttribute(string packageId, string packageExecutable)
+            : this(packageId, packageExecutable32: packageExecutable, packageExecutable64: packageExecutable)
+        {
+        }
+
+        public PackageExecutableAttribute(string packageId, string packageExecutable32, string packageExecutable64)
+            : base(packageId, packageExecutable32, packageExecutable64)
+        {
         }
     }
 }
