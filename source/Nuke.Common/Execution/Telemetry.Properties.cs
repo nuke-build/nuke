@@ -24,7 +24,7 @@ namespace Nuke.Common.Execution
         private static IDictionary<string, string> GetCommonProperties(NukeBuild build = null)
         {
             var process = ControlFlow.SuppressErrors(
-                () => ProcessTasks.StartProcess(DotNetTasks.DotNetPath, "--version", logInvocation: false, logOutput: false).AssertWaitForExit(),
+                () => ProcessTasks.StartProcess("dotnet", "--version", logInvocation: false, logOutput: false).AssertWaitForExit(),
                 logWarning: false);
 
             return new Dictionary<string, string>

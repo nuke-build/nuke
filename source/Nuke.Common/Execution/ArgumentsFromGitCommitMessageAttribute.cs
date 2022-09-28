@@ -8,10 +8,8 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.Git;
-using Nuke.Common.Tools.Git;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
-using Nuke.Common.ValueInjection;
-using static Nuke.Common.CI.BuildServerConfigurationGenerationAttributeBase;
 
 namespace Nuke.Common.Execution
 {
@@ -29,10 +27,10 @@ namespace Nuke.Common.Execution
             if (commit == null)
                 return;
 
-            var lastLine = GitTasks.Git($"show -s --format=%B {commit}", logInvocation: false, logOutput: false)
+            var git = ToolResolver.GetPathTool("git");
+            var lastLine = git.Invoke($"show -s --format=%B {commit}", logInvocation: false, logOutput: false)
                 .Select(x => x.Text)
-                .Where(x => !x.IsNullOrEmpty())
-                .LastOrDefault();
+                .LastOrDefault(x => !x.IsNullOrEmpty());
             if (!lastLine?.StartsWithOrdinalIgnoreCase(Prefix) ?? true)
                 return;
 

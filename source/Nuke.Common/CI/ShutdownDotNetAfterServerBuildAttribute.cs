@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Execution;
-using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.CI
 {
@@ -25,7 +25,10 @@ namespace Nuke.Common.CI
             if (NukeBuild.IsServerBuild &&
                 // NOTE: this should only be necessary if the interceptor build has no .NET CLI installed
                 !NukeBuild.IsInterceptorExecution)
-                DotNetTasks.DotNet("build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging, timeout: 15_000);
+            {
+                ProcessTasks.StartProcess("dotnet", "build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging, timeout: 15_000)
+                    .AssertZeroExitCode();
+            }
         }
     }
 }

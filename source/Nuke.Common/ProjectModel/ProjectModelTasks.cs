@@ -36,12 +36,11 @@ namespace Nuke.Common.ProjectModel
 
             static void RegisterMSBuildFromDotNet()
             {
-                var dotnet = ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
-                             ToolPathResolver.GetPathExecutable("dotnet");
+                var dotnet = ToolResolver.GetPathTool("dotnet");
 
                 string TryFromBasePath()
                 {
-                    var output = ProcessTasks.StartProcess(dotnet, "--info", logInvocation: false, logOutput: false).AssertZeroExitCode().Output;
+                    var output = dotnet.Invoke("--info", logInvocation: false, logOutput: false);
                     return output
                         .Select(x => x.Text.Trim())
                         .SingleOrDefault(x => x.StartsWith("Base Path:"))
@@ -50,7 +49,7 @@ namespace Nuke.Common.ProjectModel
 
                 string TryFromSdkList()
                 {
-                    var output = ProcessTasks.StartProcess(dotnet, "--list-sdks", logInvocation: false, logOutput: false).AssertZeroExitCode().Output;
+                    var output = dotnet.Invoke("--list-sdks", logInvocation: false, logOutput: false);
                     var latestInstalledSdkParts = output.Last().Text.Split(' ');
                     return (AbsolutePath)latestInstalledSdkParts.ElementAt(1).Trim('[', ']') / latestInstalledSdkParts.ElementAt(0);
                 }
