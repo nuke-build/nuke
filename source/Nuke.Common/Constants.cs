@@ -43,7 +43,6 @@ namespace Nuke.Common
         {
             var rootDirectory = new DirectoryInfo(startDirectory)
                 .DescendantsAndSelf(x => x.Parent)
-                .WhereNotNull()
                 .FirstOrDefault(x => x.GetDirectories(NukeDirectoryName).Any() ||
                                      includeLegacy && x.GetFiles(NukeFileName).Any())
                 ?.FullName;

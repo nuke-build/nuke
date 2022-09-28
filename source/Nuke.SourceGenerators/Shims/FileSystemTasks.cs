@@ -23,7 +23,6 @@ namespace Nuke.Common.IO
         {
             return start
                 .DescendantsAndSelf(x => x.Parent)
-                .Where(x => x != null)
                 .FirstOrDefault(predicate);
         }
     }
