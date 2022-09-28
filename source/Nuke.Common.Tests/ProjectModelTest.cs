@@ -14,7 +14,7 @@ namespace Nuke.Common.Tests
 {
     public class ProjectModelTest
     {
-        private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory()).NotNull();
+        private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory).NotNull();
 
         private static AbsolutePath SolutionFile => RootDirectory / "nuke-common.sln";
 

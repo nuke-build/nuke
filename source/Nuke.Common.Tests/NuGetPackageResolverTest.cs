@@ -14,7 +14,7 @@ namespace Nuke.Common.Tests
 {
     public class NuGetPackageResolverTest
     {
-        private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(Directory.GetCurrentDirectory()).NotNull();
+        private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory).NotNull();
 
         private static AbsolutePath BuildProjectFile => RootDirectory / "build" / "_build.csproj";
         private static AbsolutePath BuildAssetsFile => RootDirectory / "build" / "obj" / "project.assets.json";

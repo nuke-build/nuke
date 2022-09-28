@@ -15,11 +15,12 @@ namespace Nuke.Common.Tests
 {
     public class GitHubTasksTest
     {
+        private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory).NotNull();
+
         [Fact]
         public void GitHubRepositoryFromLocalDirectoryTest()
         {
-            var rootDirectory = (AbsolutePath) Directory.GetCurrentDirectory() / ".." / ".." / ".." / ".." / "..";
-            var repository = GitRepository.FromLocalDirectory(rootDirectory).NotNull();
+            var repository = GitRepository.FromLocalDirectory(RootDirectory).NotNull();
             if (!repository.IsGitHubRepository())
                 return;
 
@@ -27,14 +28,14 @@ namespace Nuke.Common.Tests
             var blobUrl = $"https://github.com/{repository.Identifier}/blob/{repository.Branch}";
             var treeUrl = $"https://github.com/{repository.Identifier}/tree/{repository.Branch}";
 
-            repository.GetGitHubDownloadUrl(rootDirectory / "LICENSE").Should().Be($"{rawUrl}/LICENSE");
+            repository.GetGitHubDownloadUrl(RootDirectory / "LICENSE").Should().Be($"{rawUrl}/LICENSE");
 
             repository.GetGitHubBrowseUrl("LICENSE").Should().Be($"{blobUrl}/LICENSE");
             repository.GetGitHubBrowseUrl("source").Should().Be($"{treeUrl}/source");
 
-            repository.GetGitHubBrowseUrl(rootDirectory / "LICENSE").Should().Be($"{blobUrl}/LICENSE");
-            repository.GetGitHubBrowseUrl(rootDirectory / "source").Should().Be($"{treeUrl}/source");
-            repository.GetGitHubBrowseUrl(rootDirectory / "source" / "Directory.Build.props").Should().Be($"{blobUrl}/source/Directory.Build.props");
+            repository.GetGitHubBrowseUrl(RootDirectory / "LICENSE").Should().Be($"{blobUrl}/LICENSE");
+            repository.GetGitHubBrowseUrl(RootDirectory / "source").Should().Be($"{treeUrl}/source");
+            repository.GetGitHubBrowseUrl(RootDirectory / "source" / "Directory.Build.props").Should().Be($"{blobUrl}/source/Directory.Build.props");
 
             repository.GetGitHubBrowseUrl("directory", itemType: GitHubItemType.Directory).Should().Be($"{treeUrl}/directory");
             repository.GetGitHubBrowseUrl("dir/file", itemType: GitHubItemType.File).Should().Be($"{blobUrl}/dir/file");
