@@ -2,9 +2,11 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.Utilities.Net
 {
@@ -28,6 +30,12 @@ namespace Nuke.Common.Utilities.Net
         public static async Task<JObject> GetBodyAsJson(this HttpResponseInspector inspector, JsonSerializerSettings settings)
         {
             return await inspector.GetBodyAsJson<JObject>(settings);
+        }
+
+        public static async Task WriteToFile(this HttpResponseInspector inspector, AbsolutePath path, FileMode mode = FileMode.CreateNew)
+        {
+            using var fileStream = File.Open(path, mode);
+            await inspector.Response.Content.CopyToAsync(fileStream);
         }
     }
 }
