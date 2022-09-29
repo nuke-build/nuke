@@ -43,7 +43,7 @@ namespace Nuke.Common.Git
         }
 
         /// <summary>
-        /// Obtains information from a local git repository. Auto-injection can be utilized via <see cref="GitRepositoryAttribute"/>.
+        /// Obtains information from a local git repository.
         /// </summary>
         public static GitRepository FromLocalDirectory(AbsolutePath directory)
         {

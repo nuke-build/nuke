@@ -57,22 +57,11 @@ namespace Nuke.Common
             return collection;
         }
 
-        /// <summary>
-        /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
-        /// </summary>
         public static void SuppressErrors(Action action, bool includeStackTrace = false)
         {
             SuppressErrorsIf(condition: true, action, includeStackTrace: includeStackTrace);
         }
 
-        /// <summary>
-        /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// var author = SuppressErrors(GetAuthor, defaultValue: "John Doe");
-        /// </code>
-        /// </example>
         [ContractAnnotation("defaultValue: notnull => notnull")]
         [CanBeNull]
         public static T SuppressErrors<T>(Func<T> action, T defaultValue = default, bool includeStackTrace = false, bool logWarning = true)
@@ -80,26 +69,11 @@ namespace Nuke.Common
             return (T)SuppressErrorsIf(condition: true, action, defaultValue, includeStackTrace, logWarning);
         }
 
-        /// <summary>
-        /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
-        /// </summary>
-        /// <returns>
-        /// Returns an empty collection for convenience.
-        /// </returns>
-        /// <example>
-        /// <code>
-        /// // Won't throw NRE if GetAuthors throws
-        /// var authorsCount = SuppressErrors(GetAuthors).Length;
-        /// </code>
-        /// </example>
         public static IEnumerable<T> SuppressErrors<T>(Func<IEnumerable<T>> action, bool includeStackTrace = false)
         {
             return SuppressErrors<IEnumerable<T>>(action, includeStackTrace: includeStackTrace) ?? Enumerable.Empty<T>();
         }
 
-        /// <summary>
-        /// Executes a given action and suppresses all errors while delegating them to <see cref="Logger.Warn(string)"/>.
-        /// </summary>
         [ContractAnnotation("defaultValue: notnull => notnull")]
         [CanBeNull]
         private static object SuppressErrorsIf(
@@ -125,14 +99,6 @@ namespace Nuke.Common
             }
         }
 
-        /// <summary>
-        /// Executes a given action under retry-policy. After reaching the specified amount of attempts, the actions fails permanently.
-        /// </summary>
-        /// <example>
-        /// <code>
-        /// ExecuteWithRetry(() => NuGetRestore(SolutionFile), waitInSeconds: 30);
-        /// </code>
-        /// </example>
         public static void ExecuteWithRetry(
             [InstantHandle] Action action,
             [InstantHandle] Action cleanup = null,
