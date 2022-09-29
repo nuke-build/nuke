@@ -9,9 +9,7 @@ using Microsoft.Build.Framework;
 using Nuke.CodeGeneration;
 using Nuke.CodeGeneration.Model;
 using Nuke.Common;
-using Nuke.Common.Git;
 using Nuke.Common.IO;
-using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.MSBuildTasks
@@ -35,7 +33,6 @@ namespace Nuke.MSBuildTasks
         protected override bool ExecuteInner()
         {
             var specificationFiles = SpecificationFiles.Select(x => x.GetMetadata("Fullpath")).ToList();
-            var repository = ControlFlow.SuppressErrors(() => GitRepository.FromLocalDirectory(BaseDirectory), includeStackTrace: true);
 
             string GetFilePath(Tool tool)
                 => (AbsolutePath) BaseDirectory
@@ -49,12 +46,9 @@ namespace Nuke.MSBuildTasks
                         ? tool.Name
                         : $"{BaseNamespace}.{tool.Name}";
 
-            string GetSourceFile(Tool tool)
-                => repository.IsGitHubRepository() ? repository?.GetGitHubDownloadUrl(tool.SpecificationFile) : null;
-
             specificationFiles
                 .ForEachLazy(x => LogMessage(message: $"Handling {x} ..."))
-                .ForEach(x => CodeGenerator.GenerateCode(x, GetFilePath, GetNamespace, GetSourceFile));
+                .ForEach(x => CodeGenerator.GenerateCode(x, GetFilePath, GetNamespace));
 
             if (UpdateReferences)
                 ReferenceUpdater.UpdateReferences(specificationFiles);
