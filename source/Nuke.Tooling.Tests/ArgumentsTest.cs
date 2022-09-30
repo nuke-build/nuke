@@ -42,7 +42,7 @@ namespace Nuke.Common.Tests
         [Fact]
         public void TestSecret()
         {
-            Assert(x => x.Add("-arg {value}", "secret", secret: true).RenderForOutput(), "-arg [hidden]");
+            Assert(x => x.Add("-arg {value}", "secret", secret: true).RenderForOutput(), "-arg [REDACTED]");
             Assert(x => x.Add("-arg {value}", "secret", secret: true).RenderForExecution(), "-arg secret");
         }
 
@@ -133,7 +133,7 @@ namespace Nuke.Common.Tests
         [Fact]
         public void TestFilter()
         {
-            Assert(x => x.Add("-arg {value}", "secret", secret: true).FilterSecrets("foosecretbar"), "foo[hidden]bar");
+            Assert(x => x.Add("-arg {value}", "secret", secret: true).FilterSecrets("foosecretbar"), "foo[REDACTED]bar");
         }
 
         [Fact]

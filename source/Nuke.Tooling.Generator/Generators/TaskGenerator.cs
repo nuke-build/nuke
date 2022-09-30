@@ -45,26 +45,24 @@ namespace Nuke.CodeGeneration.Generators
             var tool = writer.Tool;
             var parameters = new[]
                              {
-                                 "string arguments",
+                                 "ref ArgumentStringHandler arguments",
                                  "string workingDirectory = null",
                                  "IReadOnlyDictionary<string, string> environmentVariables = null",
                                  "int? timeout = null",
                                  "bool? logOutput = null",
                                  "bool? logInvocation = null",
-                                 "Func<string, string> outputFilter = null",
                                  "Action<OutputType, string> customLogger = null"
                              };
             var arguments = new[]
                             {
                                 $"{tool.Name}Path",
-                                "arguments",
+                                "ref arguments",
                                 "workingDirectory",
                                 "environmentVariables",
                                 "timeout",
                                 "logOutput",
                                 "logInvocation",
-                                $"customLogger ?? {tool.Name}Logger",
-                                "outputFilter"
+                                $"customLogger ?? {tool.Name}Logger"
                             };
             writer
                 .WriteSummary(tool)

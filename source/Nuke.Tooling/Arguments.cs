@@ -21,7 +21,7 @@ namespace Nuke.Common.Tooling
     // TODO: extract {value} and {key} into constants
     public sealed class Arguments : IArguments
     {
-        private const string HiddenString = "[hidden]";
+        internal const string Redacted = "[REDACTED]";
         private const char Space = ' ';
 
         private readonly List<string> _secrets = new List<string>();
@@ -184,7 +184,7 @@ namespace Nuke.Common.Tooling
 
         public string FilterSecrets(string text)
         {
-            return _secrets.Aggregate(text, (str, s) => str.Replace(s, HiddenString));
+            return _secrets.Aggregate(text, (str, s) => str.Replace(s, Redacted));
         }
 
         private string Render(bool forOutput)
@@ -192,7 +192,7 @@ namespace Nuke.Common.Tooling
             string Format(string argument)
                 => !_secrets.Contains(argument) || !forOutput
                     ? argument
-                    : HiddenString;
+                    : Redacted;
 
             var builder = new StringBuilder();
             foreach (var argumentPair in _arguments)

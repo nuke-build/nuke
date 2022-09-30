@@ -18,7 +18,11 @@ namespace Nuke.Common.Tooling
         }
 
         public IReadOnlyCollection<Output> Execute(
+#if NET6_0_OR_GREATER
+            ref ArgumentStringHandler arguments,
+#else
             string arguments = null,
+#endif
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
@@ -29,7 +33,11 @@ namespace Nuke.Common.Tooling
         {
             var process = ProcessTasks.StartProcess(
                 _toolPath,
+#if NET6_0_OR_GREATER
+                arguments.ToStringAndClear(),
+#else
                 arguments,
+#endif
                 workingDirectory,
                 environmentVariables,
                 timeout,

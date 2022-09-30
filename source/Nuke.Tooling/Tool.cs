@@ -9,7 +9,11 @@ using System.Linq;
 namespace Nuke.Common.Tooling
 {
     public delegate IReadOnlyCollection<Output> Tool(
+#if NET6_0_OR_GREATER
+        ref ArgumentStringHandler arguments,
+#else
         string arguments = null,
+#endif
         string workingDirectory = null,
         IReadOnlyDictionary<string, string> environmentVariables = null,
         int? timeout = null,

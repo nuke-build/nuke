@@ -64,6 +64,38 @@ namespace Nuke.Common.Tooling
                 arguments.FilterSecrets);
         }
 
+#if NET6_0_OR_GREATER
+
+        internal static IProcess StartProcess(
+            string toolPath,
+            ref ArgumentStringHandler arguments,
+            string workingDirectory = null,
+            IReadOnlyDictionary<string, string> environmentVariables = null,
+            int? timeout = null,
+            bool? logOutput = null,
+            bool? logInvocation = null,
+            Action<OutputType, string> customLogger = null)
+        {
+            static Func<string, string> GetOutputFilterForArgumentStringHandler(ref ArgumentStringHandler arguments)
+            {
+                var redactedValues = arguments.SecretValues;
+                return x => redactedValues.Aggregate(x, (arguments, value) => arguments.ReplaceRegex(value, _ => Arguments.Redacted));
+            }
+
+            return StartProcess(
+                toolPath,
+                arguments.ToStringAndClear(),
+                workingDirectory,
+                environmentVariables,
+                timeout,
+                logOutput,
+                logInvocation,
+                customLogger,
+                GetOutputFilterForArgumentStringHandler(ref arguments));
+        }
+
+#endif
+
         public static IProcess StartProcess(
             string toolPath,
             string arguments = null,
