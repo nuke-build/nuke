@@ -96,6 +96,9 @@ partial class Build
 
     IEnumerable<Project> ITest.TestProjects => Partition.GetCurrent(Solution.GetProjects("*.Tests"));
 
+    [Parameter]
+    public int TestDegreeOfParallelism { get; } = 1;
+
     Configure<DotNetTestSettings> ITest.TestSettings => _ => _
         .SetProcessEnvironmentVariable("NUKE_TELEMETRY_OPTOUT", bool.TrueString);
 

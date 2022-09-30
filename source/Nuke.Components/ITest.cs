@@ -26,6 +26,8 @@ namespace Nuke.Components
     {
         AbsolutePath TestResultDirectory => ArtifactsDirectory / "test-results";
 
+        int TestDegreeOfParallelism => 1;
+
         Target Test => _ => _
             .DependsOn(Compile)
             .Produces(TestResultDirectory / "*.trx")
@@ -40,7 +42,8 @@ namespace Nuke.Components
                             .CombineWith(TestProjects, (_, v) => _
                                 .Apply(TestProjectSettingsBase, v)
                                 .Apply(TestProjectSettings, v)),
-                        completeOnFailure: true);
+                        completeOnFailure: true,
+                        degreeOfParallelism: TestDegreeOfParallelism);
                 }
                 finally
                 {

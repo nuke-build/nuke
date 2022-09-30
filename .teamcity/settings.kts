@@ -86,6 +86,12 @@ project {
             value = "nuke",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
+        text (
+            "env.TestDegreeOfParallelism",
+            label = "TestDegreeOfParallelism",
+            value = "1",
+            allowEmpty = true,
+            display = ParameterDisplay.NORMAL)
         checkbox (
             "env.UseHttps",
             label = "UseHttps",
