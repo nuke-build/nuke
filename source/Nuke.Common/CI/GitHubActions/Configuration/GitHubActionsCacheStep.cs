@@ -23,7 +23,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
             writer.WriteLine($"- name: Cache {IncludePatterns.JoinCommaSpace()}");
             using (writer.Indent())
             {
-                writer.WriteLine("uses: actions/cache@v2");
+                writer.WriteLine("uses: actions/cache@v3");
                 writer.WriteLine("with:");
                 using (writer.Indent())
                 {
