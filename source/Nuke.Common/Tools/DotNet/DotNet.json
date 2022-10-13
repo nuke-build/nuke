@@ -448,6 +448,12 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "BinaryLog",
+            "type": "string",
+            "format": "-bl:{value}",
+            "help": "Generare MSBuild <a href=\"https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md\">binary log</a>."
           }
         ]
       }
@@ -531,6 +537,12 @@
             "type": "bool",
             "format": "/graphBuild",
             "help": "Causes MSBuild to construct and build a project graph. Constructing a graph involves identifying project references to form dependencies. Building that graph involves attempting to build project references prior to the projects that reference them, differing from traditional MSBuild scheduling. Requires MSBuild 16 or later."
+          },
+          {
+            "name": "BinaryLog",
+            "type": "string",
+            "format": "-bl:{value}",
+            "help": "Generare MSBuild <a href=\"https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md\">binary log</a>."
           }
         ]
       }
