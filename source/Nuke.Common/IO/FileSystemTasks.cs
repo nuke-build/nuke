@@ -112,8 +112,12 @@ namespace Nuke.Common.IO
             if (!Directory.Exists(directory))
                 return;
 
-            Directory.GetFiles(directory).ForEach(DeleteFileInternal);
-            Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
+            // Check if directory is not a symlink
+            if (!File.GetAttributes(directory).HasFlag(FileAttributes.ReparsePoint))
+            {
+                Directory.GetFiles(directory).ForEach(DeleteFileInternal);
+                Directory.GetDirectories(directory).ForEach(DeleteDirectoryInternal);
+            }
 
             Log.Verbose("Deleting directory {Directory}...", directory);
             Directory.Delete(directory, recursive: false);
