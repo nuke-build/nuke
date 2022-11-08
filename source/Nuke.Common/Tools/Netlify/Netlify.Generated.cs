@@ -36,9 +36,9 @@ namespace Nuke.Common.Tools.Netlify
         ///   <p>Netlify’s command line interface (CLI) lets you configure <a href="https://docs.netlify.com/cli/get-started/#continuous-deployment">continuous deployment</a> straight from the command line. You can use Netlify CLI to <a href="https://docs.netlify.com/cli/get-started/#run-a-local-development-environment">run a local development server</a> that you can share with others, <a href="https://docs.netlify.com/cli/get-started/#run-builds-locally">run a local build and plugins</a>, and <a href="https://docs.netlify.com/cli/get-started/#manual-deploys">deploy your site</a>.</p>
         ///   <p>For more details, visit the <a href="https://docs.netlify.com/cli/get-started/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Netlify(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> Netlify(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(NetlifyPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NetlifyLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(NetlifyPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NetlifyLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

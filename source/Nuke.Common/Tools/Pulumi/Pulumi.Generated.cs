@@ -36,9 +36,9 @@ namespace Nuke.Common.Tools.Pulumi
         ///   <p>Pulumi is an <a href="https://github.com/pulumi/pulumi">open source</a> infrastructure as code tool for creating, deploying and managing cloud infrastructure. Pulumi works with traditional infrastructure like VMs, networks, and databases, in addition to modern architectures, including containers, Kubernetes clusters, and serverless functions. Pulumi supports dozens of public, private, and hybrid cloud service providers.</p>
         ///   <p>For more details, visit the <a href="https://www.pulumi.com/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Pulumi(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> Pulumi(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(PulumiPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? PulumiLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(PulumiPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? PulumiLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

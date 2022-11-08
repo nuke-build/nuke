@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -18,7 +19,6 @@ namespace Nuke.Common.Tools.Mastodon
     [PublicAPI]
     public static class MastodonTasks
     {
-#if NETCORE
         public static void SendMastodonMessage(Configure<MastodonStatus> configurator, string instance, string accessToken)
         {
             SendMastodonMessageAsync(configurator, instance, accessToken).Wait();
@@ -60,6 +60,5 @@ namespace Nuke.Common.Tools.Mastodon
                 .GetResponseAsync();
             response.AssertSuccessfulStatusCode();
         }
-#endif
     }
 }

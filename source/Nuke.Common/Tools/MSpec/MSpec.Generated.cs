@@ -36,9 +36,9 @@ namespace Nuke.Common.Tools.MSpec
         ///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
         ///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> MSpec(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> MSpec(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(MSpecPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MSpecLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(MSpecPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MSpecLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

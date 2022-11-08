@@ -13,7 +13,6 @@ namespace Nuke.Common.Tools.Discord
     [PublicAPI]
     public static class DiscordTasks
     {
-#if NETCORE
         public static void SendDiscordMessage(Configure<DiscordMessage> configurator, string webhook)
         {
             SendDiscordMessageAsync(configurator, webhook).Wait();
@@ -31,6 +30,5 @@ namespace Nuke.Common.Tools.Discord
 
             response.AssertSuccessfulStatusCode();
         }
-#endif
     }
 }

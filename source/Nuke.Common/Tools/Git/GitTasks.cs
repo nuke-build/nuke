@@ -16,7 +16,7 @@ namespace Nuke.Common.Tools.Git
 
         public static bool GitIsDetached(string workingDirectory)
         {
-            return !Git("branch --show-current", workingDirectory, logOutput: false).Any();
+            return !Git($"branch --show-current", workingDirectory, logOutput: false).Any();
         }
 
         public static bool GitHasCleanWorkingCopy()
@@ -26,7 +26,7 @@ namespace Nuke.Common.Tools.Git
 
         public static bool GitHasCleanWorkingCopy(string workingDirectory)
         {
-            return !Git("status --short", workingDirectory, logOutput: false).Any();
+            return !Git($"status --short", workingDirectory, logOutput: false).Any();
         }
 
         public static string GitCurrentBranch()
@@ -36,7 +36,7 @@ namespace Nuke.Common.Tools.Git
 
         public static string GitCurrentBranch(string workingDirectory)
         {
-            return Git("rev-parse --abbrev-ref HEAD", workingDirectory, logOutput: false).Select(x => x.Text).Single();
+            return Git($"rev-parse --abbrev-ref HEAD", workingDirectory, logOutput: false).Select(x => x.Text).Single();
         }
 
         public static string GitCurrentCommit()
@@ -46,7 +46,7 @@ namespace Nuke.Common.Tools.Git
 
         public static string GitCurrentCommit(string workingDirectory)
         {
-            return Git("rev-parse HEAD", workingDirectory, logOutput: false).Select(x => x.Text).Single();
+            return Git($"rev-parse HEAD", workingDirectory, logOutput: false).Select(x => x.Text).Single();
         }
     }
 }

@@ -36,9 +36,9 @@ namespace Nuke.Common.Tools.CorFlags
         ///   <p>The CorFlags Conversion tool allows you to configure the CorFlags section of the header of a portable executable image.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/corflags-exe-corflags-conversion-tool">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> CorFlags(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> CorFlags(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(CorFlagsPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? CorFlagsLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(CorFlagsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? CorFlagsLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

@@ -36,9 +36,9 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   <p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p>
         ///   <p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> SonarScanner(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> SonarScanner(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(SonarScannerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SonarScannerLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(SonarScannerPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SonarScannerLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

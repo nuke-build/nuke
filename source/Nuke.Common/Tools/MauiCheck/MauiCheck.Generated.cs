@@ -36,9 +36,9 @@ namespace Nuke.Common.Tools.MauiCheck
         ///   <p>A dotnet tool for helping set up your .NET MAUI environment.</p>
         ///   <p>For more details, visit the <a href="https://github.com/Redth/dotnet-maui-check">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> MauiCheck(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> MauiCheck(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(MauiCheckPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MauiCheckLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(MauiCheckPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MauiCheckLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

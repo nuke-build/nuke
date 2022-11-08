@@ -36,9 +36,9 @@ namespace Nuke.Common.Tools.PowerShell
         ///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> PowerShell(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> PowerShell(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(PowerShellPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? PowerShellLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(PowerShellPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? PowerShellLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

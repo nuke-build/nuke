@@ -34,9 +34,9 @@ namespace Nuke.Common.Tools.Helm
         /// <summary>
         ///   <p>For more details, visit the <a href="https://helm.sh/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Helm(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> Helm(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(HelmPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? HelmLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(HelmPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? HelmLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

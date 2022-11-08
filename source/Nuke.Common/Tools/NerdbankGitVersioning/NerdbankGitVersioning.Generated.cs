@@ -34,9 +34,9 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
         /// <summary>
         ///   <p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> NerdbankGitVersioning(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> NerdbankGitVersioning(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(NerdbankGitVersioningPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NerdbankGitVersioningLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(NerdbankGitVersioningPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NerdbankGitVersioningLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

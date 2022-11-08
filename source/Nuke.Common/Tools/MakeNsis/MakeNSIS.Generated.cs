@@ -3,7 +3,6 @@
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Nuke.Common;
-using Nuke.Common.Execution;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools;
 using Nuke.Common.Utilities.Collections;
@@ -37,9 +36,9 @@ namespace Nuke.Common.Tools.MakeNSIS
         ///   <p>NSIS creates installers that are capable of installing, uninstalling, setting system settings, extracting files, etc. Because it's based on script files you can fully control every part of your installer.</p>
         ///   <p>For more details, visit the <a href="https://nsis.sourceforge.io/Docs/Contents.html">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> MakeNSIS(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> MakeNSIS(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(MakeNSISPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MakeNSISLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(MakeNSISPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MakeNSISLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

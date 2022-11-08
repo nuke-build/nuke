@@ -36,9 +36,9 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
         ///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> InnoSetup(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> InnoSetup(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(InnoSetupPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? InnoSetupLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(InnoSetupPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? InnoSetupLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }

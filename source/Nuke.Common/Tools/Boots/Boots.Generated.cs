@@ -36,9 +36,9 @@ namespace Nuke.Common.Tools.Boots
         ///   <p>boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.</p>
         ///   <p>For more details, visit the <a href="https://github.com/jonathanpeppers/boots">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Boots(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
+        public static IReadOnlyCollection<Output> Boots(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(BootsPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? BootsLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(BootsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? BootsLogger);
             process.AssertZeroExitCode();
             return process.Output;
         }
