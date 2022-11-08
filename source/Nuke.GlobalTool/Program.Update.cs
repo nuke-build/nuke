@@ -80,7 +80,7 @@ namespace Nuke.GlobalTool
 
         private static void UpdateGlobalJsonFile(AbsolutePath rootDirectory)
         {
-            var latestInstalledSdk = DotNetTasks.DotNet("--list-sdks", logInvocation: false, logOutput: false)
+            var latestInstalledSdk = DotNetTasks.DotNet($"--list-sdks", logInvocation: false, logOutput: false)
                 .LastOrDefault().Text?.Split(" ").First();
             if (latestInstalledSdk == null)
                 return;
