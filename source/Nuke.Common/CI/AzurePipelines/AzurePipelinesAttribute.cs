@@ -286,9 +286,11 @@ namespace Nuke.Common.CI.AzurePipelines
 
             foreach (var publishedArtifact in publishedArtifacts)
             {
+                var artifactName = publishedArtifact.Split('/').Last();
                 yield return new AzurePipelinesPublishStep
                              {
-                                 ArtifactName = publishedArtifact.Split('/').Last(),
+                                 DisplayName = $"Publish artifact {artifactName}",
+                                 ArtifactName = artifactName,
                                  PathToPublish = publishedArtifact
                              };
             }
