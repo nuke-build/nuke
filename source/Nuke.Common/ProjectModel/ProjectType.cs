@@ -51,6 +51,8 @@ namespace Nuke.Common.ProjectModel
         public static ProjectType XnaProject = new ProjectType("6D335F3A-9D43-41b4-9D22-F6F17C4BE596",
             "2DF5C3F4-5A5F-47a9-8E94-23B4456F55E2",
             "D399B71A-8929-442a-A9AC-8BEC78BB2433");
+            
+        public static ProjectType JavaScriptProject = new ProjectType("54A90642-561A-4BB1-A94E-469ADEE60C69");
 
         public ProjectType(params string[] guids)
             : this(guids.Select(Guid.Parse).ToArray())
