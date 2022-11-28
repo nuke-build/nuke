@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -30,7 +31,7 @@ namespace Nuke.Common.Tooling
                 messageBuilder.AppendLine("Error output:");
                 errorOutput.ForEach(x => messageBuilder.Append(indentation).AppendLine(x.Text));
             }
-            else if (Logger.LogLevel <= LogLevel.Trace)
+            else if (Logging.Level <= LogLevel.Trace)
             {
                 messageBuilder.AppendLine("Standard output:");
                 process.Output.ForEach(x => messageBuilder.Append(indentation).AppendLine(x.Text));
