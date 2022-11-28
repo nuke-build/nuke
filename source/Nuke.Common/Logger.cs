@@ -14,8 +14,6 @@ namespace Nuke.Common
     [DebuggerStepThrough]
     public static class Logger
     {
-        public static LogLevel LogLevel = LogLevel.Normal;
-
         [Obsolete("Use Serilog.Log.Write instead")]
         public static void Log(LogLevel level, string text = null)
         {
