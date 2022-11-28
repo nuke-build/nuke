@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
@@ -32,6 +31,9 @@ namespace Nuke.Common.CI
                 return;
 
             if (build.Help)
+                return;
+
+            if (Console.IsInputRedirected)
                 return;
 
             Host.Information("Press any key to continue ...");
