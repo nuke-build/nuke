@@ -30,6 +30,9 @@ namespace Nuke.Common.CI.AzurePipelines
         CheckInShelveset,
 
         /// <summary>The build was triggered by a Git branch policy that requires a build.</summary>
-        PullRequest
+        PullRequest,
+
+        /// <summary>The build was triggered by a resource trigger or it was triggered by another build.</summary>
+        ResourceTrigger
     }
 }
