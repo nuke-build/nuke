@@ -1,0 +1,102 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://nsis.sourceforge.io/Docs/Chapter3.html"
+  ],
+  "name": "MakeNSIS",
+  "officialUrl": "https://nsis.sourceforge.io/Docs/Contents.html",
+  "help": "NSIS creates installers that are capable of installing, uninstalling, setting system settings, extracting files, etc. Because it's based on script files you can fully control every part of your installer.",
+  "pathExecutable": "makensis",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Verbosity",
+            "type": "int",
+            "format": "/V{value}",
+            "help": "0=no output, 1=errors only, 2=warnings and errors, 3=info, warnings, and errors, 4=all output."
+          },
+          {
+            "name": "CompilerPriority",
+            "type": "int",
+            "format": "/P{value}",
+            "help": "set the priority of the compiler process accordingly. 0=idle, 1=below normal, 2=normal (default), 3=above normal, 4=high, 5=realtime."
+          },
+          {
+            "name": "LogOutputFile",
+            "type": "string",
+            "format": "/O{value}",
+            "help": "Tells the compiler to print its log to that file (instead of the screen)."
+          },
+          {
+            "name": "NoConfig",
+            "type": "bool",
+            "format": "/NOCONFIG",
+            "help": "disables inclusion of nsisconf.nsh. Without this parameter, installer defaults are set from nsisconf.nsh."
+          },
+          {
+            "name": "NoCurrentDirectoryChange",
+            "type": "bool",
+            "format": "/NOCD",
+            "help": "disables the current directory change to that of the .nsi file."
+          },
+          {
+            "name": "InputCharset",
+            "type": "string",
+            "format": "/INPUTCHARSET{value}",
+            "help": "Allows you to specify a specific codepage for files without a BOM. (<c>ACP</c>|<c>OEM</c>|<c>CP#</c>|<c>UTF8</c>|<c>UTF16</c>&lt;LE|BE&gt;)."
+          },
+          {
+            "name": "OutputCharset",
+            "type": "string",
+            "format": "/OUTPUTCHARSET{value}",
+            "help": "Allows you to specify the codepage used by stdout when the output is redirected. (<c>ACP</c>|<c>OEM</c>|<c>CP#</c>|<c>UTF8[SIG]</c>|<c>UTF16&lt;LE|BE&gt;[BOM]</c>)"
+          },
+          {
+            "name": "OnlyRunPreprocessor",
+            "type": "bool",
+            "format": "/PPO",
+            "help": "Will only run the preprocessor and print the result to stdout."
+          },
+          {
+            "name": "OnlyRunSaveVersionPreprocessor",
+            "type": "bool",
+            "format": "/SAFEPPO",
+            "help": "Will only run the preprocessor and print the result to stdout. The safe version will not execute instructions like <c>!appendfile</c> or <c>!system</c>. <c>!packhdr</c> and !finalize are never executed."
+          },
+          {
+            "name": "TreatWarningsAsErrors",
+            "type": "bool",
+            "format": "/WX",
+            "help": "Treats warnings as errors."
+          },
+          {
+            "name": "DefinedSymbols",
+            "type": "List<string>",
+            "format": "/D{value}",
+            "help": "One or more times will add to symbols to the globally defined list (See <c>!define</c>)."
+          },
+          {
+            "name": "PreExecutionCodes",
+            "type": "List<string>",
+            "format": "/X{value}",
+            "help": "One or more times will execute the code you specify following it."
+          },
+          {
+            "name": "ScriptFile",
+            "type": "string",
+            "format": "{value}",
+            "help": "The <c>.nsi</c> script file to compile."
+          },
+          {
+            "name": "PostExecutionCodes",
+            "type": "List<string>",
+            "format": "/X{value}",
+            "help": "One or more times will execute the code you specify following it."
+          }
+        ]
+      }
+    }
+  ]
+}
