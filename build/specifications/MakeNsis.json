@@ -15,7 +15,7 @@
             "name": "Verbosity",
             "type": "int",
             "format": "/V{value}",
-            "help": "0=no output, 1=errors only, 2=warnings and errors, 3=info, warnings, and errors, 4=all output"
+            "help": "0=no output, 1=errors only, 2=warnings and errors, 3=info, warnings, and errors, 4=all output."
           },
           {
             "name": "CompilerPriority",
@@ -27,7 +27,7 @@
             "name": "LogOutputFile",
             "type": "string",
             "format": "/O{value}",
-            "help": "Tells the compiler to print its log to that file (instead of the screen)"
+            "help": "Tells the compiler to print its log to that file (instead of the screen)."
           },
           {
             "name": "NoConfig",
@@ -45,57 +45,54 @@
             "name": "InputCharset",
             "type": "string",
             "format": "/INPUTCHARSET{value}",
-            "help": "allows you to specify a specific codepage for files without a BOM. (ACP|OEM|CP#|UTF8|UTF16<LE|BE>)"
+            "help": "Allows you to specify a specific codepage for files without a BOM. (<c>ACP</c>|<c>OEM</c>|<c>CP#</c>|<c>UTF8</c>|<c>UTF16</c>&lt;LE|BE&gt;)."
           },
           {
             "name": "OutputCharset",
             "type": "string",
             "format": "/OUTPUTCHARSET{value}",
-            "help": "allows you to specify the codepage used by stdout when the output is redirected. (ACP|OEM|CP#|UTF8[SIG]|UTF16<LE|BE>[BOM])"
+            "help": "Allows you to specify the codepage used by stdout when the output is redirected. (<c>ACP</c>|<c>OEM</c>|<c>CP#</c>|<c>UTF8[SIG]</c>|<c>UTF16&lt;LE|BE&gt;[BOM]</c>)"
           },
           {
             "name": "OnlyRunPreprocessor",
             "type": "bool",
             "format": "/PPO",
-            "help": "will only run the preprocessor and print the result to stdout."
+            "help": "Will only run the preprocessor and print the result to stdout."
           },
           {
             "name": "OnlyRunSaveVersionPreprocessor",
             "type": "bool",
             "format": "/SAFEPPO",
-            "help": "will only run the preprocessor and print the result to stdout. The safe version will not execute instructions like !appendfile or !system. !packhdr and !finalize are never executed."
+            "help": "Will only run the preprocessor and print the result to stdout. The safe version will not execute instructions like <c>!appendfile</c> or <c>!system</c>. <c>!packhdr</c> and !finalize are never executed."
           },
           {
             "name": "TreatWarningsAsErrors",
             "type": "bool",
             "format": "/WX",
-            "help": "Treats warnings as errors"
+            "help": "Treats warnings as errors."
           },
           {
             "name": "DefinedSymbols",
             "type": "List<string>",
             "format": "/D{value}",
-            "secret": false,
-            "help": "One or more times will add to symbols to the globally defined list (See !define)."
+            "help": "One or more times will add to symbols to the globally defined list (See <c>!define</c>)."
           },
           {
             "name": "PreExecutionCodes",
             "type": "List<string>",
             "format": "/X{value}",
-            "secret": false,
             "help": "One or more times will execute the code you specify following it."
           },
           {
             "name": "ScriptFile",
             "type": "string",
             "format": "{value}",
-            "help": "The .nsi script file to compile"
+            "help": "The <c>.nsi</c> script file to compile."
           },
           {
             "name": "PostExecutionCodes",
             "type": "List<string>",
             "format": "/X{value}",
-            "secret": false,
             "help": "One or more times will execute the code you specify following it."
           }
         ]
