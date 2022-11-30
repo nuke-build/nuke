@@ -1,14 +1,14 @@
 blank_issues_enabled: false
 contact_links:
   - name: 📚 Documentation
-    url: https://nuke.build/docs/getting-started/philosophy.html
-    about: Read our comprehensive documentation
+    url: https://nuke.build/docs/introduction/
+    about: Read our comprehensive documentation.
   - name: 🚀 First-Class Support
-    url: https://github.com/sponsors/matkoch?frequency=one-time&sponsor=matkoch
-    about: Make a sponsorship to receive professional support
-  - name: 💬 Chat on Slack
-    url: https://slofile.com/slack/nukebuildnet
-    about: Get in touch with the whole community
-  - name: 🐦 Follow on Twitter
-    url: https://twitter.com/nukebuildnet
-    about: Stay informed about the latest greatness
+    url: https://github.com/sponsors/matkoch?frequency=one-time
+    about: Make a sponsorship to receive professional support.
+  - name: 💬 Ask on Slack
+    url: https://nuke.build/slack
+    about: Get in touch with the whole community.
+  - name: 💬 Ask on Discord
+    url: https://nuke.build/discord
+    about: Get in touch with the whole community.
