@@ -26,7 +26,9 @@ namespace Nuke.Common.ValueInjection
             }
             catch (Exception exception)
             {
-                Log.Warning(exception.Unwrap(), "Could not inject value for {Member}", member.GetDisplayName());
+                if (!member.HasCustomAttribute<OptionalAttribute>())
+                    Log.Warning(exception.Unwrap(), "Could not inject value for {Member}", member.GetDisplayName());
+
                 return null;
             }
         }
