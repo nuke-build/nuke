@@ -930,7 +930,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Path to the DocFX executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Set changes file.
@@ -1178,7 +1178,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Path to the DocFX executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
         public virtual string DependencyFile { get; internal set; }
         /// <summary>
         ///   The intermediate folder that store cache files.
@@ -1217,7 +1217,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Path to the DocFX executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
         public virtual string ArchiveFile { get; internal set; }
         /// <summary>
         ///   Print help message for this sub-command.
@@ -1251,7 +1251,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Path to the DocFX executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
         public virtual string Command { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1275,7 +1275,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Path to the DocFX executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
         /// <summary>
         ///   Specify the source working folder for source project files to start glob search.
         /// </summary>
@@ -1332,7 +1332,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Path to the DocFX executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
         public virtual string ConfigFile { get; internal set; }
         /// <summary>
         ///   Specifies content files for generating documentation.
@@ -1413,7 +1413,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Path to the DocFX executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
         /// <summary>
         ///   The projects for which the metadata should be built.
         /// </summary>
@@ -1517,7 +1517,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Path to the DocFX executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
         /// <summary>
         ///   Specify the base path to generate external link, {host}/{locale}/{basePath}.
         /// </summary>
@@ -1826,7 +1826,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Path to the DocFX executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
         public virtual string Folder { get; internal set; }
         /// <summary>
         ///   Specify the hostname of the hosted website [localhost].
@@ -1865,7 +1865,7 @@ namespace Nuke.Common.Tools.DocFX
         ///   Path to the DocFX executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DocFXTasks.DocFXLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
         /// <summary>
         ///   The command to execute.
         /// </summary>

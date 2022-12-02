@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner
         ///   Path to the WebConfigTransformRunner executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerPath;
-        public override Action<OutputType, string> ProcessCustomLogger => WebConfigTransformRunnerTasks.WebConfigTransformRunnerLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerLogger;
         /// <summary>
         ///   The base web.config file
         /// </summary>

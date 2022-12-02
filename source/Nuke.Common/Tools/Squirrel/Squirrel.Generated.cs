@@ -171,7 +171,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   Path to the Squirrel executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SquirrelTasks.SquirrelPath;
-        public override Action<OutputType, string> ProcessCustomLogger => SquirrelTasks.SquirrelLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SquirrelTasks.SquirrelLogger;
         /// <summary>
         ///   Install the app whose package is in the specified directory.
         /// </summary>

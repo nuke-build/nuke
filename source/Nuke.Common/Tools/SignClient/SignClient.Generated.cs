@@ -132,7 +132,7 @@ namespace Nuke.Common.Tools.SignClient
         ///   Path to the SignClient executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SignClientTasks.SignClientPath;
-        public override Action<OutputType, string> ProcessCustomLogger => SignClientTasks.SignClientLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SignClientTasks.SignClientLogger;
         /// <summary>
         ///   Path to config json file
         /// </summary>

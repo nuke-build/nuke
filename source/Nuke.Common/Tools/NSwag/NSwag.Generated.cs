@@ -2515,7 +2515,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -2538,7 +2538,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The nswag.json configuration file path.
         /// </summary>
@@ -2591,7 +2591,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The nswag.json configuration file path.
         /// </summary>
@@ -2644,7 +2644,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The output file path (optional).
         /// </summary>
@@ -2699,7 +2699,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).
         /// </summary>
@@ -2805,7 +2805,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true).
         /// </summary>
@@ -3029,7 +3029,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   Specifies whether to add path parameters which are missing in the action method (default: true).
         /// </summary>
@@ -3290,7 +3290,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true).
         /// </summary>
@@ -3514,7 +3514,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The ASP.NET Core API Explorer group names to include (comma separated, default: empty = all).
         /// </summary>
@@ -3789,7 +3789,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -3812,7 +3812,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         public virtual string Input { get; internal set; }
         public virtual IReadOnlyDictionary<string, object> Variables => VariablesInternal.AsReadOnly();
         internal Dictionary<string,object> VariablesInternal { get; set; } = new Dictionary<string,object>(StringComparer.OrdinalIgnoreCase);
@@ -3840,7 +3840,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The any .NET type (default: 'object').
         /// </summary>
@@ -3934,7 +3934,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The type name of the root schema.
         /// </summary>
@@ -3983,7 +3983,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The additional contract namespace usages.
         /// </summary>
@@ -4273,7 +4273,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The client base class (empty for no base class).
         /// </summary>
@@ -4699,7 +4699,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The additional contract namespace usages.
         /// </summary>
@@ -4989,7 +4989,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The Base path on which the API is served, which is relative to the Host
         /// </summary>
@@ -5319,7 +5319,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
         /// </summary>
@@ -5383,7 +5383,7 @@ namespace Nuke.Common.Tools.NSwag
         ///   Path to the NSwag executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => NSwagTasks.NSwagLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
         /// <summary>
         ///   The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').
         /// </summary>

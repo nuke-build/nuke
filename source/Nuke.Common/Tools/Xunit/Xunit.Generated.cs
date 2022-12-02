@@ -165,7 +165,7 @@ namespace Nuke.Common.Tools.Xunit
         ///   Path to the Xunit executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => XunitTasks.XunitLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? XunitTasks.XunitLogger;
         /// <summary>
         ///   Assemblies to test, and their related related configuration files (ending with .json or .config).
         /// </summary>

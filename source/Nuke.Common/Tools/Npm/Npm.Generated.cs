@@ -222,7 +222,7 @@ namespace Nuke.Common.Tools.Npm
         ///   Path to the Npm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NpmTasks.NpmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NpmTasks.NpmLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NpmTasks.NpmLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -244,7 +244,7 @@ namespace Nuke.Common.Tools.Npm
         ///   Path to the Npm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NpmTasks.NpmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NpmTasks.NpmLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NpmTasks.NpmLogger;
         /// <summary>
         ///   List of packages to be installed.
         /// </summary>
@@ -332,7 +332,7 @@ namespace Nuke.Common.Tools.Npm
         ///   Path to the Npm executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NpmTasks.NpmPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NpmTasks.NpmLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NpmTasks.NpmLogger;
         /// <summary>
         ///   The command to be executed.
         /// </summary>

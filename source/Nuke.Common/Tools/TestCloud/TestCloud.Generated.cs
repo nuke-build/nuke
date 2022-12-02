@@ -135,7 +135,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   Path to the TestCloud executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? TestCloudTasks.TestCloudPath;
-        public override Action<OutputType, string> ProcessCustomLogger => TestCloudTasks.TestCloudLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? TestCloudTasks.TestCloudLogger;
         /// <summary>
         ///   The path to the folder holding the test assemblies.
         /// </summary>

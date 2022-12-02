@@ -894,7 +894,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Path to the EntityFramework executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   Don't confirm.
         /// </summary>
@@ -981,7 +981,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Path to the EntityFramework executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The target migration. Migrations may be identified by name or by ID. The number 0 is a special case that means before the first migration and causes all migrations to be reverted. If no migration is specified, the command defaults to the last migration.
         /// </summary>
@@ -1068,7 +1068,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Path to the EntityFramework executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   Show JSON output.
         /// </summary>
@@ -1145,7 +1145,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Path to the EntityFramework executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   Show JSON output.
         /// </summary>
@@ -1222,7 +1222,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Path to the EntityFramework executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The connection string to the database. For ASP.NET Core 2.x projects, the value can be <em>name=&lt;name of connection string&gt;</em>. In that case the name comes from the configuration sources that are set up for the project.
         /// </summary>
@@ -1366,7 +1366,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Path to the EntityFramework executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The file to write the result to.
         /// </summary>
@@ -1448,7 +1448,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Path to the EntityFramework executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The name of the migration.
         /// </summary>
@@ -1540,7 +1540,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Path to the EntityFramework executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The connection string to the database. Defaults to the one specified in AddDbContext or OnConfiguring. Added in EF Core 5.0.
         /// </summary>
@@ -1627,7 +1627,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Path to the EntityFramework executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   Revert the migration (roll back the changes that were applied to the database).
         /// </summary>
@@ -1709,7 +1709,7 @@ namespace Nuke.Common.Tools.EntityFramework
         ///   Path to the EntityFramework executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => EntityFrameworkTasks.EntityFrameworkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
         /// <summary>
         ///   The starting migration. Migrations may be identified by name or by ID. The number 0 is a special case that means <em>before the first migration</em>. Defaults to 0.
         /// </summary>

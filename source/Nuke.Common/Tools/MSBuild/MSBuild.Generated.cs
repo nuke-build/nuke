@@ -138,7 +138,7 @@ namespace Nuke.Common.Tools.MSBuild
         ///   Path to the MSBuild executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => MSBuildTasks.MSBuildLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MSBuildTasks.MSBuildLogger;
         /// <summary>
         ///   The solution or project file on which MSBuild is executed.
         /// </summary>

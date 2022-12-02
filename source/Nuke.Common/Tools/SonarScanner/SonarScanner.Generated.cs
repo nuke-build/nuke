@@ -279,7 +279,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   Path to the SonarScanner executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => SonarScannerTasks.SonarScannerLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SonarScannerTasks.SonarScannerLogger;
         /// <summary>
         ///   Specifies the key of the analyzed project in SonarQube.
         /// </summary>
@@ -532,7 +532,7 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   Path to the SonarScanner executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => SonarScannerTasks.SonarScannerLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SonarScannerTasks.SonarScannerLogger;
         /// <summary>
         ///   Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>

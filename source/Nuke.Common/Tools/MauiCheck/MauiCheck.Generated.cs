@@ -171,7 +171,7 @@ namespace Nuke.Common.Tools.MauiCheck
         ///   Path to the MauiCheck executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? MauiCheckTasks.MauiCheckPath;
-        public override Action<OutputType, string> ProcessCustomLogger => MauiCheckTasks.MauiCheckLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MauiCheckTasks.MauiCheckLogger;
         /// <summary>
         ///   Manifest files are currently used by the doctor to fetch the latest versions and requirements. The manifest is hosted by default at: <a href="https://aka.ms/dotnet-maui-check-manifest">https://aka.ms/dotnet-maui-check-manifest</a>. Use this option to specify an alternative file path or URL to use.
         /// </summary>
@@ -223,7 +223,7 @@ namespace Nuke.Common.Tools.MauiCheck
         ///   Path to the MauiCheck executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? MauiCheckTasks.MauiCheckPath;
-        public override Action<OutputType, string> ProcessCustomLogger => MauiCheckTasks.MauiCheckLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MauiCheckTasks.MauiCheckLogger;
         /// <summary>
         ///   Use the SDK version in the manifest in <em>global.json</em>.
         /// </summary>

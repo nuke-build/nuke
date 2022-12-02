@@ -135,7 +135,7 @@ namespace Nuke.Common.Tools.VSWhere
         ///   Path to the VSWhere executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? VSWhereTasks.VSWherePath;
-        public override Action<OutputType, string> ProcessCustomLogger => VSWhereTasks.VSWhereLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? VSWhereTasks.VSWhereLogger;
         /// <summary>
         ///    Return only the newest version and last installed.
         /// </summary>

@@ -200,7 +200,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   Path to the GitLink executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GitLinkTasks.GitLinkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => GitLinkTasks.GitLinkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitLinkTasks.GitLinkLogger;
         /// <summary>
         ///   The directory containing the solution with the pdb files.
         /// </summary>
@@ -286,7 +286,7 @@ namespace Nuke.Common.Tools.GitLink
         ///   Path to the GitLink executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GitLinkTasks.GitLinkPath;
-        public override Action<OutputType, string> ProcessCustomLogger => GitLinkTasks.GitLinkLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitLinkTasks.GitLinkLogger;
         /// <summary>
         ///   The PDB to add source indexing to.
         /// </summary>

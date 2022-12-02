@@ -642,7 +642,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   Path to the Octopus executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => OctopusTasks.OctopusLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctopusTasks.OctopusLogger;
         /// <summary>
         ///   The ID of the package. E.g. <c>MyCompany.MyApp</c>.
         /// </summary>
@@ -731,7 +731,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   Path to the Octopus executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => OctopusTasks.OctopusLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctopusTasks.OctopusLogger;
         /// <summary>
         ///   Package file to push.
         /// </summary>
@@ -835,7 +835,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   Path to the Octopus executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => OctopusTasks.OctopusLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctopusTasks.OctopusLogger;
         /// <summary>
         ///   Name of the project.
         /// </summary>
@@ -1077,7 +1077,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   Path to the Octopus executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => OctopusTasks.OctopusLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctopusTasks.OctopusLogger;
         /// <summary>
         ///   Show progress of the deployment.
         /// </summary>
@@ -1278,7 +1278,7 @@ namespace Nuke.Common.Tools.Octopus
         ///   Path to the Octopus executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => OctopusTasks.OctopusLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctopusTasks.OctopusLogger;
         /// <summary>
         ///   Id of the package.
         /// </summary>

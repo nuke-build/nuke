@@ -567,7 +567,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Path to the DotCover executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   File name of the program to analyse.
@@ -686,7 +686,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Path to the DotCover executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   File name of the program to analyse.
@@ -800,7 +800,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Path to the DotCover executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Path to the resulting coverage snapshot.
@@ -909,7 +909,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Path to the DotCover executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   List of snapshot files.
@@ -944,7 +944,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Path to the DotCover executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   List of snapshot files.
@@ -989,7 +989,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Path to the DotCover executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   List of snapshot files.
@@ -1039,7 +1039,7 @@ namespace Nuke.Common.Tools.DotCover
         ///   Path to the DotCover executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-        public override Action<OutputType, string> ProcessCustomLogger => DotCoverTasks.DotCoverLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
         public virtual string Configuration { get; internal set; }
         /// <summary>
         ///   Coverage snapshot file name.

@@ -123,7 +123,7 @@ namespace Nuke.Common.Tools.Boots
         ///   Path to the Boots executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? BootsTasks.BootsPath;
-        public override Action<OutputType, string> ProcessCustomLogger => BootsTasks.BootsLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? BootsTasks.BootsLogger;
         /// <summary>
         ///   Install the latest <em>stable</em> version of a product from VS manifests. Options include: <c>Xamarin.Android</c>, <c>Xamarin.iOS</c>, <c>Xamarin.Mac</c>, and <c>Mono</c>
         /// </summary>

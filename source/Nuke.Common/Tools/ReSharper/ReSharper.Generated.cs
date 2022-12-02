@@ -379,7 +379,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///   Path to the ReSharper executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ReSharperTasks.ReSharperLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ReSharperTasks.ReSharperLogger;
         /// <summary>
         ///   Target path.
         /// </summary>
@@ -542,7 +542,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///   Path to the ReSharper executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ReSharperTasks.ReSharperLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ReSharperTasks.ReSharperLogger;
         /// <summary>
         ///   Target path.
         /// </summary>
@@ -670,7 +670,7 @@ namespace Nuke.Common.Tools.ReSharper
         ///   Path to the ReSharper executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ReSharperTasks.ReSharperLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ReSharperTasks.ReSharperLogger;
         /// <summary>
         ///   Defines files included into the duplicates search. Use Visual Studio solution or project files, Ant-like wildcards or specific source file and folder names. Paths should be either absolute or relative to the working directory.
         /// </summary>

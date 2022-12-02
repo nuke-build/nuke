@@ -171,7 +171,7 @@ namespace Nuke.Common.Tools.OpenCover
         ///   Path to the OpenCover executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? OpenCoverTasks.OpenCoverPath;
-        public override Action<OutputType, string> ProcessCustomLogger => OpenCoverTasks.OpenCoverLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OpenCoverTasks.OpenCoverLogger;
         /// <summary>
         ///   The name of the target application or service that will be started; this can also be a path to the target application.
         /// </summary>

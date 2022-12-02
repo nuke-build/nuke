@@ -108,7 +108,7 @@ namespace Nuke.Common.Tools.CodeMetrics
         ///   Path to the CodeMetrics executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CodeMetricsTasks.CodeMetricsPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CodeMetricsTasks.CodeMetricsLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CodeMetricsTasks.CodeMetricsLogger;
         /// <summary>
         ///   Project to analyze.
         /// </summary>

@@ -117,7 +117,7 @@ namespace Nuke.Common.Tools.MinVer
         ///   Path to the MinVer executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => MinVerTasks.MinVerLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MinVerTasks.MinVerLogger;
         public virtual MinVerVersionPart AutoIncrement { get; internal set; }
         public virtual string BuildMetadata { get; internal set; }
         public virtual string DefaultPreReleasePhase { get; internal set; }

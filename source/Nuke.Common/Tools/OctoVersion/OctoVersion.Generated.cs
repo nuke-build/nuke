@@ -211,7 +211,7 @@ namespace Nuke.Common.Tools.OctoVersion
         ///   Path to the OctoVersion executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => OctoVersionTasks.OctoVersionLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctoVersionTasks.OctoVersionLogger;
         /// <summary>
         ///   Pass in the name of the branch. If not set, OctoVersion will attempt to derive it, but this may lead to incorrect values.
         /// </summary>
@@ -296,7 +296,7 @@ namespace Nuke.Common.Tools.OctoVersion
         ///   Path to the OctoVersion executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => OctoVersionTasks.OctoVersionLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctoVersionTasks.OctoVersionLogger;
         /// <summary>
         ///   Pass in the name of the branch. If not set, OctoVersion will attempt to derive it, but this may lead to incorrect values.
         /// </summary>

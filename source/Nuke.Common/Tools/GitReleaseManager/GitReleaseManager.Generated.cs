@@ -393,7 +393,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   Path to the GitReleaseManager executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
-        public override Action<OutputType, string> ProcessCustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary>
         ///   Paths to the files to include in the release.
         /// </summary>
@@ -456,7 +456,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   Path to the GitReleaseManager executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
-        public override Action<OutputType, string> ProcessCustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary>
         ///   The milestone to use.
         /// </summary>
@@ -513,7 +513,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   Path to the GitReleaseManager executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
-        public override Action<OutputType, string> ProcessCustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary>
         ///   Paths to the files to include in the release.
         /// </summary>
@@ -596,7 +596,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   Path to the GitReleaseManager executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
-        public override Action<OutputType, string> ProcessCustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary>
         ///   The name of the release. Typically this is the generated SemVer Version Number.
         /// </summary>
@@ -658,7 +658,7 @@ namespace Nuke.Common.Tools.GitReleaseManager
         ///   Path to the GitReleaseManager executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
-        public override Action<OutputType, string> ProcessCustomLogger => GitReleaseManagerTasks.GitReleaseManagerLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitReleaseManagerTasks.GitReleaseManagerLogger;
         /// <summary>
         ///   The name of the release. Typically this is the generated SemVer Version Number.
         /// </summary>

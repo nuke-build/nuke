@@ -246,7 +246,7 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         ///   Path to the BenchmarkDotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? BenchmarkDotNetTasks.BenchmarkDotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => BenchmarkDotNetTasks.BenchmarkDotNetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? BenchmarkDotNetTasks.BenchmarkDotNetLogger;
         /// <summary>
         ///   The assembly with the benchmarks (required).
         /// </summary>

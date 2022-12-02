@@ -153,7 +153,7 @@ namespace Nuke.Common.Tools.PowerShell
         ///   Path to the PowerShell executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => PowerShellTasks.PowerShellLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PowerShellTasks.PowerShellLogger;
         /// <summary>
         ///   Loads the specified PowerShell console file. Enter the path and name of the console file. To create a console file, use the Export-Console cmdlet in PowerShell.
         /// </summary>

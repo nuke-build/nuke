@@ -421,7 +421,7 @@ namespace Nuke.Common.Tools.Unity
         ///   Path to the Unity executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => UnityTasks.UnityLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? UnityTasks.UnityLogger;
         /// <summary>
         ///   Enter a username into the log-in form during activation of the Unity Editor.
         /// </summary>
@@ -478,7 +478,7 @@ namespace Nuke.Common.Tools.Unity
         ///   Path to the Unity executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => UnityTasks.UnityLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? UnityTasks.UnityLogger;
         /// <summary>
         ///   The path to the license file.
         /// </summary>
@@ -539,7 +539,7 @@ namespace Nuke.Common.Tools.Unity
         ///   Path to the Unity executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => UnityTasks.UnityLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? UnityTasks.UnityLogger;
         /// <summary>
         ///   Force an update of the project in the <a href="https://docs.unity3d.com/Manual/AssetServer.html">Asset Server</a> given by <c>IP:port</c>. The port is optional, and if not given it is assumed to be the standard one (10733). It is advisable to use this command in conjunction with the <c>-projectPath</c> argument to ensure you are working with the correct project. If no project name is given, then the last project opened by Unity is used. If no project exists at the path given by <c>-projectPath</c>, then one is created automatically.
         /// </summary>
@@ -775,7 +775,7 @@ namespace Nuke.Common.Tools.Unity
         ///   Path to the Unity executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => UnityTasks.UnityLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? UnityTasks.UnityLogger;
         /// <summary>
         ///   Enter a username into the log-in form during activation of the Unity Editor.
         /// </summary>

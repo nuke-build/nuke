@@ -114,7 +114,7 @@ namespace Nuke.Common.Tools.Fixie
         ///   Path to the Fixie executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? FixieTasks.FixiePath;
-        public override Action<OutputType, string> ProcessCustomLogger => FixieTasks.FixieLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? FixieTasks.FixieLogger;
         /// <summary>
         ///   The configuration under which to build. When this option is omitted, the default configuration is `Debug`.
         /// </summary>

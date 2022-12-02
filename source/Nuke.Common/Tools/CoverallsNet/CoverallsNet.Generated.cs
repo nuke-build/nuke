@@ -156,7 +156,7 @@ namespace Nuke.Common.Tools.CoverallsNet
         ///   Path to the CoverallsNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CoverallsNetTasks.CoverallsNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CoverallsNetTasks.CoverallsNetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CoverallsNetTasks.CoverallsNetLogger;
         /// <summary>
         ///   The coverage source file location.
         /// </summary>

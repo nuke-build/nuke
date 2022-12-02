@@ -156,7 +156,7 @@ namespace Nuke.Common.Tools.Codecov
         ///   Path to the Codecov executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => CodecovTasks.CodecovLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CodecovTasks.CodecovLogger;
         /// <summary>
         ///   Specify the branch name.
         /// </summary>

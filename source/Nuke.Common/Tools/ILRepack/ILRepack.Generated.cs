@@ -180,7 +180,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///   Path to the ILRepack executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ILRepackTasks.ILRepackPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ILRepackTasks.ILRepackLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ILRepackTasks.ILRepackLogger;
         /// <summary>
         ///   Specifies a keyfile to sign the output assembly.
         /// </summary>

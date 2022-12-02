@@ -427,7 +427,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
         ///   Path to the NerdbankGitVersioning executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
         /// <summary>
         ///   The path to the directory that should contain the version.json file. The default is the root of the git repo.
         /// </summary>
@@ -465,7 +465,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
         ///   Path to the NerdbankGitVersioning executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
         /// <summary>
         ///   The path to the project or project directory. The default is the current directory.
         /// </summary>
@@ -512,7 +512,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
         ///   Path to the NerdbankGitVersioning executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
         /// <summary>
         ///   The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable.
         /// </summary>
@@ -544,7 +544,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
         ///   Path to the NerdbankGitVersioning executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
         /// <summary>
         ///   The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable.
         /// </summary>
@@ -576,7 +576,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
         ///   Path to the NerdbankGitVersioning executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
         /// <summary>
         ///   The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable.
         /// </summary>
@@ -613,7 +613,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
         ///   Path to the NerdbankGitVersioning executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
         /// <summary>
         ///   The path to the project or project directory used to calculate the version. The default is the current directory. Ignored if the <c>--version</c> option is specified.
         /// </summary>
@@ -671,7 +671,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
         ///   Path to the NerdbankGitVersioning executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
         /// <summary>
         ///   The path to the project or project directory. The default is the current directory.
         /// </summary>

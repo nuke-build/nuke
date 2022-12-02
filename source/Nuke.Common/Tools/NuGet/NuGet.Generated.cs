@@ -798,7 +798,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Path to the NuGet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
         /// <summary>
         ///   Path of the package to push.
         /// </summary>
@@ -880,7 +880,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Path to the NuGet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The <c>.nuspec</c> or <c>.csproj</c> file.
         /// </summary>
@@ -1003,7 +1003,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Path to the NuGet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
         /// <summary>
         ///   Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file.
         /// </summary>
@@ -1123,7 +1123,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Path to the NuGet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
         /// <summary>
         ///   Name of the package to install.
         /// </summary>
@@ -1238,7 +1238,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Path to the NuGet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
@@ -1305,7 +1305,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Path to the NuGet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
@@ -1372,7 +1372,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Path to the NuGet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
@@ -1419,7 +1419,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Path to the NuGet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
@@ -1466,7 +1466,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Path to the NuGet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
         /// <summary>
         ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
         /// </summary>
@@ -1513,7 +1513,7 @@ namespace Nuke.Common.Tools.NuGet
         ///   Path to the NuGet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NuGetTasks.NuGetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
         /// <summary>
         ///   Can be <c>Detailed</c> (the default) or <c>Short</c>.
         /// </summary>

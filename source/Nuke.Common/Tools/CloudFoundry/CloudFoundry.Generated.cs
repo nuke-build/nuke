@@ -1386,7 +1386,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         /// <summary>
         ///   The name of the application.
         /// </summary>
@@ -1510,7 +1510,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string Username { get; internal set; }
         public virtual string Password { get; internal set; }
         /// <summary>
@@ -1550,7 +1550,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string Username { get; internal set; }
         public virtual string Password { get; internal set; }
         public virtual string Origin { get; internal set; }
@@ -1583,7 +1583,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         /// <summary>
         ///   Number of instances
         /// </summary>
@@ -1620,7 +1620,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         /// <summary>
         ///   App Name
         /// </summary>
@@ -1657,7 +1657,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         /// <summary>
         ///   CAPI Path to invoke (ex. /v2/info)
         /// </summary>
@@ -1699,7 +1699,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string Url { get; internal set; }
         /// <summary>
         ///   Skip verification of the API endpoint
@@ -1733,7 +1733,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string ServiceInstanceName { get; internal set; }
         /// <summary>
         ///   URL to which requests for bound routes will be forwarded. Scheme for this URL must be https
@@ -1773,7 +1773,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string AppName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1797,7 +1797,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string AppName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1821,7 +1821,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string AppName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1845,7 +1845,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string AppName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
@@ -1869,7 +1869,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string AppName { get; internal set; }
         /// <summary>
         ///   Also delete any mapped routes
@@ -1898,7 +1898,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         /// <summary>
         ///   Service type
         /// </summary>
@@ -1946,7 +1946,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         /// <summary>
         ///   Service Instance
         /// </summary>
@@ -1973,7 +1973,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         /// <summary>
         ///   Service Instance
         /// </summary>
@@ -2000,7 +2000,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string AppName { get; internal set; }
         public virtual string ServiceInstance { get; internal set; }
         /// <summary>
@@ -2036,7 +2036,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string AppName { get; internal set; }
         public virtual string ServiceInstance { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -2062,7 +2062,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string AppName { get; internal set; }
         public virtual string EnvironmentalVariableName { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -2088,7 +2088,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string Space { get; internal set; }
         public virtual string Domain { get; internal set; }
         /// <summary>
@@ -2134,7 +2134,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string AppName { get; internal set; }
         public virtual string Domain { get; internal set; }
         /// <summary>
@@ -2180,7 +2180,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string AppName { get; internal set; }
         public virtual string Domain { get; internal set; }
         /// <summary>
@@ -2221,7 +2221,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string Space { get; internal set; }
         public virtual string Org { get; internal set; }
         /// <summary>
@@ -2252,7 +2252,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string Space { get; internal set; }
         public virtual string Org { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -2278,7 +2278,7 @@ namespace Nuke.Common.Tools.CloudFoundry
         ///   Path to the CloudFoundry executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CloudFoundryTasks.CloudFoundryLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
         public virtual string Space { get; internal set; }
         public virtual string Org { get; internal set; }
         protected override Arguments ConfigureProcessArguments(Arguments arguments)

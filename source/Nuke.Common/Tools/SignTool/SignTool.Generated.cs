@@ -231,7 +231,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   Path to the SignTool executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SignToolTasks.SignToolPath;
-        public override Action<OutputType, string> ProcessCustomLogger => SignToolTasks.SignToolLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SignToolTasks.SignToolLogger;
         /// <summary>
         ///   Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.
         /// </summary>

@@ -168,7 +168,7 @@ namespace Nuke.Common.Tools.AzureSignTool
         ///   Path to the AzureSignTool executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? AzureSignToolTasks.AzureSignToolPath;
-        public override Action<OutputType, string> ProcessCustomLogger => AzureSignToolTasks.AzureSignToolLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? AzureSignToolTasks.AzureSignToolLogger;
         /// <summary>
         ///   A fully qualified URL of the key vault with the certificate that will be used for signing. An example value might be <c>https://my-vault.vault.azure.net</c>.
         /// </summary>

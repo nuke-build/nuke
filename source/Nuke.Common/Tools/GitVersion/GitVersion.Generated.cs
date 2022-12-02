@@ -171,7 +171,7 @@ namespace Nuke.Common.Tools.GitVersion
         ///   Path to the GitVersion executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => GitVersionTasks.GitVersionLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitVersionTasks.GitVersionLogger;
         /// <summary>
         ///   The directory containing .git. If not defined current directory is used. (Must be first argument).
         /// </summary>

@@ -153,7 +153,7 @@ namespace Nuke.Common.Tools.VSTest
         ///   Path to the VSTest executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? VSTestTasks.VSTestPath;
-        public override Action<OutputType, string> ProcessCustomLogger => VSTestTasks.VSTestLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? VSTestTasks.VSTestLogger;
         /// <summary>
         ///   Run tests from the specified files. Separate multiple test file names with spaces.
         /// </summary>

@@ -270,7 +270,7 @@ namespace Nuke.Common.Tools.Netlify
         ///   Path to the Netlify executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NetlifyTasks.NetlifyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NetlifyTasks.NetlifyLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
         /// <summary>
         ///   Specify a folder to deploy.
         /// </summary>
@@ -377,7 +377,7 @@ namespace Nuke.Common.Tools.Netlify
         ///   Path to the Netlify executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NetlifyTasks.NetlifyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NetlifyTasks.NetlifyLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
         /// <summary>
         ///   Name of site.
         /// </summary>
@@ -434,7 +434,7 @@ namespace Nuke.Common.Tools.Netlify
         ///   Path to the Netlify executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? NetlifyTasks.NetlifyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => NetlifyTasks.NetlifyLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
         /// <summary>
         ///   Site ID to delete.
         /// </summary>

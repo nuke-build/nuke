@@ -1107,7 +1107,7 @@ namespace Nuke.Common.Tools.Chocolatey
         ///   Path to the Chocolatey executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ChocolateyTasks.ChocolateyLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
         /// <summary>
         ///   Search filter.
         /// </summary>
@@ -1355,7 +1355,7 @@ namespace Nuke.Common.Tools.Chocolatey
         ///   Path to the Chocolatey executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ChocolateyTasks.ChocolateyLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
         /// <summary>
         ///   Search filter.
         /// </summary>
@@ -1603,7 +1603,7 @@ namespace Nuke.Common.Tools.Chocolatey
         ///   Path to the Chocolatey executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ChocolateyTasks.ChocolateyLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
         /// <summary>
         ///   Search filter.
         /// </summary>
@@ -1851,7 +1851,7 @@ namespace Nuke.Common.Tools.Chocolatey
         ///   Path to the Chocolatey executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ChocolateyTasks.ChocolateyLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
         /// <summary>
         ///   The source to find the package(s) to install. Special sources include: ruby, webpi, cygwin, windowsfeatures, and python. To specify more than one source, pass it with a semi-colon separating the values (-e.g. "'source1;source2'"). Defaults to default feeds.
         /// </summary>
@@ -2019,7 +2019,7 @@ namespace Nuke.Common.Tools.Chocolatey
         ///   Path to the Chocolatey executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ChocolateyTasks.ChocolateyLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
         /// <summary>
         ///   Path to nuspec
         /// </summary>
@@ -2163,7 +2163,7 @@ namespace Nuke.Common.Tools.Chocolatey
         ///   Path to the Chocolatey executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ChocolateyTasks.ChocolateyLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
         /// <summary>
         ///   Path to Nuget package (.nupkg).
         /// </summary>
@@ -2306,7 +2306,7 @@ namespace Nuke.Common.Tools.Chocolatey
         ///   Path to the Chocolatey executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ChocolateyTasks.ChocolateyLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
         /// <summary>
         ///   Generate automatic package instead of normal. Defaults to false.
         /// </summary>

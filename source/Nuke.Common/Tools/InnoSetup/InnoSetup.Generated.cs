@@ -129,7 +129,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   Path to the InnoSetup executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? InnoSetupTasks.InnoSetupPath;
-        public override Action<OutputType, string> ProcessCustomLogger => InnoSetupTasks.InnoSetupLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? InnoSetupTasks.InnoSetupLogger;
         /// <summary>
         ///   The .iss script file to compile
         /// </summary>

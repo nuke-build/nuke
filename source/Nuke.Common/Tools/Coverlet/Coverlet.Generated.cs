@@ -136,7 +136,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   Path to the Coverlet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CoverletTasks.CoverletPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CoverletTasks.CoverletLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CoverletTasks.CoverletLogger;
         /// <summary>
         ///   Path to the test assembly.
         /// </summary>

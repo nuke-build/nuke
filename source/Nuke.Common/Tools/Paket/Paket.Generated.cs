@@ -393,7 +393,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Path to the Paket executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> ProcessCustomLogger => PaketTasks.PaketLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
         /// <summary>
         ///   NuGet package ID.
         /// </summary>
@@ -500,7 +500,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Path to the Paket executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> ProcessCustomLogger => PaketTasks.PaketLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
         /// <summary>
         ///   Force download and reinstallation of all dependencies.
         /// </summary>
@@ -588,7 +588,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Path to the Paket executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> ProcessCustomLogger => PaketTasks.PaketLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
         /// <summary>
         ///   Path to the package.
         /// </summary>
@@ -650,7 +650,7 @@ namespace Nuke.Common.Tools.Paket
         ///   Path to the Paket executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? PaketTasks.PaketPath;
-        public override Action<OutputType, string> ProcessCustomLogger => PaketTasks.PaketLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PaketTasks.PaketLogger;
         /// <summary>
         ///   Output directory for .nupkg files.
         /// </summary>

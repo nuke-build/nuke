@@ -141,7 +141,7 @@ namespace Nuke.Common.Tools.MSpec
         ///   Path to the MSpec executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => MSpecTasks.MSpecLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MSpecTasks.MSpecLogger;
         /// <summary>
         ///   Assemblies with tests to be executed.
         /// </summary>

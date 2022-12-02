@@ -123,7 +123,7 @@ namespace Nuke.Common.Tools.CorFlags
         ///   Path to the CorFlags executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CorFlagsTasks.CorFlagsPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CorFlagsTasks.CorFlagsLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CorFlagsTasks.CorFlagsLogger;
         /// <summary>
         ///   Suppresses the Microsoft startup banner display.
         /// </summary>
