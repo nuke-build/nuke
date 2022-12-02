@@ -54,5 +54,7 @@ namespace Nuke.Common.Tooling
         }
 
         internal IProcess Process { get; }
+
+        public int ExitCode => Process.ExitCode;
     }
 }
