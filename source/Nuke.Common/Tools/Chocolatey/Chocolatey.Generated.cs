@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.Chocolatey
         ///   <p>Chocolatey has the largest online registry of Windows packages. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and/or scripts into a compiled package file.</p>
         ///   <p>For more details, visit the <a href="https://chocolatey.org/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Chocolatey(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Chocolatey(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(ChocolateyPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, ChocolateyLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(ChocolateyPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? ChocolateyLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }

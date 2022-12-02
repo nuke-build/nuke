@@ -38,9 +38,9 @@ namespace Nuke.Common.Tools.Docker
         ///   <p>Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.</p>
         ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Docker(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Docker(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(DockerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, DockerLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(DockerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? DockerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
