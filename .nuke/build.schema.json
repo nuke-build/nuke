@@ -24,6 +24,10 @@
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
         },
+        "DiscordWebhook": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
         "GitHubRegistryApiKey": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
