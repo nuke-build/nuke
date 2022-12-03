@@ -9,6 +9,7 @@ using System.Text;
 using Nuke.Common;
 using Nuke.Common.ChangeLog;
 using Nuke.Common.Git;
+using Nuke.Common.Tools.Discord;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.Slack;
@@ -19,12 +20,14 @@ using Tweetinvi.Models;
 using Tweetinvi.Parameters;
 using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.IO.TextTasks;
+using static Nuke.Common.Tools.Discord.DiscordTasks;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
 partial class Build
 {
     [Parameter] [Secret] readonly string GitterAuthToken;
     [Parameter] [Secret] readonly string SlackWebhook;
+    [Parameter] [Secret] readonly string DiscordWebhook;
     [Parameter] readonly string GitterRoomId;
 
     IEnumerable<string> ChangelogSectionNotes => ChangelogTasks.ExtractChangelogSectionNotes(From<IHazChangelog>().ChangelogFile);
@@ -39,6 +42,7 @@ partial class Build
         .Requires(() => TwitterCredentials.AccessToken)
         .Requires(() => TwitterCredentials.AccessTokenSecret)
         .Requires(() => SlackWebhook)
+        .Requires(() => DiscordWebhook)
         .Requires(() => GitterAuthToken)
         .Executes(async () =>
         {
@@ -117,6 +121,28 @@ partial class Build
                             .AppendLine(releaseNotes).ToString())
                         .SetFooter($"Powered by {sponsors.Select(x => CreateSlackLink(x.Text, x.Url)).JoinCommaAnd()}.")),
                 SlackWebhook);
+
+            await SendDiscordMessageAsync(_ => _
+                    .SetContent("@everyone")
+                    .AddEmbed(_ => _
+                        .SetTitle(title)
+                        .SetColor(color)
+                        .SetThumbnail(new DiscordEmbedThumbnail()
+                            .SetUrl(thumbnailUrl))
+                        .SetDescription(new StringBuilder()
+                            .Append($"This [release]({nugetReleaseLink}) includes *[{commitsText}]({comparisonUrl})*")
+                            .AppendLine(notableCommitters.Count > 0
+                                ? $" with notable contributions from {notableCommitters.JoinCommaAnd()}. A round of applause for them! 👏"
+                                : ". No contributions this time. 😅")
+                            .AppendLine()
+                            .AppendLine("Remember that you can call `nuke :update` to update your builds! 💡")
+                            .AppendLine()
+                            .AppendLine(releaseNotes).ToString()
+                            .Replace("*", "**"))
+                        .SetFooter(new DiscordEmbedFooter()
+                            .SetText($"Powered by {sponsors.Select(x => x.Text).JoinCommaAnd()}.")
+                            .SetIconUrl("https://cdn.discordapp.com/emojis/674275938757771306.webp?size=240&quality=lossless"))),
+                DiscordWebhook);
 
             SendGitterMessage(new StringBuilder()
                     .AppendLine($"@/all :mega::shipit: **{title}**")
