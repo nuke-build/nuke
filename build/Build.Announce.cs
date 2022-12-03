@@ -42,6 +42,15 @@ partial class Build
         .Requires(() => GitterAuthToken)
         .Executes(async () =>
         {
+            var title = $"NUKE {MajorMinorPatchVersion} RELEASED!";
+            var nugetReleaseLink = $"https://nuget.org/packages/Nuke.Common/{MajorMinorPatchVersion}";
+            var color = 0x00ACC1;
+            var thumbnailUrl = MajorMinorPatchVersion.EndsWith(".0.0")
+                ? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/rocket_1f680.png"
+                : MajorMinorPatchVersion.EndsWith(".0")
+                    ? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/wrapped-gift_1f381.png"
+                    : "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/package_1f4e6.png";
+
             var committers = GitTasks.Git($"log {MajorMinorPatchVersion}^..{MajorMinorPatchVersion} --pretty=tformat:%an", logOutput: false);
             var commitsText = $"{committers.Count} {(committers.Count == 1 ? "commit" : "commits")}";
             var comparisonUrl = GitRepository.GetGitHubCompareTagsUrl(MajorMinorPatchVersion, $"{MajorMinorPatchVersion}^");
@@ -51,6 +60,17 @@ partial class Build
                 .OrderByDescending(x => x.Count())
                 .Select(x => x.Key)
                 .Where(x => x != "Matthias Koch").ToList();
+            var releaseNotes = new StringBuilder()
+                .AppendLine("*Release Notes*")
+                .AppendLine("```")
+                .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ").Replace("`", string.Empty)).JoinNewLine())
+                .AppendLine("```").ToString();
+
+            var sponsors = new (string Text, string Url)[]
+                           {
+                               ("Octopus Deploy", "https://octopus.com/"),
+                               ("Virto Commerce", "https://virtocommerce.com/"),
+                           };
 
             var client = new TwitterClient(
                 new TwitterCredentials(
@@ -77,35 +97,29 @@ partial class Build
                     Medias = new List<IMedia> { media }
                 });
 
+            string CreateSlackLink(string text, string url) => $"*<{url}|{text}>*";
+
             await SendSlackMessageAsync(_ => _
                     .AddAttachment(_ => _
-                        .SetFallback($"NUKE {MajorMinorPatchVersion} RELEASED!")
-                        .SetAuthorName($"NUKE {MajorMinorPatchVersion} RELEASED!")
-                        .SetAuthorLink($"https://nuget.org/packages/Nuke.Common/{MajorMinorPatchVersion}")
-                        .SetColor("#00ACC1")
-                        .SetThumbUrl(
-                            MajorMinorPatchVersion.EndsWith(".0.0")
-                                ? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/rocket_1f680.png"
-                                : MajorMinorPatchVersion.EndsWith(".0")
-                                    ? "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/wrapped-gift_1f381.png"
-                                    : "https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/320/apple/285/package_1f4e6.png")
+                        .SetFallback(title)
+                        .SetAuthorName(title)
+                        .SetAuthorLink(nugetReleaseLink)
+                        .SetColor($"#{color:x8}")
+                        .SetThumbUrl(thumbnailUrl)
                         .SetText(new StringBuilder()
-                            .Append($"<!channel>, this release includes *<{comparisonUrl}|{commitsText}>*")
+                            .Append($"<!channel>, this release includes {CreateSlackLink(commitsText, comparisonUrl)}")
                             .AppendLine(notableCommitters.Count > 0
                                 ? $" with notable contributions from {notableCommitters.JoinCommaAnd()}. A round of applause for them! :clap:"
                                 : ". No contributions this time. :sweat_smile:")
                             .AppendLine()
                             .AppendLine("Remember that you can call `nuke :update` to update your builds! :bulb:")
                             .AppendLine()
-                            .AppendLine("*Release Notes*")
-                            .AppendLine("```")
-                            .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "• ").Replace("`", string.Empty)).JoinNewLine())
-                            .AppendLine("```").ToString())
-                        .SetFooter("Powered by *<https://octopus.com/|Octopus Deploy>* and *<https://virtocommerce.com/|Virto Commerce>*.")),
+                            .AppendLine(releaseNotes).ToString())
+                        .SetFooter($"Powered by {sponsors.Select(x => CreateSlackLink(x.Text, x.Url)).JoinCommaAnd()}.")),
                 SlackWebhook);
 
             SendGitterMessage(new StringBuilder()
-                    .AppendLine($"@/all :mega::shipit: **NUKE {MajorMinorPatchVersion} IS OUT!!!**")
+                    .AppendLine($"@/all :mega::shipit: **{title}**")
                     .AppendLine()
                     .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
                 GitterRoomId,
