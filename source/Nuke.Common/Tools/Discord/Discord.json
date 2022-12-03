@@ -1,0 +1,245 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://discord.com/developers/docs/resources/channel#create-message"
+  ],
+  "name": "Discord",
+  "officialUrl": "https://discord.com/developers/docs/intro",
+  "dataClasses": [
+    {
+      "name": "DiscordMessage",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "ChannelId",
+          "type": "string",
+          "json": "channel_id",
+          "help": "Id of the channel."
+        },
+        {
+          "name": "Content",
+          "type": "string",
+          "json": "content",
+          "help": "Message contents (up to 2000 characters)."
+        },
+        {
+          "name": "Nonce",
+          "type": "string",
+          "json": "nonce",
+          "help": "Can be used to verify a message was sent (up to 25 characters). Value will appear in the <a href=\"https://discord.com/developers/docs/topics/gateway-events#message-create\">Message Create event</a>."
+        },
+        {
+          "name": "TTS",
+          "type": "bool",
+          "json": "tts",
+          "help": "Whether this is a TTS message."
+        },
+        {
+          "name": "Embeds",
+          "type": "List<DiscordEmbed>",
+          "json": "embeds",
+          "help": "Embedded rich content (up to 6000 characters). See <a href=\"https://autocode.com/tools/discord/embed-builder/\">Discord Embed Builder</a>."
+        }
+      ]
+    },
+    {
+      "name": "DiscordEmbed",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Title",
+          "type": "string",
+          "json": "title",
+          "help": "Title of embed."
+        },
+        {
+          "name": "Type",
+          "type": "DiscordEmbedType",
+          "json": "type",
+          "help": "<a href=\"https://discord.com/developers/docs/resources/channel#embed-object-embed-types\">Type of embed</a> (always <c>rich</c> for webhook embeds)."
+        },
+        {
+          "name": "Description",
+          "type": "string",
+          "json": "description",
+          "help": "Description of embed."
+        },
+        {
+          "name": "Url",
+          "type": "string",
+          "json": "url",
+          "help": "Url of embed."
+        },
+        {
+          "name": "Timestamp",
+          "type": "string",
+          "json": "timestamp",
+          "help": "ISO8601 timestamp of embed."
+        },
+        {
+          "name": "Color",
+          "type": "int",
+          "json": "color",
+          "help": "Color code of the embed."
+        },
+        {
+          "name": "Footer",
+          "type": "DiscordEmbedFooter",
+          "json": "footer",
+          "help": "Footer information."
+        },
+        {
+          "name": "Image",
+          "type": "DiscordEmbedImage",
+          "json": "image",
+          "help": "Image information."
+        },
+        {
+          "name": "Thumbnail",
+          "type": "DiscordEmbedThumbnail",
+          "json": "thumbnail",
+          "help": "Thumbnail information."
+        },
+        {
+          "name": "Author",
+          "type": "DiscordEmbedAuthor",
+          "json": "author",
+          "help": "Author information."
+        },
+        {
+          "name": "Fields",
+          "type": "List<DiscordEmbedField>",
+          "json": "fields",
+          "help": "Fields information."
+        }
+      ]
+    },
+    {
+      "name": "DiscordEmbedFooter",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Text",
+          "type": "string",
+          "json": "text",
+          "help": "Footer text."
+        },
+        {
+          "name": "IconUrl",
+          "type": "string",
+          "json": "icon_url",
+          "help": "Url of footer icon (only supports http(s) and attachments)."
+        }
+      ]
+    },
+    {
+      "name": "DiscordEmbedImage",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Url",
+          "type": "string",
+          "json": "url",
+          "help": "Source url of image (only supports http(s) and attachments)."
+        },
+        {
+          "name": "Height",
+          "type": "int",
+          "json": "height",
+          "help": "Height of image."
+        },
+        {
+          "name": "Width",
+          "type": "int",
+          "json": "width",
+          "help": "Width of image."
+        }
+      ]
+    },
+    {
+      "name": "DiscordEmbedThumbnail",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Url",
+          "type": "string",
+          "json": "url",
+          "help": "Source url of thumbnail (only supports http(s) and attachments)."
+        },
+        {
+          "name": "Height",
+          "type": "int",
+          "json": "height",
+          "help": "Height of thumbnail."
+        },
+        {
+          "name": "Width",
+          "type": "int",
+          "json": "width",
+          "help": "Width of thumbnail."
+        }
+      ]
+    },
+    {
+      "name": "DiscordEmbedAuthor",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Name",
+          "type": "string",
+          "json": "name",
+          "help": "Name of author."
+        },
+        {
+          "name": "Url",
+          "type": "string",
+          "json": "url",
+          "help": "Url of author."
+        },
+        {
+          "name": "IconUrl",
+          "type": "string",
+          "json": "icon_url",
+          "help": "Url of author icon (only supports http(s) and attachments)."
+        }
+      ]
+    },
+    {
+      "name": "DiscordEmbedField",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Name",
+          "type": "string",
+          "json": "name",
+          "help": "Name of the field."
+        },
+        {
+          "name": "Value",
+          "type": "string",
+          "json": "value",
+          "help": "Value of the field."
+        },
+        {
+          "name": "Inline",
+          "type": "bool",
+          "json": "inline",
+          "help": "Whether or not this field should siplay inline."
+        }
+      ]
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "DiscordEmbedType",
+      "values": [
+        "rich",
+        "image",
+        "video",
+        "gifv",
+        "article",
+        "link"
+      ]
+    }
+  ]
+}
