@@ -23,7 +23,8 @@ using Nuke.Components;
             $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.AccessTokenSecret)}",
             nameof(GitterAuthToken),
             nameof(SlackWebhook),
-            nameof(DiscordWebhook)
+            nameof(DiscordWebhook),
+            nameof(MastodonAccessToken)
         })]
 [AppVeyor(
     suffix: "continuous",
@@ -44,6 +45,7 @@ using Nuke.Components;
 [AppVeyorSecret(nameof(GitterAuthToken), "Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw")]
 [AppVeyorSecret(nameof(SlackWebhook), "xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hkmagda0rH4ZxOTbJ1bcmC3D6uhvJKLtSHqY7TK/48Nw3EbvN9wNFEt97HWYc9FE+g=")]
 [AppVeyorSecret(nameof(DiscordWebhook), "K5WG8m71vcB56C75b0ErFPLYTsqywhPy8hSn49uqc5XBE7txUnZqWBHfbWCuU9AdFkm3TNgSYLoejjF59OgiACEn45fghVe7XCwAXo2l54ZXl08MZyBkJ8by9HsZirL9W+SeysNdw/Cfc0sxKrWcpDkn1IH2zZ+iXAgqBsW2CNY=")]
+[AppVeyorSecret(nameof(MastodonAccessToken), "pD/C1TvhUnFtb0oLUvlf2NtjkWeZQcrUVvYJE/LgZb8nxagK8Lwk+OR7TUqOh+Nn")]
 partial class Build
 {
 }

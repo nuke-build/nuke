@@ -12,6 +12,7 @@ using Nuke.Common.Git;
 using Nuke.Common.Tools.Discord;
 using Nuke.Common.Tools.Git;
 using Nuke.Common.Tools.GitHub;
+using Nuke.Common.Tools.Mastodon;
 using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities;
 using Nuke.Components;
@@ -21,6 +22,7 @@ using Tweetinvi.Parameters;
 using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.IO.TextTasks;
 using static Nuke.Common.Tools.Discord.DiscordTasks;
+using static Nuke.Common.Tools.Mastodon.MastodonTasks;
 using static Nuke.Common.Tools.Slack.SlackTasks;
 
 partial class Build
@@ -28,6 +30,7 @@ partial class Build
     [Parameter] [Secret] readonly string GitterAuthToken;
     [Parameter] [Secret] readonly string SlackWebhook;
     [Parameter] [Secret] readonly string DiscordWebhook;
+    [Parameter] [Secret] readonly string MastodonAccessToken;
     [Parameter] readonly string GitterRoomId;
 
     IEnumerable<string> ChangelogSectionNotes => ChangelogTasks.ExtractChangelogSectionNotes(From<IHazChangelog>().ChangelogFile);
@@ -43,6 +46,7 @@ partial class Build
         .Requires(() => TwitterCredentials.AccessTokenSecret)
         .Requires(() => SlackWebhook)
         .Requires(() => DiscordWebhook)
+        .Requires(() => MastodonAccessToken)
         .Requires(() => GitterAuthToken)
         .Executes(async () =>
         {
@@ -76,6 +80,11 @@ partial class Build
                                ("Virto Commerce", "https://virtocommerce.com/"),
                            };
 
+            var tweetText = new StringBuilder()
+                .AppendLine($"🔥 Check out the new {MajorMinorPatchVersion} release! 🏗")
+                .AppendLine()
+                .AppendLine($"More information at 👉 {GitRepository.GetGitHubBrowseUrl(From<IHazChangelog>().ChangelogFile)}").ToString();
+
             var client = new TwitterClient(
                 new TwitterCredentials(
                     TwitterCredentials.ConsumerKey,
@@ -92,12 +101,7 @@ partial class Build
             await client.Tweets.PublishTweetAsync(
                 new PublishTweetParameters
                 {
-                    Text = new[]
-                        {
-                            $"🔥 Check out the new {MajorMinorPatchVersion} release! 🏗",
-                            string.Empty,
-                            $"More information at 👉 {GitRepository.GetGitHubBrowseUrl(From<IHazChangelog>().ChangelogFile)}"
-                        }.JoinNewLine(),
+                    Text = tweetText,
                     Medias = new List<IMedia> { media }
                 });
 
@@ -143,6 +147,12 @@ partial class Build
                             .SetText($"Powered by {sponsors.Select(x => x.Text).JoinCommaAnd()}.")
                             .SetIconUrl("https://cdn.discordapp.com/emojis/674275938757771306.webp?size=240&quality=lossless"))),
                 DiscordWebhook);
+
+            await SendMastodonMessageAsync(_ => _
+                    .SetText(tweetText)
+                    .AddMediaFiles(ReleaseImageFile),
+                "https://dotnet.social",
+                MastodonAccessToken);
 
             SendGitterMessage(new StringBuilder()
                     .AppendLine($"@/all :mega::shipit: **{title}**")
