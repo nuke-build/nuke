@@ -1,0 +1,26 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "references": [
+    "https://discord.com/developers/docs/resources/channel#create-message"
+  ],
+  "name": "Mastodon",
+  "officialUrl": "https://docs.joinmastodon.org/",
+  "dataClasses": [
+    {
+      "name": "MastodonStatus",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "Text",
+          "type": "string",
+          "help": "Text of the status."
+        },
+        {
+          "name": "MediaFiles",
+          "type": "List<string>",
+          "help": "Media files to attach to the status."
+        }
+      ]
+    }
+  ]
+}
