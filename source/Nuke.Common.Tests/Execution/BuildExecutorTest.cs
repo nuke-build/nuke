@@ -61,7 +61,7 @@ namespace Nuke.Common.Tests.Execution
             ExecuteBuild(skippedTargets: new[] { A });
             AssertSucceeded(B, C);
             AssertSkipped(A);
-            A.SkipReason.Should().Be("via --skip parameter");
+            A.Skipped.Should().Be("via parameter");
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace Nuke.Common.Tests.Execution
             ExecuteBuild();
             AssertSucceeded(A, C);
             AssertSkipped(B);
-            B.SkipReason.Should().Be("false");
+            B.OnlyWhen.Should().Be("false");
         }
 
         [Fact]
@@ -108,8 +108,8 @@ namespace Nuke.Common.Tests.Execution
             ExecuteBuild();
             AssertSucceeded(C);
             AssertSkipped(A, B);
-            A.SkipReason.Should().Be("skipping B");
-            B.SkipReason.Should().Be("false");
+            A.Skipped.Should().Be("because of B");
+            B.OnlyWhen.Should().Be("false");
         }
 
         [Fact]
@@ -146,13 +146,13 @@ namespace Nuke.Common.Tests.Execution
         private static void AssertSucceeded(params ExecutableTarget[] targets)
         {
             targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.Succeeded));
-            targets.ForEach(x => x.SkipReason.Should().BeNull());
+            targets.ForEach(x => x.Skipped.Should().BeNull());
         }
 
         private static void AssertSkipped(params ExecutableTarget[] targets)
         {
             targets.ForEach(x => x.Status.Should().Be(ExecutionStatus.Skipped));
-            targets.ForEach(x => x.SkipReason.Should().NotBeNull());
+            // targets.ForEach(x => x.Skipped.Should().NotBeNull());
         }
 
         private class TestBuild : NukeBuild

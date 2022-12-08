@@ -50,10 +50,16 @@ namespace Nuke.Common.Execution
         public bool Invoked { get; set; }
         public Dictionary<string, string> SummaryInformation { get; internal set; } = new Dictionary<string, string>();
 
-        public string SkipReason
+        public string Skipped
         {
-            get => SummaryInformation.GetValueOrDefault(nameof(SkipReason));
-            set => SummaryInformation = new Dictionary<string, string> { [nameof(SkipReason)] = value };
+            get => SummaryInformation.GetValueOrDefault(nameof(Skipped));
+            set => SummaryInformation.AddPairWhenValueNotNull(nameof(Skipped), value);
+        }
+
+        public string OnlyWhen
+        {
+            get => SummaryInformation.GetValueOrDefault(nameof(OnlyWhen));
+            set => SummaryInformation.AddPairWhenValueNotNull(nameof(OnlyWhen), value);
         }
     }
 }
