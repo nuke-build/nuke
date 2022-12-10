@@ -99,7 +99,7 @@ namespace Nuke.CodeGeneration.Generators
 
             var tool = writer.DataClass.Tool;
             var logger = $"{tool.GetClassName()}.{tool.Name}Logger";
-            return writer.WriteLine($"public override Action<OutputType, string> ProcessCustomLogger => {logger};");
+            return writer.WriteLine($"public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? {logger};");
         }
 
         private static void WritePropertyDeclaration(DataClassWriter writer, Property property)
