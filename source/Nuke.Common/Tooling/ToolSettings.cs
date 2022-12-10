@@ -31,7 +31,7 @@ namespace Nuke.Common.Tooling
         public bool? ProcessLogOutput { get; internal set; }
         public bool? ProcessLogInvocation { get; internal set; }
 
-        public abstract Action<OutputType, string> ProcessCustomLogger { get; }
+        public virtual Action<OutputType, string> ProcessCustomLogger { get; internal set; }
 
         [NonSerialized]
         private Func<Arguments, Arguments> _processArgumentConfigurator = x => x;

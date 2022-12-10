@@ -18,7 +18,7 @@ namespace Nuke.Common.Tools.Helm
         /// </summary>
         public HelmCommonSettings CommonSettings { get; internal set; }
 
-        public override Action<OutputType, string> ProcessCustomLogger { get; }
+        public override Action<OutputType, string> ProcessCustomLogger { get; internal set; }
 
         protected override Arguments ConfigureProcessArguments([NotNull] Arguments arguments)
         {

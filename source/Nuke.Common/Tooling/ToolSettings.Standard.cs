@@ -164,5 +164,15 @@ namespace Nuke.Common.Tooling
             newToolSettings.ProcessArgumentConfigurator = argumentConfigurator;
             return newToolSettings;
         }
+        
+        ///<summary>Sets <see cref="ToolSettings.ProcessCustomLogger"/> -- <inheritdoc cref="ToolSettings.ProcessCustomLogger" /></summary>
+        [Pure]
+        public static T SetProcessCustomLogger<T>(this T toolSettings, [CanBeNull] Action<OutputType, string> customLogger)
+            where T : ToolSettings
+        {
+            var newToolSettings = toolSettings.NewInstance();
+            newToolSettings.ProcessCustomLogger = customLogger;
+            return newToolSettings;
+        }
     }
 }
