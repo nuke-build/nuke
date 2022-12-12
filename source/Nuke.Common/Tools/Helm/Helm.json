@@ -149,7 +149,7 @@
           {
             "name": "Timeout",
             "type": "long?",
-            "format": "--timeout {value}",
+            "format": "--timeout {value}s",
             "secret": false,
             "help": "Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300)."
           },
@@ -1622,7 +1622,7 @@
           {
             "name": "Timeout",
             "type": "long?",
-            "format": "--timeout {value}",
+            "format": "--timeout {value}s",
             "secret": false,
             "help": "Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300)."
           },
@@ -2431,7 +2431,7 @@
           {
             "name": "Timeout",
             "type": "long?",
-            "format": "--timeout {value}",
+            "format": "--timeout {value}s",
             "secret": false,
             "help": "Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300)."
           },
@@ -2812,7 +2812,7 @@
           {
             "name": "Timeout",
             "type": "long?",
-            "format": "--timeout {value}",
+            "format": "--timeout {value}s",
             "secret": false,
             "help": "Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300)."
           },
@@ -3044,7 +3044,7 @@
           {
             "name": "Timeout",
             "type": "long?",
-            "format": "--timeout {value}",
+            "format": "--timeout {value}s",
             "secret": false,
             "help": "Time in seconds to wait for any individual Kubernetes operation (like Jobs for hooks) (default 300)."
           },

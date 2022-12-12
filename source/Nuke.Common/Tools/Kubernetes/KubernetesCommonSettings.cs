@@ -15,6 +15,6 @@ namespace Nuke.Common.Tools.Kubernetes
             return ConfigureProcessArguments(new Arguments());
         }
 
-        public override Action<OutputType, string> ProcessCustomLogger { get; }
+        public override Action<OutputType, string> ProcessCustomLogger { get; internal set; }
     }
 }

@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.MSpec
         ///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
         ///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> MSpec(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> MSpec(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(MSpecPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, MSpecLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(MSpecPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MSpecLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -141,7 +141,7 @@ namespace Nuke.Common.Tools.MSpec
         ///   Path to the MSpec executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => MSpecTasks.MSpecLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MSpecTasks.MSpecLogger;
         /// <summary>
         ///   Assemblies with tests to be executed.
         /// </summary>

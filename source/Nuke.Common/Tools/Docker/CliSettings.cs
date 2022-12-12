@@ -15,6 +15,6 @@ namespace Nuke.Common.Tools.Docker
             return ConfigureProcessArguments(new Arguments());
         }
 
-        public override Action<OutputType, string> ProcessCustomLogger => throw new NotSupportedException();
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? throw new NotSupportedException();
     }
 }

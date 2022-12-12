@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.MinVer
         ///   <p>Minimalistic versioning using Git tags.</p>
         ///   <p>For more details, visit the <a href="https://github.com/adamralph/minver">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> MinVer(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> MinVer(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(MinVerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, MinVerLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(MinVerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MinVerLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -117,7 +117,7 @@ namespace Nuke.Common.Tools.MinVer
         ///   Path to the MinVer executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-        public override Action<OutputType, string> ProcessCustomLogger => MinVerTasks.MinVerLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MinVerTasks.MinVerLogger;
         public virtual MinVerVersionPart AutoIncrement { get; internal set; }
         public virtual string BuildMetadata { get; internal set; }
         public virtual string DefaultPreReleasePhase { get; internal set; }

@@ -22,7 +22,9 @@ using Nuke.Components;
             $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.AccessToken)}",
             $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.AccessTokenSecret)}",
             nameof(GitterAuthToken),
-            nameof(SlackWebhook)
+            nameof(SlackWebhook),
+            nameof(DiscordWebhook),
+            nameof(MastodonAccessToken)
         })]
 [AppVeyor(
     suffix: "continuous",
@@ -34,7 +36,7 @@ using Nuke.Components;
     SkipTags = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     Secrets = new string[0])]
-[AppVeyorSecret(nameof(PublicNuGetApiKey), "gXyMC1PrfsTGaK8vnlB6ch1DDpTEaOuK+Oy0Kz8xm1i4MjA7cb+6GkTaQEI6eCuy")]
+[AppVeyorSecret(nameof(PublicNuGetApiKey), "hgiwc3jsX4mUWkALWzpYY/VwN5AX/K3Pzev7D+//V0PshWdWs9CYiDNVrDlFUp9q")]
 [AppVeyorSecret(ISignPackages.SignPath + nameof(ISignPackages.ApiToken), "uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey), "BY+J0NeFwJrIk/IcLlApwCrhwPFYbs17ryopOEU8S80=")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerSecret), "LzY8VaBdbjdHtbCIJusREn5foh6wOEKqwBqsmBgpyhulQs21PkgYs2tilSL+SowcJw3p4QH6QKLOEp3uGwTj8g==")]
@@ -42,6 +44,8 @@ using Nuke.Components;
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessTokenSecret), "OGFEkW5fHl0YJzKnTTWJ3oHhQfjMs9RWGJMjeQ2HMIG+yUwy0NQGVUY4qOCRgrXW")]
 [AppVeyorSecret(nameof(GitterAuthToken), "Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw")]
 [AppVeyorSecret(nameof(SlackWebhook), "xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hkmagda0rH4ZxOTbJ1bcmC3D6uhvJKLtSHqY7TK/48Nw3EbvN9wNFEt97HWYc9FE+g=")]
+[AppVeyorSecret(nameof(DiscordWebhook), "K5WG8m71vcB56C75b0ErFPLYTsqywhPy8hSn49uqc5XBE7txUnZqWBHfbWCuU9AdFkm3TNgSYLoejjF59OgiACEn45fghVe7XCwAXo2l54ZXl08MZyBkJ8by9HsZirL9W+SeysNdw/Cfc0sxKrWcpDkn1IH2zZ+iXAgqBsW2CNY=")]
+[AppVeyorSecret(nameof(MastodonAccessToken), "pD/C1TvhUnFtb0oLUvlf2NtjkWeZQcrUVvYJE/LgZb8nxagK8Lwk+OR7TUqOh+Nn")]
 partial class Build
 {
 }

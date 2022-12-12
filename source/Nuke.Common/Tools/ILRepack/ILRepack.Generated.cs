@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.ILRepack
         ///   <p>ILRepack is meant at replacing <a href="https://github.com/dotnet/ILMerge">ILMerge</a> / <a href="https://evain.net/blog/articles/2006/11/06/an-introduction-to-mono-merge">Mono.Merge</a>.<para/>The former being closed-source (<a href="https://github.com/Microsoft/ILMerge">now open-sourced</a>), impossible to customize, slow, resource consuming and many more. The later being deprecated, unsupported, and based on an old version of Mono.Cecil.<para/>Here we're using latest (slightly modified) Cecil sources (0.9), you can find the fork <a href="https://github.com/gluck/cecil">here</a>. Mono.Posix is also required (build only, it gets merged afterwards) for executable bit set on target file.</p>
         ///   <p>For more details, visit the <a href="https://github.com/gluck/il-repack#readme">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> ILRepack(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> ILRepack(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(ILRepackPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, ILRepackLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(ILRepackPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? ILRepackLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -180,7 +180,7 @@ namespace Nuke.Common.Tools.ILRepack
         ///   Path to the ILRepack executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? ILRepackTasks.ILRepackPath;
-        public override Action<OutputType, string> ProcessCustomLogger => ILRepackTasks.ILRepackLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ILRepackTasks.ILRepackLogger;
         /// <summary>
         ///   Specifies a keyfile to sign the output assembly.
         /// </summary>

@@ -116,7 +116,10 @@ namespace Nuke.Common
             if (entryAssembly == null || entryAssembly.GetTypes().All(x => !x.IsSubclassOf(typeof(NukeBuild))))
             {
                 var assemblyName = entryAssembly?.GetName().Name;
-                Assert.True(assemblyName is "ReSharperTestRunner" or "testhost", $"Assembly name was {assemblyName.SingleQuote()}");
+                Assert.True(assemblyName == null ||
+                            assemblyName.StartsWith("ReSharperTestRunner") ||
+                            assemblyName == "testhost",
+                    $"Assembly name was {assemblyName.SingleQuote()}");
                 return null;
             }
 

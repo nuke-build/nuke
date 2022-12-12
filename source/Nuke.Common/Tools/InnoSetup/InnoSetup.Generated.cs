@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
         ///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> InnoSetup(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> InnoSetup(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(InnoSetupPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, InnoSetupLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(InnoSetupPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? InnoSetupLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -129,7 +129,7 @@ namespace Nuke.Common.Tools.InnoSetup
         ///   Path to the InnoSetup executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? InnoSetupTasks.InnoSetupPath;
-        public override Action<OutputType, string> ProcessCustomLogger => InnoSetupTasks.InnoSetupLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? InnoSetupTasks.InnoSetupLogger;
         /// <summary>
         ///   The .iss script file to compile
         /// </summary>

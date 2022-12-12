@@ -23,7 +23,7 @@
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.4" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="NuGet.Packaging" Version="5.11.0" />
-    <PackageReference Include="Octokit" Version="0.51.0" />
+    <PackageReference Include="Octokit" Version="4.0.2" />
     <PackageReference Include="Serilog.Formatting.Compact" Version="1.1.0" />
     <PackageReference Include="Serilog.Formatting.Compact.Reader" Version="1.0.5" />
     <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />

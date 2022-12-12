@@ -17,7 +17,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
-            writer.WriteLine("- uses: actions/checkout@v2");
+            writer.WriteLine("- uses: actions/checkout@v3");
 
             if (Submodules.HasValue || FetchDepth.HasValue)
             {
@@ -43,7 +43,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
 
         public override void Write(CustomFileWriter writer)
         {
-            writer.WriteLine("- uses: actions/upload-artifact@v1");
+            writer.WriteLine("- uses: actions/upload-artifact@v3");
 
             using (writer.Indent())
             {

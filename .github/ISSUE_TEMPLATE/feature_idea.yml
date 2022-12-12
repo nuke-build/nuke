@@ -1,0 +1,38 @@
+name: 💡 Feature Idea
+description: "Suggest new features for the project."
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        _Hi there :wave: and thanks for taking the time to send a feature idea!_
+        
+        _Before you continue, please check our updated [contribution guidelines](https://github.com/nuke-build/nuke/blob/develop/CONTRIBUTING.md) ([history](https://github.com/nuke-build/nuke/commits/develop/CONTRIBUTING.md))._
+
+  - type: textarea
+    attributes:
+      label: Description
+      description: What should the new feature do?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Usage Example
+      description: How would the proposed feature be used?
+
+  - type: textarea
+    attributes:
+      label: Alternative
+      description: What is the current alternative?
+
+  - type: dropdown
+    id: pull-request
+    attributes:
+      label: Could you help with a pull-request?
+      description: Make sure you have read the sections about [consumer expectations](https://github.com/nuke-build/nuke/blob/develop/CONTRIBUTING.md#consumer-expectations), [baseline contributions](https://github.com/nuke-build/nuke/blob/develop/CONTRIBUTING.md#baseline-contributions), [sustainability contributions](https://github.com/nuke-build/nuke/blob/develop/CONTRIBUTING.md#sustainability-contributions).
+      options:
+        - "No"
+        - "Yes"
+    validations:
+      required: true

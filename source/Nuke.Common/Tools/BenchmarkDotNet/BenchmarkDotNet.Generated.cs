@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         ///   <p>Powerful .NET library for benchmarking</p>
         ///   <p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> BenchmarkDotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> BenchmarkDotNet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(BenchmarkDotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, BenchmarkDotNetLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(BenchmarkDotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? BenchmarkDotNetLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -246,7 +246,7 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
         ///   Path to the BenchmarkDotNet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? BenchmarkDotNetTasks.BenchmarkDotNetPath;
-        public override Action<OutputType, string> ProcessCustomLogger => BenchmarkDotNetTasks.BenchmarkDotNetLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? BenchmarkDotNetTasks.BenchmarkDotNetLogger;
         /// <summary>
         ///   The assembly with the benchmarks (required).
         /// </summary>

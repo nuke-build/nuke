@@ -51,7 +51,8 @@ namespace Nuke.CodeGeneration.Generators
                                  "int? timeout = null",
                                  "bool? logOutput = null",
                                  "bool? logInvocation = null",
-                                 "Func<string, string> outputFilter = null"
+                                 "Func<string, string> outputFilter = null",
+                                 "Action<OutputType, string> customLogger = null"
                              };
             var arguments = new[]
                             {
@@ -62,7 +63,7 @@ namespace Nuke.CodeGeneration.Generators
                                 "timeout",
                                 "logOutput",
                                 "logInvocation",
-                                $"{tool.Name}Logger",
+                                $"customLogger ?? {tool.Name}Logger",
                                 "outputFilter"
                             };
             writer

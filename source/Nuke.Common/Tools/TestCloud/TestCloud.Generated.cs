@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.TestCloud
         ///   <p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p>
         ///   <p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> TestCloud(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> TestCloud(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(TestCloudPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, TestCloudLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(TestCloudPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? TestCloudLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -135,7 +135,7 @@ namespace Nuke.Common.Tools.TestCloud
         ///   Path to the TestCloud executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? TestCloudTasks.TestCloudPath;
-        public override Action<OutputType, string> ProcessCustomLogger => TestCloudTasks.TestCloudLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? TestCloudTasks.TestCloudLogger;
         /// <summary>
         ///   The path to the folder holding the test assemblies.
         /// </summary>

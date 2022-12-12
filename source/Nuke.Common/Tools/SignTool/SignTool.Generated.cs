@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.SignTool
         ///   <p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p>
         ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> SignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, SignToolLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(SignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SignToolLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -231,7 +231,7 @@ namespace Nuke.Common.Tools.SignTool
         ///   Path to the SignTool executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SignToolTasks.SignToolPath;
-        public override Action<OutputType, string> ProcessCustomLogger => SignToolTasks.SignToolLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SignToolTasks.SignToolLogger;
         /// <summary>
         ///   Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.
         /// </summary>

@@ -147,7 +147,7 @@ namespace Nuke.Common.Execution
                     return;
 
                 target.Status = ExecutionStatus.Skipped;
-                target.SkipReason ??= reason;
+                target.Skipped ??= reason;
 
                 if (target.DependencyBehavior == DependencyBehavior.Execute)
                     return;
@@ -161,7 +161,7 @@ namespace Nuke.Common.Execution
                     if (scheduledTargets.Any(x => x.ExecutionDependencies.Contains(dependentTarget) || x.Triggers.Contains(dependentTarget)))
                         return;
 
-                    MarkTargetSkipped(dependentTarget, reason: $"skipping {target.Name}");
+                    MarkTargetSkipped(dependentTarget, reason: $"because of {target.Name}");
                 }
             }
 
@@ -169,7 +169,7 @@ namespace Nuke.Common.Execution
             {
                 build.ExecutionPlan
                     .Where(x => skippedTargets.Count == 0 || skippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))
-                    .ForEach(x => MarkTargetSkipped(x, reason: "via --skip parameter"));
+                    .ForEach(x => MarkTargetSkipped(x, reason: "via parameter"));
             }
 
             build.ExecutionPlan
@@ -192,10 +192,10 @@ namespace Nuke.Common.Execution
             foreach (var condition in conditions)
             {
                 if (!condition.Compile().Invoke())
-                    target.SkipReason = GetSkipReason(condition);
+                    target.OnlyWhen = GetSkipReason(condition);
             }
 
-            return target.SkipReason != null;
+            return target.OnlyWhen != null;
         }
 
         private static void AppendToBuildAttemptFile(string value)

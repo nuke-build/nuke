@@ -6,6 +6,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [6.3.0] / 2022-12-12
+- Added new version of `Octokit`
+- Added `OptionalAttribute` to suppress auto-injection warnings
+- Added ability to override `ProcessCustomLogger` in `ToolSettings`
+- Added ability to exclude auto-linked files in build project
+- Added `DiscordTasks`
+- Added `MastodonTasks`
+- Added `JavaScriptProject` project type
+- Added `MakeNSISTasks`
+- Fixed wording for static and dynamic conditions in build summary
+- Fixed waiting for confirmation when input is redirected
+- Fixed recursion into symlink directories
+- Fixed `ProcessException` to output standard output
+- Fixed `MinimalOutput` in `UnityTasks`
+- Fixed missing `AzurePipelinesBuildReason`
+- Fixed missing arguments in `DotNetTasks`
+- Fixed argument formatting in `HelmTasks`
+- Fixed missing command in `DotNetTasks`
+
 ## [6.2.1] / 2022-08-19
 - Fixed logging configuration
 
@@ -971,7 +990,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.2.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.3.0...HEAD
+[6.3.0]: https://github.com/nuke-build/nuke/compare/6.2.1...6.3.0
 [6.2.1]: https://github.com/nuke-build/nuke/compare/6.2.0...6.2.1
 [6.2.0]: https://github.com/nuke-build/nuke/compare/6.1.2...6.2.0
 [6.1.2]: https://github.com/nuke-build/nuke/compare/6.1.1...6.1.2
@@ -1064,3 +1084,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
+
