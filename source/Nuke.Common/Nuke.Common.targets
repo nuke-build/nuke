@@ -16,22 +16,30 @@
     <None Remove="*.csproj.DotSettings;.editorconfig;Directory.Build.props;Directory.Build.targets" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(NukeScriptDirectory)' != ''">
+  <ItemGroup Condition="'$(NukeScriptDirectory)' != '' And '$(NukeExcludeBoot)' != 'True'">
     <None Include="$(NukeScriptDirectory)\build.cmd" LinkBase="boot" Condition="Exists('$(NukeScriptDirectory)\build.cmd')" />
     <None Include="$(NukeScriptDirectory)\build.ps1" LinkBase="boot" Condition="Exists('$(NukeScriptDirectory)\build.ps1')" />
     <None Include="$(NukeScriptDirectory)\build.sh" LinkBase="boot" Condition="Exists('$(NukeScriptDirectory)\build.sh')" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(NukeRootDirectory)' != ''">
+  <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeConfig)' != 'True'">
     <None Include="$(NukeRootDirectory)\.nuke\parameters.json" LinkBase="config" />
     <None Include="$(NukeRootDirectory)\.nuke\parameters.*.json" LinkBase="config" />
-    <None Include="$(NukeRootDirectory)\.nuke\temp\build*.log" Exclude="$(NukeRootDirectory)\.nuke\temp\build-attempt.log" LinkBase="logs" />
-    <None Include="$(NukeRootDirectory)\**\Directory.Build.*" LinkBase="Directory.Build" />
     <None Include="$(NukeRootDirectory)\global.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\global.json')" />
     <None Include="$(NukeRootDirectory)\nuget.config" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\nuget.config')" />
     <None Include="$(NukeRootDirectory)\GitVersion.yml" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\GitVersion.yml')" />
     <None Include="$(NukeRootDirectory)\version.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\version.json')" />
+  </ItemGroup>
 
+  <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeLogs)' != 'True'">
+     <None Include="$(NukeRootDirectory)\.nuke\temp\build*.log" Exclude="$(NukeRootDirectory)\.nuke\temp\build-attempt.log" LinkBase="logs" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeDirectoryBuild)' != 'True'">
+     <None Include="$(NukeRootDirectory)\**\Directory.Build.*" LinkBase="Directory.Build" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeCi)' != 'True'">
     <None Include="$(NukeRootDirectory)\.teamcity\settings.kts" LinkBase="ci" Condition="Exists('$(NukeRootDirectory)\.teamcity\settings.kts')" />
     <None Include="$(NukeRootDirectory)\.github\workflows\*.yml" LinkBase="ci" />
     <None Include="$(NukeRootDirectory)\azure-pipelines*.yml" LinkBase="ci" />
