@@ -38,9 +38,9 @@ namespace Nuke.Common.Tools.Coverlet
         ///   <p><c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p>
         ///   <p>For more details, visit the <a href="https://github.com/tonerdo/coverlet/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Coverlet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Coverlet(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(CoverletPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, CoverletLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(CoverletPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? CoverletLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -136,7 +136,7 @@ namespace Nuke.Common.Tools.Coverlet
         ///   Path to the Coverlet executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? CoverletTasks.CoverletPath;
-        public override Action<OutputType, string> ProcessCustomLogger => CoverletTasks.CoverletLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CoverletTasks.CoverletLogger;
         /// <summary>
         ///   Path to the test assembly.
         /// </summary>

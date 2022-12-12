@@ -35,9 +35,9 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <summary>
         ///   <p>For more details, visit the <a href="https://kubernetes.io/">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Kubernetes(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Kubernetes(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(KubernetesPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, KubernetesLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(KubernetesPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? KubernetesLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -3100,7 +3100,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Limit to resources in the specified API group.
         /// </summary>
@@ -3153,7 +3153,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained).
         /// </summary>
@@ -3215,7 +3215,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The name of the container.
         /// </summary>
@@ -3434,7 +3434,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -3579,7 +3579,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Client version only (no server required).
         /// </summary>
@@ -3616,7 +3616,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -3638,7 +3638,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -3660,7 +3660,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The name of the pod.
         /// </summary>
@@ -3707,7 +3707,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -3800,7 +3800,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -3910,7 +3910,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -4015,7 +4015,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Delete all resources, including uninitialized ones, in the namespace of the specified resource types.
         /// </summary>
@@ -4108,7 +4108,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -4241,7 +4241,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -4263,7 +4263,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the pod.
         /// </summary>
@@ -4311,7 +4311,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Regular expression for hosts that the proxy should accept.
         /// </summary>
@@ -4388,7 +4388,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -4410,7 +4410,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -4432,7 +4432,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -4454,7 +4454,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -4533,7 +4533,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -4616,7 +4616,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -4685,7 +4685,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -4744,7 +4744,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
@@ -4772,7 +4772,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
@@ -4799,7 +4799,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
@@ -4827,7 +4827,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The subcommand to run.
         /// </summary>
@@ -4855,7 +4855,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Select all resources in the namespace of the specified resource types.
         /// </summary>
@@ -4979,7 +4979,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Set the target folder of the kustomize files.
         /// </summary>
@@ -5108,7 +5108,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The namne of the Node.
         /// </summary>
@@ -5145,7 +5145,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The file specification of the source. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file.
         /// </summary>
@@ -5182,7 +5182,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -5204,7 +5204,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The name of the node.
         /// </summary>
@@ -5241,7 +5241,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -5329,7 +5329,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The name of the plugin.
         /// </summary>
@@ -5356,7 +5356,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         protected override Arguments ConfigureProcessArguments(Arguments arguments)
         {
             arguments
@@ -5378,7 +5378,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.
         /// </summary>
@@ -5446,7 +5446,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -5509,7 +5509,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -5597,7 +5597,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -5636,7 +5636,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
@@ -5850,7 +5850,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>
@@ -5934,7 +5934,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Select all resources in the namespace of the specified resource types.
         /// </summary>
@@ -6017,7 +6017,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   Get different explanations for particular API version.
         /// </summary>
@@ -6055,7 +6055,7 @@ namespace Nuke.Common.Tools.Kubernetes
         ///   Path to the Kubernetes executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-        public override Action<OutputType, string> ProcessCustomLogger => KubernetesTasks.KubernetesLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
         ///   The type or/and name of the ressource.
         /// </summary>

@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.AzureSignTool
         ///   <p>Azure Sign Tool is similar to <c>signtool</c> in the Windows SDK, with the major difference being that it uses Azure Key Vault for performing the signing process. The usage is like <c>signtool</c>, except with a limited set of options for signing and options for authenticating to Azure Key Vault.</p>
         ///   <p>For more details, visit the <a href="https://github.com/vcsjones/AzureSignTool">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> AzureSignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> AzureSignTool(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(AzureSignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, AzureSignToolLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(AzureSignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? AzureSignToolLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -168,7 +168,7 @@ namespace Nuke.Common.Tools.AzureSignTool
         ///   Path to the AzureSignTool executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? AzureSignToolTasks.AzureSignToolPath;
-        public override Action<OutputType, string> ProcessCustomLogger => AzureSignToolTasks.AzureSignToolLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? AzureSignToolTasks.AzureSignToolLogger;
         /// <summary>
         ///   A fully qualified URL of the key vault with the certificate that will be used for signing. An example value might be <c>https://my-vault.vault.azure.net</c>.
         /// </summary>

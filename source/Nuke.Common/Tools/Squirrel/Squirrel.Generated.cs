@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.Squirrel
         ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
         ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Squirrel(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Squirrel(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(SquirrelPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, SquirrelLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(SquirrelPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SquirrelLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -171,7 +171,7 @@ namespace Nuke.Common.Tools.Squirrel
         ///   Path to the Squirrel executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? SquirrelTasks.SquirrelPath;
-        public override Action<OutputType, string> ProcessCustomLogger => SquirrelTasks.SquirrelLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SquirrelTasks.SquirrelLogger;
         /// <summary>
         ///   Install the app whose package is in the specified directory.
         /// </summary>

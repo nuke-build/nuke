@@ -37,9 +37,9 @@ namespace Nuke.Common.Tools.Boots
         ///   <p>boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.</p>
         ///   <p>For more details, visit the <a href="https://github.com/jonathanpeppers/boots">official website</a>.</p>
         /// </summary>
-        public static IReadOnlyCollection<Output> Boots(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null)
+        public static IReadOnlyCollection<Output> Boots(string arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Func<string, string> outputFilter = null, Action<OutputType, string> customLogger = null)
         {
-            using var process = ProcessTasks.StartProcess(BootsPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, BootsLogger, outputFilter);
+            using var process = ProcessTasks.StartProcess(BootsPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? BootsLogger, outputFilter);
             process.AssertZeroExitCode();
             return process.Output;
         }
@@ -123,7 +123,7 @@ namespace Nuke.Common.Tools.Boots
         ///   Path to the Boots executable.
         /// </summary>
         public override string ProcessToolPath => base.ProcessToolPath ?? BootsTasks.BootsPath;
-        public override Action<OutputType, string> ProcessCustomLogger => BootsTasks.BootsLogger;
+        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? BootsTasks.BootsLogger;
         /// <summary>
         ///   Install the latest <em>stable</em> version of a product from VS manifests. Options include: <c>Xamarin.Android</c>, <c>Xamarin.iOS</c>, <c>Xamarin.Mac</c>, and <c>Mono</c>
         /// </summary>
