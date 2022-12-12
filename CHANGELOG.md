@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Added new version of `Octokit`
+- Added `OptionalAttribute` to suppress auto-injection warnings
+- Added ability to override `ProcessCustomLogger` in `ToolSettings`
+- Added ability to exclude auto-linked files in build project
+- Added `DiscordTasks`
+- Added `MastodonTasks`
+- Added `JavaScriptProject` project type
+- Added `MakeNSISTasks`
+- Fixed wording for static and dynamic conditions in build summary
+- Fixed waiting for confirmation when input is redirected
+- Fixed recursion into symlink directories
+- Fixed `ProcessException` to output standard output
+- Fixed `MinimalOutput` in `UnityTasks`
+- Fixed missing `AzurePipelinesBuildReason`
+- Fixed missing arguments in `DotNetTasks`
+- Fixed argument formatting in `HelmTasks`
+- Fixed missing command in `DotNetTasks`
 
 ## [6.2.1] / 2022-08-19
 - Fixed logging configuration
