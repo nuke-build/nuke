@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [6.3.0] / 2022-12-12
 - Added new version of `Octokit`
 - Added `OptionalAttribute` to suppress auto-injection warnings
 - Added ability to override `ProcessCustomLogger` in `ToolSettings`
@@ -988,7 +990,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.2.1...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/6.3.0...HEAD
+[6.3.0]: https://github.com/nuke-build/nuke/compare/6.2.1...6.3.0
 [6.2.1]: https://github.com/nuke-build/nuke/compare/6.2.0...6.2.1
 [6.2.0]: https://github.com/nuke-build/nuke/compare/6.1.2...6.2.0
 [6.1.2]: https://github.com/nuke-build/nuke/compare/6.1.1...6.1.2
@@ -1081,3 +1084,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
+
