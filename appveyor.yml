@@ -38,7 +38,7 @@ artifacts:
 
 environment:
   PublicNuGetApiKey:
-    secure: gXyMC1PrfsTGaK8vnlB6ch1DDpTEaOuK+Oy0Kz8xm1i4MjA7cb+6GkTaQEI6eCuy
+    secure: hgiwc3jsX4mUWkALWzpYY/VwN5AX/K3Pzev7D+//V0PshWdWs9CYiDNVrDlFUp9q
   SignPathApiToken:
     secure: uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn
   TwitterConsumerKey:
