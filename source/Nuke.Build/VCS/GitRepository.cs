@@ -99,9 +99,19 @@ namespace Nuke.Common.Git
             if (!head.StartsWith("refs/heads/"))
                 return head;
 
-            var headRefFile = gitDirectory / head;
-            Assert.FileExists(headRefFile);
-            return headRefFile.ReadAllLines().First();
+            var headRefFile = Path.Combine(gitDirectory, head);
+
+            if (File.Exists(headRefFile))
+                return File.ReadAllLines(headRefFile).First();
+
+            var commit = GetPackedRefs(gitDirectory)
+                .Where(x => x.Reference == head)
+                .Select(x => x.Commit)
+                .FirstOrDefault();
+
+            commit.NotNull("Could not find commit information");
+
+            return commit;
         }
 
         private static string GetHead(AbsolutePath gitDirectory)
@@ -126,17 +136,11 @@ namespace Nuke.Common.Git
         private static IReadOnlyCollection<string> GetTagsFromCommit(AbsolutePath gitDirectory, string commit)
         {
             if (commit == null)
-                return new string[0];
+                return Array.Empty<string>();
 
-            var packedRefsFile = gitDirectory / "packed-refs";
-            var packedTags = packedRefsFile.Exists()
-                ? packedRefsFile.ReadAllLines()
-                    .Where(x => !x.StartsWith("#") && !x.StartsWith("^"))
-                    .Select(x => x.Split(' '))
-                    .Select(x => (Commit: x[0], Reference: x[1]))
-                    .Where(x => x.Commit == commit && x.Reference.StartsWithOrdinalIgnoreCase("refs/tags"))
-                    .Select(x => x.Reference.TrimStart("refs/tags/"))
-                : new string[0];
+            var packedTags = GetPackedRefs(gitDirectory)
+                .Where(x => x.Commit == commit && x.Reference.StartsWithOrdinalIgnoreCase("refs/tags"))
+                .Select(x => x.Reference.TrimStart("refs/tags/"));
 
             var tagsDirectory = gitDirectory / "refs" / "tags";
             var localTags = tagsDirectory
@@ -145,6 +149,19 @@ namespace Nuke.Common.Git
                 .Select(x => tagsDirectory.GetUnixRelativePathTo(x).ToString());
 
             return localTags.Concat(packedTags).ToList();
+        }
+
+        private static IEnumerable<(string Commit, string Reference)> GetPackedRefs(string gitDirectory)
+        {
+            var packedRefsFile = (AbsolutePath)gitDirectory / "packed-refs";
+            var packedTags = File.Exists(packedRefsFile)
+                ? File.ReadAllLines(packedRefsFile)
+                    .Where(x => !x.StartsWith("#") && !x.StartsWith("^"))
+                    .Select(x => x.Split(' '))
+                    .Select(x => (Commit: x[0], Reference: x[1]))
+                : Enumerable.Empty<(string Commit, string Reference)>();
+
+            return packedTags;
         }
 
         private static (GitProtocol Protocol, string Endpoint, string Identifier) GetRemoteConnectionFromUrl(string url)
