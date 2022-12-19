@@ -24,8 +24,8 @@ namespace Nuke.GlobalTool
         private static string SessionId
             => EnvironmentInfo.Platform switch
             {
-                PlatformFamily.OSX => EnvironmentInfo.GetVariable<string>("TERM_SESSION_ID").NotNull()[7..],
-                PlatformFamily.Windows => EnvironmentInfo.GetVariable<string>("WT_SESSION").NotNull(),
+                PlatformFamily.OSX => EnvironmentInfo.GetVariable("TERM_SESSION_ID").NotNull()[7..],
+                PlatformFamily.Windows => EnvironmentInfo.GetVariable("WT_SESSION").NotNull(),
                 _ => throw new NotSupportedException($"{EnvironmentInfo.Platform} has no session id selector.")
             };
 

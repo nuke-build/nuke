@@ -82,7 +82,7 @@ namespace Nuke.Common.CI.TeamCity
         {
             _messageSink = messageSink ?? Console.WriteLine;
 
-            _systemProperties = Lazy.Create(() => ParseDictionary(EnvironmentInfo.GetVariable<string>("TEAMCITY_BUILD_PROPERTIES_FILE")));
+            _systemProperties = Lazy.Create(() => ParseDictionary(EnvironmentInfo.GetVariable("TEAMCITY_BUILD_PROPERTIES_FILE")));
             _configurationProperties = Lazy.Create(() => ParseDictionary(SystemProperties?["teamcity.configuration.properties.file"]));
             _runnerProperties = Lazy.Create(() => ParseDictionary(SystemProperties?["teamcity.runner.properties.file"]));
             _recentlyFailedTests = Lazy.Create(() =>
@@ -104,7 +104,7 @@ namespace Nuke.Common.CI.TeamCity
 
         public string BuildConfiguration => SystemProperties?["teamcity.buildConfName"];
         public string BuildTypeId => SystemProperties?["teamcity.buildType.id"];
-        [NoConvert] public string BuildNumber => EnvironmentInfo.GetVariable<string>("BUILD_NUMBER");
+        [NoConvert] public string BuildNumber => EnvironmentInfo.GetVariable("BUILD_NUMBER");
         public string BuildVcsNumber => SystemProperties?["build.vcs.number"];
         public string Version => SystemProperties?["teamcity.version"];
         public string ProjectName => SystemProperties?["teamcity.projectName"];

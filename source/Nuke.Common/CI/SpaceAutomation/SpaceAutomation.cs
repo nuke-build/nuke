@@ -25,13 +25,13 @@ namespace Nuke.Common.CI.SpaceAutomation
         string IBuildServer.Branch => GitBranch;
         string IBuildServer.Commit => GitRevision;
 
-        public string ProjectKey => EnvironmentInfo.GetVariable<string>("JB_SPACE_PROJECT_KEY");
-        public string ApiUrl => EnvironmentInfo.GetVariable<string>("JB_SPACE_API_URL");
-        public string ClientId => EnvironmentInfo.GetVariable<string>("JB_SPACE_CLIENT_ID");
-        public string ClientSecret => EnvironmentInfo.GetVariable<string>("JB_SPACE_CLIENT_SECRET");
-        public string ExecutionNumber => EnvironmentInfo.GetVariable<string>("JB_SPACE_EXECUTION_NUMBER");
-        public string RepositoryName => EnvironmentInfo.GetVariable<string>("JB_SPACE_GIT_REPOSITORY_NAME");
-        public string GitRevision => EnvironmentInfo.GetVariable<string>("JB_SPACE_GIT_REVISION");
-        public string GitBranch => EnvironmentInfo.GetVariable<string>("JB_SPACE_GIT_BRANCH");
+        public string ProjectKey => EnvironmentInfo.GetVariable("JB_SPACE_PROJECT_KEY");
+        public string ApiUrl => EnvironmentInfo.GetVariable("JB_SPACE_API_URL");
+        public string ClientId => EnvironmentInfo.GetVariable("JB_SPACE_CLIENT_ID");
+        public string ClientSecret => EnvironmentInfo.GetVariable("JB_SPACE_CLIENT_SECRET");
+        public string ExecutionNumber => EnvironmentInfo.GetVariable("JB_SPACE_EXECUTION_NUMBER");
+        public string RepositoryName => EnvironmentInfo.GetVariable("JB_SPACE_GIT_REPOSITORY_NAME");
+        public string GitRevision => EnvironmentInfo.GetVariable("JB_SPACE_GIT_REVISION");
+        public string GitBranch => EnvironmentInfo.GetVariable("JB_SPACE_GIT_BRANCH");
     }
 }

@@ -231,7 +231,7 @@ namespace Nuke.Common.Tooling
         public static string GetPackagesDirectory([CanBeNull] string packagesConfigFile)
         {
             string TryGetFromEnvironmentVariable()
-                => EnvironmentInfo.GetVariable<string>("NUGET_PACKAGES");
+                => EnvironmentInfo.GetVariable("NUGET_PACKAGES");
 
             string TryGetGlobalDirectoryFromConfig()
                 => GetConfigFiles(packagesConfigFile)
@@ -317,7 +317,7 @@ namespace Nuke.Common.Tooling
                     ".nuget",
                     "NuGet"));
 
-                var dataHomeDirectoy = EnvironmentInfo.GetVariable<string>("XDG_DATA_HOME");
+                var dataHomeDirectoy = EnvironmentInfo.GetVariable("XDG_DATA_HOME");
                 if (!string.IsNullOrEmpty(dataHomeDirectoy))
                 {
                     directories.Add(dataHomeDirectoy);

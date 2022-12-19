@@ -67,27 +67,27 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The branch or tag name for which project is built.
         /// </summary>
-        public string CommitRefName => EnvironmentInfo.GetVariable<string>("CI_COMMIT_REF_NAME");
+        public string CommitRefName => EnvironmentInfo.GetVariable("CI_COMMIT_REF_NAME");
 
         /// <summary>
         /// <c>$CI_COMMIT_REF_NAME</c> lowercased, shortened to 63 bytes, and with everything except <c>0-9</c> and <c>a-z</c> replaced with <c>-</c>. No leading / trailing <c>-</c>. Use in URLs, host names and domain names.
         /// </summary>
-        public string CommitRefSlug => EnvironmentInfo.GetVariable<string>("CI_COMMIT_REF_SLUG");
+        public string CommitRefSlug => EnvironmentInfo.GetVariable("CI_COMMIT_REF_SLUG");
 
         /// <summary>
         /// The commit revision for which project is built.
         /// </summary>
-        public string CommitSha => EnvironmentInfo.GetVariable<string>("CI_COMMIT_SHA");
+        public string CommitSha => EnvironmentInfo.GetVariable("CI_COMMIT_SHA");
 
         /// <summary>
         /// The commit tag name. Present only when building tags.
         /// </summary>
-        [CanBeNull] public string CommitTag => EnvironmentInfo.GetVariable<string>("CI_COMMIT_TAG");
+        [CanBeNull] public string CommitTag => EnvironmentInfo.GetVariable("CI_COMMIT_TAG");
 
         /// <summary>
         /// The path to CI config file. Defaults to <c>.gitlab-ci.yml</c>.
         /// </summary>
-        public string ConfigPath => EnvironmentInfo.GetVariable<string>("CI_CONFIG_PATH");
+        public string ConfigPath => EnvironmentInfo.GetVariable("CI_CONFIG_PATH");
 
         /// <summary>
         /// Marks that the job is executed in a disposable environment (something that is created only for this job and disposed of/destroyed after the execution - all executors except <c>shell</c> and <c>ssh</c>). If the environment is disposable, it is set to true, otherwise it is not defined at all.
@@ -107,27 +107,27 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The name of the job as defined in <c>.gitlab-ci.yml</c>.
         /// </summary>
-        public string JobName => EnvironmentInfo.GetVariable<string>("CI_JOB_NAME");
+        public string JobName => EnvironmentInfo.GetVariable("CI_JOB_NAME");
 
         /// <summary>
         /// The name of the stage as defined in <c>.gitlab-ci.yml</c>.
         /// </summary>
-        public string JobStage => EnvironmentInfo.GetVariable<string>("CI_JOB_STAGE");
+        public string JobStage => EnvironmentInfo.GetVariable("CI_JOB_STAGE");
 
         /// <summary>
         /// Token used for authenticating with the GitLab Container Registry.
         /// </summary>
-        public string JobToken => EnvironmentInfo.GetVariable<string>("CI_JOB_TOKEN");
+        public string JobToken => EnvironmentInfo.GetVariable("CI_JOB_TOKEN");
 
         /// <summary>
         /// The URL to clone the Git repository.
         /// </summary>
-        public string RepositoryUrl => EnvironmentInfo.GetVariable<string>("CI_REPOSITORY_URL");
+        public string RepositoryUrl => EnvironmentInfo.GetVariable("CI_REPOSITORY_URL");
 
         /// <summary>
         /// The description of the runner as saved in GitLab.
         /// </summary>
-        public string RunnerDescription => EnvironmentInfo.GetVariable<string>("CI_RUNNER_DESCRIPTION");
+        public string RunnerDescription => EnvironmentInfo.GetVariable("CI_RUNNER_DESCRIPTION");
 
         /// <summary>
         /// The unique id of runner being used.
@@ -137,7 +137,7 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The defined runner tags.
         /// </summary>
-        public string RunnerTags => EnvironmentInfo.GetVariable<string>("CI_RUNNER_TAGS");
+        public string RunnerTags => EnvironmentInfo.GetVariable("CI_RUNNER_TAGS");
 
         /// <summary>
         /// The unique id of the current pipeline that GitLab CI uses internally.
@@ -152,12 +152,12 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The source for this pipeline, one of: push, web, trigger, schedule, api, external. Pipelines created before 9.5 will have unknown as source.
         /// </summary>
-        public string PipelineSource => EnvironmentInfo.GetVariable<string>("CI_PIPELINE_SOURCE");
+        public string PipelineSource => EnvironmentInfo.GetVariable("CI_PIPELINE_SOURCE");
 
         /// <summary>
         /// The full path where the repository is cloned and where the job is run.
         /// </summary>
-        public string ProjectDirectory => EnvironmentInfo.GetVariable<string>("CI_PROJECT_DIR");
+        public string ProjectDirectory => EnvironmentInfo.GetVariable("CI_PROJECT_DIR");
 
         /// <summary>
         /// The unique id of the current project that GitLab CI uses internally.
@@ -167,27 +167,27 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The project name that is currently being built (actually it is project folder name).
         /// </summary>
-        public string ProjectName => EnvironmentInfo.GetVariable<string>("CI_PROJECT_NAME");
+        public string ProjectName => EnvironmentInfo.GetVariable("CI_PROJECT_NAME");
 
         /// <summary>
         /// The project namespace (username or groupname) that is currently being built.
         /// </summary>
-        public string ProjectNamespace => EnvironmentInfo.GetVariable<string>("CI_PROJECT_NAMESPACE");
+        public string ProjectNamespace => EnvironmentInfo.GetVariable("CI_PROJECT_NAMESPACE");
 
         /// <summary>
         /// The namespace with project name.
         /// </summary>
-        public string ProjectPath => EnvironmentInfo.GetVariable<string>("CI_PROJECT_PATH");
+        public string ProjectPath => EnvironmentInfo.GetVariable("CI_PROJECT_PATH");
 
         /// <summary>
         /// <c>$CI_PROJECT_PATH</c> lowercased and with everything except <c>0-9</c> and <c>a-z</c> replaced with <c>-</c>. Use in URLs and domain names.
         /// </summary>
-        public string ProjectPathSlug => EnvironmentInfo.GetVariable<string>("CI_PROJECT_PATH_SLUG");
+        public string ProjectPathSlug => EnvironmentInfo.GetVariable("CI_PROJECT_PATH_SLUG");
 
         /// <summary>
         /// The HTTP address to access project.
         /// </summary>
-        public string ProjectUrl => EnvironmentInfo.GetVariable<string>("CI_PROJECT_URL");
+        public string ProjectUrl => EnvironmentInfo.GetVariable("CI_PROJECT_URL");
 
         /// <summary>
         /// The project visibility (internal, private, public).
@@ -197,37 +197,37 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// If the Container Registry is enabled it returns the address of GitLab's Container Registry.
         /// </summary>
-        public string Registry => EnvironmentInfo.GetVariable<string>("CI_REGISTRY");
+        public string Registry => EnvironmentInfo.GetVariable("CI_REGISTRY");
 
         /// <summary>
         /// If the Container Registry is enabled for the project it returns the address of the registry tied to the specific project.
         /// </summary>
-        public string RegistryImage => EnvironmentInfo.GetVariable<string>("CI_REGISTRY_IMAGE");
+        public string RegistryImage => EnvironmentInfo.GetVariable("CI_REGISTRY_IMAGE");
 
         /// <summary>
         /// The password to use to push containers to the GitLab Container Registry.
         /// </summary>
-        public string RegistryPassword => EnvironmentInfo.GetVariable<string>("CI_REGISTRY_PASSWORD");
+        public string RegistryPassword => EnvironmentInfo.GetVariable("CI_REGISTRY_PASSWORD");
 
         /// <summary>
         /// The username to use to push containers to the GitLab Container Registry.
         /// </summary>
-        public string RegistryUser => EnvironmentInfo.GetVariable<string>("CI_REGISTRY_USER");
+        public string RegistryUser => EnvironmentInfo.GetVariable("CI_REGISTRY_USER");
 
         /// <summary>
         /// The name of CI server that is used to coordinate jobs.
         /// </summary>
-        public string ServerName => EnvironmentInfo.GetVariable<string>("CI_SERVER_NAME");
+        public string ServerName => EnvironmentInfo.GetVariable("CI_SERVER_NAME");
 
         /// <summary>
         /// GitLab revision that is used to schedule jobs.
         /// </summary>
-        public string ServerRevision => EnvironmentInfo.GetVariable<string>("CI_SERVER_REVISION");
+        public string ServerRevision => EnvironmentInfo.GetVariable("CI_SERVER_REVISION");
 
         /// <summary>
         /// GitLab version that is used to schedule jobs.
         /// </summary>
-        public string ServerVersion => EnvironmentInfo.GetVariable<string>("CI_SERVER_VERSION");
+        public string ServerVersion => EnvironmentInfo.GetVariable("CI_SERVER_VERSION");
 
         /// <summary>
         /// The id of the user who started the job.
@@ -237,16 +237,16 @@ namespace Nuke.Common.CI.GitLab
         /// <summary>
         /// The email of the user who started the job.
         /// </summary>
-        public string GitLabUserEmail => EnvironmentInfo.GetVariable<string>("GITLAB_USER_EMAIL");
+        public string GitLabUserEmail => EnvironmentInfo.GetVariable("GITLAB_USER_EMAIL");
 
         /// <summary>
         /// The login username of the user who started the job.
         /// </summary>
-        public string GitLabUserLogin => EnvironmentInfo.GetVariable<string>("GITLAB_USER_LOGIN");
+        public string GitLabUserLogin => EnvironmentInfo.GetVariable("GITLAB_USER_LOGIN");
 
         /// <summary>
         /// The real name of the user who started the job.
         /// </summary>
-        public string GitLabUserName => EnvironmentInfo.GetVariable<string>("GITLAB_USER_NAME");
+        public string GitLabUserName => EnvironmentInfo.GetVariable("GITLAB_USER_NAME");
     }
 }
