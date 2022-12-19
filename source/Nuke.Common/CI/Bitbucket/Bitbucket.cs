@@ -20,7 +20,7 @@ namespace Nuke.Common.CI.Bitbucket
     {
         public new static Bitbucket Instance => Host.Instance as Bitbucket;
 
-        internal static bool IsRunningBitbucket => !Environment.GetEnvironmentVariable("BITBUCKET_PIPELINE_UUID").IsNullOrEmpty();
+        internal static bool IsRunningBitbucket => EnvironmentInfo.HasVariable("BITBUCKET_PIPELINE_UUID");
 
         internal Bitbucket()
         {

@@ -20,7 +20,7 @@ namespace Nuke.Common.CI.SpaceAutomation
     {
         public new static SpaceAutomation Instance => Host.Instance as SpaceAutomation;
 
-        internal static bool IsRunningSpaceAutomation => !Environment.GetEnvironmentVariable("JB_SPACE_PROJECT_KEY").IsNullOrEmpty();
+        internal static bool IsRunningSpaceAutomation => EnvironmentInfo.HasVariable("JB_SPACE_PROJECT_KEY");
 
         string IBuildServer.Branch => GitBranch;
         string IBuildServer.Commit => GitRevision;

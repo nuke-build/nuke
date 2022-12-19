@@ -27,7 +27,7 @@ namespace Nuke.Common.CI.TeamCity
     {
         public new static TeamCity Instance => Host.Instance as TeamCity;
 
-        internal static bool IsRunningTeamCity => !Environment.GetEnvironmentVariable("TEAMCITY_VERSION").IsNullOrEmpty();
+        internal static bool IsRunningTeamCity => EnvironmentInfo.HasVariable("TEAMCITY_VERSION");
 
         [CanBeNull]
         private static IReadOnlyDictionary<string, string> ParseDictionary([CanBeNull] AbsolutePath file)

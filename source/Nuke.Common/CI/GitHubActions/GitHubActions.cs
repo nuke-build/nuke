@@ -25,7 +25,7 @@ namespace Nuke.Common.CI.GitHubActions
     [ExcludeFromCodeCoverage]
     public partial class GitHubActions : Host, IBuildServer
     {
-        internal static bool IsRunningGitHubActions => EnvironmentInfo.GetVariable<bool>("GITHUB_ACTIONS");
+        internal static bool IsRunningGitHubActions => EnvironmentInfo.HasVariable("GITHUB_ACTIONS");
 
         public new static GitHubActions Instance => Host.Instance as GitHubActions;
 

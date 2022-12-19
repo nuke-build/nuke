@@ -40,7 +40,7 @@ namespace Nuke.Common.CI.AppVeyor
 
         public static int MessageLimit = 500;
 
-        internal static bool IsRunningAppVeyor => !Environment.GetEnvironmentVariable("APPVEYOR").IsNullOrEmpty();
+        internal static bool IsRunningAppVeyor => EnvironmentInfo.HasVariable("APPVEYOR");
 
         private readonly Lazy<Tool> _cli = Lazy.Create(() => IsRunningAppVeyor ? ToolResolver.GetPathTool("appveyor") : null);
         private int _messageCount;
