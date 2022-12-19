@@ -33,6 +33,7 @@ namespace Nuke.Common.Tooling
         public bool? ProcessLogOutput { get; internal set; }
         public bool? ProcessLogInvocation { get; internal set; }
 
+        [field: NonSerialized]
         public virtual Action<OutputType, string> ProcessCustomLogger { get; internal set; }
 
         [NonSerialized]
