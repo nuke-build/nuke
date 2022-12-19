@@ -56,7 +56,7 @@ namespace Nuke.Common.CI.AzurePipelines
         public string QueuedBy => EnvironmentInfo.GetVariable("BUILD_QUEUEDBY");
         public Guid QueuedById => EnvironmentInfo.GetVariable<Guid>("BUILD_QUEUEDBYID");
         public AzurePipelinesBuildReason BuildReason => EnvironmentInfo.GetVariable<AzurePipelinesBuildReason>("BUILD_REASON");
-        public bool RepositoryClean => EnvironmentInfo.GetVariable<bool>("BUILD_REPOSITORY_CLEAN");
+        public bool? RepositoryClean => EnvironmentInfo.GetVariable<bool?>("BUILD_REPOSITORY_CLEAN");
         public string RepositoryLocalPath => EnvironmentInfo.GetVariable("BUILD_REPOSITORY_LOCALPATH");
         public string RepositoryName => EnvironmentInfo.GetVariable("BUILD_REPOSITORY_NAME");
 

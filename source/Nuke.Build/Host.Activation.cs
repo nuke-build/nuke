@@ -18,7 +18,8 @@ namespace Nuke.Common
 
         internal static Host Default =>
             AvailableTypes
-                .OrderByDescending(x => x != typeof(Terminal))
+                .OrderBy(x => x.IsAssignableTo(typeof(Terminal)))
+                .ThenBy(x => x == typeof(Terminal))
                 .Where(IsRunning)
                 .Select(CreateHost)
                 .First();
