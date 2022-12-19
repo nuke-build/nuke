@@ -35,6 +35,15 @@ namespace Nuke.Common
         private static readonly char s_pathVariableSeparator = IsWin ? ';' : ':';
 
         /// <summary>
+        /// Indicates whether the environment variable exists.
+        /// </summary>
+        public static bool HasVariable(string name, bool allowEmpty = true)
+        {
+            var value = GetVariable(name);
+            return value != null && (!value.IsNullOrEmpty() || allowEmpty);
+        }
+
+        /// <summary>
         /// Returns the value from an environment variable.
         /// </summary>
         [CanBeNull]
