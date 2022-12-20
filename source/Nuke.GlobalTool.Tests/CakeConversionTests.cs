@@ -25,10 +25,9 @@ namespace Nuke.GlobalTool.Tests
         public Task Test(string fileName)
         {
             var converted = Program.GetCakeConvertedContent(File.ReadAllText(CakeScriptsDirectory / fileName));
-            return Verifier.Verify(converted)
+            return Verifier.Verify(converted, extension: "cs")
                 .UseDirectory(CakeScriptsDirectory)
-                .UseFileName(Path.GetFileNameWithoutExtension(fileName))
-                .UseExtension("cs");
+                .UseFileName(Path.GetFileNameWithoutExtension(fileName));
         }
 
         [Fact]
