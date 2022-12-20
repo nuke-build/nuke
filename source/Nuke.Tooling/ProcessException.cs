@@ -45,6 +45,7 @@ namespace Nuke.Common.Tooling
             : base(FormatMessage(process))
         {
             Process = process;
+            ExitCode = process.ExitCode;
         }
 
         protected ProcessException(
@@ -56,6 +57,6 @@ namespace Nuke.Common.Tooling
 
         internal IProcess Process { get; }
 
-        public int ExitCode => Process.ExitCode;
+        public int ExitCode { get; }
     }
 }
