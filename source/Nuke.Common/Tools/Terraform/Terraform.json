@@ -1,0 +1,536 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "name": "Terraform",
+  "officialUrl": "https://www.terraform.io/",
+  "pathExecutable": "terraform",
+  "tasks": [
+    {
+      "help": "Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.  This is the first command that should be run for any new or existing Terraform configuration per machine. This sets up all the local data necessary to run Terraform that is typically not committed to version control.  This command is always safe to run multiple times. Though subsequent runs may give errors, this command will never delete your configuration or state. Even so, if you have important information, please back it up prior to running this command, just in case.",
+      "postfix": "Init",
+      "commonPropertySets": [
+        "commonSettings"
+      ],
+      "definiteArgument": "init",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Backend",
+            "type": "bool",
+            "format": "-backend",
+            "secret": false,
+            "help": "Disable backend or Terraform Cloud initialization for this configuration and use what was previously initialized instead. Aliases: -cloud=false."
+          },
+          {
+            "name": "BackendConfig",
+            "type": "string",
+            "format": "-backend-config={value}",
+            "secret": false,
+            "help": "Configuration to be merged with what is in the configuration file's 'backend' block. This can be either a path to an HCL file with key/value assignments (same format as terraform.tfvars) or a 'key=value' format, and can be specified multiple times. The backend type must be in the configuration itself."
+          },
+          {
+            "name": "ForceCopy",
+            "type": "bool",
+            "format": "-force-copy",
+            "secret": false,
+            "help": "Suppress prompts about copying state data when initializating a new state backend. This is equivalent to providing a \"yes\" to all confirmation prompts."
+          },
+          {
+            "name": "FromModule",
+            "type": "string",
+            "format": "-from-module={value}",
+            "secret": false,
+            "help": "Copy the contents of the given module into the target directory before initialization."
+          },
+          {
+            "name": "GetModules",
+            "type": "bool",
+            "format": "-get",
+            "secret": false,
+            "help": "Disable downloading modules for this configuration."
+          },
+          {
+            "name": "Input",
+            "type": "bool",
+            "format": "-input",
+            "secret": false,
+            "help": "Disable interactive prompts. Note that some actions may require interactive prompts and will error if input is disabled."
+          },
+          {
+            "name": "Lock",
+            "type": "bool",
+            "format": "-lock",
+            "secret": false,
+            "help": "Don't hold a state lock during backend migration. This is dangerous if others might concurrently run commands against the same workspace."
+          },
+          {
+            "name": "LockTimeout",
+            "type": "int",
+            "format": "-lock-timeout",
+            "secret": false,
+            "help": "Duration to retry a state lock."
+          },
+          {
+            "name": "NoColor",
+            "type": "bool",
+            "format": "-no-color",
+            "secret": false,
+            "help": "If specified, output won't contain any color."
+          },
+          {
+            "name": "PluginDirectory",
+            "type": "string",
+            "format": "-plugin-dir={value}",
+            "secret": false,
+            "help": "Directory containing plugin binaries. This overrides all default search paths for plugins, and prevents the automatic installation of plugins. This flag can be used multiple times."
+          },
+          {
+            "name": "Reconfigure",
+            "type": "bool",
+            "format": "-reconfigure",
+            "secret": false,
+            "help": "Reconfigure a backend, ignoring any saved configuration."
+          },
+          {
+            "name": "MigrateState",
+            "type": "bool",
+            "format": "-migrate-state",
+            "secret": false,
+            "help": "Reconfigure a backend, and attempt to migrate any existing state."
+          },
+          {
+            "name": "Upgrade",
+            "type": "bool",
+            "format": "-upgrade",
+            "secret": false,
+            "help": "Install the latest module and provider versions allowed within configured constraints, overriding the default behavior of selecting exactly the version recorded in the dependency lockfile."
+          },
+          {
+            "name": "LockFile",
+            "type": "bool",
+            "format": "-lockfile",
+            "secret": false,
+            "help": "Set a dependency lockfile mode. Currently only \"readonly\" is valid."
+          },
+          {
+            "name": "IgnoreRemoteVersion",
+            "type": "bool",
+            "format": "-ignore-remote-version",
+            "secret": false,
+            "help": "A rare option used for Terraform Cloud and the remote backend only. Set this to ignore checking that the local and remote Terraform versions use compatible state representations, making an operation proceed even when there is a potential mismatch. See the documentation on configuring Terraform with Terraform Cloud for more information."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "-json",
+            "secret": false,
+            "help": "Produce output in a machine-readable JSON format, suitable for use in text editor integrations and other automated systems. Always disables color."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Usage: terraform [global options] plan [options]    Generates a speculative execution plan, showing what actions Terraform   would take to apply the current configuration. This command will not   actually perform the planned actions.    You can optionally save the plan to a file, which you can then pass to   the \"apply\" command to perform exactly the actions described in the plan.",
+      "postfix": "Plan",
+      "commonPropertySets": [
+        "commonSettings"
+      ],
+      "definiteArgument": "plan",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Destroy",
+            "type": "bool",
+            "format": "-destroy",
+            "secret": false,
+            "help": "Select the \"destroy\" planning mode, which creates a plan to destroy all objects currently managed by this Terraform configuration instead of the usual behavior."
+          },
+          {
+            "name": "RefreshOnly",
+            "type": "bool",
+            "format": "-refresh-only",
+            "secret": false,
+            "help": "Select the \"refresh only\" planning mode, which checks whether remote objects still match the outcome of the most recent Terraform apply but does not propose any actions to undo any changes made outside of Terraform."
+          },
+          {
+            "name": "Refresh",
+            "type": "bool",
+            "format": "-refresh",
+            "secret": false,
+            "help": "Skip checking for external changes to remote objects while creating the plan. This can potentially make planning faster, but at the expense of possibly planning against a stale record of the remote system state."
+          },
+          {
+            "name": "Replace",
+            "type": "string",
+            "format": "-replace={value}",
+            "secret": false,
+            "help": "Force replacement of a particular resource instance using its resource address. If the plan would've normally produced an update or no-op action for this instance, Terraform will plan to replace it instead. You can use this option multiple times to replace more than one object."
+          },
+          {
+            "name": "Target",
+            "type": "string",
+            "format": "-target={value}",
+            "secret": false,
+            "help": "Limit the planning operation to only the given module, resource, or resource instance and all of its dependencies. You can use this option multiple times to include more than one object. This is for exceptional use only."
+          },
+          {
+            "name": "Variable",
+            "type": "string",
+            "format": "-var={value}",
+            "secret": false,
+            "help": "Set a value for one of the input variables in the root module of the configuration. Use this option more than once to set more than one variable."
+          },
+          {
+            "name": "SecretVariable",
+            "type": "string",
+            "format": "-var={value}",
+            "secret": true,
+            "help": "Set a value for one of the input variables in the root module of the configuration. Use this option more than once to set more than one variable."
+          },
+          {
+            "name": "VariableFile",
+            "type": "string",
+            "format": "-var-file={value}",
+            "secret": false,
+            "help": "Load variable values from the given file, in addition to the default files terraform.tfvars and *.auto.tfvars. Use this option more than once to include more than one variables file."
+          },
+          {
+            "name": "CompactWarnings",
+            "type": "bool",
+            "format": "-compact-warnings",
+            "secret": false,
+            "help": "If Terraform produces any warnings that are not accompanied by errors, shows them in a more compact form that includes only the summary messages."
+          },
+          {
+            "name": "DetailedExitcode",
+            "type": "bool",
+            "format": "-detailed-exitcode",
+            "secret": false,
+            "help": "Return detailed exit codes when the command exits. This will change the meaning of exit codes to:\t0 - Succeeded, diff is empty (no changes)\t1 - Errored\t2 - Succeeded, there is a diff"
+          },
+          {
+            "name": "PlanOutput",
+            "type": "string",
+            "format": "-out={value}",
+            "secret": false,
+            "help": "Write a plan file to the given path. This can be used as input to the \"apply\" command."
+          },
+          {
+            "name": "Parallelism",
+            "type": "int",
+            "format": "-parallelism={value}",
+            "secret": false,
+            "help": "Limit the number of concurrent operations. Defaults to 10."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "-json",
+            "secret": false,
+            "help": "Produce output in a machine-readable JSON format, suitable for use in text editor integrations and other automated systems. Always disables color."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Usage: terraform [global options] validate [options] Validate the configuration files in a directory, referring only to the configuration and not accessing any remote services such as remote state, provider APIs, etc. Validate runs checks that verify whether a configuration is syntactically valid and internally consistent, regardless of any provided variables or existing state. It is thus primarily useful for general verification of reusable modules, including correctness of attribute names and value types. It is safe to run this command automatically, for example as a post-save check in a text editor or as a test step for a re-usable module in a CI system. Validation requires an initialized working directory with any referenced plugins and modules installed. To initialize a working directory for validation without accessing any configured remote backend, use: terraform init -backend=false. To verify configuration in the context of a particular run (a particular target workspace, input variable values, etc), use the 'terraform plan' command instead, which includes an implied validation check.",
+      "postfix": "Validate",
+      "commonPropertySets": [
+        "commonSettings"
+      ],
+      "definiteArgument": "validate",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "-json",
+            "secret": false,
+            "help": "Produce output in a machine-readable JSON format, suitable for use in text editor integrations and other automated systems. Always disables color."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Usage: terraform [global options] force-unlock LOCK_ID Manually unlock the state for the defined configuration. This will not modify your infrastructure. This command removes the lock on the state for the current workspace. The behavior of this lock is dependent on the backend being used. Local state files cannot be unlocked by another process.",
+      "postfix": "ForceUnlock",
+      "commonPropertySets": [
+        "commonSettings"
+      ],
+      "definiteArgument": "force-unlock",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "LockId",
+            "type": "string",
+            "format": "{value}",
+            "secret": false,
+            "help": "The Lock Id to unlock",
+            "isTailArgument": true
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "-force",
+            "default": "true",
+            "secret": false,
+            "help": "Don't ask for input for unlock confirmation."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "-json",
+            "secret": false,
+            "help": "Produce output in a machine-readable JSON format, suitable for use in text editor integrations and other automated systems. Always disables color."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Usage: terraform [global options] graph [options] Produces a representation of the dependency graph between different objects in the current configuration and state. The graph is presented in the DOT language. The typical program that can read this format is GraphViz, but many web services are also available to read this format.",
+      "postfix": "Graph",
+      "commonPropertySets": [
+        "commonSettings"
+      ],
+      "definiteArgument": "graph",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Plan",
+            "type": "string",
+            "format": "-plan={value}",
+            "secret": false,
+            "help": "Render graph using the specified plan file instead of the configuration in the current directory."
+          },
+          {
+            "name": "DrawCycles",
+            "type": "bool",
+            "format": "-draw-cycles",
+            "secret": false,
+            "help": "Highlight any cycles in the graph with colored edges. This helps when diagnosing cycle errors."
+          },
+          {
+            "name": "Type",
+            "type": "string",
+            "format": "-type={value}",
+            "secret": false,
+            "help": "Type of graph to output. Can be: plan, plan-refresh-only, plan-destroy, or apply. By default Terraform chooses \"plan\", or \"apply\" if you also set the -plan=... option."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Usage: terraform [global options] apply [options] [PLAN] Creates or updates infrastructure according to Terraform configuration files in the current directory. By default, Terraform will generate a new plan and present it for your approval before taking any action. You can optionally provide a plan file created by a previous call to \"terraform plan\", in which case Terraform will take the actions described in that plan without any confirmation prompt.",
+      "postfix": "Apply",
+      "commonPropertySets": [
+        "commonSettings"
+      ],
+      "definiteArgument": "apply",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PlanFile",
+            "type": "string",
+            "format": "{value}",
+            "secret": false,
+            "help": "The path to the Terraform plan file.",
+            "isTailArgument": true
+          },
+          {
+            "name": "AutoApprove",
+            "type": "bool",
+            "format": "-auto-approve",
+            "default": "true",
+            "secret": false,
+            "help": "Skip interactive approval of plan before applying."
+          },
+          {
+            "name": "Backup",
+            "type": "string",
+            "format": "-backup={value}",
+            "secret": false,
+            "help": "Path to backup the existing state file before modifying. Defaults to the \"-state-out\" path with \".backup\" extension. Set to \"-\" to disable backup."
+          },
+          {
+            "name": "CompactWarnings",
+            "type": "bool",
+            "format": "-compact-warnings",
+            "secret": false,
+            "help": "Path to backup the existing state file before modifying. Defaults to the \"-state-out\" path with \".backup\" extension. Set to \"-\" to disable backup."
+          },
+          {
+            "name": "Destroy",
+            "type": "bool",
+            "format": "-destroy",
+            "secret": false,
+            "help": "Destroy Terraform-managed infrastructure. The command \"terraform destroy\" is a convenience alias for this option."
+          },
+          {
+            "name": "Lock",
+            "type": "bool",
+            "format": "-lock",
+            "secret": false,
+            "help": "Don't hold a state lock during backend migration. This is dangerous if others might concurrently run commands against the same workspace."
+          },
+          {
+            "name": "LockTimeout",
+            "type": "int",
+            "format": "-lock-timeout",
+            "secret": false,
+            "help": "Duration to retry a state lock."
+          },
+          {
+            "name": "NoColor",
+            "type": "bool",
+            "format": "-no-color",
+            "secret": false,
+            "help": "If specified, output won't contain any color."
+          },
+          {
+            "name": "Parallelism",
+            "type": "int",
+            "format": "-parallelism",
+            "secret": false,
+            "help": "Limit the number of concurrent operations. Defaults to 10."
+          },
+          {
+            "name": "State",
+            "type": "string",
+            "format": "-state={value}",
+            "secret": false,
+            "help": "Path to read and save state (unless state-out is specified). Defaults to \"terraform.tfstate\"."
+          },
+          {
+            "name": "StateOutput",
+            "type": "string",
+            "format": "-state-out={value}",
+            "secret": false,
+            "help": "Path to write state to that is different than \"-state\". This can be used to preserve the old state."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "-json",
+            "secret": false,
+            "help": "Produce output in a machine-readable JSON format, suitable for use in text editor integrations and other automated systems. Always disables color."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Usage: terraform [global options] refresh [options] Update the state file of your infrastructure with metadata that matches the physical resources they are tracking. This will not modify your infrastructure, but it can modify your state file to update metadata. This metadata might cause new changes to occur when you generate a plan or call apply next.",
+      "postfix": "Refresh",
+      "commonPropertySets": [
+        "commonSettings"
+      ],
+      "definiteArgument": "refresh",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "CompactWarnings",
+            "type": "bool",
+            "format": "-compact-warnings",
+            "secret": false,
+            "help": "Path to backup the existing state file before modifying. Defaults to the \"-state-out\" path with \".backup\" extension. Set to \"-\" to disable backup."
+          },
+          {
+            "name": "Lock",
+            "type": "bool",
+            "format": "-lock",
+            "secret": false,
+            "help": "Don't hold a state lock during backend migration. This is dangerous if others might concurrently run commands against the same workspace."
+          },
+          {
+            "name": "LockTimeout",
+            "type": "int",
+            "format": "-lock-timeout",
+            "secret": false,
+            "help": "Duration to retry a state lock."
+          },
+          {
+            "name": "NoColor",
+            "type": "bool",
+            "format": "-no-color",
+            "secret": false,
+            "help": "If specified, output won't contain any color."
+          },
+          {
+            "name": "Parallelism",
+            "type": "int",
+            "format": "-parallelism",
+            "secret": false,
+            "help": "Limit the number of concurrent operations. Defaults to 10."
+          },
+          {
+            "name": "Target",
+            "type": "string",
+            "format": "-target={value}",
+            "secret": false,
+            "help": "Limit the planning operation to only the given module, resource, or resource instance and all of its dependencies. You can use this option multiple times to include more than one object. This is for exceptional use only."
+          },
+          {
+            "name": "Variable",
+            "type": "string",
+            "format": "-var={value}",
+            "secret": false,
+            "help": "Set a value for one of the input variables in the root module of the configuration. Use this option more than once to set more than one variable."
+          },
+          {
+            "name": "SecretVariable",
+            "type": "string",
+            "format": "-var={value}",
+            "secret": true,
+            "help": "Set a value for one of the input variables in the root module of the configuration. Use this option more than once to set more than one variable."
+          },
+          {
+            "name": "VariableFile",
+            "type": "string",
+            "format": "-var-file={value}",
+            "secret": false,
+            "help": "Load variable values from the given file, in addition to the default files terraform.tfvars and *.auto.tfvars. Use this option more than once to include more than one variables file."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "-json",
+            "secret": false,
+            "help": "Produce output in a machine-readable JSON format, suitable for use in text editor integrations and other automated systems. Always disables color."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskPropertySets": {
+    "commonSettings": [
+      {
+        "name": "Help",
+        "type": "bool",
+        "format": "-help",
+        "secret": false,
+        "help": "Help for Terraform."
+      },
+      {
+        "name": "ChangeDirectory",
+        "type": "string",
+        "format": "-chdir={value}",
+        "secret": false,
+        "help": "Switch to a different working directory before executing the given subcommand."
+      },
+      {
+        "name": "Version",
+        "type": "bool",
+        "format": "-version",
+        "secret": false,
+        "help": "An alias for the \"version\" subcommand."
+      }
+    ]
+  },
+  "enumerations": [
+    {
+      "name": "TerraformOutputFormat",
+      "values": [
+        "json",
+        "yaml"
+      ]
+    }
+  ]
+}
