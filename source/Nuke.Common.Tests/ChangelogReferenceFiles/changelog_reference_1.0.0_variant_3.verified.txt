@@ -1,0 +1,88 @@
+﻿[
+  {
+    IsEmpty: false,
+    Unreleased: true,
+    Notes: [
+      ,
+      ### Added,
+      ,
+      - Added something,
+      ,
+        ### Fixed,
+      ,
+      -       Fixed something,
+      
+    ],
+    StartIndex: 6,
+    EndIndex: 15
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 1.4.0,
+    Notes: [
+      ,
+      ### Added    ,
+      ,
+      ,
+      ,
+      ,
+      - First item,
+      ,
+      - Second item,
+      ,
+      ###          Changed,
+      ,
+      - Fixed something,
+      - Fixed something else,
+      
+    ],
+    StartIndex: 16,
+    EndIndex: 31
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 1.0.0,
+    Notes: [
+      ,
+      ### Removed,
+      ,
+                   - Removed something,
+      
+    ],
+    StartIndex: 32,
+    EndIndex: 37
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 0.2.0,
+    Notes: [
+      ,
+      ### Added,
+      ,
+      - Some text that spans,
+        multiple lines,
+      - A text on a single line,
+      
+    ],
+    StartIndex: 38,
+    EndIndex: 45
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 0.1.0,
+    Notes: [
+      ,
+      ### Added,
+      ,
+      - Added something,
+      ,
+          Some text at the end of the changelog file.
+    ],
+    StartIndex: 46,
+    EndIndex: 52
+  }
+]
