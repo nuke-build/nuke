@@ -173,7 +173,7 @@ public static class ChangelogTasks
             .Take(section.EndIndex - section.StartIndex);
     }
 
-    private static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
+    internal static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
     {
         static bool IsReleaseHead(string str)
             => str.StartsWith("## ");
@@ -242,7 +242,7 @@ public static class ChangelogTasks
     }
 
     [DebuggerDisplay("{" + nameof(Caption) + "} [{" + nameof(StartIndex) + "}-{" + nameof(EndIndex) + "}]")]
-    private class ReleaseSection
+    internal class ReleaseSection
     {
         public string Caption;
         public int StartIndex;
