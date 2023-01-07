@@ -176,7 +176,7 @@ namespace Nuke.Common.ChangeLog
                 .Take(section.EndIndex - section.StartIndex);
         }
 
-        private static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
+        internal static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
         {
             static bool IsReleaseHead(string str)
                 => str.StartsWith("## ");
@@ -245,7 +245,7 @@ namespace Nuke.Common.ChangeLog
         }
 
         [DebuggerDisplay("{" + nameof(Caption) + "} [{" + nameof(StartIndex) + "}-{" + nameof(EndIndex) + "}]")]
-        private class ReleaseSection
+        internal class ReleaseSection
         {
             public string Caption;
             public int StartIndex;
