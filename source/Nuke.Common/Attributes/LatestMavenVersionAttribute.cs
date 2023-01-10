@@ -31,7 +31,7 @@ namespace Nuke.Common.Tooling
             var endpoint = _repository.TrimStart("https").TrimStart("http").TrimStart("://").TrimEnd("/");
             var uri = $"https://{endpoint}/{_groupId.Replace(".", "/")}/{_artifactId ?? _groupId}/maven-metadata.xml";
             var content = HttpTasks.HttpDownloadString(uri);
-            return XmlTasks.XmlPeekFromString(content, ".//version").Last();
+            return XmlTasks.XmlPeekFromString(content, ".//latest").Single();
         }
     }
 }
