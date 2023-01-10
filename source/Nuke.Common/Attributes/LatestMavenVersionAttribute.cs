@@ -29,7 +29,7 @@ namespace Nuke.Common.Tooling
         public override object GetValue(MemberInfo member, object instance)
         {
             var endpoint = _repository.TrimStart("https").TrimStart("http").TrimStart("://").TrimEnd("/");
-            var uri = $"https://{endpoint}/m2/{_groupId.Replace(".", "/")}/{_artifactId ?? _groupId}/maven-metadata.xml";
+            var uri = $"https://{endpoint}/{_groupId.Replace(".", "/")}/{_artifactId ?? _groupId}/maven-metadata.xml";
             var content = HttpTasks.HttpDownloadString(uri);
             return XmlTasks.XmlPeekFromString(content, ".//version").Last();
         }
