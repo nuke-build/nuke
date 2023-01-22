@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CI [AppVeyor]" type="NukeBuildTarget" factoryName="NUKE" singleton="false">
+  <configuration default="false" name="CI [AppVeyor]" type="NukeBuildTarget" factoryName=".NET Project" singleton="false">
     <option name="EXE_PATH" value="$PROJECT_DIR$/build/bin/Debug/_build.dll" />
     <option name="PROGRAM_PARAMETERS" value="--generate-configuration AppVeyor --host AppVeyor" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build/bin/Debug" />

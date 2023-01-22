@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CI [GitHub Actions]" type="NukeBuildTarget" factoryName="NUKE" singleton="false">
+  <configuration default="false" name="CI [GitHub Actions]" type="NukeBuildTarget" factoryName=".NET Project" singleton="false">
     <option name="EXE_PATH" value="$PROJECT_DIR$/build/bin/Debug/_build.dll" />
     <option name="PROGRAM_PARAMETERS" value="--generate-configuration GitHubActions_continuous --host GitHubActions" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build/bin/Debug" />
