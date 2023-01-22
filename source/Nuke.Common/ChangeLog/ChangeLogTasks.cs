@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using NuGet.Versioning;
@@ -46,7 +47,7 @@ namespace Nuke.Common.ChangeLog
         [Pure]
         public static IReadOnlyList<ReleaseNotes> ReadReleaseNotes(string changelogFile)
         {
-            var lines = TextTasks.ReadAllLines(changelogFile).ToList();
+            var lines = File.ReadAllLines(changelogFile).Where(x => !x.IsNullOrWhiteSpace()).ToList();
             var releaseSections = GetReleaseSections(lines).ToList();
 
             Assert.True(releaseSections.Any(), "Changelog should have at least one release note section");
