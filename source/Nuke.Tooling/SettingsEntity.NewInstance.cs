@@ -25,7 +25,10 @@ namespace Nuke.Common.Tooling
 
             var newInstance = (T) binaryFormatter.Deserialize(memoryStream);
             if (newInstance is ToolSettings toolSettings)
+            {
                 toolSettings.ProcessArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ProcessArgumentConfigurator;
+                toolSettings.ProcessCustomLogger = ((ToolSettings) (object) settingsEntity).ProcessCustomLogger;
+            }
 
             return newInstance;
         }

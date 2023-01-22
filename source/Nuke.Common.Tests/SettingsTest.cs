@@ -30,18 +30,22 @@ namespace Nuke.Common.Tests
         [Fact]
         public void TestCommon()
         {
+            var logEntry = default((OutputType Type, string String));
             var settings = new DotNetRunSettings()
                 .SetProcessToolPath("/path/to/dotnet")
                 .SetProcessEnvironmentVariable("key", "value")
                 .SetProcessExecutionTimeout(TimeSpan.FromMilliseconds(1_000))
                 .SetProcessArgumentConfigurator(_ => _
                     .Add("/switch"))
+                .SetProcessCustomLogger((type, str) => logEntry = (type, str))
                 .EnableProcessLogInvocation();
+            settings.ProcessCustomLogger.Invoke(OutputType.Err, "text");
 
             settings.ProcessToolPath.Should().Be("/path/to/dotnet");
             settings.ProcessEnvironmentVariables.Should().ContainSingle(x => x.Key == "key" && x.Value == "value");
             settings.ProcessExecutionTimeout.Should().Be(1_000);
             settings.ProcessArgumentConfigurator.Invoke(new Arguments()).RenderForOutput().Should().Be("/switch");
+            logEntry.Should().Be((OutputType.Err, "text"));
         }
 
         [Fact]
