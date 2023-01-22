@@ -99,10 +99,9 @@ namespace Nuke.Common.Git
             if (!head.StartsWith("refs/heads/"))
                 return head;
 
-            var headRefFile = Path.Combine(gitDirectory, head);
-
-            if (File.Exists(headRefFile))
-                return File.ReadAllLines(headRefFile).First();
+            var headRefFile = gitDirectory / head;
+            if (headRefFile.Exists())
+                return headRefFile.ReadAllLines().First();
 
             var commit = GetPackedRefs(gitDirectory)
                 .Where(x => x.Reference == head)
@@ -151,17 +150,16 @@ namespace Nuke.Common.Git
             return localTags.Concat(packedTags).ToList();
         }
 
-        private static IEnumerable<(string Commit, string Reference)> GetPackedRefs(string gitDirectory)
+        private static IEnumerable<(string Commit, string Reference)> GetPackedRefs(AbsolutePath gitDirectory)
         {
-            var packedRefsFile = (AbsolutePath)gitDirectory / "packed-refs";
-            var packedTags = File.Exists(packedRefsFile)
-                ? File.ReadAllLines(packedRefsFile)
-                    .Where(x => !x.StartsWith("#") && !x.StartsWith("^"))
-                    .Select(x => x.Split(' '))
-                    .Select(x => (Commit: x[0], Reference: x[1]))
-                : Enumerable.Empty<(string Commit, string Reference)>();
+            var packedRefsFile = gitDirectory / "packed-refs";
+            if (!packedRefsFile.Exists())
+                return Array.Empty<(string Commit, string Reference)>();
 
-            return packedTags;
+            return packedRefsFile.ReadAllLines()
+                .Where(x => !x.StartsWith("#") && !x.StartsWith("^"))
+                .Select(x => x.Split(' '))
+                .Select(x => (Commit: x[0], Reference: x[1]));
         }
 
         private static (GitProtocol Protocol, string Endpoint, string Identifier) GetRemoteConnectionFromUrl(string url)
