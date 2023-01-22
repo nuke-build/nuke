@@ -58,7 +58,11 @@ namespace Nuke.Common
         [CanBeNull]
         public static T GetVariable<T>(string name, char? separator = null)
         {
-            return (T)ReflectionUtility.Convert(GetVariable(name), typeof(T), separator);
+            var value = GetVariable(name);
+            if (value == null)
+                return default;
+
+            return (T)ReflectionUtility.Convert(value, typeof(T), separator);
         }
 
         /// <summary>
