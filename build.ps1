@@ -18,7 +18,10 @@ $TempDirectory = "$PSScriptRoot\.nuke\temp"
 
 $DotNetGlobalFile = "$PSScriptRoot\global.json"
 $DotNetInstallUrl = "https://dot.net/v1/dotnet-install.ps1"
-$DotNetChannel = "Current"
+
+$PrivateDotNetChannel = "Current"
+$PrivateDotNetDirectory = "$TempDirectory\dotnet-win"
+$PrivateDotNetExe = "$PrivateDotNetDirectory\dotnet.exe"
 
 $env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
@@ -35,6 +38,11 @@ function ExecSafe([scriptblock] $cmd) {
     if ($LASTEXITCODE) { exit $LASTEXITCODE }
 }
 
+function CheckDotNetVersion([string] $dotNetCommand = "dotnet") {
+    $null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
+        $(dotnet --version) -and $LASTEXITCODE -eq 0
+}
+
 # Print environment variables
 # WARNING: Make sure that secrets are actually scrambled in build log
 # Get-Item -Path Env:* | Sort-Object -Property Name | ForEach-Object {"{0}={1}" -f $_.Name,$_.Value}
@@ -42,20 +50,20 @@ function ExecSafe([scriptblock] $cmd) {
 # Check if any dotnet is installed
 if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue)) {
     ExecSafe { & dotnet --info }
+} else {
+    Write-Output "NUKE: no dotnet CLI installed"
 }
 
 # If dotnet CLI is installed globally and it matches requested version, use for execution
-if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
-    $(dotnet --version) -and $LASTEXITCODE -eq 0) {
+if (CheckDotNetVersion) {
+    Write-Output "NUKE: Using installed dotnet CLI"
     $env:DOTNET_EXE = (Get-Command "dotnet").Path
 }
+elseif(CheckDotNetVersion $PrivateDotNetExe) {
+    Write-Output "NUKE: Using private installed dotnet CLI at \"$PrivateDotNetDirectory\""
+    $env:DOTNET_EXE = "$PrivateDotNetExe"
+}
 else {
-    # Download install script
-    $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
-    New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-    (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
-
     # If global.json exists, load expected version
     if (Test-Path $DotNetGlobalFile) {
         $DotNetGlobal = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json)
@@ -65,13 +73,23 @@ else {
     }
 
     # Install by channel or version
-    $DotNetDirectory = "$TempDirectory\dotnet-win"
     if (!(Test-Path variable:DotNetVersion)) {
-        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
+        $PrivateDotNetSpec = "-Channel", $PrivateDotNetChannel
     } else {
-        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
+        $PrivateDotNetSpec = "-Version", $DotNetVersion
     }
-    $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
+
+    Write-Output "NUKE: Downloading dotnet CLI ($PrivateDotNetSpec) to ""$PrivateDotNetDirectory"""
+    # Download install script
+    $DotNetInstallFile = "$TempDirectory\dotnet-install.ps1"
+    New-Item -ItemType Directory -Path $TempDirectory -Force | Out-Null
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+    (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
+
+    ExecSafe { & powershell $DotNetInstallFile -InstallDir $PrivateDotNetDirectory $PrivateDotNetSpec -NoPath }
+
+    Write-Output "NUKE: Using private installed dotnet CLI at \"$PrivateDotNetDirectory\""
+    $env:DOTNET_EXE = "$PrivateDotNetExe"
 }
 
 Write-Output "Microsoft (R) .NET SDK version $(& $env:DOTNET_EXE --version)"
