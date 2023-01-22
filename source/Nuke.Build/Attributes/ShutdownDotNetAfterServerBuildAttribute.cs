@@ -26,8 +26,8 @@ namespace Nuke.Common.CI
                 // NOTE: this should only be necessary if the interceptor build has no .NET CLI installed
                 !Build.IsInterceptorExecution)
             {
-                ProcessTasks.StartProcess("dotnet", "build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging, timeout: 15_000)
-                    .AssertZeroExitCode();
+                var dotnet = ToolResolver.GetEnvironmentOrPathTool("dotnet");
+                dotnet.Invoke($"build-server shutdown", logInvocation: EnableLogging, logOutput: EnableLogging, timeout: 15_000);
             }
         }
     }

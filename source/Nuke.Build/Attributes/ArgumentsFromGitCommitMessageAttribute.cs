@@ -27,7 +27,7 @@ namespace Nuke.Common.Execution
             if (commit == null)
                 return;
 
-            var git = ToolResolver.GetPathTool("git");
+            var git = ToolResolver.GetEnvironmentOrPathTool("git");
             var lastLine = git.Invoke($"show -s --format=%B {commit}", logInvocation: false, logOutput: false)
                 .Select(x => x.Text)
                 .LastOrDefault(x => !x.IsNullOrEmpty());

@@ -46,5 +46,10 @@ namespace Nuke.Common.Tooling
             var toolPath = ToolPathResolver.GetPathExecutable(name);
             return GetTool(toolPath);
         }
+
+        public static Tool GetEnvironmentOrPathTool(string name)
+        {
+            return TryGetEnvironmentTool(name) ?? GetPathTool(name);
+        }
     }
 }

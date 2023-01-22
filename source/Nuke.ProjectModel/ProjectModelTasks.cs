@@ -34,7 +34,7 @@ namespace Nuke.Common.ProjectModel
 
             static void RegisterMSBuildFromDotNet()
             {
-                var dotnet = ToolResolver.GetPathTool("dotnet");
+                var dotnet = ToolResolver.GetEnvironmentOrPathTool("dotnet");
 
                 string TryFromBasePath()
                 {

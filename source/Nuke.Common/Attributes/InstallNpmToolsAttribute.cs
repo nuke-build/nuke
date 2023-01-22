@@ -24,7 +24,7 @@ namespace Nuke.Common.Execution
                 return;
 
             Log.Information("Installing npm tools...");
-            var npm = ToolResolver.GetPathTool("npm");
+            var npm = ToolResolver.GetEnvironmentOrPathTool("npm");
             // Use NPM_CONFIG_PREFIX environment variable instead?
             npm.Invoke($"install", workingDirectory: NpmToolPathResolver.NpmPackageJsonFile.Parent, logInvocation: false, logOutput: false);
         }

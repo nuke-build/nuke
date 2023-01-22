@@ -22,15 +22,19 @@ namespace Nuke.Common.Execution
 
         private static IDictionary<string, string> GetCommonProperties(INukeBuild build = null)
         {
-            var process = ControlFlow.SuppressErrors(
-                () => ProcessTasks.StartProcess("dotnet", "--version", logInvocation: false, logOutput: false).AssertWaitForExit(),
+            var version = ControlFlow.SuppressErrors(
+                () =>
+                {
+                    var dotnet = ToolResolver.GetEnvironmentOrPathTool("dotnet");
+                    return dotnet.Invoke($"--version", logInvocation: false, logOutput: false).StdToText();
+                },
                 logWarning: false);
 
             return new Dictionary<string, string>
                    {
                        ["os_platform"] = EnvironmentInfo.Platform.ToString(),
                        ["os_architecture"] = RuntimeInformation.OSArchitecture.ToString(),
-                       ["version_dotnet_sdk"] = process?.ExitCode == 0 ? process.Output.First().Text : null,
+                       ["version_dotnet_sdk"] = version,
                        ["version_nuke_common"] = build != null ? typeof(NukeBuild).Assembly.GetVersionText() : null,
                        ["version_nuke_global_tool"] = build != null
                            ? EnvironmentInfo.Variables.GetValueOrDefault(Constants.GlobalToolVersionEnvironmentKey)
