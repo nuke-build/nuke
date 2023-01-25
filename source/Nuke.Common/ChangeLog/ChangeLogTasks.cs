@@ -204,15 +204,15 @@ public static class ChangelogTasks
             }
 
             var caption = GetCaption(line);
-            var nextNonReleaseContentIndex = content.FindIndex(index + 1, x => IsReleaseHead(x) || !IsReleaseContent(x));
+            var nextReleaseHeadIndex = content.FindIndex(index + 1, IsReleaseHead);
 
             var releaseData =
                 new ReleaseSection
                 {
                     Caption = caption,
                     StartIndex = index,
-                    EndIndex = nextNonReleaseContentIndex != -1
-                        ? nextNonReleaseContentIndex - 1
+                    EndIndex = nextReleaseHeadIndex >= 0
+                        ? nextReleaseHeadIndex - 1
                         : content.Count - 1
                 };
 
