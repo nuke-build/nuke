@@ -166,7 +166,7 @@ public static class ChangelogTasks
         var sections = GetReleaseSections(content);
         var section = tag == null
             ? sections.First(x => x.StartIndex < x.EndIndex)
-            : sections.First(x => x.Caption.EqualsOrdinalIgnoreCase(tag)).NotNull($"Could not find release section for '{tag}'.");
+            : sections.FirstOrDefault(x => x.Caption.EqualsOrdinalIgnoreCase(tag)).NotNull($"Could not find release section for '{tag}'.");
 
         return content
             .Skip(section.StartIndex + 1)
