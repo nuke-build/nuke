@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -262,20 +263,21 @@ namespace Nuke.Common.CI.AzurePipelines
                 .Distinct()
                 .Select(GetArtifactPath).ToArray();
 
-            // var artifactDependencies = (
-            //     from artifactDependency in ArtifactExtensions.ArtifactDependencies[executableTarget.Definition]
-            //     let dependency = executableTarget.ExecutionDependencies.Single(x => x.Factory == artifactDependency.Item1)
-            //     let rules = (artifactDependency.Item2.Any()
-            //             ? artifactDependency.Item2
-            //             : ArtifactExtensions.ArtifactProducts[dependency.Definition])
-            //         .Select(GetArtifactRule).ToArray()
-            //     select new TeamCityArtifactDependency
-            //            {
-            //                BuildType = buildTypes[dependency].Single(x => x.Partition == null),
-            //                ArtifactRules = rules
-            //            }).ToArray<TeamCityDependency>();
-
             var chainLinkTargets = GetInvokedTargets(executableTarget, relevantTargets).ToArray();
+
+            var artifactDependencies = chainLinkTargets.SelectMany(x =>
+                from dependency in x.ArtifactDependencies
+                let rules = dependency.Select(GetArtifact).ToArray()
+                select new AzurePipelinesDownloadStep
+                       {
+                           ItemPatterns = rules
+                       }).ToArray();
+
+            foreach (var artifactDependency in artifactDependencies)
+            {
+                yield return artifactDependency;
+            }
+
             yield return new AzurePipelinesCmdStep
                          {
                              BuildCmdPath = BuildCmdPath,

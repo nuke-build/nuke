@@ -158,6 +158,14 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              buildType: 'current'
+              downloadType: 'specific'
+              itemPattern: |
+                output/test-results/*.trx
+                output/test-results/*.xml
+              downloadPath: '$(Build.Repository.LocalPath)'
           - task: CmdLine@2
             inputs:
               script: './build.cmd Coverage --skip'
@@ -290,6 +298,14 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              buildType: 'current'
+              downloadType: 'specific'
+              itemPattern: |
+                output/test-results/*.trx
+                output/test-results/*.xml
+              downloadPath: '$(Build.Repository.LocalPath)'
           - task: CmdLine@2
             inputs:
               script: './build.cmd Coverage --skip'

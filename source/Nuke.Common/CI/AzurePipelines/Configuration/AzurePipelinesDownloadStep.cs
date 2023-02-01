@@ -12,8 +12,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     [PublicAPI]
     public class AzurePipelinesDownloadStep : AzurePipelinesStep
     {
-        public string ArtifactName { get; set; }
-        public string DownloadPath { get; set; }
+        public string[] ItemPatterns { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
@@ -22,8 +21,16 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                 // writer.WriteLine("displayName: Download Artifacts");
                 using (writer.WriteBlock("inputs:"))
                 {
-                    writer.WriteLine($"artifactName: {ArtifactName}");
-                    writer.WriteLine($"downloadPath: {DownloadPath.SingleQuote()}");
+                    writer.WriteLine("buildType: 'current'");
+                    writer.WriteLine("downloadType: 'specific'");
+                    using (writer.WriteBlock("itemPattern: |"))
+                    {
+                        foreach (var itemPattern in ItemPatterns)
+                        {
+                            writer.WriteLine(itemPattern);
+                        }
+                    }
+                    writer.WriteLine("downloadPath: '$(Build.Repository.LocalPath)'");
                 }
             }
         }
