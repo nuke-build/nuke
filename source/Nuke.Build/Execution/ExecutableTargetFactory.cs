@@ -89,6 +89,13 @@ namespace Nuke.Common.Execution
             executable.TriggerDependencies.AddRange(GetDependencies(x => x.TriggeredByTargets, x => x.TriggersTargets));
             executable.Triggers.AddRange(GetDependencies(x => x.TriggersTargets, x => x.TriggeredByTargets));
 
+            Assert.True(executable.ExecutionDependencies
+                    .Concat(executable.OrderDependencies)
+                    .Concat(executable.TriggerDependencies)
+                    .Concat(executable.Triggers)
+                    .All(x => x != executable),
+                $"Target '{executable.Name}' cannot have a dependency on itself");
+
             if (executable.Factory is Setup)
             {
                 var cleanup = executables
