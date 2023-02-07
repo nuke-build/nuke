@@ -2,6 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+#if NETSTANDARD
 using System;
 using System.Linq;
 using JetBrains.Annotations;
@@ -21,3 +22,4 @@ namespace System.Runtime.CompilerServices
         public string ParameterName { get; }
     }
 }
+#endif
