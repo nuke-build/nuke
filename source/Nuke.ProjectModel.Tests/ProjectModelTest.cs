@@ -22,14 +22,14 @@ namespace Nuke.Common.Tests
         public void ProjectTest()
         {
             var solution = SolutionModelTasks.ParseSolution(SolutionFile);
-            var project = solution.Projects.Single(x => x.Name == "Nuke.Utilities");
+            var project = solution.Projects.Single(x => x.Name == "Nuke.ProjectModel");
 
             var action = new Action(() => project.GetMSBuildProject());
             action.Should().NotThrow();
 
-            project.GetTargetFrameworks().Should().ContainSingle("netstandard2.0");
-            project.HasPackageReference("JetBrains.Annotations").Should().BeTrue();
-            project.GetPackageReferenceVersion("JetBrains.Annotations").Should().Be("2022.1.0");
+            project.GetTargetFrameworks().Should().Equal("net6.0");
+            project.HasPackageReference("Microsoft.Build").Should().BeTrue();
+            project.GetPackageReferenceVersion("Microsoft.Build").Should().Be("16.9.0");
         }
     }
 }
