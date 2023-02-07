@@ -29,7 +29,7 @@ namespace Nuke.Common.IO
         }
 
         /// <summary>
-        /// Indicates whether the directory exists.
+        /// Indicates whether the file exists.
         /// </summary>
         [Pure]
         public static bool FileExists(this AbsolutePath path)
