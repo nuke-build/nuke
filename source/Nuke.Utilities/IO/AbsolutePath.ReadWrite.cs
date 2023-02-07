@@ -6,12 +6,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.IO
 {
     partial class AbsolutePathExtensions
     {
-        public static UTF8Encoding UTF8NoBom => new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
+        public static Encoding DefaultEncoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false, throwOnInvalidBytes: true);
+        public static PlatformFamily? DefaultLineBreakType = EnvironmentInfo.Platform;
+        public static bool DefaultEofLineBreak = true;
 
         /// <summary>
         /// Appends all lines to a file.
@@ -27,7 +30,7 @@ namespace Nuke.Common.IO
         public static void AppendAllLines(this AbsolutePath path, string[] lines, Encoding encoding = null)
         {
             path.Parent.CreateDirectory();
-            File.AppendAllLines(path, lines, encoding ?? UTF8NoBom);
+            File.AppendAllLines(path, lines, encoding ?? DefaultEncoding);
         }
 
         /// <summary>
@@ -36,33 +39,57 @@ namespace Nuke.Common.IO
         public static void AppendAllText(this AbsolutePath path, string content, Encoding encoding = null)
         {
             path.Parent.CreateDirectory();
-            File.AppendAllText(path, content, encoding ?? UTF8NoBom);
+            File.AppendAllText(path, content, encoding ?? DefaultEncoding);
         }
 
         /// <summary>
         /// Writes all lines to a file.
         /// </summary>
-        public static void WriteAllLines(this AbsolutePath path, IEnumerable<string> lines, Encoding encoding = null)
+        public static void WriteAllLines(
+            this AbsolutePath path,
+            IEnumerable<string> lines,
+            Encoding encoding = null,
+            PlatformFamily? platformFamily = null,
+            bool? eofLineBreak = null)
         {
-            WriteAllLines(path, lines.ToArray(), encoding);
+            WriteAllLines(path, lines.ToArray(), encoding, platformFamily, eofLineBreak);
         }
 
         /// <summary>
         /// Writes all lines to a file.
         /// </summary>
-        public static void WriteAllLines(this AbsolutePath path, string[] lines, Encoding encoding = null)
+        public static void WriteAllLines(
+            this AbsolutePath path,
+            string[] lines,
+            Encoding encoding = null,
+            PlatformFamily? platformFamily = null,
+            bool? eofLineBreak = null)
         {
-            path.Parent.CreateDirectory();
-            File.WriteAllLines(path, lines, encoding ?? UTF8NoBom);
+            if (eofLineBreak ?? DefaultEofLineBreak)
+                lines = lines.Concat(new[] { string.Empty }).ToArray();
+
+            path.WriteAllText(lines.JoinNewLine(platformFamily ?? DefaultLineBreakType), encoding);
         }
 
         /// <summary>
         /// Writes the string to a file.
         /// </summary>
-        public static void WriteAllText(this AbsolutePath path, string content, Encoding encoding = null)
+        public static void WriteAllText(
+            this AbsolutePath path,
+            string content,
+            Encoding encoding = null,
+            bool? eofLineBreak = null)
         {
             path.Parent.CreateDirectory();
-            File.WriteAllText(path, content, encoding ?? UTF8NoBom);
+
+            if (eofLineBreak ?? DefaultEofLineBreak)
+            {
+                var windowsLineBreaks = content.Contains("\r\n");
+                content = content.TrimEnd('\r', '\n');
+                content += windowsLineBreaks ? "\r\n" : "\n";
+            }
+
+            File.WriteAllText(path, content, encoding ?? DefaultEncoding);
         }
 
         /// <summary>

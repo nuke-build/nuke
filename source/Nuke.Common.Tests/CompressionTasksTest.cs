@@ -28,8 +28,8 @@ namespace Nuke.Common.Tests
         [InlineData("archive.tar.bz2")]
         public void Test(string archiveFile)
         {
-            RootFile.WriteAllText("root");
-            NestedFile.WriteAllText("nested");
+            RootFile.WriteAllText("root", eofLineBreak: false);
+            NestedFile.WriteAllText("nested", eofLineBreak: false);
 
             var archive = Path.Combine(TestTempDirectory, archiveFile);
             CompressionTasks.Compress(TestTempDirectory, archive);
