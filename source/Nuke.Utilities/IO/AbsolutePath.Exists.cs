@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -95,6 +96,24 @@ namespace Nuke.Common.IO
         public static AbsolutePath ExistingDirectory(this AbsolutePath path)
         {
             return path.DirectoryExists() ? path : null;
+        }
+
+        /// <summary>
+        /// Returns all existing files.
+        /// </summary>
+        [Pure]
+        public static IEnumerable<AbsolutePath> WhereFileExists(this IEnumerable<AbsolutePath> paths)
+        {
+            return paths.Where(x => x.FileExists());
+        }
+
+        /// <summary>
+        /// Returns all existing directories.
+        /// </summary>
+        [Pure]
+        public static IEnumerable<AbsolutePath> WhereDirectoryExists(this IEnumerable<AbsolutePath> paths)
+        {
+            return paths.Where(x => x.DirectoryExists());
         }
     }
 }
