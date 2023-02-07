@@ -4,7 +4,6 @@
 
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using FluentAssertions;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities.Collections;
@@ -17,9 +16,6 @@ namespace Nuke.Common.Tests.Execution
         private ExecutableTarget A = new ExecutableTarget { Name = nameof(A) };
         private ExecutableTarget B = new ExecutableTarget { Name = nameof(B) };
         private ExecutableTarget C = new ExecutableTarget { Name = nameof(C) };
-
-        private Expression<Func<bool>> True = () => true;
-        private Expression<Func<bool>> False = () => false;
 
         public BuildExecutorTest()
         {
@@ -84,7 +80,7 @@ namespace Nuke.Common.Tests.Execution
         [Fact]
         public void TestStaticCondition()
         {
-            B.StaticConditions.Add(True);
+            B.StaticConditions.Add(("True", () => true));
             ExecuteBuild();
             AssertSucceeded(A, B, C);
         }
@@ -92,7 +88,7 @@ namespace Nuke.Common.Tests.Execution
         [Fact]
         public void TestStaticCondition_DependencyBehavior_Execute()
         {
-            B.StaticConditions.Add(False);
+            B.StaticConditions.Add(("() => false", () => false));
             B.DependencyBehavior = DependencyBehavior.Execute;
             ExecuteBuild();
             AssertSucceeded(A, C);
@@ -103,7 +99,7 @@ namespace Nuke.Common.Tests.Execution
         [Fact]
         public void TestStaticCondition_DependencyBehavior_Skip()
         {
-            B.StaticConditions.Add(False);
+            B.StaticConditions.Add(("() => false", () => false));
             B.DependencyBehavior = DependencyBehavior.Skip;
             ExecuteBuild();
             AssertSucceeded(C);
@@ -113,10 +109,20 @@ namespace Nuke.Common.Tests.Execution
         }
 
         [Fact]
+        public void TestStaticCondition_Multiple()
+        {
+            A.StaticConditions.Add(("A", () => false));
+            A.StaticConditions.Add(("B", () => !true));
+            ExecuteBuild();
+            AssertSkipped(A);
+            A.OnlyWhen.Should().Be("A && B");
+        }
+
+        [Fact]
         public void TestDynamicCondition_Unchanged()
         {
             var condition = false;
-            B.DynamicConditions.Add(() => condition);
+            B.DynamicConditions.Add(("condition", () => condition));
 
             ExecuteBuild();
             AssertSucceeded(A, C);
@@ -127,10 +133,28 @@ namespace Nuke.Common.Tests.Execution
         public void TestDynamicCondition_Changed()
         {
             var condition = false;
-            B.DynamicConditions.Add(() => condition);
+            B.DynamicConditions.Add(("condition", () => condition));
             A.Actions.Add(() => condition = true);
             ExecuteBuild();
             AssertSucceeded(A, B, C);
+        }
+
+        [Fact]
+        public void TestMixedConditions()
+        {
+            A.StaticConditions.Add(("condition", () => false));
+            A.DynamicConditions.Add(("condition", () => throw new Exception()));
+            ExecuteBuild();
+            AssertSkipped(A);
+        }
+
+        [Fact]
+        public void TestThrowingCondition()
+        {
+            A.StaticConditions.Add(("condition", () => throw new Exception()));
+            var action = () => ExecuteBuild();
+
+            action.Should().Throw<TargetExecutionException>();
         }
 
         private void ExecuteBuild(ExecutableTarget[] skippedTargets = null)

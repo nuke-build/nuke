@@ -176,22 +176,30 @@ namespace Nuke.Common.Execution
                 .ForEach(x => MarkTargetSkipped(x));
         }
 
-        private static bool HasSkippingCondition(ExecutableTarget target, IEnumerable<Expression<Func<bool>>> conditions)
+        private static bool HasSkippingCondition(ExecutableTarget target, IEnumerable<(string Text, Func<bool> Delegate)> conditions)
         {
-            // TODO: trim outer parenthesis
-            static string GetSkipReason(Expression<Func<bool>> condition) =>
-                condition.Body.ToString()
-                    .Replace("False", "false")
-                    .Replace("True", "true")
-                    .Replace("OrElse", "||")
-                    .Replace("AndAlso", "&&")
-                    // TODO: should get actual build type name
-                    .Replace("value(Build).", string.Empty);
+            string Format(string condition)
+                => condition
+                    .TrimStart('(').Trim()
+                    .TrimStart(')').Trim()
+                    .TrimStart('=').Trim()
+                    .TrimStart('>').Trim();
 
-            foreach (var condition in conditions)
+            try
             {
-                if (!condition.Compile().Invoke())
-                    target.OnlyWhen = GetSkipReason(condition);
+                var violatedConditions = conditions
+                    .Where(x => !x.Delegate.Invoke())
+                    .Select(x => x.Text)
+                    .Select(Format).ToList();
+
+                if (violatedConditions.Count > 0)
+                    target.OnlyWhen = violatedConditions.Join(" && ");
+            }
+            catch (Exception exception)
+            {
+                exception = exception.Unwrap();
+                Log.Error(exception, "Invocation of condition for {TargetName} has thrown an exception", target.Name);
+                throw new TargetExecutionException(target.Name, exception);
             }
 
             return target.OnlyWhen != null;

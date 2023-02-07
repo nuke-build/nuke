@@ -33,7 +33,7 @@ namespace Nuke.Common.Tests.Execution
             a.AllDependencies.Should().BeEmpty();
 
             b.DependencyBehavior.Should().Be(DependencyBehavior.Execute);
-            b.StaticConditions.Should().Equal(build.StaticCondition);
+            b.StaticConditions.Should().ContainSingle(x => x.Delegate.Equals(build.StaticCondition));
             b.ExecutionDependencies.Should().Equal(d);
             b.TriggerDependencies.Should().Equal(c);
             b.AllDependencies.Should().NotBeEmpty();
@@ -45,7 +45,7 @@ namespace Nuke.Common.Tests.Execution
             c.AllDependencies.Should().NotBeEmpty();
 
             d.DependencyBehavior.Should().Be(DependencyBehavior.Skip);
-            d.DynamicConditions.Should().Equal(build.DynamicCondition);
+            d.DynamicConditions.Should().ContainSingle(x => x.Delegate.Equals(build.DynamicCondition));
             d.OrderDependencies.Should().Equal(b);
             d.Triggers.Should().Equal(c);
             d.AllDependencies.Should().NotBeEmpty();
@@ -56,8 +56,8 @@ namespace Nuke.Common.Tests.Execution
             public string Description = "description";
             public Action Action = () => { };
             public Expression<Func<bool>> Requirement = () => true;
-            public Expression<Func<bool>> StaticCondition = () => true;
-            public Expression<Func<bool>> DynamicCondition = () => false;
+            public Func<bool> StaticCondition = () => true;
+            public Func<bool> DynamicCondition = () => false;
 
             public Target A => _ => _
                 .Description(Description)

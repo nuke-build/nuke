@@ -25,8 +25,8 @@ namespace Nuke.Common.Execution
         public string Description { get; set; }
         public bool Listed { get; set; }
         public Delegate Factory { get; set; }
-        public ICollection<Expression<Func<bool>>> DynamicConditions { get; internal set; } = new List<Expression<Func<bool>>>();
-        public ICollection<Expression<Func<bool>>> StaticConditions { get; internal set; } = new List<Expression<Func<bool>>>();
+        public ICollection<(string Text, Func<bool> Delegate)> DynamicConditions { get; internal set; } = new List<(string Text, Func<bool> Delegate)>();
+        public ICollection<(string Text, Func<bool> Delegate)> StaticConditions { get; internal set; } = new List<(string Text, Func<bool> Delegate)>();
         public DependencyBehavior DependencyBehavior { get; set; }
         public bool AssuredAfterFailure { get; set; }
         public bool ProceedAfterFailure { get; set; }

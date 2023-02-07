@@ -16,8 +16,8 @@ namespace Nuke.Common.Tests.Execution
         public static string Description = "description";
         public static Action Action = () => { };
         public static Expression<Func<bool>> Requirement = () => true;
-        public static Expression<Func<bool>> StaticCondition = () => true;
-        public static Expression<Func<bool>> DynamicCondition = () => false;
+        public static Func<bool> StaticCondition = () => true;
+        public static Func<bool> DynamicCondition = () => false;
 
         [Fact]
         public void Test()
@@ -39,7 +39,7 @@ namespace Nuke.Common.Tests.Execution
             a.AllDependencies.Should().BeEmpty();
 
             b.DependencyBehavior.Should().Be(DependencyBehavior.Execute);
-            b.StaticConditions.Should().Equal(StaticCondition);
+            b.StaticConditions.Should().ContainSingle(x => x.Delegate.Equals(StaticCondition));
             b.ExecutionDependencies.Should().Equal(d);
             b.TriggerDependencies.Should().Equal(c);
             b.AllDependencies.Should().NotBeEmpty();
@@ -51,7 +51,7 @@ namespace Nuke.Common.Tests.Execution
             c.AllDependencies.Should().NotBeEmpty();
 
             d.DependencyBehavior.Should().Be(DependencyBehavior.Skip);
-            d.DynamicConditions.Should().Equal(DynamicCondition);
+            d.DynamicConditions.Should().ContainSingle(x => x.Delegate.Equals(DynamicCondition));
             d.OrderDependencies.Should().Equal(b);
             d.Triggers.Should().Equal(c);
             d.AllDependencies.Should().NotBeEmpty();
@@ -74,7 +74,7 @@ namespace Nuke.Common.Tests.Execution
             f.Triggers.Should().Equal(a);
 
             b.DependencyBehavior.Should().Be(DependencyBehavior.Execute);
-            b.StaticConditions.Should().Equal(StaticCondition);
+            b.StaticConditions.Should().ContainSingle(x => x.Delegate.Equals(StaticCondition));
             b.ExecutionDependencies.Should().Equal(d);
             b.TriggerDependencies.Should().Equal(c);
             b.AllDependencies.Should().NotBeEmpty();
@@ -192,8 +192,8 @@ namespace Nuke.Common.Tests.Execution
             public string Description => DefaultInterfaceExecutionTest.Description;
             public Action Action => DefaultInterfaceExecutionTest.Action;
             public Expression<Func<bool>> Requirement => DefaultInterfaceExecutionTest.Requirement;
-            public Expression<Func<bool>> StaticCondition => DefaultInterfaceExecutionTest.StaticCondition;
-            public Expression<Func<bool>> DynamicCondition => DefaultInterfaceExecutionTest.DynamicCondition;
+            public Func<bool> StaticCondition => DefaultInterfaceExecutionTest.StaticCondition;
+            public Func<bool> DynamicCondition => DefaultInterfaceExecutionTest.DynamicCondition;
 
             public Target A => _ => _
                 .Description(Description)

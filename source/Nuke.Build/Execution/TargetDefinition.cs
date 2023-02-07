@@ -31,8 +31,8 @@ namespace Nuke.Common.Execution
         internal Func<bool> Intercept { get; set; }
 
         internal string Description { get; set; }
-        internal List<Expression<Func<bool>>> DynamicConditions { get; } = new List<Expression<Func<bool>>>();
-        internal List<Expression<Func<bool>>> StaticConditions { get; } = new List<Expression<Func<bool>>>();
+        internal List<(string Text, Func<bool> Delegate)> DynamicConditions { get; } = new List<(string Text, Func<bool> Delegate)>();
+        internal List<(string Text, Func<bool> Delegate)> StaticConditions { get; } = new List<(string Text, Func<bool> Delegate)>();
         internal List<LambdaExpression> Requirements { get; } = new List<LambdaExpression>();
         internal List<Delegate> DependsOnTargets { get; } = new List<Delegate>();
         internal List<Delegate> DependentForTargets { get; } = new List<Delegate>();
@@ -103,15 +103,15 @@ namespace Nuke.Common.Execution
             return Build is T ? DependentFor(targets) : this;
         }
 
-        public ITargetDefinition OnlyWhenDynamic(params Expression<Func<bool>>[] conditions)
+        public ITargetDefinition OnlyWhenDynamic(Func<bool> condition, string conditionExpression = null)
         {
-            DynamicConditions.AddRange(conditions);
+            DynamicConditions.Add((conditionExpression, condition));
             return this;
         }
 
-        public ITargetDefinition OnlyWhenStatic(params Expression<Func<bool>>[] conditions)
+        public ITargetDefinition OnlyWhenStatic(Func<bool> condition, string conditionExpression = null)
         {
-            StaticConditions.AddRange(conditions);
+            StaticConditions.Add((conditionExpression, condition));
             return this;
         }
 

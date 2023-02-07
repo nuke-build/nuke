@@ -5,6 +5,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 
@@ -69,12 +70,12 @@ namespace Nuke.Common
         /// <summary>
         ///   Adds a set of conditions that will be checked before executing this target.
         /// </summary>
-        ITargetDefinition OnlyWhenDynamic(params Expression<Func<bool>>[] conditions);
+        ITargetDefinition OnlyWhenDynamic(Func<bool> condition, [CallerArgumentExpression("condition")] string conditionExpression = null);
 
         /// <summary>
         ///   Adds a set of conditions that will be checked prior to build execution.
         /// </summary>
-        ITargetDefinition OnlyWhenStatic(params Expression<Func<bool>>[] conditions);
+        ITargetDefinition OnlyWhenStatic(Func<bool> condition, [CallerArgumentExpression("condition")] string conditionExpression = null);
 
         /// <summary>
         ///   Adds a required parameter that will be checked prior to build execution.
