@@ -45,8 +45,7 @@ namespace Nuke.Common.IO
             Message = $"WARNING: {nameof(WriteAllLines)} is obsolete")]
         public static void WriteAllLines(string path, string[] lines, Encoding encoding = null)
         {
-            FileSystemTasks.EnsureExistingParentDirectory(path);
-            File.WriteAllLines(path, lines, encoding ?? UTF8NoBom);
+            ((AbsolutePath)path).WriteAllLines(lines, encoding);
         }
 
         [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.WriteAllText)} extension method")]
@@ -62,15 +61,13 @@ namespace Nuke.Common.IO
             Message = $"WARNING: {nameof(WriteAllText)} is obsolete")]
         public static void WriteAllText(string path, string content, Encoding encoding = null)
         {
-            FileSystemTasks.EnsureExistingParentDirectory(path);
-            File.WriteAllText(path, content, encoding ?? UTF8NoBom);
+            ((AbsolutePath)path).WriteAllText(content, encoding);
         }
 
         [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.WriteAllBytes)} extension method")]
         public static void WriteAllBytes(string path, byte[] bytes)
         {
-            FileSystemTasks.EnsureExistingParentDirectory(path);
-            File.WriteAllBytes(path, bytes);
+            ((AbsolutePath)path).WriteAllBytes(bytes);
         }
 
         [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.ReadAllText)} extension method")]
@@ -86,8 +83,7 @@ namespace Nuke.Common.IO
             Message = $"WARNING: {nameof(ReadAllText)} is obsolete")]
         public static string ReadAllText(string path, Encoding encoding = null)
         {
-            Assert.FileExists(path);
-            return File.ReadAllText(path, encoding ?? Encoding.UTF8);
+            return ((AbsolutePath)path).ReadAllText(encoding);
         }
 
         [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.ReadAllLines)} extension method")]
@@ -103,8 +99,7 @@ namespace Nuke.Common.IO
             Message = $"WARNING: {nameof(ReadAllLines)} is obsolete")]
         public static string[] ReadAllLines(string path, Encoding encoding = null)
         {
-            Assert.FileExists(path);
-            return File.ReadAllLines(path, encoding ?? Encoding.UTF8);
+            return ((AbsolutePath)path).ReadAllLines(encoding);
         }
 
         [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.ReadAllBytes)} extension method")]
@@ -120,8 +115,7 @@ namespace Nuke.Common.IO
             Message = $"WARNING: {nameof(ReadAllBytes)} is obsolete")]
         public static byte[] ReadAllBytes(string path)
         {
-            Assert.FileExists(path);
-            return File.ReadAllBytes(path);
+            return ((AbsolutePath)path).ReadAllBytes();
         }
     }
 }
