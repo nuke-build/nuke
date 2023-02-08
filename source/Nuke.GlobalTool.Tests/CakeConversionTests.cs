@@ -22,30 +22,30 @@ namespace Nuke.GlobalTool.Tests
 
         [Theory]
         [MemberData(nameof(CakeFileNames))]
-        public Task Test(string fileName)
+        public Task Test(AbsolutePath file)
         {
-            var converted = Program.GetCakeConvertedContent(File.ReadAllText(CakeScriptsDirectory / fileName));
+            var converted = Program.GetCakeConvertedContent(file.ReadAllText());
             return Verifier.Verify(converted, extension: "cs")
                 .UseDirectory(CakeScriptsDirectory)
-                .UseFileName(Path.GetFileNameWithoutExtension(fileName));
+                .UseFileName(file.NameWithoutExtension);
         }
 
         [Fact]
         public void TestPackages()
         {
-            var content = File.ReadAllText(CakeScriptsDirectory / "references.cake");
+            var content = (CakeScriptsDirectory / "references.cake").ReadAllText();
 
             var packages = Program.GetCakePackages(content).ToList();
             packages.Should().Contain((Program.PACKAGE_TYPE_DOWNLOAD, "GitVersion.CommandLine", "4.0.0"));
             packages.Should().Contain((Program.PACKAGE_TYPE_REFERENCE, "SharpZipLib", "1.2.0"));
-            packages.Should().Contain(x => x.PackageId == "TeamCity.Dotnet.Integration" &&
-                                           NuGetVersion.Parse(x.PackageVersion) > NuGetVersion.Parse("1.0.10"));
-            packages.Should().NotContain(x => x.PackageId.Contains("Cake"));
+            packages.Should().Contain(x => x.Id == "TeamCity.Dotnet.Integration" &&
+                                           NuGetVersion.Parse(x.Version) > NuGetVersion.Parse("1.0.10"));
+            packages.Should().NotContain(x => x.Id.Contains("Cake"));
         }
 
         private static AbsolutePath CakeScriptsDirectory => RootDirectory / "source" / "Nuke.GlobalTool.Tests" / "cake-scripts";
 
         public static IEnumerable<object[]> CakeFileNames
-            => CakeScriptsDirectory.GlobFiles(Program.CAKE_FILE_PATTERN).Select(x => new object[] { Path.GetFileName(x) });
+            => CakeScriptsDirectory.GlobFiles(Program.CAKE_FILE_PATTERN).Select(x => new object[] { x });
     }
 }

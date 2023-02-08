@@ -72,7 +72,7 @@ namespace Nuke.Common.Execution
             {
                 try
                 {
-                    var jobject = JObject.Parse(File.ReadAllText(file));
+                    var jobject = JObject.Parse(file.ReadAllText());
                     // TODO: use NukeBuild instance to match members and walk through structure to replace secrets and absolute-paths
                     return jobject.Properties()
                         .Where(x => x.Name != "$schema")
