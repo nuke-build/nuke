@@ -200,7 +200,9 @@ namespace Nuke.GlobalTool
             AbsolutePath buildDirectory,
             string buildProjectName)
         {
-            (scriptDirectory / "build.cmd").WriteAllLines(FillTemplate(GetTemplate("build.cmd")));
+            (scriptDirectory / "build.cmd").WriteAllLines(
+                FillTemplate(GetTemplate("build.cmd")),
+                platformFamily: PlatformFamily.Linux);
 
             (scriptDirectory / "build.sh").WriteAllLines(
                 FillTemplate(
@@ -211,7 +213,8 @@ namespace Nuke.GlobalTool
                             RootDirectory = scriptDirectory.GetUnixRelativePathTo(rootDirectory),
                             BuildDirectory = scriptDirectory.GetUnixRelativePathTo(buildDirectory),
                             BuildProjectName = buildProjectName,
-                        })));
+                        })),
+                platformFamily: PlatformFamily.Linux);
 
             (scriptDirectory / "build.ps1").WriteAllLines(
                 FillTemplate(
@@ -222,7 +225,8 @@ namespace Nuke.GlobalTool
                             RootDirectory = scriptDirectory.GetWinRelativePathTo(rootDirectory),
                             BuildDirectory = scriptDirectory.GetWinRelativePathTo(buildDirectory),
                             BuildProjectName = buildProjectName,
-                        })));
+                        })),
+                platformFamily: PlatformFamily.Windows);
 
             MakeExecutable(scriptDirectory / "build.cmd");
             MakeExecutable(scriptDirectory / "build.sh");
