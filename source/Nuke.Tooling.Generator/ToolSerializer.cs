@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Nuke.CodeGeneration.Model;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Serilog;
 
@@ -33,7 +34,7 @@ namespace Nuke.CodeGeneration
             }
         }
 
-        public static void Save(Tool tool, string file)
+        public static void Save(Tool tool, AbsolutePath file)
         {
             var content = JsonConvert.SerializeObject(
                 tool,
@@ -45,7 +46,7 @@ namespace Nuke.CodeGeneration
                     DefaultValueHandling = DefaultValueHandling.Ignore
                 });
 
-            File.WriteAllText(file, content);
+            file.WriteAllText(content);
         }
 
         private class CustomContractResolver : CamelCasePropertyNamesContractResolver

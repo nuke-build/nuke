@@ -23,7 +23,7 @@ namespace Nuke.Common.Tooling
         [CanBeNull]
         public static InstalledPackage GetLocalInstalledPackage(
             string packageId,
-            string packagesConfigFile,
+            AbsolutePath packagesConfigFile,
             string version = null,
             bool resolveDependencies = true)
         {
@@ -38,20 +38,20 @@ namespace Nuke.Common.Tooling
 
         // TODO: add HasLocalInstalledPackage() ?
         public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
-            string packagesConfigFile,
+            AbsolutePath packagesConfigFile,
             bool resolveDependencies = true,
             Func<(string PackageId, string Version), bool> preFilter = null)
         {
-            return packagesConfigFile.EndsWithOrdinalIgnoreCase("json")
+            return packagesConfigFile.HasExtension("json")
                 ? GetLocalInstalledPackagesFromAssetsFile(packagesConfigFile, resolveDependencies, preFilter)
                 : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies);
         }
 
         private static IEnumerable<(string PackageId, string Version)> GetLocalInstalledPackagesFromAssetsFileWithoutLoading(
-            string packagesConfigFile,
+            AbsolutePath packagesConfigFile,
             bool resolveDependencies = true)
         {
-            var assetsContent = File.ReadAllText(packagesConfigFile);
+            var assetsContent = packagesConfigFile.ReadAllText();
             var assetsObject = JObject.Parse(assetsContent);
 
             // ReSharper disable HeapView.BoxingAllocation
@@ -91,7 +91,7 @@ namespace Nuke.Common.Tooling
 
         [ItemNotNull]
         private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromAssetsFile(
-            string packagesConfigFile,
+            AbsolutePath packagesConfigFile,
             bool resolveDependencies = true,
             Func<(string PackageId, string Version), bool> preFilter = null)
         {
@@ -104,7 +104,7 @@ namespace Nuke.Common.Tooling
         // ReSharper disable once CognitiveComplexity
         [ItemNotNull]
         private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromConfigFile(
-            string packagesConfigFile,
+            AbsolutePath packagesConfigFile,
             bool resolveDependencies = true)
         {
             var document = XDocument.Load(packagesConfigFile);
@@ -157,7 +157,7 @@ namespace Nuke.Common.Tooling
             }
         }
 
-        private static IEnumerable<InstalledPackage> GetDependentPackages(InstalledPackage packageToCheck, string packagesConfigFile)
+        private static IEnumerable<InstalledPackage> GetDependentPackages(InstalledPackage packageToCheck, AbsolutePath packagesConfigFile)
         {
             return packageToCheck.Metadata.GetDependencyGroups()
                 .SelectMany(x => x.Packages)
@@ -167,7 +167,10 @@ namespace Nuke.Common.Tooling
         }
 
         [CanBeNull]
-        public static InstalledPackage GetGlobalInstalledPackage(string packageId, [CanBeNull] string version, [CanBeNull] string packagesConfigFile)
+        public static InstalledPackage GetGlobalInstalledPackage(
+            string packageId,
+            [CanBeNull] string version,
+            [CanBeNull] AbsolutePath packagesConfigFile)
         {
             if (version != null &&
                 !version.Contains("*") &&
@@ -185,7 +188,7 @@ namespace Nuke.Common.Tooling
         public static InstalledPackage GetGlobalInstalledPackage(
             string packageId,
             [CanBeNull] VersionRange versionRange,
-            [CanBeNull] string packagesConfigFile,
+            [CanBeNull] AbsolutePath packagesConfigFile,
             bool? includePrereleases = null)
         {
             packageId = packageId.ToLowerInvariant();
@@ -228,7 +231,7 @@ namespace Nuke.Common.Tooling
 
         // TODO: check for config ( repositoryPath / globalPackagesFolder )
         [CanBeNull]
-        public static string GetPackagesDirectory([CanBeNull] string packagesConfigFile)
+        public static AbsolutePath GetPackagesDirectory([CanBeNull] AbsolutePath packagesConfigFile)
         {
             string TryGetFromEnvironmentVariable()
                 => EnvironmentInfo.GetVariable("NUGET_PACKAGES");
@@ -272,70 +275,47 @@ namespace Nuke.Common.Tooling
                 : null;
         }
 
-        public static bool IsLegacyFile(string packagesConfigFile)
+        public static bool IsLegacyFile(AbsolutePath packagesConfigFile)
         {
-            return packagesConfigFile.EndsWithOrdinalIgnoreCase(".config");
+            return packagesConfigFile.HasExtension("config");
         }
 
-        private static bool IncludesDependencies(string packagesConfigFile)
+        private static bool IncludesDependencies(AbsolutePath packagesConfigFile)
         {
             return IsLegacyFile(packagesConfigFile);
         }
 
-        private static IEnumerable<string> GetConfigFiles([CanBeNull] string packagesConfigFile)
+        private static IEnumerable<string> GetConfigFiles([CanBeNull] AbsolutePath packagesConfigFile)
         {
-            var directories = new List<string>();
+            var directories = new List<AbsolutePath>();
 
             if (packagesConfigFile != null)
-            {
-                directories.AddRange(Directory.GetParent(packagesConfigFile)
-                    .DescendantsAndSelf(x => x.Parent)
-                    .Select(x => x.FullName));
-            }
+                directories.AddRange(packagesConfigFile.Descendants(x => x.Parent));
 
             if (EnvironmentInfo.IsWin)
             {
-                directories.Add(Path.Combine(
-                    EnvironmentInfo.SpecialFolder(SpecialFolders.ApplicationData).NotNull(),
-                    "NuGet"));
-
-                directories.Add(Path.Combine(
-                    EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull(),
-                    "NuGet",
-                    "Config"));
+                directories.Add(EnvironmentInfo.SpecialFolder(SpecialFolders.ApplicationData).NotNull() / "NuGet");
+                directories.Add(EnvironmentInfo.SpecialFolder(SpecialFolders.ProgramFilesX86).NotNull() / "NuGet" / "Config");
             }
 
             if (EnvironmentInfo.IsUnix)
             {
-                directories.Add(Path.Combine(
-                    EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
-                    ".config",
-                    "NuGet"));
-
-                directories.Add(Path.Combine(
-                    EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
-                    ".nuget",
-                    "NuGet"));
+                directories.Add(EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull() / ".config" / "NuGet");
+                directories.Add(EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull() / ".nuget" / "NuGet");
 
                 var dataHomeDirectoy = EnvironmentInfo.GetVariable("XDG_DATA_HOME");
                 if (!string.IsNullOrEmpty(dataHomeDirectoy))
-                {
                     directories.Add(dataHomeDirectoy);
-                }
                 else
-                {
-                    directories.Add(Path.Combine(
-                        EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull(),
-                        ".local",
-                        "share"));
-
                     // TODO: /usr/local/share
-                }
+                    directories.Add(EnvironmentInfo.SpecialFolder(SpecialFolders.UserProfile).NotNull() / ".local" / "share");
             }
 
             return directories
-                .Where(Directory.Exists)
-                .SelectMany(x => new[] { Path.Combine(x, "nuget.config"), Path.Combine(x, "NuGet.config") })
+                .WhereDirectoryExists()
+                .SelectMany(x => new[] { x / "nuget.config", x / "NuGet.config" })
+                // TODO: Add AbsolutePathComparer
+                .Select(x => x.ToString())
                 .Distinct(EnvironmentInfo.IsLinux ? StringComparer.Ordinal : StringComparer.OrdinalIgnoreCase)
                 .Where(File.Exists);
         }
@@ -368,20 +348,20 @@ namespace Nuke.Common.Tooling
 
             private readonly Lazy<NuspecReader> _metadata;
 
-            public InstalledPackage(string fileName)
+            public InstalledPackage(AbsolutePath file)
             {
-                FileName = fileName;
+                File = file;
                 _metadata = new Lazy<NuspecReader>(() =>
                 {
-                    var directory = new DirectoryInfo(Path.GetDirectoryName(fileName));
+                    var directory = new DirectoryInfo(Path.GetDirectoryName(file));
                     return directory.GetFiles("*.nuspec").Length == 1
                         ? new PackageFolderReader(directory).NuspecReader
-                        : new PackageArchiveReader(fileName).NuspecReader;
+                        : new PackageArchiveReader(file).NuspecReader;
                 });
             }
 
-            public string FileName { get; }
-            public AbsolutePath Directory => Path.GetDirectoryName(FileName).NotNull();
+            public AbsolutePath File { get; }
+            public AbsolutePath Directory => File.Parent.NotNull();
             public NuspecReader Metadata => _metadata.Value;
             public string Id => Metadata.GetIdentity().Id;
             public NuGetVersion Version => Metadata.GetIdentity().Version;

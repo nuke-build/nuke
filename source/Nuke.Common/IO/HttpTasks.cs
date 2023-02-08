@@ -49,7 +49,7 @@ namespace Nuke.Common.IO
 
         public static async Task HttpDownloadFileAsync(
             string uri,
-            string path,
+            AbsolutePath path,
             FileMode mode = FileMode.Create,
             Configure<HttpClient> clientConfigurator = null,
             Action<HttpRequestHeaders> headerConfigurator = null)
@@ -58,8 +58,8 @@ namespace Nuke.Common.IO
             var response = await httpClient.GetAsync(uri);
             Assert.True(response.IsSuccessStatusCode, $"{response.ReasonPhrase}: {uri}");
 
-            FileSystemTasks.EnsureExistingParentDirectory(path);
-            using var fileStream = File.Open(path, mode);
+            path.Parent.CreateDirectory();
+            await using var fileStream = File.Open(path, mode);
             await response.Content.CopyToAsync(fileStream);
         }
 

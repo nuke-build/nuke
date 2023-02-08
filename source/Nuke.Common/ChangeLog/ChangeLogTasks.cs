@@ -44,9 +44,9 @@ namespace Nuke.Common.ChangeLog
         /// <param name="changelogFile">The path to the changelog file.</param>
         /// <returns>A readonly list of the release sections contained in the changelog.</returns>
         [Pure]
-        public static IReadOnlyList<ReleaseNotes> ReadReleaseNotes(string changelogFile)
+        public static IReadOnlyList<ReleaseNotes> ReadReleaseNotes(AbsolutePath changelogFile)
         {
-            var lines = TextTasks.ReadAllLines(changelogFile).ToList();
+            var lines = changelogFile.ReadAllLines().ToList();
             var releaseSections = GetReleaseSections(lines).ToList();
 
             Assert.True(releaseSections.Any(), "Changelog should have at least one release note section");
@@ -108,9 +108,7 @@ namespace Nuke.Common.ChangeLog
             Assert.True(lastReleased != null && tag.CompareTo(lastReleased.Version) > 0,
                 $"Tag '{tag}' is not greater compared to last tag '{lastReleased.NotNull().Version}'");
 
-            var path = changelogFile.Path;
-
-            var content = TextTasks.ReadAllLines(path).ToList();
+            var content = changelogFile.Path.ReadAllLines().ToList();
 
             content.Insert(unreleasedNotes.StartIndex + 1, string.Empty);
             content.Insert(unreleasedNotes.EndIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
@@ -119,7 +117,7 @@ namespace Nuke.Common.ChangeLog
 
             content.Add(string.Empty);
 
-            TextTasks.WriteAllLines(path, content);
+            changelogFile.Path.WriteAllLines(content);
         }
 
         /// <summary>
@@ -130,11 +128,11 @@ namespace Nuke.Common.ChangeLog
         /// <param name="tag">The version to finalize the changelog.</param>
         /// <param name="repository">The repository to create the version overview for.</param>
         /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
-        public static void FinalizeChangelog(string changelogFile, string tag, [CanBeNull] GitRepository repository = null)
+        public static void FinalizeChangelog(AbsolutePath changelogFile, string tag, [CanBeNull] GitRepository repository = null)
         {
             Log.Information("Finalizing {File} for {Tag} ...", PathConstruction.GetRelativePath(NukeBuild.RootDirectory, changelogFile), tag);
 
-            var content = TextTasks.ReadAllLines(changelogFile).ToList();
+            var content = changelogFile.ReadAllLines().ToList();
             var sections = GetReleaseSections(content).ToList();
             var firstSection = sections.First();
             var secondSection = sections.Skip(1).FirstOrDefault();
@@ -152,7 +150,7 @@ namespace Nuke.Common.ChangeLog
 
             content.Add(string.Empty);
 
-            TextTasks.WriteAllLines(changelogFile, content);
+            changelogFile.WriteAllLines(content);
         }
 
         /// <summary>
@@ -162,9 +160,9 @@ namespace Nuke.Common.ChangeLog
         /// <param name="tag">The tag which release notes should get extracted.</param>
         /// <returns>A collection of the release notes.</returns>
         [Pure]
-        public static IEnumerable<string> ExtractChangelogSectionNotes(string changelogFile, string tag = null)
+        public static IEnumerable<string> ExtractChangelogSectionNotes(AbsolutePath changelogFile, string tag = null)
         {
-            var content = TextTasks.ReadAllLines(changelogFile).Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
+            var content = changelogFile.ReadAllLines().Where(x => !string.IsNullOrWhiteSpace(x)).ToList();
             var sections = GetReleaseSections(content);
             var section = tag == null
                 ? sections.First(x => x.StartIndex < x.EndIndex)

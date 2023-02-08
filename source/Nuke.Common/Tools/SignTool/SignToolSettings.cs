@@ -32,7 +32,8 @@ namespace Nuke.Common.Tools.SignTool
                        programDirectory / "Microsoft SDKs" / "Windows" / "v7.1A" / "Bin"
                    }
                 .Select(x => x / "signtool.exe")
-                .FirstOrDefault(x => x.FileExists());
+                .WhereFileExists()
+                .FirstOrDefault();
         }
     }
 }

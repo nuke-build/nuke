@@ -45,7 +45,7 @@ namespace Nuke.Common.CI
             generatedFiles.ForEach(x => x.Parent.CreateDirectory());
 
             var previousHashes = generatedFiles
-                .Where(x => x.FileExists())
+                .WhereFileExists()
                 .ToDictionary(x => x, x => x.GetFileHash());
 
             ProcessTasks.StartProcess(

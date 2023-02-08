@@ -23,7 +23,7 @@ namespace Nuke.Common.Execution
             var buildSchema = GetBuildSchema(build);
             var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
             var json = JsonSerializer.Serialize(buildSchema, options);
-            File.WriteAllText(buildSchemaFile, json);
+            buildSchemaFile.WriteAllText(json);
         }
 
         // ReSharper disable once CognitiveComplexity

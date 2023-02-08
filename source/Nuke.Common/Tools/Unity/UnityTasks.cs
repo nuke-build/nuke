@@ -88,10 +88,10 @@ namespace Nuke.Common.Tools.Unity
             Assert.FileExists(manualInstallationToolPath, $"Required Unity Hub installation for version '{editorVersion}' was not found");
         }
 
-        private static string ReadUnityEditorVersion(string projectPath)
+        private static string ReadUnityEditorVersion(AbsolutePath projectPath)
         {
-            var projectVersionPath = Path.Combine(projectPath, "ProjectSettings", "ProjectVersion.txt");
-            var properties = SerializationTasks.YamlDeserializeFromFile<Dictionary<string, string>>(projectVersionPath);
+            var projectVersionFile = projectPath / "ProjectSettings" / "ProjectVersion.txt";
+            var properties = projectVersionFile.ReadYaml<Dictionary<string, string>>();
             return properties["m_EditorVersion"];
         }
 

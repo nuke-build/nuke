@@ -22,7 +22,7 @@ namespace Nuke.CodeGeneration
         public const string SpecificationFilePattern = "*.json";
 
         public static void GenerateCodeFromDirectory(
-            string specificationDirectory,
+            AbsolutePath specificationDirectory,
             Func<Tool, string> outputFileProvider = null,
             Func<Tool, string> namespaceProvider = null,
             Func<Tool, string> sourceFileProvider = null)
@@ -32,7 +32,7 @@ namespace Nuke.CodeGeneration
         }
 
         public static void GenerateCode(
-            string specificationFile,
+            AbsolutePath specificationFile,
             Func<Tool, string> outputFileProvider = null,
             Func<Tool, string> namespaceProvider = null,
             Func<Tool, string> sourceFileProvider = null)

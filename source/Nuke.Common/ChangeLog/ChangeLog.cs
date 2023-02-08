@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using NuGet.Versioning;
+using Nuke.Common.IO;
 
 namespace Nuke.Common.ChangeLog
 {
@@ -15,7 +16,7 @@ namespace Nuke.Common.ChangeLog
         /// <summary>
         /// The path to the changelog file.
         /// </summary>
-        public string Path { get; }
+        public AbsolutePath Path { get; }
 
         /// <summary>
         /// The unreleased release notes section.
