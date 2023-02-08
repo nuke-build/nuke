@@ -2,6 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -126,6 +127,16 @@ namespace Nuke.Common.IO
         {
             Assert.FileExists(path);
             return File.ReadAllBytes(path);
+        }
+
+        /// <summary>
+        /// Updates the text of a file.
+        /// </summary>
+        public static void UpdateText(this AbsolutePath path, Func<string, string> update, Encoding encoding = null)
+        {
+            var oldText = path.ReadAllText(encoding);
+            var newText = update.Invoke(oldText);
+            path.WriteAllText(newText, encoding);
         }
     }
 }
