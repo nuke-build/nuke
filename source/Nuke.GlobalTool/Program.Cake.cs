@@ -65,18 +65,18 @@ namespace Nuke.GlobalTool
                     .GetValueOrDefault(BUILD_PROJECT_FILE, defaultValue: null)
                 : null;
 
-            AbsolutePath GetOutputDirectory(AbsolutePath file)
-                => Path.GetDirectoryName(buildProjectFile ?? file);
-
-            AbsolutePath GetOutputFile(AbsolutePath file)
-                => GetOutputDirectory(file) / Path.GetFileNameWithoutExtension(file).Capitalize() + ".cs";
-
-            GetCakeFiles().ForEach(x => File.WriteAllText(path: GetOutputFile(x), contents: GetCakeConvertedContent(File.ReadAllText(x))));
+            foreach (var cakeFile in GetCakeFiles())
+            {
+                var outputFile = cakeFile.Parent / cakeFile.NameWithoutExtension.Capitalize() + ".cs";
+                var content = GetCakeConvertedContent(cakeFile.ReadAllText());
+                outputFile.WriteAllText(content);
+            }
 
             if (buildProjectFile != null)
             {
-                GetCakeFiles().SelectMany(x => GetCakePackages(File.ReadAllText(x)))
-                    .ForEach(x => AddOrReplacePackage(x.PackageId, x.PackageVersion, x.PackageType, buildProjectFile));
+                var packages = GetCakeFiles().SelectMany(x => GetCakePackages(x.ReadAllText()));
+                foreach (var package in packages)
+                    AddOrReplacePackage(package.Id, package.Version, package.Type, buildProjectFile);
             }
 
             return 0;
@@ -122,9 +122,9 @@ namespace Nuke.GlobalTool
                 .ToFullString();
         }
 
-        internal static IEnumerable<(string PackageType, string PackageId, string PackageVersion)> GetCakePackages(string content)
+        internal static IEnumerable<(string Type, string Id, string Version)> GetCakePackages(string content)
         {
-            IEnumerable<(string PackageType, string PackageId, string PackageVersion)> GetPackages(
+            IEnumerable<(string Type, string Id, string Version)> GetPackages(
                 string packageType,
                 [RegexPattern] string regexPattern)
             {
@@ -141,7 +141,7 @@ namespace Nuke.GlobalTool
 
             return GetPackages(PACKAGE_TYPE_DOWNLOAD, @"#tool ""nuget:\?package=(?'packageId'[\w\d\.]+)(&version=(?'version'[\w\d\.]+))?S*""")
                 .Concat(GetPackages(PACKAGE_TYPE_REFERENCE, @"#addin ""nuget:\?package=(?'packageId'[\w\d\.]+)(&version=(?'version'[\w\d\.]+))?S*"""))
-                .Where(x => !x.PackageId.ContainsOrdinalIgnoreCase("Cake"));
+                .Where(x => !x.Id.ContainsOrdinalIgnoreCase("Cake"));
         }
     }
 }

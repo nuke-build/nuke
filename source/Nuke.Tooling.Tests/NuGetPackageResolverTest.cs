@@ -39,7 +39,7 @@ namespace Nuke.Common.Tests
             var result = NuGetPackageResolver.GetGlobalInstalledPackage("xunit.runner.console", version: null, packagesConfigFile: null);
             result.Should().NotBeNull();
             result.Id.Should().Be("xunit.runner.console");
-            result.FileName.Should().EndWith("nupkg");
+            result.File.Name.Should().EndWith("nupkg");
             result.Version.OriginalVersion.Should().Be(XunitConsolePackageVersion);
         }
 

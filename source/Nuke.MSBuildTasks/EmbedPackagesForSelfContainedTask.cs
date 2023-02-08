@@ -31,7 +31,7 @@ namespace Nuke.MSBuildTasks
             TargetOutputs = packages
                 .Where(x => !x.Id.StartsWithOrdinalIgnoreCase("microsoft.netcore.app.runtime"))
                 .Where(x => Directory.GetDirectories(x.Directory, "tools").Any())
-                .Select(x => new TaskItem(x.FileName)).ToArray<ITaskItem>();
+                .Select(x => new TaskItem(x.File)).ToArray<ITaskItem>();
             return true;
         }
     }

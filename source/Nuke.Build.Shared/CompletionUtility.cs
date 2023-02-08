@@ -4,19 +4,19 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Utilities
 {
     public static class CompletionUtility
     {
-        public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(string schemaFile, IEnumerable<string> profileNames)
+        public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(AbsolutePath schemaFile, IEnumerable<string> profileNames)
         {
-            var schema = JsonDocument.Parse(File.ReadAllText(schemaFile));
+            var schema = JsonDocument.Parse(schemaFile.ReadAllText());
             return GetItemsFromSchema(schema, profileNames);
         }
 

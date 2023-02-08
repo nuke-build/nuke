@@ -22,7 +22,7 @@ partial class Build
     Target UpdateContributors => _ => _
         .Executes(() =>
         {
-            var previousContributors = ContributorsCacheFile.Exists() ? ContributorsCacheFile.ReadAllLines() : new string[0];
+            var previousContributors = ContributorsCacheFile.Existing()?.ReadAllLines() ?? new string[0];
 
             var repositoryDirectories = new[] { RootDirectory / ".git" }
                 .Concat(ExternalRepositoriesDirectory.GlobDirectories("*/.git"));
@@ -38,7 +38,7 @@ partial class Build
 
             foreach (var newContributor in newContributors)
             {
-                var content = (ContributorsFile.Exists() ? ContributorsFile.ReadAllLines() : new string[0])
+                var content = (ContributorsFile.Existing()?.ReadAllLines() ?? new string[0])
                     .Concat($"- {newContributor.Name}").OrderBy(x => x);
                 ContributorsFile.WriteAllLines(content, Encoding.Default);
                 Git($"add {ContributorsFile}");
