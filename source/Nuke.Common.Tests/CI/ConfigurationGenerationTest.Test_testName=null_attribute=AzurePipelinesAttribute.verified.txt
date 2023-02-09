@@ -72,7 +72,7 @@ stages:
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: src
-              pathtoPublish: 'src'
+              pathToPublish: 'src'
       - job: Compile
         displayName: 'Compile'
         dependsOn: [ Restore ]
@@ -103,7 +103,7 @@ stages:
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: src
-              pathtoPublish: 'src'
+              pathToPublish: 'src'
       - job: Test
         displayName: 'Test'
         dependsOn: [ Compile ]
@@ -136,7 +136,7 @@ stages:
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
-              pathtoPublish: 'output/test-results'
+              pathToPublish: 'output/test-results'
       - job: Coverage
         displayName: 'Coverage'
         dependsOn: [ Test ]
@@ -167,7 +167,7 @@ stages:
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: coverage-report.zip
-              pathtoPublish: 'output/coverage-report.zip'
+              pathToPublish: 'output/coverage-report.zip'
   - stage: windows_2019
     displayName: 'windows-2019'
     dependsOn: [  ]
@@ -204,7 +204,7 @@ stages:
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: src
-              pathtoPublish: 'src'
+              pathToPublish: 'src'
       - job: Compile
         displayName: 'Compile'
         dependsOn: [ Restore ]
@@ -235,7 +235,7 @@ stages:
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: src
-              pathtoPublish: 'src'
+              pathToPublish: 'src'
       - job: Test
         displayName: 'Test'
         dependsOn: [ Compile ]
@@ -268,7 +268,7 @@ stages:
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: test-results
-              pathtoPublish: 'output/test-results'
+              pathToPublish: 'output/test-results'
       - job: Coverage
         displayName: 'Coverage'
         dependsOn: [ Test ]
@@ -299,4 +299,4 @@ stages:
           - task: PublishBuildArtifacts@1
             inputs:
               artifactName: coverage-report.zip
-              pathtoPublish: 'output/coverage-report.zip'
+              pathToPublish: 'output/coverage-report.zip'
