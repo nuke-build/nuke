@@ -14,13 +14,14 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
     [PublicAPI]
     public class GitHubActionsRunStep : GitHubActionsStep
     {
-        public string Command { get; set; }
+        public string BuildCmdPath { get; set; }
+        public string[] InvokedTargets { get; set; }
         public Dictionary<string, string> Imports { get; set; }
 
         public override void Write(CustomFileWriter writer)
         {
-            writer.WriteLine($"- name: Run '{Command}'");
-            writer.WriteLine($"  run: {Command}");
+            writer.WriteLine("- name: " + $"Run: {InvokedTargets.JoinCommaSpace()}".SingleQuote());
+            writer.WriteLine($"  run: ./{BuildCmdPath} {InvokedTargets.JoinSpace()}");
 
             if (Imports.Count > 0)
             {
