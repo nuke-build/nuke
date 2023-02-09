@@ -37,7 +37,7 @@ namespace Nuke.GlobalTool
             var packageItem = buildProject.Items.SingleOrDefault(x => x.EvaluatedInclude == Constants.NukeCommonPackageId);
             previousPackageVersion = FloatRange.Parse(packageItem.NotNull().GetMetadataValue("Version"));
 
-            var latestPackageVersion = NuGetVersionResolver.GetLatestVersion(Constants.NukeCommonPackageId, includePrereleases: false).GetAwaiter().GetResult();
+            var latestPackageVersion = AsyncHelper.RunSync(() => NuGetVersionResolver.GetLatestVersion(Constants.NukeCommonPackageId, includePrereleases: false));
             if (previousPackageVersion.Satisfies(NuGetVersion.Parse(latestPackageVersion)))
                 return;
 

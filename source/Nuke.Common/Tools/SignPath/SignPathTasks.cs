@@ -150,7 +150,7 @@ namespace Nuke.Common.Tools.SignPath
                 () =>
                 {
                     var response = SendGetRequestWithRetry(httpClient, signingRequestUrl);
-                    var rawContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    var rawContent = AsyncHelper.RunSync(() => response.Content.ReadAsStringAsync());
                     var jsonContent = JsonDeserialize<JObject>(rawContent);
                     signingRequestStatus = jsonContent["status"].NotNull().Value<string>();
                     signedArtifactUrl = signingRequestStatus switch
@@ -196,7 +196,7 @@ namespace Nuke.Common.Tools.SignPath
                 () =>
                 {
                     var request = requestFactory.Invoke();
-                    response = httpClient.SendAsync(request).GetAwaiter().GetResult().AssertStatusCode(expectedStatusCode);
+                    response = AsyncHelper.RunSync(() => httpClient.SendAsync(request)).AssertStatusCode(expectedStatusCode);
                 },
                 delay: ServiceUnavailableRetryTimeoutInSeconds,
                 logAction: Log.Debug);
@@ -256,7 +256,7 @@ namespace Nuke.Common.Tools.SignPath
         {
             if (response.StatusCode != statusCode)
             {
-                var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                var content = AsyncHelper.RunSync(() => response.Content.ReadAsStringAsync());
                 var jobject = JsonDeserialize<JObject>(content);
                 Assert.Fail($"[{response.StatusCode}] {jobject.GetChildren<JValue>("").Select(x => x.Value<string>()).JoinNewLine()}");
             }

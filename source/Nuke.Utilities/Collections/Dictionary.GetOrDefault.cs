@@ -2,6 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+#if NETSTANDARD
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -25,3 +26,4 @@ namespace Nuke.Common.Utilities.Collections
         }
     }
 }
+#endif

@@ -27,8 +27,7 @@ namespace Nuke.Common.Tooling
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            var result = NuGetVersionResolver.GetLatestVersion(_packageId, IncludePrerelease, IncludeUnlisted)
-                .GetAwaiter().GetResult();
+            var result = AsyncHelper.RunSync(() => NuGetVersionResolver.GetLatestVersion(_packageId, IncludePrerelease, IncludeUnlisted));
             return member.GetMemberType() == typeof(string)
                 ? result
                 : NuGetVersion.Parse(result);
