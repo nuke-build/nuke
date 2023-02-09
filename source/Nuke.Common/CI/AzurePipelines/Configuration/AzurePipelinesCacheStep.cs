@@ -33,7 +33,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
         {
             using (writer.WriteBlock("- task: Cache@2"))
             {
-                writer.WriteLine($"displayName: Cache ({Identifier})");
+                writer.WriteLine("displayName: " + $"Cache: {Identifier}".SingleQuote());
                 using (writer.WriteBlock("inputs:"))
                 {
                     writer.WriteLine($"key: $(Agent.OS) | {Identifier} | {KeyFiles.JoinCommaSpace()}");

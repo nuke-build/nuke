@@ -33,24 +33,26 @@ stages:
           - checkout: self
             submodules: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Restore, Compile, Test'
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: test-results'
             inputs:
               artifactName: test-results
-              pathtoPublish: 'output/test-results'
+              pathToPublish: 'output/test-results'
       - job: Pack
         displayName: '📦 Pack'
         dependsOn: [  ]
@@ -58,24 +60,26 @@ stages:
           - checkout: self
             submodules: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Restore, Compile, DownloadLicenses, Pack'
             inputs:
               script: './build.cmd Restore Compile DownloadLicenses Pack --skip'
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: packages'
             inputs:
               artifactName: packages
-              pathtoPublish: 'output/packages'
+              pathToPublish: 'output/packages'
   - stage: windows_latest
     displayName: 'windows-latest'
     dependsOn: [  ]
@@ -91,24 +95,26 @@ stages:
           - checkout: self
             submodules: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Restore, Compile, Test'
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: test-results'
             inputs:
               artifactName: test-results
-              pathtoPublish: 'output/test-results'
+              pathToPublish: 'output/test-results'
       - job: Pack
         displayName: '📦 Pack'
         dependsOn: [  ]
@@ -116,24 +122,26 @@ stages:
           - checkout: self
             submodules: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Restore, Compile, DownloadLicenses, Pack'
             inputs:
               script: './build.cmd Restore Compile DownloadLicenses Pack --skip'
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: packages'
             inputs:
               artifactName: packages
-              pathtoPublish: 'output/packages'
+              pathToPublish: 'output/packages'
   - stage: macOS_latest
     displayName: 'macOS-latest'
     dependsOn: [  ]
@@ -149,24 +157,26 @@ stages:
           - checkout: self
             submodules: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Restore, Compile, Test'
             inputs:
               script: './build.cmd Restore Compile Test --skip --partition $(System.JobPositionInPhase)/2'
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: test-results'
             inputs:
               artifactName: test-results
-              pathtoPublish: 'output/test-results'
+              pathToPublish: 'output/test-results'
       - job: Pack
         displayName: '📦 Pack'
         dependsOn: [  ]
@@ -174,21 +184,23 @@ stages:
           - checkout: self
             submodules: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | global.json, source/**/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Restore, Compile, DownloadLicenses, Pack'
             inputs:
               script: './build.cmd Restore Compile DownloadLicenses Pack --skip'
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: packages'
             inputs:
               artifactName: packages
-              pathtoPublish: 'output/packages'
+              pathToPublish: 'output/packages'
