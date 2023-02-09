@@ -78,6 +78,9 @@ namespace Nuke.GlobalTool
                     if (choice == DeletePasswordAndExit)
                         DeletePasswordFromCredentialStore(credentialStoreName);
 
+                    if (addedSecrets.Any())
+                        Host.Information("Remember to clear your clipboard!");
+
                     return 0;
                 }
             }
