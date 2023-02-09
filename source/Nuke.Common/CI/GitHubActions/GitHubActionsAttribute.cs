@@ -136,7 +136,8 @@ namespace Nuke.Common.CI.GitHubActions
 
             yield return new GitHubActionsRunStep
                          {
-                             Command = $"./{BuildCmdPath} {InvokedTargets.JoinSpace()}",
+                             BuildCmdPath = BuildCmdPath,
+                             InvokedTargets = InvokedTargets,
                              Imports = GetImports().ToDictionary(x => x.Key, x => x.Value)
                          };
 

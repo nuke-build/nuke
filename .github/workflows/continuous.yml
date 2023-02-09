@@ -34,22 +34,24 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - name: Cache .nuke/temp, ~/.nuget/packages
+      - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v3
         with:
           path: |
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('global.json', 'source/**/*.csproj') }}
-      - name: Run './build.cmd Test Pack'
+      - name: 'Run: Test, Pack'
         run: ./build.cmd Test Pack
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: test-results'
+        uses: actions/upload-artifact@v3
         with:
           name: test-results
           path: output/test-results
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: packages'
+        uses: actions/upload-artifact@v3
         with:
           name: packages
           path: output/packages
@@ -61,22 +63,24 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - name: Cache .nuke/temp, ~/.nuget/packages
+      - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v3
         with:
           path: |
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('global.json', 'source/**/*.csproj') }}
-      - name: Run './build.cmd Test Pack'
+      - name: 'Run: Test, Pack'
         run: ./build.cmd Test Pack
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: test-results'
+        uses: actions/upload-artifact@v3
         with:
           name: test-results
           path: output/test-results
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: packages'
+        uses: actions/upload-artifact@v3
         with:
           name: packages
           path: output/packages
@@ -88,22 +92,24 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - name: Cache .nuke/temp, ~/.nuget/packages
+      - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v3
         with:
           path: |
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('global.json', 'source/**/*.csproj') }}
-      - name: Run './build.cmd Test Pack'
+      - name: 'Run: Test, Pack'
         run: ./build.cmd Test Pack
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: test-results'
+        uses: actions/upload-artifact@v3
         with:
           name: test-results
           path: output/test-results
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: packages'
+        uses: actions/upload-artifact@v3
         with:
           name: packages
           path: output/packages
