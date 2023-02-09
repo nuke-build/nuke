@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Nuke.Common.Git;
 using Nuke.Common.Utilities;
 using Octokit;
+using Serilog;
 using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.Tools.GitHub
@@ -25,10 +26,13 @@ namespace Nuke.Common.Tools.GitHub
     [PublicAPI]
     public static class GitHubTasks
     {
-        public static GitHubClient GitHubClient;
+        public static GitHubClient GitHubClient = new GitHubClient(new ProductHeaderValue(nameof(NukeBuild)));
 
-        private static GitHubClient Client =>
-            GitHubClient ??= new GitHubClient(new ProductHeaderValue(nameof(NukeBuild)));
+        static GitHubTasks()
+        {
+            if (EnvironmentInfo.GetVariable("GITHUB_TOKEN") is { } token)
+                GitHubClient.Credentials = new Credentials(token);
+        }
 
         public static async Task<IEnumerable<(string DownloadUrl, string RelativePath)>> GetGitHubDownloadUrls(
             this GitRepository repository,
@@ -44,7 +48,7 @@ namespace Nuke.Common.Tools.GitHub
             relativeDirectory = (relativeDirectory + "/").TrimStart("/");
 
             branch ??= await repository.GetDefaultBranch();
-            var treeResponse = await Client.Git.Tree.GetRecursive(
+            var treeResponse = await GitHubClient.Git.Tree.GetRecursive(
                 repository.GetGitHubOwner(),
                 repository.GetGitHubName(),
                 branch);
@@ -59,14 +63,14 @@ namespace Nuke.Common.Tools.GitHub
         {
             Assert.True(repository.IsGitHubRepository());
 
-            var repo = await Client.Repository.Get(repository.GetGitHubOwner(), repository.GetGitHubName());
+            var repo = await GitHubClient.Repository.Get(repository.GetGitHubOwner(), repository.GetGitHubName());
             return repo.DefaultBranch;
         }
 
         public static async Task<string> GetLatestRelease(this GitRepository repository, bool includePrerelease = false, bool trimPrefix = false)
         {
             Assert.True(repository.IsGitHubRepository());
-            var releases = await Client.Repository.Release.GetAll(repository.GetGitHubOwner(), repository.GetGitHubName());
+            var releases = await GitHubClient.Repository.Release.GetAll(repository.GetGitHubOwner(), repository.GetGitHubName());
             return releases.First(x => !x.Prerelease || includePrerelease).TagName.TrimStart(trimPrefix ? "v" : string.Empty);
         }
 
@@ -74,7 +78,7 @@ namespace Nuke.Common.Tools.GitHub
         public static async Task<Milestone> GetGitHubMilestone(this GitRepository repository, string name)
         {
             Assert.True(repository.IsGitHubRepository());
-            var milestones = await Client.Issue.Milestone.GetAllForRepository(
+            var milestones = await GitHubClient.Issue.Milestone.GetAllForRepository(
                 repository.GetGitHubOwner(),
                 repository.GetGitHubName(),
                 new MilestoneRequest { State = ItemStateFilter.All });
@@ -96,7 +100,7 @@ namespace Nuke.Common.Tools.GitHub
         public static async Task CreateGitHubMilestone(this GitRepository repository, string title)
         {
             Assert.True(repository.IsGitHubRepository());
-            await Client.Issue.Milestone.Create(
+            await GitHubClient.Issue.Milestone.Create(
                 repository.GetGitHubOwner(),
                 repository.GetGitHubName(),
                 new NewMilestone(title));
@@ -113,7 +117,7 @@ namespace Nuke.Common.Tools.GitHub
                 Assert.True(milestone.ClosedIssues != 0);
             }
 
-            await Client.Issue.Milestone.Update(
+            await GitHubClient.Issue.Milestone.Update(
                 repository.GetGitHubOwner(),
                 repository.GetGitHubName(),
                 milestone.Number,
