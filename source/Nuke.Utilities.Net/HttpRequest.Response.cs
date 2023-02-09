@@ -26,7 +26,7 @@ namespace Nuke.Common.Utilities.Net
         /// </summary>
         public static HttpResponseInspector GetResponse(this HttpRequestBuilder builder)
         {
-            return AsyncHelper.RunSync(() => builder.GetResponseAsync());
+            return builder.GetResponseAsync().GetAwaiter().GetResult();
         }
     }
 

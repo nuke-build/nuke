@@ -24,7 +24,7 @@ namespace Nuke.Common.IO
             Configure<HttpClient> clientConfigurator = null,
             Action<HttpRequestHeaders> headerConfigurator = null)
         {
-            return AsyncHelper.RunSync(() => HttpDownloadStringAsync(uri, clientConfigurator, headerConfigurator));
+            return HttpDownloadStringAsync(uri, clientConfigurator, headerConfigurator).GetAwaiter().GetResult();
         }
 
         [Pure]
@@ -44,7 +44,7 @@ namespace Nuke.Common.IO
             Configure<HttpClient> clientConfigurator = null,
             Action<HttpRequestHeaders> headerConfigurator = null)
         {
-            AsyncHelper.RunSync(() => HttpDownloadFileAsync(uri, path, mode, clientConfigurator, headerConfigurator));
+            HttpDownloadFileAsync(uri, path, mode, clientConfigurator, headerConfigurator).GetAwaiter().GetResult();
         }
 
         public static async Task HttpDownloadFileAsync(

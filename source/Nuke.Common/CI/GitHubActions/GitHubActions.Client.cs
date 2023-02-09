@@ -28,7 +28,7 @@ namespace Nuke.Common.CI.GitHubActions
                 .GetResponse()
                 .AssertSuccessfulStatusCode();
 
-            return AsyncHelper.RunSync(() => response.GetBodyAsJson())
+            return response.GetBodyAsJson().GetAwaiter().GetResult()
                 .GetChildren("jobs")
                 .Single(x => x.GetPropertyStringValue("name") == Job);
         }

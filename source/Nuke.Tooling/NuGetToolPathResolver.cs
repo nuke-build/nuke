@@ -128,8 +128,8 @@ namespace Nuke.Common.Tooling
                     from packageVersion in
                         new[]
                         {
-                            AsyncHelper.RunSync(() => NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: false)),
-                            AsyncHelper.RunSync(() => NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: true)),
+                            NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: false).GetAwaiter().GetResult(),
+                            NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: true).GetAwaiter().GetResult(),
                             NuGetPackageResolver.GetGlobalInstalledPackage(packageId, version: null, packagesConfigFile: null)?.Version.ToString()
                         }
                     where packageVersion != null
