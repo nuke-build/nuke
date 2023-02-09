@@ -22,7 +22,7 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
                 using (writer.WriteBlock("inputs:"))
                 {
                     writer.WriteLine($"artifactName: {ArtifactName}");
-                    writer.WriteLine($"pathtoPublish: {PathToPublish.SingleQuote()}");
+                    writer.WriteLine($"pathToPublish: {PathToPublish.SingleQuote()}");
                 }
             }
         }
