@@ -52,24 +52,26 @@ stages:
             fetchDepth: 1
             clean: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Restore'
             inputs:
               script: './build.cmd Restore --skip'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: src'
             inputs:
               artifactName: src
               pathToPublish: 'src'
@@ -83,24 +85,26 @@ stages:
             fetchDepth: 1
             clean: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Compile'
             inputs:
               script: './build.cmd Compile --skip'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: src'
             inputs:
               artifactName: src
               pathToPublish: 'src'
@@ -116,24 +120,26 @@ stages:
             fetchDepth: 1
             clean: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Test'
             inputs:
               script: './build.cmd Test --skip --partition $(System.JobPositionInPhase)/2'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: test-results'
             inputs:
               artifactName: test-results
               pathToPublish: 'output/test-results'
@@ -147,24 +153,26 @@ stages:
             fetchDepth: 1
             clean: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Coverage'
             inputs:
               script: './build.cmd Coverage --skip'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: coverage-report.zip'
             inputs:
               artifactName: coverage-report.zip
               pathToPublish: 'output/coverage-report.zip'
@@ -184,24 +192,26 @@ stages:
             fetchDepth: 1
             clean: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Restore'
             inputs:
               script: './build.cmd Restore --skip'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: src'
             inputs:
               artifactName: src
               pathToPublish: 'src'
@@ -215,24 +225,26 @@ stages:
             fetchDepth: 1
             clean: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Compile'
             inputs:
               script: './build.cmd Compile --skip'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: src'
             inputs:
               artifactName: src
               pathToPublish: 'src'
@@ -248,24 +260,26 @@ stages:
             fetchDepth: 1
             clean: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Test'
             inputs:
               script: './build.cmd Test --skip --partition $(System.JobPositionInPhase)/2'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: test-results'
             inputs:
               artifactName: test-results
               pathToPublish: 'output/test-results'
@@ -279,24 +293,26 @@ stages:
             fetchDepth: 1
             clean: true
           - task: Cache@2
-            displayName: Cache (nuke-temp)
+            displayName: 'Cache: nuke-temp'
             inputs:
               key: $(Agent.OS) | nuke-temp | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuke-temp
               path: .nuke/temp
           - task: Cache@2
-            displayName: Cache (nuget-packages)
+            displayName: 'Cache: nuget-packages'
             inputs:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
           - task: CmdLine@2
+            displayName: 'Run: Coverage'
             inputs:
               script: './build.cmd Coverage --skip'
             env:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
+            displayName: 'Publish: coverage-report.zip'
             inputs:
               artifactName: coverage-report.zip
               pathToPublish: 'output/coverage-report.zip'
