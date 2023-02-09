@@ -5,7 +5,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -23,6 +25,8 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
         {
             using (writer.WriteBlock("- task: CmdLine@2"))
             {
+                writer.WriteLine("displayName: " + $"Run: {InvokedTargets.JoinCommaSpace()}".SingleQuote());
+
                 var arguments = $"{InvokedTargets.JoinSpace()} --skip";
                 if (PartitionSize != null)
                     arguments += $" --partition $(System.JobPositionInPhase)/{PartitionSize}";
