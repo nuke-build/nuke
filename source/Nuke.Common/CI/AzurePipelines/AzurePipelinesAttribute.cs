@@ -289,7 +289,6 @@ namespace Nuke.Common.CI.AzurePipelines
                 var artifactName = publishedArtifact.Split('/').Last();
                 yield return new AzurePipelinesPublishStep
                              {
-                                 DisplayName = $"Publish artifact {artifactName}",
                                  ArtifactName = artifactName,
                                  PathToPublish = publishedArtifact
                              };

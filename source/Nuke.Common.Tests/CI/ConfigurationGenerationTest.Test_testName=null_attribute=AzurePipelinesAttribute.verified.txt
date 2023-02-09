@@ -70,7 +70,6 @@ stages:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish artifact src'
             inputs:
               artifactName: src
               pathToPublish: 'src'
@@ -102,7 +101,6 @@ stages:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish artifact src'
             inputs:
               artifactName: src
               pathToPublish: 'src'
@@ -136,7 +134,6 @@ stages:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish artifact test-results'
             inputs:
               artifactName: test-results
               pathToPublish: 'output/test-results'
@@ -168,7 +165,6 @@ stages:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish artifact coverage-report.zip'
             inputs:
               artifactName: coverage-report.zip
               pathToPublish: 'output/coverage-report.zip'
@@ -206,7 +202,6 @@ stages:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish artifact src'
             inputs:
               artifactName: src
               pathToPublish: 'src'
@@ -238,7 +233,6 @@ stages:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish artifact src'
             inputs:
               artifactName: src
               pathToPublish: 'src'
@@ -272,7 +266,6 @@ stages:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish artifact test-results'
             inputs:
               artifactName: test-results
               pathToPublish: 'output/test-results'
@@ -304,7 +297,6 @@ stages:
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
               ApiKey: $(ApiKey)
           - task: PublishBuildArtifacts@1
-            displayName: 'Publish artifact coverage-report.zip'
             inputs:
               artifactName: coverage-report.zip
               pathToPublish: 'output/coverage-report.zip'

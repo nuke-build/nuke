@@ -12,7 +12,6 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
     [PublicAPI]
     public class AzurePipelinesPublishStep : AzurePipelinesStep
     {
-        public string DisplayName { get; set; }
         public string ArtifactName { get; set; }
         public string PathToPublish { get; set; }
 
@@ -20,9 +19,6 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration
         {
             using (writer.WriteBlock("- task: PublishBuildArtifacts@1"))
             {
-                if (!string.IsNullOrWhiteSpace(DisplayName))
-                    writer.WriteLine($"displayName: {DisplayName.SingleQuote()}");
-
                 using (writer.WriteBlock("inputs:"))
                 {
                     writer.WriteLine($"artifactName: {ArtifactName}");
