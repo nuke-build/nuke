@@ -970,6 +970,13 @@
         "baseClass": "KubernetesToolSettings",
         "properties": [
           {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified"
+          },
+          {
             "name": "All",
             "type": "bool",
             "format": "--all={value}",
@@ -2301,6 +2308,13 @@
         "baseClass": "KubernetesToolSettings",
         "properties": [
           {
+            "name": "TypeName",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified"
+          },
+          {
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
@@ -2394,7 +2408,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
-            "help": "The type or/and name of the ressource."
+            "help": "The type or/and name of the resource."
           },
           {
             "name": "Ports",
