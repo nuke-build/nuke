@@ -68,7 +68,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Executes(Func<Task> action)
         {
-            return Executes(() => action().GetAwaiter().GetResult());
+            return Executes(() => AsyncHelper.RunSync(action));
         }
 
         public ITargetDefinition DependsOn(params Target[] targets)

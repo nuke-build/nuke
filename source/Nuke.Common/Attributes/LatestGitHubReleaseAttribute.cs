@@ -28,7 +28,7 @@ namespace Nuke.Common.Tooling
         public override object GetValue(MemberInfo member, object instance)
         {
             var repository = GitRepository.FromUrl($"https://github.com/{_identifier}");
-            return repository.GetLatestRelease(IncludePrerelease, TrimPrefix).GetAwaiter().GetResult();
+            return AsyncHelper.RunSync(() => repository.GetLatestRelease(IncludePrerelease, TrimPrefix));
         }
     }
 }

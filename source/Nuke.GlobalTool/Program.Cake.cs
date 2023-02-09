@@ -2,10 +2,13 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -134,7 +137,7 @@ namespace Nuke.GlobalTool
                     var packageId = match.Groups["packageId"].Value;
                     var packageVersion = match.Groups["version"].Value;
                     if (packageVersion.IsNullOrEmpty())
-                        packageVersion = NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: false).GetAwaiter().GetResult();
+                        packageVersion = AsyncHelper.RunSync(() => NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: false));
                     yield return new(packageType, packageId, packageVersion);
                 }
             }

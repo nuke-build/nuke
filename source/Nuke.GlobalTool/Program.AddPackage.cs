@@ -31,7 +31,7 @@ namespace Nuke.GlobalTool
             var packageVersion =
                 (EnvironmentInfo.GetNamedArgument<string>("version") ??
                  args.ElementAtOrDefault(1) ??
-                 NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: false).GetAwaiter().GetResult() ??
+                 AsyncHelper.RunSync(() => NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: false)) ??
                  NuGetPackageResolver.GetGlobalInstalledPackage(packageId, version: null, packagesConfigFile: null)?.Version.ToString())
                 .NotNull("packageVersion != null");
 
