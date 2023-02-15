@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Nuke.CodeGeneration.Model;
+using Nuke.Common.Utilities;
 
 namespace Nuke.CodeGeneration.Writers
 {
@@ -30,7 +31,7 @@ namespace Nuke.CodeGeneration.Writers
 
         void IWriter.WriteLine(string text)
         {
-            _streamWriter.WriteLine($"{new string(c: ' ', count: _indention * 4)}{text}");
+            _streamWriter.WriteLine($"{' '.Repeat(_indention * 4)}{text}");
         }
 
         void IWriter.WriteBlock(Action action)

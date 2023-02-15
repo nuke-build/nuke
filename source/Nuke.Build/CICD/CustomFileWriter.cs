@@ -26,7 +26,7 @@ namespace Nuke.Common.Utilities
         {
             _streamWriter.WriteLine(
                 text != null
-                    ? $"{new string(c: ' ', _indentation * _indentationFactor)}{text}"
+                    ? $"{' '.Repeat(_indentation * _indentationFactor)}{text}"
                     : string.Empty);
         }
 

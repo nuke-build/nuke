@@ -101,7 +101,7 @@ namespace Nuke.Common.Utilities
 
                 Console.CursorTop -= options.Length;
                 foreach (var option in options)
-                    Console.WriteLine(new string(c: ' ', BufferWidth));
+                    Console.WriteLine(' '.Repeat(BufferWidth));
                 Console.CursorTop -= options.Length;
             } while (!(key == ConfirmationKey || key == InterruptKey));
 

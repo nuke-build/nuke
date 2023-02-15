@@ -132,7 +132,7 @@ namespace Nuke.GlobalTool
         private static void ClearPreviousLine()
         {
             AnsiConsole.Cursor.MoveUp();
-            Console.WriteLine(new string(c: ' ', Console.WindowWidth));
+            Console.WriteLine(' '.Repeat(Console.WindowWidth));
             AnsiConsole.Cursor.MoveUp();
         }
 

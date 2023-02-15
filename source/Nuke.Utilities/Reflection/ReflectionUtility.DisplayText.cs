@@ -84,7 +84,7 @@ namespace Nuke.Common.Utilities
             }
 
             if (type.IsArray)
-                return $"{type.GetElementType().GetDisplayShortName(tupleNames)}[{new string(c: ',', type.GetArrayRank() - 1)}]";
+                return $"{type.GetElementType().GetDisplayShortName(tupleNames)}[{','.Repeat(type.GetArrayRank() - 1)}]";
 
             return type.Name;
         }
