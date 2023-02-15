@@ -78,6 +78,7 @@ namespace Nuke.Common.Execution
             finally
             {
                 Finish();
+                Log.CloseAndFlush();
             }
 
             void Finish()
