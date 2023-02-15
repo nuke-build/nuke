@@ -56,9 +56,9 @@ namespace Nuke.Common
                         .Select(Theme.FormatInformation);
 
                     Debug();
-                    Debug("╬" + new string(c: '═', text.Length + 5));
+                    Debug("╬" + '═'.Repeat(text.Length + 5));
                     formattedBlockText.ForEach(x => Debug($"║ {x}"));
-                    Debug("╬" + new string(c: '═', Math.Max(text.Length - 4, 2)));
+                    Debug("╬" + '═'.Repeat(Math.Max(text.Length - 4, 2)));
                     Debug();
                 });
         }
@@ -126,10 +126,10 @@ namespace Nuke.Common
                     : null;
 
             Debug();
-            Debug(new string(c: '═', count: allColumns));
+            Debug('═'.Repeat(allColumns));
             Information(CreateLine("Target", "Status", "Duration"));
             //WriteInformationInternal($"{{0,-{firstColumn}}}{{1,-{secondColumn}}}{{2,{thirdColumn}}}{{3,1}}", "Target", "Status", "Duration", "Test");
-            Debug(new string(c: '─', count: allColumns));
+            Debug('─'.Repeat(allColumns));
             foreach (var target in build.ExecutionPlan)
             {
                 var line = CreateLine(target.Name, target.Status.ToString(), GetDurationOrBlank(target), GetInformation(target));
@@ -155,9 +155,9 @@ namespace Nuke.Common
                 }
             }
 
-            Debug(new string(c: '─', count: allColumns));
+            Debug('─'.Repeat(allColumns));
             Information(CreateLine("Total", string.Empty, GetDuration(totalDuration)));
-            Debug(new string(c: '═', count: allColumns));
+            Debug('═'.Repeat(allColumns));
         }
 
         protected internal virtual void WriteBuildOutcome(INukeBuild build)

@@ -11,7 +11,7 @@ namespace Nuke.Common.Utilities
         [Pure]
         public static string Indent(this string text, int count)
         {
-            return new string(c: ' ', count) + text;
+            return ' '.Repeat(count) + text;
         }
     }
 }
