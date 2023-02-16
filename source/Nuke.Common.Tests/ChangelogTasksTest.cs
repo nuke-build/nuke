@@ -24,6 +24,7 @@ namespace Nuke.Common.Tests
 
         [Theory]
         [MemberData(nameof(AllChangelogReference_1_0_0_Files))]
+        [MemberData(nameof(AllChangelogReference_NUKE_Files))]
         public void ReadReleaseNotes_ChangelogReferenceFile_ThrowsNoExceptions(AbsolutePath file)
         {
             Action act = () => ChangelogTasks.ReadReleaseNotes(file);
@@ -33,6 +34,7 @@ namespace Nuke.Common.Tests
 
         [Theory]
         [MemberData(nameof(AllChangelogReference_1_0_0_Files))]
+        [MemberData(nameof(AllChangelogReference_NUKE_Files))]
         public void ReadReleaseNotes_ChangelogReferenceFile_ReturnsAnyReleaseNotes(AbsolutePath file)
         {
             var releaseNotes = ChangelogTasks.ReadReleaseNotes(file);
@@ -42,6 +44,7 @@ namespace Nuke.Common.Tests
 
         [Theory]
         [MemberData(nameof(AllChangelogReference_1_0_0_Files))]
+        [MemberData(nameof(AllChangelogReference_NUKE_Files))]
         public void ReadChangelog_ChangelogReferenceFile_ThrowsNoExceptions(AbsolutePath file)
         {
             Action act = () => ChangelogTasks.ReadChangelog(file);
@@ -51,6 +54,7 @@ namespace Nuke.Common.Tests
 
         [Theory]
         [MemberData(nameof(AllChangelogReference_1_0_0_Files))]
+        [MemberData(nameof(AllChangelogReference_NUKE_Files))]
         public void ExtractChangelogSectionNotes_ChangelogReferenceFile_ThrowsNoExceptions(AbsolutePath file)
         {
             Action act = () => ChangelogTasks.ExtractChangelogSectionNotes(file);
@@ -60,6 +64,7 @@ namespace Nuke.Common.Tests
 
         [Theory]
         [MemberData(nameof(AllChangelogReference_1_0_0_Files))]
+        [MemberData(nameof(AllChangelogReference_NUKE_Files))]
         public Task ReadReleaseNotes_ChangelogReferenceFile_HasParsedCorrectly(AbsolutePath file)
         {
             var releaseNotes = ChangelogTasks.ReadReleaseNotes(file);
@@ -125,6 +130,12 @@ namespace Nuke.Common.Tests
         public static IEnumerable<object[]> AllChangelogReference_1_0_0_Files
         {
             get => PathToChangelogReferenceFiles.GlobFiles("changelog_reference_1.0.0*.md").Select(file => new object[] { file });
+        }
+        
+        [UsedImplicitly]
+        public static IEnumerable<object[]> AllChangelogReference_NUKE_Files
+        {
+            get => PathToChangelogReferenceFiles.GlobFiles("changelog_reference_NUKE*.md").Select(file => new object[] { file });
         }
     }
 }
