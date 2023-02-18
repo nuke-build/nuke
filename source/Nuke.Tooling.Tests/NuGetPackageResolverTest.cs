@@ -16,8 +16,8 @@ namespace Nuke.Common.Tests
     {
         private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory).NotNull();
 
-        private static AbsolutePath BuildProjectFile => RootDirectory / "build" / "_build.csproj";
-        private static AbsolutePath BuildAssetsFile => RootDirectory / "build" / "obj" / "project.assets.json";
+        private static AbsolutePath ProjectFile => RootDirectory / "source" / "Nuke.Tooling.Tests" / "Nuke.Tooling.Tests.csproj";
+        private static AbsolutePath AssetsFile => ProjectFile.Parent / "obj" / "project.assets.json";
 
         private const string XunitConsolePackageVersion = "2.4.1";
 
@@ -46,7 +46,7 @@ namespace Nuke.Common.Tests
         [Fact]
         public void TestGetLocalInstalledPackageViaProjectFile()
         {
-            var result = NuGetPackageResolver.GetLocalInstalledPackage("xunit.runner.console", BuildProjectFile, resolveDependencies: false);
+            var result = NuGetPackageResolver.GetLocalInstalledPackage("xunit.runner.console", ProjectFile, resolveDependencies: false);
             result.Should().NotBeNull();
             result.Version.OriginalVersion.Should().Be(XunitConsolePackageVersion);
         }
@@ -54,22 +54,22 @@ namespace Nuke.Common.Tests
         [Fact]
         public void TestGetLocalInstalledPackageViaAssetsFile()
         {
-            var result = NuGetPackageResolver.GetLocalInstalledPackage("xunit.runner.console", BuildAssetsFile, resolveDependencies: false);
+            var result = NuGetPackageResolver.GetLocalInstalledPackage("xunit.runner.console", AssetsFile, resolveDependencies: false);
             result.Version.OriginalVersion.Should().Be(XunitConsolePackageVersion);
         }
 
         [Fact]
         public void TestGetLocalInstalledPackagesViaProjectFile()
         {
-            var result = NuGetPackageResolver.GetLocalInstalledPackages(BuildProjectFile, resolveDependencies: false);
-            result.Should().Contain(x => x.Id == "JetBrains.ReSharper.GlobalTools");
+            var result = NuGetPackageResolver.GetLocalInstalledPackages(ProjectFile, resolveDependencies: false);
+            result.Should().Contain(x => x.Id == "xunit.runner.console");
         }
 
         [Fact]
         public void TestGetLocalInstalledPackagesViaAssetsFile()
         {
-            var result = NuGetPackageResolver.GetLocalInstalledPackages(BuildAssetsFile, resolveDependencies: false);
-            result.Should().Contain(x => x.Id == "JetBrains.ReSharper.GlobalTools");
+            var result = NuGetPackageResolver.GetLocalInstalledPackages(AssetsFile, resolveDependencies: false);
+            result.Should().Contain(x => x.Id == "xunit.runner.console");
         }
     }
 }
