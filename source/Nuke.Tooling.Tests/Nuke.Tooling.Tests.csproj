@@ -9,4 +9,8 @@
     <ProjectReference Include="..\Nuke.Tooling\Nuke.Tooling.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageDownload Include="xunit.runner.console" Version="[2.4.1]" />
+  </ItemGroup>
+
 </Project>
