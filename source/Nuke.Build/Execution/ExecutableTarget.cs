@@ -13,7 +13,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Execution
 {
-    [DebuggerDisplay("{" + nameof(Name) + "}")]
+    [DebuggerDisplay($"{{{nameof(Name)}}} ({{{nameof(Status)}}})")]
     public class ExecutableTarget
     {
         internal TargetDefinition Definition { get; set; }
