@@ -27,7 +27,7 @@ namespace Nuke.Common.Tooling
     /// </example>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public class LocalPathAttribute : ValueInjectionAttributeBase
+    public class LocalPathAttribute : ToolInjectionAttributeBase
     {
         private readonly string _absoluteOrRelativePath;
 

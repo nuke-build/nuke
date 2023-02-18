@@ -30,7 +30,7 @@ namespace Nuke.Common.Tooling
     /// </example>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public class PathVariableAttribute : ValueInjectionAttributeBase
+    public class PathVariableAttribute : ToolInjectionAttributeBase
     {
         private readonly string _pathExecutable;
 
