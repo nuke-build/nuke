@@ -73,7 +73,7 @@ namespace Nuke.Common.Execution
             }
 
             var previouslyExecutedTargets = GetPreviouslyExecutedTargets();
-            BuildAttemptFile.WriteAllLines(new[] { invocationHash });
+            BuildAttemptFile.WriteAllLines(new[] { invocationHash }.Concat(previouslyExecutedTargets));
             return previouslyExecutedTargets;
         }
 
@@ -89,7 +89,6 @@ namespace Nuke.Common.Execution
             {
                 target.Status = ExecutionStatus.Skipped;
                 build.ExecuteExtension<IOnTargetSkipped>(x => x.OnTargetSkipped(target));
-                AppendToBuildAttemptFile(target.Name);
                 return;
             }
 
