@@ -34,11 +34,13 @@ namespace Nuke.Common.Tooling
             var endpoint = _repository.TrimStart("https").TrimStart("http").TrimStart("://").TrimEnd("/");
             var uri = $"https://{endpoint}/{_groupId.Replace(".", "/")}/{_artifactId ?? _groupId}/maven-metadata.xml";
             var content = HttpTasks.HttpDownloadString(uri);
-            return XmlTasks.XmlPeekFromString(content, ".//version")
-                .Select(NuGetVersion.Parse)
+            var version = XmlTasks.XmlPeekFromString(content, ".//version")
+                .Select(SemanticVersion.Parse)
                 .OrderByDescending(x => x)
-                .FirstOrDefault(x => !x.IsPrerelease || IncludePrerelease)
-                ?.ToFullString();
+                .FirstOrDefault(x => !x.IsPrerelease || IncludePrerelease);
+            return member.GetMemberType() == typeof(string)
+                ? version?.ToNormalizedString()
+                : version;
         }
     }
 }

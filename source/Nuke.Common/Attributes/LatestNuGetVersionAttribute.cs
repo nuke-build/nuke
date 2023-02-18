@@ -27,11 +27,10 @@ namespace Nuke.Common.Tooling
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            var result = NuGetVersionResolver.GetLatestVersion(_packageId, IncludePrerelease, IncludeUnlisted)
-                .GetAwaiter().GetResult();
+            var version = NuGetVersionResolver.GetLatestVersion(_packageId, IncludePrerelease, IncludeUnlisted).GetAwaiter().GetResult();
             return member.GetMemberType() == typeof(string)
-                ? result
-                : NuGetVersion.Parse(result);
+                ? version
+                : NuGetVersion.Parse(version);
         }
     }
 }
