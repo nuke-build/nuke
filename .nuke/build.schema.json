@@ -122,6 +122,11 @@
             "type": "string",
             "enum": [
               "Announce",
+              "AnnounceDiscord",
+              "AnnounceGitter",
+              "AnnounceMastodon",
+              "AnnounceSlack",
+              "AnnounceTwitter",
               "Changelog",
               "CheckoutExternalRepositories",
               "Clean",
@@ -166,6 +171,11 @@
             "type": "string",
             "enum": [
               "Announce",
+              "AnnounceDiscord",
+              "AnnounceGitter",
+              "AnnounceMastodon",
+              "AnnounceSlack",
+              "AnnounceTwitter",
               "Changelog",
               "CheckoutExternalRepositories",
               "Clean",
