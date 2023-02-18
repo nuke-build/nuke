@@ -13,9 +13,9 @@ namespace Nuke.Common.Tests.Execution
 {
     public class BuildExecutorTest
     {
-        private ExecutableTarget A = new ExecutableTarget { Name = nameof(A) };
-        private ExecutableTarget B = new ExecutableTarget { Name = nameof(B) };
-        private ExecutableTarget C = new ExecutableTarget { Name = nameof(C) };
+        private ExecutableTarget A = new ExecutableTarget { Name = nameof(A), Status = ExecutionStatus.Scheduled };
+        private ExecutableTarget B = new ExecutableTarget { Name = nameof(B), Status = ExecutionStatus.Scheduled };
+        private ExecutableTarget C = new ExecutableTarget { Name = nameof(C), Status = ExecutionStatus.Scheduled };
 
         public BuildExecutorTest()
         {
@@ -155,6 +155,20 @@ namespace Nuke.Common.Tests.Execution
             var action = () => ExecuteBuild();
 
             action.Should().Throw<TargetExecutionException>();
+        }
+
+        [Fact]
+        public void TestSkipTriggers()
+        {
+            A.DynamicConditions.Add(("condition", () => false));
+            A.Triggers.Add(B);
+            B.Triggers.Add(C);
+            B.ExecutionDependencies.Clear();
+            C.ExecutionDependencies.Clear();
+
+            ExecuteBuild();
+
+            AssertSkipped(A, B, C);
         }
 
         private void ExecuteBuild(ExecutableTarget[] skippedTargets = null)
