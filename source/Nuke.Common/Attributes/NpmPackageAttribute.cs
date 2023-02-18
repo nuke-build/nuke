@@ -19,9 +19,10 @@ namespace Nuke.Common.Tooling
         {
             _name = name;
         }
+
         public override object GetValue(MemberInfo member, object instance)
         {
-            var name = _name ?? member.Name;
+            var name = _packageExecutable ?? member.Name.ToLowerInvariant();
             return ToolResolver.TryGetEnvironmentTool(name) ??
                    ToolResolver.GetNpmTool(name);
         }

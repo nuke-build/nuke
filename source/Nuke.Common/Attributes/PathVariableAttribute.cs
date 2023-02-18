@@ -32,16 +32,16 @@ namespace Nuke.Common.Tooling
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
     public class PathVariableAttribute : ValueInjectionAttributeBase
     {
-        private readonly string _name;
+        private readonly string _pathExecutable;
 
-        public PathVariableAttribute(string name = null)
+        public PathVariableAttribute(string pathExecutable = null)
         {
-            _name = name;
+            _pathExecutable = pathExecutable;
         }
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            var name = _name ?? member.Name;
+            var name = _pathExecutable ?? member.Name.ToLowerInvariant();
             return ToolResolver.TryGetEnvironmentTool(name) ??
                    ToolResolver.GetPathTool(name);
         }
@@ -50,8 +50,8 @@ namespace Nuke.Common.Tooling
     [Obsolete($"Use {nameof(PathVariableAttribute)} instead")]
     public class PathExecutableAttribute : PathVariableAttribute
     {
-        public PathExecutableAttribute(string name = null)
-            : base(name)
+        public PathExecutableAttribute(string pathExecutable = null)
+            : base(pathExecutable)
         {
         }
     }
