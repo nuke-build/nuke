@@ -27,7 +27,7 @@ namespace Nuke.Common.ValueInjection
             }
             catch (Exception exception)
             {
-                if (!member.HasCustomAttribute<OptionalAttribute>())
+                if (!SuppressWarnings && !member.HasCustomAttribute<OptionalAttribute>())
                     Log.Warning(exception.Unwrap(), "Could not inject value for {Member}", member.GetDisplayName());
 
                 return null;
@@ -38,6 +38,7 @@ namespace Nuke.Common.ValueInjection
         public abstract object GetValue(MemberInfo member, object instance);
 
         public virtual int Priority => 0;
+        public virtual bool SuppressWarnings => false;
 
         [CanBeNull]
         protected T GetMemberValue<T>(string memberName, object instance)

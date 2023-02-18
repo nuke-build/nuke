@@ -32,7 +32,7 @@ namespace Nuke.Common.Tooling
     /// </example>
     [PublicAPI]
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public class NuGetPackageAttribute : ValueInjectionAttributeBase
+    public class NuGetPackageAttribute : ToolInjectionAttributeBase
     {
         private readonly string _packageId;
         private readonly string _packageExecutable;

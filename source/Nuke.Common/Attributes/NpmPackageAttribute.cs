@@ -6,12 +6,11 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tooling
 {
     [PublicAPI]
-    public class NpmPackageAttribute : ValueInjectionAttributeBase
+    public class NpmPackageAttribute : ToolInjectionAttributeBase
     {
         private readonly string _name;
 
