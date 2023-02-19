@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Nuke.Common.Tools.NSwag
 {
-    public static partial class NSwagTasks
+    partial class NSwagTasks
     {
         internal static string GetToolPath()
         {

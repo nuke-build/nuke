@@ -9,7 +9,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.Netlify
 {
-    public static partial class NetlifyTasks
+    partial class NetlifyTasks
     {
         private static string GetResult(IProcess process, NetlifySitesCreateSettings toolSettings)
         {

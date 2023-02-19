@@ -6,7 +6,7 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.DotCover
 {
-    public static partial class DotCoverTasks
+    partial class DotCoverTasks
     {
         internal static string GetToolPath()
         {

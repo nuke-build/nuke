@@ -9,7 +9,7 @@ using Serilog;
 
 namespace Nuke.Common.Tools.Docker
 {
-    public static partial class DockerTasks
+    partial class DockerTasks
     {
         internal static void CustomLogger(OutputType type, string output)
         {

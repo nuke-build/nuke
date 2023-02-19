@@ -31,7 +31,7 @@ namespace Nuke.Common.Tools.DotNet
         }
     }
 
-    public static partial class DotNetTasks
+    public partial class DotNetTasks
     {
         // ReSharper disable once CognitiveComplexity
         internal static void CustomLogger(OutputType type, string output)
@@ -79,7 +79,7 @@ namespace Nuke.Common.Tools.DotNet
             Log.Debug(output);
         }
 
-        public static string EscapeMSBuild(this string str)
+        public static string EscapeMSBuild(string str)
         {
             // https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-special-characters
             return str

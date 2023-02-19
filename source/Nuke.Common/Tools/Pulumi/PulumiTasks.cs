@@ -7,7 +7,7 @@ using Serilog;
 
 namespace Nuke.Common.Tools.Pulumi
 {
-    public static partial class PulumiTasks
+    partial class PulumiTasks
     {
         public static void CustomLogger(OutputType type, string text)
         {

@@ -14,7 +14,7 @@ namespace Nuke.Common.Tools.MSBuild
             return MSBuildToolPathResolver.Resolve();
         }
 
-        public static string EscapeMSBuild(this string str)
+        public static string EscapeMSBuild(string str)
         {
             // https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-special-characters
             return str

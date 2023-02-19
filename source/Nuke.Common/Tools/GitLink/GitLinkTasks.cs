@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Nuke.Common.Tools.GitLink
 {
-    public static partial class GitLinkTasks
+    partial class GitLinkTasks
     {
         private static void PreProcess(ref GitLink2Settings toolSettings)
         {

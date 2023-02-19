@@ -8,7 +8,7 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.MSpec
 {
-    public static partial class MSpecTasks
+    partial class MSpecTasks
     {
         internal static string GetToolPath()
         {
