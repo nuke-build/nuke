@@ -32,7 +32,7 @@ namespace Nuke.Common.Tools.OctoVersion
         /// <summary>
         /// Framework to use when selecting the OctoVersion library from the package.
         /// </summary>
-        public string Framework { get; set; } = "net5.0";
+        public string Framework { get; set; }
 
         /// <summary>
         /// Whether to update the build number and output OctoVersion results into the CI platform.

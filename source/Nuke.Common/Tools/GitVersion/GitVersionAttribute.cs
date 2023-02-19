@@ -24,7 +24,7 @@ namespace Nuke.Common.Tools.GitVersion
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class GitVersionAttribute : ValueInjectionAttributeBase
     {
-        public string Framework { get; set; } = "net5.0";
+        public string Framework { get; set; }
         public bool DisableOnUnix { get; set; }
         public bool UpdateAssemblyInfo { get; set; }
         public bool UpdateBuildNumber { get; set; } = true;

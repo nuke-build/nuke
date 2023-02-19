@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Versioning;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -65,10 +67,15 @@ namespace Nuke.Common.Tooling
             if (frameworks.Count == 1)
                 return GetPackageExecutable(frameworks.Single());
 
-            Assert.True(framework != null && frameworks.Contains(framework),
-                $"Package executable {packageExecutables.JoinCommaOr()} [{packageId}] requires a framework:"
-                    .Concat(frameworks.Select(x => $" - {x.Key}")).JoinNewLine());
-            return GetPackageExecutable(frameworks[framework]);
+            framework ??= Assembly.GetEntryAssembly().NotNull().GetCustomAttribute<TargetFrameworkAttribute>()
+                .FrameworkDisplayName.Replace(".NET ", "net");
+            var sortedFrameworks = frameworks.Select(x => x.Key)
+                .OrderBy(x => x == framework)
+                .ThenBy(x => x.Contains("."))
+                .ThenBy(x => !x.StartsWith("netcore"))
+                .ThenBy(x => x)
+                .Reverse();
+            return GetPackageExecutable(frameworks[sortedFrameworks.First()]);
         }
 
         private static string GetPackageDirectory(string[] packageIds, [CanBeNull] string version)
