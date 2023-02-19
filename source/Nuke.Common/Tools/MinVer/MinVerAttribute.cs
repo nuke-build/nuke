@@ -21,7 +21,7 @@ namespace Nuke.Common.Tools.MinVer
     [UsedImplicitly(ImplicitUseKindFlags.Default)]
     public class MinVerAttribute : ValueInjectionAttributeBase
     {
-        public string Framework { get; set; } = "net6.0";
+        public string Framework { get; set; }
         public bool UpdateBuildNumber { get; set; }
 
         public override object GetValue(MemberInfo member, object instance)

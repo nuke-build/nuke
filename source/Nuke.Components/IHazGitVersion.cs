@@ -13,7 +13,7 @@ namespace Nuke.Components
     [PublicAPI]
     public interface IHazGitVersion : INukeBuild
     {
-        [GitVersion(Framework = "net5.0", NoFetch = true)]
+        [GitVersion(NoFetch = true)]
         [Required]
         GitVersion Versioning => TryGetValue(() => Versioning);
     }
