@@ -14,7 +14,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tools.ReSharper
 {
-    public partial class ReSharperTasks
+    partial class ReSharperTasks
     {
         public const string ReSharperPluginLatest = "latest";
 

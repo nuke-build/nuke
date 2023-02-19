@@ -7,7 +7,7 @@ using Serilog;
 
 namespace Nuke.Common.Tools.Npm
 {
-    public static partial class NpmTasks
+    partial class NpmTasks
     {
         public static void CustomLogger(OutputType type, string output)
         {

@@ -8,7 +8,7 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.MinVer
 {
-    public static partial class MinVerTasks
+    partial class MinVerTasks
     {
         internal static string GetToolPath(string framework = null)
         {

@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Nuke.Common.Tools.Git
 {
-    public static partial class GitTasks
+    partial class GitTasks
     {
         public static bool GitIsDetached()
         {
