@@ -4,12 +4,10 @@
 
 using System;
 using System.Linq;
-using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tooling
 {
-    public abstract class ToolInjectionAttributeBase : ValueInjectionAttributeBase
+    public interface IRequireTool
     {
-        public override bool SuppressWarnings => true;
     }
 }

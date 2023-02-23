@@ -12,11 +12,20 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public class NpmPackageAttribute : ToolInjectionAttributeBase
     {
-        private readonly string _name;
+        private readonly string _packageId;
+        private readonly string _packageExecutable;
 
-        public NpmPackageAttribute(string name = null)
+        public NpmPackageAttribute(string packageId, string packageExecutable = null)
         {
-            _name = name;
+            _packageId = packageId;
+            _packageExecutable = packageExecutable;
+        }
+
+        public string Version { get; set; }
+
+        public override ToolRequirement GetRequirement(MemberInfo member)
+        {
+            return NpmPackageRequirement.Create(_packageId, Version);
         }
 
         public override object GetValue(MemberInfo member, object instance)

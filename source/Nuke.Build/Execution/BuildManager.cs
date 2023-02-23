@@ -55,6 +55,7 @@ namespace Nuke.Common.Execution
                     build.ExecutableTargets,
                     ParameterService.GetParameter<string[]>(() => build.InvokedTargets));
 
+                ToolRequirementService.EnsureToolRequirements(build, build.ExecutionPlan);
                 build.ExecuteExtension<IOnBuildInitialized>(x => x.OnBuildInitialized(build.ExecutableTargets, build.ExecutionPlan));
 
                 CancellationHandler += Finish;

@@ -54,6 +54,7 @@ namespace Nuke.Common.Execution
                            ProceedAfterFailure = definition.IsProceedAfterFailure,
                            AssuredAfterFailure = definition.IsAssuredAfterFailure || factory is Cleanup,
                            Requirements = definition.Requirements,
+                           ToolRequirements = definition.ToolRequirements,
                            Actions = definition.Actions,
                            Listed = !definition.IsInternal,
                            PartitionSize = definition.PartitionSize,

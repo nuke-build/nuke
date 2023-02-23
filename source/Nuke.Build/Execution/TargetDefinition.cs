@@ -8,6 +8,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading.Tasks;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -34,6 +35,7 @@ namespace Nuke.Common.Execution
         internal List<(string Text, Func<bool> Delegate)> DynamicConditions { get; } = new List<(string Text, Func<bool> Delegate)>();
         internal List<(string Text, Func<bool> Delegate)> StaticConditions { get; } = new List<(string Text, Func<bool> Delegate)>();
         internal List<LambdaExpression> Requirements { get; } = new List<LambdaExpression>();
+        internal List<ToolRequirement> ToolRequirements { get; } = new List<ToolRequirement>();
         internal List<Delegate> DependsOnTargets { get; } = new List<Delegate>();
         internal List<Delegate> DependentForTargets { get; } = new List<Delegate>();
         internal List<Action> Actions { get; } = new List<Action>();
@@ -132,6 +134,30 @@ namespace Nuke.Common.Execution
         public ITargetDefinition Requires(Expression<Func<bool>> requirement, params Expression<Func<bool>>[] requirements)
         {
             Requirements.AddRange(requirement.Concat(requirements));
+            return this;
+        }
+
+        public ITargetDefinition Requires<T>()
+            where T : IRequireTool
+        {
+            ToolRequirements.Add(typeof(T).GetCustomAttribute<ToolRequirementAttributeBase>().NotNull().GetRequirement());
+            return this;
+        }
+
+        public ITargetDefinition Requires<T>(string version)
+            where T : IRequireToolWithVersion
+        {
+            ToolRequirements.Add(typeof(T).GetCustomAttribute<ToolRequirementAttributeBase>().NotNull().GetRequirement(version));
+            return this;
+        }
+
+        public ITargetDefinition Requires(Expression<Func<Tool>> tool, params Expression<Func<Tool>>[] tools)
+        {
+            var requirements = tool.Concat(tools)
+                .Select(x => x.GetMemberInfo())
+                .Select(x => x.GetCustomAttribute<ToolInjectionAttributeBase>().NotNull().GetRequirement(x))
+                .WhereNotNull();
+            ToolRequirements.AddRange(requirements);
             return this;
         }
 

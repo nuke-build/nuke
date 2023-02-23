@@ -8,6 +8,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common
 {
@@ -93,6 +94,23 @@ namespace Nuke.Common
         ///   Adds a requirement that will be checked prior to build execution.
         /// </summary>
         ITargetDefinition Requires(Expression<Func<bool>> requirement, params Expression<Func<bool>>[] requirements);
+
+        /// <summary>
+        ///   Adds a tool requirement that will be checked or installed prior to build execution.
+        /// </summary>
+        ITargetDefinition Requires<T>()
+            where T : IRequireTool;
+
+        /// <summary>
+        ///   Adds a tool requirement that will be checked or installed prior to build execution.
+        /// </summary>
+        ITargetDefinition Requires<T>(string version)
+            where T : IRequireToolWithVersion;
+
+        /// <summary>
+        ///   Adds a tool requirement that will be checked or installed prior to build execution.
+        /// </summary>
+        ITargetDefinition Requires(Expression<Func<Tool>> tool, params Expression<Func<Tool>>[] tools);
 
         /// <summary>
         /// Defines if the dependencies should be skipped if the target is skipped.

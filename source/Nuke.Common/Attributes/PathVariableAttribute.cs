@@ -39,6 +39,12 @@ namespace Nuke.Common.Tooling
             _pathExecutable = pathExecutable;
         }
 
+        public override ToolRequirement GetRequirement(MemberInfo member)
+        {
+            var name = _pathExecutable ?? member.Name.ToLowerInvariant();
+            return PathToolRequirement.Create(name);
+        }
+
         public override object GetValue(MemberInfo member, object instance)
         {
             var name = _pathExecutable ?? member.Name.ToLowerInvariant();
