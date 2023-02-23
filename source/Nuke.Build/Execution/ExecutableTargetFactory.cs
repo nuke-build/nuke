@@ -53,7 +53,7 @@ namespace Nuke.Common.Execution
                            DependencyBehavior = definition.DependencyBehavior,
                            ProceedAfterFailure = definition.IsProceedAfterFailure,
                            AssuredAfterFailure = definition.IsAssuredAfterFailure || factory is Cleanup,
-                           Requirements = definition.Requirements,
+                           DelegateRequirements = definition.DelegateRequirements,
                            ToolRequirements = definition.ToolRequirements,
                            Actions = definition.Actions,
                            Listed = !definition.IsInternal,

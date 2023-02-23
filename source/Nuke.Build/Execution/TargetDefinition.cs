@@ -34,7 +34,7 @@ namespace Nuke.Common.Execution
         internal string Description { get; set; }
         internal List<(string Text, Func<bool> Delegate)> DynamicConditions { get; } = new List<(string Text, Func<bool> Delegate)>();
         internal List<(string Text, Func<bool> Delegate)> StaticConditions { get; } = new List<(string Text, Func<bool> Delegate)>();
-        internal List<LambdaExpression> Requirements { get; } = new List<LambdaExpression>();
+        internal List<LambdaExpression> DelegateRequirements { get; } = new List<LambdaExpression>();
         internal List<ToolRequirement> ToolRequirements { get; } = new List<ToolRequirement>();
         internal List<Delegate> DependsOnTargets { get; } = new List<Delegate>();
         internal List<Delegate> DependentForTargets { get; } = new List<Delegate>();
@@ -120,20 +120,20 @@ namespace Nuke.Common.Execution
         public ITargetDefinition Requires<T>(Expression<Func<T>> parameterRequirement, params Expression<Func<T>>[] parameterRequirements)
             where T : class
         {
-            Requirements.AddRange(parameterRequirement.Concat(parameterRequirements));
+            DelegateRequirements.AddRange(parameterRequirement.Concat(parameterRequirements));
             return this;
         }
 
         public ITargetDefinition Requires<T>(Expression<Func<T?>> parameterRequirement, params Expression<Func<T?>>[] parameterRequirements)
             where T : struct
         {
-            Requirements.AddRange(parameterRequirement.Concat(parameterRequirements));
+            DelegateRequirements.AddRange(parameterRequirement.Concat(parameterRequirements));
             return this;
         }
 
         public ITargetDefinition Requires(Expression<Func<bool>> requirement, params Expression<Func<bool>>[] requirements)
         {
-            Requirements.AddRange(requirement.Concat(requirements));
+            DelegateRequirements.AddRange(requirement.Concat(requirements));
             return this;
         }
 

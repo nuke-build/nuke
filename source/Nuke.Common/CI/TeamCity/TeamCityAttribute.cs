@@ -168,7 +168,7 @@ namespace Nuke.Common.CI.TeamCity
                                  }).ToArray<TeamCityDependency>();
             }
 
-            var parameters = executableTarget.Requirements
+            var parameters = executableTarget.DelegateRequirements
                 .Where(x => x is not Expression<Func<bool>>)
                 .Select(x => GetParameter(x.GetMemberInfo(), required: true))
                 .Concat(new TeamCityKeyValueParameter(
@@ -241,7 +241,7 @@ namespace Nuke.Common.CI.TeamCity
         {
             return ValueInjectionUtility.GetParameterMembers(Build.GetType(), includeUnlisted: false)
                 // TODO: except build.ExecutableTargets ?
-                .Except(relevantTargets.SelectMany(x => x.Requirements
+                .Except(relevantTargets.SelectMany(x => x.DelegateRequirements
                     .Where(y => y is not Expression<Func<bool>>)
                     .Select(y => y.GetMemberInfo())))
                 .Where(x => !x.HasCustomAttribute<SecretAttribute>())
