@@ -34,7 +34,7 @@ namespace Nuke.Common.Tests.Execution
             targets.Single(x => x.IsDefault).Should().Be(e);
 
             a.Description.Should().Be(Description);
-            a.Requirements.Should().Equal(Requirement);
+            a.DelegateRequirements.Should().Equal(Requirement);
             a.Actions.Should().Equal(Action);
             a.AllDependencies.Should().BeEmpty();
 
@@ -88,7 +88,7 @@ namespace Nuke.Common.Tests.Execution
             var targets = ExecutableTargetFactory.CreateAll(build, x => ((IParameterInterface)x).HelloWorld);
 
             // must not throw
-            RequirementService.ValidateRequirements(build, targets);
+            DelegateRequirementService.ValidateRequirements(build, targets);
         }
 
         [Fact]

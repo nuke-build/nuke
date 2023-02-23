@@ -28,7 +28,7 @@ namespace Nuke.Common.Tests.Execution
 
             a.Factory.Should().Be(build.A);
             a.Description.Should().Be(build.Description);
-            a.Requirements.Should().Equal(build.Requirement);
+            a.DelegateRequirements.Should().Equal(build.Requirement);
             a.Actions.Should().Equal(build.Action);
             a.AllDependencies.Should().BeEmpty();
 

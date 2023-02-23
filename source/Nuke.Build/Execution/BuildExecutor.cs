@@ -37,7 +37,7 @@ namespace Nuke.Common.Execution
             // .Where(x => HasSkippingCondition(x, x.StaticConditions))
             // .ForEach(x => MarkTargetSkipped(build, x));
 
-            RequirementService.ValidateRequirements(build, build.ScheduledTargets);
+            DelegateRequirementService.ValidateRequirements(build, build.ScheduledTargets);
             var previouslyExecutedTargets = UpdateInvocationHash(build);
 
             BuildManager.CancellationHandler += ExecuteAssuredTargets;

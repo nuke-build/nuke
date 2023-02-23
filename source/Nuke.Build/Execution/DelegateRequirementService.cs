@@ -15,12 +15,12 @@ namespace Nuke.Common.Execution
     /// <summary>
     /// Validates all requirements for targets that are part of the execution plan.
     /// </summary>
-    internal static class RequirementService
+    internal static class DelegateRequirementService
     {
         public static void ValidateRequirements(INukeBuild build, IReadOnlyCollection<ExecutableTarget> scheduledTargets)
         {
             foreach (var target in scheduledTargets)
-            foreach (var requirement in target.Requirements)
+            foreach (var requirement in target.DelegateRequirements)
             {
                 if (requirement is Expression<Func<bool>> boolExpression)
                     // TODO: same as HasSkippingCondition.GetSkipReason

@@ -31,7 +31,7 @@ namespace Nuke.Common.Execution
         public DependencyBehavior DependencyBehavior { get; set; }
         public bool AssuredAfterFailure { get; set; }
         public bool ProceedAfterFailure { get; set; }
-        public ICollection<LambdaExpression> Requirements { get; internal set; } = new List<LambdaExpression>();
+        public ICollection<LambdaExpression> DelegateRequirements { get; internal set; } = new List<LambdaExpression>();
         public List<ToolRequirement> ToolRequirements { get; internal set; }
         public ICollection<Action> Actions { get; internal set; } = new List<Action>();
         public ICollection<ExecutableTarget> ExecutionDependencies { get; } = new List<ExecutableTarget>();
