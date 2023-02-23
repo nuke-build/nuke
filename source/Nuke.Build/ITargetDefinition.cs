@@ -80,19 +80,19 @@ namespace Nuke.Common
         /// <summary>
         ///   Adds a required parameter that will be checked prior to build execution.
         /// </summary>
-        ITargetDefinition Requires<T>(params Expression<Func<T>>[] parameterRequirement)
+        ITargetDefinition Requires<T>(Expression<Func<T>> parameterRequirement, params Expression<Func<T>>[] parameterRequirements)
             where T : class;
 
         /// <summary>
         ///   Adds a required parameter that will be checked prior to build execution.
         /// </summary>
-        ITargetDefinition Requires<T>(params Expression<Func<T?>>[] parameterRequirement)
+        ITargetDefinition Requires<T>(Expression<Func<T?>> parameterRequirement, params Expression<Func<T?>>[] parameterRequirements)
             where T : struct;
 
         /// <summary>
         ///   Adds a requirement that will be checked prior to build execution.
         /// </summary>
-        ITargetDefinition Requires(params Expression<Func<bool>>[] requirement);
+        ITargetDefinition Requires(Expression<Func<bool>> requirement, params Expression<Func<bool>>[] requirements);
 
         /// <summary>
         /// Defines if the dependencies should be skipped if the target is skipped.

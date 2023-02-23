@@ -115,23 +115,23 @@ namespace Nuke.Common.Execution
             return this;
         }
 
-        public ITargetDefinition Requires<T>(params Expression<Func<T>>[] parameterRequirement)
+        public ITargetDefinition Requires<T>(Expression<Func<T>> parameterRequirement, params Expression<Func<T>>[] parameterRequirements)
             where T : class
         {
-            Requirements.AddRange(parameterRequirement);
+            Requirements.AddRange(parameterRequirement.Concat(parameterRequirements));
             return this;
         }
 
-        public ITargetDefinition Requires<T>(params Expression<Func<T?>>[] parameterRequirement)
+        public ITargetDefinition Requires<T>(Expression<Func<T?>> parameterRequirement, params Expression<Func<T?>>[] parameterRequirements)
             where T : struct
         {
-            Requirements.AddRange(parameterRequirement);
+            Requirements.AddRange(parameterRequirement.Concat(parameterRequirements));
             return this;
         }
 
-        public ITargetDefinition Requires(params Expression<Func<bool>>[] requirement)
+        public ITargetDefinition Requires(Expression<Func<bool>> requirement, params Expression<Func<bool>>[] requirements)
         {
-            Requirements.AddRange(requirement);
+            Requirements.AddRange(requirement.Concat(requirements));
             return this;
         }
 
