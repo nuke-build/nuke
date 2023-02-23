@@ -36,7 +36,8 @@ namespace Nuke.Components
             .SetProject(Solution)
             .SetConfiguration(Configuration)
             .SetNoBuild(SucceededTargets.Contains(Compile))
-            .SetOutputDirectory(PackagesDirectory)
+            .SetProperty("PackageOutputPath", PackagesDirectory)
+            // .SetOutputDirectory(PackagesDirectory)
             .WhenNotNull(this as IHazGitRepository, (_, o) => _
                 .SetRepositoryUrl(o.GitRepository.HttpsUrl))
             .WhenNotNull(this as IHazGitVersion, (_, o) => _
