@@ -13,6 +13,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
@@ -109,6 +110,8 @@ namespace Nuke.Common.CI.GitHubActions
         public bool IsPullRequest => EventName == "pull_request";
         public int? PullRequestNumber => GitHubEvent.GetPropertyValue<int>("number");
         public string PullRequestAction => GitHubEvent.GetPropertyStringValue("action");
+
+        public AbsolutePath StepSummaryFile => EnvironmentInfo.GetVariable("GITHUB_STEP_SUMMARY");
 
         public void Group(string group)
         {
