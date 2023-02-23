@@ -18,17 +18,29 @@ namespace Nuke.CodeGeneration.Generators
     {
         public static void Run(Tool tool, ToolWriter toolWriter)
         {
-            if (tool.Tasks.Count == 0 && !tool.CustomExecutable && tool.PathExecutable == null && tool.PackageId == null)
+            if (tool.Tasks.Count == 0 && !tool.CustomExecutable && tool.PathExecutable == null && tool.NuGetPackageId == null)
                 return;
 
             toolWriter
                 .WriteSummary(tool)
                 .WriteLine("[PublicAPI]")
                 .WriteLine("[ExcludeFromCodeCoverage]")
-                .WriteLine($"public static partial class {tool.GetClassName()}")
+                .WriteLineIfTrue(tool.NuGetPackageId != null, $"[NuGetPackageRequirement({tool.Name}PackageId)]")
+                .WriteLineIfTrue(tool.NpmPackageId != null, $"[NpmPackageRequirement({tool.Name}PackageId)]")
+                .WriteLineIfTrue(tool.AptGetPackageId != null, $"[AptGetPackageRequirement({tool.Name}PackageId)]")
+                .WriteLineIfTrue(tool.PathExecutable != null, $"[PathToolRequirement({tool.Name}PathExecutable)]")
+                .WriteLine($"public partial class {tool.GetClassName()}")
+                .WriteLineIfTrue(tool.NuGetPackageId != null, "    : IRequireNuGetPackage")
+                .WriteLineIfTrue(tool.NpmPackageId != null, "    : IRequireNpmPackage")
+                .WriteLineIfTrue(tool.AptGetPackageId != null, "    : IRequireAptGetPackage")
+                .WriteLineIfTrue(tool.PathExecutable != null, "    : IRequirePathTool")
                 .WriteBlock(w =>
                 {
                     w
+                        .WriteLineIfTrue(tool.NuGetPackageId != null, $"public const string {tool.Name}PackageId = {tool.NuGetPackageId.DoubleQuote()};")
+                        .WriteLineIfTrue(tool.NpmPackageId != null, $"public const string {tool.Name}PackageId = {tool.NpmPackageId.DoubleQuote()};")
+                        .WriteLineIfTrue(tool.AptGetPackageId != null, $"public const string {tool.Name}PackageId = {tool.AptGetPackageId.DoubleQuote()};")
+                        .WriteLineIfTrue(tool.PathExecutable != null, $"public const string {tool.Name}PathExecutable = {tool.PathExecutable.DoubleQuote()};")
                         .WriteToolPath()
                         .WriteToolLogger()
                         .WriteGenericTask();
@@ -157,11 +169,16 @@ namespace Nuke.CodeGeneration.Generators
             var tool = writer.Tool;
             var resolvers = new List<string>();
 
-            if (tool.PackageId != null)
+            if (tool.NuGetPackageId != null && tool.PackageExecutable != null)
             {
                 resolvers.Add("NuGetToolPathResolver.GetPackageExecutable(" +
-                              $"{tool.PackageId.DoubleQuote()}, " +
-                              $"{tool.PackageExecutable?.DoubleQuote() ?? "GetPackageExecutable()"})");
+                              $"{tool.NuGetPackageId.DoubleQuote()}, " +
+                              $"{tool.PackageExecutable.DoubleQuote()})");
+            }
+
+            if (tool.NpmPackageId != null && tool.PackageExecutable != null)
+            {
+                resolvers.Add($"NpmToolPathResolver.GetNpmExecutable({tool.PackageExecutable.DoubleQuote()})");
             }
 
             if (tool.PathExecutable != null)

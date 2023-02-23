@@ -36,6 +36,11 @@ namespace Nuke.Common.Tooling
             _absoluteOrRelativePath = absoluteOrRelativePath;
         }
 
+        public override ToolRequirement GetRequirement(MemberInfo member)
+        {
+            return null;
+        }
+
         public override object GetValue(MemberInfo member, object instance)
         {
             var toolPath = PathConstruction.HasPathRoot(_absoluteOrRelativePath)

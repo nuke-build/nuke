@@ -52,8 +52,16 @@ namespace Nuke.CodeGeneration.Model
             "Help or introduction text to for the tool. Supports 'a-href', 'c', 'em', 'b', 'ul', 'li' and 'para' tags for better formatting.")]
         public string Help { get; set; }
 
+        [JsonProperty(PropertyName = "nugetPackageId")]
         [Description("ID for the NuGet package.")]
-        public string PackageId { get; set; }
+        public string NuGetPackageId { get; set; }
+
+        [Description("ID for the NPM package.")]
+        public string NpmPackageId { get; set; }
+
+        [JsonProperty(PropertyName = "aptPackageId")]
+        [Description("ID for the AptGet package.")]
+        public string AptGetPackageId { get; set; }
 
         [Description("Exact name of the main executable found in the './tools' folder. Case-sensitive.")]
         public string PackageExecutable { get; set; }

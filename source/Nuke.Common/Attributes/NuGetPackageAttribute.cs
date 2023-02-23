@@ -6,7 +6,6 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tooling
 {
@@ -52,6 +51,11 @@ namespace Nuke.Common.Tooling
         {
             _packageId = packageId;
             _packageExecutable = EnvironmentInfo.Is32Bit ? packageExecutable32 : packageExecutable64;
+        }
+
+        public override ToolRequirement GetRequirement(MemberInfo member)
+        {
+            return NuGetPackageRequirement.Create(_packageId, Version);
         }
 
         public override object GetValue(MemberInfo member, object instance)

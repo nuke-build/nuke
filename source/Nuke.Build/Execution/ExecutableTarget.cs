@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Collections;
 // ReSharper disable MissingBaseTypeHighlighting
 
@@ -31,6 +32,7 @@ namespace Nuke.Common.Execution
         public bool AssuredAfterFailure { get; set; }
         public bool ProceedAfterFailure { get; set; }
         public ICollection<LambdaExpression> Requirements { get; internal set; } = new List<LambdaExpression>();
+        public List<ToolRequirement> ToolRequirements { get; internal set; }
         public ICollection<Action> Actions { get; internal set; } = new List<Action>();
         public ICollection<ExecutableTarget> ExecutionDependencies { get; } = new List<ExecutableTarget>();
         public ICollection<ExecutableTarget> OrderDependencies { get; } = new List<ExecutableTarget>();
