@@ -73,15 +73,11 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 
 [<img height="170px" src="https://octopus.com/images/company/OctopusDeploy-logo-RGB.svg" alt="Octopus Deploy" />](https://octopus.com)
 
-[<img height="130px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/virto-commerce.png" alt="Virto Commerce" />](https://virtocommerce.com/)
-
 [<img height="60px" src="https://www.dangl-it.de/media/1195/logo-en-rectangular.png" alt="Dangl-IT GmbH" />](https://www.dangl-it.com/)
 [<img height="60px" src="https://peiitalliance.com/logos/LevelingUp-Logo.svg" alt="Leveling Up" />](https://github.com/ron-myers)
-[<img height="60px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/multinet.png" alt="MultiNet" />](https://www.multinet.com/)
 
 [![Rodney Littles II](https://avatars.githubusercontent.com/RLittlesII?s=60&v=4)](https://github.com/RLittlesII)
 [![Olga Nelioubov](https://avatars.githubusercontent.com/onelioubov?s=60&v=4)](https://github.com/onelioubov)
-[![Vova Lantsov](https://avatars.githubusercontent.com/vova-lantsov-dev?s=60&v=4)](https://github.com/vova-lantsov-dev)
 [![Daniel Valadas](https://avatars.githubusercontent.com/valadas?s=60&v=4)](https://github.com/valadas)
 [![Anton Wieslander](https://avatars.githubusercontent.com/T0shik?s=60&v=4)](https://github.com/T0shik)
 [![Chase Florell](https://avatars.githubusercontent.com/ChaseFlorell?s=60&v=4)](https://github.com/ChaseFlorell)
@@ -97,11 +93,11 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Logan Laughlin](https://avatars.githubusercontent.com/llaughlin?s=45&v=4)](https://github.com/llaughlin)
 [![Alex Sink](https://avatars.githubusercontent.com/hardcoded2?s=45&v=4)](https://github.com/hardcoded2)
 [![Martin Gill](https://avatars.githubusercontent.com/MartinSGill?s=45&v=4)](https://github.com/MartinSGill)
-[![Trey Cook](https://avatars.githubusercontent.com/hfcook3?s=45&v=4)](https://github.com/hfcook3)
 [![Todor Todorov](https://avatars.githubusercontent.com/totollygeek?s=45&v=4)](https://github.com/totollygeek)
 [![Vezel](https://avatars.githubusercontent.com/vezel-dev?s=45&v=4)](https://github.com/vezel-dev)
+[![Derek Beattie](https://avatars.githubusercontent.com/dbeattie71?s=45&v=4)](https://github.com/dbeattie71)
 [![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
-[![Rich Bryant](https://avatars.githubusercontent.com/richbryant?s=45&v=4)](https://github.com/richbryant)
+[![patrik53](https://avatars.githubusercontent.com/patrik53?s=45&v=4)](https://github.com/patrik53)
 [<img height="45px" src="https://images.opencollective.com/archon-systems-inc/85fa9b1/logo/256.png" alt="Archon Systems Inc." />](https://opencollective.com/archon-systems-inc/)
 [<img height="45px" src="https://images.opencollective.com/bitzer-electronics-as/39862ac/logo/256.png" alt="BITZER Electronics A/S" />](https://opencollective.com/bitzer-electronics-as)
 
