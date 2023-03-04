@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Run MSBuildTasks" type="RunExe" factoryName=".NET Executable">
-    <option name="EXE_PATH" value="/usr/local/share/dotnet/sdk/6.0.300/MSBuild.dll" />
+    <option name="EXE_PATH" value="/usr/local/share/dotnet/sdk/7.0.100/MSBuild.dll" />
     <option name="PROGRAM_PARAMETERS" value="/t:Clean;Restore;Publish;Pack /p:NukeTasksEnabled=True /bl" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build" />
     <option name="PASS_PARENT_ENVS" value="1" />
