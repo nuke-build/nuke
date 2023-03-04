@@ -2,9 +2,11 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.IO
 {
@@ -24,11 +26,12 @@ namespace Nuke.Common.IO
             if (depth == 0)
                 return Enumerable.Empty<AbsolutePath>();
 
-            var directories = path.GetDirectories(depth: depth);
-
-            return directories.SelectMany(x => Directory.EnumerateFiles(x, pattern, SearchOption.TopDirectoryOnly))
+            var files = Directory.EnumerateFiles(path, pattern, SearchOption.TopDirectoryOnly)
                 .Where(x => (File.GetAttributes(x) & attributes) == 0)
+                .OrderBy(x => x)
                 .Select(AbsolutePath.Create);
+
+            return files.Concat(path.GetDirectories(depth: depth - 1).SelectMany(x => x.GetFiles(pattern, attributes: attributes)));
         }
 
         /// <summary>
@@ -42,14 +45,21 @@ namespace Nuke.Common.IO
         {
             Assert.True(depth >= 0);
 
-            if (depth == 0)
-                return Enumerable.Empty<AbsolutePath>();
+            var paths = new string[] { path };
+            while (!paths.IsEmpty() && depth > 0)
+            {
+                var matchingDirectories = paths
+                    .SelectMany(x => Directory.EnumerateDirectories(x, pattern, SearchOption.TopDirectoryOnly))
+                    .Where(x => (File.GetAttributes(x) & attributes) == 0)
+                    .OrderBy(x => x)
+                    .Select(AbsolutePath.Create).ToList();
+                
+                foreach (var matchingDirectory in matchingDirectories)
+                    yield return matchingDirectory;
 
-            var directories = Directory.EnumerateDirectories(path, pattern, SearchOption.TopDirectoryOnly)
-                .Where(x => (File.GetAttributes(x) & attributes) == 0)
-                .Select(AbsolutePath.Create).ToList();
-
-            return directories.Concat(directories.SelectMany(x => x.GetDirectories(pattern, depth - 1, attributes)));
+                depth--;
+                paths = paths.SelectMany(x => Directory.GetDirectories(x, "*", SearchOption.TopDirectoryOnly)).ToArray();
+            }
         }
     }
 }
