@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CI [Azure Pipelines]" type="NukeBuildTarget" factoryName=".NET Project" singleton="false">
-    <option name="EXE_PATH" value="$PROJECT_DIR$/build/bin/Debug/_build.dll" />
-    <option name="PROGRAM_PARAMETERS" value="--generate-configuration AzurePipelines --host AzurePipelines" />
+  <configuration default="false" name="CI [TeamCity]" type="NukeBuildTarget" factoryName=".NET Project" singleton="false">
+    <option name="EXE_PATH" value="$PROJECT_DIR$/build/bin/Debug/_build" />
+    <option name="PROGRAM_PARAMETERS" value="--generate-configuration TeamCity --host TeamCity" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/build/bin/Debug" />
     <option name="PASS_PARENT_ENVS" value="1" />
     <option name="USE_EXTERNAL_CONSOLE" value="0" />
@@ -12,7 +12,7 @@
     <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
     <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
     <option name="PROJECT_KIND" value="DotNetCore" />
-    <option name="PROJECT_TFM" value="net5.0" />
+    <option name="PROJECT_TFM" value="net7.0" />
     <method v="2">
       <option name="Build" />
     </method>
