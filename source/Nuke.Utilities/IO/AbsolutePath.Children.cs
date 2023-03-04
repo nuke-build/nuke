@@ -24,11 +24,12 @@ namespace Nuke.Common.IO
             if (depth == 0)
                 return Enumerable.Empty<AbsolutePath>();
 
-            var directories = path.GetDirectories(depth: depth);
-
-            return directories.SelectMany(x => Directory.EnumerateFiles(x, pattern, SearchOption.TopDirectoryOnly))
+            var files = Directory.EnumerateFiles(path, pattern, SearchOption.TopDirectoryOnly)
                 .Where(x => (File.GetAttributes(x) & attributes) == 0)
+                .OrderBy(x => x)
                 .Select(AbsolutePath.Create);
+
+            return files.Concat(path.GetDirectories(depth: depth - 1).SelectMany(x => x.GetFiles(pattern, attributes: attributes)));
         }
 
         /// <summary>
@@ -47,9 +48,10 @@ namespace Nuke.Common.IO
 
             var directories = Directory.EnumerateDirectories(path, pattern, SearchOption.TopDirectoryOnly)
                 .Where(x => (File.GetAttributes(x) & attributes) == 0)
-                .Select(AbsolutePath.Create).ToList();
+                .OrderBy(x => x)
+                .Select(AbsolutePath.Create);
 
-            return directories.Concat(directories.SelectMany(x => x.GetDirectories(pattern, depth - 1, attributes)));
+            return directories.Concat(path.GetDirectories(depth: depth - 1).SelectMany(x => x.GetDirectories(pattern, attributes: attributes)));
         }
     }
 }
