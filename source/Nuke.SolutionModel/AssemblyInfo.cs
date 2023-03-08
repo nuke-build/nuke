@@ -6,3 +6,4 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Nuke.Common")]
 [assembly: InternalsVisibleTo("Nuke.SolutionModel.Tests")]
+[assembly: InternalsVisibleTo("Nuke.SourceGenerators")]
