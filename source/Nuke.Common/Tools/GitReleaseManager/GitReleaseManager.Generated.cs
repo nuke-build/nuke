@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.GitReleaseManager
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class GitReleaseManagerTasks
+    [NuGetPackageRequirement(GitReleaseManagerPackageId)]
+    public partial class GitReleaseManagerTasks
+        : IRequireNuGetPackage
     {
+        public const string GitReleaseManagerPackageId = "gitreleasemanager";
         /// <summary>
         ///   Path to the GitReleaseManager executable.
         /// </summary>

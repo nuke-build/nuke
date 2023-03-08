@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.InnoSetup
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class InnoSetupTasks
+    [PathToolRequirement(InnoSetupPathExecutable)]
+    public partial class InnoSetupTasks
+        : IRequirePathTool
     {
+        public const string InnoSetupPathExecutable = "iscc";
         /// <summary>
         ///   Path to the InnoSetup executable.
         /// </summary>

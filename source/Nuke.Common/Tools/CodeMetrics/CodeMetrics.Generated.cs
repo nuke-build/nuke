@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.CodeMetrics
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class CodeMetricsTasks
+    [NuGetPackageRequirement(CodeMetricsPackageId)]
+    public partial class CodeMetricsTasks
+        : IRequireNuGetPackage
     {
+        public const string CodeMetricsPackageId = "Microsoft.CodeAnalysis.Metrics";
         /// <summary>
         ///   Path to the CodeMetrics executable.
         /// </summary>

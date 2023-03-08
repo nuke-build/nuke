@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.NuGet
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class NuGetTasks
+    [NuGetPackageRequirement(NuGetPackageId)]
+    public partial class NuGetTasks
+        : IRequireNuGetPackage
     {
+        public const string NuGetPackageId = "NuGet.CommandLine";
         /// <summary>
         ///   Path to the NuGet executable.
         /// </summary>

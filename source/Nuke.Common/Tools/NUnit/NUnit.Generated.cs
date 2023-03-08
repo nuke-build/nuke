@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.NUnit
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class NUnitTasks
+    [NuGetPackageRequirement(NUnitPackageId)]
+    public partial class NUnitTasks
+        : IRequireNuGetPackage
     {
+        public const string NUnitPackageId = "NUnit.ConsoleRunner";
         /// <summary>
         ///   Path to the NUnit executable.
         /// </summary>

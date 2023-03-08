@@ -23,7 +23,7 @@ namespace Nuke.Common.Tools.CloudFoundry
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class CloudFoundryTasks
+    public partial class CloudFoundryTasks
     {
         /// <summary>
         ///   Path to the CloudFoundry executable.

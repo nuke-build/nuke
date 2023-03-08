@@ -24,8 +24,11 @@ namespace Nuke.Common.Tools.Docker
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class DockerTasks
+    [PathToolRequirement(DockerPathExecutable)]
+    public partial class DockerTasks
+        : IRequirePathTool
     {
+        public const string DockerPathExecutable = "docker";
         /// <summary>
         ///   Path to the Docker executable.
         /// </summary>

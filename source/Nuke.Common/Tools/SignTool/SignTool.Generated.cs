@@ -23,7 +23,7 @@ namespace Nuke.Common.Tools.SignTool
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class SignToolTasks
+    public partial class SignToolTasks
     {
         /// <summary>
         ///   Path to the SignTool executable.

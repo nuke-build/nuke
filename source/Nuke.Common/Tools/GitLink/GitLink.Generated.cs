@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.GitLink
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class GitLinkTasks
+    [NuGetPackageRequirement(GitLinkPackageId)]
+    public partial class GitLinkTasks
+        : IRequireNuGetPackage
     {
+        public const string GitLinkPackageId = "gitlink";
         /// <summary>
         ///   Path to the GitLink executable.
         /// </summary>

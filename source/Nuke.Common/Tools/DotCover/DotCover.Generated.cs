@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.DotCover
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class DotCoverTasks
+    [NuGetPackageRequirement(DotCoverPackageId)]
+    public partial class DotCoverTasks
+        : IRequireNuGetPackage
     {
+        public const string DotCoverPackageId = "JetBrains.dotCover.DotNetCliTool";
         /// <summary>
         ///   Path to the DotCover executable.
         /// </summary>

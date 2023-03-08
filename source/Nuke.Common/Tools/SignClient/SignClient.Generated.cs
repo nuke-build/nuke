@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.SignClient
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class SignClientTasks
+    [NuGetPackageRequirement(SignClientPackageId)]
+    public partial class SignClientTasks
+        : IRequireNuGetPackage
     {
+        public const string SignClientPackageId = "SignClient";
         /// <summary>
         ///   Path to the SignClient executable.
         /// </summary>

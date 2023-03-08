@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.Paket
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class PaketTasks
+    [NuGetPackageRequirement(PaketPackageId)]
+    public partial class PaketTasks
+        : IRequireNuGetPackage
     {
+        public const string PaketPackageId = "Paket";
         /// <summary>
         ///   Path to the Paket executable.
         /// </summary>

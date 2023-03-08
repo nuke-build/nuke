@@ -22,8 +22,11 @@ namespace Nuke.Common.Tools.DotNet
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class DotNetTasks
+    [PathToolRequirement(DotNetPathExecutable)]
+    public partial class DotNetTasks
+        : IRequirePathTool
     {
+        public const string DotNetPathExecutable = "dotnet";
         /// <summary>
         ///   Path to the DotNet executable.
         /// </summary>

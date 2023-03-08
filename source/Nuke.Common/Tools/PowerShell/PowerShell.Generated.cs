@@ -23,7 +23,7 @@ namespace Nuke.Common.Tools.PowerShell
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class PowerShellTasks
+    public partial class PowerShellTasks
     {
         /// <summary>
         ///   Path to the PowerShell executable.

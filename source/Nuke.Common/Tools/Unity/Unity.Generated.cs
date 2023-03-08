@@ -23,7 +23,7 @@ namespace Nuke.Common.Tools.Unity
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class UnityTasks
+    public partial class UnityTasks
     {
         /// <summary>
         ///   Path to the Unity executable.

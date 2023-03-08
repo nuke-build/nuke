@@ -22,8 +22,11 @@ namespace Nuke.Common.Tools.Kubernetes
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class KubernetesTasks
+    [PathToolRequirement(KubernetesPathExecutable)]
+    public partial class KubernetesTasks
+        : IRequirePathTool
     {
+        public const string KubernetesPathExecutable = "kubectl";
         /// <summary>
         ///   Path to the Kubernetes executable.
         /// </summary>
@@ -893,6 +896,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;typeName&gt;</c> via <see cref="KubernetesDeleteSettings.TypeName"/></li>
         ///     <li><c>--all</c> via <see cref="KubernetesDeleteSettings.All"/></li>
         ///     <li><c>--cascade</c> via <see cref="KubernetesDeleteSettings.Cascade"/></li>
         ///     <li><c>--field-selector</c> via <see cref="KubernetesDeleteSettings.FieldSelector"/></li>
@@ -923,6 +927,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;typeName&gt;</c> via <see cref="KubernetesDeleteSettings.TypeName"/></li>
         ///     <li><c>--all</c> via <see cref="KubernetesDeleteSettings.All"/></li>
         ///     <li><c>--cascade</c> via <see cref="KubernetesDeleteSettings.Cascade"/></li>
         ///     <li><c>--field-selector</c> via <see cref="KubernetesDeleteSettings.FieldSelector"/></li>
@@ -950,6 +955,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;typeName&gt;</c> via <see cref="KubernetesDeleteSettings.TypeName"/></li>
         ///     <li><c>--all</c> via <see cref="KubernetesDeleteSettings.All"/></li>
         ///     <li><c>--cascade</c> via <see cref="KubernetesDeleteSettings.Cascade"/></li>
         ///     <li><c>--field-selector</c> via <see cref="KubernetesDeleteSettings.FieldSelector"/></li>
@@ -2516,6 +2522,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;typeName&gt;</c> via <see cref="KubernetesCreateSettings.TypeName"/></li>
         ///     <li><c>--allow-missing-template-keys</c> via <see cref="KubernetesCreateSettings.AllowMissingTemplateKeys"/></li>
         ///     <li><c>--dry-run</c> via <see cref="KubernetesCreateSettings.DryRun"/></li>
         ///     <li><c>--edit</c> via <see cref="KubernetesCreateSettings.Edit"/></li>
@@ -2545,6 +2552,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;typeName&gt;</c> via <see cref="KubernetesCreateSettings.TypeName"/></li>
         ///     <li><c>--allow-missing-template-keys</c> via <see cref="KubernetesCreateSettings.AllowMissingTemplateKeys"/></li>
         ///     <li><c>--dry-run</c> via <see cref="KubernetesCreateSettings.DryRun"/></li>
         ///     <li><c>--edit</c> via <see cref="KubernetesCreateSettings.Edit"/></li>
@@ -2571,6 +2579,7 @@ namespace Nuke.Common.Tools.Kubernetes
         /// <remarks>
         ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
         ///   <ul>
+        ///     <li><c>&lt;typeName&gt;</c> via <see cref="KubernetesCreateSettings.TypeName"/></li>
         ///     <li><c>--allow-missing-template-keys</c> via <see cref="KubernetesCreateSettings.AllowMissingTemplateKeys"/></li>
         ///     <li><c>--dry-run</c> via <see cref="KubernetesCreateSettings.DryRun"/></li>
         ///     <li><c>--edit</c> via <see cref="KubernetesCreateSettings.Edit"/></li>
@@ -4016,6 +4025,11 @@ namespace Nuke.Common.Tools.Kubernetes
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
         public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
+        ///   The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified
+        /// </summary>
+        public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
+        internal List<string> TypeNameInternal { get; set; } = new List<string>();
+        /// <summary>
         ///   Delete all resources, including uninitialized ones, in the namespace of the specified resource types.
         /// </summary>
         public virtual bool? All { get; internal set; }
@@ -4076,6 +4090,7 @@ namespace Nuke.Common.Tools.Kubernetes
         {
             arguments
               .Add("delete")
+              .Add("{value}", TypeName, separator: ' ')
               .Add("--all={value}", All)
               .Add("--cascade={value}", Cascade)
               .Add("--field-selector={value}", FieldSelector)
@@ -5510,6 +5525,11 @@ namespace Nuke.Common.Tools.Kubernetes
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
         public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
+        ///   The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified
+        /// </summary>
+        public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
+        internal List<string> TypeNameInternal { get; set; } = new List<string>();
+        /// <summary>
         ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
         /// </summary>
         public virtual bool? AllowMissingTemplateKeys { get; internal set; }
@@ -5566,6 +5586,7 @@ namespace Nuke.Common.Tools.Kubernetes
         {
             arguments
               .Add("create")
+              .Add("{value}", TypeName, separator: ' ')
               .Add("--allow-missing-template-keys={value}", AllowMissingTemplateKeys)
               .Add("--dry-run={value}", DryRun)
               .Add("--edit={value}", Edit)
@@ -5598,7 +5619,7 @@ namespace Nuke.Common.Tools.Kubernetes
         public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
         public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
         /// <summary>
-        ///   The type or/and name of the ressource.
+        ///   The type or/and name of the resource.
         /// </summary>
         public virtual IReadOnlyList<string> TypeName => TypeNameInternal.AsReadOnly();
         internal List<string> TypeNameInternal { get; set; } = new List<string>();
@@ -12287,6 +12308,87 @@ namespace Nuke.Common.Tools.Kubernetes
     [ExcludeFromCodeCoverage]
     public static partial class KubernetesDeleteSettingsExtensions
     {
+        #region TypeName
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesDeleteSettings.TypeName"/> to a new list</em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesDeleteSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameInternal = typeName.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesDeleteSettings.TypeName"/> to a new list</em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesDeleteSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameInternal = typeName.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="KubernetesDeleteSettings.TypeName"/></em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesDeleteSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameInternal.AddRange(typeName);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="KubernetesDeleteSettings.TypeName"/></em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesDeleteSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameInternal.AddRange(typeName);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="KubernetesDeleteSettings.TypeName"/></em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesDeleteSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="KubernetesDeleteSettings.TypeName"/></em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesDeleteSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(typeName);
+            toolSettings.TypeNameInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="KubernetesDeleteSettings.TypeName"/></em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesDeleteSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(typeName);
+            toolSettings.TypeNameInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
         #region All
         /// <summary>
         ///   <p><em>Sets <see cref="KubernetesDeleteSettings.All"/></em></p>
@@ -20405,6 +20507,87 @@ namespace Nuke.Common.Tools.Kubernetes
     [ExcludeFromCodeCoverage]
     public static partial class KubernetesCreateSettingsExtensions
     {
+        #region TypeName
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesCreateSettings.TypeName"/> to a new list</em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesCreateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameInternal = typeName.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Sets <see cref="KubernetesCreateSettings.TypeName"/> to a new list</em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesCreateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameInternal = typeName.ToList();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="KubernetesCreateSettings.TypeName"/></em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesCreateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameInternal.AddRange(typeName);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Adds values to <see cref="KubernetesCreateSettings.TypeName"/></em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesCreateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameInternal.AddRange(typeName);
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Clears <see cref="KubernetesCreateSettings.TypeName"/></em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesCreateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            toolSettings.TypeNameInternal.Clear();
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="KubernetesCreateSettings.TypeName"/></em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesCreateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(typeName);
+            toolSettings.TypeNameInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        /// <summary>
+        ///   <p><em>Removes values from <see cref="KubernetesCreateSettings.TypeName"/></em></p>
+        ///   <p>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</p>
+        /// </summary>
+        [Pure]
+        public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesCreateSettings
+        {
+            toolSettings = toolSettings.NewInstance();
+            var hashSet = new HashSet<string>(typeName);
+            toolSettings.TypeNameInternal.RemoveAll(x => hashSet.Contains(x));
+            return toolSettings;
+        }
+        #endregion
         #region AllowMissingTemplateKeys
         /// <summary>
         ///   <p><em>Sets <see cref="KubernetesCreateSettings.AllowMissingTemplateKeys"/></em></p>
@@ -21051,7 +21234,7 @@ namespace Nuke.Common.Tools.Kubernetes
         #region TypeName
         /// <summary>
         ///   <p><em>Sets <see cref="KubernetesPortForwardSettings.TypeName"/> to a new list</em></p>
-        ///   <p>The type or/and name of the ressource.</p>
+        ///   <p>The type or/and name of the resource.</p>
         /// </summary>
         [Pure]
         public static T SetTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesPortForwardSettings
@@ -21062,7 +21245,7 @@ namespace Nuke.Common.Tools.Kubernetes
         }
         /// <summary>
         ///   <p><em>Sets <see cref="KubernetesPortForwardSettings.TypeName"/> to a new list</em></p>
-        ///   <p>The type or/and name of the ressource.</p>
+        ///   <p>The type or/and name of the resource.</p>
         /// </summary>
         [Pure]
         public static T SetTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesPortForwardSettings
@@ -21073,7 +21256,7 @@ namespace Nuke.Common.Tools.Kubernetes
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="KubernetesPortForwardSettings.TypeName"/></em></p>
-        ///   <p>The type or/and name of the ressource.</p>
+        ///   <p>The type or/and name of the resource.</p>
         /// </summary>
         [Pure]
         public static T AddTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesPortForwardSettings
@@ -21084,7 +21267,7 @@ namespace Nuke.Common.Tools.Kubernetes
         }
         /// <summary>
         ///   <p><em>Adds values to <see cref="KubernetesPortForwardSettings.TypeName"/></em></p>
-        ///   <p>The type or/and name of the ressource.</p>
+        ///   <p>The type or/and name of the resource.</p>
         /// </summary>
         [Pure]
         public static T AddTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesPortForwardSettings
@@ -21095,7 +21278,7 @@ namespace Nuke.Common.Tools.Kubernetes
         }
         /// <summary>
         ///   <p><em>Clears <see cref="KubernetesPortForwardSettings.TypeName"/></em></p>
-        ///   <p>The type or/and name of the ressource.</p>
+        ///   <p>The type or/and name of the resource.</p>
         /// </summary>
         [Pure]
         public static T ClearTypeName<T>(this T toolSettings) where T : KubernetesPortForwardSettings
@@ -21106,7 +21289,7 @@ namespace Nuke.Common.Tools.Kubernetes
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="KubernetesPortForwardSettings.TypeName"/></em></p>
-        ///   <p>The type or/and name of the ressource.</p>
+        ///   <p>The type or/and name of the resource.</p>
         /// </summary>
         [Pure]
         public static T RemoveTypeName<T>(this T toolSettings, params string[] typeName) where T : KubernetesPortForwardSettings
@@ -21118,7 +21301,7 @@ namespace Nuke.Common.Tools.Kubernetes
         }
         /// <summary>
         ///   <p><em>Removes values from <see cref="KubernetesPortForwardSettings.TypeName"/></em></p>
-        ///   <p>The type or/and name of the ressource.</p>
+        ///   <p>The type or/and name of the resource.</p>
         /// </summary>
         [Pure]
         public static T RemoveTypeName<T>(this T toolSettings, IEnumerable<string> typeName) where T : KubernetesPortForwardSettings

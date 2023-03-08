@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.Boots
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class BootsTasks
+    [NuGetPackageRequirement(BootsPackageId)]
+    public partial class BootsTasks
+        : IRequireNuGetPackage
     {
+        public const string BootsPackageId = "Boots";
         /// <summary>
         ///   Path to the Boots executable.
         /// </summary>

@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.AzureSignTool
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class AzureSignToolTasks
+    [NuGetPackageRequirement(AzureSignToolPackageId)]
+    public partial class AzureSignToolTasks
+        : IRequireNuGetPackage
     {
+        public const string AzureSignToolPackageId = "AzureSignTool";
         /// <summary>
         ///   Path to the AzureSignTool executable.
         /// </summary>

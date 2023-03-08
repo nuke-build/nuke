@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.Xunit
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class XunitTasks
+    [NuGetPackageRequirement(XunitPackageId)]
+    public partial class XunitTasks
+        : IRequireNuGetPackage
     {
+        public const string XunitPackageId = "xunit.runner.console";
         /// <summary>
         ///   Path to the Xunit executable.
         /// </summary>
