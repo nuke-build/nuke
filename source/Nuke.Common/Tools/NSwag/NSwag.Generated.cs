@@ -24,8 +24,11 @@ namespace Nuke.Common.Tools.NSwag
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class NSwagTasks
+    [NuGetPackageRequirement(NSwagPackageId)]
+    public partial class NSwagTasks
+        : IRequireNuGetPackage
     {
+        public const string NSwagPackageId = "nswag.msbuild";
         /// <summary>
         ///   Path to the NSwag executable.
         /// </summary>

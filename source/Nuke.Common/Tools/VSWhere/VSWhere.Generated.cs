@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.VSWhere
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class VSWhereTasks
+    [NuGetPackageRequirement(VSWherePackageId)]
+    public partial class VSWhereTasks
+        : IRequireNuGetPackage
     {
+        public const string VSWherePackageId = "vswhere";
         /// <summary>
         ///   Path to the VSWhere executable.
         /// </summary>

@@ -22,8 +22,11 @@ namespace Nuke.Common.Tools.Helm
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class HelmTasks
+    [PathToolRequirement(HelmPathExecutable)]
+    public partial class HelmTasks
+        : IRequirePathTool
     {
+        public const string HelmPathExecutable = "helm";
         /// <summary>
         ///   Path to the Helm executable.
         /// </summary>

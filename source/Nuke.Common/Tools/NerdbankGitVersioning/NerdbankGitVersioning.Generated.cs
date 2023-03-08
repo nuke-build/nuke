@@ -22,8 +22,11 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class NerdbankGitVersioningTasks
+    [NuGetPackageRequirement(NerdbankGitVersioningPackageId)]
+    public partial class NerdbankGitVersioningTasks
+        : IRequireNuGetPackage
     {
+        public const string NerdbankGitVersioningPackageId = "nbgv";
         /// <summary>
         ///   Path to the NerdbankGitVersioning executable.
         /// </summary>

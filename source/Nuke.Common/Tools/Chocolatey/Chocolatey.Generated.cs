@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.Chocolatey
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class ChocolateyTasks
+    [PathToolRequirement(ChocolateyPathExecutable)]
+    public partial class ChocolateyTasks
+        : IRequirePathTool
     {
+        public const string ChocolateyPathExecutable = "choco";
         /// <summary>
         ///   Path to the Chocolatey executable.
         /// </summary>

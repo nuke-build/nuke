@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.ReportGenerator
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class ReportGeneratorTasks
+    [NuGetPackageRequirement(ReportGeneratorPackageId)]
+    public partial class ReportGeneratorTasks
+        : IRequireNuGetPackage
     {
+        public const string ReportGeneratorPackageId = "ReportGenerator";
         /// <summary>
         ///   Path to the ReportGenerator executable.
         /// </summary>

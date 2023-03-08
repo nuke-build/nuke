@@ -22,8 +22,11 @@ namespace Nuke.Common.Tools.ReSharper
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class ReSharperTasks
+    [NuGetPackageRequirement(ReSharperPackageId)]
+    public partial class ReSharperTasks
+        : IRequireNuGetPackage
     {
+        public const string ReSharperPackageId = "JetBrains.ReSharper.GlobalTools";
         /// <summary>
         ///   Path to the ReSharper executable.
         /// </summary>

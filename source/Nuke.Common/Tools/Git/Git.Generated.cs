@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.Git
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class GitTasks
+    [PathToolRequirement(GitPathExecutable)]
+    public partial class GitTasks
+        : IRequirePathTool
     {
+        public const string GitPathExecutable = "git";
         /// <summary>
         ///   Path to the Git executable.
         /// </summary>

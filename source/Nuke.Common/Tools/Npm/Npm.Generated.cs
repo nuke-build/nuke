@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.Npm
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class NpmTasks
+    [PathToolRequirement(NpmPathExecutable)]
+    public partial class NpmTasks
+        : IRequirePathTool
     {
+        public const string NpmPathExecutable = "npm";
         /// <summary>
         ///   Path to the Npm executable.
         /// </summary>

@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.DotMemoryUnit
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class DotMemoryUnitTasks
+    [NuGetPackageRequirement(DotMemoryUnitPackageId)]
+    public partial class DotMemoryUnitTasks
+        : IRequireNuGetPackage
     {
+        public const string DotMemoryUnitPackageId = "JetBrains.DotMemoryUnit";
         /// <summary>
         ///   Path to the DotMemoryUnit executable.
         /// </summary>

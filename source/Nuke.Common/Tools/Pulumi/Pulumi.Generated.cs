@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.Pulumi
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class PulumiTasks
+    [PathToolRequirement(PulumiPathExecutable)]
+    public partial class PulumiTasks
+        : IRequirePathTool
     {
+        public const string PulumiPathExecutable = "pulumi";
         /// <summary>
         ///   Path to the Pulumi executable.
         /// </summary>

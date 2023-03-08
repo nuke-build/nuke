@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.OpenCover
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class OpenCoverTasks
+    [NuGetPackageRequirement(OpenCoverPackageId)]
+    public partial class OpenCoverTasks
+        : IRequireNuGetPackage
     {
+        public const string OpenCoverPackageId = "OpenCover";
         /// <summary>
         ///   Path to the OpenCover executable.
         /// </summary>

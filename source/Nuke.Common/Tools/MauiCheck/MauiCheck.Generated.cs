@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.MauiCheck
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class MauiCheckTasks
+    [NuGetPackageRequirement(MauiCheckPackageId)]
+    public partial class MauiCheckTasks
+        : IRequireNuGetPackage
     {
+        public const string MauiCheckPackageId = "Redth.Net.Maui.Check";
         /// <summary>
         ///   Path to the MauiCheck executable.
         /// </summary>

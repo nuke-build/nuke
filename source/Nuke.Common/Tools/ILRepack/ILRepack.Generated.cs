@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.ILRepack
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class ILRepackTasks
+    [NuGetPackageRequirement(ILRepackPackageId)]
+    public partial class ILRepackTasks
+        : IRequireNuGetPackage
     {
+        public const string ILRepackPackageId = "ILRepack";
         /// <summary>
         ///   Path to the ILRepack executable.
         /// </summary>

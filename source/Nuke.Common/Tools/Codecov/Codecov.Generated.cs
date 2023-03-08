@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.Codecov
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class CodecovTasks
+    [NuGetPackageRequirement(CodecovPackageId)]
+    public partial class CodecovTasks
+        : IRequireNuGetPackage
     {
+        public const string CodecovPackageId = "Codecov.Tool";
         /// <summary>
         ///   Path to the Codecov executable.
         /// </summary>

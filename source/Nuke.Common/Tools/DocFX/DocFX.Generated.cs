@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.DocFX
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class DocFXTasks
+    [NuGetPackageRequirement(DocFXPackageId)]
+    public partial class DocFXTasks
+        : IRequireNuGetPackage
     {
+        public const string DocFXPackageId = "docfx.console";
         /// <summary>
         ///   Path to the DocFX executable.
         /// </summary>

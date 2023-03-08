@@ -23,7 +23,7 @@ namespace Nuke.Common.Tools.MSBuild
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class MSBuildTasks
+    public partial class MSBuildTasks
     {
         /// <summary>
         ///   Path to the MSBuild executable.

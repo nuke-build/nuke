@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.EntityFramework
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class EntityFrameworkTasks
+    [PathToolRequirement(EntityFrameworkPathExecutable)]
+    public partial class EntityFrameworkTasks
+        : IRequirePathTool
     {
+        public const string EntityFrameworkPathExecutable = "dotnet";
         /// <summary>
         ///   Path to the EntityFramework executable.
         /// </summary>

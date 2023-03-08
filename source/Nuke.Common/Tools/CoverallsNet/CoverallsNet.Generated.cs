@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.CoverallsNet
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class CoverallsNetTasks
+    [NuGetPackageRequirement(CoverallsNetPackageId)]
+    public partial class CoverallsNetTasks
+        : IRequireNuGetPackage
     {
+        public const string CoverallsNetPackageId = "coveralls.net";
         /// <summary>
         ///   Path to the CoverallsNet executable.
         /// </summary>

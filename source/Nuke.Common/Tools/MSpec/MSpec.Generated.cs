@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.MSpec
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class MSpecTasks
+    [NuGetPackageRequirement(MSpecPackageId)]
+    public partial class MSpecTasks
+        : IRequireNuGetPackage
     {
+        public const string MSpecPackageId = "machine.specifications.runner.console";
         /// <summary>
         ///   Path to the MSpec executable.
         /// </summary>

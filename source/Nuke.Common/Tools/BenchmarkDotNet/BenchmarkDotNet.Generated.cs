@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.BenchmarkDotNet
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class BenchmarkDotNetTasks
+    [NuGetPackageRequirement(BenchmarkDotNetPackageId)]
+    public partial class BenchmarkDotNetTasks
+        : IRequireNuGetPackage
     {
+        public const string BenchmarkDotNetPackageId = "benchmarkdotnet.tool";
         /// <summary>
         ///   Path to the BenchmarkDotNet executable.
         /// </summary>

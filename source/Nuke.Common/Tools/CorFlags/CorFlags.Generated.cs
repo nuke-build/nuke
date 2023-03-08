@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.CorFlags
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class CorFlagsTasks
+    [PathToolRequirement(CorFlagsPathExecutable)]
+    public partial class CorFlagsTasks
+        : IRequirePathTool
     {
+        public const string CorFlagsPathExecutable = "CorFlags.exe";
         /// <summary>
         ///   Path to the CorFlags executable.
         /// </summary>

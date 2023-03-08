@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.SpecFlow
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class SpecFlowTasks
+    [NuGetPackageRequirement(SpecFlowPackageId)]
+    public partial class SpecFlowTasks
+        : IRequireNuGetPackage
     {
+        public const string SpecFlowPackageId = "SpecFlow";
         /// <summary>
         ///   Path to the SpecFlow executable.
         /// </summary>

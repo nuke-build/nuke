@@ -24,8 +24,11 @@ namespace Nuke.Common.Tools.Coverlet
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class CoverletTasks
+    [NuGetPackageRequirement(CoverletPackageId)]
+    public partial class CoverletTasks
+        : IRequireNuGetPackage
     {
+        public const string CoverletPackageId = "coverlet.console";
         /// <summary>
         ///   Path to the Coverlet executable.
         /// </summary>

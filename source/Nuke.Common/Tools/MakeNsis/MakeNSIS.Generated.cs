@@ -23,8 +23,11 @@ namespace Nuke.Common.Tools.MakeNSIS
     /// </summary>
     [PublicAPI]
     [ExcludeFromCodeCoverage]
-    public static partial class MakeNSISTasks
+    [PathToolRequirement(MakeNSISPathExecutable)]
+    public partial class MakeNSISTasks
+        : IRequirePathTool
     {
+        public const string MakeNSISPathExecutable = "makensis";
         /// <summary>
         ///   Path to the MakeNSIS executable.
         /// </summary>
