@@ -289,8 +289,16 @@
       "description": "Help or introduction text to for the tool. Supports 'a-href', 'c', 'em', 'b', 'ul', 'li' and 'para' tags for better formatting.",
       "type": "string"
     },
-    "packageId": {
+    "nugetPackageId": {
       "description": "ID for the NuGet package.",
+      "type": "string"
+    },
+    "npmPackageId": {
+      "description": "ID for the NPM package.",
+      "type": "string"
+    },
+    "aptgetPackageId": {
+      "description": "ID for the AptGet package.",
       "type": "string"
     },
     "packageExecutable": {

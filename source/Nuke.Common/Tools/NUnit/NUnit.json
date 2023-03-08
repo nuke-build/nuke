@@ -6,7 +6,7 @@
   "name": "NUnit",
   "officialUrl": "https://www.nunit.org/",
   "help": "NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href=\"http://www.junit.org/\">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.",
-  "packageId": "NUnit.ConsoleRunner",
+  "nugetPackageId": "NUnit.ConsoleRunner",
   "packageExecutable": "nunit3-console.exe",
   "tasks": [
     {

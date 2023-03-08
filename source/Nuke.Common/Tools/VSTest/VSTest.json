@@ -6,7 +6,7 @@
   "name": "VSTest",
   "officialUrl": "https://msdn.microsoft.com/en-us/library/jj155796.aspx",
   "help": "VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.",
-  "packageId": "Microsoft.TestPlatform",
+  "nugetPackageId": "Microsoft.TestPlatform",
   "packageExecutable": "vstest.console.exe",
   "tasks": [
     {

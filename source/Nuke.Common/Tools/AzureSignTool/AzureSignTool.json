@@ -3,7 +3,7 @@
   "name": "AzureSignTool",
   "officialUrl": "https://github.com/vcsjones/AzureSignTool",
   "help": "Azure Sign Tool is similar to <c>signtool</c> in the Windows SDK, with the major difference being that it uses Azure Key Vault for performing the signing process. The usage is like <c>signtool</c>, except with a limited set of options for signing and options for authenticating to Azure Key Vault.",
-  "packageId": "AzureSignTool",
+  "nugetPackageId": "AzureSignTool",
   "packageExecutable": "AzureSignTool.dll",
   "tasks": [
     {

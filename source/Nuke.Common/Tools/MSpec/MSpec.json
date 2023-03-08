@@ -6,6 +6,7 @@
   "name": "MSpec",
   "officialUrl": "https://github.com/machine/machine.specifications",
   "help": "MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.",
+  "nugetPackageId": "machine.specifications.runner.console",
   "customExecutable": true,
   "tasks": [
     {

@@ -6,7 +6,7 @@
   "name": "SignClient",
   "officialUrl": "https://discoverdot.net/projects/sign-service",
   "help": "Code Signing client for Authenticode, NuGet, VSIX, and more",
-  "packageId": "SignClient",
+  "nugetPackageId": "SignClient",
   "packageExecutable": "SignClient.exe",
   "tasks": [
     {

@@ -3,7 +3,7 @@
   "name": "MauiCheck",
   "officialUrl": "https://github.com/Redth/dotnet-maui-check",
   "help": "A dotnet tool for helping set up your .NET MAUI environment.",
-  "packageId": "Redth.Net.Maui.Check",
+  "nugetPackageId": "Redth.Net.Maui.Check",
   "packageExecutable": "MauiCheck.dll",
   "tasks": [
     {

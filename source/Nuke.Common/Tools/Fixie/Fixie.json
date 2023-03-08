@@ -6,7 +6,7 @@
   "name": "Fixie",
   "officialUrl": "https://fixie.github.io/",
   "help": "Fixie is a .NET modern test framework similar to NUnit and xUnit, but with an emphasis on low-ceremony defaults and flexible customization.",
-  "packageId": "fixie.console",
+  "nugetPackageId": "fixie.console",
   "packageExecutable": "dotnet-fixie.dll",
   "tasks": [
     {

@@ -6,7 +6,7 @@
   "name": "CoverallsNet",
   "officialUrl": "https://coverallsnet.readthedocs.io",
   "help": "Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.",
-  "packageId": "coveralls.net",
+  "nugetPackageId": "coveralls.net",
   "packageExecutable": "csmacnz.Coveralls.dll",
   "tasks": [
     {

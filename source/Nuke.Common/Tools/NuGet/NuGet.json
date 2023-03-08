@@ -10,7 +10,7 @@
   "name": "NuGet",
   "officialUrl": "https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference",
   "help": "The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.",
-  "packageId": "NuGet.CommandLine",
+  "nugetPackageId": "NuGet.CommandLine",
   "packageExecutable": "NuGet.exe",
   "tasks": [
     {

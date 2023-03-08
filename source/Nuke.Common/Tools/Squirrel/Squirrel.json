@@ -6,7 +6,7 @@
   "name": "Squirrel",
   "officialUrl": "https://github.com/Squirrel/Squirrel.Windows",
   "help": "Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).",
-  "packageId": "Squirrel.Windows",
+  "nugetPackageId": "Squirrel.Windows",
   "packageExecutable": "Squirrel.exe",
   "tasks": [
     {
