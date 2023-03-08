@@ -6,7 +6,7 @@
   "name": "Boots",
   "officialUrl": "https://github.com/jonathanpeppers/boots",
   "help": "boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.",
-  "packageId": "Boots",
+  "nugetPackageId": "Boots",
   "packageExecutable": "Boots.exe",
   "tasks": [
     {

@@ -5,7 +5,7 @@
   ],
   "name": "OctoVersion",
   "officialUrl": "https://github.com/OctopusDeploy/OctoVersion",
-  "packageId": "OctoVersion.Tool",
+  "nugetPackageId": "OctoVersion.Tool",
   "packageExecutable": "OctoVersion.Tool.dll",
   "customExecutable": true,
   "tasks": [

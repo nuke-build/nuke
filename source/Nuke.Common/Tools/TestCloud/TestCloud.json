@@ -6,7 +6,7 @@
   "name": "TestCloud",
   "officialUrl": "https://developer.xamarin.com/guides/testcloud/",
   "help": "Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.",
-  "packageId": "Xamarin.UITest",
+  "nugetPackageId": "Xamarin.UITest",
   "packageExecutable": "test-cloud.exe",
   "tasks": [
     {

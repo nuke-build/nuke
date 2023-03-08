@@ -6,6 +6,7 @@
   "name": "DotCover",
   "officialUrl": "https://www.jetbrains.com/dotcover",
   "help": "dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.",
+  "nugetPackageId": "JetBrains.dotCover.DotNetCliTool",
   "tasks": [
     {
       "postfix": "Analyse",

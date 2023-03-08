@@ -6,7 +6,7 @@
   "name": "VSWhere",
   "officialUrl": "https://github.com/Microsoft/vswhere",
   "help": "VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.",
-  "packageId": "vswhere",
+  "nugetPackageId": "vswhere",
   "packageExecutable": "vswhere.exe",
   "tasks": [
     {

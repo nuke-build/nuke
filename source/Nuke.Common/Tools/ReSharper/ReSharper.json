@@ -5,7 +5,7 @@
   ],
   "name": "ReSharper",
   "officialUrl": "https://www.jetbrains.com/help/resharper/ReSharper_Command_Line_Tools.html",
-  "packageId": "JetBrains.ReSharper.GlobalTools",
+  "nugetPackageId": "JetBrains.ReSharper.GlobalTools",
   "packageExecutable": "JetBrains.CommandLine.Products.dll",
   "tasks": [
     {

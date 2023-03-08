@@ -6,7 +6,7 @@
   "name": "WebConfigTransformRunner",
   "officialUrl": "https://github.com/erichexter/WebConfigTransformRunner",
   "help": "This is a commandline tool to run an ASP.Net web.config tranformation.",
-  "packageId": "WebConfigTransformRunner",
+  "nugetPackageId": "WebConfigTransformRunner",
   "packageExecutable": "WebConfigTransformRunner.exe",
   "tasks": [
     {

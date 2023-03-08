@@ -6,7 +6,7 @@
   "name": "BenchmarkDotNet",
   "officialUrl": "https://benchmarkdotnet.org/",
   "help": "Powerful .NET library for benchmarking",
-  "packageId": "benchmarkdotnet.tool",
+  "nugetPackageId": "benchmarkdotnet.tool",
   "packageExecutable": "BenchmarkDotNet.Tool.dll",
   "tasks": [
     {

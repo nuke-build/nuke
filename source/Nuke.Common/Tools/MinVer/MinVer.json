@@ -6,6 +6,7 @@
   "name": "MinVer",
   "officialUrl": "https://github.com/adamralph/minver",
   "help": "Minimalistic versioning using Git tags.",
+  "nugetPackageId": "minver-cli",
   "customExecutable": true,
   "tasks": [
     {
