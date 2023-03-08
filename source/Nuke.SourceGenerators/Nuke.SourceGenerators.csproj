@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nuke.Build.Shared\Nuke.Build.Shared.csproj" />
+    <ProjectReference Include="..\Nuke.SolutionModel\Nuke.SolutionModel.csproj" />
+    <ProjectReference Include="..\Nuke.Utilities\Nuke.Utilities.csproj" />
+    <ProjectReference Include="..\Nuke.Utilities.IO.Globbing\Nuke.Utilities.IO.Globbing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.9.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" PrivateAssets="all" GeneratePathProperty="true" />
@@ -26,24 +33,17 @@
     <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
   </PropertyGroup>
 
+  <!-- TODO: check for easier method https://github.com/dotnet/roslyn/issues/52017#issuecomment-809113013 -->
   <Target Name="GetDependencyTargetPaths">
     <ItemGroup>
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgNewtonsoft_Json)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgJetBrains_Annotations)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\Nuke.Build.Shared.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\Nuke.SolutionModel.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\Nuke.Utilities.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\Nuke.Utilities.IO.Globbing.dll" IncludeRuntimeDependency="false" />
+
+      <TargetPathWithTargetPlatformMoniker Include="$(PkgNewtonsoft_Json)\lib\$(TargetFramework)\*.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(PkgJetBrains_Annotations)\lib\$(TargetFramework)\*.dll" IncludeRuntimeDependency="false" />
     </ItemGroup>
   </Target>
-
-  <ItemGroup>
-    <Compile Include="..\Nuke.Build.Shared\Constants.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.SolutionModel\*.cs" LinkBase=".\Linked\SolutionModel" />
-    <Compile Include="..\Nuke.Utilities\Assert.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Utilities\Collections\*.cs" LinkBase=".\Linked\Utilities" />
-    <Compile Include="..\Nuke.Utilities\EnvironmentInfo.Platform.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Utilities\EnvironmentInfo.SpecialFolder.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Utilities\IO\*.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Utilities\Shims\CallerArgumentExpressionAttribute.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Utilities\Text\*.cs" LinkBase=".\Linked\Utilities" />
-    <Compile Include="..\Nuke.Utilities.IO.Globbing\Globbing.cs" LinkBase=".\Linked\IO" />
-  </ItemGroup>
 
 </Project>
