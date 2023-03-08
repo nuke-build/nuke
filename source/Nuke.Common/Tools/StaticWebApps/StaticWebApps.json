@@ -1,0 +1,135 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "name": "StaticWebApps",
+  "officialUrl": "https://docs.microsoft.com/en-us/azure/static-web-apps/local-development",
+  "help": "The Static Web Apps CLI, also known as SWA CLI, serves as a local development tool for <a href=\"https://docs.microsoft.com/azure/static-web-apps\">Azure Static Web Apps</a>. It can:<ul><li>Serve static app assets, or proxy to your app dev server</li><li>Serve API requests, or proxy to APIs running in Azure Functions Core Tools</li><li>Emulate authentication and authorization</li><li>Emulate Static Web Apps configuration, including routing</li></ul>",
+  "npmPackageId": "@azure/static-web-apps-cli",
+  "packageExecutable": "swa",
+  "tasks": [
+    {
+      "postfix": "Start",
+      "definiteArgument": "start",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppLocation",
+            "type": "string",
+            "format": "--app-location {value}",
+            "help": "Location for the static app source code (default: <c>./</c>)"
+          },
+          {
+            "name": "AppArtifactLocation",
+            "type": "string",
+            "format": "--app-artifact-location {value}",
+            "help": "Location of the build output directory relative to the <c>--app-location</c>. (default: <c>./</c>)"
+          },
+          {
+            "name": "ApiLocation",
+            "type": "string",
+            "format": "--api-location {value}",
+            "help": "API folder or Azure Functions emulator address"
+          },
+          {
+            "name": "ConfigLocation",
+            "type": "string",
+            "format": "--swa-config-location {value}",
+            "help": "Directory where the <em>staticwebapp.config.json</em> file is found (default: <c>./</c>)"
+          },
+          {
+            "name": "ApiPort",
+            "type": "int",
+            "format": "--api-port {value}",
+            "help": "API backend port (default: <c>7071</c>)"
+          },
+          {
+            "name": "Host",
+            "type": "string",
+            "format": "--host {value}",
+            "help": "CLI host address (default: <c>localhost</c>)"
+          },
+          {
+            "name": "Port",
+            "type": "int",
+            "format": "--port {value}",
+            "help": "CLI port (default: <c>4280</c>)"
+          },
+          {
+            "name": "Ssl",
+            "type": "bool",
+            "format": "--ssl",
+            "help": "Serve the app and API over HTTPS (default: <c>false</c>)"
+          },
+          {
+            "name": "SslCertificate",
+            "type": "string",
+            "format": "--ssl-cert {value}",
+            "help": "SSL certificate (.crt) to use for serving HTTPS"
+          },
+          {
+            "name": "SslKey",
+            "type": "string",
+            "format": "--ssl-key {value}",
+            "help": "SSL key (.key) to use for serving HTTPS"
+          },
+          {
+            "name": "StartupScript",
+            "type": "string",
+            "format": "--run {value}",
+            "help": "Run a command at startup"
+          },
+          {
+            "name": "DevServerTimeout",
+            "type": "int",
+            "format": "--devserver-timeout {value}",
+            "help": "Time to wait(in ms) for the dev server to start (default: <c>30000</c>)"
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Deploy",
+      "definiteArgument": "deploy",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AppLocation",
+            "type": "string",
+            "format": "--app-location {value}",
+            "help": "Directory containing the source code of the front-end application (default: <c>./</c>)."
+          },
+          {
+            "name": "ApiLocation",
+            "type": "string",
+            "format": "--api-location {value}",
+            "help": "Directory containing the source code of the API application."
+          },
+          {
+            "name": "OutputLocation",
+            "type": "string",
+            "format": "--output-location {value}",
+            "help": "Directory containing the built source of the front-end application. The path is relative to <c>--app-location</c> (default: <c>./</c>)."
+          },
+          {
+            "name": "ConfigLocation",
+            "type": "string",
+            "format": "--swa-config-location {value}",
+            "help": "Directory where the <em>staticwebapp.config.json</em> file is found (default: <c>./</c>)"
+          },
+          {
+            "name": "DeploymentToken",
+            "type": "string",
+            "format": "--deployment-token {value}",
+            "secret": true,
+            "help": "Secret token used to authenticate with the Static Web Apps"
+          },
+          {
+            "name": "Environment",
+            "type": "string",
+            "format": "--env {value}",
+            "help": "Type of deployment environment where to deploy the project (default: <c>preview</c>)."
+          }
+        ]
+      }
+    }
+  ]
+}
