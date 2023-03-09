@@ -19,6 +19,11 @@ namespace Nuke.Common
     public interface ITargetDefinition
     {
         /// <summary>
+        /// Showing the name of target represented by this definition
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         ///   Adds a description for this target.
         /// </summary>
         ITargetDefinition Description(string description);
