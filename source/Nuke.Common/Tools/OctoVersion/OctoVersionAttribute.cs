@@ -54,8 +54,6 @@ namespace Nuke.Common.Tools.OctoVersion
         /// If this parameter is provided, it will override any value passed in the AutoDetectBranch property.
         /// </summary>
         [CanBeNull] public string AutoDetectBranchMember { get; set; }
-        [Obsolete($"Use {nameof(AutoDetectBranchMember)} instead")]
-        public string AutoDetectBranchParameter { get; set; }
 
         /// <summary>
         /// branch to pass to OctoVersion.
@@ -67,8 +65,6 @@ namespace Nuke.Common.Tools.OctoVersion
         /// If this parameter is provided, it will override any value passed in the Branch property.
         /// </summary>
         [CanBeNull] public string BranchMember { get; set; }
-        [Obsolete($"Use {nameof(BranchMember)} instead")]
-        public string BranchParameter { get; set; }
 
         /// <summary>
         /// FullSemVer to pass to OctoVersion.
@@ -80,8 +76,6 @@ namespace Nuke.Common.Tools.OctoVersion
         /// If this parameter is provided, it will override any value passed in the FullSemVer property.
         /// </summary>
         [CanBeNull] public string FullSemVerMember { get; set; }
-        [Obsolete($"Use {nameof(FullSemVerMember)} instead")]
-        public string FullSemVerParameter { get; set; }
 
         /// <summary>
         /// Major version number to pass to OctoVersion..
@@ -97,8 +91,6 @@ namespace Nuke.Common.Tools.OctoVersion
         /// If this parameter is provided, it will override any value passed in the Major property.
         /// </summary>
         [CanBeNull] public string MajorMember { get; set; }
-        [Obsolete($"Use {nameof(MajorMember)} instead")]
-        public string MajorParameter { get; set; }
 
         /// <summary>
         /// Minor version number to pass to OctoVersion.
@@ -114,8 +106,6 @@ namespace Nuke.Common.Tools.OctoVersion
         /// If this parameter is provided, it will override any value passed in the Minor property.
         /// </summary>
         [CanBeNull] public string MinorMember { get; set; }
-        [Obsolete($"Use {nameof(MinorMember)} instead")]
-        public string MinorParameter { get; set; }
 
         /// <summary>
         /// Patch version number to pass to OctoVersion.
@@ -131,17 +121,15 @@ namespace Nuke.Common.Tools.OctoVersion
         /// If this parameter is provided, it will override any value passed in the Patch property
         /// </summary>
         [CanBeNull] public string PatchMember { get; set; }
-        [Obsolete($"Use {nameof(PatchMember)} instead")]
-        public string PatchParameter { get; set; }
 
         public override object GetValue(MemberInfo member, object instance)
         {
-            var autoDetectBranch = GetMemberValueOrNull<bool?>(AutoDetectBranchMember, instance) ?? GetMemberValueOrNull<bool?>(AutoDetectBranchParameter, instance) ?? _autoDetectBranch;
-            var branch = GetMemberValueOrNull<string>(BranchMember, instance) ?? GetMemberValueOrNull<string>(BranchParameter, instance) ?? Branch;
-            var fullSemVer = GetMemberValueOrNull<string>(FullSemVerMember, instance) ?? GetMemberValueOrNull<string>(FullSemVerParameter, instance) ?? FullSemVer;
-            var majorVersion = GetMemberValueOrNull<int?>(MajorMember, instance) ?? GetMemberValueOrNull<int?>(MajorParameter, instance) ?? _major;
-            var minorVersion = GetMemberValueOrNull<int?>(MinorMember, instance) ?? GetMemberValueOrNull<int?>(MinorParameter, instance) ?? _minor;
-            var patchVersion = GetMemberValueOrNull<int?>(PatchMember, instance) ?? GetMemberValueOrNull<int?>(PatchParameter, instance) ?? _patch;
+            var autoDetectBranch = GetMemberValueOrNull<bool?>(AutoDetectBranchMember, instance) ?? _autoDetectBranch;
+            var branch = GetMemberValueOrNull<string>(BranchMember, instance) ?? Branch;
+            var fullSemVer = GetMemberValueOrNull<string>(FullSemVerMember, instance) ?? FullSemVer;
+            var majorVersion = GetMemberValueOrNull<int?>(MajorMember, instance) ?? _major;
+            var minorVersion = GetMemberValueOrNull<int?>(MinorMember, instance) ?? _minor;
+            var patchVersion = GetMemberValueOrNull<int?>(PatchMember, instance) ?? _patch;
 
             Assert.False(autoDetectBranch.HasValue && autoDetectBranch.Value && !branch.IsNullOrEmpty(),
                 $"Branch cannot be specified via {nameof(Branch)} or {nameof(BranchMember)} properties when {nameof(AutoDetectBranch)} is enabled");
