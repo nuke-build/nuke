@@ -85,7 +85,7 @@ partial class Build : NukeBuild
         {
             return CSharpCompilation.Create("compilation",
                 new[] { CSharpSyntaxTree.ParseText(source) },
-                Basic.Reference.Assemblies.NetStandard20.All
+                Basic.Reference.Assemblies.NetStandard20.References.All
                     .Concat(new[] { typeof(NukeBuild), typeof(SolutionAttribute) }
                         .Select(x => MetadataReference.CreateFromFile(x.Assembly.Location))),
                 new CSharpCompilationOptions(OutputKind.ConsoleApplication));

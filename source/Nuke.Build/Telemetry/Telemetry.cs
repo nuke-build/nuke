@@ -44,7 +44,8 @@ namespace Nuke.Common.Execution
                 return;
 
             var configuration = TelemetryConfiguration.CreateDefault();
-            s_client = new TelemetryClient(configuration) { InstrumentationKey = InstrumentationKey };
+            configuration.ConnectionString = $"InstrumentationKey={InstrumentationKey}";
+            s_client = new TelemetryClient(configuration);
             s_client.Context.Session.Id = Guid.NewGuid().ToString();
             s_client.Context.Location.Ip = "N/A";
             s_client.Context.Cloud.RoleInstance = "N/A";
