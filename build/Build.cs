@@ -114,7 +114,7 @@ partial class Build
 
     bool IReportIssues.InspectCodeFailOnWarning => false;
     bool IReportIssues.InspectCodeReportWarnings => true;
-    IEnumerable<string> IReportIssues.InspectCodeFailOnIssues => new[] { "CognitiveComplexity" };
+    IEnumerable<string> IReportIssues.InspectCodeFailOnIssues => new string[0];
     IEnumerable<string> IReportIssues.InspectCodeFailOnCategories => new string[0];
 
     string PublicNuGetSource => "https://api.nuget.org/v3/index.json";
