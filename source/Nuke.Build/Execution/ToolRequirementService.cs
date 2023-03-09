@@ -19,7 +19,7 @@ namespace Nuke.Common.Execution
         {
             var requirements = build.GetType().GetCustomAttributes<RequiresAttribute>().Select(x => x.GetRequirement())
                 .Concat(executionPlan.SelectMany(x => x.ToolRequirements)).ToList();
-            var directory = build.TemporaryDirectory / "requirements";
+            var directory = build.TemporaryDirectory;
 
             InstallNuGetPackages(requirements.OfType<NuGetPackageRequirement>().ToList(), directory);
             InstallNpmPackages(requirements.OfType<NpmPackageRequirement>().ToList(), directory);
