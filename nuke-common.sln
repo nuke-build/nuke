@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Common", "source\Nuke.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Common.Tests", "source\Nuke.Common.Tests\Nuke.Common.Tests.csproj", "{C4CEFCC5-1387-4340-B1BE-EC421511F734}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.MSBuildLocator", "source\Nuke.MSBuildLocator\Nuke.MSBuildLocator.csproj", "{656F585C-0B2D-429D-95A7-226EF59DAB79}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8A89-4516-BAD3-2DA4C6660D3A}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.md = CHANGELOG.md
@@ -78,10 +76,6 @@ Global
 		{C4CEFCC5-1387-4340-B1BE-EC421511F734}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4CEFCC5-1387-4340-B1BE-EC421511F734}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4CEFCC5-1387-4340-B1BE-EC421511F734}.Release|Any CPU.Build.0 = Release|Any CPU
-		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{656F585C-0B2D-429D-95A7-226EF59DAB79}.Release|Any CPU.Build.0 = Release|Any CPU
 		{34FBD413-AD5D-493E-BD61-ED8497D314A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{34FBD413-AD5D-493E-BD61-ED8497D314A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34FBD413-AD5D-493E-BD61-ED8497D314A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
