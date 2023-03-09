@@ -32,11 +32,13 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeLogs)' != 'True'">
-     <None Include="$(NukeRootDirectory)\.nuke\temp\build*.log" Exclude="$(NukeRootDirectory)\.nuke\temp\build-attempt.log" LinkBase="logs" />
+    <None Include="$(NukeRootDirectory)\.nuke\temp\build*.log" Exclude="$(NukeRootDirectory)\.nuke\temp\build-attempt.log" LinkBase="logs" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeDirectoryBuild)' != 'True'">
-     <None Include="$(NukeRootDirectory)\**\Directory.Build.*" LinkBase="Directory.Build" />
+    <None Include="$(NukeRootDirectory)\**\Directory.Build.*"
+          Link="Directory.Build\$([MSBuild]::MakeRelative($(MSBuildProjectDirectory)\$(NukeRootDirectory), %(FullPath)))"
+          LinkBase="Directory.Build" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeCi)' != 'True'">
