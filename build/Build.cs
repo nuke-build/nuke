@@ -133,7 +133,7 @@ partial class Build
     Target IPublish.Publish => _ => _
         .Inherit<IPublish>()
         .Consumes(From<IPack>().Pack)
-        .Requires(() => IsOriginalRepository && AppVeyor != null && (GitRepository.IsOnMasterBranch() || GitRepository.IsOnReleaseBranch()) ||
+        .Requires(() => IsOriginalRepository && AppVeyor != null && (GitRepository.IsOnMasterBranch() || GitRepository.IsOnReleaseBranch() || GitRepository.IsOnDevelopBranch()) ||
                         !IsOriginalRepository)
         .WhenSkipped(DependencyBehavior.Execute);
 
