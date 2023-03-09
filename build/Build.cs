@@ -5,12 +5,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NuGet.Packaging;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
+using Nuke.Common.Execution;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
@@ -86,12 +88,12 @@ partial class Build
         .When(!ScheduledTargets.Contains(((IPublish)this).Publish) && !ScheduledTargets.Contains(Install), _ => _
             .ClearProperties());
 
-    IEnumerable<(Project Project, string Framework)> ICompile.PublishConfigurations =>
+    IEnumerable<(Nuke.Common.ProjectModel.Project Project, string Framework)> ICompile.PublishConfigurations =>
         from project in new[] { Solution.Nuke_GlobalTool, Solution.Nuke_MSBuildTasks }
         from framework in project.GetTargetFrameworks()
         select (project, framework);
 
-    IEnumerable<Project> ITest.TestProjects => Partition.GetCurrent(Solution.GetProjects("*.Tests"));
+    IEnumerable<Nuke.Common.ProjectModel.Project> ITest.TestProjects => Partition.GetCurrent(Solution.GetProjects("*.Tests"));
 
     [Parameter]
     public int TestDegreeOfParallelism { get; } = 1;
@@ -117,25 +119,54 @@ partial class Build
     IEnumerable<string> IReportIssues.InspectCodeFailOnIssues => new string[0];
     IEnumerable<string> IReportIssues.InspectCodeFailOnCategories => new string[0];
 
-    string PublicNuGetSource => "https://api.nuget.org/v3/index.json";
+    Configure<DotNetPackSettings> IPack.PackSettings => _ => _
+        .When(Host is Terminal or GitHubActions { Workflow: "ubuntu-latest" }, _ => _
+            .SetVersion(DefaultDeploymentVersion));
 
-    string GitHubRegistrySource => GitHubActions != null
-        ? $"https://nuget.pkg.github.com/{GitHubActions.RepositoryOwner}/index.json"
-        : null;
+    string PublicNuGetSource => "https://api.nuget.org/v3/index.json";
+    string FeedzNuGetSource => "https://f.feedz.io/nuke/alpha/nuget";
+    string DefaultDeploymentVersion => "9999.0.0";
 
     [Parameter] [Secret] readonly string PublicNuGetApiKey;
-    [Parameter] [Secret] readonly string GitHubRegistryApiKey;
+    [Parameter] [Secret] readonly string FeedzNuGetApiKey;
 
-    bool IsOriginalRepository => GitRepository.Identifier == "nuke-build/nuke";
-    string IPublish.NuGetApiKey => IsOriginalRepository ? PublicNuGetApiKey : GitHubRegistryApiKey;
-    string IPublish.NuGetSource => IsOriginalRepository ? PublicNuGetSource : GitHubRegistrySource;
+    bool IsPublicRelease => GitRepository.IsOnMasterBranch() || GitRepository.IsOnReleaseBranch();
+    string IPublish.NuGetSource => IsPublicRelease ? PublicNuGetSource : FeedzNuGetSource;
+    string IPublish.NuGetApiKey => IsPublicRelease ? PublicNuGetApiKey : FeedzNuGetApiKey;
 
     Target IPublish.Publish => _ => _
         .Inherit<IPublish>()
         .Consumes(From<IPack>().Pack)
-        .Requires(() => IsOriginalRepository && AppVeyor != null && (GitRepository.IsOnMasterBranch() || GitRepository.IsOnReleaseBranch() || GitRepository.IsOnDevelopBranch()) ||
-                        !IsOriginalRepository)
+        .Requires(() => IsPublicRelease && Host is AppVeyor || GitRepository.IsOnDevelopBranch() && Host is GitHubActions && GitHubActions.Workflow == "ubuntu-latest")
         .WhenSkipped(DependencyBehavior.Execute);
+
+    IEnumerable<AbsolutePath> NuGetPackageFiles
+        => From<IPack>().PackagesDirectory.GlobFiles("*.nupkg");
+
+    Target DeletePackages => _ => _
+        .DependentFor<IPublish>()
+        .After<IPack>()
+        .OnlyWhenStatic(() => Host is Terminal or GitHubActions { Workflow: "ubuntu-latest", Ref: $"refs/heads/{DevelopBranch}" })
+        .Executes(() =>
+        {
+            if (Host is Terminal)
+            {
+                var packagesDirectory = NuGetPackageResolver.GetPackagesDirectory(packagesConfigFile: BuildProjectFile);
+                var packageDirectories = packagesDirectory.GlobDirectories($"nuke.*/{DefaultDeploymentVersion}");
+                packageDirectories.DeleteDirectories();
+            }
+            else if (Host is GitHubActions)
+            {
+                void DeletePackage(string id, string version)
+                    => DotNet(
+                        $"nuget delete {id} {version} --source {FeedzNuGetSource} --api-key {FeedzNuGetApiKey} --non-interactive",
+                        logOutput: false);
+
+                var packageIds = NuGetPackageFiles.Select(x => new PackageArchiveReader(x).NuspecReader.GetId());
+                foreach (var packageId in packageIds)
+                    SuppressErrors(() => DeletePackage(packageId, DefaultDeploymentVersion), logWarning: false);
+            }
+        });
 
     Target Install => _ => _
         .DependsOn<IPack>()
