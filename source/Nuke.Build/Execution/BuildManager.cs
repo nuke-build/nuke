@@ -18,7 +18,7 @@ namespace Nuke.Common.Execution
     {
         private const int ErrorExitCode = -1;
 
-        private static readonly LinkedList<Action> s_cancellationHandlers = new LinkedList<Action>();
+        private static readonly LinkedList<Action> s_cancellationHandlers = new();
 
         public static event Action CancellationHandler
         {

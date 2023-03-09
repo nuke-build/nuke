@@ -85,7 +85,7 @@ namespace Nuke.Common
         /// Indicates the target framework of the current process.
         /// </summary>
         public static FrameworkName Framework
-            => new FrameworkName(Assembly.GetEntryAssembly().NotNull().GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName);
+            => new(Assembly.GetEntryAssembly().NotNull().GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName);
 
         /// <summary>
         /// Indicates the operating-system platform.

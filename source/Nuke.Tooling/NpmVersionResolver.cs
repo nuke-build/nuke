@@ -15,7 +15,7 @@ namespace Nuke.Common.Tooling
     [PublicAPI]
     public static class NpmVersionResolver
     {
-        private static readonly HttpClient s_client = new HttpClient();
+        private static readonly HttpClient s_client = new();
 
         [ItemCanBeNull]
         public static async Task<string> GetLatestVersion(string packageId)

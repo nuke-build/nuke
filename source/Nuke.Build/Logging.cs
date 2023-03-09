@@ -23,7 +23,7 @@ namespace Nuke.Common.Execution
     [PublicAPI]
     public static class Logging
     {
-        public static readonly LoggingLevelSwitch LevelSwitch = new LoggingLevelSwitch();
+        public static readonly LoggingLevelSwitch LevelSwitch = new();
 
         internal static bool SupportsAnsiOutput => Environment.GetEnvironmentVariable("TERM") is { } term && term.StartsWithOrdinalIgnoreCase("xterm");
         internal static IHostTheme DefaultTheme { get; } = SupportsAnsiOutput
@@ -212,7 +212,7 @@ namespace Nuke.Common.Execution
 
         public class InMemorySink : ILogEventSink, IDisposable
         {
-            public static InMemorySink Instance { get; } = new InMemorySink();
+            public static InMemorySink Instance { get; } = new();
 
             private readonly List<LogEvent> _logEvents;
 

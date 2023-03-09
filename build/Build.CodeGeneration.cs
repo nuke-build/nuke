@@ -10,7 +10,6 @@ using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build

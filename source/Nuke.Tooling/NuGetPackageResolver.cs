@@ -325,7 +325,7 @@ namespace Nuke.Common.Tooling
         {
             public sealed class Comparer : IEqualityComparer<InstalledPackage>
             {
-                public static readonly Comparer Instance = new Comparer();
+                public static readonly Comparer Instance = new();
 
                 public bool Equals([CanBeNull] InstalledPackage x, [CanBeNull] InstalledPackage y)
                 {

@@ -20,7 +20,7 @@ namespace Nuke.Common.Gitter
 
     public static class GitterTasks
     {
-        private static HttpClient s_client = new HttpClient();
+        private static HttpClient s_client = new();
 
         public static void SendGitterMessage(string message, string roomId, string token)
         {

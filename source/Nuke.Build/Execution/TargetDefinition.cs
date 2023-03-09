@@ -32,24 +32,24 @@ namespace Nuke.Common.Execution
         internal Func<bool> Intercept { get; set; }
 
         internal string Description { get; set; }
-        internal List<(string Text, Func<bool> Delegate)> DynamicConditions { get; } = new List<(string Text, Func<bool> Delegate)>();
-        internal List<(string Text, Func<bool> Delegate)> StaticConditions { get; } = new List<(string Text, Func<bool> Delegate)>();
-        internal List<LambdaExpression> DelegateRequirements { get; } = new List<LambdaExpression>();
-        internal List<ToolRequirement> ToolRequirements { get; } = new List<ToolRequirement>();
-        internal List<Delegate> DependsOnTargets { get; } = new List<Delegate>();
-        internal List<Delegate> DependentForTargets { get; } = new List<Delegate>();
-        internal List<Action> Actions { get; } = new List<Action>();
+        internal List<(string Text, Func<bool> Delegate)> DynamicConditions { get; } = new();
+        internal List<(string Text, Func<bool> Delegate)> StaticConditions { get; } = new();
+        internal List<LambdaExpression> DelegateRequirements { get; } = new();
+        internal List<ToolRequirement> ToolRequirements { get; } = new();
+        internal List<Delegate> DependsOnTargets { get; } = new();
+        internal List<Delegate> DependentForTargets { get; } = new();
+        internal List<Action> Actions { get; } = new();
         internal DependencyBehavior DependencyBehavior { get; private set; }
         internal bool IsProceedAfterFailure { get; private set; }
         internal bool IsAssuredAfterFailure { get; private set; }
         internal bool IsInternal { get; private set; }
-        internal List<Delegate> BeforeTargets { get; } = new List<Delegate>();
-        internal List<Delegate> AfterTargets { get; } = new List<Delegate>();
-        internal List<Delegate> TriggersTargets { get; } = new List<Delegate>();
-        internal List<Delegate> TriggeredByTargets { get; } = new List<Delegate>();
+        internal List<Delegate> BeforeTargets { get; } = new();
+        internal List<Delegate> AfterTargets { get; } = new();
+        internal List<Delegate> TriggersTargets { get; } = new();
+        internal List<Delegate> TriggeredByTargets { get; } = new();
         internal int? PartitionSize { get; private set; }
-        internal List<string> ArtifactProducts { get; } = new List<string>();
-        internal LookupTable<Target, string[]> ArtifactDependencies { get; } = new LookupTable<Target, string[]>();
+        internal List<string> ArtifactProducts { get; } = new();
+        internal LookupTable<Target, string[]> ArtifactDependencies { get; } = new();
 
         ITargetDefinition ITargetDefinition.Description(string description)
         {
@@ -81,7 +81,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition DependsOn<T>(params Func<T, Target>[] targets)
         {
-            return DependsOn(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return DependsOn(GetTargetsOrShorthand<T>(targets.Select(x => x((T) Build)).ToArray()));
         }
 
         public ITargetDefinition TryDependsOn<T>(params Func<T, Target>[] targets)
@@ -97,7 +97,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition DependentFor<T>(params Func<T, Target>[] targets)
         {
-            return DependentFor(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return DependentFor(GetTargetsOrShorthand<T>(targets.Select(x => x((T) Build)).ToArray()));
         }
 
         public ITargetDefinition TryDependentFor<T>(params Func<T, Target>[] targets)
@@ -175,7 +175,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Before<T>(params Func<T, Target>[] targets)
         {
-            return Before(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return Before(GetTargetsOrShorthand<T>(targets.Select(x => x((T) Build)).ToArray()));
         }
 
         public ITargetDefinition TryBefore<T>(params Func<T, Target>[] targets)
@@ -191,7 +191,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition After<T>(params Func<T, Target>[] targets)
         {
-            return After(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return After(GetTargetsOrShorthand<T>(targets.Select(x => x((T) Build)).ToArray()));
         }
 
         public ITargetDefinition TryAfter<T>(params Func<T, Target>[] targets)
@@ -207,7 +207,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Triggers<T>(params Func<T, Target>[] targets)
         {
-            return Triggers(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return Triggers(GetTargetsOrShorthand<T>(targets.Select(x => x((T) Build)).ToArray()));
         }
 
         public ITargetDefinition TryTriggers<T>(params Func<T, Target>[] targets)
@@ -223,7 +223,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition TriggeredBy<T>(params Func<T, Target>[] targets)
         {
-            return TriggeredBy(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return TriggeredBy(GetTargetsOrShorthand<T>(targets.Select(x => x((T) Build)).ToArray()));
         }
 
         public ITargetDefinition TryTriggeredBy<T>(params Func<T, Target>[] targets)
@@ -287,7 +287,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Consumes<T>(params Func<T, Target>[] targets)
         {
-            return Consumes(GetTargetsOrShorthand<T>(targets.Select(x => x((T) (object) Build)).ToArray()));
+            return Consumes(GetTargetsOrShorthand<T>(targets.Select(x => x((T) Build)).ToArray()));
         }
 
         public ITargetDefinition Consumes(Target target, params string[] artifacts)
@@ -298,7 +298,7 @@ namespace Nuke.Common.Execution
 
         public ITargetDefinition Consumes<T>(Func<T, Target> target, params string[] artifacts)
         {
-            return Consumes(target.Invoke((T) (object) Build), artifacts);
+            return Consumes(target.Invoke((T) Build), artifacts);
         }
 
         public ITargetDefinition Consumes<T>(params string[] artifacts)

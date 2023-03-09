@@ -12,7 +12,6 @@ using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.Zip;
 using JetBrains.Annotations;
-using Nuke.Common.Utilities;
 using Serilog;
 
 namespace Nuke.Common.IO

@@ -8,7 +8,6 @@ using JetBrains.Annotations;
 using Microsoft.Build.Framework;
 using Nuke.CodeGeneration;
 using Nuke.CodeGeneration.Model;
-using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 

@@ -13,7 +13,7 @@ namespace Nuke.Common
 {
     internal partial class ParameterService
     {
-        internal static ParameterService Instance = new ParameterService(
+        internal static ParameterService Instance = new(
             () => EnvironmentInfo.ArgumentParser,
             () => EnvironmentInfo.Variables);
 

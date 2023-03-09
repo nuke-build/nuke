@@ -193,7 +193,7 @@ namespace Nuke.Common
         public object GetEnvironmentVariable(string variableName, Type destinationType, char? separator)
         {
             static string GetTrimmedName(string name)
-                => new string(name.Where(char.IsLetterOrDigit).ToArray());
+                => new(name.Where(char.IsLetterOrDigit).ToArray());
 
             if (!Variables.TryGetValue(variableName, out var value))
             {

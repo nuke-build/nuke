@@ -6,15 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Nuke.Common.Gitter;
-using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Net;
@@ -24,7 +19,7 @@ namespace Nuke.Common.Tools.Slack
     [PublicAPI]
     public static class SlackTasks
     {
-        private static HttpClient s_client = new HttpClient();
+        private static HttpClient s_client = new();
 
         public static void SendSlackMessage(Configure<SlackMessage> configurator, string webhook)
         {

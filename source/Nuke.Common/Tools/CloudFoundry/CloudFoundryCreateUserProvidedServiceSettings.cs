@@ -13,7 +13,7 @@ namespace Nuke.Common.Tools.CloudFoundry
     public partial class CloudFoundryCreateUserProvidedServiceSettings : ISerializable
     {
         [NonSerialized]
-        private JObject _credentials = new JObject();
+        private JObject _credentials = new();
 
         public CloudFoundryCreateUserProvidedServiceSettings()
         {

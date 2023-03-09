@@ -49,8 +49,7 @@ namespace Nuke.Common.Tooling
 
     internal static class VerbosityMapping
     {
-        public static readonly LookupTable<Type, (Verbosity Verbosity, object MappedVerbosity)> Mappings
-            = new LookupTable<Type, (Verbosity Verbosity, object MappedVerbosity)>();
+        public static readonly LookupTable<Type, (Verbosity Verbosity, object MappedVerbosity)> Mappings = new();
 
         public static void Apply(object obj)
         {

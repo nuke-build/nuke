@@ -25,7 +25,7 @@ namespace Nuke.Common.Utilities
             return Regex.Replace(str, pattern, matchEvaluator, options);
         }
 
-        private static readonly Regex s_unicodeRegex = new Regex(@"\\u(?<Value>[a-zA-Z0-9]{4})", RegexOptions.Compiled);
+        private static readonly Regex s_unicodeRegex = new(@"\\u(?<Value>[a-zA-Z0-9]{4})", RegexOptions.Compiled);
 
         [Pure]
         public static string ReplaceUnicode(this string str)

@@ -11,7 +11,6 @@ using JetBrains.Annotations;
 using Nuke.Common.Git;
 using Nuke.Common.Utilities;
 using Octokit;
-using Serilog;
 using static Nuke.Common.IO.PathConstruction;
 
 namespace Nuke.Common.Tools.GitHub
@@ -26,7 +25,7 @@ namespace Nuke.Common.Tools.GitHub
     [PublicAPI]
     public static class GitHubTasks
     {
-        public static GitHubClient GitHubClient = new GitHubClient(new ProductHeaderValue(nameof(NukeBuild)));
+        public static GitHubClient GitHubClient = new(new ProductHeaderValue(nameof(NukeBuild)));
 
         static GitHubTasks()
         {

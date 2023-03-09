@@ -6,7 +6,6 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tooling
 {

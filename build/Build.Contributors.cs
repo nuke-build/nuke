@@ -2,7 +2,6 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-using System.IO;
 using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
@@ -10,7 +9,6 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.IO.TextTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build

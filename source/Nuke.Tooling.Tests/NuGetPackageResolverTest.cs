@@ -2,8 +2,6 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-using System.CodeDom;
-using System.IO;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Nuke.Common.IO;

@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.IO;
 using System.Linq;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;

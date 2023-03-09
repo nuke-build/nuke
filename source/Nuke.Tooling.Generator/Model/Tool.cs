@@ -32,8 +32,8 @@ namespace Nuke.CodeGeneration.Model
         [CanBeNull] [JsonIgnore] public IDeprecatable Parent => null;
 
         [Description("Contains all references on which this definition is based on. Allows checking for updates.")]
-        public List<string> References { get; set; } = new List<string>();
-        public List<string> Imports { get; set; } = new List<string>();
+        public List<string> References { get; set; } = new();
+        public List<string> Imports { get; set; } = new();
 
         [JsonProperty(Required = Required.Always)]
         [RegularExpression(RegexPatterns.Name)]
@@ -76,19 +76,19 @@ namespace Nuke.CodeGeneration.Model
         public bool CustomLogger { get; set; }
 
         [Description("Help or introduction text to for the tool. Can contain HTML tags for better formatting.")]
-        public List<Task> Tasks { get; set; } = new List<Task>();
+        public List<Task> Tasks { get; set; } = new();
 
         [Description("Common properties for all tasks.")]
-        public List<Property> CommonTaskProperties { get; set; } = new List<Property>();
+        public List<Property> CommonTaskProperties { get; set; } = new();
 
         [Description("Named common property sets which can be used by tasks.")]
-        public Dictionary<string, List<Property>> CommonTaskPropertySets { get; set; } = new Dictionary<string, List<Property>>();
+        public Dictionary<string, List<Property>> CommonTaskPropertySets { get; set; } = new();
 
         [Description("Common used data classes.")]
-        public List<DataClass> DataClasses { get; set; } = new List<DataClass>();
+        public List<DataClass> DataClasses { get; set; } = new();
 
         [Description("Used enumerations.")]
-        public List<Enumeration> Enumerations { get; set; } = new List<Enumeration>();
+        public List<Enumeration> Enumerations { get; set; } = new();
 
         [CanBeNull]
         [Description("Can be used to store additional information about the tool.")]

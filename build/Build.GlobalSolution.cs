@@ -14,7 +14,6 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitHub;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.SerializationTasks;
 using static Nuke.Common.ProjectModel.SolutionModelTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 

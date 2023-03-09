@@ -13,7 +13,7 @@ namespace Nuke.Common
 {
     public static partial class EnvironmentInfo
     {
-        internal static ArgumentParser ArgumentParser = new ArgumentParser(Environment.GetCommandLineArgs().Skip(1));
+        internal static ArgumentParser ArgumentParser = new(Environment.GetCommandLineArgs().Skip(1));
 
         /// <summary>
         /// Returns a collection of arguments passed to the current process.

@@ -14,7 +14,6 @@ using Serilog;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
-using static Nuke.Common.IO.TextTasks;
 
 namespace Nuke.Components
 {

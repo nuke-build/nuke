@@ -9,7 +9,6 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.IO;
-using Nuke.Common.Utilities;
 using static Nuke.Common.Constants;
 
 namespace Nuke.GlobalTool

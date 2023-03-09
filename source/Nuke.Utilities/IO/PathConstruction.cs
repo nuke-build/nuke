@@ -141,7 +141,7 @@ namespace Nuke.Common.IO
                root[index: 1] == UncSeparator &&
                root.Skip(count: 2).All(char.IsLetterOrDigit);
 
-        private static string GetHeadPart([CanBeNull] string str, int count) => new string((str ?? string.Empty).Take(count).ToArray());
+        private static string GetHeadPart([CanBeNull] string str, int count) => new((str ?? string.Empty).Take(count).ToArray());
 
         internal static bool HasUnixRoot([CanBeNull] string path) => IsUnixRoot(GetHeadPart(path, count: 1));
         internal static bool HasUncRoot([CanBeNull] string path) => IsUncRoot(GetHeadPart(path, count: 3));

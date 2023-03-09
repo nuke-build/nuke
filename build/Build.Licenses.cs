@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Nuke.Common.IO;
 using Nuke.Components;
 using Serilog;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.HttpTasks;
 
 partial class Build

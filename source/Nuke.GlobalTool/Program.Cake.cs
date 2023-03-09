@@ -3,7 +3,6 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
@@ -15,7 +14,6 @@ using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 using Nuke.GlobalTool.Rewriting.Cake;
 using static Nuke.Common.Constants;
 using static Nuke.Common.EnvironmentInfo;

@@ -40,7 +40,7 @@ namespace Nuke.CodeGeneration.Model
         public bool OmitDataClass { get; set; }
 
         [Description("Properties of the data class.")]
-        public List<Property> Properties { get; set; } = new List<Property>();
+        public List<Property> Properties { get; set; } = new();
 
         [Description("Obsolete message. DataClass is marked as obsolete when specified.")]
         public string DeprecationMessage { get; set; }

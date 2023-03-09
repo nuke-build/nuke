@@ -34,7 +34,7 @@ partial class Build
     AbsolutePath FontDirectory => TemporaryDirectory / "fonts";
     IReadOnlyCollection<AbsolutePath> FontArchives => FontDirectory.GlobFiles("*.*");
     IReadOnlyCollection<AbsolutePath> FontFiles => FontDirectory.GlobFiles("**/[!\\.]*.ttf");
-    readonly FontCollection FontCollection = new FontCollection();
+    readonly FontCollection FontCollection = new();
 
     Target InstallFonts => _ => _
         .Executes(() =>

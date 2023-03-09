@@ -13,9 +13,9 @@ namespace Nuke.Common.Tests.Execution
 {
     public class ExecutionPlannerTest
     {
-        private ExecutableTarget A = new ExecutableTarget { Name = nameof(A), IsDefault = true };
-        private ExecutableTarget B = new ExecutableTarget { Name = nameof(B) };
-        private ExecutableTarget C = new ExecutableTarget { Name = nameof(C) };
+        private ExecutableTarget A = new() { Name = nameof(A), IsDefault = true };
+        private ExecutableTarget B = new() { Name = nameof(B) };
+        private ExecutableTarget C = new() { Name = nameof(C) };
 
         [Fact]
         public void TestDefault()

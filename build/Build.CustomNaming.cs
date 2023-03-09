@@ -8,7 +8,7 @@ using Nuke.Components;
 partial class Build
 {
     static Dictionary<string, string> CustomNames =
-        new Dictionary<string, string>
+        new()
         {
             { nameof(ICompile.Compile), "⚙️" },
             { nameof(ITest.Test), "🚦" },

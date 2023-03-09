@@ -40,7 +40,7 @@ namespace Nuke.CodeGeneration.Model
         public bool OmitCommonProperties { get; set; }
 
         [Description("Appends the properties of the named property sets.")]
-        public List<string> CommonPropertySets { get; set; } = new List<string>();
+        public List<string> CommonPropertySets { get; set; } = new();
 
         [Description("Generates a pre-process hook")]
         public bool PreProcess { get; set; }
@@ -65,7 +65,7 @@ namespace Nuke.CodeGeneration.Model
         public string OfficialUrl { get; set; }
 
         [Description("The settings of the task.")]
-        public SettingsClass SettingsClass { get; set; } = new SettingsClass();
+        public SettingsClass SettingsClass { get; set; } = new();
 
         [Description("Obsolete message. Task is marked as obsolete when specified.")]
         public string DeprecationMessage { get; set; }

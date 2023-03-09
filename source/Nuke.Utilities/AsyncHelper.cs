@@ -11,7 +11,7 @@ namespace Nuke.Common
 {
     internal static class AsyncHelper
     {
-        private static readonly TaskFactory s_taskFactory = new TaskFactory(
+        private static readonly TaskFactory s_taskFactory = new(
             CancellationToken.None,
             TaskCreationOptions.None,
             TaskContinuationOptions.None,

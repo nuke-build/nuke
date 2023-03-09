@@ -16,7 +16,7 @@ namespace Nuke.Common.IO
     public static partial class SerializationTasks
     {
         public static JsonSerializerSettings DefaultJsonSerializerSettings =
-            new JsonSerializerSettings
+            new()
             {
                 Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Ignore,
