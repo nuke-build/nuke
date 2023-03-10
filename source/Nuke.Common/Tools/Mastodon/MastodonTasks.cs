@@ -10,9 +10,6 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Net;
-#if NETCORE
-using System.IO;
-#endif
 
 namespace Nuke.Common.Tools.Mastodon
 {

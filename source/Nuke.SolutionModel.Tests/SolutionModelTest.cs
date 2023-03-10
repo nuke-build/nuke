@@ -44,13 +44,14 @@ namespace Nuke.Common.Tests
         [Fact]
         public void DuplicatedProjectTest()
         {
-            var content = @"
-Project(""{9A19103F-16F7-4668-BE54-9A1E7A4F7556}"") = ""_build"", ""build\_build.csproj"", ""{BB6A9024-24DB-4170-A09B-02349148A78F}""
-EndProject
-Project(""{9A19103F-16F7-4668-BE54-9A1E7A4F7556}"") = ""_build"", ""build\_build.csproj"", ""{BB6A9024-24DB-4170-A09B-02349148A78F}""
-EndProject
-Global
-EndGlobal".SplitLineBreaks();
+            var content = """
+                Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{BB6A9024-24DB-4170-A09B-02349148A78F}"
+                EndProject
+                Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{BB6A9024-24DB-4170-A09B-02349148A78F}"
+                EndProject
+                Global
+                EndGlobal
+                """.SplitLineBreaks();
 
             Action action = () => SolutionSerializer.DeserializeFromContent<Solution>(content);
             action.Should().Throw<Exception>()
@@ -61,14 +62,16 @@ EndGlobal".SplitLineBreaks();
         [Fact]
         public void DuplicatedSolutionConfigurationTest()
         {
-            var content = @"
-Global
-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
-		Debug|Any CPU = Debug|Any CPU
-		Debug|Any CPU = Debug|Any CPU
-		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-EndGlobal".SplitLineBreaks();
+            var content = """
+                
+                Global
+                	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+                		Debug|Any CPU = Debug|Any CPU
+                		Debug|Any CPU = Debug|Any CPU
+                		Release|Any CPU = Release|Any CPU
+                	EndGlobalSection
+                EndGlobal
+                """.SplitLineBreaks();
 
             Action action = () => SolutionSerializer.DeserializeFromContent<Solution>(content);
             action.Should().Throw<Exception>()
@@ -79,14 +82,16 @@ EndGlobal".SplitLineBreaks();
         [Fact]
         public void DuplicatedProjectConfigurationTest()
         {
-            var content = @"
-Global
-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BB6A9024-24DB-4170-A09B-02349148A78F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB6A9024-24DB-4170-A09B-02349148A78F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB6A9024-24DB-4170-A09B-02349148A78F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
-	EndGlobalSection
-EndGlobal".SplitLineBreaks();
+            var content = """
+                
+                Global
+                	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+                		{BB6A9024-24DB-4170-A09B-02349148A78F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+                		{BB6A9024-24DB-4170-A09B-02349148A78F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+                		{BB6A9024-24DB-4170-A09B-02349148A78F}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+                	EndGlobalSection
+                EndGlobal
+                """.SplitLineBreaks();
 
             Action action = () => SolutionSerializer.DeserializeFromContent<Solution>(content);
             action.Should().Throw<Exception>()
