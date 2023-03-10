@@ -21,15 +21,15 @@ namespace Nuke.SourceGenerators.Tests
         [Fact]
         public Task Test()
         {
-            var inputCompilation = CreateCompilation(@"
-using Nuke.Common;
-using Nuke.Common.ProjectModel;
-
-partial class Build : NukeBuild
-{
-    [Solution(GenerateProjects = true)]
-    readonly Solution Solution;
-}");
+            var inputCompilation = CreateCompilation("""
+                using Nuke.Common;
+                using Nuke.Common.ProjectModel;
+                partial class Build : NukeBuild
+                {
+                    [Solution(GenerateProjects = true)]
+                    readonly Solution Solution;
+                }
+                """);
 
             var generator = new StronglyTypedSolutionGenerator();
             var driver = CSharpGeneratorDriver.Create(generator);
@@ -40,15 +40,17 @@ partial class Build : NukeBuild
         [Fact]
         public void TestDisabled()
         {
-            var inputCompilation = CreateCompilation(@"
-using Nuke.Common;
-using Nuke.Common.ProjectModel;
-
-partial class Build : NukeBuild
-{
-    [Solution(GenerateProjects = false)]
-    readonly Solution Solution;
-}");
+            var inputCompilation = CreateCompilation("""
+                
+                using Nuke.Common;
+                using Nuke.Common.ProjectModel;
+                
+                partial class Build : NukeBuild
+                {
+                    [Solution(GenerateProjects = false)]
+                    readonly Solution Solution;
+                }
+                """);
 
             var generator = new StronglyTypedSolutionGenerator();
             var driver = CSharpGeneratorDriver.Create(generator);
@@ -62,15 +64,17 @@ partial class Build : NukeBuild
         [Fact]
         public void TestUnspecified()
         {
-            var inputCompilation = CreateCompilation(@"
-using Nuke.Common;
-using Nuke.Common.ProjectModel;
-
-partial class Build : NukeBuild
-{
-    [Solution]
-    readonly Solution Solution;
-}");
+            var inputCompilation = CreateCompilation("""
+                
+                using Nuke.Common;
+                using Nuke.Common.ProjectModel;
+                
+                partial class Build : NukeBuild
+                {
+                    [Solution]
+                    readonly Solution Solution;
+                }
+                """);
 
             var generator = new StronglyTypedSolutionGenerator();
             var driver = CSharpGeneratorDriver.Create(generator);
