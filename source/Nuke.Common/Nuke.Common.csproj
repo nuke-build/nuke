@@ -8,7 +8,7 @@
     <EmbeddedResource Include="CI\TeamCity\Configuration\pom.xml" />
     <!--<None Remove="execution-plan.html" />-->
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\Nuke.Build\Nuke.Build.csproj" />
     <ProjectReference Include="..\Nuke.Build.Shared\Nuke.Build.Shared.csproj" />
@@ -29,7 +29,7 @@
     <PackageReference Include="YamlDotNet" Version="13.0.1" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == ''">
+  <ItemGroup Condition="'$(_IsPacking)' == 'True'">
     <None Include="$(MSBuildProjectName).props" PackagePath="build" Pack="true" />
     <None Include="$(MSBuildProjectName).targets" PackagePath="build" Pack="true" />
     <None Include="..\Nuke.MSBuildTasks\Nuke.MSBuildTasks.targets" PackagePath="build\netcore" Pack="true" />
