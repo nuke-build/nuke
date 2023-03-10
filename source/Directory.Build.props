@@ -20,6 +20,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://nuke.build</PackageProjectUrl>
     <PackageIcon>icon.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="$(TargetFramework.StartsWith('netstandard')) OR $(TargetFramework.StartsWith('netcoreapp'))">
@@ -34,8 +35,9 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup Condition="">
-    <None Include="..\..\icon.png" Pack="true" PackagePath="" Visible="false" />
+  <ItemGroup Condition="'$(_IsPacking)' == 'True'">
+    <None Include="..\..\icon.png" Pack="true" PackagePath="\" />
+<!--    <None Include="..\..\README.md" Pack="true" PackagePath="\" />-->
   </ItemGroup>
 
   <ItemGroup>
