@@ -30,6 +30,7 @@ NUKE brings your build automation to an even level with every other .NET project
 [![Slack](https://img.shields.io/badge/slack-nukebuildnet-red.svg?style=for-the-badge&colorB=F5015F&logo=slack)](https://nuke.build/slack)
 [![Discord](https://img.shields.io/badge/discord-nuke-blue.svg?style=for-the-badge&colorB=5B65EA&logo=discord&logoColor=white)](https://nuke.build/slack)
 [![Twitter](https://img.shields.io/badge/twitter-%40nukebuildnet-blue.svg?style=for-the-badge&logo=twitter&logoColor=white)](https://nuke.build/twitter)
+[![Mastodon](https://img.shields.io/badge/mastodon-%40nuke%40dotnet.social-blue.svg?style=for-the-badge&logo=mastodon&logoColor=white&colorB=6364FF)](https://dotnet.social/@nuke)
 
 ## Example
 
