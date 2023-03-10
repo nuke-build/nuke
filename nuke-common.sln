@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "misc", "misc", "{B43B0E45-8
 		CHANGELOG.md = CHANGELOG.md
 		LICENSE = LICENSE
 		README.md = README.md
+		CONTRIBUTING.md = CONTRIBUTING.md
+		CODE_OF_CONDUCT.md = CODE_OF_CONDUCT.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nuke.Tooling.Generator", "source\Nuke.Tooling.Generator\Nuke.Tooling.Generator.csproj", "{34FBD413-AD5D-493E-BD61-ED8497D314A0}"
