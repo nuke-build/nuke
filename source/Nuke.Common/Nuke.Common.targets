@@ -2,8 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup Condition="'$(NukeTasksDirectory)' == ''">
-    <NukeTasksDirectory Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)\netcore</NukeTasksDirectory>
-    <NukeTasksDirectory Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)\netfx</NukeTasksDirectory>
+    <NukeTasksDirectory>$(MSBuildThisFileDirectory)</NukeTasksDirectory>
   </PropertyGroup>
 
   <Import Project="$(NukeTasksDirectory)\Nuke.MSBuildTasks.targets" Condition="'$(NukeTasksEnabled)' != 'False'" />
