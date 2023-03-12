@@ -25,9 +25,9 @@ namespace Nuke.Components
             {
                 ReportSummary(_ => _
                     .WhenNotNull(this as IHazGitVersion, (_, o) => _
-                        .AddPair("Version", o.Versioning.FullSemVer))
+                        .AddPair("Version", o.Versioning.NuGetVersionV2))
                     .WhenNotNull(this as IHazNerdbankGitVersioning, (_, o) => _
-                        .AddPair("Version", o.Versioning.SemVer2)));
+                        .AddPair("Version", o.Versioning.NuGetPackageVersion)));
 
                 DotNetBuild(_ => _
                     .Apply(CompileSettingsBase)
