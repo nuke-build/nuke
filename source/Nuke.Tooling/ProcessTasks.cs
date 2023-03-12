@@ -66,7 +66,7 @@ namespace Nuke.Common.Tooling
 
 #if NET6_0_OR_GREATER
 
-        internal static IProcess StartProcess(
+        public static IProcess StartProcess(
             string toolPath,
             ref ArgumentStringHandler arguments,
             string workingDirectory = null,
