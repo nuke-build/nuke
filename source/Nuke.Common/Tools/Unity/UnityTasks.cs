@@ -12,6 +12,7 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Unity.Logging;
 using Nuke.Common.Utilities;
+using Nuke.Utilities.Text.Yaml;
 using Serilog;
 
 namespace Nuke.Common.Tools.Unity

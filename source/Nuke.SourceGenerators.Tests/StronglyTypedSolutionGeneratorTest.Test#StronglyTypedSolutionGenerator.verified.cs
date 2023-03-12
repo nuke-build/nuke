@@ -29,6 +29,7 @@ internal class Solution : Nuke.Common.ProjectModel.Solution
     public Project Nuke_Build_Shared => SolutionFolder.GetProject("Nuke.Build.Shared");
     public Project Nuke_Build => SolutionFolder.GetProject("Nuke.Build");
     public Project Nuke_Build_Tests => SolutionFolder.GetProject("Nuke.Build.Tests");
+    public Project Nuke_Utilities_Text_Yaml => SolutionFolder.GetProject("Nuke.Utilities.Text.Yaml");
     public _misc misc => new(SolutionFolder.GetSolutionFolder("misc"));
     internal class _misc
     {

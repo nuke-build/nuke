@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.IO
 {
@@ -23,7 +24,7 @@ namespace Nuke.Common.IO
                 DefaultValueHandling = DefaultValueHandling.Ignore
             };
 
-        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(WriteJson)} as {nameof(AbsolutePath)} extension method")]
+        [Obsolete($"Use {nameof(JsonExtensions)}.{nameof(JsonExtensions.WriteJson)} as {nameof(AbsolutePath)} extension method")]
         [CodeTemplate(
             searchTemplate: "JsonSerializeToFile($arg$, $expr{'Nuke.Common.IO.AbsolutePath', true}$)",
             ReplaceTemplate = "$expr$.WriteJson($arg$)",
@@ -40,7 +41,7 @@ namespace Nuke.Common.IO
         }
 
         [Pure]
-        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(ReadJson)} as {nameof(AbsolutePath)} extension method")]
+        [Obsolete($"Use {nameof(JsonExtensions)}.{nameof(JsonExtensions.ReadJson)} as {nameof(AbsolutePath)} extension method")]
         [CodeTemplate(
             searchTemplate: "JsonDeserializeFromFile<$type$>($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
             ReplaceTemplate = "$expr$.ReadJson<$type$>($args$)",
@@ -58,18 +59,20 @@ namespace Nuke.Common.IO
         }
 
         [Pure]
+        [Obsolete($"Use {nameof(JsonExtensions)}.{nameof(JsonExtensions.ToJson)} as object extension method")]
         public static string JsonSerialize<T>(T obj, Configure<JsonSerializerSettings> configurator = null)
         {
             return JsonConvert.SerializeObject(obj, configurator.InvokeSafe(DefaultJsonSerializerSettings));
         }
 
         [Pure]
+        [Obsolete($"Use {nameof(JsonExtensions)}.{nameof(JsonExtensions.GetJson)} as string extension method")]
         public static T JsonDeserialize<T>(string content, Configure<JsonSerializerSettings> configurator = null)
         {
             return JsonConvert.DeserializeObject<T>(content, configurator.InvokeSafe(DefaultJsonSerializerSettings));
         }
 
-        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(UpdateJson)} as {nameof(AbsolutePath)} extension method")]
+        [Obsolete($"Use {nameof(JsonExtensions)}.{nameof(JsonExtensions.UpdateJson)} as {nameof(AbsolutePath)} extension method")]
         [CodeTemplate(
             searchTemplate: "JsonUpdateFile<$type$>($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
             ReplaceTemplate = "$expr$.UpdateJson<$type$>($args$)",
@@ -87,7 +90,7 @@ namespace Nuke.Common.IO
             JsonSerializeToFile(obj, path, configurator);
         }
 
-        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(UpdateJson)} as {nameof(AbsolutePath)} extension method")]
+        [Obsolete($"Use {nameof(JsonExtensions)}.{nameof(JsonExtensions.UpdateJson)} as {nameof(AbsolutePath)} extension method")]
         [CodeTemplate(
             searchTemplate: "JsonDeserializeFromFile($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
             ReplaceTemplate = "$expr$.ReadJson($args$)",
@@ -103,12 +106,13 @@ namespace Nuke.Common.IO
             return JsonDeserializeFromFile<JObject>(path, configurator);
         }
 
+        [Obsolete($"Use {nameof(JsonExtensions)}.{nameof(JsonExtensions.GetJson)} as string extension method")]
         public static JObject JsonDeserialize(string content, Configure<JsonSerializerSettings> configurator = null)
         {
             return JsonDeserialize<JObject>(content, configurator);
         }
 
-        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(UpdateJson)} as {nameof(AbsolutePath)} extension method")]
+        [Obsolete($"Use {nameof(JsonExtensions)}.{nameof(JsonExtensions.UpdateJson)} as {nameof(AbsolutePath)} extension method")]
         [CodeTemplate(
             searchTemplate: "JsonUpdateFile($expr{'Nuke.Common.IO.AbsolutePath', true}$, $args$)",
             ReplaceTemplate = "$expr$.UpdateJson($args$)",

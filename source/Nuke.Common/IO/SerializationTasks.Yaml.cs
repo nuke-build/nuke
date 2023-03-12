@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
+using Nuke.Utilities.Text.Yaml;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -20,14 +21,14 @@ namespace Nuke.Common.IO
         public static DeserializerBuilder DefaultYamlDeserializerBuilder = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance);
 
-        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(WriteYaml)} as {nameof(AbsolutePath)} extension method")]
+        [Obsolete($"Use {nameof(YamlExtensions)}.{nameof(YamlExtensions.WriteYaml)} as {nameof(AbsolutePath)} extension method")]
         public static void YamlSerializeToFile<T>(T obj, string path, Configure<SerializerBuilder> configurator = null)
         {
             TextTasks.WriteAllText(path, YamlSerialize(obj, configurator));
         }
 
         [Pure]
-        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(ReadYaml)} as {nameof(AbsolutePath)} extension method")]
+        [Obsolete($"Use {nameof(YamlExtensions)}.{nameof(YamlExtensions.ReadYaml)} as {nameof(AbsolutePath)} extension method")]
         public static T YamlDeserializeFromFile<T>(string path, Configure<DeserializerBuilder> configurator = null)
         {
             Assert.FileExists(path);
@@ -35,6 +36,7 @@ namespace Nuke.Common.IO
         }
 
         [Pure]
+        [Obsolete($"Use {nameof(YamlExtensions)}.{nameof(YamlExtensions.ToYaml)} as object extension method")]
         public static string YamlSerialize<T>(T obj, Configure<SerializerBuilder> configurator = null)
         {
             var serializer = configurator.InvokeSafe(DefaultYamlSerializerBuilder).Build();
@@ -42,13 +44,14 @@ namespace Nuke.Common.IO
         }
 
         [Pure]
+        [Obsolete($"Use {nameof(YamlExtensions)}.{nameof(YamlExtensions.GetYaml)} as string extension method")]
         public static T YamlDeserialize<T>(string content, Configure<DeserializerBuilder> configurator = null)
         {
             var deserializer = configurator.InvokeSafe(DefaultYamlDeserializerBuilder).Build();
             return deserializer.Deserialize<T>(content);
         }
 
-        [Obsolete($"Use {nameof(SerializationTasks)}.{nameof(UpdateYaml)} as {nameof(AbsolutePath)} extension method")]
+        [Obsolete($"Use {nameof(YamlExtensions)}.{nameof(YamlExtensions.UpdateYaml)} as {nameof(AbsolutePath)} extension method")]
         public static void YamlUpdateFile<T>(
             string path,
             Action<T> update,

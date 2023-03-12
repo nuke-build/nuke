@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using Newtonsoft.Json;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -40,11 +41,8 @@ namespace Nuke.Common.Tools.OctoVersion
             Assert.FileExists(toolSettings.OutputJsonFile);
             try
             {
-                return SerializationTasks.JsonDeserializeFromFile<OctoVersionInfo>(toolSettings.OutputJsonFile, settings =>
-                {
-                    settings.ContractResolver = new AllWritableContractResolver();
-                    return settings;
-                });
+                var file = (AbsolutePath) toolSettings.OutputJsonFile;
+                return file.ReadJson<OctoVersionInfo>(new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() });
             }
             catch (Exception exception)
             {
