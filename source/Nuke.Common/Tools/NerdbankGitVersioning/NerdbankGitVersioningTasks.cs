@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
@@ -20,11 +21,7 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning
             var output = process.Output.EnsureOnlyStd().Select(x => x.Text).JoinNewLine();
             try
             {
-                return SerializationTasks.JsonDeserialize<NerdbankGitVersioning>(output, settings =>
-                {
-                    settings.ContractResolver = new AllWritableContractResolver();
-                    return settings;
-                });
+                return output.GetJson<NerdbankGitVersioning>(new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() });
             }
             catch (Exception exception)
             {

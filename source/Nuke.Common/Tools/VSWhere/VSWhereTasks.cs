@@ -24,7 +24,7 @@ namespace Nuke.Common.Tools.VSWhere
                 return null;
 
             var output = process.Output.EnsureOnlyStd().Select(x => x.Text).JoinNewLine();
-            return SerializationTasks.JsonDeserialize<VSWhereResult[]>(output).ToList();
+            return output.GetJson<VSWhereResult[]>().ToList();
         }
     }
 }

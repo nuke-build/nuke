@@ -12,6 +12,7 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitHub;
+using Nuke.Utilities.Text.Yaml;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.ProjectModel.SolutionModelTasks;

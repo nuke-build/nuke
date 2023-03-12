@@ -17,7 +17,6 @@ using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Serilog;
 using static Nuke.Common.ControlFlow;
-using static Nuke.Common.IO.SerializationTasks;
 
 namespace Nuke.Common.Tools.SignPath
 {
@@ -73,7 +72,7 @@ namespace Nuke.Common.Tools.SignPath
                 using var httpClient = CreateAuthorizedHttpClient(authToken, DefaultHttpClientTimeout);
                 var response = await httpClient.PostAsync(
                     GetSignPathAppVeyorIntegrationUrl(organizationId, projectSlug, signingPolicySlug),
-                    new StringContent(JsonSerialize(content), Encoding.UTF8, contentType));
+                    new StringContent(content.ToJson(), Encoding.UTF8, contentType));
                 response.AssertStatusCode(HttpStatusCode.Created);
 
                 Log.Information("Signing request created: {Url}", response.Headers.Location.AbsoluteUri.Replace("api/v1", "Web"));
@@ -151,7 +150,7 @@ namespace Nuke.Common.Tools.SignPath
                 {
                     var response = SendGetRequestWithRetry(httpClient, signingRequestUrl);
                     var rawContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    var jsonContent = JsonDeserialize<JObject>(rawContent);
+                    var jsonContent = rawContent.GetJson();
                     signingRequestStatus = jsonContent["status"].NotNull().Value<string>();
                     signedArtifactUrl = signingRequestStatus switch
                     {
@@ -257,7 +256,7 @@ namespace Nuke.Common.Tools.SignPath
             if (response.StatusCode != statusCode)
             {
                 var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                var jobject = JsonDeserialize<JObject>(content);
+                var jobject = content.GetJson();
                 Assert.Fail($"[{response.StatusCode}] {jobject.GetChildren<JValue>("").Select(x => x.Value<string>()).JoinNewLine()}");
             }
 
