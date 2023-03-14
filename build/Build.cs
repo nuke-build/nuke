@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using NuGet.Packaging;
 using Nuke.Common;
 using Nuke.Common.CI;
@@ -19,6 +20,9 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Tools.ReSharper;
+using Nuke.Common.Tools.StaticWebApps;
+using Nuke.Common.Utilities;
 using Nuke.Components;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -26,6 +30,7 @@ using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 
 [DotNetVerbosityMapping]
 [ShutdownDotNetAfterServerBuild]
+[Requires<DotNetTasks>]
 partial class Build
     : NukeBuild,
         IHazTwitterCredentials,
@@ -48,6 +53,36 @@ partial class Build
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
     public static int Main() => Execute<Build>(x => ((IPack)x).Pack);
+
+    // [NpmPackage("@azure/static-web-apps-cli", "swa")]
+    // readonly Tool StaticWebApps;
+
+    [NuGetPackage("GitVersion.Tool", "GitVersion.dll", Version = "5.11.0")]
+    readonly Tool GitV;
+
+    [State]
+    GitVersion Version;
+
+    [State(DefaultValueHandling = ValueHandling.Ignore)]
+    string String;
+
+    Target Foo => _ => _
+        // .Requires(() => StaticWebApps)
+        .Requires(() => GitV)
+        .Requires<ReSharperTasks>()
+        .Requires<StaticWebAppsTasks>()
+        .Executes(() =>
+        {
+            Version = GitV.Invoke($"").StdToText().GetJson<GitVersion>(new JsonSerializerSettings { ContractResolver = new StateResolver() });
+            String = "foo";
+        });
+
+    Target Foo2 => _ => _
+        .Executes(() =>
+        {
+            Console.WriteLine(Version.ToJson());
+            Console.WriteLine(String);
+        });
 
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;

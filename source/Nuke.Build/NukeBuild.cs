@@ -50,6 +50,7 @@ namespace Nuke.Common
     // Before logo
     [ArgumentsFromParametersFile(Priority = 150)]
     [HandleReSharperSurrogateArguments(Priority = 150)]
+    [InjectPreviousState(Priority = 125)]
     [InjectParameterValues(Priority = 100)]
     [HandleShellCompletion(Priority = 75)]
     [GenerateBuildServerConfigurations(Priority = 50)]
@@ -64,6 +65,7 @@ namespace Nuke.Common
     [HandleVisualStudioDebugging]
     [InjectNonParameterValues(Priority = -100)]
     // After finish
+    [SerializeCurrentState(Priority = 100)]
     [UpdateNotification(Priority = 10)]
     [SerializeBuildServerState]
     public abstract partial class NukeBuild : INukeBuild

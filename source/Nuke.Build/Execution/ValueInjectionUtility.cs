@@ -76,6 +76,9 @@ namespace Nuke.Common.ValueInjection
                 if (member.ReflectedType.NotNull().IsInterface)
                     continue;
 
+                if (member.HasCustomAttribute<StateAttribute>() && member.GetValue(instance) != null)
+                    continue;
+
                 attribute.Build = instance as INukeBuild;
                 var value = attribute.TryGetValue(member, instance);
                 if (value == null)

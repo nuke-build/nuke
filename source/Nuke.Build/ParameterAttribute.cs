@@ -92,4 +92,24 @@ namespace Nuke.Common
 
         public string Prefix { get; }
     }
+
+    [AttributeUsage(AttributeTargets.Field)]
+    public class StateAttribute : Attribute
+    {
+        public ConflictResolution ConflictResolution { get; set; }
+        public ValueHandling DefaultValueHandling { get; set; }
+    }
+
+    public enum ConflictResolution
+    {
+        Any,
+        Merge,
+        Error
+    }
+
+    public enum ValueHandling
+    {
+        Include,
+        Ignore
+    }
 }
