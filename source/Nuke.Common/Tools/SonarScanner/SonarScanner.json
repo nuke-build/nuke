@@ -69,7 +69,7 @@
           {
             "name": "Verbose",
             "type": "bool",
-            "format": "/d:sonar.verbose={value}",
+            "customImpl": true,
             "help": "Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting."
           },
           {

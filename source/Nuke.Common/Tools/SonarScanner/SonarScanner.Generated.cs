@@ -89,7 +89,6 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
         ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
         ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
-        ///     <li><c>/d:sonar.verbose</c> via <see cref="SonarScannerBeginSettings.Verbose"/></li>
         ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
         ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
         ///     <li><c>/n</c> via <see cref="SonarScannerBeginSettings.Name"/></li>
@@ -148,7 +147,6 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
         ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
         ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
-        ///     <li><c>/d:sonar.verbose</c> via <see cref="SonarScannerBeginSettings.Verbose"/></li>
         ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
         ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
         ///     <li><c>/n</c> via <see cref="SonarScannerBeginSettings.Name"/></li>
@@ -204,7 +202,6 @@ namespace Nuke.Common.Tools.SonarScanner
         ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
         ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
         ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
-        ///     <li><c>/d:sonar.verbose</c> via <see cref="SonarScannerBeginSettings.Verbose"/></li>
         ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
         ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
         ///     <li><c>/n</c> via <see cref="SonarScannerBeginSettings.Name"/></li>
@@ -314,10 +311,6 @@ namespace Nuke.Common.Tools.SonarScanner
         ///   Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
         /// </summary>
         public virtual string Password { get; internal set; }
-        /// <summary>
-        ///   Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.
-        /// </summary>
-        public virtual bool? Verbose { get; internal set; }
         /// <summary>
         ///   Comma separated list of VSTest report files to include.
         /// </summary>
@@ -482,7 +475,6 @@ namespace Nuke.Common.Tools.SonarScanner
               .Add("/d:sonar.host.url={value}", Server)
               .Add("/d:sonar.login={value}", Login, secret: true)
               .Add("/d:sonar.password={value}", Password, secret: true)
-              .Add("/d:sonar.verbose={value}", Verbose)
               .Add("/d:sonar.cs.vstest.reportsPaths={value}", VSTestReports, separator: ',')
               .Add("/d:sonar.cs.nunit.reportsPaths={value}", NUnitTestReports, separator: ',')
               .Add("/d:sonar.cs.xunit.reportsPaths={value}", XUnitTestReports, separator: ',')
@@ -756,63 +748,6 @@ namespace Nuke.Common.Tools.SonarScanner
         {
             toolSettings = toolSettings.NewInstance();
             toolSettings.Password = null;
-            return toolSettings;
-        }
-        #endregion
-        #region Verbose
-        /// <summary>
-        ///   <p><em>Sets <see cref="SonarScannerBeginSettings.Verbose"/></em></p>
-        ///   <p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p>
-        /// </summary>
-        [Pure]
-        public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : SonarScannerBeginSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbose = verbose;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Resets <see cref="SonarScannerBeginSettings.Verbose"/></em></p>
-        ///   <p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p>
-        /// </summary>
-        [Pure]
-        public static T ResetVerbose<T>(this T toolSettings) where T : SonarScannerBeginSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbose = null;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Enables <see cref="SonarScannerBeginSettings.Verbose"/></em></p>
-        ///   <p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p>
-        /// </summary>
-        [Pure]
-        public static T EnableVerbose<T>(this T toolSettings) where T : SonarScannerBeginSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbose = true;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Disables <see cref="SonarScannerBeginSettings.Verbose"/></em></p>
-        ///   <p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p>
-        /// </summary>
-        [Pure]
-        public static T DisableVerbose<T>(this T toolSettings) where T : SonarScannerBeginSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbose = false;
-            return toolSettings;
-        }
-        /// <summary>
-        ///   <p><em>Toggles <see cref="SonarScannerBeginSettings.Verbose"/></em></p>
-        ///   <p>Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.</p>
-        /// </summary>
-        [Pure]
-        public static T ToggleVerbose<T>(this T toolSettings) where T : SonarScannerBeginSettings
-        {
-            toolSettings = toolSettings.NewInstance();
-            toolSettings.Verbose = !toolSettings.Verbose;
             return toolSettings;
         }
         #endregion
