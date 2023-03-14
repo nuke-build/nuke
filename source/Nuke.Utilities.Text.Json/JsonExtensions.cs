@@ -8,6 +8,7 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Utilities
 {
@@ -19,7 +20,8 @@ namespace Nuke.Common.Utilities
             {
                 Formatting = Formatting.Indented,
                 NullValueHandling = NullValueHandling.Ignore,
-                DefaultValueHandling = DefaultValueHandling.Ignore
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                ContractResolver = new AllWritableContractResolver()
             };
 
         /// <summary>
