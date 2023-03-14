@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -20,6 +20,11 @@ namespace Nuke.Common
         }
 
         public DefaultOutput[] DisabledOutputs { get; }
+
+        public virtual bool IsApplicable(INukeBuild build)
+        {
+            return true;
+        }
     }
 
     public enum DefaultOutput
