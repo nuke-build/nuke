@@ -67,7 +67,9 @@ namespace Nuke.Common
 
         private bool IsOutputEnabled(DefaultOutput output)
         {
-            return !(GetType().GetCustomAttribute<DisableDefaultOutputAttribute>()?.DisabledOutputs.Contains(output) ?? false);
+            return !GetType().GetCustomAttributes<DisableDefaultOutputAttribute>()
+                .Where(x => x.IsApplicable(this))
+                .Any(x => x.DisabledOutputs.Contains(output));
         }
     }
 }
