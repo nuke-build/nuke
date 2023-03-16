@@ -21,7 +21,7 @@ namespace Nuke.Common.IO
         [Pure]
         public static bool Exists(this AbsolutePath path, [CallerArgumentExpression("path")] string expression = null)
         {
-            if (expression.EndsWithAnyOrdinalIgnoreCase("file", "executable", "exe", "script"))
+            if (expression.EndsWithAnyOrdinalIgnoreCase("file", "executable", "exe", "script", "archive"))
                 return path.FileExists();
             if (expression.EndsWithAnyOrdinalIgnoreCase("directory", "dir", "folder"))
                 return path.DirectoryExists();
