@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Nuke.Common;
 using Nuke.Common.IO;
 using Xunit.Abstractions;
 

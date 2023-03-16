@@ -64,6 +64,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Build.Tests", "source\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Utilities.Text.Yaml", "source\Nuke.Utilities.Text.Yaml\Nuke.Utilities.Text.Yaml.csproj", "{8D985032-FC74-4E7D-93F7-55BCF74755F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nuke.Utilities.IO.Compression", "source\Nuke.Utilities.IO.Compression\Nuke.Utilities.IO.Compression.csproj", "{3E330C45-DB19-4EAD-9C5D-B9D24F0254E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -172,6 +174,10 @@ Global
 		{8D985032-FC74-4E7D-93F7-55BCF74755F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D985032-FC74-4E7D-93F7-55BCF74755F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D985032-FC74-4E7D-93F7-55BCF74755F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E330C45-DB19-4EAD-9C5D-B9D24F0254E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E330C45-DB19-4EAD-9C5D-B9D24F0254E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E330C45-DB19-4EAD-9C5D-B9D24F0254E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E330C45-DB19-4EAD-9C5D-B9D24F0254E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
