@@ -16,7 +16,6 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.IO.HttpTasks;
 
 partial class Build
@@ -40,7 +39,7 @@ partial class Build
         .Executes(() =>
         {
             FontDownloadUrls.ForEach(x => HttpDownloadFile(x, FontDirectory / new Uri(x).Segments.Last()));
-            FontArchives.ForEach(x => Uncompress(x, FontDirectory / Path.GetFileNameWithoutExtension(x)));
+            FontArchives.ForEach(x => x.UncompressTo(FontDirectory / x.NameWithoutExtension));
 
             FontFiles.ForEach(x => FontCollection.Add(x));
             FontCollection.Families.ForEach(x => Log.Information("Installed font {Font}", x.Name));

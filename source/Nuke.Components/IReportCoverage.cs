@@ -13,7 +13,6 @@ using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Codecov;
 using Nuke.Common.Tools.ReportGenerator;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.Tools.Codecov.CodecovTasks;
 using static Nuke.Common.Tools.ReportGenerator.ReportGeneratorTasks;
 
@@ -26,8 +25,8 @@ namespace Nuke.Components
         bool ReportToCodecov { get; }
         [Parameter] [Secret] string CodecovToken => TryGetValue(() => CodecovToken);
 
-        string CoverageReportDirectory => ReportDirectory / "coverage-report";
-        string CoverageReportArchive => Path.ChangeExtension(CoverageReportDirectory, ".zip");
+        AbsolutePath CoverageReportDirectory => ReportDirectory / "coverage-report";
+        AbsolutePath CoverageReportArchive => CoverageReportDirectory.WithExtension("zip");
 
         Target ReportCoverage => _ => _
             .DependsOn(Test)
@@ -50,10 +49,7 @@ namespace Nuke.Components
                         .Apply(ReportGeneratorSettingsBase)
                         .Apply(ReportGeneratorSettings));
 
-                    CompressZip(
-                        directory: CoverageReportDirectory,
-                        archiveFile: CoverageReportArchive,
-                        fileMode: FileMode.Create);
+                    CoverageReportDirectory.ZipTo(CoverageReportArchive, fileMode: FileMode.Create);
                 }
 
                 UploadCoverageData();

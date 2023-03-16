@@ -31,15 +31,15 @@ namespace Nuke.Common.Tests
             RootFile.WriteAllText("root", eofLineBreak: false);
             NestedFile.WriteAllText("nested", eofLineBreak: false);
 
-            var archive = Path.Combine(TestTempDirectory, archiveFile);
-            CompressionTasks.Compress(TestTempDirectory, archive);
+            var archive = TestTempDirectory / archiveFile;
+            TestTempDirectory.CompressTo(archive);
             File.Exists(archive).Should().BeTrue();
 
             File.Delete(RootFile);
             File.Delete(NestedFile);
             Directory.GetFiles(TestTempDirectory, "*").Should().HaveCount(1);
 
-            CompressionTasks.Uncompress(archive, TestTempDirectory);
+            archive.UncompressTo(TestTempDirectory);
             File.Exists(RootFile).Should().BeTrue();
             File.ReadAllText(RootFile).Should().Be("root");
             File.Exists(NestedFile).Should().BeTrue();
