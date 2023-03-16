@@ -11,7 +11,6 @@ using Nuke.Common;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.IO.CompressionTasks;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.SignPath.SignPathTasks;
 
@@ -61,8 +60,8 @@ namespace Nuke.Components
         AbsolutePath SignPathTemporaryDirectory => TemporaryDirectory / "signpath";
         AbsolutePath SignPathRequestDirectory => SignPathTemporaryDirectory / "signing-request";
         AbsolutePath SignPathResponseDirectory => SignPathTemporaryDirectory / "signing-response";
-        string SignPathRequestArchive => Path.ChangeExtension(SignPathRequestDirectory, ".zip");
-        string SignPathResponseArchive => Path.ChangeExtension(SignPathResponseDirectory, ".zip");
+        AbsolutePath SignPathRequestArchive => Path.ChangeExtension(SignPathRequestDirectory, ".zip");
+        AbsolutePath SignPathResponseArchive => Path.ChangeExtension(SignPathResponseDirectory, ".zip");
 
         IEnumerable<AbsolutePath> SignPathPackages { get; }
         bool SignPathReplacePackages => true;
@@ -81,7 +80,7 @@ namespace Nuke.Components
             {
                 SignPathRequestDirectory.CreateOrCleanDirectory();
                 SignPathPackages.ForEach(x => CopyFileToDirectory(x, SignPathRequestDirectory));
-                CompressZip(SignPathRequestDirectory, SignPathRequestArchive);
+                SignPathRequestDirectory.ZipTo(SignPathRequestArchive);
 
                 AppVeyor.PushArtifact(SignPathRequestArchive);
 
@@ -106,7 +105,7 @@ namespace Nuke.Components
                     ReportSummary(_ => _);
                 }
 
-                UncompressZip(SignPathResponseArchive, SignPathResponseDirectory);
+                SignPathResponseArchive.UnZipTo(SignPathResponseDirectory);
 
                 if (SignPathReplacePackages)
                 {
