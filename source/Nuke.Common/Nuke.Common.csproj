@@ -16,6 +16,7 @@
     <ProjectReference Include="..\Nuke.SolutionModel\Nuke.SolutionModel.csproj" />
     <ProjectReference Include="..\Nuke.Tooling\Nuke.Tooling.csproj" />
     <ProjectReference Include="..\Nuke.Utilities\Nuke.Utilities.csproj" />
+    <ProjectReference Include="..\Nuke.Utilities.IO.Compression\Nuke.Utilities.IO.Compression.csproj" />
     <ProjectReference Include="..\Nuke.Utilities.IO.Globbing\Nuke.Utilities.IO.Globbing.csproj" />
     <ProjectReference Include="..\Nuke.Utilities.Net\Nuke.Utilities.Net.csproj" />
     <ProjectReference Include="..\Nuke.Utilities.Text.Json\Nuke.Utilities.Text.Json.csproj" />
@@ -25,7 +26,6 @@
     <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.4" />
     <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.4" />
     <PackageReference Include="Octokit" Version="5.0.0" />
-    <PackageReference Include="SharpZipLib" Version="1.4.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(_IsPacking)' == 'True'">
