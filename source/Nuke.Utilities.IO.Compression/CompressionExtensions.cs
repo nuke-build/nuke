@@ -13,6 +13,8 @@ using ICSharpCode.SharpZipLib.Tar;
 using ICSharpCode.SharpZipLib.Zip;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Utilities;
+
 
 namespace Nuke.Common.IO
 {
@@ -43,6 +45,7 @@ namespace Nuke.Common.IO
                 Assert.Fail($"Unknown archive extension for archive '{Path.GetFileName(archiveFile)}'");
         }
 
+        [AdaptiveLogging]
         public static void ZipTo(
             this AbsolutePath directory,
             AbsolutePath archiveFile,
@@ -50,6 +53,8 @@ namespace Nuke.Common.IO
             CompressionLevel compressionLevel = CompressionLevel.Optimal,
             FileMode fileMode = FileMode.CreateNew)
         {
+            AdaptiveLogger.Log("Zipping {Directory} to {Archive}...", directory, archiveFile);
+
             archiveFile.Parent.CreateDirectory();
 
             filter ??= _ => true;
@@ -58,6 +63,7 @@ namespace Nuke.Common.IO
             using var fileStream = File.Open(archiveFile, fileMode, FileAccess.ReadWrite);
             using var zipArchive = new ZipArchive(fileStream, ZipArchiveMode.Create);
 
+            [AdaptiveLogging]
             void AddFile(AbsolutePath file)
             {
                 var relativePath = directory.GetRelativePathTo(file);
@@ -68,13 +74,17 @@ namespace Nuke.Common.IO
             files.ForEach(AddFile);
         }
 
+        [AdaptiveLogging]
         public static void UnZipTo(this AbsolutePath archiveFile, AbsolutePath directory)
         {
+            AdaptiveLogger.Log("Unzipping {Archive} to {Directory}...", archiveFile, directory);
+
             using var fileStream = File.OpenRead(archiveFile);
             using var zipFile = new ICSharpCode.SharpZipLib.Zip.ZipFile(fileStream);
 
             var entries = zipFile.Cast<ZipEntry>().Where(x => !x.IsDirectory);
 
+            [AdaptiveLogging]
             void HandleEntry(ZipEntry entry)
             {
                 var file = directory / entry.Name;
@@ -145,12 +155,15 @@ namespace Nuke.Common.IO
             FileMode fileMode,
             Func<Stream, Stream> outputStreamFactory)
         {
+            AdaptiveLogger.Log("Zipping {Files} files from {Directory} to {Archive}...", files.Count, baseDirectory, archiveFile);
+
             archiveFile.Parent.CreateDirectory();
 
             using var fileStream = File.Open(archiveFile, fileMode, FileAccess.ReadWrite);
             using var outputStream = outputStreamFactory(fileStream);
             using var tarArchive = TarArchive.CreateOutputTarArchive(outputStream);
 
+            [AdaptiveLogging]
             void AddFile(AbsolutePath file)
             {
                 var entry = TarEntry.CreateEntryFromFile(file);
@@ -164,12 +177,18 @@ namespace Nuke.Common.IO
 
         private static void UncompressTar(AbsolutePath archiveFile, AbsolutePath directory, Func<Stream, Stream> inputStreamFactory)
         {
+            AdaptiveLogger.Log("Unzipping {Archive} to {Directory}...", archiveFile, directory);
+
             using var fileStream = File.OpenRead(archiveFile);
             using var inputStream = inputStreamFactory(fileStream);
             using var tarArchive = TarArchive.CreateInputTarArchive(inputStream, nameEncoding: null);
 
             directory.CreateDirectory();
 
+            [AdaptiveLogging]
+            void HandleFile(string file) => AdaptiveLogger.Log("Extracting {File}", file);
+
+            tarArchive.ProgressMessageEvent += [AdaptiveLogging](a, e, m) => HandleFile(e.Name);
             tarArchive.ExtractContents(directory);
         }
     }

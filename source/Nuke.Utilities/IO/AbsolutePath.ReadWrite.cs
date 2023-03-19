@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Nuke.Common.Utilities;
+using Nuke.Utilities;
 
 namespace Nuke.Common.IO
 {
@@ -28,8 +29,10 @@ namespace Nuke.Common.IO
         /// <summary>
         /// Appends all lines to a file.
         /// </summary>
+        [AdaptiveLogging]
         public static void AppendAllLines(this AbsolutePath path, string[] lines, Encoding encoding = null)
         {
+            AdaptiveLogger.Log("Appending {Lines} lines to {File}", lines.Length, path);
             path.Parent.CreateDirectory();
             File.AppendAllLines(path, lines, encoding ?? DefaultEncoding);
         }
@@ -37,8 +40,10 @@ namespace Nuke.Common.IO
         /// <summary>
         /// Appends the string to a file.
         /// </summary>
+        [AdaptiveLogging]
         public static void AppendAllText(this AbsolutePath path, string content, Encoding encoding = null)
         {
+            AdaptiveLogger.Log("Appending {ContentLength} characters to {File}", content.Length, path);
             path.Parent.CreateDirectory();
             File.AppendAllText(path, content, encoding ?? DefaultEncoding);
         }
@@ -53,7 +58,7 @@ namespace Nuke.Common.IO
             PlatformFamily? platformFamily = null,
             bool? eofLineBreak = null)
         {
-            WriteAllLines(path, lines.ToArray(), encoding, platformFamily, eofLineBreak);
+            path.WriteAllLines(lines.ToArray(), encoding, platformFamily, eofLineBreak);
         }
 
         /// <summary>
@@ -75,12 +80,15 @@ namespace Nuke.Common.IO
         /// <summary>
         /// Writes the string to a file.
         /// </summary>
+        [AdaptiveLogging]
         public static void WriteAllText(
             this AbsolutePath path,
             string content,
             Encoding encoding = null,
             bool? eofLineBreak = null)
         {
+            AdaptiveLogger.Log("Writing {ContentLength} characters to {File}", content.Length, path);
+
             path.Parent.CreateDirectory();
 
             if (eofLineBreak ?? DefaultEofLineBreak)
@@ -96,8 +104,10 @@ namespace Nuke.Common.IO
         /// <summary>
         /// Writes all bytes to a file.
         /// </summary>
+        [AdaptiveLogging]
         public static void WriteAllBytes(this AbsolutePath path, byte[] bytes)
         {
+            AdaptiveLogger.Log("Writing {BytesLength} characters to {File}", bytes.Length, path);
             path.Parent.CreateDirectory();
             File.WriteAllBytes(path, bytes);
         }

@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Utilities;
 
 namespace Nuke.Common.IO
 {
@@ -13,11 +14,13 @@ namespace Nuke.Common.IO
         /// <summary>
         /// Deletes the file when existent.
         /// </summary>
+        [AdaptiveLogging]
         public static void DeleteFile(this AbsolutePath path)
         {
             if (!path.FileExists())
                 return;
 
+            AdaptiveLogger.Log("Deleting file {File}", path);
             File.SetAttributes(path, FileAttributes.Normal);
             File.Delete(path);
         }
@@ -25,11 +28,13 @@ namespace Nuke.Common.IO
         /// <summary>
         /// Deletes the directory recursively when existent.
         /// </summary>
+        [AdaptiveLogging]
         public static void DeleteDirectory(this AbsolutePath path)
         {
             if (!path.DirectoryExists())
                 return;
 
+            AdaptiveLogger.Log("Deleting directory {Directory}", path);
             Directory.GetFiles(path, "*", SearchOption.AllDirectories).ForEach(x => File.SetAttributes(x, FileAttributes.Normal));
             Directory.Delete(path, recursive: true);
         }
