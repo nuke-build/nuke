@@ -21,6 +21,28 @@
 <!--    <PackageReadmeFile>README.md</PackageReadmeFile>-->
   </PropertyGroup>
 
+  <PropertyGroup>
+    <FodyVerifyAssembly>True</FodyVerifyAssembly>
+<!--    <DisableFody Condition="'$(_ComputeFilesToPublishForRuntimeIdentifiers)'=='true'">true</DisableFody>-->
+    <WeaverConfiguration>
+      <Weavers>
+        <MethodDecorator />
+      </Weavers>
+    </WeaverConfiguration>
+  </PropertyGroup>
+
+<!--  <Target Name="DisableFodyOnComputeFiles" BeforeTargets="AfterCompile" Condition="'$(_ComputeFilesToPublishForRuntimeIdentifiers)'=='true'">-->
+<!--    <PropertyGroup>-->
+<!--      <DisableFody>true</DisableFody>-->
+<!--    </PropertyGroup>-->
+<!--    <Message Text="DisableFodyOnComputeFiles" Importance="High" />-->
+<!--  </Target>-->
+  
+  <ItemGroup>
+    <PackageReference Include="Fody" Version="6.6.4" />
+    <PackageReference Include="MethodDecorator.Fody" Version="1.1.1" />
+  </ItemGroup>
+
   <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
     <IsPackable>False</IsPackable>
   </PropertyGroup>

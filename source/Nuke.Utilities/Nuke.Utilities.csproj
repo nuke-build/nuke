@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
+    <PackageReference Include="Serilog" Version="2.12.0" />
   </ItemGroup>
 
 </Project>
