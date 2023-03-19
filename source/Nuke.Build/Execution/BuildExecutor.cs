@@ -10,7 +10,9 @@ using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Utilities;
 using Serilog;
+using Serilog.Events;
 
 namespace Nuke.Common.Execution
 {
@@ -116,7 +118,12 @@ namespace Nuke.Common.Execution
                 try
                 {
                     if (target.Intercept == null || !target.Intercept.Invoke())
-                        target.Actions.ForEach(x => x());
+                    {
+                        using (DelegateDisposable.SetAndRestore(() => AdaptiveLogger.Level, LogEventLevel.Information))
+                        {
+                            target.Actions.ForEach(x => x());
+                        }
+                    }
 
                     target.Stopwatch.Stop();
                     target.Status = ExecutionStatus.Succeeded;

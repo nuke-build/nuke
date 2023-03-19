@@ -3,6 +3,7 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System.Runtime.CompilerServices;
+using Nuke.Utilities;
 
 [assembly: InternalsVisibleTo("Nuke.Build")]
 [assembly: InternalsVisibleTo("Nuke.Build.Shared")]
@@ -18,3 +19,5 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Nuke.Tooling.Tests")]
 [assembly: InternalsVisibleTo("Nuke.Utilities.IO.Globbing")]
 [assembly: InternalsVisibleTo("Nuke.Utilities.Tests")]
+
+[module: AdaptiveLogging]

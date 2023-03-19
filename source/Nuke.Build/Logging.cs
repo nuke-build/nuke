@@ -12,6 +12,7 @@ using Nuke.Common.Execution.Theming;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Nuke.Utilities;
 using Serilog;
 using Serilog.Core;
 using Serilog.Events;
@@ -58,6 +59,10 @@ namespace Nuke.Common.Execution
 
         public static void Configure(INukeBuild build = null)
         {
+            AdaptiveLogger.Level = build == null
+                ? LogEventLevel.Information
+                : LogEventLevel.Verbose;
+
             if (build != null)
             {
                 if (build.IsInterceptorExecution)
