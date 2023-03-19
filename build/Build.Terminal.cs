@@ -7,13 +7,13 @@ using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Execution;
 
-[DisableDefaultOutput<Terminal>(
-    DefaultOutput.Logo,
-    DefaultOutput.Timestamps,
-    DefaultOutput.TargetHeader,
-    DefaultOutput.ErrorsAndWarnings,
-    DefaultOutput.TargetOutcome,
-    DefaultOutput.BuildOutcome)]
+// [DisableDefaultOutput<Terminal>(
+//     DefaultOutput.Logo,
+//     DefaultOutput.Timestamps,
+//     DefaultOutput.TargetHeader,
+//     DefaultOutput.ErrorsAndWarnings,
+//     DefaultOutput.TargetOutcome,
+//     DefaultOutput.BuildOutcome)]
 partial class Build
 {
 }
