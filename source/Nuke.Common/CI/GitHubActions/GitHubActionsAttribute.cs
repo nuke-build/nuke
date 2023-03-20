@@ -62,6 +62,8 @@ namespace Nuke.Common.CI.GitHubActions
 
         public string[] ImportSecrets { get; set; } = new string[0];
         public bool EnableGitHubToken { get; set; }
+        public GitHubActionsPermissions[] WritePermissions { get; set; } = new GitHubActionsPermissions[0];
+        public GitHubActionsPermissions[] ReadPermissions { get; set; } = new GitHubActionsPermissions[0];
 
         public string[] CacheIncludePatterns { get; set; } = { ".nuke/temp", "~/.nuget/packages" };
         public string[] CacheExcludePatterns { get; set; } = new string[0];
@@ -95,6 +97,8 @@ namespace Nuke.Common.CI.GitHubActions
                                     Name = _name,
                                     ShortTriggers = On,
                                     DetailedTriggers = GetTriggers().ToArray(),
+                                    Permissions = WritePermissions.Select(x => (x, "write"))
+                                        .Concat(ReadPermissions.Select(x => (x, "read"))).ToArray(),
                                     Jobs = _images.Select(x => GetJobs(x, relevantTargets)).ToArray()
                                 };
 
