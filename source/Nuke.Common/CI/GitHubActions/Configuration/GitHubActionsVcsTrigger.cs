@@ -26,7 +26,8 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
         {
             writer.WriteLine($"{Kind.GetValue()}:");
 
-            void WriteValue(string value) => writer.WriteLine($"- {value.SingleQuoteIfNeeded('*', '!')}");
+            void WriteValue(string value)
+                => writer.WriteLine($"- {value.SingleQuoteIfNeeded('.', '*', '!', '?', '+', '[', ']', '(', ')')}");
 
             using (writer.Indent())
             {
