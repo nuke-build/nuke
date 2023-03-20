@@ -17,6 +17,7 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
 
         public GitHubActionsTrigger[] ShortTriggers { get; set; }
         public GitHubActionsDetailedTrigger[] DetailedTriggers { get; set; }
+        public (GitHubActionsPermissions Type, string Permission)[] Permissions { get; set; }
         public GitHubActionsJob[] Jobs { get; set; }
 
         public override void Write(CustomFileWriter writer)
@@ -32,6 +33,16 @@ namespace Nuke.Common.CI.GitHubActions.Configuration
                 using (writer.Indent())
                 {
                     DetailedTriggers.ForEach(x => x.Write(writer));
+                }
+            }
+
+            if (Permissions.Length > 0)
+            {
+                writer.WriteLine();
+                writer.WriteLine("permissions:");
+                using (writer.Indent())
+                {
+                    Permissions.ForEach(x => writer.WriteLine($"{x.Type.GetValue()}: {x.Permission}"));
                 }
             }
 
