@@ -34,8 +34,9 @@ namespace Nuke.Common.Tooling
             var endpoint = _repository.TrimStart("https").TrimStart("http").TrimStart("://").TrimEnd("/");
             var uri = $"https://{endpoint}/{_groupId.Replace(".", "/")}/{_artifactId ?? _groupId}/maven-metadata.xml";
             var content = HttpTasks.HttpDownloadString(uri);
-            var version = XmlTasks.XmlPeekFromString(content, ".//version")
-                .Select(SemanticVersion.Parse)
+            var versions = XmlTasks.XmlPeekFromString(content, ".//version").ToList();
+            var version = versions
+                .Select(NuGetVersion.Parse)
                 .OrderByDescending(x => x)
                 .FirstOrDefault(x => !x.IsPrerelease || IncludePrerelease);
             return member.GetMemberType() == typeof(string)
