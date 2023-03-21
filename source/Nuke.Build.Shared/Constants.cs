@@ -22,6 +22,7 @@ namespace Nuke.Common
         internal const string NukeDirectoryName = ".nuke";
         internal const string NukeCommonPackageId = nameof(Nuke) + "." + nameof(Common);
         internal const string BuildSchemaFileName = "build.schema.json";
+        internal const string VisualStudioDebugFileName = $"{VisualStudioDebugParameterName}.log";
 
         internal const string TargetsSeparator = "+";
         internal const string RootDirectoryParameterName = "Root";
