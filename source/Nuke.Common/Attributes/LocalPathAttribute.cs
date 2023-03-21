@@ -35,6 +35,11 @@ namespace Nuke.Common.Tooling
             _absoluteOrRelativePath = absoluteOrRelativePath;
         }
 
+        public LocalPathAttribute(string windowsPath, string unixPath)
+        {
+            _absoluteOrRelativePath = EnvironmentInfo.IsWin ? windowsPath : unixPath;
+        }
+
         public override ToolRequirement GetRequirement(MemberInfo member)
         {
             return null;
