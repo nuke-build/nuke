@@ -22,8 +22,7 @@ partial class Build
 {
     [Parameter] readonly bool UseHttps;
 
-    Nuke.Common.ProjectModel.Solution GlobalSolution = (RootDirectory / "nuke-global.sln").ExistingFile()?.ReadSolution();
-
+    AbsolutePath GlobalSolution => RootDirectory / "nuke-global.sln";
     AbsolutePath ExternalRepositoriesDirectory => RootDirectory / "external";
     AbsolutePath ExternalRepositoriesFile => ExternalRepositoriesDirectory / "repositories.yml";
 
