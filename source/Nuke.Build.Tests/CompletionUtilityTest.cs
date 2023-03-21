@@ -37,6 +37,13 @@ namespace Nuke.Common.Tests
                             "Release"
                           ]
                         },
+                        "Profile": {
+                          "type": "array",
+                          "description": "Defines the profiles to load",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
                         "Target": {
                           "type": "array",
                           "description": "List of targets to be invoked. Default is '{default_target}'",

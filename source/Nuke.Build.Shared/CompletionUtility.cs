@@ -26,7 +26,7 @@ namespace Nuke.Common.Utilities
                 => property.TryGetProperty("enum", out var enumProperty)
                     ? enumProperty.EnumerateArray().Select(x => x.GetString()).ToArray()
                     : property.TryGetProperty("items", out var itemsProperty)
-                        ? itemsProperty.GetProperty("enum").EnumerateArray().Select(x => x.GetString()).ToArray()
+                        ? GetEnumValues(itemsProperty)
                         : null;
 
             var properties = schema.RootElement.GetProperty("definitions").GetProperty("build").GetProperty("properties")
