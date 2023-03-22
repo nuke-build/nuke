@@ -17,7 +17,8 @@ namespace Nuke.Common.Utilities
             "AppVeyor",
             "TeamCity",
             "GitLab",
-            "SignPath"
+            "SignPath",
+            "JetBrains"
         };
     }
 }
