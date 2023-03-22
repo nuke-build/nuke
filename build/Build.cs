@@ -40,7 +40,8 @@ partial class Build
         IReportCoverage,
         IReportIssues,
         IReportDuplicates,
-        IPublish
+        IPublish,
+        ICreateGitHubRelease
 {
     /// Support plugins are available for:
     ///   - JetBrains ReSharper        https://nuke.build/resharper
@@ -167,6 +168,15 @@ partial class Build
                     SuppressErrors(() => DeletePackage(packageId, DefaultDeploymentVersion), logWarning: false);
             }
         });
+
+    string ICreateGitHubRelease.Name => MajorMinorPatchVersion;
+    IEnumerable<AbsolutePath> ICreateGitHubRelease.AssetFiles => NuGetPackageFiles;
+
+    Target ICreateGitHubRelease.CreateGitHubRelease => _ => _
+        .Inherit<ICreateGitHubRelease>()
+        .TriggeredBy<IPublish>()
+        .ProceedAfterFailure()
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch());
 
     Target Install => _ => _
         .DependsOn<IPack>()

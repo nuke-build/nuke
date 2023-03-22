@@ -32,6 +32,10 @@
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
+        "GitHubToken": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
         "GitterAuthToken": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
@@ -131,6 +135,7 @@
               "CheckoutExternalRepositories",
               "Clean",
               "Compile",
+              "CreateGitHubRelease",
               "DeletePackages",
               "DownloadLicenses",
               "GenerateGlobalSolution",
@@ -181,6 +186,7 @@
               "CheckoutExternalRepositories",
               "Clean",
               "Compile",
+              "CreateGitHubRelease",
               "DeletePackages",
               "DownloadLicenses",
               "GenerateGlobalSolution",
