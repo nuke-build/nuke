@@ -19,28 +19,27 @@ using Octokit;
 namespace Nuke.Components
 {
     [PublicAPI]
-    [ParameterPrefix(GitHubRelease)]
     public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
     {
         public const string GitHubRelease = nameof(GitHubRelease);
 
-        [Parameter] [Secret] string Token => TryGetValue(() => Token) ?? GitHubActions.Instance.Token;
-        string Version { get; }
+        [Parameter] [Secret] string GitHubToken => TryGetValue(() => GitHubToken) ?? GitHubActions.Instance.Token;
+
+        string Name { get; }
         IEnumerable<AbsolutePath> AssetFiles { get; }
 
         Target CreateGitHubRelease => _ => _
-            .Requires(() => Token)
             .Executes(async () =>
             {
-                GitHubTasks.GitHubClient.Credentials = new Credentials(Token);
+                GitHubTasks.GitHubClient.Credentials ??= new Credentials(GitHubToken);
 
                 var release = await GitHubTasks.GitHubClient.Repository.Release.Create(
                     GitRepository.GetGitHubOwner(),
                     GitRepository.GetGitHubName(),
-                    new NewRelease(Version)
+                    new NewRelease(Name)
                     {
-                        Name = $"v{Version}",
-                        Body = ChangelogTasks.ExtractChangelogSectionNotes(NuGetReleaseNotes).JoinNewLine()
+                        Name = Name,
+                        Body = ChangelogTasks.ExtractChangelogSectionNotes(ChangelogFile).JoinNewLine()
                     });
 
                 var uploadTasks = AssetFiles.Select(async x =>
