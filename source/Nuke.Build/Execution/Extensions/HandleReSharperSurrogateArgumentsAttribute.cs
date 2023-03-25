@@ -13,23 +13,21 @@ namespace Nuke.Common.Execution
 {
     internal class HandleReSharperSurrogateArgumentsAttribute : BuildExtensionAttributeBase, IOnBuildCreated
     {
-        private const string SurrogateFileName = "nuke.tmp";
-
-        private AbsolutePath SurrogateFile => Build.BuildAssemblyDirectory / SurrogateFileName;
+        private AbsolutePath ReSharperSurrogateFile => Constants.GetReSharperSurrogateFile(Build.RootDirectory);
 
         public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
         {
-            if (!SurrogateFile.Exists())
+            if (!ReSharperSurrogateFile.Exists())
                 return;
 
-            var argumentLines = SurrogateFile.ReadAllLines();
-            var lastWriteTime = File.GetLastWriteTime(SurrogateFile);
+            var argumentLines = ReSharperSurrogateFile.ReadAllLines();
+            var lastWriteTime = File.GetLastWriteTime(ReSharperSurrogateFile);
 
-            Assert.HasSingleItem(argumentLines, $"{SurrogateFileName} must have only one single line");
-            SurrogateFile.DeleteFile();
+            Assert.HasSingleItem(argumentLines, $"{ReSharperSurrogateFile} must have only one single line");
+            ReSharperSurrogateFile.DeleteFile();
             if (lastWriteTime.AddMinutes(value: 1) < DateTime.Now)
             {
-                Log.Warning("Last write time of {File} was {LastWriteTime}. Skipping ...", SurrogateFileName, lastWriteTime);
+                Log.Warning("Last write time of {File} was {LastWriteTime}. Skipping ...", ReSharperSurrogateFile, lastWriteTime);
                 return;
             }
 

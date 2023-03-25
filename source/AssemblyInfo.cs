@@ -19,3 +19,5 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Nuke.Utilities.IO.Globbing")]
 [assembly: InternalsVisibleTo("Nuke.Utilities.Tests")]
 [assembly: InternalsVisibleTo("Nuke.VisualStudio")]
+[assembly: InternalsVisibleTo("ReSharper.Nuke")]
+[assembly: InternalsVisibleTo("ReSharper.Nuke.Rider")]

@@ -88,6 +88,11 @@ namespace Nuke.Common
             return GetTemporaryDirectory(rootDirectory) / $"{VisualStudioDebugParameterName}.log";
         }
 
+        public static AbsolutePath GetReSharperSurrogateFile(AbsolutePath rootDirectory)
+        {
+            return GetTemporaryDirectory(rootDirectory) / "resharper-surrogate.log";
+        }
+
         internal static AbsolutePath GetBuildSchemaFile(AbsolutePath rootDirectory)
         {
             return GetNukeDirectory(rootDirectory) / BuildSchemaFileName;
