@@ -46,8 +46,7 @@ namespace Nuke.Utilities
             Nesting--;
             if (Nesting == 1)
             {
-                Assert.True(PreviousLevel.HasValue);
-                AdaptiveLogger.Level = PreviousLevel.Value;
+                AdaptiveLogger.Level = PreviousLevel ?? AdaptiveLogger.Level;
                 PreviousLevel = null;
             }
         }

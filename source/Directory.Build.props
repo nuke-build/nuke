@@ -39,7 +39,7 @@
 <!--  </Target>-->
   
   <ItemGroup>
-    <PackageReference Include="Fody" Version="6.6.4" />
+    <PackageReference Include="Fody" Version="6.6.5-beta2" />
     <PackageReference Include="MethodDecorator.Fody" Version="1.1.1" />
   </ItemGroup>
 
