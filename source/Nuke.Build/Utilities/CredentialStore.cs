@@ -93,7 +93,7 @@ namespace Nuke.Common.Utilities
                 if (password.IsNullOrEmpty() && EnvironmentInfo.IsOsx)
                 {
                     generated = true;
-                    return EncryptionUtility.GetGeneratedPassword(bits: 256);
+                    return EncryptionUtility.GetGeneratedPassword();
                 }
 
                 if (!password.IsNullOrEmpty() && password.Length >= 10)

@@ -2,6 +2,8 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+#if NET6_0_OR_GREATER
+
 using System;
 using System.IO;
 using System.Linq;
@@ -10,7 +12,7 @@ using System.Text;
 
 namespace Nuke.Common.Utilities
 {
-    public static class EncryptionUtility
+    internal static class EncryptionUtility
     {
         public static string Decrypt(string cipherText, string password, string name)
         {
@@ -57,7 +59,7 @@ namespace Nuke.Common.Utilities
             return new CryptoStream(stream, transformSelector(symmetricAlgorithm), CryptoStreamMode.Write);
         }
 
-        public static string GetGeneratedPassword(int bits)
+        public static string GetGeneratedPassword(int bits = 256)
         {
             var randomNumberGenerator = RandomNumberGenerator.Create();
             var password = new byte[bits / 8];
@@ -66,3 +68,4 @@ namespace Nuke.Common.Utilities
         }
     }
 }
+#endif
