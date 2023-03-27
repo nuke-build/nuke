@@ -10,7 +10,7 @@ using System.Text;
 
 namespace Nuke.Common.Utilities
 {
-    public static partial class EncryptionUtility
+    public static class EncryptionUtility
     {
         public static string Decrypt(string cipherText, string password, string name)
         {

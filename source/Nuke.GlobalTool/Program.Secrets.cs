@@ -44,15 +44,15 @@ namespace Nuke.GlobalTool
 
             var generatedPassword = false;
             var credentialStoreName = GetCredentialStoreName(rootDirectory, profile);
-            var password = TryGetPasswordFromCredentialStore(credentialStoreName);
+            var password = CredentialStore.TryGetPassword(credentialStoreName);
             var fromCredentialStore = password != null;
-            password ??= CreateNewPassword(out generatedPassword);
+            password ??= CredentialStore.CreateNewPassword(out generatedPassword);
             var existingSecrets = LoadSecrets(secretParameters, password, parametersFile);
 
             if (EnvironmentInfo.IsOsx && existingSecrets.Count == 0 && !fromCredentialStore)
             {
                 if (generatedPassword || PromptForConfirmation($"Save password to keychain? (associated with '{rootDirectory}')"))
-                    SavePasswordToCredentialStore(credentialStoreName, password);
+                    CredentialStore.SavePassword(credentialStoreName, password);
             }
 
             var options = secretParameters
@@ -76,7 +76,7 @@ namespace Nuke.GlobalTool
                         SaveSecrets(addedSecrets, password, parametersFile);
 
                     if (choice == DeletePasswordAndExit)
-                        DeletePasswordFromCredentialStore(credentialStoreName);
+                        CredentialStore.DeletePassword(credentialStoreName);
 
                     if (addedSecrets.Any())
                         Host.Information("Remember to clear your clipboard!");

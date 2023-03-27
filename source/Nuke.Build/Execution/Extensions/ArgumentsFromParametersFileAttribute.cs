@@ -44,7 +44,7 @@ namespace Nuke.Common.Execution
             string DecryptValue(string profile, string name, string value)
                 => EncryptionUtility.Decrypt(
                     value,
-                    passwords[profile] = passwords.GetValueOrDefault(profile) ?? EncryptionUtility.GetPassword(profile, Build.RootDirectory),
+                    passwords[profile] = passwords.GetValueOrDefault(profile) ?? CredentialStore.GetPassword(profile, Build.RootDirectory),
                     name);
 
             // TODO: Abstract AbsolutePath/Solution/Project etc.

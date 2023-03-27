@@ -9,9 +9,9 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Utilities
 {
-    public static partial class EncryptionUtility
+    public static class CredentialStore
     {
-        public static void DeletePasswordFromCredentialStore(string name)
+        public static void DeletePassword(string name)
         {
             switch (EnvironmentInfo.Platform)
             {
@@ -27,7 +27,7 @@ namespace Nuke.Common.Utilities
             }
         }
 
-        public static void SavePasswordToCredentialStore(string name, string password)
+        public static void SavePassword(string name, string password)
         {
             switch (EnvironmentInfo.Platform)
             {
@@ -44,7 +44,7 @@ namespace Nuke.Common.Utilities
         }
 
         [CanBeNull]
-        public static string TryGetPasswordFromCredentialStore(string name)
+        public static string TryGetPassword(string name)
         {
             switch (EnvironmentInfo.Platform)
             {
@@ -75,7 +75,7 @@ namespace Nuke.Common.Utilities
 
             var credentialStoreName = Constants.GetCredentialStoreName(rootDirectory, profile);
             var passwordParameterName = Constants.GetProfilePasswordParameterName(profile);
-            return TryGetPasswordFromCredentialStore(credentialStoreName) ??
+            return TryGetPassword(credentialStoreName) ??
                    ParameterService.GetParameter<string>(passwordParameterName) ??
                    PromptForPassword();
         }
@@ -93,7 +93,7 @@ namespace Nuke.Common.Utilities
                 if (password.IsNullOrEmpty() && EnvironmentInfo.IsOsx)
                 {
                     generated = true;
-                    return GetGeneratedPassword(bits: 256);
+                    return EncryptionUtility.GetGeneratedPassword(bits: 256);
                 }
 
                 if (!password.IsNullOrEmpty() && password.Length >= 10)
