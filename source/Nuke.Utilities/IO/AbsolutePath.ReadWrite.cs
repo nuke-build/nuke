@@ -20,46 +20,48 @@ namespace Nuke.Common.IO
         /// <summary>
         /// Appends all lines to a file.
         /// </summary>
-        public static void AppendAllLines(this AbsolutePath path, IEnumerable<string> lines, Encoding encoding = null)
+        public static AbsolutePath AppendAllLines(this AbsolutePath path, IEnumerable<string> lines, Encoding encoding = null)
         {
-            AppendAllLines(path, lines.ToArray(), encoding);
+            return path.AppendAllLines(lines.ToArray(), encoding);
         }
 
         /// <summary>
         /// Appends all lines to a file.
         /// </summary>
-        public static void AppendAllLines(this AbsolutePath path, string[] lines, Encoding encoding = null)
+        public static AbsolutePath AppendAllLines(this AbsolutePath path, string[] lines, Encoding encoding = null)
         {
             path.Parent.CreateDirectory();
             File.AppendAllLines(path, lines, encoding ?? DefaultEncoding);
+            return path;
         }
 
         /// <summary>
         /// Appends the string to a file.
         /// </summary>
-        public static void AppendAllText(this AbsolutePath path, string content, Encoding encoding = null)
+        public static AbsolutePath AppendAllText(this AbsolutePath path, string content, Encoding encoding = null)
         {
             path.Parent.CreateDirectory();
             File.AppendAllText(path, content, encoding ?? DefaultEncoding);
+            return path;
         }
 
         /// <summary>
         /// Writes all lines to a file.
         /// </summary>
-        public static void WriteAllLines(
+        public static AbsolutePath WriteAllLines(
             this AbsolutePath path,
             IEnumerable<string> lines,
             Encoding encoding = null,
             PlatformFamily? platformFamily = null,
             bool? eofLineBreak = null)
         {
-            WriteAllLines(path, lines.ToArray(), encoding, platformFamily, eofLineBreak);
+            return path.WriteAllLines(lines.ToArray(), encoding, platformFamily, eofLineBreak);
         }
 
         /// <summary>
         /// Writes all lines to a file.
         /// </summary>
-        public static void WriteAllLines(
+        public static AbsolutePath WriteAllLines(
             this AbsolutePath path,
             string[] lines,
             Encoding encoding = null,
@@ -69,13 +71,13 @@ namespace Nuke.Common.IO
             if (eofLineBreak ?? DefaultEofLineBreak)
                 lines = lines.Concat(new[] { string.Empty }).ToArray();
 
-            path.WriteAllText(lines.JoinNewLine(platformFamily ?? DefaultLineBreakType), encoding);
+            return path.WriteAllText(lines.JoinNewLine(platformFamily ?? DefaultLineBreakType), encoding);
         }
 
         /// <summary>
         /// Writes the string to a file.
         /// </summary>
-        public static void WriteAllText(
+        public static AbsolutePath WriteAllText(
             this AbsolutePath path,
             string content,
             Encoding encoding = null,
@@ -91,15 +93,17 @@ namespace Nuke.Common.IO
             }
 
             File.WriteAllText(path, content, encoding ?? DefaultEncoding);
+            return path;
         }
 
         /// <summary>
         /// Writes all bytes to a file.
         /// </summary>
-        public static void WriteAllBytes(this AbsolutePath path, byte[] bytes)
+        public static AbsolutePath WriteAllBytes(this AbsolutePath path, byte[] bytes)
         {
             path.Parent.CreateDirectory();
             File.WriteAllBytes(path, bytes);
+            return path;
         }
 
         /// <summary>
@@ -132,11 +136,11 @@ namespace Nuke.Common.IO
         /// <summary>
         /// Updates the text of a file.
         /// </summary>
-        public static void UpdateText(this AbsolutePath path, Func<string, string> update, Encoding encoding = null)
+        public static AbsolutePath UpdateText(this AbsolutePath path, Func<string, string> update, Encoding encoding = null)
         {
             var oldText = path.ReadAllText(encoding);
             var newText = update.Invoke(oldText);
-            path.WriteAllText(newText, encoding);
+            return path.WriteAllText(newText, encoding);
         }
     }
 }

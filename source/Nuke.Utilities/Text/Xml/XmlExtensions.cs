@@ -46,18 +46,19 @@ namespace Nuke.Common.Utilities
         /// <summary>
         /// Serializes an <see cref="XDocument"/> to a file.
         /// </summary>
-        public static void WriteXml(this AbsolutePath path, XDocument obj, SaveOptions options = SaveOptions.None)
+        public static AbsolutePath WriteXml(this AbsolutePath path, XDocument obj, SaveOptions options = SaveOptions.None)
         {
             obj.Save(path, options);
+            return path;
         }
 
         /// <summary>
         /// Serializes an object as XML to a file.
         /// </summary>
-        public static void WriteXml<T>(this AbsolutePath path, T obj, SaveOptions options = SaveOptions.None)
+        public static AbsolutePath WriteXml<T>(this AbsolutePath path, T obj, SaveOptions options = SaveOptions.None)
         {
             var content = obj.ToXml(options);
-            path.WriteAllText(content);
+            return path.WriteAllText(content);
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace Nuke.Common.Utilities
         /// <summary>
         /// Deserializes an object as XML from a file, applies updates, and serializes it back to the file.
         /// </summary>
-        public static void UpdateXml<T>(
+        public static AbsolutePath UpdateXml<T>(
             this AbsolutePath path,
             Action<T> update,
             LoadOptions loadOptions = LoadOptions.PreserveWhitespace,
@@ -93,19 +94,19 @@ namespace Nuke.Common.Utilities
             var obj = before.GetXml<T>(loadOptions);
             update.Invoke(obj);
             var after = obj.ToXml(saveOptions);
-            path.WriteAllText(after);
+            return path.WriteAllText(after);
         }
 
         /// <summary>
         /// Deserializes a <see cref="XDocument"/> from a file, applies updates, and serializes it back to the file.
         /// </summary>
-        public static void UpdateXml(
+        public static AbsolutePath UpdateXml(
             this AbsolutePath path,
             Action<XDocument> update,
             LoadOptions loadOptions = LoadOptions.PreserveWhitespace,
             SaveOptions saveOptions = SaveOptions.None)
         {
-            path.WriteXml(path.ReadXml(loadOptions), saveOptions);
+            return path.WriteXml(path.ReadXml(loadOptions), saveOptions);
         }
     }
 }

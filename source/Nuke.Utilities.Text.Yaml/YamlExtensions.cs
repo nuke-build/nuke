@@ -42,10 +42,10 @@ namespace Nuke.Utilities.Text.Yaml
         /// <summary>
         /// Serializes an object as YAML to a file.
         /// </summary>
-        public static void WriteYaml<T>(this AbsolutePath path, T obj, SerializerBuilder serializerBuilder = null)
+        public static AbsolutePath WriteYaml<T>(this AbsolutePath path, T obj, SerializerBuilder serializerBuilder = null)
         {
             var content = obj.ToYaml(serializerBuilder);
-            path.WriteAllText(content);
+            return path.WriteAllText(content);
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace Nuke.Utilities.Text.Yaml
         /// <summary>
         /// Deserializes an object as YAML from a file, applies updates, and serializes it back to the file.
         /// </summary>
-        public static void UpdateYaml<T>(
+        public static AbsolutePath UpdateYaml<T>(
             this AbsolutePath path,
             Action<T> update,
             DeserializerBuilder deserializerBuilder = null,
@@ -71,7 +71,7 @@ namespace Nuke.Utilities.Text.Yaml
             var obj = before.GetYaml<T>(deserializerBuilder);
             update.Invoke(obj);
             var after = obj.ToYaml(serializerBuilder);
-            path.WriteAllText(after);
+            return path.WriteAllText(after);
         }
     }
 }

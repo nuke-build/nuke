@@ -54,10 +54,10 @@ namespace Nuke.Common.Utilities
         /// <summary>
         /// Serializes an object as JSON to a file.
         /// </summary>
-        public static void WriteJson<T>(this AbsolutePath path, T obj, JsonSerializerSettings serializerSettings = null)
+        public static AbsolutePath WriteJson<T>(this AbsolutePath path, T obj, JsonSerializerSettings serializerSettings = null)
         {
             var content = obj.ToJson(serializerSettings);
-            path.WriteAllText(content);
+            return path.WriteAllText(content);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace Nuke.Common.Utilities
         /// <summary>
         /// Deserializes an object as JSON from a file, applies updates, and serializes it back to the file.
         /// </summary>
-        public static void UpdateJson<T>(
+        public static AbsolutePath UpdateJson<T>(
             this AbsolutePath path,
             Action<T> update,
             JsonSerializerSettings serializerSettings = null)
@@ -91,18 +91,18 @@ namespace Nuke.Common.Utilities
             var obj = before.GetJson<T>(serializerSettings);
             update.Invoke(obj);
             var after = obj.ToJson(serializerSettings);
-            path.WriteAllText(after);
+            return path.WriteAllText(after);
         }
 
         /// <summary>
         /// Deserializes a <see cref="JObject"/> from a file, applies updates, and serializes it back to the file.
         /// </summary>
-        public static void UpdateJson(
+        public static AbsolutePath UpdateJson(
             this AbsolutePath path,
             Action<JObject> update,
             JsonSerializerSettings serializerSettings = null)
         {
-            path.UpdateJson<JObject>(update, serializerSettings);
+            return path.UpdateJson<JObject>(update, serializerSettings);
         }
     }
 }
