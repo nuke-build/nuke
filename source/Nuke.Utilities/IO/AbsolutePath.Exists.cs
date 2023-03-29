@@ -64,7 +64,7 @@ namespace Nuke.Common.IO
         public static bool ContainsDirectory(this AbsolutePath path, string pattern, SearchOption options = SearchOption.TopDirectoryOnly)
         {
             Assert.DirectoryExists(path);
-            return path.ToDirectoryInfo().GetDirectories(pattern, SearchOption.TopDirectoryOnly).Any();
+            return path.ToDirectoryInfo().GetDirectories(pattern, options).Any();
         }
 
         /// <summary>
