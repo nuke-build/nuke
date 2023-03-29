@@ -156,7 +156,9 @@ public class ConfigurationGenerationTest
                     PublishCondition = "success() || failure()",
                     Submodules = GitHubActionsSubmodules.Recursive,
                     Lfs = true,
-                    FetchDepth = 2
+                    FetchDepth = 2,
+                    TimeoutMinutes = 30,
+                    JobConcurrencyCancelInProgress = true
                 }
             );
 

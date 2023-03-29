@@ -73,6 +73,11 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     public bool PublishArtifacts { get; set; } = true;
     public string PublishCondition { get; set; }
 
+    public int TimeoutMinutes { get; set; }
+
+    public string JobConcurrencyGroup { get; set; }
+    public bool JobConcurrencyCancelInProgress { get; set; }
+
     public string[] InvokedTargets { get; set; } = new string[0];
 
     public GitHubActionsSubmodules Submodules
@@ -124,7 +129,10 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
                {
                    Name = image.GetValue().Replace(".", "_"),
                    Steps = GetSteps(image, relevantTargets).ToArray(),
-                   Image = image
+                   Image = image,
+                   TimeoutMinutes = TimeoutMinutes,
+                   ConcurrencyGroup = JobConcurrencyGroup,
+                   ConcurrencyCancelInProgress = JobConcurrencyCancelInProgress
                };
     }
 
