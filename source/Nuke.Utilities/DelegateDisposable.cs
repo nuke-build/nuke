@@ -23,6 +23,15 @@ namespace Nuke.Common.Utilities
             return new DelegateDisposable(cleanup);
         }
 
+        /// <summary>
+        /// Creates an <see cref="IDisposable"/> from a setup and cleanup delegate.
+        /// </summary>
+        public static IDisposable CreateBracket<T>([InstantHandle] Func<T> setup, [InstantHandle] Action<T> cleanup)
+        {
+            T obj = default;
+            return CreateBracket(() => obj = setup.Invoke(), () => cleanup.Invoke(obj));
+        }
+
         public static IDisposable SetAndRestore<T>(Expression<Func<T>> memberProvider, T value)
         {
             var member = memberProvider.GetMemberInfo();
