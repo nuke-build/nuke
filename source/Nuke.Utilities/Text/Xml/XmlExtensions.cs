@@ -48,8 +48,8 @@ namespace Nuke.Common.Utilities
         /// </summary>
         public static AbsolutePath WriteXml(this AbsolutePath path, XDocument obj, SaveOptions options = SaveOptions.None)
         {
-            obj.Save(path, options);
-            return path;
+            var content = obj.ToString(options);
+            return path.WriteAllText(content);
         }
 
         /// <summary>
@@ -106,7 +106,9 @@ namespace Nuke.Common.Utilities
             LoadOptions loadOptions = LoadOptions.PreserveWhitespace,
             SaveOptions saveOptions = SaveOptions.None)
         {
-            return path.WriteXml(path.ReadXml(loadOptions), saveOptions);
+            var obj = path.ReadXml(loadOptions);
+            update.Invoke(obj);
+            return path.WriteXml(obj, saveOptions);
         }
     }
 }
