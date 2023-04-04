@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -70,6 +70,7 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj" };
 
     public bool PublishArtifacts { get; set; } = true;
+    public string PublishCondition { get; set; }
 
     public string[] InvokedTargets { get; set; } = new string[0];
 
@@ -159,7 +160,8 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
                 yield return new GitHubActionsArtifactStep
                              {
                                  Name = artifact.ToString().TrimStart(artifact.Parent.ToString()).TrimStart('/', '\\'),
-                                 Path = Build.RootDirectory.GetUnixRelativePathTo(artifact)
+                                 Path = Build.RootDirectory.GetUnixRelativePathTo(artifact),
+                                 Condition = PublishCondition
                              };
             }
         }
