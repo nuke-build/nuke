@@ -46,27 +46,61 @@ namespace Nuke.Common.Git
         /// </summary>
         public static GitRepository FromLocalDirectory(AbsolutePath directory)
         {
-            var rootDirectory = directory.FindParentOrSelf(x => x.ContainsDirectory(".git")).NotNull($"No parent Git directory for '{directory}'");
-            var gitDirectory = rootDirectory / ".git";
+            var metadata = GetGitMetadata(directory);
 
-            var head = GetHead(gitDirectory);
+            var head = metadata.Head;
             var branch = (GetBranchFromCI() ?? GetHeadIfAttached(head))?.TrimStart("refs/heads/").TrimStart("origin/");
-            var commit = GetCommitFromCI() ?? GetCommitFromHead(gitDirectory, head);
-            var tags = GetTagsFromCommit(gitDirectory, commit);
-            var (remoteName, remoteBranch) = GetRemoteNameAndBranch(gitDirectory, branch);
-            var (protocol, endpoint, identifier) = GetRemoteConnectionFromConfig(gitDirectory, remoteName ?? FallbackRemoteName);
+            var commit = GetCommitFromCI() ?? GetCommitFromHead(metadata.GitDirectory, head);
+            var tags = GetTagsFromCommit(metadata.GitDirectory, commit);
+            var (remoteName, remoteBranch) = GetRemoteNameAndBranch(metadata.GitDirectory, branch);
+            var (protocol, endpoint, identifier) = GetRemoteConnectionFromConfig(metadata.GitDirectory, remoteName ?? FallbackRemoteName);
 
             return new GitRepository(
                 protocol,
                 endpoint,
                 identifier,
                 branch,
-                rootDirectory,
+                metadata.RootDirectory,
                 head,
                 commit,
                 tags,
                 remoteName,
                 remoteBranch);
+        }
+
+        private record GitMetadata(AbsolutePath RootDirectory, string GitDirectory, string Head);
+
+        private static GitMetadata GetGitMetadata(AbsolutePath directory)
+        {
+            var rootDirectory = directory.FindParentOrSelf(x => x.ContainsDirectory(".git"));
+
+            if (rootDirectory is not null)
+            {
+                var gitDirectory = rootDirectory / ".git";
+                var head = GetHead(gitDirectory / "HEAD");
+                return new GitMetadata(rootDirectory, gitDirectory, head);
+            }
+
+            rootDirectory = directory.FindParentOrSelf(x => x.ContainsFile(".git"))
+                .NotNull($"No parent Git directory or file for '{directory}'");
+
+            const string gitDirPrefix = "gitdir:";
+            var gitFile = rootDirectory / ".git";
+
+            var worktreeGitDirLine = gitFile.ReadAllLines()
+                .FirstOrDefault(s => s.StartsWith(gitDirPrefix))
+                .NotNullOrEmpty($"Couldn't find {gitDirPrefix} line in {gitFile}.");
+
+            var worktreeGitDir = AbsolutePath.Create(worktreeGitDirLine
+                .Substring(gitDirPrefix.Length)
+                .TrimStart());
+
+            var mainWorktreeGitDir = worktreeGitDir
+                .FindParentOrSelf(x => x.Name == ".git")
+                .NotNull($"No parent Git directory for worktree '{worktreeGitDir}'");
+
+            var worktreeHead = GetHead(worktreeGitDir / "HEAD");
+            return new GitMetadata(rootDirectory, mainWorktreeGitDir, worktreeHead);
         }
 
         private static (string Name, string Branch) GetRemoteNameAndBranch(AbsolutePath gitDirectory, [CanBeNull] string branch)
@@ -112,9 +146,8 @@ namespace Nuke.Common.Git
             return commit;
         }
 
-        private static string GetHead(AbsolutePath gitDirectory)
+        private static string GetHead(AbsolutePath headFile)
         {
-            var headFile = gitDirectory / "HEAD";
             Assert.FileExists(headFile);
             return headFile.ReadAllText().TrimStart("ref: ").Trim();
         }
