@@ -67,7 +67,7 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
 
     public string[] CacheIncludePatterns { get; set; } = { ".nuke/temp", "~/.nuget/packages" };
     public string[] CacheExcludePatterns { get; set; } = new string[0];
-    public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj" };
+    public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj", "**/Directory.Packages.props" };
 
     public bool PublishArtifacts { get; set; } = true;
 
