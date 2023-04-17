@@ -76,6 +76,7 @@ partial class Build
         new (string Text, string Url)[]
         {
             ("Octopus Deploy", "https://octopus.com/"),
+            ("Amazon Web Services", "https://aws.amazon.com/"),
         };
 
     [Parameter] [Secret] readonly string SlackWebhook;
