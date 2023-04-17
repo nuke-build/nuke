@@ -11,10 +11,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Nuke.Build\Nuke.Build.csproj" />
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
-    <ProjectReference Include="..\..\external\spectre.console\src\Spectre.Console\Spectre.Console.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="matkoch.spectre.console" Version="0.46.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.2.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.2.0" />

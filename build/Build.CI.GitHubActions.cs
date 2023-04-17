@@ -8,7 +8,6 @@ using Nuke.Components;
 [GitHubActions(
     "windows-latest",
     GitHubActionsImage.WindowsLatest,
-    Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0,
     OnPushBranchesIgnore = new[] { MasterBranch, $"{ReleaseBranchPrefix}/*" },
     OnPullRequestBranches = new[] { DevelopBranch },
@@ -19,18 +18,16 @@ using Nuke.Components;
 [GitHubActions(
     "macos-latest",
     GitHubActionsImage.MacOsLatest,
-    Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0,
     OnPushBranchesIgnore = new[] { MasterBranch, $"{ReleaseBranchPrefix}/*" },
     OnPullRequestBranches = new[] { DevelopBranch },
-    PublishArtifacts = true,
+    PublishArtifacts = false,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" },
     EnableGitHubToken = true)]
 [GitHubActions(
     "ubuntu-latest",
     GitHubActionsImage.UbuntuLatest,
-    Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0,
     OnPushBranchesIgnore = new[] { MasterBranch, $"{ReleaseBranchPrefix}/*" },
     OnPullRequestBranches = new[] { DevelopBranch },

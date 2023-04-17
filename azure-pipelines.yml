@@ -30,8 +30,6 @@ stages:
         strategy:
           parallel: 2
         steps:
-          - checkout: self
-            submodules: true
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -57,8 +55,6 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [  ]
         steps:
-          - checkout: self
-            submodules: true
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -92,8 +88,6 @@ stages:
         strategy:
           parallel: 2
         steps:
-          - checkout: self
-            submodules: true
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -119,8 +113,6 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [  ]
         steps:
-          - checkout: self
-            submodules: true
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -154,8 +146,6 @@ stages:
         strategy:
           parallel: 2
         steps:
-          - checkout: self
-            submodules: true
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
@@ -181,8 +171,6 @@ stages:
         displayName: '📦 Pack'
         dependsOn: [  ]
         steps:
-          - checkout: self
-            submodules: true
           - task: Cache@2
             displayName: 'Cache: nuke-temp'
             inputs:
