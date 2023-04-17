@@ -28,6 +28,7 @@
     <None Include="$(NukeRootDirectory)\nuget.config" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\nuget.config')" />
     <None Include="$(NukeRootDirectory)\GitVersion.yml" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\GitVersion.yml')" />
     <None Include="$(NukeRootDirectory)\version.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\version.json')" />
+    <None Include="$(NukeRootDirectory)\qodana.yml" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\qodana.yml')" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeLogs)' != 'True'">
