@@ -4,3 +4,9 @@ linter: jetbrains/qodana-dotnet:2023.1-eap
 
 dot-net:
   solution: nuke-common.sln
+
+exclude:
+  - name: CheckNamespace
+  - name: All
+    paths:
+      - source/Nuke.Build/Execution/Extensions/execution-plan.html
