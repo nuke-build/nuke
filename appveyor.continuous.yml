@@ -26,9 +26,6 @@ branches:
 
 skip_tags: true
 
-install:
-  - git submodule update --init --recursive
-
 build_script:
   - cmd: .\build.cmd Test Pack
   - sh: ./build.cmd Test Pack

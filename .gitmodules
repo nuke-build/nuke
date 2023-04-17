@@ -1,3 +1,0 @@
-[submodule "external/spectre.console"]
-	path = external/spectre.console
-	url = https://github.com/matkoch/spectre.console

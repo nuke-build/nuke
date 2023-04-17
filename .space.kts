@@ -24,10 +24,7 @@ job("continuous") {
 
     container("mcr.microsoft.com/dotnet/sdk:6.0") {
         shellScript {
-            content = """
-                git submodule update --init --recursive
-                ./build.sh Test
-            """
+            content = "./build.sh Test"
         }
     }
 
