@@ -12,6 +12,7 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitHub;
+using Nuke.Common.Utilities;
 using Nuke.Utilities.Text.Yaml;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.FileSystemTasks;
@@ -58,7 +59,7 @@ partial class Build
             var global = CreateSolution(
                 solutionFile: GlobalSolution,
                 solutions: new[] { Solution }.Concat(ExternalSolutions),
-                folderNameProvider: x => x == Solution ? null : x.Name);
+                folderNameProvider: x => x.Name.TrimStart("nuke-"));
             global.Save();
 
             if ((RootDirectory / $"{Solution.FileName}.DotSettings").FileExists())
