@@ -5,12 +5,11 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tools.AzureKeyVault
+namespace Nuke.Common.Tools.AzureKeyVault;
+
+public class KeyVaultCertificate
 {
-    public class KeyVaultCertificate
-    {
-        public byte[] Cer { get; internal set; }
-        public byte[] X509Thumbprint { get; internal set; }
-        public KeyVaultKey Key { get; internal set; }
-    }
+    public byte[] Cer { get; internal set; }
+    public byte[] X509Thumbprint { get; internal set; }
+    public KeyVaultKey Key { get; internal set; }
 }

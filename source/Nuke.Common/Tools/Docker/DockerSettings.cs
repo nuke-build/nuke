@@ -7,24 +7,23 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Tools.Docker
+namespace Nuke.Common.Tools.Docker;
+
+[PublicAPI]
+[Serializable]
+public abstract class DockerSettings : ToolSettings
 {
-    [PublicAPI]
-    [Serializable]
-    public abstract class DockerSettings : ToolSettings
+    public CliSettings CliSettings { get; internal set; }
+
+    protected string GetCliSettings()
     {
-        public CliSettings CliSettings { get; internal set; }
+        return string.Empty;
+    }
 
-        protected string GetCliSettings()
-        {
-            return string.Empty;
-        }
-
-        protected override Arguments ConfigureProcessArguments(Arguments arguments)
-        {
-            if (CliSettings != null)
-                arguments = CliSettings.CreateArguments().Concatenate(arguments);
-            return base.ConfigureProcessArguments(arguments);
-        }
+    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    {
+        if (CliSettings != null)
+            arguments = CliSettings.CreateArguments().Concatenate(arguments);
+        return base.ConfigureProcessArguments(arguments);
     }
 }

@@ -5,18 +5,17 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.CI.AppVeyor
-{
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public class AppVeyorSecretAttribute : Attribute
-    {
-        public AppVeyorSecretAttribute(string parameter, string value)
-        {
-            Parameter = parameter;
-            Value = value;
-        }
+namespace Nuke.Common.CI.AppVeyor;
 
-        public string Parameter { get; }
-        public string Value { get; }
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+public class AppVeyorSecretAttribute : Attribute
+{
+    public AppVeyorSecretAttribute(string parameter, string value)
+    {
+        Parameter = parameter;
+        Value = value;
     }
+
+    public string Parameter { get; }
+    public string Value { get; }
 }

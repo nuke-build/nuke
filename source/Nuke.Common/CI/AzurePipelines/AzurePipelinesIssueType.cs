@@ -6,12 +6,11 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.AzurePipelines
+namespace Nuke.Common.CI.AzurePipelines;
+
+[PublicAPI]
+public enum AzurePipelinesIssueType
 {
-    [PublicAPI]
-    public enum AzurePipelinesIssueType
-    {
-        Warning,
-        Error
-    }
+    Warning,
+    Error
 }

@@ -6,15 +6,14 @@ using System;
 using System.Linq;
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Tools.Kubernetes
-{
-    public partial class KubernetesCommonSettings
-    {
-        internal Arguments CreateArguments()
-        {
-            return ConfigureProcessArguments(new Arguments());
-        }
+namespace Nuke.Common.Tools.Kubernetes;
 
-        public override Action<OutputType, string> ProcessCustomLogger { get; internal set; }
+public partial class KubernetesCommonSettings
+{
+    internal Arguments CreateArguments()
+    {
+        return ConfigureProcessArguments(new Arguments());
     }
+
+    public override Action<OutputType, string> ProcessCustomLogger { get; internal set; }
 }

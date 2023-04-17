@@ -5,22 +5,21 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+public class PathToolRequirement : ToolRequirement
 {
-    public class PathToolRequirement : ToolRequirement
+    public static PathToolRequirement Create(string pathExecutable)
     {
-        public static PathToolRequirement Create(string pathExecutable)
-        {
-            return new PathToolRequirement
-                   {
-                       PathExecutable = pathExecutable,
-                   };
-        }
-
-        public PathToolRequirement()
-        {
-        }
-
-        public string PathExecutable { get; set; }
+        return new PathToolRequirement
+               {
+                   PathExecutable = pathExecutable,
+               };
     }
+
+    public PathToolRequirement()
+    {
+    }
+
+    public string PathExecutable { get; set; }
 }

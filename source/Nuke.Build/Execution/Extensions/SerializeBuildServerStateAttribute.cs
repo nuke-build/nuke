@@ -6,16 +6,15 @@ using System;
 using System.Linq;
 using Nuke.Common.Execution;
 
-namespace Nuke.Common.CI
+namespace Nuke.Common.CI;
+
+internal class SerializeBuildServerStateAttribute : BuildServerConfigurationGenerationAttributeBase, IOnBuildFinished
 {
-    internal class SerializeBuildServerStateAttribute : BuildServerConfigurationGenerationAttributeBase, IOnBuildFinished
+    public void OnBuildFinished()
     {
-        public void OnBuildFinished()
-        {
-            GetGenerators(Build)
-                // TODO: bool IsRunning
-                .FirstOrDefault(x => x.HostType == Build.Host.GetType())
-                ?.SerializeState();
-        }
+        GetGenerators(Build)
+            // TODO: bool IsRunning
+            .FirstOrDefault(x => x.HostType == Build.Host.GetType())
+            ?.SerializeState();
     }
 }

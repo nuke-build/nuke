@@ -9,28 +9,27 @@ using System.Runtime.Serialization.Formatters.Binary;
 using JetBrains.Annotations;
 #pragma warning disable SYSLIB0011
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+[PublicAPI]
+public static partial class SettingsEntityExtensions
 {
-    [PublicAPI]
-    public static partial class SettingsEntityExtensions
+    public static T NewInstance<T>(this T settingsEntity)
+        where T : ISettingsEntity
     {
-        public static T NewInstance<T>(this T settingsEntity)
-            where T : ISettingsEntity
+        var binaryFormatter = new BinaryFormatter();
+
+        using var memoryStream = new MemoryStream();
+        binaryFormatter.Serialize(memoryStream, settingsEntity);
+        memoryStream.Seek(offset: 0, loc: SeekOrigin.Begin);
+
+        var newInstance = (T) binaryFormatter.Deserialize(memoryStream);
+        if (newInstance is ToolSettings toolSettings)
         {
-            var binaryFormatter = new BinaryFormatter();
-
-            using var memoryStream = new MemoryStream();
-            binaryFormatter.Serialize(memoryStream, settingsEntity);
-            memoryStream.Seek(offset: 0, loc: SeekOrigin.Begin);
-
-            var newInstance = (T) binaryFormatter.Deserialize(memoryStream);
-            if (newInstance is ToolSettings toolSettings)
-            {
-                toolSettings.ProcessArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ProcessArgumentConfigurator;
-                toolSettings.ProcessCustomLogger = ((ToolSettings) (object) settingsEntity).ProcessCustomLogger;
-            }
-
-            return newInstance;
+            toolSettings.ProcessArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ProcessArgumentConfigurator;
+            toolSettings.ProcessCustomLogger = ((ToolSettings) (object) settingsEntity).ProcessCustomLogger;
         }
+
+        return newInstance;
     }
 }

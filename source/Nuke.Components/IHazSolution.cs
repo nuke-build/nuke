@@ -8,11 +8,10 @@ using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.ProjectModel;
 
-namespace Nuke.Components
+namespace Nuke.Components;
+
+[PublicAPI]
+public interface IHazSolution : INukeBuild
 {
-    [PublicAPI]
-    public interface IHazSolution : INukeBuild
-    {
-        [Solution] [Required] Solution Solution => TryGetValue(() => Solution);
-    }
+    [Solution] [Required] Solution Solution => TryGetValue(() => Solution);
 }

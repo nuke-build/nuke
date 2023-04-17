@@ -5,13 +5,12 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tools.MSpec
+namespace Nuke.Common.Tools.MSpec;
+
+public partial class MSpecSettings
 {
-    public partial class MSpecSettings
+    private string GetProcessToolPath()
     {
-        private string GetProcessToolPath()
-        {
-            return MSpecTasks.GetToolPath();
-        }
+        return MSpecTasks.GetToolPath();
     }
 }

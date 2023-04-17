@@ -5,11 +5,10 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+public enum OutputType
 {
-    public enum OutputType
-    {
-        Std,
-        Err
-    }
+    Std,
+    Err
 }

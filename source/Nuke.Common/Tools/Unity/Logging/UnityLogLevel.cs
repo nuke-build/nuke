@@ -5,13 +5,12 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tools.Unity.Logging
+namespace Nuke.Common.Tools.Unity.Logging;
+
+public enum LogLevel
 {
-    public enum LogLevel
-    {
-        Normal,
-        Warning,
-        Failure,
-        Error
-    }
+    Normal,
+    Warning,
+    Failure,
+    Error
 }

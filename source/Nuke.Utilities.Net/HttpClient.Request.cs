@@ -6,36 +6,35 @@ using System;
 using System.Linq;
 using System.Net.Http;
 
-namespace Nuke.Common.Utilities.Net
+namespace Nuke.Common.Utilities.Net;
+
+public static partial class HttpClientExtensions
 {
-    public static partial class HttpClientExtensions
+    /// <summary>
+    /// Creates an HTTP request.
+    /// </summary>
+    public static HttpRequestBuilder CreateRequest(this HttpClient client, HttpMethod method, string relativeUri)
     {
-        /// <summary>
-        /// Creates an HTTP request.
-        /// </summary>
-        public static HttpRequestBuilder CreateRequest(this HttpClient client, HttpMethod method, string relativeUri)
-        {
-            return new HttpRequestBuilder(client, new HttpRequestMessage(method, relativeUri));
-        }
-
-        /// <summary>
-        /// Creates an HTTP request.
-        /// </summary>
-        public static HttpRequestBuilder CreateRequest(this HttpClient client, HttpMethod method, string baseAddress, string relativeUri)
-        {
-            return new HttpRequestBuilder(client, new HttpRequestMessage(method, new Uri(new Uri(baseAddress), relativeUri)));
-        }
+        return new HttpRequestBuilder(client, new HttpRequestMessage(method, relativeUri));
     }
 
-    public class HttpRequestBuilder
+    /// <summary>
+    /// Creates an HTTP request.
+    /// </summary>
+    public static HttpRequestBuilder CreateRequest(this HttpClient client, HttpMethod method, string baseAddress, string relativeUri)
     {
-        public HttpRequestBuilder(HttpClient client, HttpRequestMessage request)
-        {
-            Client = client;
-            Request = request;
-        }
-
-        public HttpClient Client { get; }
-        public HttpRequestMessage Request { get; }
+        return new HttpRequestBuilder(client, new HttpRequestMessage(method, new Uri(new Uri(baseAddress), relativeUri)));
     }
+}
+
+public class HttpRequestBuilder
+{
+    public HttpRequestBuilder(HttpClient client, HttpRequestMessage request)
+    {
+        Client = client;
+        Request = request;
+    }
+
+    public HttpClient Client { get; }
+    public HttpRequestMessage Request { get; }
 }

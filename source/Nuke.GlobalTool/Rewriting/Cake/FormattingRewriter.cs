@@ -10,75 +10,74 @@ using Nuke.Common;
 using Nuke.Common.Utilities.Collections;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
-namespace Nuke.GlobalTool.Rewriting.Cake
+namespace Nuke.GlobalTool.Rewriting.Cake;
+
+internal class FormattingRewriter : SafeSyntaxRewriter
 {
-    internal class FormattingRewriter : SafeSyntaxRewriter
+    private static readonly SyntaxTrivia[] Indent = { Space, Space, Space, Space };
+
+    public override SyntaxNode VisitPropertyDeclaration(PropertyDeclarationSyntax node)
     {
-        private static readonly SyntaxTrivia[] Indent = { Space, Space, Space, Space };
+        node = (PropertyDeclarationSyntax) base.VisitPropertyDeclaration(node).NotNull();
 
-        public override SyntaxNode VisitPropertyDeclaration(PropertyDeclarationSyntax node)
-        {
-            node = (PropertyDeclarationSyntax) base.VisitPropertyDeclaration(node).NotNull();
+        return (node.Type as SimpleNameSyntax)?.Identifier.Text == nameof(Target)
+            ? node.WithLeadingTrivia(LineFeed.Concat(Indent))
+            : node;
+    }
 
-            return (node.Type as SimpleNameSyntax)?.Identifier.Text == nameof(Target)
-                ? node.WithLeadingTrivia(LineFeed.Concat(Indent))
-                : node;
-        }
-
-        public override SyntaxToken VisitToken(SyntaxToken token)
-        {
-            if (token.Parent is not MemberAccessExpressionSyntax memberAccessExpression)
-                return token;
-
-            var identifierName = memberAccessExpression.GetIdentifierName();
-            if (identifierName == nameof(ITargetDefinition.Executes) ||
-                identifierName == nameof(ITargetDefinition.DependsOn) ||
-                identifierName == nameof(ITargetDefinition.DependentFor) ||
-                identifierName == nameof(ITargetDefinition.OnlyWhenStatic) ||
-                identifierName == nameof(ITargetDefinition.OnlyWhenDynamic) ||
-                identifierName == nameof(ITargetDefinition.ProceedAfterFailure))
-                return token.WithLeadingTrivia(LineFeed.Concat(Indent).Concat(Indent));
-
-            if (identifierName.StartsWith("Set"))
-                return token.WithLeadingTrivia(LineFeed.Concat(Indent).Concat(Indent).Concat(Indent));
-
+    public override SyntaxToken VisitToken(SyntaxToken token)
+    {
+        if (token.Parent is not MemberAccessExpressionSyntax memberAccessExpression)
             return token;
-        }
 
-        public override SyntaxNode VisitFieldDeclaration(FieldDeclarationSyntax node)
-        {
-            return node
-                .WithAttributeLists(List(node
-                    .AttributeLists.Select((x, i) => x
-                        .When(i != 0,
-                            _ => _
-                                .WithoutTrivia())
-                        .WithTrailingTrivia(Space))))
-                .When(node.AttributeLists.Any(),
-                    _ => _
-                        .WithModifiers(TokenList(node
-                            .Modifiers.Select((x, i) => x
-                                .WithLeadingTrivia(i == 0 ? new SyntaxTrivia[0] : new[] { Space })))));
-        }
+        var identifierName = memberAccessExpression.GetIdentifierName();
+        if (identifierName == nameof(ITargetDefinition.Executes) ||
+            identifierName == nameof(ITargetDefinition.DependsOn) ||
+            identifierName == nameof(ITargetDefinition.DependentFor) ||
+            identifierName == nameof(ITargetDefinition.OnlyWhenStatic) ||
+            identifierName == nameof(ITargetDefinition.OnlyWhenDynamic) ||
+            identifierName == nameof(ITargetDefinition.ProceedAfterFailure))
+            return token.WithLeadingTrivia(LineFeed.Concat(Indent).Concat(Indent));
 
-        public override SyntaxNode VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax node)
-        {
-            return node.Contents.Count() == 1
-                ? node.Contents.Single() switch
-                {
-                    InterpolationSyntax interpolation
-                        => interpolation.Expression,
-                    InterpolatedStringTextSyntax interpolatedStringText
-                        => interpolatedStringText.TextToken.Text.ToLiteralExpression(),
-                    _ => throw new NotSupportedException()
-                }
-                : node;
-        }
+        if (identifierName.StartsWith("Set"))
+            return token.WithLeadingTrivia(LineFeed.Concat(Indent).Concat(Indent).Concat(Indent));
 
-        public override SyntaxNode VisitAttributeList(AttributeListSyntax node)
-        {
-            return node;
-            // return node.WithTrailingTrivia(Space);
-        }
+        return token;
+    }
+
+    public override SyntaxNode VisitFieldDeclaration(FieldDeclarationSyntax node)
+    {
+        return node
+            .WithAttributeLists(List(node
+                .AttributeLists.Select((x, i) => x
+                    .When(i != 0,
+                        _ => _
+                            .WithoutTrivia())
+                    .WithTrailingTrivia(Space))))
+            .When(node.AttributeLists.Any(),
+                _ => _
+                    .WithModifiers(TokenList(node
+                        .Modifiers.Select((x, i) => x
+                            .WithLeadingTrivia(i == 0 ? new SyntaxTrivia[0] : new[] { Space })))));
+    }
+
+    public override SyntaxNode VisitInterpolatedStringExpression(InterpolatedStringExpressionSyntax node)
+    {
+        return node.Contents.Count() == 1
+            ? node.Contents.Single() switch
+            {
+                InterpolationSyntax interpolation
+                    => interpolation.Expression,
+                InterpolatedStringTextSyntax interpolatedStringText
+                    => interpolatedStringText.TextToken.Text.ToLiteralExpression(),
+                _ => throw new NotSupportedException()
+            }
+            : node;
+    }
+
+    public override SyntaxNode VisitAttributeList(AttributeListSyntax node)
+    {
+        return node;
+        // return node.WithTrailingTrivia(Space);
     }
 }

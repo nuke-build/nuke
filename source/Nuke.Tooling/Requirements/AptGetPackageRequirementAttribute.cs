@@ -6,21 +6,20 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+[BaseTypeRequired(typeof(IRequireAptGetPackage))]
+public class AptGetPackageRequirementAttribute : ToolRequirementAttributeBase
 {
-    [BaseTypeRequired(typeof(IRequireAptGetPackage))]
-    public class AptGetPackageRequirementAttribute : ToolRequirementAttributeBase
+    private readonly string _packageId;
+
+    public AptGetPackageRequirementAttribute(string packageId)
     {
-        private readonly string _packageId;
+        _packageId = packageId;
+    }
 
-        public AptGetPackageRequirementAttribute(string packageId)
-        {
-            _packageId = packageId;
-        }
-
-        public override ToolRequirement GetRequirement(string version = null)
-        {
-            return AptGetPackageRequirement.Create(_packageId);
-        }
+    public override ToolRequirement GetRequirement(string version = null)
+    {
+        return AptGetPackageRequirement.Create(_packageId);
     }
 }

@@ -6,26 +6,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.Execution;
+
+internal class TelemetryAttribute : BuildExtensionAttributeBase, IOnBuildInitialized, IOnTargetSucceeded
 {
-    internal class TelemetryAttribute : BuildExtensionAttributeBase, IOnBuildInitialized, IOnTargetSucceeded
+    public void OnBuildInitialized(
+        IReadOnlyCollection<ExecutableTarget> executableTargets,
+        IReadOnlyCollection<ExecutableTarget> executionPlan)
     {
-        public void OnBuildInitialized(
-            IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan)
-        {
-            if (Build.IsInterceptorExecution)
-                return;
+        if (Build.IsInterceptorExecution)
+            return;
 
-            Telemetry.BuildStarted(Build);
-        }
+        Telemetry.BuildStarted(Build);
+    }
 
-        public void OnTargetSucceeded(ExecutableTarget target)
-        {
-            if (Build.IsInterceptorExecution)
-                return;
+    public void OnTargetSucceeded(ExecutableTarget target)
+    {
+        if (Build.IsInterceptorExecution)
+            return;
 
-            Telemetry.TargetSucceeded(target, Build);
-        }
+        Telemetry.TargetSucceeded(target, Build);
     }
 }

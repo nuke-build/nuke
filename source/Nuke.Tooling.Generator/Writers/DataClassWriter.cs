@@ -6,17 +6,16 @@ using System;
 using System.Linq;
 using Nuke.CodeGeneration.Model;
 
-namespace Nuke.CodeGeneration.Writers
-{
-    public class DataClassWriter : IWriterWrapper
-    {
-        public DataClassWriter(DataClass dataClass, ToolWriter writer)
-        {
-            DataClass = dataClass;
-            Writer = writer;
-        }
+namespace Nuke.CodeGeneration.Writers;
 
-        public DataClass DataClass { get; }
-        public IWriter Writer { get; }
+public class DataClassWriter : IWriterWrapper
+{
+    public DataClassWriter(DataClass dataClass, ToolWriter writer)
+    {
+        DataClass = dataClass;
+        Writer = writer;
     }
+
+    public DataClass DataClass { get; }
+    public IWriter Writer { get; }
 }

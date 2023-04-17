@@ -9,129 +9,128 @@ using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 
-namespace Nuke.Common.Tools.AzureKeyVault.Attributes
+namespace Nuke.Common.Tools.AzureKeyVault.Attributes;
+
+public class KeyVaultSettings
 {
-    public class KeyVaultSettings
+    [CanBeNull]
+    public string Secret { get; internal set; }
+    [CanBeNull]
+    public string ClientId { get; internal set; }
+    [CanBeNull]
+    public string BaseUrl { get; internal set; }
+
+    public bool IsValid ([CanBeNull]out string error)
     {
-        [CanBeNull]
-        public string Secret { get; internal set; }
-        [CanBeNull]
-        public string ClientId { get; internal set; }
-        [CanBeNull]
-        public string BaseUrl { get; internal set; }
+        error = null;
+        if (!IsPropertyValid(Secret, nameof(Secret), out var msg)) error += msg;
+        if (!IsPropertyValid(ClientId, nameof(ClientId), out msg)) error += msg;
+        if (!IsPropertyValid(BaseUrl, nameof(BaseUrl), out msg)) error += msg;
+        return error == null;
+    }
 
-        public bool IsValid ([CanBeNull]out string error)
+    private bool IsPropertyValid ([CanBeNull] string value, string name, [CanBeNull] out string error)
+    {
+        error = null;
+        if (string.IsNullOrWhiteSpace(value))
         {
-            error = null;
-            if (!IsPropertyValid(Secret, nameof(Secret), out var msg)) error += msg;
-            if (!IsPropertyValid(ClientId, nameof(ClientId), out msg)) error += msg;
-            if (!IsPropertyValid(BaseUrl, nameof(BaseUrl), out msg)) error += msg;
-            return error == null;
+            error = $"The value of {name} is invalid{EnvironmentInfo.NewLine}";
+            return false;
         }
 
-        private bool IsPropertyValid ([CanBeNull] string value, string name, [CanBeNull] out string error)
-        {
-            error = null;
-            if (string.IsNullOrWhiteSpace(value))
-            {
-                error = $"The value of {name} is invalid{EnvironmentInfo.NewLine}";
-                return false;
-            }
+        return true;
+    }
+}
 
-            return true;
-        }
+/// <summary>Defines where the KeyVault login details can be found.</summary>
+[PublicAPI]
+[AttributeUsage(AttributeTargets.Field)]
+[MeansImplicitUse(ImplicitUseKindFlags.Assign)]
+public class KeyVaultSettingsAttribute : ValueInjectionAttributeBase
+{
+    /// <summary><p>The base url of the Azure Key Vault. Either <see cref="BaseUrl"/> or <see cref="BaseUrlParameterName"/> must be set.</p></summary>
+    [CanBeNull] public string BaseUrl { get; set; }
+
+    /// <summary><p>The client id of an AzureAd application with permissions for the required operations. Either <see cref="ClientId"/> or <see cref="ClientIdParameterName"/> must be set.</p></summary>
+
+    [CanBeNull] public string ClientId { get; set; }
+
+    /// <summary><p>The name of the parameter or environment variable which contains the base url to the Azure Key Vault. Either <see cref='BaseUrl'/> or  <see cref='BaseUrlParameterName'/> must be set.</p></summary>
+    [CanBeNull] public string BaseUrlParameterName { get; set; }
+
+    /// <summary><p>The name of the parameter or environment variable which contains the id of an AzureAd application with permissions for the required operations. Either <see cref='ClientId'/> or <see cref='ClientIdParameterName'/> must be set.</p></summary>
+    [CanBeNull] public string ClientIdParameterName { get; set; }
+
+    /// <summary><p>The name of the parameter or environment variable which contains the secret of the AzureAd application.</p></summary>
+    [CanBeNull] public string ClientSecretParameterName { get; set; }
+
+    /// <summary>Defines where the KeyVault login details can be found.</summary>
+    public KeyVaultSettingsAttribute()
+    {
     }
 
     /// <summary>Defines where the KeyVault login details can be found.</summary>
-    [PublicAPI]
-    [AttributeUsage(AttributeTargets.Field)]
-    [MeansImplicitUse(ImplicitUseKindFlags.Assign)]
-    public class KeyVaultSettingsAttribute : ValueInjectionAttributeBase
+    /// <param name="baseUrlParameterName">The name of the parameter, commandline argument or environment variable which contains the base url to the Azure Key Vault.</param>
+    /// <param name="clientIdParameterName">The name of the parameter, commandline argument or environment variable which contains the id of an AzureAd application with permissions for the required operations.</param>
+    /// <param name="clientSecretParameterName">The name of the parameter, commandline argument or environment variable which contains the secret of the AzureAd application.</param>
+    public KeyVaultSettingsAttribute(string baseUrlParameterName, string clientIdParameterName, string clientSecretParameterName)
     {
-        /// <summary><p>The base url of the Azure Key Vault. Either <see cref="BaseUrl"/> or <see cref="BaseUrlParameterName"/> must be set.</p></summary>
-        [CanBeNull] public string BaseUrl { get; set; }
+        BaseUrlParameterName = baseUrlParameterName;
+        ClientIdParameterName = clientIdParameterName;
+        ClientSecretParameterName = clientSecretParameterName;
+    }
 
-        /// <summary><p>The client id of an AzureAd application with permissions for the required operations. Either <see cref="ClientId"/> or <see cref="ClientIdParameterName"/> must be set.</p></summary>
+    [NotNull]
+    public override object GetValue(MemberInfo member, object instance)
+    {
+        var memberType = member.GetMemberType();
+        Assert.True(memberType == typeof(KeyVaultSettings));
+        AssertIsValid();
 
-        [CanBeNull] public string ClientId { get; set; }
+        return new KeyVaultSettings
+               {
+                   ClientId = string.IsNullOrWhiteSpace(ClientId) ? GetParameter(ClientIdParameterName, instance) : ClientId,
+                   BaseUrl = string.IsNullOrWhiteSpace(BaseUrl) ? GetParameter(BaseUrlParameterName, instance) : BaseUrl,
+                   Secret = GetParameter(ClientSecretParameterName, instance)
+               };
+    }
 
-        /// <summary><p>The name of the parameter or environment variable which contains the base url to the Azure Key Vault. Either <see cref='BaseUrl'/> or  <see cref='BaseUrlParameterName'/> must be set.</p></summary>
-        [CanBeNull] public string BaseUrlParameterName { get; set; }
+    public KeyVaultSettings GetValue(object instance)
+    {
+        return (KeyVaultSettings) GetValue(member: null, instance);
+    }
 
-        /// <summary><p>The name of the parameter or environment variable which contains the id of an AzureAd application with permissions for the required operations. Either <see cref='ClientId'/> or <see cref='ClientIdParameterName'/> must be set.</p></summary>
-        [CanBeNull] public string ClientIdParameterName { get; set; }
+    private void AssertIsValid()
+    {
+        var error = string.Empty;
+        if (string.IsNullOrWhiteSpace(BaseUrl) && string.IsNullOrWhiteSpace(BaseUrlParameterName))
+            error += EnvironmentInfo.NewLine + $"Either '{nameof(BaseUrl)}' or '{nameof(BaseUrlParameterName)}' must be defined";
+        if (string.IsNullOrWhiteSpace(ClientId) && string.IsNullOrWhiteSpace(ClientIdParameterName))
+            error += EnvironmentInfo.NewLine + $"Either '{nameof(ClientId)}' or '{nameof(ClientIdParameterName)}' must be defined";
+        if (string.IsNullOrWhiteSpace(ClientSecretParameterName))
+            error += EnvironmentInfo.NewLine + $"'{nameof(ClientSecretParameterName)}' must be defined";
+        Assert.True(error == string.Empty, error);
+    }
 
-        /// <summary><p>The name of the parameter or environment variable which contains the secret of the AzureAd application.</p></summary>
-        [CanBeNull] public string ClientSecretParameterName { get; set; }
-
-        /// <summary>Defines where the KeyVault login details can be found.</summary>
-        public KeyVaultSettingsAttribute()
+    private string GetParameter(string memberName, object instance)
+    {
+        string result = null;
+        var fieldInfo = instance.GetType().GetField(memberName, ReflectionUtility.Instance);
+        if (fieldInfo != null)
         {
-        }
-
-        /// <summary>Defines where the KeyVault login details can be found.</summary>
-        /// <param name="baseUrlParameterName">The name of the parameter, commandline argument or environment variable which contains the base url to the Azure Key Vault.</param>
-        /// <param name="clientIdParameterName">The name of the parameter, commandline argument or environment variable which contains the id of an AzureAd application with permissions for the required operations.</param>
-        /// <param name="clientSecretParameterName">The name of the parameter, commandline argument or environment variable which contains the secret of the AzureAd application.</param>
-        public KeyVaultSettingsAttribute(string baseUrlParameterName, string clientIdParameterName, string clientSecretParameterName)
-        {
-            BaseUrlParameterName = baseUrlParameterName;
-            ClientIdParameterName = clientIdParameterName;
-            ClientSecretParameterName = clientSecretParameterName;
-        }
-
-        [NotNull]
-        public override object GetValue(MemberInfo member, object instance)
-        {
-            var memberType = member.GetMemberType();
-            Assert.True(memberType == typeof(KeyVaultSettings));
-            AssertIsValid();
-
-            return new KeyVaultSettings
-                   {
-                       ClientId = string.IsNullOrWhiteSpace(ClientId) ? GetParameter(ClientIdParameterName, instance) : ClientId,
-                       BaseUrl = string.IsNullOrWhiteSpace(BaseUrl) ? GetParameter(BaseUrlParameterName, instance) : BaseUrl,
-                       Secret = GetParameter(ClientSecretParameterName, instance)
-                   };
-        }
-
-        public KeyVaultSettings GetValue(object instance)
-        {
-            return (KeyVaultSettings) GetValue(member: null, instance);
-        }
-
-        private void AssertIsValid()
-        {
-            var error = string.Empty;
-            if (string.IsNullOrWhiteSpace(BaseUrl) && string.IsNullOrWhiteSpace(BaseUrlParameterName))
-                error += EnvironmentInfo.NewLine + $"Either '{nameof(BaseUrl)}' or '{nameof(BaseUrlParameterName)}' must be defined";
-            if (string.IsNullOrWhiteSpace(ClientId) && string.IsNullOrWhiteSpace(ClientIdParameterName))
-                error += EnvironmentInfo.NewLine + $"Either '{nameof(ClientId)}' or '{nameof(ClientIdParameterName)}' must be defined";
-            if (string.IsNullOrWhiteSpace(ClientSecretParameterName))
-                error += EnvironmentInfo.NewLine + $"'{nameof(ClientSecretParameterName)}' must be defined";
-            Assert.True(error == string.Empty, error);
-        }
-
-        private string GetParameter(string memberName, object instance)
-        {
-            string result = null;
-            var fieldInfo = instance.GetType().GetField(memberName, ReflectionUtility.Instance);
-            if (fieldInfo != null)
+            var parameterAttribute = fieldInfo.GetCustomAttribute<ParameterAttribute>();
+            if (parameterAttribute != null)
             {
-                var parameterAttribute = fieldInfo.GetCustomAttribute<ParameterAttribute>();
-                if (parameterAttribute != null)
-                {
-                    var member = instance.GetType().GetMember(memberName, ReflectionUtility.Instance).Single();
-                    result = (string) parameterAttribute.GetValue(member, instance);
-                    if (string.IsNullOrEmpty(result))
-                        result = (string) fieldInfo.GetValue(instance);
-                }
+                var member = instance.GetType().GetMember(memberName, ReflectionUtility.Instance).Single();
+                result = (string) parameterAttribute.GetValue(member, instance);
+                if (string.IsNullOrEmpty(result))
+                    result = (string) fieldInfo.GetValue(instance);
             }
-
-            if (string.IsNullOrWhiteSpace(result))
-                result = ParameterService.GetParameter<string>(memberName);
-
-            return result;
         }
+
+        if (string.IsNullOrWhiteSpace(result))
+            result = ParameterService.GetParameter<string>(memberName);
+
+        return result;
     }
 }

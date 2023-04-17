@@ -6,10 +6,9 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.GitHubActions.Configuration
+namespace Nuke.Common.CI.GitHubActions.Configuration;
+
+[PublicAPI]
+public abstract class GitHubActionsStep : ConfigurationEntity
 {
-    [PublicAPI]
-    public abstract class GitHubActionsStep : ConfigurationEntity
-    {
-    }
 }

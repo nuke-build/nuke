@@ -10,14 +10,14 @@ using FluentAssertions;
 using Nuke.Common.Utilities;
 using Xunit;
 
-namespace Nuke.Common.Tests
+namespace Nuke.Common.Tests;
+
+public class CompletionUtilityTest
 {
-    public class CompletionUtilityTest
+    [Fact]
+    public void TestGetCompletionItemsFromSchema()
     {
-        [Fact]
-        public void TestGetCompletionItemsFromSchema()
-        {
-            var schema = JsonDocument.Parse("""
+        var schema = JsonDocument.Parse("""
                 {
                   "$schema": "http://json-schema.org/draft-04/schema#",
                   "title": "Build Schema",
@@ -60,47 +60,46 @@ namespace Nuke.Common.Tests
                   }
                 }
                 """);
-            var profileNames = new[] { "dev" };
-            var items = CompletionUtility.GetItemsFromSchema(schema, profileNames);
-            items.Should().BeEquivalentTo(
-                new Dictionary<string, string[]>
-                {
-                    ["NoLogo"] = null,
-                    ["Configuration"] = new[] { "Debug", "Release" },
-                    ["Target"] = new[] { "Restore", "Compile" },
-                    [Constants.LoadedLocalProfilesParameterName] = profileNames
-                });
-        }
+        var profileNames = new[] { "dev" };
+        var items = CompletionUtility.GetItemsFromSchema(schema, profileNames);
+        items.Should().BeEquivalentTo(
+            new Dictionary<string, string[]>
+            {
+                ["NoLogo"] = null,
+                ["Configuration"] = new[] { "Debug", "Release" },
+                ["Target"] = new[] { "Restore", "Compile" },
+                [Constants.LoadedLocalProfilesParameterName] = profileNames
+            });
+    }
 
-        [Theory]
-        [InlineData("", new[] { "Compile", "GitHub-Publish", "--target", "--api-key", "--nuget-source" })]
-        [InlineData("-", new[] { "--target", "--api-key", "--nuget-source" })]
-        [InlineData("-t", new[] { "-target" })]
-        [InlineData("-Api", new[] { "-ApiKey" })]
-        [InlineData("--api", new[] { "--api-key" })]
-        [InlineData("--Nu", new[] { "--Nuget-source" })]
-        [InlineData("-ApiKey ", new[] { "--target", "--nuget-source" })]
-        [InlineData("--api-key ", new[] { "--target", "--nuget-source" })]
-        [InlineData("--target ", new[] { "Compile", "GitHub-Publish", "--api-key", "--nuget-source" })]
-        [InlineData("--target G", new[] { "GitHub-Publish" })]
-        [InlineData("--target -", new[] { "--api-key", "--nuget-source" })]
-        [InlineData("--target compile ", new[] { "GitHub-Publish", "--api-key", "--nuget-source" })]
-        [InlineData("C", new[] { "Compile" })]
-        [InlineData("Compile ", new[] { "GitHub-Publish", "--target", "--api-key", "--nuget-source" })]
-        [InlineData("Compile gith", new[] { "github-publish" })]
-        [InlineData("Compile GITH", new[] { "GITHUB-PUBLISH" })]
-        public void TestGetRelevantCompletionItems(string words, string[] expectedItems)
-        {
-            var completionItems =
-                new Dictionary<string, string[]>
-                {
-                    { Constants.InvokedTargetsParameterName, new[] { "Compile", "GitHubPublish" } },
-                    { "ApiKey", null },
-                    { "NuGetSource", null }
-                };
-            CompletionUtility.GetRelevantItems(words, completionItems)
-                .Should()
-                .BeEquivalentTo(expectedItems);
-        }
+    [Theory]
+    [InlineData("", new[] { "Compile", "GitHub-Publish", "--target", "--api-key", "--nuget-source" })]
+    [InlineData("-", new[] { "--target", "--api-key", "--nuget-source" })]
+    [InlineData("-t", new[] { "-target" })]
+    [InlineData("-Api", new[] { "-ApiKey" })]
+    [InlineData("--api", new[] { "--api-key" })]
+    [InlineData("--Nu", new[] { "--Nuget-source" })]
+    [InlineData("-ApiKey ", new[] { "--target", "--nuget-source" })]
+    [InlineData("--api-key ", new[] { "--target", "--nuget-source" })]
+    [InlineData("--target ", new[] { "Compile", "GitHub-Publish", "--api-key", "--nuget-source" })]
+    [InlineData("--target G", new[] { "GitHub-Publish" })]
+    [InlineData("--target -", new[] { "--api-key", "--nuget-source" })]
+    [InlineData("--target compile ", new[] { "GitHub-Publish", "--api-key", "--nuget-source" })]
+    [InlineData("C", new[] { "Compile" })]
+    [InlineData("Compile ", new[] { "GitHub-Publish", "--target", "--api-key", "--nuget-source" })]
+    [InlineData("Compile gith", new[] { "github-publish" })]
+    [InlineData("Compile GITH", new[] { "GITHUB-PUBLISH" })]
+    public void TestGetRelevantCompletionItems(string words, string[] expectedItems)
+    {
+        var completionItems =
+            new Dictionary<string, string[]>
+            {
+                { Constants.InvokedTargetsParameterName, new[] { "Compile", "GitHubPublish" } },
+                { "ApiKey", null },
+                { "NuGetSource", null }
+            };
+        CompletionUtility.GetRelevantItems(words, completionItems)
+            .Should()
+            .BeEquivalentTo(expectedItems);
     }
 }

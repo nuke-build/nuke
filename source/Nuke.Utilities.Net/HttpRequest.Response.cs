@@ -6,45 +6,44 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Nuke.Common.Utilities.Net
-{
-    public static partial class HttpRequestExtensions
-    {
-        /// <summary>
-        /// Executes the HTTP request and returns the response.
-        /// </summary>
-        public static async Task<HttpResponseInspector> GetResponseAsync(
-            this HttpRequestBuilder builder,
-            CancellationToken cancellationToken = default)
-        {
-            var response = await builder.Client.SendAsync(builder.Request, cancellationToken);
-            return new HttpResponseInspector(response);
-        }
+namespace Nuke.Common.Utilities.Net;
 
-        /// <summary>
-        /// Executes the HTTP request and returns the response.
-        /// </summary>
-        public static HttpResponseInspector GetResponse(this HttpRequestBuilder builder)
-        {
-            return builder.GetResponseAsync().GetAwaiter().GetResult();
-        }
+public static partial class HttpRequestExtensions
+{
+    /// <summary>
+    /// Executes the HTTP request and returns the response.
+    /// </summary>
+    public static async Task<HttpResponseInspector> GetResponseAsync(
+        this HttpRequestBuilder builder,
+        CancellationToken cancellationToken = default)
+    {
+        var response = await builder.Client.SendAsync(builder.Request, cancellationToken);
+        return new HttpResponseInspector(response);
     }
 
-    public class HttpResponseInspector
+    /// <summary>
+    /// Executes the HTTP request and returns the response.
+    /// </summary>
+    public static HttpResponseInspector GetResponse(this HttpRequestBuilder builder)
     {
-        private string _body;
+        return builder.GetResponseAsync().GetAwaiter().GetResult();
+    }
+}
 
-        public HttpResponseInspector(HttpResponseMessage response)
-        {
-            Response = response;
-        }
+public class HttpResponseInspector
+{
+    private string _body;
 
-        public HttpResponseMessage Response { get; }
+    public HttpResponseInspector(HttpResponseMessage response)
+    {
+        Response = response;
+    }
 
-        public async Task<string> GetBodyAsync()
-        {
-            _body ??= await Response.Content.ReadAsStringAsync();
-            return _body;
-        }
+    public HttpResponseMessage Response { get; }
+
+    public async Task<string> GetBodyAsync()
+    {
+        _body ??= await Response.Content.ReadAsStringAsync();
+        return _body;
     }
 }

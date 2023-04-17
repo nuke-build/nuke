@@ -10,31 +10,30 @@ using Nuke.Common;
 using Nuke.Common.IO;
 using Xunit.Abstractions;
 
-namespace Nuke.Common.Tests
+namespace Nuke.Common.Tests;
+
+public abstract class FileSystemDependentTest
 {
-    public abstract class FileSystemDependentTest
+    public ITestOutputHelper TestOutputHelper { get; }
+    public string TestName { get; }
+    public AbsolutePath ExecutionDirectory { get; }
+    public AbsolutePath TestProjectDirectory { get; }
+    public AbsolutePath RootDirectory { get; }
+    public AbsolutePath TestTempDirectory { get; }
+
+    protected FileSystemDependentTest(ITestOutputHelper testOutputHelper)
     {
-        public ITestOutputHelper TestOutputHelper { get; }
-        public string TestName { get; }
-        public AbsolutePath ExecutionDirectory { get; }
-        public AbsolutePath TestProjectDirectory { get; }
-        public AbsolutePath RootDirectory { get; }
-        public AbsolutePath TestTempDirectory { get; }
+        TestOutputHelper = testOutputHelper;
 
-        protected FileSystemDependentTest(ITestOutputHelper testOutputHelper)
-        {
-            TestOutputHelper = testOutputHelper;
+        TestName = ((ITest) testOutputHelper.GetType()
+            .GetField("test", BindingFlags.NonPublic | BindingFlags.Instance).NotNull()
+            .GetValue(testOutputHelper).NotNull()).TestCase.TestMethod.Method.Name;
 
-            TestName = ((ITest) testOutputHelper.GetType()
-                .GetField("test", BindingFlags.NonPublic | BindingFlags.Instance).NotNull()
-                .GetValue(testOutputHelper).NotNull()).TestCase.TestMethod.Method.Name;
+        ExecutionDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).NotNull();
+        RootDirectory = Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory);
+        TestProjectDirectory = ExecutionDirectory.FindParentOrSelf(x => x.ContainsFile("*.csproj"));
+        TestTempDirectory = ExecutionDirectory / "temp"  / $"{GetType().Name}.{TestName}";
 
-            ExecutionDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).NotNull();
-            RootDirectory = Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory);
-            TestProjectDirectory = ExecutionDirectory.FindParentOrSelf(x => x.ContainsFile("*.csproj"));
-            TestTempDirectory = ExecutionDirectory / "temp"  / $"{GetType().Name}.{TestName}";
-
-            TestTempDirectory.CreateOrCleanDirectory();
-        }
+        TestTempDirectory.CreateOrCleanDirectory();
     }
 }

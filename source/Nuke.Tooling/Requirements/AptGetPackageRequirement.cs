@@ -5,22 +5,21 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+public class AptGetPackageRequirement : ToolRequirement
 {
-    public class AptGetPackageRequirement : ToolRequirement
+    public static AptGetPackageRequirement Create(string packageId)
     {
-        public static AptGetPackageRequirement Create(string packageId)
-        {
-            return new AptGetPackageRequirement
-                   {
-                       PackageId = packageId,
-                   };
-        }
-
-        private AptGetPackageRequirement()
-        {
-        }
-
-        public string PackageId { get; set; }
+        return new AptGetPackageRequirement
+               {
+                   PackageId = packageId,
+               };
     }
+
+    private AptGetPackageRequirement()
+    {
+    }
+
+    public string PackageId { get; set; }
 }

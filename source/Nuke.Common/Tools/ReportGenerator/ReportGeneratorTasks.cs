@@ -5,37 +5,36 @@
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Tools.ReportGenerator
+namespace Nuke.Common.Tools.ReportGenerator;
+
+[PublicAPI]
+public class ReportGeneratorVerbosityMappingAttribute : VerbosityMappingAttribute
 {
-    [PublicAPI]
-    public class ReportGeneratorVerbosityMappingAttribute : VerbosityMappingAttribute
+    public ReportGeneratorVerbosityMappingAttribute()
+        : base(typeof(ReportGeneratorVerbosity))
     {
-        public ReportGeneratorVerbosityMappingAttribute()
-            : base(typeof(ReportGeneratorVerbosity))
-        {
-            Quiet = nameof(ReportGeneratorVerbosity.Off);
-            Minimal = nameof(ReportGeneratorVerbosity.Warning);
-            Normal = nameof(ReportGeneratorVerbosity.Info);
-            Verbose = nameof(ReportGeneratorVerbosity.Verbose);
-        }
+        Quiet = nameof(ReportGeneratorVerbosity.Off);
+        Minimal = nameof(ReportGeneratorVerbosity.Warning);
+        Normal = nameof(ReportGeneratorVerbosity.Info);
+        Verbose = nameof(ReportGeneratorVerbosity.Verbose);
     }
+}
 
-    partial class ReportGeneratorSettings
+partial class ReportGeneratorSettings
+{
+    private string GetProcessToolPath()
     {
-        private string GetProcessToolPath()
-        {
-            return ReportGeneratorTasks.GetToolPath(Framework);
-        }
+        return ReportGeneratorTasks.GetToolPath(Framework);
     }
+}
 
-    partial class ReportGeneratorTasks
+partial class ReportGeneratorTasks
+{
+    internal static string GetToolPath(string framework = null)
     {
-        internal static string GetToolPath(string framework = null)
-        {
-            return NuGetToolPathResolver.GetPackageExecutable(
-                packageId: "ReportGenerator",
-                packageExecutable: "ReportGenerator.dll|ReportGenerator.exe",
-                framework: framework);
-        }
+        return NuGetToolPathResolver.GetPackageExecutable(
+            packageId: "ReportGenerator",
+            packageExecutable: "ReportGenerator.dll|ReportGenerator.exe",
+            framework: framework);
     }
 }

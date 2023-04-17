@@ -5,10 +5,9 @@
 using System;
 using System.Linq;
 
-namespace Nuke.CodeGeneration.Writers
+namespace Nuke.CodeGeneration.Writers;
+
+public interface IWriterWrapper
 {
-    public interface IWriterWrapper
-    {
-        IWriter Writer { get; }
-    }
+    IWriter Writer { get; }
 }

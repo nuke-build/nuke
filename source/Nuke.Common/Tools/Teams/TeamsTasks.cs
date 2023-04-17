@@ -11,29 +11,28 @@ using Newtonsoft.Json;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Net;
 
-namespace Nuke.Common.Tools.Teams
+namespace Nuke.Common.Tools.Teams;
+
+[PublicAPI]
+public static class TeamsTasks
 {
-    [PublicAPI]
-    public static class TeamsTasks
+    public static void SendTeamsMessage(Configure<TeamsMessage> configurator, string webhook)
     {
-        public static void SendTeamsMessage(Configure<TeamsMessage> configurator, string webhook)
-        {
-            SendTeamsMessageAsync(configurator, webhook).Wait();
-        }
+        SendTeamsMessageAsync(configurator, webhook).Wait();
+    }
 
-        public static async Task SendTeamsMessageAsync(Configure<TeamsMessage> configurator, string webhook)
-        {
-            var message = configurator(new TeamsMessage());
-            var messageJson = JsonConvert.SerializeObject(message);
+    public static async Task SendTeamsMessageAsync(Configure<TeamsMessage> configurator, string webhook)
+    {
+        var message = configurator(new TeamsMessage());
+        var messageJson = JsonConvert.SerializeObject(message);
 
-            using var client = new HttpClient();
+        using var client = new HttpClient();
 
-            var response = await client.CreateRequest(HttpMethod.Post, webhook)
-                .WithJsonContent(messageJson)
-                .GetResponseAsync();
+        var response = await client.CreateRequest(HttpMethod.Post, webhook)
+            .WithJsonContent(messageJson)
+            .GetResponseAsync();
 
-            var responseText = await response.GetBodyAsync();
-            Assert.True(responseText == "1", $"'{responseText}' == '1'");
-        }
+        var responseText = await response.GetBodyAsync();
+        Assert.True(responseText == "1", $"'{responseText}' == '1'");
     }
 }

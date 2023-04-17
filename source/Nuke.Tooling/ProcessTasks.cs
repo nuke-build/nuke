@@ -14,55 +14,55 @@ using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Serilog;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+[PublicAPI]
+public static class ProcessTasks
 {
-    [PublicAPI]
-    public static class ProcessTasks
+    public static bool DefaultLogOutput = true;
+    public static bool DefaultLogInvocation = true;
+    public static bool LogWorkingDirectory = true;
+
+    private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
+
+    public static IProcess StartShell(
+        string command,
+        string workingDirectory = null,
+        IReadOnlyDictionary<string, string> environmentVariables = null,
+        int? timeout = null,
+        bool? logOutput = null,
+        bool? logInvocation = null,
+        Action<OutputType, string> customLogger = null,
+        Func<string, string> outputFilter = null)
     {
-        public static bool DefaultLogOutput = true;
-        public static bool DefaultLogInvocation = true;
-        public static bool LogWorkingDirectory = true;
+        // TODO: fallback to sh
+        return StartProcess(
+            toolPath: ToolPathResolver.GetPathExecutable(EnvironmentInfo.IsWin ? "cmd" : "bash"),
+            arguments: $"{(EnvironmentInfo.IsWin ? "/c" : "-c")} {command.DoubleQuote()}",
+            workingDirectory,
+            environmentVariables,
+            timeout,
+            logOutput,
+            logInvocation,
+            customLogger,
+            outputFilter);
+    }
 
-        private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
+    public static IProcess StartProcess(ToolSettings toolSettings)
+    {
+        var arguments = toolSettings.GetProcessArguments();
 
-        public static IProcess StartShell(
-            string command,
-            string workingDirectory = null,
-            IReadOnlyDictionary<string, string> environmentVariables = null,
-            int? timeout = null,
-            bool? logOutput = null,
-            bool? logInvocation = null,
-            Action<OutputType, string> customLogger = null,
-            Func<string, string> outputFilter = null)
-        {
-            // TODO: fallback to sh
-            return StartProcess(
-                toolPath: ToolPathResolver.GetPathExecutable(EnvironmentInfo.IsWin ? "cmd" : "bash"),
-                arguments: $"{(EnvironmentInfo.IsWin ? "/c" : "-c")} {command.DoubleQuote()}",
-                workingDirectory,
-                environmentVariables,
-                timeout,
-                logOutput,
-                logInvocation,
-                customLogger,
-                outputFilter);
-        }
-
-        public static IProcess StartProcess(ToolSettings toolSettings)
-        {
-            var arguments = toolSettings.GetProcessArguments();
-
-            return StartProcess(
-                toolSettings.ProcessToolPath,
-                arguments.RenderForExecution(),
-                toolSettings.ProcessWorkingDirectory,
-                toolSettings.ProcessEnvironmentVariables,
-                toolSettings.ProcessExecutionTimeout,
-                toolSettings.ProcessLogOutput,
-                toolSettings.ProcessLogInvocation,
-                toolSettings.ProcessCustomLogger,
-                arguments.FilterSecrets);
-        }
+        return StartProcess(
+            toolSettings.ProcessToolPath,
+            arguments.RenderForExecution(),
+            toolSettings.ProcessWorkingDirectory,
+            toolSettings.ProcessEnvironmentVariables,
+            toolSettings.ProcessExecutionTimeout,
+            toolSettings.ProcessLogOutput,
+            toolSettings.ProcessLogInvocation,
+            toolSettings.ProcessCustomLogger,
+            arguments.FilterSecrets);
+    }
 
 #if NET6_0_OR_GREATER
 
@@ -96,189 +96,188 @@ namespace Nuke.Common.Tooling
 
 #endif
 
-        public static IProcess StartProcess(
-            string toolPath,
-            string arguments = null,
-            string workingDirectory = null,
-            IReadOnlyDictionary<string, string> environmentVariables = null,
-            int? timeout = null,
-            bool? logOutput = null,
-            bool? logInvocation = null,
-            Action<OutputType, string> customLogger = null,
-            Func<string, string> outputFilter = null)
+    public static IProcess StartProcess(
+        string toolPath,
+        string arguments = null,
+        string workingDirectory = null,
+        IReadOnlyDictionary<string, string> environmentVariables = null,
+        int? timeout = null,
+        bool? logOutput = null,
+        bool? logInvocation = null,
+        Action<OutputType, string> customLogger = null,
+        Func<string, string> outputFilter = null)
+    {
+        Assert.True(toolPath != null);
+        if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
+            toolPath = ToolPathResolver.GetPathExecutable(toolPath);
+
+        var toolPathOverride = GetToolPathOverride(toolPath);
+        if (!string.IsNullOrEmpty(toolPathOverride))
         {
-            Assert.True(toolPath != null);
-            if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
-                toolPath = ToolPathResolver.GetPathExecutable(toolPath);
-
-            var toolPathOverride = GetToolPathOverride(toolPath);
-            if (!string.IsNullOrEmpty(toolPathOverride))
-            {
-                arguments = $"{toolPath.DoubleQuoteIfNeeded()} {arguments}".TrimEnd();
-                toolPath = toolPathOverride;
-            }
-
-            outputFilter ??= x => x;
-            Assert.FileExists(toolPath);
-            if (logInvocation ?? DefaultLogInvocation)
-            {
-                // TODO: logging additional
-                Log.Information("> {ToolPath} {Arguments}", Path.GetFullPath(toolPath).DoubleQuoteIfNeeded(), outputFilter(arguments));
-                if (LogWorkingDirectory && workingDirectory != null)
-                    Log.Information("@ {WorkingDirectory}", workingDirectory);
-            }
-
-            return StartProcessInternal(toolPath,
-                arguments,
-                workingDirectory,
-                environmentVariables,
-                timeout,
-                logOutput ?? DefaultLogOutput
-                    ? customLogger ?? DefaultLogger
-                    : null,
-                outputFilter);
+            arguments = $"{toolPath.DoubleQuoteIfNeeded()} {arguments}".TrimEnd();
+            toolPath = toolPathOverride;
         }
 
-        [CanBeNull]
-        private static string GetToolPathOverride(string toolPath)
+        outputFilter ??= x => x;
+        Assert.FileExists(toolPath);
+        if (logInvocation ?? DefaultLogInvocation)
         {
-            if (toolPath.EndsWithOrdinalIgnoreCase(".dll"))
-            {
-                return ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
-                       ToolPathResolver.GetPathExecutable("dotnet");
-            }
+            // TODO: logging additional
+            Log.Information("> {ToolPath} {Arguments}", Path.GetFullPath(toolPath).DoubleQuoteIfNeeded(), outputFilter(arguments));
+            if (LogWorkingDirectory && workingDirectory != null)
+                Log.Information("@ {WorkingDirectory}", workingDirectory);
+        }
 
-            if (EnvironmentInfo.IsUnix &&
-                toolPath.EndsWithOrdinalIgnoreCase(".exe") &&
-                !EnvironmentInfo.IsWsl)
-                return ToolPathResolver.GetPathExecutable("mono");
+        return StartProcessInternal(toolPath,
+            arguments,
+            workingDirectory,
+            environmentVariables,
+            timeout,
+            logOutput ?? DefaultLogOutput
+                ? customLogger ?? DefaultLogger
+                : null,
+            outputFilter);
+    }
 
+    [CanBeNull]
+    private static string GetToolPathOverride(string toolPath)
+    {
+        if (toolPath.EndsWithOrdinalIgnoreCase(".dll"))
+        {
+            return ToolPathResolver.TryGetEnvironmentExecutable("DOTNET_EXE") ??
+                   ToolPathResolver.GetPathExecutable("dotnet");
+        }
+
+        if (EnvironmentInfo.IsUnix &&
+            toolPath.EndsWithOrdinalIgnoreCase(".exe") &&
+            !EnvironmentInfo.IsWsl)
+            return ToolPathResolver.GetPathExecutable("mono");
+
+        return null;
+    }
+
+    // TODO: add default values
+    [CanBeNull]
+    private static IProcess StartProcessInternal(
+        string toolPath,
+        [CanBeNull] string arguments,
+        [CanBeNull] string workingDirectory,
+        [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
+        int? timeout,
+        [CanBeNull] Action<OutputType, string> logger,
+        Func<string, string> outputFilter)
+    {
+        Assert.True(workingDirectory == null || Directory.Exists(workingDirectory), $"WorkingDirectory '{workingDirectory}' does not exist");
+
+        var startInfo = new ProcessStartInfo
+                        {
+                            FileName = toolPath,
+                            Arguments = arguments ?? string.Empty,
+                            WorkingDirectory = workingDirectory ?? EnvironmentInfo.WorkingDirectory,
+                            RedirectStandardOutput = true,
+                            RedirectStandardError = true,
+                            UseShellExecute = false,
+                            StandardErrorEncoding = Encoding.UTF8,
+                            StandardOutputEncoding = Encoding.UTF8
+                        };
+
+        ApplyEnvironmentVariables(environmentVariables, startInfo);
+        // PrintEnvironmentVariables(startInfo);
+
+        var process = Process.Start(startInfo);
+        if (process == null)
             return null;
-        }
 
-        // TODO: add default values
-        [CanBeNull]
-        private static IProcess StartProcessInternal(
-            string toolPath,
-            [CanBeNull] string arguments,
-            [CanBeNull] string workingDirectory,
-            [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
-            int? timeout,
-            [CanBeNull] Action<OutputType, string> logger,
-            Func<string, string> outputFilter)
+        var output = GetOutputCollection(process, logger, outputFilter);
+        return new Process2(process, outputFilter, timeout, output);
+    }
+
+    private static void ApplyEnvironmentVariables(
+        [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
+        ProcessStartInfo startInfo)
+    {
+        if (environmentVariables == null)
+            return;
+
+        startInfo.Environment.Clear();
+
+        foreach (var (key, value) in environmentVariables)
+            startInfo.Environment[key] = value;
+    }
+
+    private static BlockingCollection<Output> GetOutputCollection(
+        Process process,
+        [CanBeNull] Action<OutputType, string> logger,
+        Func<string, string> outputFilter)
+    {
+        var output = new BlockingCollection<Output>();
+
+        process.OutputDataReceived += (_, e) =>
         {
-            Assert.True(workingDirectory == null || Directory.Exists(workingDirectory), $"WorkingDirectory '{workingDirectory}' does not exist");
-
-            var startInfo = new ProcessStartInfo
-                            {
-                                FileName = toolPath,
-                                Arguments = arguments ?? string.Empty,
-                                WorkingDirectory = workingDirectory ?? EnvironmentInfo.WorkingDirectory,
-                                RedirectStandardOutput = true,
-                                RedirectStandardError = true,
-                                UseShellExecute = false,
-                                StandardErrorEncoding = Encoding.UTF8,
-                                StandardOutputEncoding = Encoding.UTF8
-                            };
-
-            ApplyEnvironmentVariables(environmentVariables, startInfo);
-            // PrintEnvironmentVariables(startInfo);
-
-            var process = Process.Start(startInfo);
-            if (process == null)
-                return null;
-
-            var output = GetOutputCollection(process, logger, outputFilter);
-            return new Process2(process, outputFilter, timeout, output);
-        }
-
-        private static void ApplyEnvironmentVariables(
-            [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
-            ProcessStartInfo startInfo)
-        {
-            if (environmentVariables == null)
+            if (e.Data == null)
                 return;
 
-            startInfo.Environment.Clear();
+            output.Add(new Output { Text = e.Data, Type = OutputType.Std });
 
-            foreach (var (key, value) in environmentVariables)
-                startInfo.Environment[key] = value;
-        }
-
-        private static BlockingCollection<Output> GetOutputCollection(
-            Process process,
-            [CanBeNull] Action<OutputType, string> logger,
-            Func<string, string> outputFilter)
+            var filteredOutput = outputFilter(e.Data);
+            logger?.Invoke(OutputType.Std, filteredOutput);
+        };
+        process.ErrorDataReceived += (_, e) =>
         {
-            var output = new BlockingCollection<Output>();
+            if (e.Data == null)
+                return;
 
-            process.OutputDataReceived += (_, e) =>
-            {
-                if (e.Data == null)
-                    return;
+            output.Add(new Output { Text = e.Data, Type = OutputType.Err });
 
-                output.Add(new Output { Text = e.Data, Type = OutputType.Std });
+            var filteredOutput = outputFilter(e.Data);
+            logger?.Invoke(OutputType.Err, filteredOutput);
+        };
 
-                var filteredOutput = outputFilter(e.Data);
-                logger?.Invoke(OutputType.Std, filteredOutput);
-            };
-            process.ErrorDataReceived += (_, e) =>
-            {
-                if (e.Data == null)
-                    return;
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
 
-                output.Add(new Output { Text = e.Data, Type = OutputType.Err });
+        return output;
+    }
 
-                var filteredOutput = outputFilter(e.Data);
-                logger?.Invoke(OutputType.Err, filteredOutput);
-            };
+    public static void DefaultLogger(OutputType type, string output)
+    {
+        if (type == OutputType.Std)
+            Log.Debug(output);
+        else
+            Log.Error(output);
+    }
 
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+    private static void PrintEnvironmentVariables(ProcessStartInfo startInfo)
+    {
+        static void TraceItem(string key, string value) => Log.Verbose($"  - {key} = {value}");
 
-            return output;
-        }
+        // TODO: logging additional
+        Log.Verbose("Environment variables:");
 
-        public static void DefaultLogger(OutputType type, string output)
+        foreach (var (key, value) in startInfo.Environment.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
         {
-            if (type == OutputType.Std)
-                Log.Debug(output);
+            if (key.EqualsOrdinalIgnoreCase("path"))
+            {
+                var paths = value.Split(s_pathSeparators);
+                var padding = paths.Length.ToString().Length;
+
+                for (var i = 0; i < paths.Length; i++)
+                    TraceItem($"{key}[{i.ToString().PadLeft(padding, paddingChar: '0')}]", paths[i]);
+            }
             else
-                Log.Error(output);
-        }
-
-        private static void PrintEnvironmentVariables(ProcessStartInfo startInfo)
-        {
-            static void TraceItem(string key, string value) => Log.Verbose($"  - {key} = {value}");
-
-            // TODO: logging additional
-            Log.Verbose("Environment variables:");
-
-            foreach (var (key, value) in startInfo.Environment.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
             {
-                if (key.EqualsOrdinalIgnoreCase("path"))
-                {
-                    var paths = value.Split(s_pathSeparators);
-                    var padding = paths.Length.ToString().Length;
-
-                    for (var i = 0; i < paths.Length; i++)
-                        TraceItem($"{key}[{i.ToString().PadLeft(padding, paddingChar: '0')}]", paths[i]);
-                }
-                else
-                {
-                    TraceItem(key, value);
-                }
+                TraceItem(key, value);
             }
         }
+    }
 
-        public static void CheckPathEnvironmentVariable()
-        {
-            EnvironmentInfo.Variables
-                .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
-                .Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries)
-                .Select(EnvironmentInfo.ExpandVariables)
-                .Where(x => !Directory.Exists(x))
-                .ForEach(x => Log.Warning("Path environment variable contains invalid or inaccessible path {Path}", x));
-        }
+    public static void CheckPathEnvironmentVariable()
+    {
+        EnvironmentInfo.Variables
+            .SingleOrDefault(x => x.Key.EqualsOrdinalIgnoreCase("path"))
+            .Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries)
+            .Select(EnvironmentInfo.ExpandVariables)
+            .Where(x => !Directory.Exists(x))
+            .ForEach(x => Log.Warning("Path environment variable contains invalid or inaccessible path {Path}", x));
     }
 }

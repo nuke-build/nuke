@@ -2,23 +2,22 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-namespace Nuke.Common.Utilities
+namespace Nuke.Common.Utilities;
+
+public static partial class StringExtensions
 {
-    public static partial class StringExtensions
+    private static readonly string[] KnownWords =
     {
-        private static readonly string[] KnownWords =
-        {
-            "DotNet",
-            "GitHub",
-            "GitVersion",
-            "MSBuild",
-            "NuGet",
-            "ReSharper",
-            "AppVeyor",
-            "TeamCity",
-            "GitLab",
-            "SignPath",
-            "JetBrains"
-        };
-    }
+        "DotNet",
+        "GitHub",
+        "GitVersion",
+        "MSBuild",
+        "NuGet",
+        "ReSharper",
+        "AppVeyor",
+        "TeamCity",
+        "GitLab",
+        "SignPath",
+        "JetBrains"
+    };
 }

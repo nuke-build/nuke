@@ -7,14 +7,13 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Nuke.Common.Execution;
 
-namespace Nuke.Common.Tests
+namespace Nuke.Common.Tests;
+
+public static class ExecutionTestsInitializer
 {
-    public static class ExecutionTestsInitializer
+    [ModuleInitializer]
+    public static void Initialize()
     {
-        [ModuleInitializer]
-        public static void Initialize()
-        {
-            Environment.SetEnvironmentVariable(Telemetry.OptOutEnvironmentKey, "true");
-        }
+        Environment.SetEnvironmentVariable(Telemetry.OptOutEnvironmentKey, "true");
     }
 }

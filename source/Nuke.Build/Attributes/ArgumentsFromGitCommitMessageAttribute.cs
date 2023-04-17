@@ -11,31 +11,30 @@ using Nuke.Common.Git;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.Execution;
+
+[PublicAPI]
+public class ArgumentsFromGitCommitMessageAttribute : BuildExtensionAttributeBase, IOnBuildCreated
 {
-    [PublicAPI]
-    public class ArgumentsFromGitCommitMessageAttribute : BuildExtensionAttributeBase, IOnBuildCreated
+    public string Prefix { get; set; } = "[nuke++]";
+
+    public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
     {
-        public string Prefix { get; set; } = "[nuke++]";
+        if (BuildServerConfigurationGeneration.IsActive)
+            return;
 
-        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
-        {
-            if (BuildServerConfigurationGeneration.IsActive)
-                return;
+        var commit = GitRepository.GetCommitFromCI();
+        if (commit == null)
+            return;
 
-            var commit = GitRepository.GetCommitFromCI();
-            if (commit == null)
-                return;
+        var git = ToolResolver.GetEnvironmentOrPathTool("git");
+        var lastLine = git.Invoke($"show -s --format=%B {commit}", logInvocation: false, logOutput: false)
+            .Select(x => x.Text)
+            .LastOrDefault(x => !x.IsNullOrEmpty());
+        if (!lastLine?.StartsWithOrdinalIgnoreCase(Prefix) ?? true)
+            return;
 
-            var git = ToolResolver.GetEnvironmentOrPathTool("git");
-            var lastLine = git.Invoke($"show -s --format=%B {commit}", logInvocation: false, logOutput: false)
-                .Select(x => x.Text)
-                .LastOrDefault(x => !x.IsNullOrEmpty());
-            if (!lastLine?.StartsWithOrdinalIgnoreCase(Prefix) ?? true)
-                return;
-
-            var arguments = lastLine.Substring(Prefix.Length).TrimStart();
-            ParameterService.Instance.ArgumentsFromCommitMessageService = new ArgumentParser(arguments);
-        }
+        var arguments = lastLine.Substring(Prefix.Length).TrimStart();
+        ParameterService.Instance.ArgumentsFromCommitMessageService = new ArgumentParser(arguments);
     }
 }

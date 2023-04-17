@@ -7,18 +7,17 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tools.MSBuild;
 
-namespace Nuke.Common.CI.TeamCity
+namespace Nuke.Common.CI.TeamCity;
+
+[PublicAPI]
+public static class MSBuildSettingsExtensions
 {
-    [PublicAPI]
-    public static class MSBuildSettingsExtensions
+    public static MSBuildSettings AddTeamCityLogger(this MSBuildSettings toolSettings)
     {
-        public static MSBuildSettings AddTeamCityLogger(this MSBuildSettings toolSettings)
-        {
-            var teamCity = TeamCity.Instance.NotNull("TeamCity.Instance != null");
-            var teamCityLogger = teamCity.ConfigurationProperties["teamcity.dotnet.msbuild.extensions4.0"];
-            return toolSettings
-                .AddLoggers($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
-                .EnableNoConsoleLogger();
-        }
+        var teamCity = TeamCity.Instance.NotNull("TeamCity.Instance != null");
+        var teamCityLogger = teamCity.ConfigurationProperties["teamcity.dotnet.msbuild.extensions4.0"];
+        return toolSettings
+            .AddLoggers($"JetBrains.BuildServer.MSBuildLoggers.MSBuildLogger,{teamCityLogger}")
+            .EnableNoConsoleLogger();
     }
 }

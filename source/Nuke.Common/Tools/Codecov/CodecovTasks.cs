@@ -4,24 +4,23 @@
 
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Tools.Codecov
-{
-    partial class CodecovSettings
-    {
-        private string GetProcessToolPath()
-        {
-            return CodecovTasks.GetToolPath(Framework);
-        }
-    }
+namespace Nuke.Common.Tools.Codecov;
 
-    partial class CodecovTasks
+partial class CodecovSettings
+{
+    private string GetProcessToolPath()
     {
-        internal static string GetToolPath(string framework = null)
-        {
-            return NuGetToolPathResolver.GetPackageExecutable(
-                packageId: "Codecov.Tool",
-                packageExecutable: "codecov.dll",
-                framework: framework);
-        }
+        return CodecovTasks.GetToolPath(Framework);
+    }
+}
+
+partial class CodecovTasks
+{
+    internal static string GetToolPath(string framework = null)
+    {
+        return NuGetToolPathResolver.GetPackageExecutable(
+            packageId: "Codecov.Tool",
+            packageExecutable: "codecov.dll",
+            framework: framework);
     }
 }

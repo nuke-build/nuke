@@ -8,18 +8,17 @@ using System.Linq;
 using JetBrains.Annotations;
 
 // ReSharper disable once CheckNamespace
-namespace System.Runtime.CompilerServices
-{
-    [PublicAPI]
-    [AttributeUsage(AttributeTargets.Parameter)]
-    public sealed class CallerArgumentExpressionAttribute : Attribute
-    {
-        public CallerArgumentExpressionAttribute(string parameterName)
-        {
-            ParameterName = parameterName;
-        }
+namespace System.Runtime.CompilerServices;
 
-        public string ParameterName { get; }
+[PublicAPI]
+[AttributeUsage(AttributeTargets.Parameter)]
+public sealed class CallerArgumentExpressionAttribute : Attribute
+{
+    public CallerArgumentExpressionAttribute(string parameterName)
+    {
+        ParameterName = parameterName;
     }
+
+    public string ParameterName { get; }
 }
 #endif
