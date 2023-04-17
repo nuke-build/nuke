@@ -25,12 +25,9 @@ public static class ToolGenerator
             .WriteLine(string.Empty)
             .ForEach(GetNamespaceImports(tool), x => writer.WriteLine($"using {x};"))
             .WriteLine(string.Empty)
-            .WriteLineIfTrue(tool.Namespace != null, $"namespace {tool.Namespace}");
-
-        if (!string.IsNullOrEmpty(tool.Namespace))
-            writer.WriteBlock(x => x.WriteAll());
-        else
-            writer.WriteAll();
+            .WriteLineIfTrue(tool.Namespace != null, $"namespace {tool.Namespace};")
+            .WriteLine(string.Empty)
+            .WriteAll();
     }
 
     private static ToolWriter WriteAll(this ToolWriter w)
