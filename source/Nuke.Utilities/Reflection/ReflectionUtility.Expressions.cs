@@ -8,36 +8,35 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Nuke.Common.Utilities
+namespace Nuke.Common.Utilities;
+
+public static partial class ReflectionUtility
 {
-    public static partial class ReflectionUtility
+    public static IEnumerable<object> GetArguments(this MethodCallExpression methodCall)
     {
-        public static IEnumerable<object> GetArguments(this MethodCallExpression methodCall)
-        {
-            return methodCall.Arguments.Cast<ConstantExpression>().Select(x => x.Value);
-        }
+        return methodCall.Arguments.Cast<ConstantExpression>().Select(x => x.Value);
+    }
 
-        public static MemberInfo GetMemberInfo<T>(Expression<Func<T>> expression)
-        {
-            return expression.GetMemberInfo();
-        }
+    public static MemberInfo GetMemberInfo<T>(Expression<Func<T>> expression)
+    {
+        return expression.GetMemberInfo();
+    }
 
-        public static MemberInfo GetMemberInfo(this LambdaExpression expression)
-        {
-            if (expression.Body is MethodCallExpression methodCallExpression)
-                return methodCallExpression.Method;
+    public static MemberInfo GetMemberInfo(this LambdaExpression expression)
+    {
+        if (expression.Body is MethodCallExpression methodCallExpression)
+            return methodCallExpression.Method;
 
-            var memberExpression = expression.Body is not UnaryExpression unaryExpression
-                ? (MemberExpression) expression.Body
-                : (MemberExpression) unaryExpression.Operand;
-            return memberExpression.Member;
-        }
+        var memberExpression = expression.Body is not UnaryExpression unaryExpression
+            ? (MemberExpression) expression.Body
+            : (MemberExpression) unaryExpression.Operand;
+        return memberExpression.Member;
+    }
 
-        public static object GetTarget(this LambdaExpression expression)
-        {
-            var memberExpression = expression.Body as MemberExpression;
-            var constantExpression = memberExpression?.Expression as ConstantExpression;
-            return constantExpression?.Value;
-        }
+    public static object GetTarget(this LambdaExpression expression)
+    {
+        var memberExpression = expression.Body as MemberExpression;
+        var constantExpression = memberExpression?.Expression as ConstantExpression;
+        return constantExpression?.Value;
     }
 }

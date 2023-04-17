@@ -5,9 +5,8 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+public interface IRequireToolWithVersion
 {
-    public interface IRequireToolWithVersion
-    {
-    }
 }

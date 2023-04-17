@@ -11,48 +11,47 @@ using Nuke.CodeGeneration.Model;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.MSBuildTasks
+namespace Nuke.MSBuildTasks;
+
+[UsedImplicitly]
+public class CodeGenerationTask : ContextAwareTask
 {
-    [UsedImplicitly]
-    public class CodeGenerationTask : ContextAwareTask
+    [Microsoft.Build.Framework.Required]
+    public ITaskItem[] SpecificationFiles { get; set; }
+
+    [Microsoft.Build.Framework.Required]
+    public string BaseDirectory { get; set; }
+
+    public bool UseNestedNamespaces { get; set; }
+
+    [CanBeNull]
+    public string BaseNamespace { get; set; }
+
+    public bool UpdateReferences { get; set; }
+
+    protected override bool ExecuteInner()
     {
-        [Microsoft.Build.Framework.Required]
-        public ITaskItem[] SpecificationFiles { get; set; }
+        var specificationFiles = SpecificationFiles.Select(x => x.GetMetadata("Fullpath")).ToList();
 
-        [Microsoft.Build.Framework.Required]
-        public string BaseDirectory { get; set; }
+        string GetFilePath(Tool tool)
+            => (AbsolutePath) BaseDirectory
+               / (UseNestedNamespaces ? tool.Name : ".")
+               / tool.DefaultOutputFileName;
 
-        public bool UseNestedNamespaces { get; set; }
+        string GetNamespace(Tool tool)
+            => !UseNestedNamespaces
+                ? BaseNamespace
+                : string.IsNullOrEmpty(BaseNamespace)
+                    ? tool.Name
+                    : $"{BaseNamespace}.{tool.Name}";
 
-        [CanBeNull]
-        public string BaseNamespace { get; set; }
+        specificationFiles
+            .ForEachLazy(x => LogMessage(message: $"Handling {x} ..."))
+            .ForEach(x => CodeGenerator.GenerateCode(x, GetFilePath, GetNamespace));
 
-        public bool UpdateReferences { get; set; }
+        if (UpdateReferences)
+            ReferenceUpdater.UpdateReferences(specificationFiles);
 
-        protected override bool ExecuteInner()
-        {
-            var specificationFiles = SpecificationFiles.Select(x => x.GetMetadata("Fullpath")).ToList();
-
-            string GetFilePath(Tool tool)
-                => (AbsolutePath) BaseDirectory
-                   / (UseNestedNamespaces ? tool.Name : ".")
-                   / tool.DefaultOutputFileName;
-
-            string GetNamespace(Tool tool)
-                => !UseNestedNamespaces
-                    ? BaseNamespace
-                    : string.IsNullOrEmpty(BaseNamespace)
-                        ? tool.Name
-                        : $"{BaseNamespace}.{tool.Name}";
-
-            specificationFiles
-                .ForEachLazy(x => LogMessage(message: $"Handling {x} ..."))
-                .ForEach(x => CodeGenerator.GenerateCode(x, GetFilePath, GetNamespace));
-
-            if (UpdateReferences)
-                ReferenceUpdater.UpdateReferences(specificationFiles);
-
-            return true;
-        }
+        return true;
     }
 }

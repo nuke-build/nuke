@@ -8,20 +8,19 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Tools.Kubernetes
-{
-    [PublicAPI]
-    [ExcludeFromCodeCoverage]
-    [Serializable]
-    public abstract class KubernetesToolSettings : ToolSettings
-    {
-        public KubernetesCommonSettings CommonSettings { get; internal set; }
+namespace Nuke.Common.Tools.Kubernetes;
 
-        protected override Arguments ConfigureProcessArguments(Arguments arguments)
-        {
-            if (CommonSettings != null)
-                arguments.Concatenate(CommonSettings.CreateArguments());
-            return base.ConfigureProcessArguments(arguments);
-        }
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Serializable]
+public abstract class KubernetesToolSettings : ToolSettings
+{
+    public KubernetesCommonSettings CommonSettings { get; internal set; }
+
+    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    {
+        if (CommonSettings != null)
+            arguments.Concatenate(CommonSettings.CreateArguments());
+        return base.ConfigureProcessArguments(arguments);
     }
 }

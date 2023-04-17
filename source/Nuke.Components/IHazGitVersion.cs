@@ -8,13 +8,12 @@ using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Tools.GitVersion;
 
-namespace Nuke.Components
+namespace Nuke.Components;
+
+[PublicAPI]
+public interface IHazGitVersion : INukeBuild
 {
-    [PublicAPI]
-    public interface IHazGitVersion : INukeBuild
-    {
-        [GitVersion(NoFetch = true)]
-        [Required]
-        GitVersion Versioning => TryGetValue(() => Versioning);
-    }
+    [GitVersion(NoFetch = true)]
+    [Required]
+    GitVersion Versioning => TryGetValue(() => Versioning);
 }

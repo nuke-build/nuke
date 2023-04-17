@@ -6,13 +6,12 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.TeamCity.Configuration
+namespace Nuke.Common.CI.TeamCity.Configuration;
+
+[PublicAPI]
+public enum TeamCityParameterDisplay
 {
-    [PublicAPI]
-    public enum TeamCityParameterDisplay
-    {
-        Normal,
-        Prompt,
-        Hidden
-    }
+    Normal,
+    Prompt,
+    Hidden
 }

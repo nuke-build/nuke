@@ -5,12 +5,11 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+/// <summary>
+///   Marker interface for settings entities.
+/// </summary>
+public interface ISettingsEntity
 {
-    /// <summary>
-    ///   Marker interface for settings entities.
-    /// </summary>
-    public interface ISettingsEntity
-    {
-    }
 }

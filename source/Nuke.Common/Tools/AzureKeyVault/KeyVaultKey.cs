@@ -6,11 +6,10 @@ using System;
 using System.Linq;
 using Microsoft.Azure.KeyVault.WebKey;
 
-namespace Nuke.Common.Tools.AzureKeyVault
+namespace Nuke.Common.Tools.AzureKeyVault;
+
+public class KeyVaultKey
 {
-    public class KeyVaultKey
-    {
-        public string Secret { get; internal set; }
-        public JsonWebKey Key { get; internal set; }
-    }
+    public string Secret { get; internal set; }
+    public JsonWebKey Key { get; internal set; }
 }

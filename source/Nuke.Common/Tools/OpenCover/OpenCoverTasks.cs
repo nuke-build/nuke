@@ -5,37 +5,36 @@
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Tools.OpenCover
+namespace Nuke.Common.Tools.OpenCover;
+
+[PublicAPI]
+public class OpenCoverVerbosityMappingAttribute : VerbosityMappingAttribute
 {
-    [PublicAPI]
-    public class OpenCoverVerbosityMappingAttribute : VerbosityMappingAttribute
+    public OpenCoverVerbosityMappingAttribute()
+        : base(typeof(OpenCoverVerbosity))
     {
-        public OpenCoverVerbosityMappingAttribute()
-            : base(typeof(OpenCoverVerbosity))
-        {
-            Quiet = nameof(OpenCoverVerbosity.Off);
-            Minimal = nameof(OpenCoverVerbosity.Warn);
-            Normal = nameof(OpenCoverVerbosity.Info);
-            Verbose = nameof(OpenCoverVerbosity.Verbose);
-        }
+        Quiet = nameof(OpenCoverVerbosity.Off);
+        Minimal = nameof(OpenCoverVerbosity.Warn);
+        Normal = nameof(OpenCoverVerbosity.Info);
+        Verbose = nameof(OpenCoverVerbosity.Verbose);
+    }
+}
+
+partial class OpenCoverSettingsExtensions
+{
+    public static OpenCoverSettings SetTargetSettings(this OpenCoverSettings toolSettings, ToolSettings targetSettings)
+    {
+        return toolSettings
+            .SetTargetPath(targetSettings.ProcessToolPath)
+            .SetTargetArguments(targetSettings.GetProcessArguments().RenderForExecution())
+            .SetTargetDirectory(targetSettings.ProcessWorkingDirectory);
     }
 
-    partial class OpenCoverSettingsExtensions
+    public static OpenCoverSettings ResetTargetSettings(this OpenCoverSettings toolSettings)
     {
-        public static OpenCoverSettings SetTargetSettings(this OpenCoverSettings toolSettings, ToolSettings targetSettings)
-        {
-            return toolSettings
-                .SetTargetPath(targetSettings.ProcessToolPath)
-                .SetTargetArguments(targetSettings.GetProcessArguments().RenderForExecution())
-                .SetTargetDirectory(targetSettings.ProcessWorkingDirectory);
-        }
-
-        public static OpenCoverSettings ResetTargetSettings(this OpenCoverSettings toolSettings)
-        {
-            return toolSettings
-                .ResetTargetPath()
-                .ResetTargetArguments()
-                .ResetTargetDirectory();
-        }
+        return toolSettings
+            .ResetTargetPath()
+            .ResetTargetArguments()
+            .ResetTargetDirectory();
     }
 }

@@ -4,15 +4,14 @@
 
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Tools.DotCover
+namespace Nuke.Common.Tools.DotCover;
+
+partial class DotCoverTasks
 {
-    partial class DotCoverTasks
+    internal static string GetToolPath()
     {
-        internal static string GetToolPath()
-        {
-            return NuGetToolPathResolver.GetPackageExecutable(
-                "JetBrains.dotCover.DotNetCliTool|JetBrains.dotCover.CommandLineTools",
-                EnvironmentInfo.IsWin ? "dotCover.exe" : "dotCover.sh|dotCover.exe");
-        }
+        return NuGetToolPathResolver.GetPackageExecutable(
+            "JetBrains.dotCover.DotNetCliTool|JetBrains.dotCover.CommandLineTools",
+            EnvironmentInfo.IsWin ? "dotCover.exe" : "dotCover.sh|dotCover.exe");
     }
 }

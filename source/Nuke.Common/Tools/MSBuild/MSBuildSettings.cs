@@ -8,42 +8,41 @@ using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.Tools.MSBuild
+namespace Nuke.Common.Tools.MSBuild;
+
+[PublicAPI]
+public class MSBuildVerbosityMappingAttribute : VerbosityMappingAttribute
 {
-    [PublicAPI]
-    public class MSBuildVerbosityMappingAttribute : VerbosityMappingAttribute
+    public MSBuildVerbosityMappingAttribute()
+        : base(typeof(MSBuildVerbosity))
     {
-        public MSBuildVerbosityMappingAttribute()
-            : base(typeof(MSBuildVerbosity))
+        Quiet = nameof(MSBuildVerbosity.Quiet);
+        Minimal = nameof(MSBuildVerbosity.Minimal);
+        Normal = nameof(MSBuildVerbosity.Minimal);
+        Verbose = nameof(MSBuildVerbosity.Detailed);
+    }
+}
+
+partial class MSBuildSettings
+{
+    [CanBeNull]
+    private string GetTargetPlatform()
+    {
+        if (TargetPlatform == null)
+            return null;
+
+        if (Equals(TargetPlatform, MSBuildTargetPlatform.MSIL))
         {
-            Quiet = nameof(MSBuildVerbosity.Quiet);
-            Minimal = nameof(MSBuildVerbosity.Minimal);
-            Normal = nameof(MSBuildVerbosity.Minimal);
-            Verbose = nameof(MSBuildVerbosity.Detailed);
+            return TargetPath == null || TargetPath.EndsWithOrdinalIgnoreCase(".sln")
+                ? "Any CPU".DoubleQuote()
+                : "AnyCPU";
         }
+
+        return TargetPlatform.ToString();
     }
 
-    partial class MSBuildSettings
+    private string GetProcessToolPath()
     {
-        [CanBeNull]
-        private string GetTargetPlatform()
-        {
-            if (TargetPlatform == null)
-                return null;
-
-            if (Equals(TargetPlatform, MSBuildTargetPlatform.MSIL))
-            {
-                return TargetPath == null || TargetPath.EndsWithOrdinalIgnoreCase(".sln")
-                    ? "Any CPU".DoubleQuote()
-                    : "AnyCPU";
-            }
-
-            return TargetPlatform.ToString();
-        }
-
-        private string GetProcessToolPath()
-        {
-            return MSBuildToolPathResolver.Resolve(MSBuildVersion, MSBuildPlatform);
-        }
+        return MSBuildToolPathResolver.Resolve(MSBuildVersion, MSBuildPlatform);
     }
 }

@@ -5,10 +5,9 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+public abstract class ToolRequirementAttributeBase : Attribute
 {
-    public abstract class ToolRequirementAttributeBase : Attribute
-    {
-        public abstract ToolRequirement GetRequirement(string version = null);
-    }
+    public abstract ToolRequirement GetRequirement(string version = null);
 }

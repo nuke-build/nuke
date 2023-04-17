@@ -7,22 +7,21 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.Tests
-{
-    public static class HostInitializer
-    {
-        [ModuleInitializer]
-        public static void Initialize()
-        {
-            NukeBuild.Host = new SilentHost();
-        }
+namespace Nuke.Common.Tests;
 
-        private class SilentHost : Host
+public static class HostInitializer
+{
+    [ModuleInitializer]
+    public static void Initialize()
+    {
+        NukeBuild.Host = new SilentHost();
+    }
+
+    private class SilentHost : Host
+    {
+        protected internal override IDisposable WriteBlock(string text)
         {
-            protected internal override IDisposable WriteBlock(string text)
-            {
-                return DelegateDisposable.CreateBracket();
-            }
+            return DelegateDisposable.CreateBracket();
         }
     }
 }

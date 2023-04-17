@@ -9,43 +9,42 @@ using System.Linq;
 using Nuke.Common.Utilities;
 using static Nuke.Common.Constants;
 
-namespace Nuke.Common.Execution
+namespace Nuke.Common.Execution;
+
+internal class UpdateNotificationAttribute : BuildExtensionAttributeBase, IOnBuildCreated, IOnBuildFinished
 {
-    internal class UpdateNotificationAttribute : BuildExtensionAttributeBase, IOnBuildCreated, IOnBuildFinished
+    public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
     {
-        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
+        if (Build.IsLocalBuild && ShouldNotify)
         {
-            if (Build.IsLocalBuild && ShouldNotify)
+            Notify();
+            Host.Information("Press any key to continue without update ...");
+            Console.ReadKey();
+        }
+    }
+
+    public void OnBuildFinished()
+    {
+        if (Build.IsServerBuild && ShouldNotify)
+            Notify();
+    }
+
+    private bool ShouldNotify => !Directory.Exists(GetNukeDirectory(Build.RootDirectory)) &&
+                                 !Build.IsInterceptorExecution;
+
+    private static void Notify()
+    {
+        Host.Warning(
+            new[]
             {
-                Notify();
-                Host.Information("Press any key to continue without update ...");
-                Console.ReadKey();
-            }
-        }
-
-        public void OnBuildFinished()
-        {
-            if (Build.IsServerBuild && ShouldNotify)
-                Notify();
-        }
-
-        private bool ShouldNotify => !Directory.Exists(GetNukeDirectory(Build.RootDirectory)) &&
-                                     !Build.IsInterceptorExecution;
-
-        private static void Notify()
-        {
-            Host.Warning(
-                new[]
-                {
-                    "--- UPDATE RECOMMENDED FROM 5.1.0 ---",
-                    "1. Update your global tool",
-                    "   dotnet tool update Nuke.GlobalTool -g",
-                    "2. Update your build",
-                    "   nuke :update",
-                    "3. Confirm on update for configuration file and build scripts",
-                    "   (Others are be optional)",
-                    string.Empty
-                }.JoinNewLine());
-        }
+                "--- UPDATE RECOMMENDED FROM 5.1.0 ---",
+                "1. Update your global tool",
+                "   dotnet tool update Nuke.GlobalTool -g",
+                "2. Update your build",
+                "   nuke :update",
+                "3. Confirm on update for configuration file and build scripts",
+                "   (Others are be optional)",
+                string.Empty
+            }.JoinNewLine());
     }
 }

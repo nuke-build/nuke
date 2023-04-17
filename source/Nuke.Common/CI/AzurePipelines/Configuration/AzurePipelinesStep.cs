@@ -6,10 +6,9 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.AzurePipelines.Configuration
+namespace Nuke.Common.CI.AzurePipelines.Configuration;
+
+[PublicAPI]
+public abstract class AzurePipelinesStep : ConfigurationEntity
 {
-    [PublicAPI]
-    public abstract class AzurePipelinesStep : ConfigurationEntity
-    {
-    }
 }

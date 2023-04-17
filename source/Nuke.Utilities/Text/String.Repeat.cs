@@ -4,14 +4,13 @@
 
 using JetBrains.Annotations;
 
-namespace Nuke.Common.Utilities
+namespace Nuke.Common.Utilities;
+
+public static partial class StringExtensions
 {
-    public static partial class StringExtensions
+    [Pure]
+    public static string Repeat(this char ch, int count)
     {
-        [Pure]
-        public static string Repeat(this char ch, int count)
-        {
-            return new string(ch, count);
-        }
+        return new string(ch, count);
     }
 }

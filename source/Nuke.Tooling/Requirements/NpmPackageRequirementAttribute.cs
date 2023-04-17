@@ -6,21 +6,20 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+[BaseTypeRequired(typeof(IRequireNpmPackage))]
+public class NpmPackageRequirementAttribute : ToolRequirementAttributeBase
 {
-    [BaseTypeRequired(typeof(IRequireNpmPackage))]
-    public class NpmPackageRequirementAttribute : ToolRequirementAttributeBase
+    private readonly string _packageId;
+
+    public NpmPackageRequirementAttribute(string packageId)
     {
-        private readonly string _packageId;
+        _packageId = packageId;
+    }
 
-        public NpmPackageRequirementAttribute(string packageId)
-        {
-            _packageId = packageId;
-        }
-
-        public override ToolRequirement GetRequirement(string version = null)
-        {
-            return NpmPackageRequirement.Create(_packageId, version);
-        }
+    public override ToolRequirement GetRequirement(string version = null)
+    {
+        return NpmPackageRequirement.Create(_packageId, version);
     }
 }

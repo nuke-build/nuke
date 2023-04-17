@@ -7,15 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Execution;
 
-namespace Nuke.Common.ValueInjection
+namespace Nuke.Common.ValueInjection;
+
+internal class InjectNonParameterValuesAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
 {
-    internal class InjectNonParameterValuesAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
+    public void OnBuildInitialized(
+        IReadOnlyCollection<ExecutableTarget> executableTargets,
+        IReadOnlyCollection<ExecutableTarget> executionPlan)
     {
-        public void OnBuildInitialized(
-            IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan)
-        {
-            ValueInjectionUtility.InjectValues(Build, x => x is not ParameterAttribute);
-        }
+        ValueInjectionUtility.InjectValues(Build, x => x is not ParameterAttribute);
     }
 }

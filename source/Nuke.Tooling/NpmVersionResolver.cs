@@ -10,27 +10,26 @@ using JetBrains.Annotations;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Nuke.Common.Tooling
-{
-    [PublicAPI]
-    public static class NpmVersionResolver
-    {
-        private static readonly HttpClient s_client = new();
+namespace Nuke.Common.Tooling;
 
-        [ItemCanBeNull]
-        public static async Task<string> GetLatestVersion(string packageId)
+[PublicAPI]
+public static class NpmVersionResolver
+{
+    private static readonly HttpClient s_client = new();
+
+    [ItemCanBeNull]
+    public static async Task<string> GetLatestVersion(string packageId)
+    {
+        try
         {
-            try
-            {
-                var url = $"https://registry.npmjs.org/{packageId}";
-                var jsonString = await s_client.GetStringAsync(url);
-                var jsonObject = JsonConvert.DeserializeObject<JObject>(jsonString);
-                return (jsonObject["dist-tags"]?["latest"]).NotNull().Value<string>();
-            }
-            catch
-            {
-                return null;
-            }
+            var url = $"https://registry.npmjs.org/{packageId}";
+            var jsonString = await s_client.GetStringAsync(url);
+            var jsonObject = JsonConvert.DeserializeObject<JObject>(jsonString);
+            return (jsonObject["dist-tags"]?["latest"]).NotNull().Value<string>();
+        }
+        catch
+        {
+            return null;
         }
     }
 }

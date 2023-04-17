@@ -4,14 +4,13 @@
 
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI
-{
-    public interface IBuildServer
-    {
-        [CanBeNull]
-        string Branch { get; }
+namespace Nuke.Common.CI;
 
-        [CanBeNull]
-        string Commit { get; }
-    }
+public interface IBuildServer
+{
+    [CanBeNull]
+    string Branch { get; }
+
+    [CanBeNull]
+    string Commit { get; }
 }

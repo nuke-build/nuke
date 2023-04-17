@@ -8,46 +8,45 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.Tools.OctoVersion
+namespace Nuke.Common.Tools.OctoVersion;
+
+public partial class OctoVersionGetVersionSettings
 {
-    public partial class OctoVersionGetVersionSettings
+    private string GetProcessToolPath()
     {
-        private string GetProcessToolPath()
-        {
-            return OctoVersionTasks.GetToolPath(Framework);
-        }
+        return OctoVersionTasks.GetToolPath(Framework);
+    }
+}
+
+public partial class OctoVersionExecuteSettings
+{
+    private string GetProcessToolPath()
+    {
+        return OctoVersionTasks.GetToolPath(Framework);
+    }
+}
+
+public partial class OctoVersionTasks
+{
+    internal static string GetToolPath(string framework = null)
+    {
+        return NuGetToolPathResolver.GetPackageExecutable(
+            packageId: "Octopus.OctoVersion.Tool",
+            packageExecutable: "OctoVersion.Tool.dll",
+            framework: framework);
     }
 
-    public partial class OctoVersionExecuteSettings
+    private static OctoVersionInfo GetResult(IProcess process, OctoVersionGetVersionSettings toolSettings)
     {
-        private string GetProcessToolPath()
+        Assert.FileExists(toolSettings.OutputJsonFile);
+        try
         {
-            return OctoVersionTasks.GetToolPath(Framework);
+            var file = (AbsolutePath) toolSettings.OutputJsonFile;
+            return file.ReadJson<OctoVersionInfo>(new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() });
         }
-    }
-
-    public partial class OctoVersionTasks
-    {
-        internal static string GetToolPath(string framework = null)
+        catch (Exception exception)
         {
-            return NuGetToolPathResolver.GetPackageExecutable(
-                packageId: "Octopus.OctoVersion.Tool",
-                packageExecutable: "OctoVersion.Tool.dll",
-                framework: framework);
-        }
-
-        private static OctoVersionInfo GetResult(IProcess process, OctoVersionGetVersionSettings toolSettings)
-        {
-            Assert.FileExists(toolSettings.OutputJsonFile);
-            try
-            {
-                var file = (AbsolutePath) toolSettings.OutputJsonFile;
-                return file.ReadJson<OctoVersionInfo>(new JsonSerializerSettings { ContractResolver = new AllWritableContractResolver() });
-            }
-            catch (Exception exception)
-            {
-                throw new Exception($"Cannot parse {nameof(OctoVersion)} output from {toolSettings.OutputJsonFile.SingleQuote()}.", exception);
-            }
+            throw new Exception($"Cannot parse {nameof(OctoVersion)} output from {toolSettings.OutputJsonFile.SingleQuote()}.", exception);
         }
     }
 }

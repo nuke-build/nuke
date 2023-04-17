@@ -7,13 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.Execution;
 
-namespace Nuke.Common.ValueInjection
+namespace Nuke.Common.ValueInjection;
+
+internal class InjectParameterValuesAttribute : BuildExtensionAttributeBase, IOnBuildCreated
 {
-    internal class InjectParameterValuesAttribute : BuildExtensionAttributeBase, IOnBuildCreated
+    public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
     {
-        public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
-        {
-            ValueInjectionUtility.InjectValues(Build, x => x is ParameterAttribute);
-        }
+        ValueInjectionUtility.InjectValues(Build, x => x is ParameterAttribute);
     }
 }

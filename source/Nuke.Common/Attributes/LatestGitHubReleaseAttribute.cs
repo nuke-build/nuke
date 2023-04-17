@@ -10,25 +10,24 @@ using Nuke.Common.Git;
 using Nuke.Common.Tools.GitHub;
 using Nuke.Common.ValueInjection;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+[PublicAPI]
+public class LatestGitHubReleaseAttribute : ValueInjectionAttributeBase
 {
-    [PublicAPI]
-    public class LatestGitHubReleaseAttribute : ValueInjectionAttributeBase
+    private readonly string _identifier;
+
+    public LatestGitHubReleaseAttribute(string identifier)
     {
-        private readonly string _identifier;
+        _identifier = identifier;
+    }
 
-        public LatestGitHubReleaseAttribute(string identifier)
-        {
-            _identifier = identifier;
-        }
+    public bool IncludePrerelease { get; set; }
+    public bool TrimPrefix { get; set; }
 
-        public bool IncludePrerelease { get; set; }
-        public bool TrimPrefix { get; set; }
-
-        public override object GetValue(MemberInfo member, object instance)
-        {
-            var repository = GitRepository.FromUrl($"https://github.com/{_identifier}");
-            return repository.GetLatestRelease(IncludePrerelease, TrimPrefix).GetAwaiter().GetResult();
-        }
+    public override object GetValue(MemberInfo member, object instance)
+    {
+        var repository = GitRepository.FromUrl($"https://github.com/{_identifier}");
+        return repository.GetLatestRelease(IncludePrerelease, TrimPrefix).GetAwaiter().GetResult();
     }
 }

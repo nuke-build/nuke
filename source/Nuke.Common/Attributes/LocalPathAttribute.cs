@@ -9,57 +9,56 @@ using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
 
-namespace Nuke.Common.Tooling
+namespace Nuke.Common.Tooling;
+
+/// <summary>
+///     Injects a delegate for process execution. The path relative to the root directory is passed as constructor argument.
+/// </summary>
+/// <example>
+///     <code>
+/// [LocalTool("./tools/custom.exe")] readonly Tool Custom;
+/// Target FooBar => _ => _
+///     .Executes(() =>
+///     {
+///         var output = Custom("test");
+///     });
+///     </code>
+/// </example>
+[PublicAPI]
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
+public class LocalPathAttribute : ToolInjectionAttributeBase
 {
-    /// <summary>
-    ///     Injects a delegate for process execution. The path relative to the root directory is passed as constructor argument.
-    /// </summary>
-    /// <example>
-    ///     <code>
-    /// [LocalTool("./tools/custom.exe")] readonly Tool Custom;
-    /// Target FooBar => _ => _
-    ///     .Executes(() =>
-    ///     {
-    ///         var output = Custom("test");
-    ///     });
-    ///     </code>
-    /// </example>
-    [PublicAPI]
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-    public class LocalPathAttribute : ToolInjectionAttributeBase
+    private readonly string _absoluteOrRelativePath;
+
+    public LocalPathAttribute(string absoluteOrRelativePath)
     {
-        private readonly string _absoluteOrRelativePath;
-
-        public LocalPathAttribute(string absoluteOrRelativePath)
-        {
-            _absoluteOrRelativePath = absoluteOrRelativePath;
-        }
-
-        public LocalPathAttribute(string windowsPath, string unixPath)
-        {
-            _absoluteOrRelativePath = EnvironmentInfo.IsWin ? windowsPath : unixPath;
-        }
-
-        public override ToolRequirement GetRequirement(MemberInfo member)
-        {
-            return null;
-        }
-
-        public override object GetValue(MemberInfo member, object instance)
-        {
-            var toolPath = PathConstruction.HasPathRoot(_absoluteOrRelativePath)
-                ? _absoluteOrRelativePath
-                : Path.Combine(Build.RootDirectory, _absoluteOrRelativePath);
-            return ToolResolver.GetTool(toolPath);
-        }
+        _absoluteOrRelativePath = absoluteOrRelativePath;
     }
 
-    [Obsolete($"Use {nameof(LocalPathAttribute)} instead")]
-    public class LocalExecutableAttribute : LocalPathAttribute
+    public LocalPathAttribute(string windowsPath, string unixPath)
     {
-        public LocalExecutableAttribute(string absoluteOrRelativePath)
-            : base(absoluteOrRelativePath)
-        {
-        }
+        _absoluteOrRelativePath = EnvironmentInfo.IsWin ? windowsPath : unixPath;
+    }
+
+    public override ToolRequirement GetRequirement(MemberInfo member)
+    {
+        return null;
+    }
+
+    public override object GetValue(MemberInfo member, object instance)
+    {
+        var toolPath = PathConstruction.HasPathRoot(_absoluteOrRelativePath)
+            ? _absoluteOrRelativePath
+            : Path.Combine(Build.RootDirectory, _absoluteOrRelativePath);
+        return ToolResolver.GetTool(toolPath);
+    }
+}
+
+[Obsolete($"Use {nameof(LocalPathAttribute)} instead")]
+public class LocalExecutableAttribute : LocalPathAttribute
+{
+    public LocalExecutableAttribute(string absoluteOrRelativePath)
+        : base(absoluteOrRelativePath)
+    {
     }
 }

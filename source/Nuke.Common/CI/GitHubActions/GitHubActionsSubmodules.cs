@@ -5,12 +5,11 @@
 using System;
 using System.Linq;
 
-namespace Nuke.Common.CI.GitHubActions
+namespace Nuke.Common.CI.GitHubActions;
+
+public enum GitHubActionsSubmodules
 {
-    public enum GitHubActionsSubmodules
-    {
-        False,
-        True,
-        Recursive
-    }
+    False,
+    True,
+    Recursive
 }

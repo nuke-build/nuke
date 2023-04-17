@@ -7,15 +7,14 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.CI.TeamCity.Configuration
-{
-    [PublicAPI]
-    public class TeamCityVcsRoot : ConfigurationEntity
-    {
-        public string Id => "DslContext.settingsRoot";
+namespace Nuke.Common.CI.TeamCity.Configuration;
 
-        public override void Write(CustomFileWriter writer)
-        {
-        }
+[PublicAPI]
+public class TeamCityVcsRoot : ConfigurationEntity
+{
+    public string Id => "DslContext.settingsRoot";
+
+    public override void Write(CustomFileWriter writer)
+    {
     }
 }

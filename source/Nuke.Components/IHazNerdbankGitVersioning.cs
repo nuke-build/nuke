@@ -8,11 +8,10 @@ using JetBrains.Annotations;
 using Nuke.Common;
 using Nuke.Common.Tools.NerdbankGitVersioning;
 
-namespace Nuke.Components
+namespace Nuke.Components;
+
+[PublicAPI]
+public interface IHazNerdbankGitVersioning : INukeBuild
 {
-    [PublicAPI]
-    public interface IHazNerdbankGitVersioning : INukeBuild
-    {
-        [NerdbankGitVersioning] [Required] NerdbankGitVersioning Versioning => TryGetValue(() => Versioning);
-    }
+    [NerdbankGitVersioning] [Required] NerdbankGitVersioning Versioning => TryGetValue(() => Versioning);
 }
