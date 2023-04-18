@@ -127,7 +127,8 @@ public class ConsoleUtility
                         (key.Modifiers & ConsoleModifiers.Alt) != 0 && EnvironmentInfo.IsOsx
                             ? secret.Length
                             : 1;
-                    secret = secret.Substring(startIndex: 0, length: secret.Length - charsToRemove);
+                    var length = secret.Length - charsToRemove;
+                    secret = secret[..length];
                     Console.Write(string.Concat(Enumerable.Repeat("\b \b", charsToRemove)));
                 }
             }

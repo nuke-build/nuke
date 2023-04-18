@@ -48,12 +48,12 @@ internal class AbsolutePathRewriter : SafeSyntaxRewriter
         if (index == -1)
             return CreateAbsolutePathExpression(new[] { SyntaxFactory.ParseExpression(str.Replace("/", "\" / $\"")) });
 
-        var lastPathSeparatorIndex = str.Substring(0, index).LastIndexOf('/');
+        var lastPathSeparatorIndex = str[..index].LastIndexOf('/');
         if (lastPathSeparatorIndex < 0)
             return node;
 
-        var absolutePart = str.Substring(0, lastPathSeparatorIndex) + "\"";
-        var wildcardPart = "\"" + str.Substring(lastPathSeparatorIndex + 1);
+        var absolutePart = str[..lastPathSeparatorIndex] + "\"";
+        var wildcardPart = "\"" + str[(lastPathSeparatorIndex + 1)..];
 
         return SyntaxFactory.InvocationExpression(
                 SyntaxFactory.MemberAccessExpression(

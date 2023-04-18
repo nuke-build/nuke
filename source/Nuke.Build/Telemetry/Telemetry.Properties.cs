@@ -71,8 +71,8 @@ internal partial class Telemetry
                {
                    ["repo_provider"] = providers.FirstOrDefault(x => x.Item1.Invoke()).Item2,
                    ["repo_branch"] = branches.FirstOrDefault(x => x.Item1.Invoke()).Item2,
-                   ["repo_url"] = repository.SshUrl?.GetSHA256Hash().Substring(startIndex: 0, length: 6),
-                   ["repo_commit"] = repository.Commit?.GetSHA256Hash().Substring(startIndex: 0, length: 6)
+                   ["repo_url"] = repository.SshUrl?.GetSHA256Hash()[..6],
+                   ["repo_commit"] = repository.Commit?.GetSHA256Hash()[..6]
                };
     }
 
@@ -118,7 +118,7 @@ internal partial class Telemetry
         return new Dictionary<string, string>
                {
                    ["generator_host"] = GetTypeName(hostType),
-                   ["generator_id"] = generatorId.GetSHA256Hash().Substring(startIndex: 0, length: 6)
+                   ["generator_id"] = generatorId.GetSHA256Hash()[..6]
                };
     }
 

@@ -28,7 +28,7 @@ partial class Program
         if (!words.StartsWithOrdinalIgnoreCase(CommandName))
             return 0;
 
-        words = words.Substring(CommandName.Length).TrimStart();
+        words = words[CommandName.Length..].TrimStart();
 
         var buildSchemaFile = GetBuildSchemaFile(rootDirectory);
         var completionFile = GetCompletionFile(rootDirectory);

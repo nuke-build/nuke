@@ -34,7 +34,7 @@ public class ArgumentsFromGitCommitMessageAttribute : BuildExtensionAttributeBas
         if (!lastLine?.StartsWithOrdinalIgnoreCase(Prefix) ?? true)
             return;
 
-        var arguments = lastLine.Substring(Prefix.Length).TrimStart();
+        var arguments = lastLine[Prefix.Length..].TrimStart();
         ParameterService.Instance.ArgumentsFromCommitMessageService = new ArgumentParser(arguments);
     }
 }

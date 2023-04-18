@@ -251,7 +251,8 @@ public static class Logging
 
         private static LogEventProperty GetTargetEventProperty(string name)
         {
-            var paddedName = name.Substring(startIndex: 0, Math.Min(name.Length, TargetNameLength));
+            var length = Math.Min(name.Length, TargetNameLength);
+            var paddedName = name[..length];
             return new LogEventProperty("ExecutingTarget", new ScalarValue(paddedName));
         }
 

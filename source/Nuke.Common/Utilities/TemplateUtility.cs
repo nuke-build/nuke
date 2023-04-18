@@ -144,7 +144,7 @@ public static class TemplateUtility
 
         return (commentIndex == -1
                 ? line
-                : line.Substring(startIndex: 0, commentIndex).TrimEnd())
+                : line[..commentIndex].TrimEnd())
             .Replace(tokens);
     }
 
@@ -153,7 +153,7 @@ public static class TemplateUtility
         if (commentIndex == -1)
             return true;
 
-        var requiredTokensText = line.Substring(commentIndex + 4).Replace(" ", string.Empty);
+        var requiredTokensText = line[(commentIndex + 4)..].Replace(" ", string.Empty);
         var requiredTokens = requiredTokensText.Split(new[] { "||", "&&" }, StringSplitOptions.RemoveEmptyEntries);
         var orConjunction = requiredTokensText.Contains("||");
         var andConjunction = requiredTokensText.Contains("&&");

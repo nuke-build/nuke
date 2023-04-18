@@ -110,6 +110,6 @@ public class HandleSingleFileExecutionAttribute : BuildExtensionAttributeBase, I
     {
         var globalJsonFile = Build.RootDirectory / "global.json";
         var jobject = globalJsonFile.Existing()?.ReadJson() ?? new JObject();
-        return jobject["sdk"]?["version"]?.Value<string>().Substring(startIndex: 0, length: 5);
+        return jobject["sdk"]?["version"]?.Value<string>()[..5];
     }
 }

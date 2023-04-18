@@ -49,9 +49,8 @@ public partial class TeamCity : Host, IBuildServer
                     continue;
 
                 var index = line.IndexOfRegex(@"[^\.]=") + 1;
-                var key = line.Substring(startIndex: 0, length: index)
-                    .Replace("secure:", string.Empty);
-                var value = line.Substring(index + 1);
+                var key = line[..index].Replace("secure:", string.Empty);
+                var value = line[(index + 1)..];
 
                 dictionary.Add(key, value);
             }
