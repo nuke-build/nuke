@@ -1,0 +1,164 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "references": [
+    "https://yarnpkg.com/cli/install",
+    "https://yarnpkg.com/cli/run",
+    "https://yarnpkg.com/cli/config/get",
+    "https://yarnpkg.com/cli/config/set"
+  ],
+  "name": "Yarn",
+  "officialUrl": "https://yarnpkg.com/",
+  "help": "Yarn is a package manager that doubles down as project manager. Whether you work on one-shot projects or large monorepos, as a hobbyist or an enterprise user, we've got you covered.",
+  "pathExecutable": "yarn",
+  "customLogger": true,
+  "tasks": [
+    {
+      "help": "Install the project dependencies",
+      "postfix": "Install",
+      "definiteArgument": "install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Format the output as an NDJSON stream."
+          },
+          {
+            "name": "Immutable",
+            "type": "bool",
+            "format": "--immutable",
+            "help": "Abort with an error exit code if the lockfile was to be modified."
+          },
+          {
+            "name": "ImmutableCache",
+            "type": "bool",
+            "format": "--immutable-cache",
+            "help": "Abort with an error exit code if the cache folder was to be modified."
+          },
+          {
+            "name": "CheckCache",
+            "type": "bool",
+            "format": "--check-cache",
+            "help": "Always refetch the packages and ensure that their checksums are consistent."
+          },
+          {
+            "name": "InlineBuilds",
+            "type": "bool",
+            "format": "--inline-builds",
+            "help": "Verbosely print the output of the build steps of dependencies."
+          },
+          {
+            "name": "Mode",
+            "type": "YarnInstallMode",
+            "format": "--mode={value}",
+            "help": "If the <c>--mode=<mode></c> option is set, Yarn will change which artifacts are generated."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Run a script defined in the package.json",
+      "postfix": "Run",
+      "definiteArgument": "run",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Command",
+            "type": "string",
+            "format": "{value}",
+            "help": "The command to be executed."
+          },
+          {
+            "name": "Arguments",
+            "type": "List<string>",
+            "format": "{value}",
+            "separator": " ",
+            "help": "Arguments passed to the script."
+          },
+          {
+            "name": "TopLevel",
+            "type": "bool",
+            "format": "--top-level",
+            "help": "Check the root workspace for scripts and/or binaries instead of the current one."
+          },
+          {
+            "name": "BinariesOnly",
+            "type": "bool",
+            "format": "--binaries-only",
+            "help": "Ignore any user defined scripts and only check for binaries."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Read a configuration settings",
+      "postfix": "GetConfig",
+      "definiteArgument": "config get",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the configuration setting."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Format the output as an NDJSON stream."
+          },
+          {
+            "name": "NoRedacted",
+            "type": "bool",
+            "format": "--no-redacted",
+            "help": "Don't redact secrets (such as tokens) from the output."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Change a configuration settings",
+      "postfix": "SetConfig",
+      "definiteArgument": "config set",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "{value}",
+            "help": "The name of the configuration setting."
+          },
+          {
+            "name": "Json",
+            "type": "bool",
+            "format": "--json",
+            "help": "Set complex configuration settings to JSON values."
+          },
+          {
+            "name": "Value",
+            "type": "string",
+            "format": "{value}",
+            "help": "The value of the configuration setting."
+          },
+          {
+            "name": "Home",
+            "type": "bool",
+            "format": "--home",
+            "help": "Update the home configuration instead of the project configuration."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "YarnInstallMode",
+      "values": [
+        "skip-build",
+        "update-lockfile"
+      ]
+    }
+  ]
+}
