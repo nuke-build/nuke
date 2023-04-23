@@ -183,7 +183,7 @@ partial class Build
         .Executes(() =>
         {
             SuppressErrors(() => DotNet($"tool uninstall -g {Solution.Nuke_GlobalTool.Name}"));
-            DotNet($"tool install -g {Solution.Nuke_GlobalTool.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
+            DotNet($"tool install -g {Solution.Nuke_GlobalTool.Name} --add-source {OutputDirectory} --version {DefaultDeploymentVersion}");
         });
 
     T From<T>()
