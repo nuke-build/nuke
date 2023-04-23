@@ -58,5 +58,10 @@ fi
 
 echo "Microsoft (R) .NET SDK version $("$DOTNET_EXE" --version)"
 
+if [[ ! -z ${NUKE_ENTERPRISE_TOKEN+x} && "NUKE_ENTERPRISE_TOKEN" != "" ]]; then
+    "$DOTNET_EXE" nuget remove source "nuke-enterprise" &>/dev/null || true
+    "$DOTNET_EXE" nuget add source "https://f.feedz.io/nuke/enterprise/nuget" --name "nuke-enterprise" --username "PAT" --password "$NUKE_ENTERPRISE_TOKEN" --store-password-in-clear-text &>/dev/null || true
+fi
+
 "$DOTNET_EXE" build "$BUILD_PROJECT_FILE" /nodeReuse:false /p:UseSharedCompilation=false -nologo -clp:NoSummary --verbosity quiet
 "$DOTNET_EXE" run --project "$BUILD_PROJECT_FILE" --no-build -- "$@"
