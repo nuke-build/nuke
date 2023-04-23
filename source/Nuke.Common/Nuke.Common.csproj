@@ -23,8 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.4" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.2.4" />
+    <PackageReference Include="Azure.Identity" Version="1.8.2" />
+    <PackageReference Include="Azure.Security.KeyVault.Certificates" Version="4.5.1" />
+    <PackageReference Include="Azure.Security.KeyVault.Keys" Version="4.5.0" />
+    <PackageReference Include="Azure.Security.KeyVault.Secrets" Version="4.5.0" />
     <PackageReference Include="Octokit" Version="5.0.0" />
   </ItemGroup>
 
