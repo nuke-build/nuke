@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -26,6 +26,7 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     private readonly string _name;
     private readonly GitHubActionsImage[] _images;
     private GitHubActionsSubmodules? _submodules;
+    private bool? _lfs;
     private uint? _fetchDepth;
 
     public GitHubActionsAttribute(
@@ -79,6 +80,12 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
         get => throw new NotSupportedException();
     }
 
+    public bool Lfs
+    {
+        set => _lfs = value;
+        get => throw new NotSupportedException();
+    }
+
     public uint FetchDepth
     {
         set => _fetchDepth = value;
@@ -125,6 +132,7 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
         yield return new GitHubActionsCheckoutStep
                      {
                          Submodules = _submodules,
+                         Lfs = _lfs,
                          FetchDepth = _fetchDepth
                      };
 
