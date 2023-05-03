@@ -13,7 +13,7 @@
         "properties": [
           {
             "name": "Version",
-            "type": "string",
+            "type": "bool",
             "format": "-Version",
             "help": "Displays the version of PowerShell. Additional parameters are ignored."
           },
@@ -30,13 +30,13 @@
             "help": "Does not exit after running startup commands."
           },
           {
-            "name": "StartUsingASingleThreadedApartment",
+            "name": "SingleThreadedApartment",
             "type": "bool",
             "format": "-Sta",
             "help": "Start PowerShell using a single-threaded apartment. This is the default. This switch is only available on the Windows platform."
           },
           {
-            "name": "StartUsingAMultiThreadedApartment",
+            "name": "MultiThreadedApartment",
             "type": "bool",
             "format": "-Mta",
             "help": "Start PowerShell using a multi-threaded apartment. This switch is only available on Windows."
@@ -97,9 +97,9 @@
           },
           {
             "name": "ExecutionPolicy",
-            "type": "string",
+            "type": "PwshExecutionPolicy",
             "format": "-ExecutionPolicy {value}",
-            "help": "Sets the default execution policy for the current session and saves it in the <c>$env:PSExecutionPolicyPreference</c> environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. This parameter only applies to Windows computers. The $env:PSExecutionPolicyPreference environment variable does not exist on non-Windows platforms."
+            "help": "Sets the default execution policy for the current session and saves it in the <c>$env:PSExecutionPolicyPreference</c> environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. This parameter only applies to Windows computers. The <c>$env:PSExecutionPolicyPreference</c> environment variable does not exist on non-Windows platforms."
           },
           {
             "name": "File",
@@ -160,6 +160,18 @@
     }
   ],
   "enumerations": [
+    {
+      "name": "PwshExecutionPolicy",
+      "values": [
+        "AllSigned",
+        "Bypass",
+        "Default",
+        "RemoteSigned",
+        "Restricted",
+        "Undefined",
+        "Unrestricted"
+      ]
+    },
     {
       "name": "PwshInOutFormat",
       "values": [
