@@ -53,4 +53,14 @@ public static class ToolingExtensions
 
         return path;
     }
+
+    /// <summary>
+    /// Opens a file or directory with the associated application.
+    /// </summary>
+    public static void Open(this AbsolutePath path)
+    {
+        Assert.True(path.DirectoryExists() || path.FileExists());
+        var verb = EnvironmentInfo.IsUnix ? "open" : path.DirectoryExists() ? "explorer.exe" : "call";
+        ProcessTasks.StartShell($"{verb} {path}");
+    }
 }
