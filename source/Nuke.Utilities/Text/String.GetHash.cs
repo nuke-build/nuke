@@ -33,4 +33,19 @@ public static partial class StringExtensions
         var hash = algorithm.ComputeHash(Encoding.UTF8.GetBytes(str));
         return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
     }
+
+    public static string GetHMACSHA256Hash<T>(this string str, string key)
+        where T : Encoding, new()
+    {
+        using var hmacsha256 = new HMACSHA256(new T().GetBytes(key));
+        var hash = hmacsha256.ComputeHash(Encoding.UTF8.GetBytes(str));
+        return BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
+    }
+
+    public static string GetHMACSHA1Hash(this string str, string key)
+    {
+        using var hmacsha1 = new HMACSHA1(Encoding.UTF8.GetBytes(key));
+        var hash = hmacsha1.ComputeHash(Encoding.UTF8.GetBytes(str));
+        return BitConverter.ToString(hash).Replace("-", string.Empty).ToLowerInvariant();
+    }
 }
