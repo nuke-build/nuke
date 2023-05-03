@@ -154,6 +154,7 @@ public class ConfigurationGenerationTest
                     OnWorkflowDispatchOptionalInputs = new[] { "OptionalInput" },
                     OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" },
                     Submodules = GitHubActionsSubmodules.Recursive,
+                    Lfs = true,
                     FetchDepth = 2
                 }
             );

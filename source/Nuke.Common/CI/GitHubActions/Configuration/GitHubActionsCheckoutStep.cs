@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -13,13 +13,14 @@ namespace Nuke.Common.CI.GitHubActions.Configuration;
 public class GitHubActionsCheckoutStep : GitHubActionsStep
 {
     public GitHubActionsSubmodules? Submodules { get; set; }
+    public bool? Lfs { get; set; }
     public uint? FetchDepth { get; set; }
 
     public override void Write(CustomFileWriter writer)
     {
         writer.WriteLine("- uses: actions/checkout@v3");
 
-        if (Submodules.HasValue || FetchDepth.HasValue)
+        if (Submodules.HasValue || Lfs.HasValue || FetchDepth.HasValue)
         {
             using (writer.Indent())
             {
@@ -28,6 +29,8 @@ public class GitHubActionsCheckoutStep : GitHubActionsStep
                 {
                     if (Submodules.HasValue)
                         writer.WriteLine($"submodules: {Submodules.ToString().ToLowerInvariant()}");
+                    if(Lfs.HasValue)
+                        writer.WriteLine($"lfs: {Lfs.ToString().ToLowerInvariant()}");
                     if (FetchDepth.HasValue)
                         writer.WriteLine($"fetch-depth: {FetchDepth}");
                 }
