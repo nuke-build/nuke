@@ -48,6 +48,10 @@ jobs:
   macos-latest:
     name: macos-latest
     runs-on: macos-latest
+    timeout-minutes: 30
+    concurrency:
+      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3
         with:
@@ -87,6 +91,10 @@ jobs:
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3
         with:
@@ -126,6 +134,10 @@ jobs:
   windows-latest:
     name: windows-latest
     runs-on: windows-latest
+    timeout-minutes: 30
+    concurrency:
+      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3
         with:
