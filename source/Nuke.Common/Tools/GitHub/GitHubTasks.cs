@@ -125,7 +125,7 @@ public static class GitHubTasks
 
     public static bool IsGitHubRepository(this GitRepository repository)
     {
-        return repository != null && repository.Endpoint.EqualsOrdinalIgnoreCase("github.com");
+        return repository?.Endpoint?.EqualsOrdinalIgnoreCase("github.com") ?? false;
     }
 
     public static string GetGitHubOwner(this GitRepository repository)
