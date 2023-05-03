@@ -12,6 +12,7 @@ public class GitHubActionsArtifactStep : GitHubActionsStep
 {
     public string Name { get; set; }
     public string Path { get; set; }
+    public string Condition { get; set; }
 
     public override void Write(CustomFileWriter writer)
     {
@@ -20,6 +21,11 @@ public class GitHubActionsArtifactStep : GitHubActionsStep
 
         using (writer.Indent())
         {
+            if (!Condition.IsNullOrWhiteSpace())
+            {
+                writer.WriteLine($"if: {Condition}");
+            }
+
             writer.WriteLine("with:");
             using (writer.Indent())
             {

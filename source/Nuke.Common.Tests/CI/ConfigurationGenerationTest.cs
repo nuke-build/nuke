@@ -153,6 +153,7 @@ public class ConfigurationGenerationTest
                     OnPullRequestExcludePaths = new[] { "pull_request_exclude_path/**" },
                     OnWorkflowDispatchOptionalInputs = new[] { "OptionalInput" },
                     OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" },
+                    PublishCondition = "success() || failure()",
                     Submodules = GitHubActionsSubmodules.Recursive,
                     Lfs = true,
                     FetchDepth = 2
