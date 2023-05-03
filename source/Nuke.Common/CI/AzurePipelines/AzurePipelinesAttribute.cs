@@ -111,7 +111,7 @@ public class AzurePipelinesAttribute : ChainedConfigurationAttributeBase
     public string[] PullRequestsPathsInclude { get; set; } = new string[0];
     public string[] PullRequestsPathsExclude { get; set; } = new string[0];
 
-    public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj" };
+    public string[] CacheKeyFiles { get; set; } = { "**/global.json", "**/*.csproj", "**/Directory.Packages.props" };
     public string[] CachePaths { get; set; } = { AzurePipelinesCachePaths.Nuke, AzurePipelinesCachePaths.NuGet };
 
     public string[] ImportVariableGroups { get; set; } = new string[0];
