@@ -72,7 +72,7 @@ public static class Logging
         }
 
         Log.Logger = new LoggerConfiguration()
-            .Enrich.With<ExecutingTargetLogEventEnricher>()
+            .ConfigureEnricher()
             .ConfigureHost(build)
             .ConfigureConsole(build)
             .ConfigureInMemory(build)
@@ -80,6 +80,11 @@ public static class Logging
             .ConfigureLevel()
             .ConfigureFilter(build)
             .CreateLogger();
+    }
+
+    public static LoggerConfiguration ConfigureEnricher(this LoggerConfiguration configuration)
+    {
+        return configuration.Enrich.With<ExecutingTargetLogEventEnricher>();
     }
 
     public static LoggerConfiguration ConfigureLevel(this LoggerConfiguration configuration)
