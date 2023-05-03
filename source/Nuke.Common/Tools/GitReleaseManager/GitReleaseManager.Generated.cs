@@ -59,6 +59,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerAddAssetsSettings.RepositoryName"/></li>
     ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerAddAssetsSettings.TagName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerAddAssetsSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerAddAssetsSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerAddAssetsSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -83,6 +84,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerAddAssetsSettings.RepositoryName"/></li>
     ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerAddAssetsSettings.TagName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerAddAssetsSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerAddAssetsSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerAddAssetsSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -104,6 +106,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerAddAssetsSettings.RepositoryName"/></li>
     ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerAddAssetsSettings.TagName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerAddAssetsSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerAddAssetsSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerAddAssetsSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -124,6 +127,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--password</c> via <see cref="GitReleaseManagerCloseSettings.Password"/></li>
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerCloseSettings.RepositoryName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerCloseSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerCloseSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerCloseSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -147,6 +151,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--password</c> via <see cref="GitReleaseManagerCloseSettings.Password"/></li>
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerCloseSettings.RepositoryName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerCloseSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerCloseSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerCloseSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -167,6 +172,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--password</c> via <see cref="GitReleaseManagerCloseSettings.Password"/></li>
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerCloseSettings.RepositoryName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerCloseSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerCloseSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerCloseSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -192,6 +198,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerCreateSettings.RepositoryName"/></li>
     ///     <li><c>--targetcommitish</c> via <see cref="GitReleaseManagerCreateSettings.TargetCommitish"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerCreateSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerCreateSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerCreateSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -220,6 +227,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerCreateSettings.RepositoryName"/></li>
     ///     <li><c>--targetcommitish</c> via <see cref="GitReleaseManagerCreateSettings.TargetCommitish"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerCreateSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerCreateSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerCreateSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -245,6 +253,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerCreateSettings.RepositoryName"/></li>
     ///     <li><c>--targetcommitish</c> via <see cref="GitReleaseManagerCreateSettings.TargetCommitish"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerCreateSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerCreateSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerCreateSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -266,6 +275,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerExportSettings.RepositoryName"/></li>
     ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerExportSettings.TagName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerExportSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerExportSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerExportSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -290,6 +300,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerExportSettings.RepositoryName"/></li>
     ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerExportSettings.TagName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerExportSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerExportSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerExportSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -311,6 +322,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerExportSettings.RepositoryName"/></li>
     ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerExportSettings.TagName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerExportSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerExportSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerExportSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -331,6 +343,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerPublishSettings.RepositoryName"/></li>
     ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerPublishSettings.TagName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerPublishSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerPublishSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerPublishSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -354,6 +367,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerPublishSettings.RepositoryName"/></li>
     ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerPublishSettings.TagName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerPublishSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerPublishSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerPublishSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -374,6 +388,7 @@ public partial class GitReleaseManagerTasks
     ///     <li><c>--repository</c> via <see cref="GitReleaseManagerPublishSettings.RepositoryName"/></li>
     ///     <li><c>--tagName</c> via <see cref="GitReleaseManagerPublishSettings.TagName"/></li>
     ///     <li><c>--targetDirectory</c> via <see cref="GitReleaseManagerPublishSettings.TargetDirectory"/></li>
+    ///     <li><c>--token</c> via <see cref="GitReleaseManagerPublishSettings.Token"/></li>
     ///     <li><c>--username</c> via <see cref="GitReleaseManagerPublishSettings.UserName"/></li>
     ///   </ul>
     /// </remarks>
@@ -429,6 +444,10 @@ public partial class GitReleaseManagerAddAssetsSettings : ToolSettings
     ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
     /// </summary>
     public virtual string LogFilePath { get; internal set; }
+    /// <summary>
+    ///   The access token to access GitHub with.
+    /// </summary>
+    public virtual string Token { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -440,7 +459,8 @@ public partial class GitReleaseManagerAddAssetsSettings : ToolSettings
           .Add("--owner {value}", RepositoryOwner)
           .Add("--repository {value}", RepositoryName)
           .Add("--targetDirectory {value}", TargetDirectory)
-          .Add("--logFilePath {value}", LogFilePath);
+          .Add("--logFilePath {value}", LogFilePath)
+          .Add("--token {value}", Token);
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -487,6 +507,10 @@ public partial class GitReleaseManagerCloseSettings : ToolSettings
     ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
     /// </summary>
     public virtual string LogFilePath { get; internal set; }
+    /// <summary>
+    ///   The access token to access GitHub with.
+    /// </summary>
+    public virtual string Token { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -497,7 +521,8 @@ public partial class GitReleaseManagerCloseSettings : ToolSettings
           .Add("--owner {value}", RepositoryOwner)
           .Add("--repository {value}", RepositoryName)
           .Add("--targetDirectory {value}", TargetDirectory)
-          .Add("--logFilePath {value}", LogFilePath);
+          .Add("--logFilePath {value}", LogFilePath)
+          .Add("--token {value}", Token);
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -565,6 +590,10 @@ public partial class GitReleaseManagerCreateSettings : ToolSettings
     ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
     /// </summary>
     public virtual string LogFilePath { get; internal set; }
+    /// <summary>
+    ///   The access token to access GitHub with.
+    /// </summary>
+    public virtual string Token { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -580,7 +609,8 @@ public partial class GitReleaseManagerCreateSettings : ToolSettings
           .Add("--owner {value}", RepositoryOwner)
           .Add("--repository {value}", RepositoryName)
           .Add("--targetDirectory {value}", TargetDirectory)
-          .Add("--logFilePath {value}", LogFilePath);
+          .Add("--logFilePath {value}", LogFilePath)
+          .Add("--token {value}", Token);
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -631,6 +661,10 @@ public partial class GitReleaseManagerExportSettings : ToolSettings
     ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
     /// </summary>
     public virtual string LogFilePath { get; internal set; }
+    /// <summary>
+    ///   The access token to access GitHub with.
+    /// </summary>
+    public virtual string Token { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -642,7 +676,8 @@ public partial class GitReleaseManagerExportSettings : ToolSettings
           .Add("--owner {value}", RepositoryOwner)
           .Add("--repository {value}", RepositoryName)
           .Add("--targetDirectory {value}", TargetDirectory)
-          .Add("--logFilePath {value}", LogFilePath);
+          .Add("--logFilePath {value}", LogFilePath)
+          .Add("--token {value}", Token);
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -689,6 +724,10 @@ public partial class GitReleaseManagerPublishSettings : ToolSettings
     ///   Path to where log file should be created. Defaults is <em>logging to console</em>.
     /// </summary>
     public virtual string LogFilePath { get; internal set; }
+    /// <summary>
+    ///   The access token to access GitHub with.
+    /// </summary>
+    public virtual string Token { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -699,7 +738,8 @@ public partial class GitReleaseManagerPublishSettings : ToolSettings
           .Add("--owner {value}", RepositoryOwner)
           .Add("--repository {value}", RepositoryName)
           .Add("--targetDirectory {value}", TargetDirectory)
-          .Add("--logFilePath {value}", LogFilePath);
+          .Add("--logFilePath {value}", LogFilePath)
+          .Add("--token {value}", Token);
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -961,6 +1001,30 @@ public static partial class GitReleaseManagerAddAssetsSettingsExtensions
         return toolSettings;
     }
     #endregion
+    #region Token
+    /// <summary>
+    ///   <p><em>Sets <see cref="GitReleaseManagerAddAssetsSettings.Token"/></em></p>
+    ///   <p>The access token to access GitHub with.</p>
+    /// </summary>
+    [Pure]
+    public static T SetToken<T>(this T toolSettings, string token) where T : GitReleaseManagerAddAssetsSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = token;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="GitReleaseManagerAddAssetsSettings.Token"/></em></p>
+    ///   <p>The access token to access GitHub with.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetToken<T>(this T toolSettings) where T : GitReleaseManagerAddAssetsSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = null;
+        return toolSettings;
+    }
+    #endregion
 }
 #endregion
 #region GitReleaseManagerCloseSettingsExtensions
@@ -1136,6 +1200,30 @@ public static partial class GitReleaseManagerCloseSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.LogFilePath = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Token
+    /// <summary>
+    ///   <p><em>Sets <see cref="GitReleaseManagerCloseSettings.Token"/></em></p>
+    ///   <p>The access token to access GitHub with.</p>
+    /// </summary>
+    [Pure]
+    public static T SetToken<T>(this T toolSettings, string token) where T : GitReleaseManagerCloseSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = token;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="GitReleaseManagerCloseSettings.Token"/></em></p>
+    ///   <p>The access token to access GitHub with.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetToken<T>(this T toolSettings) where T : GitReleaseManagerCloseSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = null;
         return toolSettings;
     }
     #endregion
@@ -1527,6 +1615,30 @@ public static partial class GitReleaseManagerCreateSettingsExtensions
         return toolSettings;
     }
     #endregion
+    #region Token
+    /// <summary>
+    ///   <p><em>Sets <see cref="GitReleaseManagerCreateSettings.Token"/></em></p>
+    ///   <p>The access token to access GitHub with.</p>
+    /// </summary>
+    [Pure]
+    public static T SetToken<T>(this T toolSettings, string token) where T : GitReleaseManagerCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = token;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="GitReleaseManagerCreateSettings.Token"/></em></p>
+    ///   <p>The access token to access GitHub with.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetToken<T>(this T toolSettings) where T : GitReleaseManagerCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = null;
+        return toolSettings;
+    }
+    #endregion
 }
 #endregion
 #region GitReleaseManagerExportSettingsExtensions
@@ -1729,6 +1841,30 @@ public static partial class GitReleaseManagerExportSettingsExtensions
         return toolSettings;
     }
     #endregion
+    #region Token
+    /// <summary>
+    ///   <p><em>Sets <see cref="GitReleaseManagerExportSettings.Token"/></em></p>
+    ///   <p>The access token to access GitHub with.</p>
+    /// </summary>
+    [Pure]
+    public static T SetToken<T>(this T toolSettings, string token) where T : GitReleaseManagerExportSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = token;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="GitReleaseManagerExportSettings.Token"/></em></p>
+    ///   <p>The access token to access GitHub with.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetToken<T>(this T toolSettings) where T : GitReleaseManagerExportSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = null;
+        return toolSettings;
+    }
+    #endregion
 }
 #endregion
 #region GitReleaseManagerPublishSettingsExtensions
@@ -1904,6 +2040,30 @@ public static partial class GitReleaseManagerPublishSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.LogFilePath = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Token
+    /// <summary>
+    ///   <p><em>Sets <see cref="GitReleaseManagerPublishSettings.Token"/></em></p>
+    ///   <p>The access token to access GitHub with.</p>
+    /// </summary>
+    [Pure]
+    public static T SetToken<T>(this T toolSettings, string token) where T : GitReleaseManagerPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = token;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="GitReleaseManagerPublishSettings.Token"/></em></p>
+    ///   <p>The access token to access GitHub with.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetToken<T>(this T toolSettings) where T : GitReleaseManagerPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = null;
         return toolSettings;
     }
     #endregion
