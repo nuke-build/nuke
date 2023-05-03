@@ -68,16 +68,19 @@ jobs:
           RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - name: 'Publish: src'
         uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: src
           path: src
       - name: 'Publish: test-results'
         uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: test-results
           path: output/test-results
       - name: 'Publish: coverage-report.zip'
         uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip
@@ -104,16 +107,19 @@ jobs:
           RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - name: 'Publish: src'
         uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: src
           path: src
       - name: 'Publish: test-results'
         uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: test-results
           path: output/test-results
       - name: 'Publish: coverage-report.zip'
         uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip
@@ -140,16 +146,19 @@ jobs:
           RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - name: 'Publish: src'
         uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: src
           path: src
       - name: 'Publish: test-results'
         uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: test-results
           path: output/test-results
       - name: 'Publish: coverage-report.zip'
         uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip
