@@ -28,6 +28,7 @@ public static partial class SettingsEntityExtensions
         {
             toolSettings.ProcessArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ProcessArgumentConfigurator;
             toolSettings.ProcessCustomLogger = ((ToolSettings) (object) settingsEntity).ProcessCustomLogger;
+            toolSettings.ProcessCustomExitHandler = ((ToolSettings) (object) settingsEntity).ProcessCustomExitHandler;
         }
 
         return newInstance;

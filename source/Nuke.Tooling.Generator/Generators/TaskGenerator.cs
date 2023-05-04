@@ -43,6 +43,7 @@ public static class TaskGenerator
                     .WriteLineIfTrue(tool.PathExecutable != null, $"public const string {tool.Name}PathExecutable = {tool.PathExecutable.DoubleQuote()};")
                     .WriteToolPath()
                     .WriteToolLogger()
+                    .WriteToolExitHandler()
                     .WriteGenericTask();
 
                 tool.Tasks.ForEach(x => new TaskWriter(x, toolWriter)
@@ -63,7 +64,8 @@ public static class TaskGenerator
                              "int? timeout = null",
                              "bool? logOutput = null",
                              "bool? logInvocation = null",
-                             "Action<OutputType, string> customLogger = null"
+                             "Action<OutputType, string> customLogger = null",
+                             "Action<IProcess> customExitHandler = null"
                          };
         var arguments = new[]
                         {
@@ -74,7 +76,7 @@ public static class TaskGenerator
                             "timeout",
                             "logOutput",
                             "logInvocation",
-                            $"customLogger ?? {tool.Name}Logger"
+                            $"customLogger ?? {tool.Name}Logger",
                         };
         writer
             .WriteSummary(tool)
@@ -82,7 +84,7 @@ public static class TaskGenerator
             .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinCommaSpace()})")
             .WriteBlock(w => w
                 .WriteLine($"using var process = ProcessTasks.StartProcess({arguments.JoinCommaSpace()});")
-                .WriteLine("process.AssertZeroExitCode();")
+                .WriteLine($"(customExitHandler ?? (p => {tool.Name}ExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());")
                 .WriteLine("return process.Output;"));
     }
 
@@ -160,8 +162,8 @@ public static class TaskGenerator
     private static string GetProcessAssertion(Task task)
     {
         return !task.CustomAssertion
-            ? "process.AssertZeroExitCode();"
-            : "AssertProcess(process, toolSettings);";
+            ? "toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());"
+            : "AssertProcess(process.AssertWaitForExit(), toolSettings);";
     }
 
     private static ToolWriter WriteToolPath(this ToolWriter writer)
@@ -202,5 +204,13 @@ public static class TaskGenerator
         var logger = tool.CustomLogger ? "CustomLogger" : "ProcessTasks.DefaultLogger";
         return writer
             .WriteLine($"public static Action<OutputType, string> {tool.Name}Logger {{ get; set; }} = {logger};");
+    }
+
+    private static ToolWriter WriteToolExitHandler(this ToolWriter writer)
+    {
+        var tool = writer.Tool;
+        var exitHandler = tool.CustomExitHandler ? "CustomExitHandler" : "ProcessTasks.DefaultExitHandler";
+        return writer
+            .WriteLine($"public static Action<ToolSettings, IProcess> {tool.Name}ExitHandler {{ get; set; }} = {exitHandler};");
     }
 }

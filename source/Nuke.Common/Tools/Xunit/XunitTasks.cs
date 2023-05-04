@@ -36,7 +36,6 @@ partial class XunitTasks
 
     private static void AssertProcess(IProcess process, Xunit2Settings toolSettings)
     {
-        process.AssertWaitForExit();
         switch (process.ExitCode)
         {
             case 0:

@@ -45,6 +45,7 @@ public static class DataClassGenerator
             .WriteBlock(w => w
                 .WriteProcessToolPath()
                 .WriteProcessCustomLogger()
+                .WriteProcessCustomExitHandler()
                 .ForEach(dataClass.Properties, WritePropertyDeclaration)
                 .WriteConfigureArguments())
             .WriteLine("#endregion");
@@ -100,6 +101,16 @@ public static class DataClassGenerator
         var tool = writer.DataClass.Tool;
         var logger = $"{tool.GetClassName()}.{tool.Name}Logger";
         return writer.WriteLine($"public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? {logger};");
+    }
+
+    private static DataClassWriter WriteProcessCustomExitHandler(this DataClassWriter writer)
+    {
+        if (!writer.DataClass.IsToolSettingsClass)
+            return writer;
+
+        var tool = writer.DataClass.Tool;
+        var exitHandler = $"{tool.GetClassName()}.{tool.Name}ExitHandler";
+        return writer.WriteLine($"public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? {exitHandler};");
     }
 
     private static void WritePropertyDeclaration(DataClassWriter writer, Property property)

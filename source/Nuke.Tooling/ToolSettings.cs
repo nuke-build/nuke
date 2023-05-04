@@ -36,6 +36,9 @@ public abstract class ToolSettings : ISettingsEntity
     [field: NonSerialized]
     public virtual Action<OutputType, string> ProcessCustomLogger { get; internal set; }
 
+    [field: NonSerialized]
+    public virtual Action<ToolSettings, IProcess> ProcessCustomExitHandler { get; internal set; }
+
     [NonSerialized]
     private Func<Arguments, Arguments> _processArgumentConfigurator = x => x;
 

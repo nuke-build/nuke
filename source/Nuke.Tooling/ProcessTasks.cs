@@ -247,6 +247,11 @@ public static class ProcessTasks
             Log.Error(output);
     }
 
+    public static void DefaultExitHandler(ToolSettings toolSettings, IProcess process)
+    {
+        process.AssertZeroExitCode();
+    }
+
     private static void PrintEnvironmentVariables(ProcessStartInfo startInfo)
     {
         static void TraceItem(string key, string value) => Log.Verbose($"  - {key} = {value}");

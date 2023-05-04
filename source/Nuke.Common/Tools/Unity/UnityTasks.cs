@@ -129,7 +129,6 @@ public partial class UnityTasks
 
     private static void AssertProcess(IProcess process, UnityBaseSettings settings)
     {
-        process.AssertWaitForExit();
         AssertWatcherStopped();
         if (process.ExitCode == 0)
             return;

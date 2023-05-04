@@ -75,6 +75,9 @@ public class Tool : IDeprecatable
     [Description("Enables custom logger.")]
     public bool CustomLogger { get; set; }
 
+    [Description("Enables custom exit handler.")]
+    public bool CustomExitHandler { get; set; }
+
     [Description("Help or introduction text to for the tool. Can contain HTML tags for better formatting.")]
     public List<Task> Tasks { get; set; } = new();
 
