@@ -32,14 +32,15 @@ public partial class CloudFoundryTasks
         ToolPathResolver.TryGetEnvironmentExecutable("CLOUDFOUNDRY_EXE") ??
         GetToolPath();
     public static Action<OutputType, string> CloudFoundryLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> CloudFoundryExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>Cloud Foundry CLI is the official command line client for Cloud Foundry</p>
     ///   <p>For more details, visit the <a href="https://docs.cloudfoundry.org/cf-cli/cf-help.html">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> CloudFoundry(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> CloudFoundry(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(CloudFoundryPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? CloudFoundryLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => CloudFoundryExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -75,7 +76,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryPushSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -163,7 +164,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryLoginSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -221,7 +222,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryAuthSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -274,7 +275,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryScaleSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -325,7 +326,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundrySetEnvSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -377,7 +378,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryCurlSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -430,7 +431,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryApiSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -483,7 +484,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryCreateUserProvidedServiceSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -536,7 +537,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryStartSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -581,7 +582,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryStopSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -626,7 +627,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryRestartSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -671,7 +672,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryRestageSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -717,7 +718,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryDeleteApplicationSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -768,7 +769,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryCreateServiceSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -821,7 +822,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryDeleteServiceSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -866,7 +867,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryGetServiceInfoSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -914,7 +915,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryBindServiceSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -966,7 +967,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryUnbindServiceSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1014,7 +1015,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryUnsetEnvSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1066,7 +1067,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryCreateRouteSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1126,7 +1127,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryMapRouteSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1185,7 +1186,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryUnmapRouteSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1240,7 +1241,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryCreateSpaceSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1290,7 +1291,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryDeleteSpaceSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1338,7 +1339,7 @@ public partial class CloudFoundryTasks
     {
         toolSettings = toolSettings ?? new CloudFoundryTargetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1386,6 +1387,7 @@ public partial class CloudFoundryPushSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     /// <summary>
     ///   The name of the application.
     /// </summary>
@@ -1510,6 +1512,7 @@ public partial class CloudFoundryLoginSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string Username { get; internal set; }
     public virtual string Password { get; internal set; }
     /// <summary>
@@ -1550,6 +1553,7 @@ public partial class CloudFoundryAuthSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string Username { get; internal set; }
     public virtual string Password { get; internal set; }
     public virtual string Origin { get; internal set; }
@@ -1583,6 +1587,7 @@ public partial class CloudFoundryScaleSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     /// <summary>
     ///   Number of instances
     /// </summary>
@@ -1620,6 +1625,7 @@ public partial class CloudFoundrySetEnvSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     /// <summary>
     ///   App Name
     /// </summary>
@@ -1657,6 +1663,7 @@ public partial class CloudFoundryCurlSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     /// <summary>
     ///   CAPI Path to invoke (ex. /v2/info)
     /// </summary>
@@ -1699,6 +1706,7 @@ public partial class CloudFoundryApiSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string Url { get; internal set; }
     /// <summary>
     ///   Skip verification of the API endpoint
@@ -1733,6 +1741,7 @@ public partial class CloudFoundryCreateUserProvidedServiceSettings : ToolSetting
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string ServiceInstanceName { get; internal set; }
     /// <summary>
     ///   URL to which requests for bound routes will be forwarded. Scheme for this URL must be https
@@ -1773,6 +1782,7 @@ public partial class CloudFoundryStartSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string AppName { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
@@ -1797,6 +1807,7 @@ public partial class CloudFoundryStopSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string AppName { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
@@ -1821,6 +1832,7 @@ public partial class CloudFoundryRestartSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string AppName { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
@@ -1845,6 +1857,7 @@ public partial class CloudFoundryRestageSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string AppName { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
@@ -1869,6 +1882,7 @@ public partial class CloudFoundryDeleteApplicationSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string AppName { get; internal set; }
     /// <summary>
     ///   Also delete any mapped routes
@@ -1898,6 +1912,7 @@ public partial class CloudFoundryCreateServiceSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     /// <summary>
     ///   Service type
     /// </summary>
@@ -1946,6 +1961,7 @@ public partial class CloudFoundryDeleteServiceSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     /// <summary>
     ///   Service Instance
     /// </summary>
@@ -1973,6 +1989,7 @@ public partial class CloudFoundryGetServiceInfoSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     /// <summary>
     ///   Service Instance
     /// </summary>
@@ -2000,6 +2017,7 @@ public partial class CloudFoundryBindServiceSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string AppName { get; internal set; }
     public virtual string ServiceInstance { get; internal set; }
     /// <summary>
@@ -2036,6 +2054,7 @@ public partial class CloudFoundryUnbindServiceSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string AppName { get; internal set; }
     public virtual string ServiceInstance { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -2062,6 +2081,7 @@ public partial class CloudFoundryUnsetEnvSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string AppName { get; internal set; }
     public virtual string EnvironmentalVariableName { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -2088,6 +2108,7 @@ public partial class CloudFoundryCreateRouteSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string Space { get; internal set; }
     public virtual string Domain { get; internal set; }
     /// <summary>
@@ -2134,6 +2155,7 @@ public partial class CloudFoundryMapRouteSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string AppName { get; internal set; }
     public virtual string Domain { get; internal set; }
     /// <summary>
@@ -2180,6 +2202,7 @@ public partial class CloudFoundryUnmapRouteSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string AppName { get; internal set; }
     public virtual string Domain { get; internal set; }
     /// <summary>
@@ -2221,6 +2244,7 @@ public partial class CloudFoundryCreateSpaceSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string Space { get; internal set; }
     public virtual string Org { get; internal set; }
     /// <summary>
@@ -2252,6 +2276,7 @@ public partial class CloudFoundryDeleteSpaceSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string Space { get; internal set; }
     public virtual string Org { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
@@ -2278,6 +2303,7 @@ public partial class CloudFoundryTargetSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CloudFoundryTasks.CloudFoundryPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CloudFoundryTasks.CloudFoundryLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CloudFoundryTasks.CloudFoundryExitHandler;
     public virtual string Space { get; internal set; }
     public virtual string Org { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)

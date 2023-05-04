@@ -35,14 +35,15 @@ public partial class GitVersionTasks
         ToolPathResolver.TryGetEnvironmentExecutable("GITVERSION_EXE") ??
         GetToolPath();
     public static Action<OutputType, string> GitVersionLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> GitVersionExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
     ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> GitVersion(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> GitVersion(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(GitVersionPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? GitVersionLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => GitVersionExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -82,7 +83,7 @@ public partial class GitVersionTasks
     {
         toolSettings = toolSettings ?? new GitVersionSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return (GetResult(process, toolSettings), process.Output);
     }
     /// <summary>
@@ -174,6 +175,7 @@ public partial class GitVersionSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitVersionTasks.GitVersionLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? GitVersionTasks.GitVersionExitHandler;
     /// <summary>
     ///   The directory containing .git. If not defined current directory is used. (Must be first argument).
     /// </summary>

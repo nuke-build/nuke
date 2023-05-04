@@ -34,13 +34,14 @@ public partial class OctoVersionTasks
         ToolPathResolver.TryGetEnvironmentExecutable("OCTOVERSION_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("OctoVersion.Tool", "OctoVersion.Tool.dll");
     public static Action<OutputType, string> OctoVersionLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> OctoVersionExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>For more details, visit the <a href="https://github.com/OctopusDeploy/OctoVersion">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> OctoVersion(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> OctoVersion(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(OctoVersionPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? OctoVersionLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => OctoVersionExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -68,7 +69,7 @@ public partial class OctoVersionTasks
     {
         toolSettings = toolSettings ?? new OctoVersionGetVersionSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return (GetResult(process, toolSettings), process.Output);
     }
     /// <summary>
@@ -146,7 +147,7 @@ public partial class OctoVersionTasks
     {
         toolSettings = toolSettings ?? new OctoVersionExecuteSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -214,6 +215,7 @@ public partial class OctoVersionGetVersionSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctoVersionTasks.OctoVersionLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? OctoVersionTasks.OctoVersionExitHandler;
     /// <summary>
     ///   Pass in the name of the branch. If not set, OctoVersion will attempt to derive it, but this may lead to incorrect values.
     /// </summary>
@@ -299,6 +301,7 @@ public partial class OctoVersionExecuteSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctoVersionTasks.OctoVersionLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? OctoVersionTasks.OctoVersionExitHandler;
     /// <summary>
     ///   Pass in the name of the branch. If not set, OctoVersion will attempt to derive it, but this may lead to incorrect values.
     /// </summary>

@@ -35,14 +35,15 @@ public partial class CorFlagsTasks
         ToolPathResolver.TryGetEnvironmentExecutable("CORFLAGS_EXE") ??
         ToolPathResolver.GetPathExecutable("CorFlags.exe");
     public static Action<OutputType, string> CorFlagsLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> CorFlagsExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>The CorFlags Conversion tool allows you to configure the CorFlags section of the header of a portable executable image.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/corflags-exe-corflags-conversion-tool">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> CorFlags(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> CorFlags(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(CorFlagsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? CorFlagsLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => CorFlagsExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -66,7 +67,7 @@ public partial class CorFlagsTasks
     {
         toolSettings = toolSettings ?? new CorFlagsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -126,6 +127,7 @@ public partial class CorFlagsSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CorFlagsTasks.CorFlagsPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CorFlagsTasks.CorFlagsLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CorFlagsTasks.CorFlagsExitHandler;
     /// <summary>
     ///   Suppresses the Microsoft startup banner display.
     /// </summary>

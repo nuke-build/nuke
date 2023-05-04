@@ -35,14 +35,15 @@ public partial class NUnitTasks
         ToolPathResolver.TryGetEnvironmentExecutable("NUNIT_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("NUnit.ConsoleRunner", "nunit3-console.exe");
     public static Action<OutputType, string> NUnitLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> NUnitExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>NUnit is a unit-testing framework for all .Net languages. Initially ported from <a href="http://www.junit.org/">JUnit</a>, the current production release, version 3.0, has been completely rewritten with many new features and support for a wide range of .NET platforms.</p>
     ///   <p>For more details, visit the <a href="https://www.nunit.org/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> NUnit(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> NUnit(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(NUnitPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NUnitLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => NUnitExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -96,7 +97,7 @@ public partial class NUnitTasks
     {
         toolSettings = toolSettings ?? new NUnit3Settings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -216,6 +217,7 @@ public partial class NUnit3Settings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NUnitTasks.NUnitPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NUnitTasks.NUnitLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NUnitTasks.NUnitExitHandler;
     /// <summary>
     ///   <p>The console program must always have an assembly or project specified. Assemblies are specified by file name or path, which may be absolute or relative. Relative paths are interpreted based on the current directory.</p><p>In addition to assemblies, you may specify any project type that is understood by NUnit. Out of the box, this includes various Visual Studio project types as well as NUnit (<c>.nunit</c>) test projects (see <a href="https://github.com/nunit/docs/wiki/NUnit-Test-Projects">NUnit Test Projects</a> for a description of NUnit test projects).</p><p>If the NUnit V2 framework driver is installed, test assemblies may be run based on any version of the NUnit framework beginning with 2.0. Without the V2 driver, only version 3.0 and higher tests may be run.</p>
     /// </summary>

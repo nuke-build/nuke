@@ -35,14 +35,15 @@ public partial class VSWhereTasks
         ToolPathResolver.TryGetEnvironmentExecutable("VSWHERE_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("vswhere", "vswhere.exe");
     public static Action<OutputType, string> VSWhereLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> VSWhereExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
     ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> VSWhere(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> VSWhere(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(VSWherePath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? VSWhereLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => VSWhereExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -70,7 +71,7 @@ public partial class VSWhereTasks
     {
         toolSettings = toolSettings ?? new VSWhereSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return (GetResult(process, toolSettings), process.Output);
     }
     /// <summary>
@@ -138,6 +139,7 @@ public partial class VSWhereSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? VSWhereTasks.VSWherePath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? VSWhereTasks.VSWhereLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? VSWhereTasks.VSWhereExitHandler;
     /// <summary>
     ///    Return only the newest version and last installed.
     /// </summary>

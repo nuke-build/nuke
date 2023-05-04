@@ -35,14 +35,15 @@ public partial class DocFXTasks
         ToolPathResolver.TryGetEnvironmentExecutable("DOCFX_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("docfx.console", "docfx.exe");
     public static Action<OutputType, string> DocFXLogger { get; set; } = CustomLogger;
+    public static Action<ToolSettings, IProcess> DocFXExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>DocFX is an API documentation generator for .NET, and currently it supports C# and VB. It generates API reference documentation from triple-slash comments in your source code. It also allows you to use Markdown files to create additional topics such as tutorials and how-tos, and to customize the generated reference documentation. DocFX builds a static HTML website from your source code and Markdown files, which can be easily hosted on any web servers (for example, <em>github.io</em>). Also, DocFX provides you the flexibility to customize the layout and style of your website through templates. If you are interested in creating your own website with your own styles, you can follow <a href="http://dotnet.github.io/docfx/tutorial/howto_create_custom_template.html">how to create custom template</a> to create custom templates.</p>
     ///   <p>For more details, visit the <a href="https://dotnet.github.io/docfx/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> DocFX(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> DocFX(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(DocFXPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? DocFXLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => DocFXExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -102,7 +103,7 @@ public partial class DocFXTasks
     {
         toolSettings = toolSettings ?? new DocFXBuildSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -236,7 +237,7 @@ public partial class DocFXTasks
     {
         toolSettings = toolSettings ?? new DocFXDependencySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -289,7 +290,7 @@ public partial class DocFXTasks
     {
         toolSettings = toolSettings ?? new DocFXDownloadSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -338,7 +339,7 @@ public partial class DocFXTasks
     {
         toolSettings = toolSettings ?? new DocFXHelpSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -389,7 +390,7 @@ public partial class DocFXTasks
     {
         toolSettings = toolSettings ?? new DocFXInitSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -457,7 +458,7 @@ public partial class DocFXTasks
     {
         toolSettings = toolSettings ?? new DocFXMergeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -539,7 +540,7 @@ public partial class DocFXTasks
     {
         toolSettings = toolSettings ?? new DocFXMetadataSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -669,7 +670,7 @@ public partial class DocFXTasks
     {
         toolSettings = toolSettings ?? new DocFXPdfSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -827,7 +828,7 @@ public partial class DocFXTasks
     {
         toolSettings = toolSettings ?? new DocFXServeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -881,7 +882,7 @@ public partial class DocFXTasks
     {
         toolSettings = toolSettings ?? new DocFXTemplateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -933,6 +934,7 @@ public partial class DocFXBuildSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DocFXTasks.DocFXExitHandler;
     public virtual string ConfigFile { get; internal set; }
     /// <summary>
     ///   Set changes file.
@@ -1181,6 +1183,7 @@ public partial class DocFXDependencySettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DocFXTasks.DocFXExitHandler;
     public virtual string DependencyFile { get; internal set; }
     /// <summary>
     ///   The intermediate folder that store cache files.
@@ -1220,6 +1223,7 @@ public partial class DocFXDownloadSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DocFXTasks.DocFXExitHandler;
     public virtual string ArchiveFile { get; internal set; }
     /// <summary>
     ///   Print help message for this sub-command.
@@ -1254,6 +1258,7 @@ public partial class DocFXHelpSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DocFXTasks.DocFXExitHandler;
     public virtual string Command { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
@@ -1278,6 +1283,7 @@ public partial class DocFXInitSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DocFXTasks.DocFXExitHandler;
     /// <summary>
     ///   Specify the source working folder for source project files to start glob search.
     /// </summary>
@@ -1335,6 +1341,7 @@ public partial class DocFXMergeSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DocFXTasks.DocFXExitHandler;
     public virtual string ConfigFile { get; internal set; }
     /// <summary>
     ///   Specifies content files for generating documentation.
@@ -1416,6 +1423,7 @@ public partial class DocFXMetadataSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DocFXTasks.DocFXExitHandler;
     /// <summary>
     ///   The projects for which the metadata should be built.
     /// </summary>
@@ -1520,6 +1528,7 @@ public partial class DocFXPdfSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DocFXTasks.DocFXExitHandler;
     /// <summary>
     ///   Specify the base path to generate external link, {host}/{locale}/{basePath}.
     /// </summary>
@@ -1829,6 +1838,7 @@ public partial class DocFXServeSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DocFXTasks.DocFXExitHandler;
     public virtual string Folder { get; internal set; }
     /// <summary>
     ///   Specify the hostname of the hosted website [localhost].
@@ -1868,6 +1878,7 @@ public partial class DocFXTemplateSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DocFXTasks.DocFXPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DocFXTasks.DocFXLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DocFXTasks.DocFXExitHandler;
     /// <summary>
     ///   The command to execute.
     /// </summary>

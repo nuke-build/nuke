@@ -35,14 +35,15 @@ public partial class MinVerTasks
         ToolPathResolver.TryGetEnvironmentExecutable("MINVER_EXE") ??
         GetToolPath();
     public static Action<OutputType, string> MinVerLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> MinVerExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>Minimalistic versioning using Git tags.</p>
     ///   <p>For more details, visit the <a href="https://github.com/adamralph/minver">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> MinVer(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> MinVer(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(MinVerPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MinVerLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => MinVerExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -64,7 +65,7 @@ public partial class MinVerTasks
     {
         toolSettings = toolSettings ?? new MinVerSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return (GetResult(process, toolSettings), process.Output);
     }
     /// <summary>
@@ -120,6 +121,7 @@ public partial class MinVerSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MinVerTasks.MinVerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? MinVerTasks.MinVerExitHandler;
     public virtual MinVerVersionPart AutoIncrement { get; internal set; }
     public virtual string BuildMetadata { get; internal set; }
     public virtual string DefaultPreReleasePhase { get; internal set; }

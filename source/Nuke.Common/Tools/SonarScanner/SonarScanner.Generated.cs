@@ -35,14 +35,15 @@ public partial class SonarScannerTasks
         ToolPathResolver.TryGetEnvironmentExecutable("SONARSCANNER_EXE") ??
         GetToolPath();
     public static Action<OutputType, string> SonarScannerLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> SonarScannerExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.</p>
     ///   <p>For more details, visit the <a href="https://www.sonarqube.org/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> SonarScanner(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> SonarScanner(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(SonarScannerPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SonarScannerLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => SonarScannerExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -101,7 +102,7 @@ public partial class SonarScannerTasks
     {
         toolSettings = toolSettings ?? new SonarScannerBeginSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -232,7 +233,7 @@ public partial class SonarScannerTasks
     {
         toolSettings = toolSettings ?? new SonarScannerEndSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -282,6 +283,7 @@ public partial class SonarScannerBeginSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SonarScannerTasks.SonarScannerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SonarScannerTasks.SonarScannerExitHandler;
     /// <summary>
     ///   Specifies the key of the analyzed project in SonarQube.
     /// </summary>
@@ -535,6 +537,7 @@ public partial class SonarScannerEndSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SonarScannerTasks.SonarScannerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SonarScannerTasks.SonarScannerExitHandler;
     /// <summary>
     ///   Specifies the username or access token to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added on the end step.
     /// </summary>

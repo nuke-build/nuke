@@ -35,14 +35,15 @@ public partial class NpmTasks
         ToolPathResolver.TryGetEnvironmentExecutable("NPM_EXE") ??
         ToolPathResolver.GetPathExecutable("npm");
     public static Action<OutputType, string> NpmLogger { get; set; } = CustomLogger;
+    public static Action<ToolSettings, IProcess> NpmExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.</p>
     ///   <p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Npm(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> Npm(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(NpmPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NpmLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => NpmExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -56,7 +57,7 @@ public partial class NpmTasks
     {
         toolSettings = toolSettings ?? new NpmCiSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -107,7 +108,7 @@ public partial class NpmTasks
     {
         toolSettings = toolSettings ?? new NpmInstallSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -177,7 +178,7 @@ public partial class NpmTasks
     {
         toolSettings = toolSettings ?? new NpmRunSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -225,6 +226,7 @@ public partial class NpmCiSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NpmTasks.NpmPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NpmTasks.NpmLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NpmTasks.NpmExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -247,6 +249,7 @@ public partial class NpmInstallSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NpmTasks.NpmPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NpmTasks.NpmLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NpmTasks.NpmExitHandler;
     /// <summary>
     ///   List of packages to be installed.
     /// </summary>
@@ -335,6 +338,7 @@ public partial class NpmRunSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NpmTasks.NpmPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NpmTasks.NpmLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NpmTasks.NpmExitHandler;
     /// <summary>
     ///   The command to be executed.
     /// </summary>

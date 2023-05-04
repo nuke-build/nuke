@@ -35,14 +35,15 @@ public partial class MakeNSISTasks
         ToolPathResolver.TryGetEnvironmentExecutable("MAKENSIS_EXE") ??
         ToolPathResolver.GetPathExecutable("makensis");
     public static Action<OutputType, string> MakeNSISLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> MakeNSISExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>NSIS creates installers that are capable of installing, uninstalling, setting system settings, extracting files, etc. Because it's based on script files you can fully control every part of your installer.</p>
     ///   <p>For more details, visit the <a href="https://nsis.sourceforge.io/Docs/Contents.html">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> MakeNSIS(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> MakeNSIS(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(MakeNSISPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MakeNSISLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => MakeNSISExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -72,7 +73,7 @@ public partial class MakeNSISTasks
     {
         toolSettings = toolSettings ?? new MakeNSISSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -144,6 +145,7 @@ public partial class MakeNSISSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? MakeNSISTasks.MakeNSISPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MakeNSISTasks.MakeNSISLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? MakeNSISTasks.MakeNSISExitHandler;
     /// <summary>
     ///   0=no output, 1=errors only, 2=warnings and errors, 3=info, warnings, and errors, 4=all output.
     /// </summary>

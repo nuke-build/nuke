@@ -35,14 +35,15 @@ public partial class SignClientTasks
         ToolPathResolver.TryGetEnvironmentExecutable("SIGNCLIENT_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("SignClient", "SignClient.exe");
     public static Action<OutputType, string> SignClientLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> SignClientExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>Code Signing client for Authenticode, NuGet, VSIX, and more</p>
     ///   <p>For more details, visit the <a href="https://discoverdot.net/projects/sign-service">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> SignClient(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> SignClient(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(SignClientPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SignClientLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => SignClientExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -69,7 +70,7 @@ public partial class SignClientTasks
     {
         toolSettings = toolSettings ?? new SignClientSignSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -135,6 +136,7 @@ public partial class SignClientSignSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? SignClientTasks.SignClientPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SignClientTasks.SignClientLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SignClientTasks.SignClientExitHandler;
     /// <summary>
     ///   Path to config json file
     /// </summary>

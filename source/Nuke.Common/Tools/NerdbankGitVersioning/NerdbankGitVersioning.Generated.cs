@@ -34,13 +34,14 @@ public partial class NerdbankGitVersioningTasks
         ToolPathResolver.TryGetEnvironmentExecutable("NERDBANKGITVERSIONING_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("nbgv", "nbgv.dll");
     public static Action<OutputType, string> NerdbankGitVersioningLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> NerdbankGitVersioningExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioning(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> NerdbankGitVersioning(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(NerdbankGitVersioningPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NerdbankGitVersioningLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => NerdbankGitVersioningExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -59,7 +60,7 @@ public partial class NerdbankGitVersioningTasks
     {
         toolSettings = toolSettings ?? new NerdbankGitVersioningInstallSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -112,7 +113,7 @@ public partial class NerdbankGitVersioningTasks
     {
         toolSettings = toolSettings ?? new NerdbankGitVersioningGetVersionSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return (GetResult(process, toolSettings), process.Output);
     }
     /// <summary>
@@ -166,7 +167,7 @@ public partial class NerdbankGitVersioningTasks
     {
         toolSettings = toolSettings ?? new NerdbankGitVersioningSetVersionSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -214,7 +215,7 @@ public partial class NerdbankGitVersioningTasks
     {
         toolSettings = toolSettings ?? new NerdbankGitVersioningTagSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -263,7 +264,7 @@ public partial class NerdbankGitVersioningTasks
     {
         toolSettings = toolSettings ?? new NerdbankGitVersioningGetCommitsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -318,7 +319,7 @@ public partial class NerdbankGitVersioningTasks
     {
         toolSettings = toolSettings ?? new NerdbankGitVersioningCloudSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -378,7 +379,7 @@ public partial class NerdbankGitVersioningTasks
     {
         toolSettings = toolSettings ?? new NerdbankGitVersioningPrepareReleaseSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -430,6 +431,7 @@ public partial class NerdbankGitVersioningInstallSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NerdbankGitVersioningTasks.NerdbankGitVersioningExitHandler;
     /// <summary>
     ///   The path to the directory that should contain the version.json file. The default is the root of the git repo.
     /// </summary>
@@ -468,6 +470,7 @@ public partial class NerdbankGitVersioningGetVersionSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NerdbankGitVersioningTasks.NerdbankGitVersioningExitHandler;
     /// <summary>
     ///   The path to the project or project directory. The default is the current directory.
     /// </summary>
@@ -515,6 +518,7 @@ public partial class NerdbankGitVersioningSetVersionSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NerdbankGitVersioningTasks.NerdbankGitVersioningExitHandler;
     /// <summary>
     ///   The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable.
     /// </summary>
@@ -547,6 +551,7 @@ public partial class NerdbankGitVersioningTagSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NerdbankGitVersioningTasks.NerdbankGitVersioningExitHandler;
     /// <summary>
     ///   The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable.
     /// </summary>
@@ -579,6 +584,7 @@ public partial class NerdbankGitVersioningGetCommitsSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NerdbankGitVersioningTasks.NerdbankGitVersioningExitHandler;
     /// <summary>
     ///   The path to the project or project directory. The default is the root directory of the repo that spans the current directory, or an existing version.json file, if applicable.
     /// </summary>
@@ -616,6 +622,7 @@ public partial class NerdbankGitVersioningCloudSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NerdbankGitVersioningTasks.NerdbankGitVersioningExitHandler;
     /// <summary>
     ///   The path to the project or project directory used to calculate the version. The default is the current directory. Ignored if the <c>--version</c> option is specified.
     /// </summary>
@@ -674,6 +681,7 @@ public partial class NerdbankGitVersioningPrepareReleaseSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NerdbankGitVersioningTasks.NerdbankGitVersioningPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NerdbankGitVersioningTasks.NerdbankGitVersioningLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NerdbankGitVersioningTasks.NerdbankGitVersioningExitHandler;
     /// <summary>
     ///   The path to the project or project directory. The default is the current directory.
     /// </summary>

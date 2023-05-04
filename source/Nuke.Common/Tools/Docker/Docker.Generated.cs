@@ -36,14 +36,15 @@ public partial class DockerTasks
         ToolPathResolver.TryGetEnvironmentExecutable("DOCKER_EXE") ??
         ToolPathResolver.GetPathExecutable("docker");
     public static Action<OutputType, string> DockerLogger { get; set; } = CustomLogger;
+    public static Action<ToolSettings, IProcess> DockerExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.</p>
     ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Docker(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> Docker(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(DockerPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? DockerLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => DockerExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -61,7 +62,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerConfigRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -110,7 +111,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerLoadSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -161,7 +162,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerPruneSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -210,7 +211,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTrustSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -257,7 +258,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerStackSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -308,7 +309,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTopSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -362,7 +363,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPullSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -417,7 +418,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTrustSignSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -462,7 +463,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerCheckpointSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -507,7 +508,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTrustSignerSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -555,7 +556,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerConfigInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -606,7 +607,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerServiceSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -652,7 +653,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTrustKeyGenerateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -699,7 +700,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSystemSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -747,7 +748,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerConfigLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -803,7 +804,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContextUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -863,7 +864,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerStackServicesSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -920,7 +921,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerPortSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -971,7 +972,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerRenameSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1022,7 +1023,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTagSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1074,7 +1075,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSecretInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1125,7 +1126,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSecretSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1172,7 +1173,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerExportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1226,7 +1227,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerHistorySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1350,7 +1351,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerServiceCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1539,7 +1540,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerServicePsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1598,7 +1599,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerStopSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1647,7 +1648,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNodeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1708,7 +1709,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1788,7 +1789,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1840,7 +1841,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSystemInfoSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1889,7 +1890,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerVolumePruneSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1943,7 +1944,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginUpgradeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1998,7 +1999,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerBuilderPruneSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2046,7 +2047,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSwarmJoinTokenSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2102,7 +2103,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNodeUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2160,7 +2161,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTrustSignerAddSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2218,7 +2219,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSwarmUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2287,7 +2288,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerServiceLogsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2355,7 +2356,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerServiceLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2406,7 +2407,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSwarmUnlockSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2455,7 +2456,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNetworkLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2512,7 +2513,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2567,7 +2568,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2652,7 +2653,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImageBuildSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2771,7 +2772,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTrustRevokeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2823,7 +2824,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerRmiSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2875,7 +2876,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNetworkRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2924,7 +2925,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerVersionSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2978,7 +2979,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSecretCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3034,7 +3035,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerServiceRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3083,7 +3084,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTrustKeyLoadSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3133,7 +3134,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSecretRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3182,7 +3183,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImageInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3233,7 +3234,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImageSaveSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3282,7 +3283,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTrustKeySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3331,7 +3332,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerAttachSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3390,7 +3391,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContextCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3451,7 +3452,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerConfigCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3506,7 +3507,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerVolumeInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3557,7 +3558,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerStopSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3608,7 +3609,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNetworkPruneSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3661,7 +3662,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerManifestInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3715,7 +3716,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerInfoSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3768,7 +3769,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerCommitSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3832,7 +3833,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerStackDeploySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3892,7 +3893,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerServiceScaleSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -4043,7 +4044,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerRunSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -4397,7 +4398,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -4729,7 +4730,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerServiceUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -4946,7 +4947,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPortSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -4995,7 +4996,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5043,7 +5044,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImagePushSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5097,7 +5098,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerServiceInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5156,7 +5157,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNetworkConnectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5220,7 +5221,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSecretLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5272,7 +5273,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSwarmLeaveSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5326,7 +5327,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImagesSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5389,7 +5390,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerEngineUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5446,7 +5447,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSystemEventsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5503,7 +5504,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5564,7 +5565,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerEngineCheckSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5629,7 +5630,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerAttachSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5683,7 +5684,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerWaitSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5737,7 +5738,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSwarmCaSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5797,7 +5798,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerEngineSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5848,7 +5849,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSystemPruneSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5901,7 +5902,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerBuilderSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -5947,7 +5948,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerPauseSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6000,7 +6001,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerCommitSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6059,7 +6060,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContextLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6109,7 +6110,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContextRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6163,7 +6164,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerStackPsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6323,7 +6324,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6575,7 +6576,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerVolumeCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6630,7 +6631,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6678,7 +6679,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerLoginSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6731,7 +6732,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSwarmUnlockKeySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6786,7 +6787,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerStartSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6858,7 +6859,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSwarmInitSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6934,7 +6935,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerDiffSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -6983,7 +6984,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerRestartSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7032,7 +7033,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerConfigSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7079,7 +7080,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginDisableSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7129,7 +7130,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerUnpauseSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7178,7 +7179,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContextImportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7231,7 +7232,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7291,7 +7292,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerDeploySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7352,7 +7353,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNodeRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7404,7 +7405,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerCheckpointRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7458,7 +7459,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPushSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7526,7 +7527,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNetworkCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7608,7 +7609,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerVolumeLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7660,7 +7661,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTrustInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7710,7 +7711,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNetworkInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7769,7 +7770,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerEngineActivateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7831,7 +7832,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContextUseSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7880,7 +7881,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerVolumeRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7931,7 +7932,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerManifestCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -7983,7 +7984,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerManifestPushSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8036,7 +8037,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginEnableSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8090,7 +8091,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8249,7 +8250,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerRunSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8505,7 +8506,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNodeInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8558,7 +8559,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSaveSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8612,7 +8613,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerStatsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8678,7 +8679,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerExecSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8748,7 +8749,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNodeLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8804,7 +8805,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSwarmJoinSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8866,7 +8867,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerLogsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8927,7 +8928,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerCheckpointLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -8978,7 +8979,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerKillSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9033,7 +9034,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginInstallSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9093,7 +9094,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImagePruneSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9149,7 +9150,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImageImportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9205,7 +9206,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerDiffSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9253,7 +9254,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerUnpauseSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9308,7 +9309,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9375,7 +9376,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNodePsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9434,7 +9435,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerTopSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9485,7 +9486,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerRenameSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9539,7 +9540,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImageHistorySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9602,7 +9603,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9665,7 +9666,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImageTagSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9716,7 +9717,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerExportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9768,7 +9769,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNetworkDisconnectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -9855,7 +9856,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerBuilderBuildSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10009,7 +10010,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerBuildxBuildSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10133,7 +10134,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerStatsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10195,7 +10196,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSearchSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10255,7 +10256,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerManifestSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10304,7 +10305,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginPushSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10355,7 +10356,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImageLoadSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10404,7 +10405,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSwarmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10453,7 +10454,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10522,7 +10523,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10601,7 +10602,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginSetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10651,7 +10652,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerWaitSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10701,7 +10702,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContextExportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10758,7 +10759,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerManifestAnnotateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10820,7 +10821,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImagePullSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10879,7 +10880,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerEventsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10935,7 +10936,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerStackLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -10989,7 +10990,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11042,7 +11043,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerKillSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11095,7 +11096,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerCheckpointCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11149,7 +11150,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPauseSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11203,7 +11204,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerLogsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11265,7 +11266,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContextInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11317,7 +11318,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNodePromoteSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11365,7 +11366,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNodeDemoteSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11423,7 +11424,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerExecSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11493,7 +11494,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImageRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11544,7 +11545,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImageSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11589,7 +11590,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContextSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11635,7 +11636,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerVolumeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11688,7 +11689,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerContainerStartSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11747,7 +11748,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerPluginInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11797,7 +11798,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerLogoutSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11844,7 +11845,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerNetworkSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11896,7 +11897,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerImageLsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -11957,7 +11958,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerSystemDfSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -12009,7 +12010,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerServiceRollbackSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -12062,7 +12063,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerRestartSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -12114,7 +12115,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerTrustSignerRemoveSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -12167,7 +12168,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerStackRmSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -12252,7 +12253,7 @@ public partial class DockerTasks
     {
         toolSettings = toolSettings ?? new DockerBuildSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -12370,6 +12371,7 @@ public partial class DockerConfigRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONFIG
     /// </summary>
@@ -12399,6 +12401,7 @@ public partial class DockerLoadSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Read from tar archive file, instead of STDIN.
     /// </summary>
@@ -12432,6 +12435,7 @@ public partial class DockerContainerPruneSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Provide filter values (e.g. 'until=&lt;timestamp&gt;').
     /// </summary>
@@ -12465,6 +12469,7 @@ public partial class DockerTrustSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -12488,6 +12493,7 @@ public partial class DockerStackSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Kubernetes config file.
     /// </summary>
@@ -12521,6 +12527,7 @@ public partial class DockerTopSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -12554,6 +12561,7 @@ public partial class DockerPullSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Download all tagged images in the repository.
     /// </summary>
@@ -12602,6 +12610,7 @@ public partial class DockerTrustSignSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -12625,6 +12634,7 @@ public partial class DockerCheckpointSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -12648,6 +12658,7 @@ public partial class DockerTrustSignerSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -12671,6 +12682,7 @@ public partial class DockerConfigInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -12710,6 +12722,7 @@ public partial class DockerServiceSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -12733,6 +12746,7 @@ public partial class DockerTrustKeyGenerateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   NAME
     /// </summary>
@@ -12761,6 +12775,7 @@ public partial class DockerSystemSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -12784,6 +12799,7 @@ public partial class DockerConfigLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Filter output based on conditions provided.
     /// </summary>
@@ -12822,6 +12838,7 @@ public partial class DockerContextUpdateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Default orchestrator for stack operations to use with this context (swarm|kubernetes|all).
     /// </summary>
@@ -12870,6 +12887,7 @@ public partial class DockerStackServicesSettings : DockerStackSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Filter output based on conditions provided.
     /// </summary>
@@ -12918,6 +12936,7 @@ public partial class DockerContainerPortSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -12951,6 +12970,7 @@ public partial class DockerRenameSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -12984,6 +13004,7 @@ public partial class DockerTagSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   SOURCE_IMAGE[:TAG]
     /// </summary>
@@ -13017,6 +13038,7 @@ public partial class DockerSecretInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -13056,6 +13078,7 @@ public partial class DockerSecretSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -13079,6 +13102,7 @@ public partial class DockerContainerExportSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Write to a file, instead of STDOUT.
     /// </summary>
@@ -13112,6 +13136,7 @@ public partial class DockerHistorySettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Pretty-print images using a Go template.
     /// </summary>
@@ -13160,6 +13185,7 @@ public partial class DockerServiceCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Specify configurations to expose to the service.
     /// </summary>
@@ -13542,6 +13568,7 @@ public partial class DockerServicePsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Filter output based on conditions provided.
     /// </summary>
@@ -13596,6 +13623,7 @@ public partial class DockerStopSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Seconds to wait for stop before killing it.
     /// </summary>
@@ -13630,6 +13658,7 @@ public partial class DockerNodeSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -13653,6 +13682,7 @@ public partial class DockerUpdateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0).
     /// </summary>
@@ -13757,6 +13787,7 @@ public partial class DockerPluginCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Compress the context using gzip.
     /// </summary>
@@ -13795,6 +13826,7 @@ public partial class DockerSystemInfoSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -13823,6 +13855,7 @@ public partial class DockerVolumePruneSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Provide filter values (e.g. 'label=&lt;label&gt;').
     /// </summary>
@@ -13856,6 +13889,7 @@ public partial class DockerPluginUpgradeSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Skip image verification.
     /// </summary>
@@ -13904,6 +13938,7 @@ public partial class DockerBuilderPruneSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -13927,6 +13962,7 @@ public partial class DockerSwarmJoinTokenSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Only display token.
     /// </summary>
@@ -13965,6 +14001,7 @@ public partial class DockerNodeUpdateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Availability of the node ("active"|"pause"|"drain").
     /// </summary>
@@ -14015,6 +14052,7 @@ public partial class DockerTrustSignerAddSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   OPTIONS
     /// </summary>
@@ -14054,6 +14092,7 @@ public partial class DockerSwarmUpdateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Change manager autolocking setting (true|false).
     /// </summary>
@@ -14112,6 +14151,7 @@ public partial class DockerServiceLogsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Show extra details provided to logs.
     /// </summary>
@@ -14185,6 +14225,7 @@ public partial class DockerServiceLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Filter output based on conditions provided.
     /// </summary>
@@ -14223,6 +14264,7 @@ public partial class DockerSwarmUnlockSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -14246,6 +14288,7 @@ public partial class DockerNetworkLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Provide filter values (e.g. 'driver=bridge').
     /// </summary>
@@ -14289,6 +14332,7 @@ public partial class DockerPluginLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Provide filter values (e.g. 'enabled=true').
     /// </summary>
@@ -14332,6 +14376,7 @@ public partial class DockerPluginRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Force the removal of an active plugin.
     /// </summary>
@@ -14366,6 +14411,7 @@ public partial class DockerImageBuildSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Add a custom host-to-IP mapping (host:ip).
     /// </summary>
@@ -14575,6 +14621,7 @@ public partial class DockerTrustRevokeSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Do not prompt for confirmation.
     /// </summary>
@@ -14608,6 +14655,7 @@ public partial class DockerRmiSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Force removal of the image.
     /// </summary>
@@ -14647,6 +14695,7 @@ public partial class DockerNetworkRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   NETWORK
     /// </summary>
@@ -14676,6 +14725,7 @@ public partial class DockerVersionSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -14709,6 +14759,7 @@ public partial class DockerSecretCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Secret driver.
     /// </summary>
@@ -14758,6 +14809,7 @@ public partial class DockerServiceRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   SERVICE
     /// </summary>
@@ -14787,6 +14839,7 @@ public partial class DockerTrustKeyLoadSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Name for the loaded key.
     /// </summary>
@@ -14820,6 +14873,7 @@ public partial class DockerSecretRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   SECRET
     /// </summary>
@@ -14849,6 +14903,7 @@ public partial class DockerImageInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -14883,6 +14938,7 @@ public partial class DockerImageSaveSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Write to a file, instead of STDOUT.
     /// </summary>
@@ -14917,6 +14973,7 @@ public partial class DockerTrustKeySettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -14940,6 +14997,7 @@ public partial class DockerContainerAttachSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Override the key sequence for detaching a container.
     /// </summary>
@@ -14983,6 +15041,7 @@ public partial class DockerContextCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Default orchestrator for stack operations to use with this context (swarm|kubernetes|all).
     /// </summary>
@@ -15036,6 +15095,7 @@ public partial class DockerConfigCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Config labels.
     /// </summary>
@@ -15080,6 +15140,7 @@ public partial class DockerVolumeInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -15114,6 +15175,7 @@ public partial class DockerContainerStopSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Seconds to wait for stop before killing it.
     /// </summary>
@@ -15148,6 +15210,7 @@ public partial class DockerNetworkPruneSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Provide filter values (e.g. 'until=&lt;timestamp&gt;').
     /// </summary>
@@ -15181,6 +15244,7 @@ public partial class DockerManifestInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Allow communication with an insecure registry.
     /// </summary>
@@ -15224,6 +15288,7 @@ public partial class DockerInfoSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -15252,6 +15317,7 @@ public partial class DockerCommitSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Author (e.g., "John Hannibal Smith &lt;hannibal@a-team.com&gt;").
     /// </summary>
@@ -15306,6 +15372,7 @@ public partial class DockerStackDeploySettings : DockerStackSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Path to a Distributed Application Bundle file.
     /// </summary>
@@ -15365,6 +15432,7 @@ public partial class DockerServiceScaleSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   SERVICE=REPLICAS
     /// </summary>
@@ -15394,6 +15462,7 @@ public partial class DockerRunSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Add a custom host-to-IP mapping (host:ip).
     /// </summary>
@@ -15971,6 +16040,7 @@ public partial class DockerCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Add a custom host-to-IP mapping (host:ip).
     /// </summary>
@@ -16533,6 +16603,7 @@ public partial class DockerServiceUpdateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Service command args.
     /// </summary>
@@ -17008,6 +17079,7 @@ public partial class DockerPortSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -17041,6 +17113,7 @@ public partial class DockerContainerSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -17064,6 +17137,7 @@ public partial class DockerImagePushSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Push all tagged images in the repository.
     /// </summary>
@@ -17102,6 +17176,7 @@ public partial class DockerServiceInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -17141,6 +17216,7 @@ public partial class DockerNetworkConnectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Add network-scoped alias for the container.
     /// </summary>
@@ -17208,6 +17284,7 @@ public partial class DockerSecretLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Filter output based on conditions provided.
     /// </summary>
@@ -17246,6 +17323,7 @@ public partial class DockerSwarmLeaveSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Force this node to leave the swarm, ignoring warnings.
     /// </summary>
@@ -17274,6 +17352,7 @@ public partial class DockerImagesSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Show all images (default hides intermediate images).
     /// </summary>
@@ -17332,6 +17411,7 @@ public partial class DockerEngineUpdateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   override default location of containerd endpoint.
     /// </summary>
@@ -17375,6 +17455,7 @@ public partial class DockerSystemEventsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Filter output based on conditions provided.
     /// </summary>
@@ -17418,6 +17499,7 @@ public partial class DockerInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -17462,6 +17544,7 @@ public partial class DockerEngineCheckSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   override default location of containerd endpoint.
     /// </summary>
@@ -17525,6 +17608,7 @@ public partial class DockerAttachSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Override the key sequence for detaching a container.
     /// </summary>
@@ -17568,6 +17652,7 @@ public partial class DockerContainerWaitSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -17597,6 +17682,7 @@ public partial class DockerSwarmCaSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Path to the PEM-formatted root CA certificate to use for the new cluster.
     /// </summary>
@@ -17655,6 +17741,7 @@ public partial class DockerEngineSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   COMMAND
     /// </summary>
@@ -17683,6 +17770,7 @@ public partial class DockerSystemPruneSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Remove all unused images not just dangling ones.
     /// </summary>
@@ -17726,6 +17814,7 @@ public partial class DockerBuilderSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -17749,6 +17838,7 @@ public partial class DockerContainerPauseSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -17778,6 +17868,7 @@ public partial class DockerContainerCommitSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Author (e.g., "John Hannibal Smith &lt;hannibal@a-team.com&gt;").
     /// </summary>
@@ -17832,6 +17923,7 @@ public partial class DockerContextLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Pretty-print contexts using a Go template.
     /// </summary>
@@ -17865,6 +17957,7 @@ public partial class DockerContextRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTEXT
     /// </summary>
@@ -17894,6 +17987,7 @@ public partial class DockerStackPsSettings : DockerStackSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Filter output based on conditions provided.
     /// </summary>
@@ -17952,6 +18046,7 @@ public partial class DockerContainerCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Add a custom host-to-IP mapping (host:ip).
     /// </summary>
@@ -18514,6 +18609,7 @@ public partial class DockerVolumeCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Specify volume driver name.
     /// </summary>
@@ -18564,6 +18660,7 @@ public partial class DockerPluginSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -18587,6 +18684,7 @@ public partial class DockerLoginSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Password.
     /// </summary>
@@ -18625,6 +18723,7 @@ public partial class DockerSwarmUnlockKeySettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Only display token.
     /// </summary>
@@ -18658,6 +18757,7 @@ public partial class DockerStartSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Attach STDOUT/STDERR and forward signals.
     /// </summary>
@@ -18712,6 +18812,7 @@ public partial class DockerSwarmInitSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Advertised address (format: &lt;ip|interface&gt;[:port]).
     /// </summary>
@@ -18810,6 +18911,7 @@ public partial class DockerContainerDiffSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -18838,6 +18940,7 @@ public partial class DockerContainerRestartSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Seconds to wait for stop before killing the container.
     /// </summary>
@@ -18872,6 +18975,7 @@ public partial class DockerConfigSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -18895,6 +18999,7 @@ public partial class DockerPluginDisableSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Force the disable of an active plugin.
     /// </summary>
@@ -18928,6 +19033,7 @@ public partial class DockerContainerUnpauseSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -18957,6 +19063,7 @@ public partial class DockerContextImportSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTEXT
     /// </summary>
@@ -18990,6 +19097,7 @@ public partial class DockerRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Force the removal of a running container (uses SIGKILL).
     /// </summary>
@@ -19034,6 +19142,7 @@ public partial class DockerDeploySettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Path to a Distributed Application Bundle file.
     /// </summary>
@@ -19093,6 +19202,7 @@ public partial class DockerNodeRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Force remove a node from the swarm.
     /// </summary>
@@ -19127,6 +19237,7 @@ public partial class DockerCheckpointRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Use a custom checkpoint storage directory.
     /// </summary>
@@ -19165,6 +19276,7 @@ public partial class DockerPushSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Push all tagged images in the repository.
     /// </summary>
@@ -19203,6 +19315,7 @@ public partial class DockerNetworkCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Enable manual container attachment.
     /// </summary>
@@ -19318,6 +19431,7 @@ public partial class DockerVolumeLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Provide filter values (e.g. 'dangling=true').
     /// </summary>
@@ -19356,6 +19470,7 @@ public partial class DockerTrustInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   IMAGE[:TAG]
     /// </summary>
@@ -19385,6 +19500,7 @@ public partial class DockerNetworkInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -19424,6 +19540,7 @@ public partial class DockerEngineActivateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   override default location of containerd endpoint.
     /// </summary>
@@ -19487,6 +19604,7 @@ public partial class DockerContextUseSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTEXT
     /// </summary>
@@ -19515,6 +19633,7 @@ public partial class DockerVolumeRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Force the removal of one or more volumes.
     /// </summary>
@@ -19549,6 +19668,7 @@ public partial class DockerManifestCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   MANIFEST_LIST
     /// </summary>
@@ -19583,6 +19703,7 @@ public partial class DockerManifestPushSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Allow push to an insecure registry.
     /// </summary>
@@ -19621,6 +19742,7 @@ public partial class DockerPluginEnableSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   HTTP client timeout (in seconds).
     /// </summary>
@@ -19654,6 +19776,7 @@ public partial class DockerImportSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Apply Dockerfile instruction to the created image.
     /// </summary>
@@ -19703,6 +19826,7 @@ public partial class DockerContainerRunSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Add a custom host-to-IP mapping (host:ip).
     /// </summary>
@@ -20280,6 +20404,7 @@ public partial class DockerNodeInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -20319,6 +20444,7 @@ public partial class DockerSaveSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Write to a file, instead of STDOUT.
     /// </summary>
@@ -20353,6 +20479,7 @@ public partial class DockerContainerStatsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Show all containers (default shows just running).
     /// </summary>
@@ -20402,6 +20529,7 @@ public partial class DockerContainerExecSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Detached mode: run command in the background.
     /// </summary>
@@ -20482,6 +20610,7 @@ public partial class DockerNodeLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Filter output based on conditions provided.
     /// </summary>
@@ -20520,6 +20649,7 @@ public partial class DockerSwarmJoinSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Advertised address (format: &lt;ip|interface&gt;[:port]).
     /// </summary>
@@ -20568,6 +20698,7 @@ public partial class DockerContainerLogsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Show extra details provided to logs.
     /// </summary>
@@ -20626,6 +20757,7 @@ public partial class DockerCheckpointLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Use a custom checkpoint storage directory.
     /// </summary>
@@ -20659,6 +20791,7 @@ public partial class DockerContainerKillSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Signal to send to the container.
     /// </summary>
@@ -20693,6 +20826,7 @@ public partial class DockerPluginInstallSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Local name for plugin.
     /// </summary>
@@ -20747,6 +20881,7 @@ public partial class DockerImagePruneSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Remove all unused images, not just dangling ones.
     /// </summary>
@@ -20785,6 +20920,7 @@ public partial class DockerImageImportSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Apply Dockerfile instruction to the created image.
     /// </summary>
@@ -20834,6 +20970,7 @@ public partial class DockerDiffSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -20862,6 +20999,7 @@ public partial class DockerUnpauseSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -20891,6 +21029,7 @@ public partial class DockerContainerLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Show all containers (default shows just running).
     /// </summary>
@@ -20954,6 +21093,7 @@ public partial class DockerNodePsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Filter output based on conditions provided.
     /// </summary>
@@ -21008,6 +21148,7 @@ public partial class DockerContainerTopSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -21041,6 +21182,7 @@ public partial class DockerContainerRenameSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -21074,6 +21216,7 @@ public partial class DockerImageHistorySettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Pretty-print images using a Go template.
     /// </summary>
@@ -21122,6 +21265,7 @@ public partial class DockerPsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Show all containers (default shows just running).
     /// </summary>
@@ -21185,6 +21329,7 @@ public partial class DockerImageTagSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   SOURCE_IMAGE[:TAG]
     /// </summary>
@@ -21218,6 +21363,7 @@ public partial class DockerExportSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Write to a file, instead of STDOUT.
     /// </summary>
@@ -21251,6 +21397,7 @@ public partial class DockerNetworkDisconnectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Force the container to disconnect from a network.
     /// </summary>
@@ -21289,6 +21436,7 @@ public partial class DockerBuilderBuildSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Add a custom host-to-IP mapping (host:ip).
     /// </summary>
@@ -21498,6 +21646,7 @@ public partial class DockerBuildxBuildSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Add a custom host-to-IP mapping <c>host:ip</c>.
     /// </summary>
@@ -21714,6 +21863,7 @@ public partial class DockerStatsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Show all containers (default shows just running).
     /// </summary>
@@ -21763,6 +21913,7 @@ public partial class DockerSearchSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Only show automated builds.
     /// </summary>
@@ -21821,6 +21972,7 @@ public partial class DockerManifestSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   COMMAND
     /// </summary>
@@ -21849,6 +22001,7 @@ public partial class DockerPluginPushSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Skip image signing.
     /// </summary>
@@ -21882,6 +22035,7 @@ public partial class DockerImageLoadSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Read from tar archive file, instead of STDIN.
     /// </summary>
@@ -21915,6 +22069,7 @@ public partial class DockerSwarmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -21938,6 +22093,7 @@ public partial class DockerContainerRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Force the removal of a running container (uses SIGKILL).
     /// </summary>
@@ -21982,6 +22138,7 @@ public partial class DockerContainerUpdateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0).
     /// </summary>
@@ -22086,6 +22243,7 @@ public partial class DockerPluginSetSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   PLUGIN
     /// </summary>
@@ -22120,6 +22278,7 @@ public partial class DockerWaitSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -22149,6 +22308,7 @@ public partial class DockerContextExportSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Export as a kubeconfig file.
     /// </summary>
@@ -22187,6 +22347,7 @@ public partial class DockerManifestAnnotateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Set architecture.
     /// </summary>
@@ -22241,6 +22402,7 @@ public partial class DockerImagePullSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Download all tagged images in the repository.
     /// </summary>
@@ -22289,6 +22451,7 @@ public partial class DockerEventsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Filter output based on conditions provided.
     /// </summary>
@@ -22332,6 +22495,7 @@ public partial class DockerStackLsSettings : DockerStackSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   List stacks from all Kubernetes namespaces.
     /// </summary>
@@ -22371,6 +22535,7 @@ public partial class DockerContainerInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -22410,6 +22575,7 @@ public partial class DockerKillSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Signal to send to the container.
     /// </summary>
@@ -22444,6 +22610,7 @@ public partial class DockerCheckpointCreateSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Use a custom checkpoint storage directory.
     /// </summary>
@@ -22487,6 +22654,7 @@ public partial class DockerPauseSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   CONTAINER
     /// </summary>
@@ -22516,6 +22684,7 @@ public partial class DockerLogsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Show extra details provided to logs.
     /// </summary>
@@ -22574,6 +22743,7 @@ public partial class DockerContextInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -22613,6 +22783,7 @@ public partial class DockerNodePromoteSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   NODE
     /// </summary>
@@ -22642,6 +22813,7 @@ public partial class DockerNodeDemoteSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   NODE
     /// </summary>
@@ -22671,6 +22843,7 @@ public partial class DockerExecSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Detached mode: run command in the background.
     /// </summary>
@@ -22751,6 +22924,7 @@ public partial class DockerImageRmSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Force removal of the image.
     /// </summary>
@@ -22790,6 +22964,7 @@ public partial class DockerImageSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -22813,6 +22988,7 @@ public partial class DockerContextSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -22836,6 +23012,7 @@ public partial class DockerVolumeSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   COMMAND
     /// </summary>
@@ -22864,6 +23041,7 @@ public partial class DockerContainerStartSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Attach STDOUT/STDERR and forward signals.
     /// </summary>
@@ -22918,6 +23096,7 @@ public partial class DockerPluginInspectSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Format the output using the given Go template.
     /// </summary>
@@ -22952,6 +23131,7 @@ public partial class DockerLogoutSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   [SERVER]
     /// </summary>
@@ -22980,6 +23160,7 @@ public partial class DockerNetworkSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -23003,6 +23184,7 @@ public partial class DockerImageLsSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Show all images (default hides intermediate images).
     /// </summary>
@@ -23061,6 +23243,7 @@ public partial class DockerSystemDfSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Pretty-print images using a Go template.
     /// </summary>
@@ -23094,6 +23277,7 @@ public partial class DockerServiceRollbackSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Exit immediately instead of waiting for the service to converge.
     /// </summary>
@@ -23132,6 +23316,7 @@ public partial class DockerRestartSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Seconds to wait for stop before killing the container.
     /// </summary>
@@ -23166,6 +23351,7 @@ public partial class DockerTrustSignerRemoveSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Do not prompt for confirmation before removing the most recent signer.
     /// </summary>
@@ -23205,6 +23391,7 @@ public partial class DockerStackRmSettings : DockerStackSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Kubernetes namespace to use.
     /// </summary>
@@ -23239,6 +23426,7 @@ public partial class DockerBuildSettings : DockerSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DockerTasks.DockerExitHandler;
     /// <summary>
     ///   Add a custom host-to-IP mapping (host:ip).
     /// </summary>

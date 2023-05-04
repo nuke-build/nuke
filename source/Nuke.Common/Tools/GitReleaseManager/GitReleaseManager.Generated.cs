@@ -35,14 +35,15 @@ public partial class GitReleaseManagerTasks
         ToolPathResolver.TryGetEnvironmentExecutable("GITRELEASEMANAGER_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("gitreleasemanager", "GitReleaseManager.exe");
     public static Action<OutputType, string> GitReleaseManagerLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> GitReleaseManagerExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>GitReleaseManager is a tool that will help create a set of release notes for your application/product. It does this using the collection of issues which are stored on the GitHub Issue Tracker for your application/product.<para/>By inspecting the issues that have been assigned to a particular milestone, GitReleaseManager creates a set of release notes, in markdown format, which are then used to create a Release on GitHub.<para/>In addition to creating a Release, GitReleaseManager can be used to publish a release, close a milestone, and also to export the complete set of release notes for your application/product.</p>
     ///   <p>For more details, visit the <a href="https://gitreleasemanager.readthedocs.io">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> GitReleaseManager(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> GitReleaseManager(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(GitReleaseManagerPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? GitReleaseManagerLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => GitReleaseManagerExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -67,7 +68,7 @@ public partial class GitReleaseManagerTasks
     {
         toolSettings = toolSettings ?? new GitReleaseManagerAddAssetsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -135,7 +136,7 @@ public partial class GitReleaseManagerTasks
     {
         toolSettings = toolSettings ?? new GitReleaseManagerCloseSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -206,7 +207,7 @@ public partial class GitReleaseManagerTasks
     {
         toolSettings = toolSettings ?? new GitReleaseManagerCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -283,7 +284,7 @@ public partial class GitReleaseManagerTasks
     {
         toolSettings = toolSettings ?? new GitReleaseManagerExportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -351,7 +352,7 @@ public partial class GitReleaseManagerTasks
     {
         toolSettings = toolSettings ?? new GitReleaseManagerPublishSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -411,6 +412,7 @@ public partial class GitReleaseManagerAddAssetsSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitReleaseManagerTasks.GitReleaseManagerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? GitReleaseManagerTasks.GitReleaseManagerExitHandler;
     /// <summary>
     ///   Paths to the files to include in the release.
     /// </summary>
@@ -479,6 +481,7 @@ public partial class GitReleaseManagerCloseSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitReleaseManagerTasks.GitReleaseManagerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? GitReleaseManagerTasks.GitReleaseManagerExitHandler;
     /// <summary>
     ///   The milestone to use.
     /// </summary>
@@ -541,6 +544,7 @@ public partial class GitReleaseManagerCreateSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitReleaseManagerTasks.GitReleaseManagerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? GitReleaseManagerTasks.GitReleaseManagerExitHandler;
     /// <summary>
     ///   Paths to the files to include in the release.
     /// </summary>
@@ -629,6 +633,7 @@ public partial class GitReleaseManagerExportSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitReleaseManagerTasks.GitReleaseManagerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? GitReleaseManagerTasks.GitReleaseManagerExitHandler;
     /// <summary>
     ///   The name of the release. Typically this is the generated SemVer Version Number.
     /// </summary>
@@ -696,6 +701,7 @@ public partial class GitReleaseManagerPublishSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GitReleaseManagerTasks.GitReleaseManagerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? GitReleaseManagerTasks.GitReleaseManagerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? GitReleaseManagerTasks.GitReleaseManagerExitHandler;
     /// <summary>
     ///   The name of the release. Typically this is the generated SemVer Version Number.
     /// </summary>

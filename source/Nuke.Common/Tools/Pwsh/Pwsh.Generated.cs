@@ -1,4 +1,4 @@
-﻿// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Pwsh/Pwsh.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/Pwsh/Pwsh.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -35,14 +35,15 @@ public partial class PwshTasks
         ToolPathResolver.TryGetEnvironmentExecutable("PWSH_EXE") ??
         ToolPathResolver.GetPathExecutable("pwsh");
     public static Action<OutputType, string> PwshLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> PwshExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Pwsh(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> Pwsh(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(PwshPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? PwshLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => PwshExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -82,7 +83,7 @@ public partial class PwshTasks
     {
         toolSettings = toolSettings ?? new PwshSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -174,6 +175,7 @@ public partial class PwshSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PwshTasks.PwshPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PwshTasks.PwshLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PwshTasks.PwshExitHandler;
     /// <summary>
     ///   Displays the version of PowerShell. Additional parameters are ignored.
     /// </summary>

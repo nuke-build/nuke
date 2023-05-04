@@ -35,14 +35,15 @@ public partial class MauiCheckTasks
         ToolPathResolver.TryGetEnvironmentExecutable("MAUICHECK_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("Redth.Net.Maui.Check", "MauiCheck.dll");
     public static Action<OutputType, string> MauiCheckLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> MauiCheckExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>A dotnet tool for helping set up your .NET MAUI environment.</p>
     ///   <p>For more details, visit the <a href="https://github.com/Redth/dotnet-maui-check">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> MauiCheck(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> MauiCheck(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(MauiCheckPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MauiCheckLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => MauiCheckExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -64,7 +65,7 @@ public partial class MauiCheckTasks
     {
         toolSettings = toolSettings ?? new MauiCheckSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -122,7 +123,7 @@ public partial class MauiCheckTasks
     {
         toolSettings = toolSettings ?? new MauiCheckConfigSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -174,6 +175,7 @@ public partial class MauiCheckSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? MauiCheckTasks.MauiCheckPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MauiCheckTasks.MauiCheckLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? MauiCheckTasks.MauiCheckExitHandler;
     /// <summary>
     ///   Manifest files are currently used by the doctor to fetch the latest versions and requirements. The manifest is hosted by default at: <a href="https://aka.ms/dotnet-maui-check-manifest">https://aka.ms/dotnet-maui-check-manifest</a>. Use this option to specify an alternative file path or URL to use.
     /// </summary>
@@ -226,6 +228,7 @@ public partial class MauiCheckConfigSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? MauiCheckTasks.MauiCheckPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MauiCheckTasks.MauiCheckLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? MauiCheckTasks.MauiCheckExitHandler;
     /// <summary>
     ///   Use the SDK version in the manifest in <em>global.json</em>.
     /// </summary>

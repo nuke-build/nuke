@@ -35,14 +35,15 @@ public partial class WebConfigTransformRunnerTasks
         ToolPathResolver.TryGetEnvironmentExecutable("WEBCONFIGTRANSFORMRUNNER_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("WebConfigTransformRunner", "WebConfigTransformRunner.exe");
     public static Action<OutputType, string> WebConfigTransformRunnerLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> WebConfigTransformRunnerExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>This is a commandline tool to run an ASP.Net web.config tranformation.</p>
     ///   <p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> WebConfigTransformRunner(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> WebConfigTransformRunner(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(WebConfigTransformRunnerPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? WebConfigTransformRunnerLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => WebConfigTransformRunnerExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -61,7 +62,7 @@ public partial class WebConfigTransformRunnerTasks
     {
         toolSettings = toolSettings ?? new WebConfigTransformRunnerSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -111,6 +112,7 @@ public partial class WebConfigTransformRunnerSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? WebConfigTransformRunnerTasks.WebConfigTransformRunnerExitHandler;
     /// <summary>
     ///   The base web.config file
     /// </summary>

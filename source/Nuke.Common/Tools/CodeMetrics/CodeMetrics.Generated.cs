@@ -35,14 +35,15 @@ public partial class CodeMetricsTasks
         ToolPathResolver.TryGetEnvironmentExecutable("CODEMETRICS_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("Microsoft.CodeAnalysis.Metrics", "Metrics.exe");
     public static Action<OutputType, string> CodeMetricsLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> CodeMetricsExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>Code metrics is a set of software measures that provide developers better insight into the code they are developing. By taking advantage of code metrics, developers can understand which types and/or methods should be reworked or more thoroughly tested. Development teams can identify potential risks, understand the current state of a project, and track progress during software development.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/visualstudio/code-quality/code-metrics-values">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> CodeMetrics(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> CodeMetrics(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(CodeMetricsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? CodeMetricsLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => CodeMetricsExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -61,7 +62,7 @@ public partial class CodeMetricsTasks
     {
         toolSettings = toolSettings ?? new CodeMetricsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -111,6 +112,7 @@ public partial class CodeMetricsSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CodeMetricsTasks.CodeMetricsPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CodeMetricsTasks.CodeMetricsLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CodeMetricsTasks.CodeMetricsExitHandler;
     /// <summary>
     ///   Project to analyze.
     /// </summary>

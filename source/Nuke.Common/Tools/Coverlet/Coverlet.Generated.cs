@@ -36,14 +36,15 @@ public partial class CoverletTasks
         ToolPathResolver.TryGetEnvironmentExecutable("COVERLET_EXE") ??
         NuGetToolPathResolver.GetPackageExecutable("coverlet.console", "coverlet.console.dll");
     public static Action<OutputType, string> CoverletLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> CoverletExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p><c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p>
     ///   <p>For more details, visit the <a href="https://github.com/tonerdo/coverlet/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Coverlet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> Coverlet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(CoverletPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? CoverletLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => CoverletExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -71,7 +72,7 @@ public partial class CoverletTasks
     {
         toolSettings = toolSettings ?? new CoverletSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -139,6 +140,7 @@ public partial class CoverletSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CoverletTasks.CoverletPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CoverletTasks.CoverletLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CoverletTasks.CoverletExitHandler;
     /// <summary>
     ///   Path to the test assembly.
     /// </summary>

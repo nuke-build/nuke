@@ -35,14 +35,15 @@ public partial class ChocolateyTasks
         ToolPathResolver.TryGetEnvironmentExecutable("CHOCOLATEY_EXE") ??
         ToolPathResolver.GetPathExecutable("choco");
     public static Action<OutputType, string> ChocolateyLogger { get; set; } = ProcessTasks.DefaultLogger;
+    public static Action<ToolSettings, IProcess> ChocolateyExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
     ///   <p>Chocolatey has the largest online registry of Windows packages. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and/or scripts into a compiled package file.</p>
     ///   <p>For more details, visit the <a href="https://chocolatey.org/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Chocolatey(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null)
+    public static IReadOnlyCollection<Output> Chocolatey(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
     {
         using var process = ProcessTasks.StartProcess(ChocolateyPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? ChocolateyLogger);
-        process.AssertZeroExitCode();
+        (customExitHandler ?? (p => ChocolateyExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -103,7 +104,7 @@ public partial class ChocolateyTasks
     {
         toolSettings = toolSettings ?? new ChocolateySearchSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -280,7 +281,7 @@ public partial class ChocolateyTasks
     {
         toolSettings = toolSettings ?? new ChocolateyListSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -457,7 +458,7 @@ public partial class ChocolateyTasks
     {
         toolSettings = toolSettings ?? new ChocolateyFindSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -618,7 +619,7 @@ public partial class ChocolateyTasks
     {
         toolSettings = toolSettings ?? new ChocolateyOutdatedSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -742,7 +743,7 @@ public partial class ChocolateyTasks
     {
         toolSettings = toolSettings ?? new ChocolateyPackSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -856,7 +857,7 @@ public partial class ChocolateyTasks
     {
         toolSettings = toolSettings ?? new ChocolateyPushSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -986,7 +987,7 @@ public partial class ChocolateyTasks
     {
         toolSettings = toolSettings ?? new ChocolateyNewSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        process.AssertZeroExitCode();
+        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1110,6 +1111,7 @@ public partial class ChocolateySearchSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ChocolateyTasks.ChocolateyExitHandler;
     /// <summary>
     ///   Search filter.
     /// </summary>
@@ -1358,6 +1360,7 @@ public partial class ChocolateyListSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ChocolateyTasks.ChocolateyExitHandler;
     /// <summary>
     ///   Search filter.
     /// </summary>
@@ -1606,6 +1609,7 @@ public partial class ChocolateyFindSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ChocolateyTasks.ChocolateyExitHandler;
     /// <summary>
     ///   Search filter.
     /// </summary>
@@ -1854,6 +1858,7 @@ public partial class ChocolateyOutdatedSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ChocolateyTasks.ChocolateyExitHandler;
     /// <summary>
     ///   The source to find the package(s) to install. Special sources include: ruby, webpi, cygwin, windowsfeatures, and python. To specify more than one source, pass it with a semi-colon separating the values (-e.g. "'source1;source2'"). Defaults to default feeds.
     /// </summary>
@@ -2022,6 +2027,7 @@ public partial class ChocolateyPackSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ChocolateyTasks.ChocolateyExitHandler;
     /// <summary>
     ///   Path to nuspec
     /// </summary>
@@ -2166,6 +2172,7 @@ public partial class ChocolateyPushSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ChocolateyTasks.ChocolateyExitHandler;
     /// <summary>
     ///   Path to Nuget package (.nupkg).
     /// </summary>
@@ -2309,6 +2316,7 @@ public partial class ChocolateyNewSettings : ToolSettings
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ChocolateyTasks.ChocolateyPath;
     public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ChocolateyTasks.ChocolateyLogger;
+    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ChocolateyTasks.ChocolateyExitHandler;
     /// <summary>
     ///   Generate automatic package instead of normal. Defaults to false.
     /// </summary>
