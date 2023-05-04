@@ -64,8 +64,8 @@ public static class TaskGenerator
                              "int? timeout = null",
                              "bool? logOutput = null",
                              "bool? logInvocation = null",
-                             "Action<OutputType, string> customLogger = null",
-                             "Action<IProcess> customExitHandler = null"
+                             "Action<OutputType, string> logger = null",
+                             "Action<IProcess> exitHandler = null"
                          };
         var arguments = new[]
                         {
@@ -76,7 +76,7 @@ public static class TaskGenerator
                             "timeout",
                             "logOutput",
                             "logInvocation",
-                            $"customLogger ?? {tool.Name}Logger",
+                            $"logger ?? {tool.Name}Logger",
                         };
         writer
             .WriteSummary(tool)
@@ -84,7 +84,7 @@ public static class TaskGenerator
             .WriteLine($"public static IReadOnlyCollection<Output> {tool.Name}({parameters.JoinCommaSpace()})")
             .WriteBlock(w => w
                 .WriteLine($"using var process = ProcessTasks.StartProcess({arguments.JoinCommaSpace()});")
-                .WriteLine($"(customExitHandler ?? (p => {tool.Name}ExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());")
+                .WriteLine($"(exitHandler ?? (p => {tool.Name}ExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());")
                 .WriteLine("return process.Output;"));
     }
 
@@ -162,7 +162,7 @@ public static class TaskGenerator
     private static string GetProcessAssertion(Task task)
     {
         return !task.CustomAssertion
-            ? "toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());"
+            ? "toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());"
             : "AssertProcess(process.AssertWaitForExit(), toolSettings);";
     }
 

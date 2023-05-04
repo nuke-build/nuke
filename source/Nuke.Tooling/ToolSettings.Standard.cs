@@ -165,81 +165,81 @@ public static partial class ToolSettingsExtensions
         return newToolSettings;
     }
 
-    ///<summary>Sets <see cref="ToolSettings.ProcessCustomLogger"/> -- <inheritdoc cref="ToolSettings.ProcessCustomLogger" /></summary>
+    ///<summary>Sets <see cref="ToolSettings.ProcessLogger"/> -- <inheritdoc cref="ToolSettings.ProcessLogger" /></summary>
     [Pure]
-    public static T SetProcessCustomLogger<T>(this T toolSettings, [CanBeNull] Action<OutputType, string> customLogger)
+    public static T SetProcessLogger<T>(this T toolSettings, [CanBeNull] Action<OutputType, string> logger)
         where T : ToolSettings
     {
         var newToolSettings = toolSettings.NewInstance();
-        newToolSettings.ProcessCustomLogger = customLogger;
+        newToolSettings.ProcessLogger = logger;
         return newToolSettings;
     }
 
-    ///<summary>Sets <see cref="ToolSettings.ProcessCustomExitHandler"/> -- <inheritdoc cref="ToolSettings.ProcessCustomExitHandler" /></summary>
+    ///<summary>Sets <see cref="ToolSettings.ProcessExitHandler"/> -- <inheritdoc cref="ToolSettings.ProcessExitHandler" /></summary>
     [Pure]
-    public static T SetProcessCustomExitHandler<T>(this T toolSettings, [CanBeNull] Action<IProcess> customExitHandler)
+    public static T SetProcessExitHandler<T>(this T toolSettings, [CanBeNull] Action<IProcess> exitHandler)
         where T : ToolSettings
     {
         var newToolSettings = toolSettings.NewInstance();
-        newToolSettings.ProcessCustomExitHandler = customExitHandler != null
-            ? (_, process) => customExitHandler.Invoke(process)
+        newToolSettings.ProcessExitHandler = exitHandler != null
+            ? (_, process) => exitHandler.Invoke(process)
             : null;
         return newToolSettings;
     }
 
-    ///<summary>Sets <see cref="ToolSettings.ProcessCustomExitHandler"/> -- <inheritdoc cref="ToolSettings.ProcessCustomExitHandler" /></summary>
+    ///<summary>Sets <see cref="ToolSettings.ProcessExitHandler"/> -- <inheritdoc cref="ToolSettings.ProcessExitHandler" /></summary>
     [Pure]
-    public static T SetProcessCustomExitHandler<T>(this T toolSettings, [CanBeNull] Action<T, IProcess> customExitHandler)
+    public static T SetProcessExitHandler<T>(this T toolSettings, [CanBeNull] Action<T, IProcess> exitHandler)
         where T : ToolSettings
     {
         var newToolSettings = toolSettings.NewInstance();
-        newToolSettings.ProcessCustomExitHandler = customExitHandler != null
-            ? (toolSettings, process) => customExitHandler.Invoke((T)toolSettings, process)
+        newToolSettings.ProcessExitHandler = exitHandler != null
+            ? (toolSettings, process) => exitHandler.Invoke((T)toolSettings, process)
             : null;
         return newToolSettings;
     }
 
-    ///<summary>Sets <see cref="ToolSettings.ProcessCustomExitHandler"/> -- <inheritdoc cref="ToolSettings.ProcessCustomExitHandler" /></summary>
+    ///<summary>Sets <see cref="ToolSettings.ProcessExitHandler"/> -- <inheritdoc cref="ToolSettings.ProcessExitHandler" /></summary>
     [Pure]
-    public static T SetProcessCustomExitHandler<T>(this T toolSettings, [CanBeNull] Func<IProcess, object> customExitHandler)
+    public static T SetProcessExitHandler<T>(this T toolSettings, [CanBeNull] Func<IProcess, object> exitHandler)
         where T : ToolSettings
     {
         var newToolSettings = toolSettings.NewInstance();
-        newToolSettings.ProcessCustomExitHandler = customExitHandler != null
-            ? (_, process) => customExitHandler.Invoke(process)
+        newToolSettings.ProcessExitHandler = exitHandler != null
+            ? (_, process) => exitHandler.Invoke(process)
             : null;
         return newToolSettings;
     }
 
-    ///<summary>Sets <see cref="ToolSettings.ProcessCustomExitHandler"/> -- <inheritdoc cref="ToolSettings.ProcessCustomExitHandler" /></summary>
+    ///<summary>Sets <see cref="ToolSettings.ProcessExitHandler"/> -- <inheritdoc cref="ToolSettings.ProcessExitHandler" /></summary>
     [Pure]
-    public static T SetProcessCustomExitHandler<T>(this T toolSettings, [CanBeNull] Func<T, IProcess, object> customExitHandler)
+    public static T SetProcessExitHandler<T>(this T toolSettings, [CanBeNull] Func<T, IProcess, object> exitHandler)
         where T : ToolSettings
     {
         var newToolSettings = toolSettings.NewInstance();
-        newToolSettings.ProcessCustomExitHandler = customExitHandler != null
-            ? (toolSettings, process) => customExitHandler.Invoke((T)toolSettings, process)
+        newToolSettings.ProcessExitHandler = exitHandler != null
+            ? (toolSettings, process) => exitHandler.Invoke((T)toolSettings, process)
             : null;
         return newToolSettings;
     }
 
-    ///<summary>Sets <see cref="ToolSettings.ProcessCustomExitHandler"/> to assert the exit code.</summary>
+    ///<summary>Sets <see cref="ToolSettings.ProcessExitHandler"/> to assert the exit code.</summary>
     [Pure]
     public static T EnableProcessAssertZeroExitCode<T>(this T toolSettings)
         where T : ToolSettings
     {
         var newToolSettings = toolSettings.NewInstance();
-        newToolSettings.ProcessCustomExitHandler = null;
+        newToolSettings.ProcessExitHandler = null;
         return newToolSettings;
     }
 
-    ///<summary>Sets <see cref="ToolSettings.ProcessCustomExitHandler"/> to assert the exit code.</summary>
+    ///<summary>Sets <see cref="ToolSettings.ProcessExitHandler"/> to ignore the exit code.</summary>
     [Pure]
     public static T DisableProcessAssertZeroExitCode<T>(this T toolSettings)
         where T : ToolSettings
     {
         var newToolSettings = toolSettings.NewInstance();
-        newToolSettings.ProcessCustomExitHandler = (_, _) => { };
+        newToolSettings.ProcessExitHandler = (_, _) => { };
         return newToolSettings;
     }
 }

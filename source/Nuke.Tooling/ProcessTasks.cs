@@ -60,7 +60,7 @@ public static class ProcessTasks
             toolSettings.ProcessExecutionTimeout,
             toolSettings.ProcessLogOutput,
             toolSettings.ProcessLogInvocation,
-            toolSettings.ProcessCustomLogger,
+            toolSettings.ProcessLogger,
             arguments.FilterSecrets);
     }
 

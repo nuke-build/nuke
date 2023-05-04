@@ -18,7 +18,7 @@ public class HelmToolSettings : ToolSettings
     /// </summary>
     public HelmCommonSettings CommonSettings { get; internal set; }
 
-    public override Action<OutputType, string> ProcessCustomLogger { get; internal set; }
+    public override Action<OutputType, string> ProcessLogger { get; internal set; }
 
     protected override Arguments ConfigureProcessArguments([NotNull] Arguments arguments)
     {

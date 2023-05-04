@@ -34,10 +34,10 @@ public abstract class ToolSettings : ISettingsEntity
     public bool? ProcessLogInvocation { get; internal set; }
 
     [field: NonSerialized]
-    public virtual Action<OutputType, string> ProcessCustomLogger { get; internal set; }
+    public virtual Action<OutputType, string> ProcessLogger { get; internal set; }
 
     [field: NonSerialized]
-    public virtual Action<ToolSettings, IProcess> ProcessCustomExitHandler { get; internal set; }
+    public virtual Action<ToolSettings, IProcess> ProcessExitHandler { get; internal set; }
 
     [NonSerialized]
     private Func<Arguments, Arguments> _processArgumentConfigurator = x => x;

@@ -44,8 +44,8 @@ public static class DataClassGenerator
             .WriteLine($"public partial class {dataClass.Name} : {baseType}")
             .WriteBlock(w => w
                 .WriteProcessToolPath()
-                .WriteProcessCustomLogger()
-                .WriteProcessCustomExitHandler()
+                .WriteProcessLogger()
+                .WriteProcessExitHandler()
                 .ForEach(dataClass.Properties, WritePropertyDeclaration)
                 .WriteConfigureArguments())
             .WriteLine("#endregion");
@@ -93,24 +93,24 @@ public static class DataClassGenerator
             .WriteLine($"public override string ProcessToolPath => base.ProcessToolPath ?? {resolver};");
     }
 
-    private static DataClassWriter WriteProcessCustomLogger(this DataClassWriter writer)
+    private static DataClassWriter WriteProcessLogger(this DataClassWriter writer)
     {
         if (!writer.DataClass.IsToolSettingsClass)
             return writer;
 
         var tool = writer.DataClass.Tool;
         var logger = $"{tool.GetClassName()}.{tool.Name}Logger";
-        return writer.WriteLine($"public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? {logger};");
+        return writer.WriteLine($"public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? {logger};");
     }
 
-    private static DataClassWriter WriteProcessCustomExitHandler(this DataClassWriter writer)
+    private static DataClassWriter WriteProcessExitHandler(this DataClassWriter writer)
     {
         if (!writer.DataClass.IsToolSettingsClass)
             return writer;
 
         var tool = writer.DataClass.Tool;
         var exitHandler = $"{tool.GetClassName()}.{tool.Name}ExitHandler";
-        return writer.WriteLine($"public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? {exitHandler};");
+        return writer.WriteLine($"public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? {exitHandler};");
     }
 
     private static void WritePropertyDeclaration(DataClassWriter writer, Property property)

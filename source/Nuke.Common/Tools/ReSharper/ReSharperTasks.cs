@@ -73,5 +73,5 @@ partial class ReSharperTasks
 
 partial class ReSharperSettingsBase
 {
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ProcessTasks.DefaultLogger;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? ProcessTasks.DefaultLogger;
 }

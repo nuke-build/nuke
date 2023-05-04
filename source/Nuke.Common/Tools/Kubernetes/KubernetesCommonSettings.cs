@@ -15,5 +15,5 @@ public partial class KubernetesCommonSettings
         return ConfigureProcessArguments(new Arguments());
     }
 
-    public override Action<OutputType, string> ProcessCustomLogger { get; internal set; }
+    public override Action<OutputType, string> ProcessLogger { get; internal set; }
 }

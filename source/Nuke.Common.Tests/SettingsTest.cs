@@ -37,9 +37,9 @@ public class SettingsTest
             .SetProcessExecutionTimeout(TimeSpan.FromMilliseconds(1_000))
             .SetProcessArgumentConfigurator(_ => _
                 .Add("/switch"))
-            .SetProcessCustomLogger((type, str) => logEntry = (type, str))
+            .SetProcessLogger((type, str) => logEntry = (type, str))
             .EnableProcessLogInvocation();
-        settings.ProcessCustomLogger.Invoke(OutputType.Err, "text");
+        settings.ProcessLogger.Invoke(OutputType.Err, "text");
 
         settings.ProcessToolPath.Should().Be("/path/to/dotnet");
         settings.ProcessEnvironmentVariables.Should().ContainSingle(x => x.Key == "key" && x.Value == "value");

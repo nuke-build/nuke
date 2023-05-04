@@ -11,7 +11,7 @@ namespace Nuke.Common.Tools.Unity;
 
 public partial class UnityBaseSettings
 {
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? UnityTasks.UnityLogger;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? UnityTasks.UnityLogger;
 
     public string GetProcessToolPath()
     {
