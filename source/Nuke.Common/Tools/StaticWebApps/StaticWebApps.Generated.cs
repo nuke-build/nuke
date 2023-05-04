@@ -40,10 +40,10 @@ public partial class StaticWebAppsTasks
     ///   <p>The Static Web Apps CLI, also known as SWA CLI, serves as a local development tool for <a href="https://docs.microsoft.com/azure/static-web-apps">Azure Static Web Apps</a>. It can:<ul><li>Serve static app assets, or proxy to your app dev server</li><li>Serve API requests, or proxy to APIs running in Azure Functions Core Tools</li><li>Emulate authentication and authorization</li><li>Emulate Static Web Apps configuration, including routing</li></ul></p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/azure/static-web-apps/local-development">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> StaticWebApps(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> StaticWebApps(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(StaticWebAppsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? StaticWebAppsLogger);
-        (customExitHandler ?? (p => StaticWebAppsExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(StaticWebAppsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? StaticWebAppsLogger);
+        (exitHandler ?? (p => StaticWebAppsExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -71,7 +71,7 @@ public partial class StaticWebAppsTasks
     {
         toolSettings = toolSettings ?? new StaticWebAppsStartSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -143,7 +143,7 @@ public partial class StaticWebAppsTasks
     {
         toolSettings = toolSettings ?? new StaticWebAppsDeploySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -198,8 +198,8 @@ public partial class StaticWebAppsStartSettings : ToolSettings
     ///   Path to the StaticWebApps executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? StaticWebAppsTasks.StaticWebAppsPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? StaticWebAppsTasks.StaticWebAppsLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? StaticWebAppsTasks.StaticWebAppsExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? StaticWebAppsTasks.StaticWebAppsLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? StaticWebAppsTasks.StaticWebAppsExitHandler;
     /// <summary>
     ///   Location for the static app source code (default: <c>./</c>)
     /// </summary>
@@ -281,8 +281,8 @@ public partial class StaticWebAppsDeploySettings : ToolSettings
     ///   Path to the StaticWebApps executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? StaticWebAppsTasks.StaticWebAppsPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? StaticWebAppsTasks.StaticWebAppsLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? StaticWebAppsTasks.StaticWebAppsExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? StaticWebAppsTasks.StaticWebAppsLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? StaticWebAppsTasks.StaticWebAppsExitHandler;
     /// <summary>
     ///   Directory containing the source code of the front-end application (default: <c>./</c>).
     /// </summary>

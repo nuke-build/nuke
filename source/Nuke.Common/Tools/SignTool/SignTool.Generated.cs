@@ -37,10 +37,10 @@ public partial class SignToolTasks
     ///   <p>Sign Tool is a command-line tool that digitally signs files, verifies signatures in files, and time-stamps files.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/signtool-exe">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> SignTool(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> SignTool(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(SignToolPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SignToolLogger);
-        (customExitHandler ?? (p => SignToolExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(SignToolPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? SignToolLogger);
+        (exitHandler ?? (p => SignToolExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -100,7 +100,7 @@ public partial class SignToolTasks
     {
         toolSettings = toolSettings ?? new SignToolSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -231,8 +231,8 @@ public partial class SignToolSettings : ToolSettings
     ///   Path to the SignTool executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? SignToolTasks.SignToolPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SignToolTasks.SignToolLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SignToolTasks.SignToolExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? SignToolTasks.SignToolLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? SignToolTasks.SignToolExitHandler;
     /// <summary>
     ///   Select the best signing cert automatically. SignTool will find all valid certs that satisfy all specified conditions and select the one that is valid for the longest. If this option is not present, SignTool will expect to find only one valid signing cert.
     /// </summary>

@@ -40,10 +40,10 @@ public partial class NetlifyTasks
     ///   <p>Netlify’s command line interface (CLI) lets you configure <a href="https://docs.netlify.com/cli/get-started/#continuous-deployment">continuous deployment</a> straight from the command line. You can use Netlify CLI to <a href="https://docs.netlify.com/cli/get-started/#run-a-local-development-environment">run a local development server</a> that you can share with others, <a href="https://docs.netlify.com/cli/get-started/#run-builds-locally">run a local build and plugins</a>, and <a href="https://docs.netlify.com/cli/get-started/#manual-deploys">deploy your site</a>.</p>
     ///   <p>For more details, visit the <a href="https://docs.netlify.com/cli/get-started/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Netlify(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> Netlify(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(NetlifyPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NetlifyLogger);
-        (customExitHandler ?? (p => NetlifyExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(NetlifyPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? NetlifyLogger);
+        (exitHandler ?? (p => NetlifyExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -76,7 +76,7 @@ public partial class NetlifyTasks
     {
         toolSettings = toolSettings ?? new NetlifyDeploySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -159,7 +159,7 @@ public partial class NetlifyTasks
     {
         toolSettings = toolSettings ?? new NetlifySitesCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return (GetResult(process, toolSettings), process.Output);
     }
     /// <summary>
@@ -220,7 +220,7 @@ public partial class NetlifyTasks
     {
         toolSettings = toolSettings ?? new NetlifySitesDeleteSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -273,8 +273,8 @@ public partial class NetlifyDeploySettings : ToolSettings
     ///   Path to the Netlify executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NetlifyTasks.NetlifyPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NetlifyTasks.NetlifyExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NetlifyTasks.NetlifyLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NetlifyTasks.NetlifyExitHandler;
     /// <summary>
     ///   Specify a folder to deploy.
     /// </summary>
@@ -381,8 +381,8 @@ public partial class NetlifySitesCreateSettings : ToolSettings
     ///   Path to the Netlify executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NetlifyTasks.NetlifyPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NetlifyTasks.NetlifyExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NetlifyTasks.NetlifyLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NetlifyTasks.NetlifyExitHandler;
     /// <summary>
     ///   Name of site.
     /// </summary>
@@ -439,8 +439,8 @@ public partial class NetlifySitesDeleteSettings : ToolSettings
     ///   Path to the Netlify executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NetlifyTasks.NetlifyPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NetlifyTasks.NetlifyLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NetlifyTasks.NetlifyExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NetlifyTasks.NetlifyLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NetlifyTasks.NetlifyExitHandler;
     /// <summary>
     ///   Site ID to delete.
     /// </summary>

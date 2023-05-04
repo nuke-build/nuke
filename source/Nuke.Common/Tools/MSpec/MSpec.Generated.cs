@@ -40,10 +40,10 @@ public partial class MSpecTasks
     ///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
     ///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> MSpec(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> MSpec(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(MSpecPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? MSpecLogger);
-        (customExitHandler ?? (p => MSpecExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(MSpecPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? MSpecLogger);
+        (exitHandler ?? (p => MSpecExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -73,7 +73,7 @@ public partial class MSpecTasks
     {
         toolSettings = toolSettings ?? new MSpecSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -144,8 +144,8 @@ public partial class MSpecSettings : ToolSettings
     ///   Path to the MSpec executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? MSpecTasks.MSpecLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? MSpecTasks.MSpecExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? MSpecTasks.MSpecLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? MSpecTasks.MSpecExitHandler;
     /// <summary>
     ///   Assemblies with tests to be executed.
     /// </summary>

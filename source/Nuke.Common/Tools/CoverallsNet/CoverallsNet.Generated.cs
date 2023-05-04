@@ -40,10 +40,10 @@ public partial class CoverallsNetTasks
     ///   <p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p>
     ///   <p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> CoverallsNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> CoverallsNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(CoverallsNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? CoverallsNetLogger);
-        (customExitHandler ?? (p => CoverallsNetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(CoverallsNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? CoverallsNetLogger);
+        (exitHandler ?? (p => CoverallsNetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -78,7 +78,7 @@ public partial class CoverallsNetTasks
     {
         toolSettings = toolSettings ?? new CoverallsNetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -159,8 +159,8 @@ public partial class CoverallsNetSettings : ToolSettings
     ///   Path to the CoverallsNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? CoverallsNetTasks.CoverallsNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CoverallsNetTasks.CoverallsNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CoverallsNetTasks.CoverallsNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? CoverallsNetTasks.CoverallsNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? CoverallsNetTasks.CoverallsNetExitHandler;
     /// <summary>
     ///   The coverage source file location.
     /// </summary>

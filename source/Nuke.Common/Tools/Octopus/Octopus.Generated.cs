@@ -40,10 +40,10 @@ public partial class OctopusTasks
     ///   <p>Octopus Deploy is an automated deployment server, which you install yourself, much like you would install SQL Server, Team Foundation Server or JetBrains TeamCity. Octopus makes it easy to automate deployment of ASP.NET web applications and Windows Services into development, test and production environments.<para/>Along with the Octopus Deploy server, you'll also install a lightweight agent service on each of the machines that you plan to deploy to, for example your web and application servers. We call this the Tentacle agent; the idea being that one Octopus server controls many Tentacles, potentially a lot more than 8! With Octopus and Tentacle, you can easily deploy to your own servers, or cloud services from providers like Amazon Web Services or Microsoft Azure.</p>
     ///   <p>For more details, visit the <a href="https://octopus.com/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Octopus(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> Octopus(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(OctopusPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? OctopusLogger);
-        (customExitHandler ?? (p => OctopusExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(OctopusPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? OctopusLogger);
+        (exitHandler ?? (p => OctopusExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -72,7 +72,7 @@ public partial class OctopusTasks
     {
         toolSettings = toolSettings ?? new OctopusPackSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -156,7 +156,7 @@ public partial class OctopusTasks
     {
         toolSettings = toolSettings ?? new OctopusPushSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -273,7 +273,7 @@ public partial class OctopusTasks
     {
         toolSettings = toolSettings ?? new OctopusCreateReleaseSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -436,7 +436,7 @@ public partial class OctopusTasks
     {
         toolSettings = toolSettings ?? new OctopusDeployReleaseSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -566,7 +566,7 @@ public partial class OctopusTasks
     {
         toolSettings = toolSettings ?? new OctopusBuildInformationSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -645,8 +645,8 @@ public partial class OctopusPackSettings : ToolSettings
     ///   Path to the Octopus executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctopusTasks.OctopusLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? OctopusTasks.OctopusExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? OctopusTasks.OctopusLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? OctopusTasks.OctopusExitHandler;
     /// <summary>
     ///   The ID of the package. E.g. <c>MyCompany.MyApp</c>.
     /// </summary>
@@ -735,8 +735,8 @@ public partial class OctopusPushSettings : ToolSettings
     ///   Path to the Octopus executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctopusTasks.OctopusLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? OctopusTasks.OctopusExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? OctopusTasks.OctopusLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? OctopusTasks.OctopusExitHandler;
     /// <summary>
     ///   Package file to push.
     /// </summary>
@@ -840,8 +840,8 @@ public partial class OctopusCreateReleaseSettings : ToolSettings
     ///   Path to the Octopus executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctopusTasks.OctopusLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? OctopusTasks.OctopusExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? OctopusTasks.OctopusLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? OctopusTasks.OctopusExitHandler;
     /// <summary>
     ///   Name of the project.
     /// </summary>
@@ -1083,8 +1083,8 @@ public partial class OctopusDeployReleaseSettings : ToolSettings
     ///   Path to the Octopus executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctopusTasks.OctopusLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? OctopusTasks.OctopusExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? OctopusTasks.OctopusLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? OctopusTasks.OctopusExitHandler;
     /// <summary>
     ///   Show progress of the deployment.
     /// </summary>
@@ -1285,8 +1285,8 @@ public partial class OctopusBuildInformationSettings : ToolSettings
     ///   Path to the Octopus executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OctopusTasks.OctopusLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? OctopusTasks.OctopusExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? OctopusTasks.OctopusLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? OctopusTasks.OctopusExitHandler;
     /// <summary>
     ///   Id of the package.
     /// </summary>

@@ -37,10 +37,10 @@ public partial class PowerShellTasks
     ///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> PowerShell(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> PowerShell(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(PowerShellPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? PowerShellLogger);
-        (customExitHandler ?? (p => PowerShellExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(PowerShellPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? PowerShellLogger);
+        (exitHandler ?? (p => PowerShellExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -74,7 +74,7 @@ public partial class PowerShellTasks
     {
         toolSettings = toolSettings ?? new PowerShellSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -153,8 +153,8 @@ public partial class PowerShellSettings : ToolSettings
     ///   Path to the PowerShell executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PowerShellTasks.PowerShellLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PowerShellTasks.PowerShellExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PowerShellTasks.PowerShellLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PowerShellTasks.PowerShellExitHandler;
     /// <summary>
     ///   Loads the specified PowerShell console file. Enter the path and name of the console file. To create a console file, use the Export-Console cmdlet in PowerShell.
     /// </summary>

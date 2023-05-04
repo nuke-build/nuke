@@ -40,10 +40,10 @@ public partial class VSTestTasks
     ///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>
     ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> VSTest(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> VSTest(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(VSTestPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? VSTestLogger);
-        (customExitHandler ?? (p => VSTestExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(VSTestPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? VSTestLogger);
+        (exitHandler ?? (p => VSTestExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -77,7 +77,7 @@ public partial class VSTestTasks
     {
         toolSettings = toolSettings ?? new VSTestSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -156,8 +156,8 @@ public partial class VSTestSettings : ToolSettings
     ///   Path to the VSTest executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? VSTestTasks.VSTestPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? VSTestTasks.VSTestLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? VSTestTasks.VSTestExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? VSTestTasks.VSTestLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? VSTestTasks.VSTestExitHandler;
     /// <summary>
     ///   Run tests from the specified files. Separate multiple test file names with spaces.
     /// </summary>

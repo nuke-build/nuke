@@ -40,10 +40,10 @@ public partial class BootsTasks
     ///   <p>boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.</p>
     ///   <p>For more details, visit the <a href="https://github.com/jonathanpeppers/boots">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Boots(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> Boots(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(BootsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? BootsLogger);
-        (customExitHandler ?? (p => BootsExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(BootsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? BootsLogger);
+        (exitHandler ?? (p => BootsExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -67,7 +67,7 @@ public partial class BootsTasks
     {
         toolSettings = toolSettings ?? new BootsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -126,8 +126,8 @@ public partial class BootsSettings : ToolSettings
     ///   Path to the Boots executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? BootsTasks.BootsPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? BootsTasks.BootsLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? BootsTasks.BootsExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? BootsTasks.BootsLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? BootsTasks.BootsExitHandler;
     /// <summary>
     ///   Install the latest <em>stable</em> version of a product from VS manifests. Options include: <c>Xamarin.Android</c>, <c>Xamarin.iOS</c>, <c>Xamarin.Mac</c>, and <c>Mono</c>
     /// </summary>

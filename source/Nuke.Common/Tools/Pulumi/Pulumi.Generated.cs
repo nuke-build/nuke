@@ -40,10 +40,10 @@ public partial class PulumiTasks
     ///   <p>Pulumi is an <a href="https://github.com/pulumi/pulumi">open source</a> infrastructure as code tool for creating, deploying and managing cloud infrastructure. Pulumi works with traditional infrastructure like VMs, networks, and databases, in addition to modern architectures, including containers, Kubernetes clusters, and serverless functions. Pulumi supports dozens of public, private, and hybrid cloud service providers.</p>
     ///   <p>For more details, visit the <a href="https://www.pulumi.com/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Pulumi(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> Pulumi(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(PulumiPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? PulumiLogger);
-        (customExitHandler ?? (p => PulumiExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(PulumiPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? PulumiLogger);
+        (exitHandler ?? (p => PulumiExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -94,7 +94,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiUpSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -239,7 +239,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiPreviewSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -361,7 +361,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiConfigSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -443,7 +443,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiConfigCopySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -522,7 +522,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiConfigGetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -601,7 +601,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiConfigRefreshSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -677,7 +677,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiConfigRemoveSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -758,7 +758,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiConfigSetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -845,7 +845,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -928,7 +928,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackChangeSecretsProviderSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1005,7 +1005,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackExportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1088,7 +1088,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackGraphSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1172,7 +1172,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackHistorySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1250,7 +1250,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackImportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1329,7 +1329,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackInitSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1412,7 +1412,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackListSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1497,7 +1497,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackOutputSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1576,7 +1576,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackRenameSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1654,7 +1654,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackRemoveSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1737,7 +1737,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackSelectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1817,7 +1817,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackTagSetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1894,7 +1894,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackTagGetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1969,7 +1969,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackTagRemoveSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2044,7 +2044,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiStackTagListSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2130,7 +2130,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiNewSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2242,7 +2242,7 @@ public partial class PulumiTasks
     {
         toolSettings = toolSettings ?? new PulumiDestroySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2337,8 +2337,8 @@ public partial class PulumiUpSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   Config to use during the update.
     /// </summary>
@@ -2541,8 +2541,8 @@ public partial class PulumiPreviewSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   Config to use during the update.
     /// </summary>
@@ -2735,8 +2735,8 @@ public partial class PulumiConfigSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   Use the configuration values in the specified file rather than detecting the file name.
     /// </summary>
@@ -2828,8 +2828,8 @@ public partial class PulumiConfigCopySettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The name of the new stack to copy the config to.
     /// </summary>
@@ -2911,8 +2911,8 @@ public partial class PulumiConfigGetSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The key to the key-value pair in the configuration.
     /// </summary>
@@ -2999,8 +2999,8 @@ public partial class PulumiConfigRefreshSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   Overwrite configuration file, if it exists, without creating a backup.
     /// </summary>
@@ -3077,8 +3077,8 @@ public partial class PulumiConfigRemoveSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The key to the key-value pair in the configuration.
     /// </summary>
@@ -3160,8 +3160,8 @@ public partial class PulumiConfigSetSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The key to the key-value pair in the configuration.
     /// </summary>
@@ -3258,8 +3258,8 @@ public partial class PulumiStackSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   Display each resource's provider-assigned unique ID.
     /// </summary>
@@ -3356,8 +3356,8 @@ public partial class PulumiStackChangeSecretsProviderSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The name of the new secrets provider.
     /// </summary>
@@ -3434,8 +3434,8 @@ public partial class PulumiStackExportSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   A filename to write stack output to.
     /// </summary>
@@ -3522,8 +3522,8 @@ public partial class PulumiStackGraphSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   A file that will have a Graphviz DOT graph written to it.
     /// </summary>
@@ -3620,8 +3620,8 @@ public partial class PulumiStackHistorySettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   Serialize the preview diffs, operations, and overall output as JSON.
     /// </summary>
@@ -3703,8 +3703,8 @@ public partial class PulumiStackImportSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   A filename to read stack input from.
     /// </summary>
@@ -3786,8 +3786,8 @@ public partial class PulumiStackInitSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The stack name, optionally preceded by the organization name and a slash: <c>[&lt;org-name&gt;/]&lt;stack-name&gt;</c>
     /// </summary>
@@ -3874,8 +3874,8 @@ public partial class PulumiStackListSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   List all stacks instead of just stacks for the current project.
     /// </summary>
@@ -3972,8 +3972,8 @@ public partial class PulumiStackOutputSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The name of the property whose output value should be listed. This is optional.
     /// </summary>
@@ -4060,8 +4060,8 @@ public partial class PulumiStackRenameSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The new name for the stack.
     /// </summary>
@@ -4138,8 +4138,8 @@ public partial class PulumiStackRemoveSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The name for the stack to be removed.
     /// </summary>
@@ -4231,8 +4231,8 @@ public partial class PulumiStackSelectSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The name of the stack that should be selected.
     /// </summary>
@@ -4319,8 +4319,8 @@ public partial class PulumiStackTagSetSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The name of the tag to be set.
     /// </summary>
@@ -4402,8 +4402,8 @@ public partial class PulumiStackTagGetSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The name of the tag to be set.
     /// </summary>
@@ -4480,8 +4480,8 @@ public partial class PulumiStackTagRemoveSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The name of the tag to be set.
     /// </summary>
@@ -4558,8 +4558,8 @@ public partial class PulumiStackTagListSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   Emit output as JSON.
     /// </summary>
@@ -4636,8 +4636,8 @@ public partial class PulumiNewSettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   The template or URL to base the new stack off of.
     /// </summary>
@@ -4770,8 +4770,8 @@ public partial class PulumiDestroySettings : ToolSettings
     ///   Path to the Pulumi executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? PulumiTasks.PulumiPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? PulumiTasks.PulumiLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? PulumiTasks.PulumiExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PulumiTasks.PulumiLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PulumiTasks.PulumiExitHandler;
     /// <summary>
     ///   Use the configuration values in the specified file rather than detecting the file name.
     /// </summary>

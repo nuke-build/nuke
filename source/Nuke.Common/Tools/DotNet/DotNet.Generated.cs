@@ -38,10 +38,10 @@ public partial class DotNetTasks
     /// <summary>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> DotNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> DotNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(DotNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? DotNetLogger);
-        (customExitHandler ?? (p => DotNetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(DotNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? DotNetLogger);
+        (exitHandler ?? (p => DotNetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -94,7 +94,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetTestSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -231,7 +231,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetRunSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -331,7 +331,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetRestoreSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -429,7 +429,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetPackSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -545,7 +545,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetBuildSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -653,7 +653,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetMSBuildSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -731,7 +731,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetCleanSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -800,7 +800,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetFormatSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -888,7 +888,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetPublishSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -989,7 +989,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetNuGetPushSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1059,7 +1059,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetNuGetAddSourceSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1121,7 +1121,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetToolInstallSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1186,7 +1186,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetToolRestoreSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1246,7 +1246,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetToolUninstallSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1304,7 +1304,7 @@ public partial class DotNetTasks
     {
         toolSettings = toolSettings ?? new DotNetToolUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1363,8 +1363,8 @@ public partial class DotNetTestSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   Specifies a path to the test project. If omitted, it defaults to current directory.
     /// </summary>
@@ -1572,8 +1572,8 @@ public partial class DotNetRunSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   Configuration to use for building the project. The default value is Debug.
     /// </summary>
@@ -1702,8 +1702,8 @@ public partial class DotNetRestoreSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   Optional path to the project file to restore.
     /// </summary>
@@ -1807,8 +1807,8 @@ public partial class DotNetPackSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory.
     /// </summary>
@@ -1952,8 +1952,8 @@ public partial class DotNetBuildSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file.
     /// </summary>
@@ -2108,8 +2108,8 @@ public partial class DotNetMSBuildSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   The solution or project file on which MSBuild is executed.
     /// </summary>
@@ -2204,8 +2204,8 @@ public partial class DotNetCleanSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file.
     /// </summary>
@@ -2268,8 +2268,8 @@ public partial class DotNetFormatSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   The MSBuild project or solution to run code formatting on. If a project or solution file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> or <em>sln</em>, and uses that file.
     /// </summary>
@@ -2349,8 +2349,8 @@ public partial class DotNetPublishSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   The project to publish, which defaults to the current directory if not specified.
     /// </summary>
@@ -2494,8 +2494,8 @@ public partial class DotNetNuGetPushSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   Path of the package to push.
     /// </summary>
@@ -2572,8 +2572,8 @@ public partial class DotNetNuGetAddSourceSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   URL of the source.
     /// </summary>
@@ -2626,8 +2626,8 @@ public partial class DotNetToolInstallSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
     /// </summary>
@@ -2690,8 +2690,8 @@ public partial class DotNetToolRestoreSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   Specifies the NuGet configuration (<em>nuget.config</em>) file to use.
     /// </summary>
@@ -2749,8 +2749,8 @@ public partial class DotNetToolUninstallSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list">dotnet tool list</a> command.
     /// </summary>
@@ -2792,8 +2792,8 @@ public partial class DotNetToolUpdateSettings : ToolSettings
     ///   Path to the DotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotNetTasks.DotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotNetTasks.DotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
     ///   The Name/ID of the NuGet package that contains the .NET Core Global Tool to install.
     /// </summary>

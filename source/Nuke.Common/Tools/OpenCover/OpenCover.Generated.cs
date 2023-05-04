@@ -40,10 +40,10 @@ public partial class OpenCoverTasks
     ///   <p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p>
     ///   <p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> OpenCover(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> OpenCover(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(OpenCoverPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? OpenCoverLogger);
-        (customExitHandler ?? (p => OpenCoverExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(OpenCoverPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? OpenCoverLogger);
+        (exitHandler ?? (p => OpenCoverExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -83,7 +83,7 @@ public partial class OpenCoverTasks
     {
         toolSettings = toolSettings ?? new OpenCoverSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -174,8 +174,8 @@ public partial class OpenCoverSettings : ToolSettings
     ///   Path to the OpenCover executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? OpenCoverTasks.OpenCoverPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? OpenCoverTasks.OpenCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? OpenCoverTasks.OpenCoverExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? OpenCoverTasks.OpenCoverLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? OpenCoverTasks.OpenCoverExitHandler;
     /// <summary>
     ///   The name of the target application or service that will be started; this can also be a path to the target application.
     /// </summary>

@@ -40,10 +40,10 @@ public partial class DotCoverTasks
     ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
     ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> DotCover(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> DotCover(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(DotCoverPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? DotCoverLogger);
-        (customExitHandler ?? (p => DotCoverExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(DotCoverPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? DotCoverLogger);
+        (exitHandler ?? (p => DotCoverExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -78,7 +78,7 @@ public partial class DotCoverTasks
     {
         toolSettings = toolSettings ?? new DotCoverAnalyseSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -176,7 +176,7 @@ public partial class DotCoverTasks
     {
         toolSettings = toolSettings ?? new DotCoverCoverSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -271,7 +271,7 @@ public partial class DotCoverTasks
     {
         toolSettings = toolSettings ?? new DotCoverCoverDotNetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -350,7 +350,7 @@ public partial class DotCoverTasks
     {
         toolSettings = toolSettings ?? new DotCoverDeleteSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -403,7 +403,7 @@ public partial class DotCoverTasks
     {
         toolSettings = toolSettings ?? new DotCoverMergeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -461,7 +461,7 @@ public partial class DotCoverTasks
     {
         toolSettings = toolSettings ?? new DotCoverReportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -519,7 +519,7 @@ public partial class DotCoverTasks
     {
         toolSettings = toolSettings ?? new DotCoverZipSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -570,8 +570,8 @@ public partial class DotCoverAnalyseSettings : ToolSettings
     ///   Path to the DotCover executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotCoverTasks.DotCoverExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
     public virtual string Configuration { get; internal set; }
     /// <summary>
     ///   File name of the program to analyse.
@@ -690,8 +690,8 @@ public partial class DotCoverCoverSettings : ToolSettings
     ///   Path to the DotCover executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotCoverTasks.DotCoverExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
     public virtual string Configuration { get; internal set; }
     /// <summary>
     ///   File name of the program to analyse.
@@ -805,8 +805,8 @@ public partial class DotCoverCoverDotNetSettings : ToolSettings
     ///   Path to the DotCover executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotCoverTasks.DotCoverExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
     public virtual string Configuration { get; internal set; }
     /// <summary>
     ///   Path to the resulting coverage snapshot.
@@ -915,8 +915,8 @@ public partial class DotCoverDeleteSettings : ToolSettings
     ///   Path to the DotCover executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotCoverTasks.DotCoverExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
     public virtual string Configuration { get; internal set; }
     /// <summary>
     ///   List of snapshot files.
@@ -951,8 +951,8 @@ public partial class DotCoverMergeSettings : ToolSettings
     ///   Path to the DotCover executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotCoverTasks.DotCoverExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
     public virtual string Configuration { get; internal set; }
     /// <summary>
     ///   List of snapshot files.
@@ -997,8 +997,8 @@ public partial class DotCoverReportSettings : ToolSettings
     ///   Path to the DotCover executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotCoverTasks.DotCoverExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
     public virtual string Configuration { get; internal set; }
     /// <summary>
     ///   List of snapshot files.
@@ -1048,8 +1048,8 @@ public partial class DotCoverZipSettings : ToolSettings
     ///   Path to the DotCover executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? DotCoverTasks.DotCoverExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
     public virtual string Configuration { get; internal set; }
     /// <summary>
     ///   Coverage snapshot file name.

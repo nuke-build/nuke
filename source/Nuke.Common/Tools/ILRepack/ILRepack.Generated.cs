@@ -40,10 +40,10 @@ public partial class ILRepackTasks
     ///   <p>ILRepack is meant at replacing <a href="https://github.com/dotnet/ILMerge">ILMerge</a> / <a href="https://evain.net/blog/articles/2006/11/06/an-introduction-to-mono-merge">Mono.Merge</a>.<para/>The former being closed-source (<a href="https://github.com/Microsoft/ILMerge">now open-sourced</a>), impossible to customize, slow, resource consuming and many more. The later being deprecated, unsupported, and based on an old version of Mono.Cecil.<para/>Here we're using latest (slightly modified) Cecil sources (0.9), you can find the fork <a href="https://github.com/gluck/cecil">here</a>. Mono.Posix is also required (build only, it gets merged afterwards) for executable bit set on target file.</p>
     ///   <p>For more details, visit the <a href="https://github.com/gluck/il-repack#readme">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> ILRepack(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> ILRepack(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(ILRepackPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? ILRepackLogger);
-        (customExitHandler ?? (p => ILRepackExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(ILRepackPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? ILRepackLogger);
+        (exitHandler ?? (p => ILRepackExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -86,7 +86,7 @@ public partial class ILRepackTasks
     {
         toolSettings = toolSettings ?? new ILRepackSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -183,8 +183,8 @@ public partial class ILRepackSettings : ToolSettings
     ///   Path to the ILRepack executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ILRepackTasks.ILRepackPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ILRepackTasks.ILRepackLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ILRepackTasks.ILRepackExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? ILRepackTasks.ILRepackLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? ILRepackTasks.ILRepackExitHandler;
     /// <summary>
     ///   Specifies a keyfile to sign the output assembly.
     /// </summary>

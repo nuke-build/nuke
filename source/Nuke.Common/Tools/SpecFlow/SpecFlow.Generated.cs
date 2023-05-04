@@ -40,10 +40,10 @@ public partial class SpecFlowTasks
     ///   <p>Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.</p>
     ///   <p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> SpecFlow(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> SpecFlow(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(SpecFlowPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? SpecFlowLogger);
-        (customExitHandler ?? (p => SpecFlowExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(SpecFlowPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? SpecFlowLogger);
+        (exitHandler ?? (p => SpecFlowExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -66,7 +66,7 @@ public partial class SpecFlowTasks
     {
         toolSettings = toolSettings ?? new SpecFlowNUnitExecutionReportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -126,7 +126,7 @@ public partial class SpecFlowTasks
     {
         toolSettings = toolSettings ?? new SpecFlowMSTestExecutionReportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -180,7 +180,7 @@ public partial class SpecFlowTasks
     {
         toolSettings = toolSettings ?? new SpecFlowStepDefinitionReportSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -237,7 +237,7 @@ public partial class SpecFlowTasks
     {
         toolSettings = toolSettings ?? new SpecFlowRunSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -300,7 +300,7 @@ public partial class SpecFlowTasks
     {
         toolSettings = toolSettings ?? new SpecFlowBuildServerRunSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -358,7 +358,7 @@ public partial class SpecFlowTasks
     {
         toolSettings = toolSettings ?? new SpecFlowRegisterSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -402,7 +402,7 @@ public partial class SpecFlowTasks
     {
         toolSettings = toolSettings ?? new SpecFlowUnregisterSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -438,7 +438,7 @@ public partial class SpecFlowTasks
     {
         toolSettings = toolSettings ?? new SpecFlowAboutSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -477,8 +477,8 @@ public partial class SpecFlowNUnitExecutionReportSettings : ToolSettings
     ///   Path to the SpecFlow executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? SpecFlowTasks.SpecFlowLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
     /// <summary>
     ///   A path of the project file containing the *.feature files. Required.
     /// </summary>
@@ -535,8 +535,8 @@ public partial class SpecFlowMSTestExecutionReportSettings : ToolSettings
     ///   Path to the SpecFlow executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? SpecFlowTasks.SpecFlowLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
     /// <summary>
     ///   A path of the project file containing the *.feature files. Required.
     /// </summary>
@@ -578,8 +578,8 @@ public partial class SpecFlowStepDefinitionReportSettings : ToolSettings
     ///   Path to the SpecFlow executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? SpecFlowTasks.SpecFlowLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
     /// <summary>
     ///   A path of the project file containing the *.feature files. Required.
     /// </summary>
@@ -621,8 +621,8 @@ public partial class SpecFlowRunSettings : ToolSettings
     ///   Path to the SpecFlow executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? SpecFlowTasks.SpecFlowLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
     /// <summary>
     ///   Supported values: <c>None, VS2010, VS2012, VS2013, TeamCity, TFS</c>.
     /// </summary>
@@ -679,8 +679,8 @@ public partial class SpecFlowBuildServerRunSettings : ToolSettings
     ///   Path to the SpecFlow executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? SpecFlowTasks.SpecFlowLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
     /// <summary>
     ///   The assembly or test profile (<c>.srprofile</c> file) to be tested.
     /// </summary>
@@ -737,8 +737,8 @@ public partial class SpecFlowRegisterSettings : ToolSettings
     ///   Path to the SpecFlow executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? SpecFlowTasks.SpecFlowLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
     /// <summary>
     ///   The license key you received when you purchased SpecFlow+.
     /// </summary>
@@ -770,8 +770,8 @@ public partial class SpecFlowUnregisterSettings : ToolSettings
     ///   Path to the SpecFlow executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? SpecFlowTasks.SpecFlowLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -793,8 +793,8 @@ public partial class SpecFlowAboutSettings : ToolSettings
     ///   Path to the SpecFlow executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? SpecFlowTasks.SpecFlowPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? SpecFlowTasks.SpecFlowLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? SpecFlowTasks.SpecFlowLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? SpecFlowTasks.SpecFlowExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments

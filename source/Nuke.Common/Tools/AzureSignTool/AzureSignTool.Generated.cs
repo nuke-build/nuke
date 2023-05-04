@@ -40,10 +40,10 @@ public partial class AzureSignToolTasks
     ///   <p>Azure Sign Tool is similar to <c>signtool</c> in the Windows SDK, with the major difference being that it uses Azure Key Vault for performing the signing process. The usage is like <c>signtool</c>, except with a limited set of options for signing and options for authenticating to Azure Key Vault.</p>
     ///   <p>For more details, visit the <a href="https://github.com/vcsjones/AzureSignTool">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> AzureSignTool(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> AzureSignTool(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(AzureSignToolPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? AzureSignToolLogger);
-        (customExitHandler ?? (p => AzureSignToolExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(AzureSignToolPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? AzureSignToolLogger);
+        (exitHandler ?? (p => AzureSignToolExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -82,7 +82,7 @@ public partial class AzureSignToolTasks
     {
         toolSettings = toolSettings ?? new AzureSignToolSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -171,8 +171,8 @@ public partial class AzureSignToolSettings : ToolSettings
     ///   Path to the AzureSignTool executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? AzureSignToolTasks.AzureSignToolPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? AzureSignToolTasks.AzureSignToolLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? AzureSignToolTasks.AzureSignToolExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? AzureSignToolTasks.AzureSignToolLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? AzureSignToolTasks.AzureSignToolExitHandler;
     /// <summary>
     ///   A fully qualified URL of the key vault with the certificate that will be used for signing. An example value might be <c>https://my-vault.vault.azure.net</c>.
     /// </summary>

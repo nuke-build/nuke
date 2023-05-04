@@ -40,10 +40,10 @@ public partial class NuGetTasks
     ///   <p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> NuGet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> NuGet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(NuGetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NuGetLogger);
-        (customExitHandler ?? (p => NuGetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(NuGetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? NuGetLogger);
+        (exitHandler ?? (p => NuGetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -71,7 +71,7 @@ public partial class NuGetTasks
     {
         toolSettings = toolSettings ?? new NuGetPushSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -157,7 +157,7 @@ public partial class NuGetTasks
     {
         toolSettings = toolSettings ?? new NuGetPackSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -258,7 +258,7 @@ public partial class NuGetTasks
     {
         toolSettings = toolSettings ?? new NuGetRestoreSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -356,7 +356,7 @@ public partial class NuGetTasks
     {
         toolSettings = toolSettings ?? new NuGetInstallSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -443,7 +443,7 @@ public partial class NuGetTasks
     {
         toolSettings = toolSettings ?? new NuGetSourcesAddSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -512,7 +512,7 @@ public partial class NuGetTasks
     {
         toolSettings = toolSettings ?? new NuGetSourcesUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -577,7 +577,7 @@ public partial class NuGetTasks
     {
         toolSettings = toolSettings ?? new NuGetSourcesRemoveSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -634,7 +634,7 @@ public partial class NuGetTasks
     {
         toolSettings = toolSettings ?? new NuGetSourcesEnableSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -691,7 +691,7 @@ public partial class NuGetTasks
     {
         toolSettings = toolSettings ?? new NuGetSourcesDisableSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -748,7 +748,7 @@ public partial class NuGetTasks
     {
         toolSettings = toolSettings ?? new NuGetSourcesListSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -801,8 +801,8 @@ public partial class NuGetPushSettings : ToolSettings
     ///   Path to the NuGet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NuGetTasks.NuGetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NuGetTasks.NuGetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NuGetTasks.NuGetExitHandler;
     /// <summary>
     ///   Path of the package to push.
     /// </summary>
@@ -884,8 +884,8 @@ public partial class NuGetPackSettings : ToolSettings
     ///   Path to the NuGet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NuGetTasks.NuGetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NuGetTasks.NuGetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NuGetTasks.NuGetExitHandler;
     /// <summary>
     ///   The <c>.nuspec</c> or <c>.csproj</c> file.
     /// </summary>
@@ -1008,8 +1008,8 @@ public partial class NuGetRestoreSettings : ToolSettings
     ///   Path to the NuGet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NuGetTasks.NuGetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NuGetTasks.NuGetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NuGetTasks.NuGetExitHandler;
     /// <summary>
     ///   Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file.
     /// </summary>
@@ -1129,8 +1129,8 @@ public partial class NuGetInstallSettings : ToolSettings
     ///   Path to the NuGet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NuGetTasks.NuGetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NuGetTasks.NuGetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NuGetTasks.NuGetExitHandler;
     /// <summary>
     ///   Name of the package to install.
     /// </summary>
@@ -1245,8 +1245,8 @@ public partial class NuGetSourcesAddSettings : ToolSettings
     ///   Path to the NuGet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NuGetTasks.NuGetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NuGetTasks.NuGetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NuGetTasks.NuGetExitHandler;
     /// <summary>
     ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
     /// </summary>
@@ -1313,8 +1313,8 @@ public partial class NuGetSourcesUpdateSettings : ToolSettings
     ///   Path to the NuGet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NuGetTasks.NuGetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NuGetTasks.NuGetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NuGetTasks.NuGetExitHandler;
     /// <summary>
     ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
     /// </summary>
@@ -1381,8 +1381,8 @@ public partial class NuGetSourcesRemoveSettings : ToolSettings
     ///   Path to the NuGet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NuGetTasks.NuGetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NuGetTasks.NuGetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NuGetTasks.NuGetExitHandler;
     /// <summary>
     ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
     /// </summary>
@@ -1429,8 +1429,8 @@ public partial class NuGetSourcesEnableSettings : ToolSettings
     ///   Path to the NuGet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NuGetTasks.NuGetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NuGetTasks.NuGetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NuGetTasks.NuGetExitHandler;
     /// <summary>
     ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
     /// </summary>
@@ -1477,8 +1477,8 @@ public partial class NuGetSourcesDisableSettings : ToolSettings
     ///   Path to the NuGet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NuGetTasks.NuGetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NuGetTasks.NuGetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NuGetTasks.NuGetExitHandler;
     /// <summary>
     ///   The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.
     /// </summary>
@@ -1525,8 +1525,8 @@ public partial class NuGetSourcesListSettings : ToolSettings
     ///   Path to the NuGet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? NuGetTasks.NuGetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NuGetTasks.NuGetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NuGetTasks.NuGetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NuGetTasks.NuGetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NuGetTasks.NuGetExitHandler;
     /// <summary>
     ///   Can be <c>Detailed</c> (the default) or <c>Short</c>.
     /// </summary>

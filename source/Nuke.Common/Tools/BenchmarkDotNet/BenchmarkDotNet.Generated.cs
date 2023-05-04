@@ -40,10 +40,10 @@ public partial class BenchmarkDotNetTasks
     ///   <p>Powerful .NET library for benchmarking</p>
     ///   <p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> BenchmarkDotNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> BenchmarkDotNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(BenchmarkDotNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? BenchmarkDotNetLogger);
-        (customExitHandler ?? (p => BenchmarkDotNetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(BenchmarkDotNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? BenchmarkDotNetLogger);
+        (exitHandler ?? (p => BenchmarkDotNetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -108,7 +108,7 @@ public partial class BenchmarkDotNetTasks
     {
         toolSettings = toolSettings ?? new BenchmarkDotNetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -249,8 +249,8 @@ public partial class BenchmarkDotNetSettings : ToolSettings
     ///   Path to the BenchmarkDotNet executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? BenchmarkDotNetTasks.BenchmarkDotNetPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? BenchmarkDotNetTasks.BenchmarkDotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? BenchmarkDotNetTasks.BenchmarkDotNetExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? BenchmarkDotNetTasks.BenchmarkDotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? BenchmarkDotNetTasks.BenchmarkDotNetExitHandler;
     /// <summary>
     ///   The assembly with the benchmarks (required).
     /// </summary>

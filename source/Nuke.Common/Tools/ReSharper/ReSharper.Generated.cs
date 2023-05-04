@@ -38,10 +38,10 @@ public partial class ReSharperTasks
     /// <summary>
     ///   <p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/ReSharper_Command_Line_Tools.html">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> ReSharper(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> ReSharper(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(ReSharperPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? ReSharperLogger);
-        (customExitHandler ?? (p => ReSharperExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(ReSharperPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? ReSharperLogger);
+        (exitHandler ?? (p => ReSharperExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -85,7 +85,7 @@ public partial class ReSharperTasks
         toolSettings = toolSettings ?? new ReSharperInspectCodeSettings();
         PreProcess(ref toolSettings);
         using var process = StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         PostProcess(toolSettings);
         return process.Output;
     }
@@ -203,7 +203,7 @@ public partial class ReSharperTasks
         toolSettings = toolSettings ?? new ReSharperCleanupCodeSettings();
         PreProcess(ref toolSettings);
         using var process = StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -303,7 +303,7 @@ public partial class ReSharperTasks
     {
         toolSettings = toolSettings ?? new ReSharperDupFinderSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -382,8 +382,8 @@ public partial class ReSharperInspectCodeSettings : ReSharperSettingsBase
     ///   Path to the ReSharper executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ReSharperTasks.ReSharperLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ReSharperTasks.ReSharperExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? ReSharperTasks.ReSharperLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? ReSharperTasks.ReSharperExitHandler;
     /// <summary>
     ///   Target path.
     /// </summary>
@@ -546,8 +546,8 @@ public partial class ReSharperCleanupCodeSettings : ReSharperSettingsBase
     ///   Path to the ReSharper executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ReSharperTasks.ReSharperLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ReSharperTasks.ReSharperExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? ReSharperTasks.ReSharperLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? ReSharperTasks.ReSharperExitHandler;
     /// <summary>
     ///   Target path.
     /// </summary>
@@ -675,8 +675,8 @@ public partial class ReSharperDupFinderSettings : ToolSettings
     ///   Path to the ReSharper executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? ReSharperTasks.ReSharperPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? ReSharperTasks.ReSharperLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? ReSharperTasks.ReSharperExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? ReSharperTasks.ReSharperLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? ReSharperTasks.ReSharperExitHandler;
     /// <summary>
     ///   Defines files included into the duplicates search. Use Visual Studio solution or project files, Ant-like wildcards or specific source file and folder names. Paths should be either absolute or relative to the working directory.
     /// </summary>

@@ -38,10 +38,10 @@ public partial class KubernetesTasks
     /// <summary>
     ///   <p>For more details, visit the <a href="https://kubernetes.io/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Kubernetes(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> Kubernetes(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(KubernetesPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? KubernetesLogger);
-        (customExitHandler ?? (p => KubernetesExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(KubernetesPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? KubernetesLogger);
+        (exitHandler ?? (p => KubernetesExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -63,7 +63,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesApiResourcesSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -125,7 +125,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesDrainSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -222,7 +222,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesRunSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -366,7 +366,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesGetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -459,7 +459,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesVersionSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -505,7 +505,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesTopSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -541,7 +541,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesConfigSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -584,7 +584,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesExecSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -650,7 +650,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesRollingUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -737,7 +737,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesLabelSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -829,7 +829,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesAnnotateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -918,7 +918,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesDeleteSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1012,7 +1012,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesExposeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1096,7 +1096,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesOptionsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1139,7 +1139,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesAttachSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1202,7 +1202,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesProxySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1264,7 +1264,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesAlphaSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1300,7 +1300,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1336,7 +1336,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesCompletionSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1385,7 +1385,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesPatchSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1461,7 +1461,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesReplaceSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1536,7 +1536,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesTaintSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1603,7 +1603,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesDescribeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1660,7 +1660,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesSetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1705,7 +1705,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesAuthSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1750,7 +1750,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesCertificateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1795,7 +1795,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesRolloutSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1859,7 +1859,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesApplySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1962,7 +1962,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesApplyKustomizeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2049,7 +2049,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesCordonSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2100,7 +2100,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesCpSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2146,7 +2146,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesApiVersionsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2187,7 +2187,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesUncordonSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2248,7 +2248,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesAutoscaleSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2317,7 +2317,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesPluginSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2359,7 +2359,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesClusterInfoSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2405,7 +2405,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesWaitSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2471,7 +2471,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesConvertSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2543,7 +2543,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2616,7 +2616,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesPortForwardSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2702,7 +2702,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesRunContainerSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2832,7 +2832,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesEditSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2910,7 +2910,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesScaleSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2979,7 +2979,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesExplainSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3040,7 +3040,7 @@ public partial class KubernetesTasks
     {
         toolSettings = toolSettings ?? new KubernetesLogsSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3109,8 +3109,8 @@ public partial class KubernetesApiResourcesSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   Limit to resources in the specified API group.
     /// </summary>
@@ -3163,8 +3163,8 @@ public partial class KubernetesDrainSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   Continue even if there are pods using emptyDir (local data that will be deleted when the node is drained).
     /// </summary>
@@ -3226,8 +3226,8 @@ public partial class KubernetesRunSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The name of the container.
     /// </summary>
@@ -3446,8 +3446,8 @@ public partial class KubernetesGetSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type or/and name of the ressource.
     /// </summary>
@@ -3592,8 +3592,8 @@ public partial class KubernetesVersionSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   Client version only (no server required).
     /// </summary>
@@ -3630,8 +3630,8 @@ public partial class KubernetesTopSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -3653,8 +3653,8 @@ public partial class KubernetesConfigSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -3676,8 +3676,8 @@ public partial class KubernetesExecSettings : KubernetesExecBaseSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The name of the pod.
     /// </summary>
@@ -3724,8 +3724,8 @@ public partial class KubernetesRollingUpdateSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
     /// </summary>
@@ -3818,8 +3818,8 @@ public partial class KubernetesLabelSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type or/and name of the ressource.
     /// </summary>
@@ -3929,8 +3929,8 @@ public partial class KubernetesAnnotateSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type or/and name of the ressource.
     /// </summary>
@@ -4035,8 +4035,8 @@ public partial class KubernetesDeleteSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified
     /// </summary>
@@ -4135,8 +4135,8 @@ public partial class KubernetesExposeSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
     /// </summary>
@@ -4269,8 +4269,8 @@ public partial class KubernetesOptionsSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -4292,8 +4292,8 @@ public partial class KubernetesAttachSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type or/and name of the pod.
     /// </summary>
@@ -4341,8 +4341,8 @@ public partial class KubernetesProxySettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   Regular expression for hosts that the proxy should accept.
     /// </summary>
@@ -4419,8 +4419,8 @@ public partial class KubernetesAlphaSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -4442,8 +4442,8 @@ public partial class KubernetesSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -4465,8 +4465,8 @@ public partial class KubernetesCompletionSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -4488,8 +4488,8 @@ public partial class KubernetesPatchSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type or/and name of the ressource.
     /// </summary>
@@ -4568,8 +4568,8 @@ public partial class KubernetesReplaceSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
     /// </summary>
@@ -4652,8 +4652,8 @@ public partial class KubernetesTaintSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type or/and name of the ressource.
     /// </summary>
@@ -4722,8 +4722,8 @@ public partial class KubernetesDescribeSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type or/and name of the ressource.
     /// </summary>
@@ -4782,8 +4782,8 @@ public partial class KubernetesSetSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The subcommand to run.
     /// </summary>
@@ -4811,8 +4811,8 @@ public partial class KubernetesAuthSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The subcommand to run.
     /// </summary>
@@ -4839,8 +4839,8 @@ public partial class KubernetesCertificateSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The subcommand to run.
     /// </summary>
@@ -4868,8 +4868,8 @@ public partial class KubernetesRolloutSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The subcommand to run.
     /// </summary>
@@ -4897,8 +4897,8 @@ public partial class KubernetesApplySettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   Select all resources in the namespace of the specified resource types.
     /// </summary>
@@ -5022,8 +5022,8 @@ public partial class KubernetesApplyKustomizeSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   Set the target folder of the kustomize files.
     /// </summary>
@@ -5152,8 +5152,8 @@ public partial class KubernetesCordonSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The namne of the Node.
     /// </summary>
@@ -5190,8 +5190,8 @@ public partial class KubernetesCpSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The file specification of the source. '[namespace/]pod-name:/file/path'. for a remote file '/file/path' for a local file.
     /// </summary>
@@ -5228,8 +5228,8 @@ public partial class KubernetesApiVersionsSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -5251,8 +5251,8 @@ public partial class KubernetesUncordonSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The name of the node.
     /// </summary>
@@ -5289,8 +5289,8 @@ public partial class KubernetesAutoscaleSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
     /// </summary>
@@ -5378,8 +5378,8 @@ public partial class KubernetesPluginSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The name of the plugin.
     /// </summary>
@@ -5406,8 +5406,8 @@ public partial class KubernetesClusterInfoSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -5429,8 +5429,8 @@ public partial class KubernetesWaitSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.
     /// </summary>
@@ -5498,8 +5498,8 @@ public partial class KubernetesConvertSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
     /// </summary>
@@ -5562,8 +5562,8 @@ public partial class KubernetesCreateSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified
     /// </summary>
@@ -5657,8 +5657,8 @@ public partial class KubernetesPortForwardSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type or/and name of the resource.
     /// </summary>
@@ -5697,8 +5697,8 @@ public partial class KubernetesRunContainerSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.
     /// </summary>
@@ -5912,8 +5912,8 @@ public partial class KubernetesEditSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type or/and name of the ressource.
     /// </summary>
@@ -5997,8 +5997,8 @@ public partial class KubernetesScaleSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   Select all resources in the namespace of the specified resource types.
     /// </summary>
@@ -6081,8 +6081,8 @@ public partial class KubernetesExplainSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   Get different explanations for particular API version.
     /// </summary>
@@ -6120,8 +6120,8 @@ public partial class KubernetesLogsSettings : KubernetesToolSettings
     ///   Path to the Kubernetes executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? KubernetesTasks.KubernetesPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? KubernetesTasks.KubernetesLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? KubernetesTasks.KubernetesExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? KubernetesTasks.KubernetesLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? KubernetesTasks.KubernetesExitHandler;
     /// <summary>
     ///   The type or/and name of the ressource.
     /// </summary>

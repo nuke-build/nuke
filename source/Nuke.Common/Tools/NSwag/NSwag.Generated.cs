@@ -41,10 +41,10 @@ public partial class NSwagTasks
     ///   <p>The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance">inheritance</a>, <a href="https://github.com/NJsonSchema/NJsonSchema/wiki/Enums">enum</a> and reference handling). The NSwag project heavily uses <a href="http://njsonschema.org/">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.</p>
     ///   <p>For more details, visit the <a href="https://github.com/RSuter/NSwag">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> NSwag(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> NSwag(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(NSwagPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? NSwagLogger);
-        (customExitHandler ?? (p => NSwagExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(NSwagPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? NSwagLogger);
+        (exitHandler ?? (p => NSwagExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -61,7 +61,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagVersionSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -112,7 +112,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagListTypesSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -175,7 +175,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagListWebApiControllersSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -238,7 +238,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagTypesToOpenApiSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -311,7 +311,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagTypesToSwaggerSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -427,7 +427,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagWebApiToOpenApiSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -596,7 +596,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagWebApiToSwaggerSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -772,7 +772,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagAspNetCoreToOpenApiSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -944,7 +944,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagAspNetCoreToSwaggerSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1087,7 +1087,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagCreateDocumentSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1134,7 +1134,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagExecuteDocumentSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1197,7 +1197,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagJsonSchemaToCSharpSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1275,7 +1275,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagJsonSchemaToTypeScriptSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1382,7 +1382,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagOpenApiToCSharpClientSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1610,7 +1610,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagSwaggerToCSharpClientSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1865,7 +1865,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagOpenApiToCSharpControllerSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2074,7 +2074,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagSwaggerToCSharpControllerSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2247,7 +2247,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagOpenApiToTypeScriptClientSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2363,7 +2363,7 @@ public partial class NSwagTasks
     {
         toolSettings = toolSettings ?? new NSwagSwaggerToTypeScriptClientSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2518,8 +2518,8 @@ public partial class NSwagVersionSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -2542,8 +2542,8 @@ public partial class NSwagListTypesSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The nswag.json configuration file path.
     /// </summary>
@@ -2596,8 +2596,8 @@ public partial class NSwagListWebApiControllersSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The nswag.json configuration file path.
     /// </summary>
@@ -2650,8 +2650,8 @@ public partial class NSwagTypesToOpenApiSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The output file path (optional).
     /// </summary>
@@ -2706,8 +2706,8 @@ public partial class NSwagTypesToSwaggerSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   Use $ref references even if additional properties are defined on the object (otherwise allOf/oneOf with $ref is used, default: false).
     /// </summary>
@@ -2813,8 +2813,8 @@ public partial class NSwagWebApiToOpenApiSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true).
     /// </summary>
@@ -3038,8 +3038,8 @@ public partial class NSwagWebApiToSwaggerSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   Specifies whether to add path parameters which are missing in the action method (default: true).
     /// </summary>
@@ -3300,8 +3300,8 @@ public partial class NSwagAspNetCoreToOpenApiSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   Nullable body parameters are allowed (ignored when MvcOptions.AllowEmptyInputInBodyModelBinding is available (ASP.NET Core 2.0+), default: true).
     /// </summary>
@@ -3525,8 +3525,8 @@ public partial class NSwagAspNetCoreToSwaggerSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The ASP.NET Core API Explorer group names to include (comma separated, default: empty = all).
     /// </summary>
@@ -3801,8 +3801,8 @@ public partial class NSwagCreateDocumentSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -3825,8 +3825,8 @@ public partial class NSwagExecuteDocumentSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     public virtual string Input { get; internal set; }
     public virtual IReadOnlyDictionary<string, object> Variables => VariablesInternal.AsReadOnly();
     internal Dictionary<string,object> VariablesInternal { get; set; } = new Dictionary<string,object>(StringComparer.OrdinalIgnoreCase);
@@ -3854,8 +3854,8 @@ public partial class NSwagJsonSchemaToCSharpSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The any .NET type (default: 'object').
     /// </summary>
@@ -3949,8 +3949,8 @@ public partial class NSwagJsonSchemaToTypeScriptSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The type name of the root schema.
     /// </summary>
@@ -3999,8 +3999,8 @@ public partial class NSwagOpenApiToCSharpClientSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The additional contract namespace usages.
     /// </summary>
@@ -4290,8 +4290,8 @@ public partial class NSwagSwaggerToCSharpClientSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The client base class (empty for no base class).
     /// </summary>
@@ -4717,8 +4717,8 @@ public partial class NSwagOpenApiToCSharpControllerSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The additional contract namespace usages.
     /// </summary>
@@ -5008,8 +5008,8 @@ public partial class NSwagSwaggerToCSharpControllerSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The Base path on which the API is served, which is relative to the Host
     /// </summary>
@@ -5339,8 +5339,8 @@ public partial class NSwagOpenApiToTypeScriptClientSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The custom IEnumNameGenerator implementation type in the form 'assemblyName:fullTypeName' or 'fullTypeName').
     /// </summary>
@@ -5404,8 +5404,8 @@ public partial class NSwagSwaggerToTypeScriptClientSettings : NSwagSettings
     ///   Path to the NSwag executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? NSwagTasks.NSwagLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? NSwagTasks.NSwagExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? NSwagTasks.NSwagLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? NSwagTasks.NSwagExitHandler;
     /// <summary>
     ///   The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').
     /// </summary>

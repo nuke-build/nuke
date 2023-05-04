@@ -40,10 +40,10 @@ public partial class TestCloudTasks
     ///   <p>Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.</p>
     ///   <p>For more details, visit the <a href="https://developer.xamarin.com/guides/testcloud/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> TestCloud(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> TestCloud(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(TestCloudPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? TestCloudLogger);
-        (customExitHandler ?? (p => TestCloudExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(TestCloudPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? TestCloudLogger);
+        (exitHandler ?? (p => TestCloudExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -71,7 +71,7 @@ public partial class TestCloudTasks
     {
         toolSettings = toolSettings ?? new TestCloudSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -138,8 +138,8 @@ public partial class TestCloudSettings : ToolSettings
     ///   Path to the TestCloud executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? TestCloudTasks.TestCloudPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? TestCloudTasks.TestCloudLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? TestCloudTasks.TestCloudExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? TestCloudTasks.TestCloudLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? TestCloudTasks.TestCloudExitHandler;
     /// <summary>
     ///   The path to the folder holding the test assemblies.
     /// </summary>

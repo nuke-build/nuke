@@ -40,10 +40,10 @@ public partial class InnoSetupTasks
     ///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
     ///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> InnoSetup(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> InnoSetup(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(InnoSetupPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? InnoSetupLogger);
-        (customExitHandler ?? (p => InnoSetupExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(InnoSetupPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? InnoSetupLogger);
+        (exitHandler ?? (p => InnoSetupExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -69,7 +69,7 @@ public partial class InnoSetupTasks
     {
         toolSettings = toolSettings ?? new InnoSetupSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -132,8 +132,8 @@ public partial class InnoSetupSettings : ToolSettings
     ///   Path to the InnoSetup executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? InnoSetupTasks.InnoSetupPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? InnoSetupTasks.InnoSetupLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? InnoSetupTasks.InnoSetupExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? InnoSetupTasks.InnoSetupLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? InnoSetupTasks.InnoSetupExitHandler;
     /// <summary>
     ///   The .iss script file to compile
     /// </summary>

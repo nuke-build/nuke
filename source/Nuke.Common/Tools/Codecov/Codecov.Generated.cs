@@ -40,10 +40,10 @@ public partial class CodecovTasks
     ///   <p>Code coverage is a measurement used to express which lines of code were executed by a test suite. We use three primary terms to describe each line executed.<para/><ul><li>hit - indicates that the source code was executed by the test suite.</li><li>partial - indicates that the source code was not fully executed by the test suite; there are remaining branches that were not executed.</li><li>miss - indicates that the source code was not executed by the test suite.</li></ul><para/>Coverage is the ratio of <c>hits / (sum of hit + partial + miss)</c>. A code base that has 5 lines executed by tests out of 12 total lines will receive a coverage ratio of 41% (rounding down).<para/>Phrased simply, code coverage provides a visual measurement of what source code is being executed by a test suite. This information indicates to the software developer where they should write new tests in an effort to achieve higher coverage.<para/>Testing source code helps to prevent bugs and syntax errors by executing each line with a known variable and cross-checking it with an expected output.</p>
     ///   <p>For more details, visit the <a href="https://about.codecov.io/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Codecov(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> Codecov(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(CodecovPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? CodecovLogger);
-        (customExitHandler ?? (p => CodecovExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(CodecovPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? CodecovLogger);
+        (exitHandler ?? (p => CodecovExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -78,7 +78,7 @@ public partial class CodecovTasks
     {
         toolSettings = toolSettings ?? new CodecovSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -159,8 +159,8 @@ public partial class CodecovSettings : ToolSettings
     ///   Path to the Codecov executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? CodecovTasks.CodecovLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? CodecovTasks.CodecovExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? CodecovTasks.CodecovLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? CodecovTasks.CodecovExitHandler;
     /// <summary>
     ///   Specify the branch name.
     /// </summary>

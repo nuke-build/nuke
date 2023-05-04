@@ -40,10 +40,10 @@ public partial class FixieTasks
     ///   <p>Fixie is a .NET modern test framework similar to NUnit and xUnit, but with an emphasis on low-ceremony defaults and flexible customization.</p>
     ///   <p>For more details, visit the <a href="https://fixie.github.io/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Fixie(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> Fixie(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(FixiePath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? FixieLogger);
-        (customExitHandler ?? (p => FixieExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(FixiePath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? FixieLogger);
+        (exitHandler ?? (p => FixieExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -64,7 +64,7 @@ public partial class FixieTasks
     {
         toolSettings = toolSettings ?? new FixieSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -117,8 +117,8 @@ public partial class FixieSettings : ToolSettings
     ///   Path to the Fixie executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? FixieTasks.FixiePath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? FixieTasks.FixieLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? FixieTasks.FixieExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? FixieTasks.FixieLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? FixieTasks.FixieExitHandler;
     /// <summary>
     ///   The configuration under which to build. When this option is omitted, the default configuration is `Debug`.
     /// </summary>

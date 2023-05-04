@@ -38,10 +38,10 @@ public partial class HelmTasks
     /// <summary>
     ///   <p>For more details, visit the <a href="https://helm.sh/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Helm(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> customLogger = null, Action<IProcess> customExitHandler = null)
+    public static IReadOnlyCollection<Output> Helm(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(HelmPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, customLogger ?? HelmLogger);
-        (customExitHandler ?? (p => HelmExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
+        using var process = ProcessTasks.StartProcess(HelmPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? HelmLogger);
+        (exitHandler ?? (p => HelmExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -59,7 +59,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmCompletionSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -108,7 +108,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmCreateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -169,7 +169,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmDeleteSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -241,7 +241,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmDependencyBuildSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -293,7 +293,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmDependencyListSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -344,7 +344,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmDependencyUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -412,7 +412,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmFetchSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -495,7 +495,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmGetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -564,7 +564,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmGetHooksSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -633,7 +633,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmGetManifestSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -702,7 +702,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmGetNotesSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -773,7 +773,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmGetValuesSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -848,7 +848,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmHistorySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -913,7 +913,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmHomeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -982,7 +982,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmInitSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1086,7 +1086,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmInspectSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1164,7 +1164,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmInspectChartSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1240,7 +1240,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmInspectReadmeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1314,7 +1314,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmInspectValuesSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1415,7 +1415,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmInstallSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1535,7 +1535,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmLintSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1616,7 +1616,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmListSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1714,7 +1714,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmPackageSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1780,7 +1780,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmPluginInstallSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1831,7 +1831,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmPluginListSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1877,7 +1877,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmPluginRemoveSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1925,7 +1925,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmPluginUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -1980,7 +1980,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmRepoAddSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2044,7 +2044,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmRepoIndexSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2095,7 +2095,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmRepoListSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2141,7 +2141,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmRepoRemoveSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2189,7 +2189,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmRepoUpdateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2244,7 +2244,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmResetSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2320,7 +2320,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmRollbackSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2400,7 +2400,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmSearchSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2458,7 +2458,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmServeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2518,7 +2518,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmStatusSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2594,7 +2594,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmTemplateSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2675,7 +2675,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmTestSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2776,7 +2776,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmUpgradeSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2895,7 +2895,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmVerifySettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -2954,7 +2954,7 @@ public partial class HelmTasks
     {
         toolSettings = toolSettings ?? new HelmVersionSettings();
         using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessCustomExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
         return process.Output;
     }
     /// <summary>
@@ -3019,8 +3019,8 @@ public partial class HelmCompletionSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for completion.
     /// </summary>
@@ -3049,8 +3049,8 @@ public partial class HelmCreateSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for create.
     /// </summary>
@@ -3087,8 +3087,8 @@ public partial class HelmDeleteSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Specify a description for the release.
     /// </summary>
@@ -3176,8 +3176,8 @@ public partial class HelmDependencyBuildSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for build.
     /// </summary>
@@ -3219,8 +3219,8 @@ public partial class HelmDependencyListSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for list.
     /// </summary>
@@ -3252,8 +3252,8 @@ public partial class HelmDependencyUpdateSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for update.
     /// </summary>
@@ -3300,8 +3300,8 @@ public partial class HelmFetchSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
     /// </summary>
@@ -3404,8 +3404,8 @@ public partial class HelmGetSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for get.
     /// </summary>
@@ -3472,8 +3472,8 @@ public partial class HelmGetHooksSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for hooks.
     /// </summary>
@@ -3540,8 +3540,8 @@ public partial class HelmGetManifestSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for manifest.
     /// </summary>
@@ -3608,8 +3608,8 @@ public partial class HelmGetNotesSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for notes.
     /// </summary>
@@ -3673,8 +3673,8 @@ public partial class HelmGetValuesSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Dump all (computed) values.
     /// </summary>
@@ -3751,8 +3751,8 @@ public partial class HelmHistorySettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Specifies the max column width of output (default 60).
     /// </summary>
@@ -3829,8 +3829,8 @@ public partial class HelmHomeSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for home.
     /// </summary>
@@ -3857,8 +3857,8 @@ public partial class HelmInitSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Auto-mount the given service account to tiller (default true).
     /// </summary>
@@ -4006,8 +4006,8 @@ public partial class HelmInspectSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Chart repository url where to locate the requested chart.
     /// </summary>
@@ -4089,8 +4089,8 @@ public partial class HelmInspectChartSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Chart repository url where to locate the requested chart.
     /// </summary>
@@ -4172,8 +4172,8 @@ public partial class HelmInspectReadmeSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Chart repository url where to locate the requested chart.
     /// </summary>
@@ -4245,8 +4245,8 @@ public partial class HelmInspectValuesSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Chart repository url where to locate the requested chart.
     /// </summary>
@@ -4328,8 +4328,8 @@ public partial class HelmInstallSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   If set, installation process purges chart on fail, also sets --wait flag.
     /// </summary>
@@ -4530,8 +4530,8 @@ public partial class HelmLintSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for lint.
     /// </summary>
@@ -4597,8 +4597,8 @@ public partial class HelmListSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Show all releases, not just the ones marked DEPLOYED.
     /// </summary>
@@ -4735,8 +4735,8 @@ public partial class HelmPackageSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Set the appVersion on the chart to this version.
     /// </summary>
@@ -4809,8 +4809,8 @@ public partial class HelmPluginInstallSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for install.
     /// </summary>
@@ -4850,8 +4850,8 @@ public partial class HelmPluginListSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for list.
     /// </summary>
@@ -4878,8 +4878,8 @@ public partial class HelmPluginRemoveSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for remove.
     /// </summary>
@@ -4912,8 +4912,8 @@ public partial class HelmPluginUpdateSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for update.
     /// </summary>
@@ -4946,8 +4946,8 @@ public partial class HelmRepoAddSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Verify certificates of HTTPS-enabled servers using this CA bundle.
     /// </summary>
@@ -5014,8 +5014,8 @@ public partial class HelmRepoIndexSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for index.
     /// </summary>
@@ -5057,8 +5057,8 @@ public partial class HelmRepoListSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for list.
     /// </summary>
@@ -5085,8 +5085,8 @@ public partial class HelmRepoRemoveSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for remove.
     /// </summary>
@@ -5118,8 +5118,8 @@ public partial class HelmRepoUpdateSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for update.
     /// </summary>
@@ -5151,8 +5151,8 @@ public partial class HelmResetSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Forces Tiller uninstall even if there are releases installed, or if Tiller is not in ready state. Releases are not deleted.).
     /// </summary>
@@ -5219,8 +5219,8 @@ public partial class HelmRollbackSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Specify a description for the release.
     /// </summary>
@@ -5322,8 +5322,8 @@ public partial class HelmSearchSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Specifies the max column width of output (default 60).
     /// </summary>
@@ -5375,8 +5375,8 @@ public partial class HelmServeSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Address to listen on (default "127.0.0.1:8879").
     /// </summary>
@@ -5418,8 +5418,8 @@ public partial class HelmStatusSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for status.
     /// </summary>
@@ -5491,8 +5491,8 @@ public partial class HelmTemplateSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Only execute the given templates.
     /// </summary>
@@ -5586,8 +5586,8 @@ public partial class HelmTestSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Delete test pods upon completion.
     /// </summary>
@@ -5664,8 +5664,8 @@ public partial class HelmUpgradeSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   If set, upgrade process rolls back changes made in case of failed upgrade, also sets --wait flag.
     /// </summary>
@@ -5876,8 +5876,8 @@ public partial class HelmVerifySettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Help for verify.
     /// </summary>
@@ -5914,8 +5914,8 @@ public partial class HelmVersionSettings : HelmToolSettings
     ///   Path to the Helm executable.
     /// </summary>
     public override string ProcessToolPath => base.ProcessToolPath ?? HelmTasks.HelmPath;
-    public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? HelmTasks.HelmLogger;
-    public override Action<ToolSettings, IProcess> ProcessCustomExitHandler => base.ProcessCustomExitHandler ?? HelmTasks.HelmExitHandler;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? HelmTasks.HelmLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? HelmTasks.HelmExitHandler;
     /// <summary>
     ///   Client version only.
     /// </summary>
