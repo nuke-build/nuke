@@ -39,18 +39,6 @@ jobs:
           path: |
             .nuke/temp
             ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('global.json', 'source/**/*.csproj') }}
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
       - name: 'Run: Test, Pack'
         run: ./build.cmd Test Pack
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: 'Publish: test-results'
-        uses: actions/upload-artifact@v3
-        with:
-          name: test-results
-          path: output/test-results
-      - name: 'Publish: packages'
-        uses: actions/upload-artifact@v3
-        with:
-          name: packages
-          path: output/packages

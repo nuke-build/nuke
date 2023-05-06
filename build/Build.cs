@@ -121,7 +121,7 @@ partial class Build
     IEnumerable<string> IReportIssues.InspectCodeFailOnCategories => new string[0];
 
     Configure<DotNetPackSettings> IPack.PackSettings => _ => _
-        .When(Host is Terminal or GitHubActions { Workflow: "ubuntu-latest" }, _ => _
+        .When(Host is Terminal or GitHubActions { Workflow: AlphaDeployment }, _ => _
             .SetVersion(DefaultDeploymentVersion));
 
     string PublicNuGetSource => "https://api.nuget.org/v3/index.json";
@@ -138,7 +138,7 @@ partial class Build
     Target IPublish.Publish => _ => _
         .Inherit<IPublish>()
         .Consumes(From<IPack>().Pack)
-        .Requires(() => IsPublicRelease && Host is AppVeyor || GitRepository.IsOnDevelopBranch() && Host is GitHubActions && GitHubActions.Workflow == "ubuntu-latest")
+        .Requires(() => IsPublicRelease && Host is AppVeyor || GitRepository.IsOnDevelopBranch() && Host is GitHubActions && GitHubActions.Workflow == AlphaDeployment)
         .WhenSkipped(DependencyBehavior.Execute);
 
     IEnumerable<AbsolutePath> NuGetPackageFiles
@@ -147,7 +147,7 @@ partial class Build
     Target DeletePackages => _ => _
         .DependentFor<IPublish>()
         .After<IPack>()
-        .OnlyWhenStatic(() => Host is Terminal or GitHubActions { Workflow: "ubuntu-latest", Ref: $"refs/heads/{DevelopBranch}" })
+        .OnlyWhenStatic(() => Host is Terminal or GitHubActions { Workflow: AlphaDeployment })
         .Executes(() =>
         {
             if (Host is Terminal)
