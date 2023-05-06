@@ -26,6 +26,9 @@ public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
     [Parameter] [Secret] string GitHubToken => TryGetValue(() => GitHubToken) ?? GitHubActions.Instance.Token;
 
     string Name { get; }
+    bool Prerelease => false;
+    bool Draft => false;
+
     IEnumerable<AbsolutePath> AssetFiles { get; }
 
     Target CreateGitHubRelease => _ => _
@@ -39,6 +42,8 @@ public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
                 new NewRelease(Name)
                 {
                     Name = Name,
+                    Prerelease = Prerelease,
+                    Draft = Draft,
                     Body = ChangelogTasks.ExtractChangelogSectionNotes(ChangelogFile).JoinNewLine()
                 });
 
