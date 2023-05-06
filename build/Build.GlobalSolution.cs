@@ -28,7 +28,10 @@ partial class Build
     AbsolutePath ExternalRepositoriesFile => ExternalRepositoriesDirectory / "repositories.yml";
 
     IEnumerable<Nuke.Common.ProjectModel.Solution> ExternalSolutions
-        => ExternalRepositoriesDirectory.GlobFiles("*/*.sln").Select(x => ParseSolution(x));
+        => ExternalRepositories
+            .Select(x => ExternalRepositoriesDirectory / x.GetGitHubName())
+            .Select(x => x.GlobFiles("*.sln").Single())
+            .Select(x => x.ReadSolution());
 
     IEnumerable<GitRepository> ExternalRepositories
         => ExternalRepositoriesFile.ReadYaml<string[]>().Select(x => GitRepository.FromUrl(x));
