@@ -19,6 +19,7 @@ using Octokit;
 namespace Nuke.Components;
 
 [PublicAPI]
+[ParameterPrefix(GitHubRelease)]
 public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
 {
     public const string GitHubRelease = nameof(GitHubRelease);
@@ -34,7 +35,7 @@ public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
     Target CreateGitHubRelease => _ => _
         .Executes(async () =>
         {
-            GitHubTasks.GitHubClient.Credentials ??= new Credentials(GitHubToken);
+            GitHubTasks.GitHubClient.Credentials ??= new Credentials(GitHubToken.NotNull());
 
             var release = await GitHubTasks.GitHubClient.Repository.Release.Create(
                 GitRepository.GetGitHubOwner(),
