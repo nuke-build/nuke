@@ -91,6 +91,11 @@ public class AbsolutePath : IFormattable
     public string NameWithoutExtension => Path.GetFileNameWithoutExtension(_path);
 
     /// <summary>
+    /// Returns the extension of the file with dot.
+    /// </summary>
+    public string Extension => Path.GetExtension(_path);
+
+    /// <summary>
     /// Returns the parent path (directory).
     /// </summary>
     [CanBeNull]
