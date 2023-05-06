@@ -155,6 +155,7 @@ public class ConfigurationGenerationTest
                     OnWorkflowDispatchRequiredInputs = new[] { "RequiredInput" },
                     PublishCondition = "success() || failure()",
                     Submodules = GitHubActionsSubmodules.Recursive,
+                    CheckoutTokenSecret = "GhFullToken",
                     Lfs = true,
                     FetchDepth = 2,
                     TimeoutMinutes = 30,

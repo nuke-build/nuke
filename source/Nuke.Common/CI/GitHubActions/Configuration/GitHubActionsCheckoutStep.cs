@@ -15,6 +15,7 @@ public class GitHubActionsCheckoutStep : GitHubActionsStep
     public GitHubActionsSubmodules? Submodules { get; set; }
     public bool? Lfs { get; set; }
     public uint? FetchDepth { get; set; }
+    public string Token { get; set; }
 
     public override void Write(CustomFileWriter writer)
     {
@@ -33,6 +34,8 @@ public class GitHubActionsCheckoutStep : GitHubActionsStep
                         writer.WriteLine($"lfs: {Lfs.ToString().ToLowerInvariant()}");
                     if (FetchDepth.HasValue)
                         writer.WriteLine($"fetch-depth: {FetchDepth}");
+                    if (!string.IsNullOrEmpty(Token))
+                        writer.WriteLine($"token: {Token}");
                 }
             }
         }

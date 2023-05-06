@@ -28,6 +28,7 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     private GitHubActionsSubmodules? _submodules;
     private bool? _lfs;
     private uint? _fetchDepth;
+    private string _checkoutTokenSecret;
 
     public GitHubActionsAttribute(
         string name,
@@ -98,6 +99,12 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
         get => throw new NotSupportedException();
     }
 
+    public string CheckoutTokenSecret
+    {
+        set => _checkoutTokenSecret = value;
+        get => throw new NotSupportedException();
+    }
+
     public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
     {
         return new CustomFileWriter(streamWriter, indentationFactor: 2, commentPrefix: "#");
@@ -142,7 +149,8 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
                      {
                          Submodules = _submodules,
                          Lfs = _lfs,
-                         FetchDepth = _fetchDepth
+                         FetchDepth = _fetchDepth,
+                         Token = !string.IsNullOrEmpty(_checkoutTokenSecret) ? GetSecretValue(_checkoutTokenSecret) : null
                      };
 
         if (CacheKeyFiles.Any())
@@ -187,9 +195,6 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     {
         foreach (var input in OnWorkflowDispatchOptionalInputs.Concat(OnWorkflowDispatchRequiredInputs))
             yield return (input, $"${{{{ github.event.inputs.{input} }}}}");
-
-        static string GetSecretValue(string secret)
-            => $"${{{{ secrets.{secret.SplitCamelHumpsWithKnownWords().JoinUnderscore().ToUpperInvariant()} }}}}";
 
         foreach (var secret in ImportSecrets)
             yield return (secret, GetSecretValue(secret));
@@ -252,5 +257,10 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
 
         if (OnCronSchedule != null)
             yield return new GitHubActionsScheduledTrigger { Cron = OnCronSchedule };
+    }
+
+    private static string GetSecretValue(string secret)
+    {
+        return $"${{{{ secrets.{secret.SplitCamelHumpsWithKnownWords().JoinUnderscore().ToUpperInvariant()} }}}}";
     }
 }

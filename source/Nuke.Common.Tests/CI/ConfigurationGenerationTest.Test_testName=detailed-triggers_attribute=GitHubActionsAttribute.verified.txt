@@ -58,6 +58,7 @@ jobs:
           submodules: recursive
           lfs: true
           fetch-depth: 2
+          token: ${{ secrets.GH_FULL_TOKEN }}
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v3
         with:
@@ -101,6 +102,7 @@ jobs:
           submodules: recursive
           lfs: true
           fetch-depth: 2
+          token: ${{ secrets.GH_FULL_TOKEN }}
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v3
         with:
@@ -144,6 +146,7 @@ jobs:
           submodules: recursive
           lfs: true
           fetch-depth: 2
+          token: ${{ secrets.GH_FULL_TOKEN }}
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v3
         with:
