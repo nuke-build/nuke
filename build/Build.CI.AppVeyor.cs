@@ -20,7 +20,6 @@ using Nuke.Components;
             $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.ConsumerSecret)}",
             $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.AccessToken)}",
             $"{IHazTwitterCredentials.Twitter}{nameof(IHazTwitterCredentials.AccessTokenSecret)}",
-            nameof(GitterAuthToken),
             nameof(SlackWebhook),
             nameof(DiscordWebhook),
             nameof(MastodonAccessToken)
@@ -40,7 +39,6 @@ using Nuke.Components;
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerSecret), "KtMo935mJ2UmINXevKZyr1cmin1Ho7g8f/+VMxAQKvvw0eLSKqJHHfZNqhg/dMWc+Sh6BxzDlW+MGWkDGvSTSA==")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessToken), "nnv1h5nkNm4MS50soQHiYV0sAK3Jpmc3RqRNiCWmBJc1iS8bYmOTSmaUVcjUbY/U2wJ2SpeNgZffswsaKY3qVw==")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.AccessTokenSecret), "RlLDa3WfOftTieTJ30hY8jM54FrA/z6FPxv5QmowPlgTuxRCGxKiEXcux5DQO9fx")]
-[AppVeyorSecret(nameof(GitterAuthToken), "Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw")]
 [AppVeyorSecret(nameof(SlackWebhook), "xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hmM/XDRPsJCxvZvTHFhtfLsQ3cF7GQi3xDaShkVVR7zoXHsIYT+KT0zLnq9FSEvr5c=")]
 [AppVeyorSecret(nameof(DiscordWebhook), "K5WG8m71vcB56C75b0ErFPLYTsqywhPy8hSn49uqc5XBE7txUnZqWBHfbWCuU9AdFkm3TNgSYLoejjF59OgiACEn45fghVe7XCwAXo2l54ZXl08MZyBkJ8by9HsZirL9W+SeysNdw/Cfc0sxKrWcpDkn1IH2zZ+iXAgqBsW2CNY=")]
 [AppVeyorSecret(nameof(MastodonAccessToken), "pD/C1TvhUnFtb0oLUvlf2NtjkWeZQcrUVvYJE/LgZb8nxagK8Lwk+OR7TUqOh+Nn")]

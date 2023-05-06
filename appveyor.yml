@@ -46,8 +46,6 @@ environment:
     secure: nnv1h5nkNm4MS50soQHiYV0sAK3Jpmc3RqRNiCWmBJc1iS8bYmOTSmaUVcjUbY/U2wJ2SpeNgZffswsaKY3qVw==
   TwitterAccessTokenSecret:
     secure: RlLDa3WfOftTieTJ30hY8jM54FrA/z6FPxv5QmowPlgTuxRCGxKiEXcux5DQO9fx
-  GitterAuthToken:
-    secure: Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw
   SlackWebhook:
     secure: xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hmM/XDRPsJCxvZvTHFhtfLsQ3cF7GQi3xDaShkVVR7zoXHsIYT+KT0zLnq9FSEvr5c=
   DiscordWebhook:
