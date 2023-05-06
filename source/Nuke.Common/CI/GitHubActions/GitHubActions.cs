@@ -87,14 +87,20 @@ public partial class GitHubActions : Host, IBuildServer
     ///<summary>The commit SHA that triggered the workflow. For example, <code>ffac537e6cbbf934b08745a378932722df287a53</code>.</summary>
     public string Sha => EnvironmentInfo.GetVariable("GITHUB_SHA");
 
-    ///<summary>The branch or tag ref that triggered the workflow. For example, <code>refs/heads/feature-branch-1</code>. If neither a branch or tag is available for the event type, the variable will not exist.</summary>
+    ///<summary>The fully-formed ref of the branch or tag that triggered the workflow run. For workflows triggered by <code>push</code>, this is the branch or tag ref that was pushed. For workflows triggered by <code>pull_request</code>, this is the pull request merge branch. For workflows triggered by <code>release</code>, this is the release tag created. For other triggers, this is the branch or tag ref that triggered the workflow run. This is only set if a branch or tag is available for the event type. The ref given is fully-formed, meaning that for branches the format is <code>refs/heads/&lt;branch_name&gt;</code>, for pull requests it is <code>refs/pull/&lt;pr_number&gt;/merge</code>, and for tags it is <code>refs/tags/&lt;tag_name&gt;</code>. For example, <code>refs/heads/feature-branch-1</code>.</summary>
     public string Ref => EnvironmentInfo.GetVariable("GITHUB_REF");
+
+    ///<summary>The short ref name of the branch or tag that triggered the workflow run. This value matches the branch or tag name shown on GitHub. For example, <code>feature-branch-1</code>.</summary>
+    public string RefName => EnvironmentInfo.GetVariable("GITHUB_REF_NAME");
 
     ///<summary>Only set for forked repositories. The branch of the head repository.</summary>
     public string HeadRef => EnvironmentInfo.GetVariable("GITHUB_HEAD_REF");
 
     ///<summary>Only set for forked repositories. The branch of the base repository.</summary>
     public string BaseRef => EnvironmentInfo.GetVariable("GITHUB_BASE_REF");
+
+    ///<summary>The type of ref that triggered the workflow run. Valid values are <code>branch</code> or <code>tag</code>.</summary>
+    public string RefType => EnvironmentInfo.GetVariable("GITHUB_REF_TYPE");
 
     public long RunAttempt => EnvironmentInfo.GetVariable<long>("GITHUB_RUN_ATTEMPT");
     public long RunNumber => EnvironmentInfo.GetVariable<long>("GITHUB_RUN_NUMBER");
