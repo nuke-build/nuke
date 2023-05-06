@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://specflow.org/plus/documentation/SpecFlowPlus-Runner-Command-Line/",
     "https://specflow.org/documentation/Reporting/"
@@ -7,7 +7,7 @@
   "name": "SpecFlow",
   "officialUrl": "https://specflow.org/",
   "help": "Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.",
-  "packageId": "SpecFlow",
+  "nugetPackageId": "SpecFlow",
   "packageExecutable": "specflow.exe",
   "tasks": [
     {

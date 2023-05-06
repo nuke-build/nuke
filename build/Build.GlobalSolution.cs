@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,18 +12,18 @@ using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitHub;
+using Nuke.Common.Utilities;
+using Nuke.Utilities.Text.Yaml;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.SerializationTasks;
-using static Nuke.Common.ProjectModel.ProjectModelTasks;
+using static Nuke.Common.ProjectModel.SolutionModelTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
 {
     [Parameter] readonly bool UseHttps;
 
-    [Solution("nuke-global.sln")] readonly Nuke.Common.ProjectModel.Solution GlobalSolution;
-
+    AbsolutePath GlobalSolution => RootDirectory / "nuke-global.sln";
     AbsolutePath ExternalRepositoriesDirectory => RootDirectory / "external";
     AbsolutePath ExternalRepositoriesFile => ExternalRepositoriesDirectory / "repositories.yml";
 
@@ -31,7 +31,7 @@ partial class Build
         => ExternalRepositoriesDirectory.GlobFiles("*/*.sln").Select(x => ParseSolution(x));
 
     IEnumerable<GitRepository> ExternalRepositories
-        => YamlDeserializeFromFile<string[]>(ExternalRepositoriesFile).Select(x => GitRepository.FromUrl(x));
+        => ExternalRepositoriesFile.ReadYaml<string[]>().Select(x => GitRepository.FromUrl(x));
 
     Target CheckoutExternalRepositories => _ => _
         .Executes(() =>
@@ -57,12 +57,12 @@ partial class Build
         .Executes(() =>
         {
             var global = CreateSolution(
-                fileName: GlobalSolution,
+                solutionFile: GlobalSolution,
                 solutions: new[] { Solution }.Concat(ExternalSolutions),
-                folderNameProvider: x => x == Solution ? null : x.Name);
+                folderNameProvider: x => x.Name.TrimStart("nuke-"));
             global.Save();
 
-            if (File.Exists(RootDirectory / $"{Solution.FileName}.DotSettings"))
+            if ((RootDirectory / $"{Solution.FileName}.DotSettings").FileExists())
             {
                 CopyFile(
                     source: RootDirectory / $"{Solution.FileName}.DotSettings",
@@ -70,7 +70,7 @@ partial class Build
                     FileExistsPolicy.Overwrite);
             }
 
-            if (File.Exists(RootDirectory / $"{Solution.FileName}.DotSettings.user"))
+            if ((RootDirectory / $"{Solution.FileName}.DotSettings.user").FileExists())
             {
                 CopyFile(
                     source: RootDirectory / $"{Solution.FileName}.DotSettings.user",

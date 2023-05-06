@@ -5,6 +5,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
+    <LangVersion>preview</LangVersion>
     <RootNamespace></RootNamespace>
     <NoWarn>CS0649;CS0169</NoWarn>
     <NukeRootDirectory>.\..</NukeRootDirectory>
@@ -54,14 +55,14 @@
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta14" />
     <PackageDownload Include="Codecov.Tool" Version="[1.12.3]" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.8.0]" />
-    <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2020.3.2]" />
+    <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2022.3.2]" />
     <PackageDownload Include="ReportGenerator" Version="[4.6.1]" />
     <PackageDownload Include="xunit.runner.console" Version="[2.4.1]" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\source\Nuke.Components\Nuke.Components.csproj" />
-    <ProjectReference Include="..\source\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
+    <ProjectReference Include="..\source\Nuke.Tooling.Generator\Nuke.Tooling.Generator.csproj" />
     <ProjectReference Include="..\source\Nuke.SourceGenerators\Nuke.SourceGenerators.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
   </ItemGroup>
 

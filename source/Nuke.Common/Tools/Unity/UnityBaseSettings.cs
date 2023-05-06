@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,20 +7,19 @@ using System.Linq;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.Tools.Unity
+namespace Nuke.Common.Tools.Unity;
+
+public partial class UnityBaseSettings
 {
-    public partial class UnityBaseSettings
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? UnityTasks.UnityLogger;
+
+    public string GetProcessToolPath()
     {
-        public override Action<OutputType, string> ProcessCustomLogger => base.ProcessCustomLogger ?? UnityTasks.UnityLogger;
+        return UnityTasks.GetToolPath(HubVersion);
+    }
 
-        public string GetProcessToolPath()
-        {
-            return UnityTasks.GetToolPath(HubVersion);
-        }
-
-        public string GetLogFile()
-        {
-            return (LogFile ?? NukeBuild.RootDirectory / "unity.log").DoubleQuoteIfNeeded();
-        }
+    public string GetLogFile()
+    {
+        return (LogFile ?? NukeBuild.RootDirectory / "unity.log").DoubleQuoteIfNeeded();
     }
 }

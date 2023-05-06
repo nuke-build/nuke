@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,51 +7,32 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.CI.GitHubActions.Configuration
+namespace Nuke.Common.CI.GitHubActions.Configuration;
+
+[PublicAPI]
+public class GitHubActionsCheckoutStep : GitHubActionsStep
 {
-    [PublicAPI]
-    public class GitHubActionsCheckoutStep : GitHubActionsStep
+    public GitHubActionsSubmodules? Submodules { get; set; }
+    public bool? Lfs { get; set; }
+    public uint? FetchDepth { get; set; }
+
+    public override void Write(CustomFileWriter writer)
     {
-        public GitHubActionsSubmodules? Submodules { get; set; }
-        public uint? FetchDepth { get; set; }
+        writer.WriteLine("- uses: actions/checkout@v3");
 
-        public override void Write(CustomFileWriter writer)
+        if (Submodules.HasValue || Lfs.HasValue || FetchDepth.HasValue)
         {
-            writer.WriteLine("- uses: actions/checkout@v3");
-
-            if (Submodules.HasValue || FetchDepth.HasValue)
-            {
-                using (writer.Indent())
-                {
-                    writer.WriteLine("with:");
-                    using (writer.Indent())
-                    {
-                        if (Submodules.HasValue)
-                            writer.WriteLine($"submodules: {Submodules.ToString().ToLowerInvariant()}");
-                        if (FetchDepth.HasValue)
-                            writer.WriteLine($"fetch-depth: {FetchDepth}");
-                    }
-                }
-            }
-        }
-    }
-
-    public class GitHubActionsArtifactStep : GitHubActionsStep
-    {
-        public string Name { get; set; }
-        public string Path { get; set; }
-
-        public override void Write(CustomFileWriter writer)
-        {
-            writer.WriteLine("- uses: actions/upload-artifact@v3");
-
             using (writer.Indent())
             {
                 writer.WriteLine("with:");
                 using (writer.Indent())
                 {
-                    writer.WriteLine($"name: {Name}");
-                    writer.WriteLine($"path: {Path}");
+                    if (Submodules.HasValue)
+                        writer.WriteLine($"submodules: {Submodules.ToString().ToLowerInvariant()}");
+                    if(Lfs.HasValue)
+                        writer.WriteLine($"lfs: {Lfs.ToString().ToLowerInvariant()}");
+                    if (FetchDepth.HasValue)
+                        writer.WriteLine($"fetch-depth: {FetchDepth}");
                 }
             }
         }

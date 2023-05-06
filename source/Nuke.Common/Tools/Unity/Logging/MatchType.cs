@@ -1,16 +1,15 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tools.Unity.Logging
+namespace Nuke.Common.Tools.Unity.Logging;
+
+internal enum MatchType
 {
-    internal enum MatchType
-    {
-        None = 0,
-        Inclusive = 1,
-        Exclusive = 2
-    }
+    None = 0,
+    Inclusive = 1,
+    Exclusive = 2
 }

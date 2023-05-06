@@ -2,26 +2,22 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <TargetFrameworks>netcoreapp2.1;net472</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Nuke.CodeGeneration\Nuke.CodeGeneration.csproj" />
+    <ProjectReference Include="..\Nuke.Tooling\Nuke.Tooling.csproj" />
+    <ProjectReference Include="..\Nuke.Tooling.Generator\Nuke.Tooling.Generator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NuGet.Packaging" Version="5.11.0" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- MSBuild and dependencies only acquired through MSBuild shall not make it into the final package -->
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.9.0" CopyLocal="false" Publish="false" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.Build.Framework" Version="16.9.0" CopyLocal="false" Publish="false" ExcludeAssets="runtime" />
-    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" CopyLocal="false" Publish="false" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETFramework'">
-    <PackageReference Include="Microsoft.VisualStudio.Setup.Configuration.Interop" Version="1.16.30" CopyLocal="false" Publish="false" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFrameworkIdentifier)' == '.NETCoreApp'">
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.6.0" CopyLocal="false" Publish="false" />
   </ItemGroup>
 
   <ItemGroup>

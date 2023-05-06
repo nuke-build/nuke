@@ -1,52 +1,68 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.IO;
 using System.Linq;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 using JetBrains.Annotations;
+using Nuke.Common.Utilities;
 
-namespace Nuke.Common.IO
+namespace Nuke.Common.IO;
+
+public static partial class SerializationTasks
 {
-    public static partial class SerializationTasks
+    [Obsolete($"Use {nameof(XmlExtensions)}.{nameof(XmlExtensions.WriteXml)} as {nameof(AbsolutePath)} extension method")]
+    public static void XmlSerializeToFile<T>(T obj, string path, SaveOptions options = SaveOptions.None)
     {
-        public static void XmlSerializeToFile<T>(T obj, string path)
+        TextTasks.WriteAllText(path, XmlSerialize(obj, options));
+    }
+
+    [Pure]
+    [Obsolete($"Use {nameof(XmlExtensions)}.{nameof(XmlExtensions.ReadXml)} as {nameof(AbsolutePath)} extension method")]
+    public static T XmlDeserializeFromFile<T>(string path, LoadOptions options = LoadOptions.PreserveWhitespace)
+    {
+        Assert.FileExists(path);
+        return XmlDeserialize<T>(File.ReadAllText(path), options);
+    }
+
+    [Pure]
+    [Obsolete($"Use {nameof(XmlExtensions)}.{nameof(XmlExtensions.ToXml)} as object extension method")]
+    public static string XmlSerialize<T>(T obj, SaveOptions options = SaveOptions.None)
+    {
+        var xmlSerializer = new XmlSerializer(typeof(T));
+        var xmlDocument = new XDocument();
+
+        using (var writer = xmlDocument.CreateWriter())
         {
-            TextTasks.WriteAllText(path, XmlSerialize(obj));
+            xmlSerializer.Serialize(writer, obj);
         }
 
-        [Pure]
-        public static T XmlDeserializeFromFile<T>(string path)
-        {
-            return XmlDeserialize<T>(File.ReadAllText(path));
-        }
+        return xmlDocument.ToString(options);
+    }
 
-        [Pure]
-        public static string XmlSerialize<T>(T obj)
-        {
-            var xmlSerializer = new XmlSerializer(typeof(T));
+    [Pure]
+    [Obsolete($"Use {nameof(XmlExtensions)}.{nameof(XmlExtensions.GetXml)} as string extension method")]
+    public static T XmlDeserialize<T>(string content, LoadOptions options = LoadOptions.PreserveWhitespace)
+    {
+        var xmlSerializer = new XmlSerializer(typeof(T));
+        var xmlDocument = XDocument.Parse(content, options);
 
-            using var streamWriter = new StringWriter();
-            xmlSerializer.Serialize(streamWriter, obj);
-            return streamWriter.ToString();
-        }
+        using var reader = xmlDocument.Root.NotNull().CreateReader();
+        return (T) xmlSerializer.Deserialize(reader);
+    }
 
-        [Pure]
-        public static T XmlDeserialize<T>(string content)
-        {
-            var xmlSerializer = new XmlSerializer(typeof(T));
-
-            using var memoryStream = new StringReader(content);
-            return (T) xmlSerializer.Deserialize(memoryStream);
-        }
-
-        public static void XmlUpdateFile<T>(string path, Action<T> update)
-        {
-            var obj = XmlDeserializeFromFile<T>(path);
-            update.Invoke(obj);
-            XmlSerializeToFile(obj, path);
-        }
+    [Obsolete($"Use {nameof(XmlExtensions)}.{nameof(XmlExtensions.UpdateXml)} as {nameof(AbsolutePath)} extension method")]
+    public static void XmlUpdateFile<T>(
+        string path,
+        Action<T> update,
+        LoadOptions loadOptions = LoadOptions.PreserveWhitespace,
+        SaveOptions saveOptions = SaveOptions.None)
+    {
+        var obj = XmlDeserializeFromFile<T>(path, loadOptions);
+        update.Invoke(obj);
+        XmlSerializeToFile(obj, path, saveOptions);
     }
 }

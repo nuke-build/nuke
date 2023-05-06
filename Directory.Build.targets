@@ -4,7 +4,7 @@
   <!-- Thanks to Thomas Frenzel (https://github.com/dotnet/sdk/issues/1151#issuecomment-385133284) -->
   <PropertyGroup>
     <ReplacePackageReferences Condition="$(ReplacePackageReferences) == ''">true</ReplacePackageReferences>
-    <SolutionPath>$(MSBuildThisFileDirectory)\nuke-common.sln</SolutionPath>
+    <SolutionPath>$(MSBuildThisFileDirectory)\nuke-global.sln</SolutionPath>
   </PropertyGroup>
 
   <Choose>

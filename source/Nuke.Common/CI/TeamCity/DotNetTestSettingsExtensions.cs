@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,22 +8,21 @@ using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 
-namespace Nuke.Common.CI.TeamCity
+namespace Nuke.Common.CI.TeamCity;
+
+[PublicAPI]
+public static class DotNetTestSettingsExtensions
 {
-    [PublicAPI]
-    public static class DotNetTestSettingsExtensions
+    public static DotNetTestSettings AddTeamCityLogger(this DotNetTestSettings toolSettings)
     {
-        public static DotNetTestSettings AddTeamCityLogger(this DotNetTestSettings toolSettings)
-        {
-            Assert.True(TeamCity.Instance != null);
-            var teamcityPackage = NuGetPackageResolver
-                .GetLocalInstalledPackage("TeamCity.Dotnet.Integration", ToolPathResolver.NuGetPackagesConfigFile)
-                .NotNull("teamcityPackage != null");
-            var loggerPath = teamcityPackage.Directory / "build" / "_common" / "vstest15";
-            Assert.DirectoryExists(loggerPath);
-            return toolSettings
-                .SetLoggers("teamcity")
-                .SetTestAdapterPath(loggerPath);
-        }
+        Assert.True(TeamCity.Instance != null);
+        var teamcityPackage = NuGetPackageResolver
+            .GetLocalInstalledPackage("TeamCity.Dotnet.Integration", NuGetToolPathResolver.NuGetPackagesConfigFile)
+            .NotNull("teamcityPackage != null");
+        var loggerPath = teamcityPackage.Directory / "build" / "_common" / "vstest15";
+        Assert.DirectoryExists(loggerPath);
+        return toolSettings
+            .SetLoggers("teamcity")
+            .SetTestAdapterPath(loggerPath);
     }
 }

@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -9,17 +9,15 @@ using JetBrains.Annotations;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.Execution;
 
-namespace Nuke.Common.Tools.DotCover
+namespace Nuke.Common.Tools.DotCover;
+
+[PublicAPI]
+public class TeamCitySetDotCoverHomePathAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
 {
-    [PublicAPI]
-    public class TeamCitySetDotCoverHomePathAttribute : BuildExtensionAttributeBase, IOnBuildInitialized
+    public void OnBuildInitialized(
+        IReadOnlyCollection<ExecutableTarget> executableTargets,
+        IReadOnlyCollection<ExecutableTarget> executionPlan)
     {
-        public void OnBuildInitialized(
-            NukeBuild build,
-            IReadOnlyCollection<ExecutableTarget> executableTargets,
-            IReadOnlyCollection<ExecutableTarget> executionPlan)
-        {
-            TeamCity.Instance?.SetConfigurationParameter("teamcity.dotCover.home", DotCoverTasks.DotCoverPath);
-        }
+        TeamCity.Instance?.SetConfigurationParameter("teamcity.dotCover.home", DotCoverTasks.DotCoverPath);
     }
 }

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://github.com/jonathanpeppers/boots#systemcommandline"
   ],
   "name": "Boots",
   "officialUrl": "https://github.com/jonathanpeppers/boots",
   "help": "boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.",
-  "packageId": "Boots",
+  "nugetPackageId": "Boots",
   "packageExecutable": "Boots.exe",
   "tasks": [
     {

@@ -1,4 +1,4 @@
-﻿// Copyright 2022 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,46 +16,49 @@ using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities;
 using Octokit;
 
-namespace Nuke.Components
+namespace Nuke.Components;
+
+[PublicAPI]
+public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
 {
-    [PublicAPI]
-    [ParameterPrefix(GitHubRelease)]
-    public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
-    {
-        public const string GitHubRelease = nameof(GitHubRelease);
+    public const string GitHubRelease = nameof(GitHubRelease);
 
-        [Parameter] [Secret] string Token => TryGetValue(() => Token) ?? GitHubActions.Instance.Token;
-        string Version { get; }
-        IEnumerable<AbsolutePath> AssetFiles { get; }
+    [Parameter] [Secret] string GitHubToken => TryGetValue(() => GitHubToken) ?? GitHubActions.Instance.Token;
 
-        Target CreateGitHubRelease => _ => _
-            .Requires(() => Token)
-            .Executes(async () =>
-            {
-                GitHubTasks.GitHubClient.Credentials = new Credentials(Token);
+    string Name { get; }
+    bool Prerelease => false;
+    bool Draft => false;
 
-                var release = await GitHubTasks.GitHubClient.Repository.Release.Create(
-                    GitRepository.GetGitHubOwner(),
-                    GitRepository.GetGitHubName(),
-                    new NewRelease(Version)
-                    {
-                        Name = $"v{Version}",
-                        Body = ChangelogTasks.ExtractChangelogSectionNotes(NuGetReleaseNotes).JoinNewLine()
-                    });
+    IEnumerable<AbsolutePath> AssetFiles { get; }
 
-                var uploadTasks = AssetFiles.Select(async x =>
+    Target CreateGitHubRelease => _ => _
+        .Executes(async () =>
+        {
+            GitHubTasks.GitHubClient.Credentials ??= new Credentials(GitHubToken);
+
+            var release = await GitHubTasks.GitHubClient.Repository.Release.Create(
+                GitRepository.GetGitHubOwner(),
+                GitRepository.GetGitHubName(),
+                new NewRelease(Name)
                 {
-                    await using var assetFile = File.OpenRead(x);
-                    var asset = new ReleaseAssetUpload
-                                {
-                                    FileName = x.Name,
-                                    ContentType = "application/octet-stream",
-                                    RawData = assetFile
-                                };
-                    await GitHubTasks.GitHubClient.Repository.Release.UploadAsset(release, asset);
-                }).ToArray();
+                    Name = Name,
+                    Prerelease = Prerelease,
+                    Draft = Draft,
+                    Body = ChangelogTasks.ExtractChangelogSectionNotes(ChangelogFile).JoinNewLine()
+                });
 
-                Task.WaitAll(uploadTasks);
-            });
-    }
+            var uploadTasks = AssetFiles.Select(async x =>
+            {
+                await using var assetFile = File.OpenRead(x);
+                var asset = new ReleaseAssetUpload
+                            {
+                                FileName = x.Name,
+                                ContentType = "application/octet-stream",
+                                RawData = assetFile
+                            };
+                await GitHubTasks.GitHubClient.Repository.Release.UploadAsset(release, asset);
+            }).ToArray();
+
+            Task.WaitAll(uploadTasks);
+        });
 }

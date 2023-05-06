@@ -2,8 +2,7 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup Condition="'$(NukeTasksDirectory)' == ''">
-    <NukeTasksDirectory Condition="'$(MSBuildRuntimeType)' == 'Core'">$(MSBuildThisFileDirectory)\netcore</NukeTasksDirectory>
-    <NukeTasksDirectory Condition="'$(MSBuildRuntimeType)' != 'Core'">$(MSBuildThisFileDirectory)\netfx</NukeTasksDirectory>
+    <NukeTasksDirectory>$(MSBuildThisFileDirectory)</NukeTasksDirectory>
   </PropertyGroup>
 
   <Import Project="$(NukeTasksDirectory)\Nuke.MSBuildTasks.targets" Condition="'$(NukeTasksEnabled)' != 'False'" />
@@ -29,14 +28,17 @@
     <None Include="$(NukeRootDirectory)\nuget.config" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\nuget.config')" />
     <None Include="$(NukeRootDirectory)\GitVersion.yml" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\GitVersion.yml')" />
     <None Include="$(NukeRootDirectory)\version.json" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\version.json')" />
+    <None Include="$(NukeRootDirectory)\qodana.yml" LinkBase="config" Condition="Exists('$(NukeRootDirectory)\qodana.yml')" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeLogs)' != 'True'">
-     <None Include="$(NukeRootDirectory)\.nuke\temp\build*.log" Exclude="$(NukeRootDirectory)\.nuke\temp\build-attempt.log" LinkBase="logs" />
+    <None Include="$(NukeRootDirectory)\.nuke\temp\build*.log" Exclude="$(NukeRootDirectory)\.nuke\temp\build-attempt.log" LinkBase="logs" />
   </ItemGroup>
-  
+
   <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeDirectoryBuild)' != 'True'">
-     <None Include="$(NukeRootDirectory)\**\Directory.Build.*" LinkBase="Directory.Build" />
+    <None Include="$(NukeRootDirectory)\**\Directory.Build.*"
+          Link="Directory.Build\$([MSBuild]::MakeRelative($(MSBuildProjectDirectory)\$(NukeRootDirectory), %(FullPath)))"
+          LinkBase="Directory.Build" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(NukeRootDirectory)' != '' And '$(NukeExcludeCi)' != 'True'">

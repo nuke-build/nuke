@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://raw.githubusercontent.com/GitTools/GitVersion/master/docs/more-info/variables.md",
     "https://raw.githubusercontent.com/GitTools/GitVersion/master/src/GitVersionExe/HelpWriter.cs"
@@ -7,6 +7,7 @@
   "name": "GitVersion",
   "officialUrl": "http://gitversion.readthedocs.io/en/stable/",
   "help": "GitVersion is a tool to help you achieve Semantic Versioning on your project.",
+  "nugetPackageId": "GitVersion.Tool",
   "customExecutable": true,
   "tasks": [
     {

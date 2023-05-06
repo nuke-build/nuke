@@ -1,17 +1,16 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tools.MSpec
+namespace Nuke.Common.Tools.MSpec;
+
+public partial class MSpecSettings
 {
-    public partial class MSpecSettings
+    private string GetProcessToolPath()
     {
-        private string GetProcessToolPath()
-        {
-            return MSpecTasks.GetToolPath();
-        }
+        return MSpecTasks.GetToolPath();
     }
 }

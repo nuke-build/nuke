@@ -1,9 +1,8 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
@@ -13,134 +12,133 @@ using Nuke.Common;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
-using Nuke.Common.Utilities.Collections;
 using Nuke.GlobalTool.Rewriting.Cake;
 using static Nuke.Common.Constants;
 using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.Tooling.NuGetPackageResolver;
 
-namespace Nuke.GlobalTool
+namespace Nuke.GlobalTool;
+
+partial class Program
 {
-    partial class Program
+    public const string CAKE_FILE_PATTERN = "*.cake";
+
+    [UsedImplicitly]
+    public static int CakeConvert(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
     {
-        public const string CAKE_FILE_PATTERN = "*.cake";
+        PrintInfo();
+        Logging.Configure();
+        Telemetry.ConvertCake();
+        ProjectModelTasks.Initialize();
 
-        [UsedImplicitly]
-        public static int CakeConvert(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
-        {
-            PrintInfo();
-            Logging.Configure();
-            Telemetry.ConvertCake();
-            ProjectModelTasks.Initialize();
-
-            Host.Warning(
-                new[]
-                {
-                    "Converting .cake files is a best effort approach using syntax rewriting.",
-                    "Compile errors are to be expected, however, the following elements are currently covered:",
-                    "  - Target definitions",
-                    "  - Default targets",
-                    "  - Parameter declarations",
-                    "  - Absolute paths",
-                    "  - Globbing patterns",
-                    "  - Tool invocations (dotnet CLI, SignTool)",
-                    "  - Addin and tool references",
-                }.JoinNewLine());
-
-            Host.Debug();
-            if (!PromptForConfirmation("Continue?"))
-                return 0;
-            Host.Debug();
-
-            if (buildScript == null &&
-                PromptForConfirmation("Should a NUKE project be created for better results?"))
+        Host.Warning(
+            new[]
             {
-                Setup(args, rootDirectory: null, buildScript: null);
-            }
+                "Converting .cake files is a best effort approach using syntax rewriting.",
+                "Compile errors are to be expected, however, the following elements are currently covered:",
+                "  - Target definitions",
+                "  - Default targets",
+                "  - Parameter declarations",
+                "  - Absolute paths",
+                "  - Globbing patterns",
+                "  - Tool invocations (dotnet CLI, SignTool)",
+                "  - Addin and tool references",
+            }.JoinNewLine());
 
-            var buildProjectFile = File.Exists(WorkingDirectory / CurrentBuildScriptName)
-                ? GetConfiguration(WorkingDirectory / CurrentBuildScriptName, evaluate: true)
-                    .GetValueOrDefault(BUILD_PROJECT_FILE, defaultValue: null)
-                : null;
-
-            string GetOutputDirectory(string file)
-                => Path.GetDirectoryName(buildProjectFile ?? file);
-
-            string GetOutputFile(string file)
-                => (AbsolutePath) GetOutputDirectory(file) / Path.GetFileNameWithoutExtension(file).Capitalize() + ".cs";
-
-            GetCakeFiles().ForEach(x => File.WriteAllText(path: GetOutputFile(x), contents: GetCakeConvertedContent(File.ReadAllText(x))));
-
-            if (buildProjectFile != null)
-            {
-                GetCakeFiles().SelectMany(x => GetCakePackages(File.ReadAllText(x)))
-                    .ForEach(x => AddOrReplacePackage(x.PackageId, x.PackageVersion, x.PackageType, buildProjectFile));
-            }
-
+        Host.Debug();
+        if (!PromptForConfirmation("Continue?"))
             return 0;
+        Host.Debug();
+
+        if (buildScript == null &&
+            PromptForConfirmation("Should a NUKE project be created for better results?"))
+        {
+            Setup(args, rootDirectory: null, buildScript: null);
         }
 
-        [UsedImplicitly]
-        public static int CakeClean(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
+        var buildScriptFile = WorkingDirectory / CurrentBuildScriptName;
+        var buildProjectFile = buildScriptFile.Exists()
+            ? GetConfiguration(buildScriptFile, evaluate: true)
+                .GetValueOrDefault(BUILD_PROJECT_FILE, defaultValue: null)
+            : null;
+
+        foreach (var cakeFile in GetCakeFiles())
         {
-            var cakeFiles = GetCakeFiles().ToList();
-            Host.Information("Found .cake files:");
-            cakeFiles.ForEach(x => Host.Debug($"  - {x}"));
-
-            if (PromptForConfirmation("Delete?"))
-                cakeFiles.ForEach(FileSystemTasks.DeleteFile);
-
-            return 0;
+            var outputFile = cakeFile.Parent / cakeFile.NameWithoutExtension.Capitalize() + ".cs";
+            var content = GetCakeConvertedContent(cakeFile.ReadAllText());
+            outputFile.WriteAllText(content);
         }
 
-        private static IEnumerable<AbsolutePath> GetCakeFiles()
+        if (buildProjectFile != null)
         {
-            return (TryGetRootDirectoryFrom(WorkingDirectory) ?? WorkingDirectory).GlobFiles($"**/{CAKE_FILE_PATTERN}");
+            var packages = GetCakeFiles().SelectMany(x => GetCakePackages(x.ReadAllText()));
+            foreach (var package in packages)
+                AddOrReplacePackage(package.Id, package.Version, package.Type, buildProjectFile);
         }
 
-        internal static string GetCakeConvertedContent(string content)
-        {
-            var options = new CSharpParseOptions(LanguageVersion.Latest, DocumentationMode.None, SourceCodeKind.Script);
-            var syntaxTree = CSharpSyntaxTree.ParseText(content, options);
-            return new CSharpSyntaxRewriter[]
-                   {
-                       new RemoveUsingDirectivesRewriter(),
-                       new RenameFieldIdentifierRewriter(),
-                       new ParameterRewriter(),
-                       new AbsolutePathRewriter(),
-                       new RegularFieldRewriter(),
-                       new TargetDefinitionRewriter(),
-                       new InvocationRewriter(),
-                       new MemberAccessRewriter(),
-                       new IdentifierNameRewriter(),
-                       new ToolInvocationRewriter(),
-                       new ClassRewriter(),
-                       new FormattingRewriter()
-                   }.Aggregate(syntaxTree.GetRoot(), (root, rewriter) => rewriter.Visit(root.NormalizeWhitespace(elasticTrivia: true)))
-                .ToFullString();
-        }
+        return 0;
+    }
 
-        internal static IEnumerable<(string PackageType, string PackageId, string PackageVersion)> GetCakePackages(string content)
+    [UsedImplicitly]
+    public static int CakeClean(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
+    {
+        var cakeFiles = GetCakeFiles().ToList();
+        Host.Information("Found .cake files:");
+        cakeFiles.ForEach(x => Host.Debug($"  - {x}"));
+
+        if (PromptForConfirmation("Delete?"))
+            cakeFiles.ForEach(x => x.DeleteFile());
+
+        return 0;
+    }
+
+    private static IEnumerable<AbsolutePath> GetCakeFiles()
+    {
+        return (TryGetRootDirectoryFrom(WorkingDirectory) ?? WorkingDirectory).GlobFiles($"**/{CAKE_FILE_PATTERN}");
+    }
+
+    internal static string GetCakeConvertedContent(string content)
+    {
+        var options = new CSharpParseOptions(LanguageVersion.Latest, DocumentationMode.None, SourceCodeKind.Script);
+        var syntaxTree = CSharpSyntaxTree.ParseText(content, options);
+        return new CSharpSyntaxRewriter[]
+               {
+                   new RemoveUsingDirectivesRewriter(),
+                   new RenameFieldIdentifierRewriter(),
+                   new ParameterRewriter(),
+                   new AbsolutePathRewriter(),
+                   new RegularFieldRewriter(),
+                   new TargetDefinitionRewriter(),
+                   new InvocationRewriter(),
+                   new MemberAccessRewriter(),
+                   new IdentifierNameRewriter(),
+                   new ToolInvocationRewriter(),
+                   new ClassRewriter(),
+                   new FormattingRewriter()
+               }.Aggregate(syntaxTree.GetRoot(), (root, rewriter) => rewriter.Visit(root.NormalizeWhitespace(elasticTrivia: true)))
+            .ToFullString();
+    }
+
+    internal static IEnumerable<(string Type, string Id, string Version)> GetCakePackages(string content)
+    {
+        IEnumerable<(string Type, string Id, string Version)> GetPackages(
+            string packageType,
+            [RegexPattern] string regexPattern)
         {
-            IEnumerable<(string PackageType, string PackageId, string PackageVersion)> GetPackages(
-                string packageType,
-                [RegexPattern] string regexPattern)
+            var regex = new Regex(regexPattern);
+            foreach (Match match in regex.Matches(content))
             {
-                var regex = new Regex(regexPattern);
-                foreach (Match match in regex.Matches(content))
-                {
-                    var packageId = match.Groups["packageId"].Value;
-                    var packageVersion = match.Groups["version"].Value;
-                    if (packageVersion.IsNullOrEmpty())
-                        packageVersion = GetLatestPackageVersion(packageId, includePrereleases: false).GetAwaiter().GetResult();
-                    yield return new(packageType, packageId, packageVersion);
-                }
+                var packageId = match.Groups["packageId"].Value;
+                var packageVersion = match.Groups["version"].Value;
+                if (packageVersion.IsNullOrEmpty())
+                    packageVersion = AsyncHelper.RunSync(() => NuGetVersionResolver.GetLatestVersion(packageId, includePrereleases: false));
+                yield return new(packageType, packageId, packageVersion);
             }
-
-            return GetPackages(PACKAGE_TYPE_DOWNLOAD, @"#tool ""nuget:\?package=(?'packageId'[\w\d\.]+)(&version=(?'version'[\w\d\.]+))?S*""")
-                .Concat(GetPackages(PACKAGE_TYPE_REFERENCE, @"#addin ""nuget:\?package=(?'packageId'[\w\d\.]+)(&version=(?'version'[\w\d\.]+))?S*"""))
-                .Where(x => !x.PackageId.ContainsOrdinalIgnoreCase("Cake"));
         }
+
+        return GetPackages(PACKAGE_TYPE_DOWNLOAD, @"#tool ""nuget:\?package=(?'packageId'[\w\d\.]+)(&version=(?'version'[\w\d\.]+))?S*""")
+            .Concat(GetPackages(PACKAGE_TYPE_REFERENCE, @"#addin ""nuget:\?package=(?'packageId'[\w\d\.]+)(&version=(?'version'[\w\d\.]+))?S*"""))
+            .Where(x => !x.Id.ContainsOrdinalIgnoreCase("Cake"));
     }
 }

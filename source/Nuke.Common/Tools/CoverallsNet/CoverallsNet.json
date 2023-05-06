@@ -1,12 +1,12 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://raw.githubusercontent.com/csMACnz/coveralls.net/master/src/csmacnz.Coveralls/T4DocoptNet.cs"
   ],
   "name": "CoverallsNet",
   "officialUrl": "https://coverallsnet.readthedocs.io",
   "help": "Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.",
-  "packageId": "coveralls.net",
+  "nugetPackageId": "coveralls.net",
   "packageExecutable": "csmacnz.Coveralls.dll",
   "tasks": [
     {

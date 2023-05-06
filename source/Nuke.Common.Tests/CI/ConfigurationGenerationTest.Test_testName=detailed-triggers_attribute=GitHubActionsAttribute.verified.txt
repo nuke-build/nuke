@@ -48,96 +48,129 @@ jobs:
   macos-latest:
     name: macos-latest
     runs-on: macos-latest
+    timeout-minutes: 30
+    concurrency:
+      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+          lfs: true
           fetch-depth: 2
-      - name: Cache .nuke/temp, ~/.nuget/packages
+      - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v3
         with:
           path: |
             .nuke/temp
             ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
-      - name: Run './build.cmd Test'
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
+      - name: 'Run: Test'
         run: ./build.cmd Test
         env:
           OptionalInput: ${{ github.event.inputs.OptionalInput }}
           RequiredInput: ${{ github.event.inputs.RequiredInput }}
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: src'
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: src
           path: src
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: test-results'
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: test-results
           path: output/test-results
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: coverage-report.zip'
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip
   ubuntu-latest:
     name: ubuntu-latest
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    concurrency:
+      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+          lfs: true
           fetch-depth: 2
-      - name: Cache .nuke/temp, ~/.nuget/packages
+      - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v3
         with:
           path: |
             .nuke/temp
             ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
-      - name: Run './build.cmd Test'
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
+      - name: 'Run: Test'
         run: ./build.cmd Test
         env:
           OptionalInput: ${{ github.event.inputs.OptionalInput }}
           RequiredInput: ${{ github.event.inputs.RequiredInput }}
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: src'
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: src
           path: src
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: test-results'
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: test-results
           path: output/test-results
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: coverage-report.zip'
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip
   windows-latest:
     name: windows-latest
     runs-on: windows-latest
+    timeout-minutes: 30
+    concurrency:
+      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
+          lfs: true
           fetch-depth: 2
-      - name: Cache .nuke/temp, ~/.nuget/packages
+      - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v3
         with:
           path: |
             .nuke/temp
             ~/.nuget/packages
-          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj') }}
-      - name: Run './build.cmd Test'
+          key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
+      - name: 'Run: Test'
         run: ./build.cmd Test
         env:
           OptionalInput: ${{ github.event.inputs.OptionalInput }}
           RequiredInput: ${{ github.event.inputs.RequiredInput }}
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: src'
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: src
           path: src
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: test-results'
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: test-results
           path: output/test-results
-      - uses: actions/upload-artifact@v3
+      - name: 'Publish: coverage-report.zip'
+        uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: coverage-report.zip
           path: output/coverage-report.zip

@@ -20,10 +20,7 @@
   </PropertyGroup>
 
   <Target Name="NukeExternalFiles" BeforeTargets="Restore" Condition="'@(NukeExternalFiles)' != ''">
-    <ExternalFilesTask
-      ExternalFiles="@(NukeExternalFiles)"
-      Timeout="$(NukeTaskTimeout)"
-      ContinueOnError="$(NukeContinueOnError)" />
+    <Error Text="External files are no longer supported. Let us know if you're depending on this feature at https://github.com/nuke-build/nuke" />
   </Target>
 
   <Target Name="NukePackPackageTools" BeforeTargets="GenerateNuspec" Condition="'$(PackAsTool)' == 'True'">

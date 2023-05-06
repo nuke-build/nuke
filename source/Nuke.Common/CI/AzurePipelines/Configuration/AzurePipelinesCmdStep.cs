@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -9,35 +9,36 @@ using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.CI.AzurePipelines.Configuration
+namespace Nuke.Common.CI.AzurePipelines.Configuration;
+
+[PublicAPI]
+public class AzurePipelinesCmdStep : AzurePipelinesStep
 {
-    [PublicAPI]
-    public class AzurePipelinesCmdStep : AzurePipelinesStep
+    public string[] InvokedTargets { get; set; }
+    public string BuildCmdPath { get; set; }
+    public int? PartitionSize { get; set; }
+    public Dictionary<string, string> Imports { get; set; }
+
+    public override void Write(CustomFileWriter writer)
     {
-        public string[] InvokedTargets { get; set; }
-        public string BuildCmdPath { get; set; }
-        public int? PartitionSize { get; set; }
-        public Dictionary<string, string> Imports { get; set; }
-
-        public override void Write(CustomFileWriter writer)
+        using (writer.WriteBlock("- task: CmdLine@2"))
         {
-            using (writer.WriteBlock("- task: CmdLine@2"))
+            writer.WriteLine("displayName: " + $"Run: {InvokedTargets.JoinCommaSpace()}".SingleQuote());
+
+            var arguments = $"{InvokedTargets.JoinSpace()} --skip";
+            if (PartitionSize != null)
+                arguments += $" --partition $(System.JobPositionInPhase)/{PartitionSize}";
+
+            using (writer.WriteBlock("inputs:"))
             {
-                var arguments = $"{InvokedTargets.JoinSpace()} --skip";
-                if (PartitionSize != null)
-                    arguments += $" --partition $(System.JobPositionInPhase)/{PartitionSize}";
+                writer.WriteLine($"script: './{BuildCmdPath} {arguments}'");
+            }
 
-                using (writer.WriteBlock("inputs:"))
+            if (Imports.Count > 0)
+            {
+                using (writer.WriteBlock("env:"))
                 {
-                    writer.WriteLine($"script: './{BuildCmdPath} {arguments}'");
-                }
-
-                if (Imports.Count > 0)
-                {
-                    using (writer.WriteBlock("env:"))
-                    {
-                        Imports.ForEach(x => writer.WriteLine($"{x.Key}: {x.Value}"));
-                    }
+                    Imports.ForEach(x => writer.WriteLine($"{x.Key}: {x.Value}"));
                 }
             }
         }

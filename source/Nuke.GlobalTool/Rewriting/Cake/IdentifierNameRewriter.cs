@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -12,26 +12,25 @@ using Nuke.Common;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.MSBuild;
 
-namespace Nuke.GlobalTool.Rewriting.Cake
-{
-    internal class IdentifierNameRewriter : SafeSyntaxRewriter
-    {
-        private static Dictionary<string, string> Replacements =>
-            new()
-            {
-                ["DotNetCoreVerbosity"] = nameof(DotNetVerbosity),
-                ["MSBuildToolVersion"] = nameof(MSBuildToolsVersion),
-                ["PlatformTarget"] = nameof(MSBuildTargetPlatform),
-                ["IsRunningOnUnix"] = nameof(EnvironmentInfo.IsUnix),
-                ["IsRunningOnWindows"] = nameof(EnvironmentInfo.IsWin),
-                ["EnvironmentVariable"] = "GetVariable<string>",
-            };
+namespace Nuke.GlobalTool.Rewriting.Cake;
 
-        public override SyntaxNode VisitIdentifierName(IdentifierNameSyntax node)
+internal class IdentifierNameRewriter : SafeSyntaxRewriter
+{
+    private static Dictionary<string, string> Replacements =>
+        new()
         {
-            return Replacements.TryGetValue(node.Identifier.Text, out var replacement)
-                ? node.WithIdentifier(SyntaxFactory.Identifier(replacement))
-                : node;
-        }
+            ["DotNetCoreVerbosity"] = nameof(DotNetVerbosity),
+            ["MSBuildToolVersion"] = nameof(MSBuildToolsVersion),
+            ["PlatformTarget"] = nameof(MSBuildTargetPlatform),
+            ["IsRunningOnUnix"] = nameof(EnvironmentInfo.IsUnix),
+            ["IsRunningOnWindows"] = nameof(EnvironmentInfo.IsWin),
+            ["EnvironmentVariable"] = "GetVariable<string>",
+        };
+
+    public override SyntaxNode VisitIdentifierName(IdentifierNameSyntax node)
+    {
+        return Replacements.TryGetValue(node.Identifier.Text, out var replacement)
+            ? node.WithIdentifier(SyntaxFactory.Identifier(replacement))
+            : node;
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,40 +6,39 @@ using System;
 using System.Linq;
 using Nuke.Common.Utilities;
 
-namespace Nuke.Common.CI.SpaceAutomation.Configuration
+namespace Nuke.Common.CI.SpaceAutomation.Configuration;
+
+public static class SpaceAutomationCustomWriterExtensions
 {
-    public static class SpaceAutomationCustomWriterExtensions
+    public static IDisposable WriteBlock(this CustomFileWriter writer, string text)
     {
-        public static IDisposable WriteBlock(this CustomFileWriter writer, string text)
+        return DelegateDisposable
+            .CreateBracket(
+                () => writer.WriteLine(string.IsNullOrWhiteSpace(text)
+                    ? "{"
+                    : $"{text} {{"),
+                () => writer.WriteLine("}"))
+            .CombineWith(writer.Indent());
+    }
+
+    public static void WriteArray(this CustomFileWriter writer, string property, string[] values)
+    {
+        if (!values?.Any() ?? true)
+            return;
+
+        if (values.Length <= 1)
         {
-            return DelegateDisposable
-                .CreateBracket(
-                    () => writer.WriteLine(string.IsNullOrWhiteSpace(text)
-                        ? "{"
-                        : $"{text} {{"),
-                    () => writer.WriteLine("}"))
-                .CombineWith(writer.Indent());
+            writer.WriteLine($"{property} = {values.Single().DoubleQuote()}");
+            return;
         }
 
-        public static void WriteArray(this CustomFileWriter writer, string property, string[] values)
+        writer.WriteLine($"{property} = \"\"\"");
+        using (writer.Indent())
         {
-            if (!values?.Any() ?? true)
-                return;
-
-            if (values.Length <= 1)
-            {
-                writer.WriteLine($"{property} = {values.Single().DoubleQuote()}");
-                return;
-            }
-
-            writer.WriteLine($"{property} = \"\"\"");
-            using (writer.Indent())
-            {
-                foreach (var value in values)
-                    writer.WriteLine(value);
-            }
-
-            writer.WriteLine("\"\"\"");
+            foreach (var value in values)
+                writer.WriteLine(value);
         }
+
+        writer.WriteLine("\"\"\"");
     }
 }

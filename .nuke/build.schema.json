@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "title": "Build Schema",
   "$ref": "#/definitions/build",
+  "title": "Build Schema",
   "definitions": {
     "build": {
       "type": "object",
@@ -28,7 +28,11 @@
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
-        "GitHubRegistryApiKey": {
+        "FeedzNuGetApiKey": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "GitHubToken": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
@@ -38,10 +42,6 @@
         },
         "GitterRoomId": {
           "type": "string"
-        },
-        "GlobalSolution": {
-          "type": "string",
-          "description": "Path to a solution file that is automatically loaded. Default is nuke-global.sln"
         },
         "Help": {
           "type": "boolean",
@@ -126,10 +126,17 @@
             "type": "string",
             "enum": [
               "Announce",
+              "AnnounceDiscord",
+              "AnnounceGitter",
+              "AnnounceMastodon",
+              "AnnounceSlack",
+              "AnnounceTwitter",
               "Changelog",
               "CheckoutExternalRepositories",
               "Clean",
               "Compile",
+              "CreateGitHubRelease",
+              "DeletePackages",
               "DownloadLicenses",
               "GenerateGlobalSolution",
               "GeneratePublicApi",
@@ -170,10 +177,17 @@
             "type": "string",
             "enum": [
               "Announce",
+              "AnnounceDiscord",
+              "AnnounceGitter",
+              "AnnounceMastodon",
+              "AnnounceSlack",
+              "AnnounceTwitter",
               "Changelog",
               "CheckoutExternalRepositories",
               "Clean",
               "Compile",
+              "CreateGitHubRelease",
+              "DeletePackages",
               "DownloadLicenses",
               "GenerateGlobalSolution",
               "GeneratePublicApi",
@@ -198,6 +212,9 @@
               "UpdateStargazers"
             ]
           }
+        },
+        "TestDegreeOfParallelism": {
+          "type": "integer"
         },
         "TwitterAccessToken": {
           "type": "string",

@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,15 +7,14 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using JetBrains.Annotations;
 
-namespace Nuke.Common.CI.TeamCity
+namespace Nuke.Common.CI.TeamCity;
+
+[PublicAPI]
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+public enum TeamCityStatus
 {
-    [PublicAPI]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public enum TeamCityStatus
-    {
-        NORMAL,
-        WARNING,
-        ERROR,
-        FAILURE
-    }
+    NORMAL,
+    WARNING,
+    ERROR,
+    FAILURE
 }

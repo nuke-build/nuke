@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -8,14 +8,13 @@ using JetBrains.Annotations;
 
 // ReSharper disable InconsistentNaming
 
-namespace Nuke.Common.CI.TravisCI
+namespace Nuke.Common.CI.TravisCI;
+
+[PublicAPI]
+public enum TravisCIEventType
 {
-    [PublicAPI]
-    public enum TravisCIEventType
-    {
-        push,
-        pull_request,
-        api,
-        cron
-    }
+    push,
+    pull_request,
+    api,
+    cron
 }

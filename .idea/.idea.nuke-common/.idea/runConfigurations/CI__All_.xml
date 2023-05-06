@@ -1,9 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="CI [All]" type="CompoundRunConfigurationType">
-    <toRun name="CI [AppVeyor]" type="NukeBuildTarget" />
-    <toRun name="CI [GitHub Actions]" type="NukeBuildTarget" />
-    <toRun name="CI [Azure Pipelines]" type="NukeBuildTarget" />
-    <toRun name="CI [TeamCity]" type="NukeBuildTarget" />
-    <method v="2" />
-  </configuration>
-</component>

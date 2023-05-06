@@ -1,35 +1,34 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using Nuke.Common.Tooling;
 
-namespace Nuke.Common.Tools.SonarScanner
+namespace Nuke.Common.Tools.SonarScanner;
+
+partial class SonarScannerBeginSettings
 {
-    partial class SonarScannerBeginSettings
+    private string GetProcessToolPath()
     {
-        private string GetProcessToolPath()
-        {
-            return SonarScannerTasks.GetToolPath(Framework);
-        }
+        return SonarScannerTasks.GetToolPath(Framework);
     }
+}
 
-    partial class SonarScannerEndSettings
+partial class SonarScannerEndSettings
+{
+    private string GetProcessToolPath()
     {
-        private string GetProcessToolPath()
-        {
-            return SonarScannerTasks.GetToolPath(Framework);
-        }
+        return SonarScannerTasks.GetToolPath(Framework);
     }
+}
 
-    partial class SonarScannerTasks
+partial class SonarScannerTasks
+{
+    internal static string GetToolPath(string framework = null)
     {
-        internal static string GetToolPath(string framework = null)
-        {
-            return ToolPathResolver.GetPackageExecutable(
-                packageId: "dotnet-sonarscanner|MSBuild.SonarQube.Runner.Tool",
-                packageExecutable: "SonarScanner.MSBuild.dll|SonarScanner.MSBuild.exe",
-                framework: framework);
-        }
+        return NuGetToolPathResolver.GetPackageExecutable(
+            packageId: "dotnet-sonarscanner|MSBuild.SonarQube.Runner.Tool",
+            packageExecutable: "SonarScanner.MSBuild.dll|SonarScanner.MSBuild.exe",
+            framework: framework);
     }
 }

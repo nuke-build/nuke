@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -10,19 +10,18 @@ using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Utilities.Collections;
 using static Nuke.CodeGeneration.CodeGenerator;
 using static Nuke.CodeGeneration.ReferenceUpdater;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 
 partial class Build
 {
     AbsolutePath SpecificationsDirectory => RootDirectory / "source" / "Nuke.Common" / "Tools";
-    string ReferencesDirectory => BuildProjectDirectory / "references";
+    AbsolutePath ReferencesDirectory => BuildProjectDirectory / "references";
 
     Target References => _ => _
         .Requires(() => GitHasCleanWorkingCopy())
         .Executes(() =>
         {
-            EnsureCleanDirectory(ReferencesDirectory);
+            ReferencesDirectory.CreateOrCleanDirectory();
 
             UpdateReferences(SpecificationsDirectory, ReferencesDirectory);
         });

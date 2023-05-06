@@ -28,8 +28,9 @@ NUKE brings your build automation to an even level with every other .NET project
 **For more information check out our [documentation](https://nuke.build/docs/introduction/) or visit our community ...**
 
 [![Slack](https://img.shields.io/badge/slack-nukebuildnet-red.svg?style=for-the-badge&colorB=F5015F&logo=slack)](https://nuke.build/slack)
-[![Discord](https://img.shields.io/badge/discord-nuke-blue.svg?style=for-the-badge&colorB=5B65EA&logo=discord&logoColor=white)](https://nuke.build/slack)
+[![Discord](https://img.shields.io/badge/discord-nuke-blue.svg?style=for-the-badge&colorB=5B65EA&logo=discord&logoColor=white)](https://nuke.build/discord)
 [![Twitter](https://img.shields.io/badge/twitter-%40nukebuildnet-blue.svg?style=for-the-badge&logo=twitter&logoColor=white)](https://nuke.build/twitter)
+[![Mastodon](https://img.shields.io/badge/mastodon-%40nuke%40dotnet.social-blue.svg?style=for-the-badge&logo=mastodon&logoColor=white&colorB=6364FF)](https://dotnet.social/@nuke)
 
 ## Example
 
@@ -42,7 +43,7 @@ NUKE builds and tests itself on several CI/CD services, which helps to ensure a 
 | Build Server    | Status                                                                                                                                                                                                                                                |       Platform       | Configuration                                                                                      | 
 |-----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------:|----------------------------------------------------------------------------------------------------|
 | TeamCity        | [![TeamCity](https://img.shields.io/teamcity/build/s/Nuke_Test?server=https%3A%2F%2Fnuke.teamcity.com&label=build&style=flat-square&logo=teamcity)](https://nuke.beta.teamcity.com/project/Nuke?mode=trends)                                          |         Win          | [settings.kts](https://github.com/nuke-build/nuke/blob/develop/.teamcity/settings.kts)             |
-| GitHub Actions  | [![GitHub Actions](https://img.shields.io/github/workflow/status/nuke-build/nuke/continuous?label=build&style=flat-square&logo=github&logoColor=white)](https://github.com/nuke-build/nuke/actions)                                                   | Win / Ubuntu / macOS | [continuous.yml](https://github.com/nuke-build/nuke/blob/develop/.github/workflows/continuous.yml) |
+| GitHub Actions  | [![GitHub Actions](https://img.shields.io/github/actions/workflow/status/nuke-build/nuke/ubuntu-latest.yml?branch=develop&label=build&style=flat-square&logo=github&logoColor=white)](https://github.com/nuke-build/nuke/actions)                     | Win / Ubuntu / macOS | [continuous.yml](https://github.com/nuke-build/nuke/blob/develop/.github/workflows/continuous.yml) |
 | GitLab CI       | [![GitLab CI](https://img.shields.io/gitlab/pipeline/matkoch/nuke/develop?label=build&style=flat-square&logo=gitlab&logoColor=white)](https://gitlab.com/matkoch/nuke/-/pipelines)                                                                    |        Ubuntu        | [.gitlab-ci.yml](https://github.com/nuke-build/nuke/blob/develop/.gitlab-ci.yml)                   |
 | Azure Pipelines | [![Azure Pipelines](https://img.shields.io/azure-devops/build/nuke-build/db5bcee5-db3e-430e-980b-96372b5b7941/7.svg?style=flat-square&label=build&logo=azure-pipelines&logoColor=white)](https://dev.azure.com/nuke-build/NUKE/_build?definitionId=7) | Win / Linux / macOS  | [azure-pipelines.yml](https://github.com/nuke-build/nuke/blob/develop/azure-pipelines.yml)         |
 | AppVeyor        | [![AppVeyor](https://img.shields.io/appveyor/ci/matkoch/nuke-continuous/develop.svg?style=flat-square&label=build&logo=appveyor&logoColor=white)](https://ci.appveyor.com/project/matkoch/nuke-continuous)                                            |     Win / Ubuntu     | [appveyor.yml](https://github.com/nuke-build/nuke/blob/develop/appveyor.continuous.yml)            |
@@ -71,17 +72,15 @@ NUKE builds and tests itself on several CI/CD services, which helps to ensure a 
 
 Thanks to all companies, organizations, and individuals who are sponsoring the further development of this project. Your support means a lot! 💙
 
-[<img height="170px" src="https://octopus.com/images/company/OctopusDeploy-logo-RGB.svg" alt="Octopus Deploy" />](https://octopus.com)
+[<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/octopusdeploy-dark.svg"><img alt="Octopus Deploy" height="170px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/octopusdeploy-light.svg"></picture>](https://octopus.com)
 
-[<img height="130px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/virto-commerce.png" alt="Virto Commerce" />](https://virtocommerce.com/)
+[<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/aws-dark.png"><img alt="Amazon Web Services" height="160px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/aws-light.png"></picture>](https://aws.amazon.com/)
 
 [<img height="60px" src="https://www.dangl-it.de/media/1195/logo-en-rectangular.png" alt="Dangl-IT GmbH" />](https://www.dangl-it.com/)
 [<img height="60px" src="https://peiitalliance.com/logos/LevelingUp-Logo.svg" alt="Leveling Up" />](https://github.com/ron-myers)
-[<img height="60px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/multinet.png" alt="MultiNet" />](https://www.multinet.com/)
 
 [![Rodney Littles II](https://avatars.githubusercontent.com/RLittlesII?s=60&v=4)](https://github.com/RLittlesII)
 [![Olga Nelioubov](https://avatars.githubusercontent.com/onelioubov?s=60&v=4)](https://github.com/onelioubov)
-[![Vova Lantsov](https://avatars.githubusercontent.com/vova-lantsov-dev?s=60&v=4)](https://github.com/vova-lantsov-dev)
 [![Daniel Valadas](https://avatars.githubusercontent.com/valadas?s=60&v=4)](https://github.com/valadas)
 [![Anton Wieslander](https://avatars.githubusercontent.com/T0shik?s=60&v=4)](https://github.com/T0shik)
 [![Chase Florell](https://avatars.githubusercontent.com/ChaseFlorell?s=60&v=4)](https://github.com/ChaseFlorell)
@@ -97,11 +96,11 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Logan Laughlin](https://avatars.githubusercontent.com/llaughlin?s=45&v=4)](https://github.com/llaughlin)
 [![Alex Sink](https://avatars.githubusercontent.com/hardcoded2?s=45&v=4)](https://github.com/hardcoded2)
 [![Martin Gill](https://avatars.githubusercontent.com/MartinSGill?s=45&v=4)](https://github.com/MartinSGill)
-[![Trey Cook](https://avatars.githubusercontent.com/hfcook3?s=45&v=4)](https://github.com/hfcook3)
 [![Todor Todorov](https://avatars.githubusercontent.com/totollygeek?s=45&v=4)](https://github.com/totollygeek)
 [![Vezel](https://avatars.githubusercontent.com/vezel-dev?s=45&v=4)](https://github.com/vezel-dev)
+[![Derek Beattie](https://avatars.githubusercontent.com/dbeattie71?s=45&v=4)](https://github.com/dbeattie71)
 [![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
-[![Rich Bryant](https://avatars.githubusercontent.com/richbryant?s=45&v=4)](https://github.com/richbryant)
+[![patrik53](https://avatars.githubusercontent.com/patrik53?s=45&v=4)](https://github.com/patrik53)
 [<img height="45px" src="https://images.opencollective.com/archon-systems-inc/85fa9b1/logo/256.png" alt="Archon Systems Inc." />](https://opencollective.com/archon-systems-inc/)
 [<img height="45px" src="https://images.opencollective.com/bitzer-electronics-as/39862ac/logo/256.png" alt="BITZER Electronics A/S" />](https://opencollective.com/bitzer-electronics-as)
 

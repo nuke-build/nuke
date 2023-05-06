@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,166 +7,85 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using ICSharpCode.SharpZipLib.BZip2;
-using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Tar;
-using ICSharpCode.SharpZipLib.Zip;
 using JetBrains.Annotations;
-using Nuke.Common.Utilities;
-using Serilog;
 
-namespace Nuke.Common.IO
+namespace Nuke.Common.IO;
+
+[PublicAPI]
+public static class CompressionTasks
 {
-    [PublicAPI]
-    public static class CompressionTasks
+    [Obsolete($"Use {nameof(CompressionExtensions)}.{nameof(CompressionExtensions.CompressTo)} as {nameof(AbsolutePath)} extension method")]
+    public static void Compress(AbsolutePath directory, AbsolutePath archiveFile, Predicate<FileInfo> filter = null)
     {
-        public static void Compress(string directory, string archiveFile, Predicate<FileInfo> filter = null)
-        {
-            if (archiveFile.EndsWithAny(".zip"))
-                CompressZip(directory, archiveFile, filter);
-            else if (archiveFile.EndsWithAny(".tar.gz", ".tgz"))
-                CompressTarGZip(directory, archiveFile, filter);
-            else if (archiveFile.EndsWithAny(".tar.bz2", ".tbz2", ".tbz"))
-                CompressTarBZip2(directory, archiveFile, filter);
-            else
-                Assert.Fail($"Unknown archive extension for archive '{Path.GetFileName(archiveFile)}'");
-        }
+        filter ??= _ => true;
+        directory.CompressTo(archiveFile, x => filter(new FileInfo(x)));
+    }
 
-        public static void Uncompress(string archiveFile, string directory)
-        {
-            if (archiveFile.EndsWithAny(".zip"))
-                UncompressZip(archiveFile, directory);
-            else if (archiveFile.EndsWithAny(".tar.gz", ".tgz"))
-                UncompressTarGZip(archiveFile, directory);
-            else if (archiveFile.EndsWithAny(".tar.bz2", ".tbz2", ".tbz"))
-                UncompressTarBZip2(archiveFile, directory);
-            else
-                Assert.Fail($"Unknown archive extension for archive '{Path.GetFileName(archiveFile)}'");
-        }
+    [Obsolete($"Use {nameof(CompressionExtensions)}.{nameof(CompressionExtensions.UncompressTo)} as {nameof(AbsolutePath)} extension method")]
+    public static void Uncompress(AbsolutePath archiveFile, AbsolutePath directory)
+    {
+        archiveFile.UncompressTo(directory);
+    }
 
-        public static void CompressZip(
-            string directory,
-            string archiveFile,
-            Predicate<FileInfo> filter = null,
-            CompressionLevel compressionLevel = CompressionLevel.Optimal,
-            FileMode fileMode = FileMode.CreateNew)
-        {
-            Log.Information("Compressing content of {Directory} to {File} ...", directory, Path.GetFileName(archiveFile));
+    [Obsolete($"Use {nameof(CompressionExtensions)}.{nameof(CompressionExtensions.ZipTo)} as {nameof(AbsolutePath)} extension method")]
+    public static void CompressZip(
+        AbsolutePath directory,
+        AbsolutePath archiveFile,
+        Predicate<FileInfo> filter = null,
+        CompressionLevel compressionLevel = CompressionLevel.Optimal,
+        FileMode fileMode = FileMode.CreateNew)
+    {
+        filter ??= _ => true;
+        directory.ZipTo(archiveFile, x => filter(new FileInfo(x)), compressionLevel, fileMode);
+    }
 
-            FileSystemTasks.EnsureExistingParentDirectory(archiveFile);
+    [Obsolete($"Use {nameof(CompressionExtensions)}.{nameof(CompressionExtensions.UnZipTo)} as {nameof(AbsolutePath)} extension method")]
+    public static void UncompressZip(AbsolutePath archiveFile, AbsolutePath directory)
+    {
+        archiveFile.UnZipTo(directory);
+    }
 
-            var files = GetFiles(directory, filter);
-            using (var fileStream = File.Open(archiveFile, fileMode, FileAccess.ReadWrite))
-            using (var zipArchive = new ZipArchive(fileStream, ZipArchiveMode.Create))
-            {
-                // zipStream.SetLevel(1);
+    [Obsolete($"Use {nameof(CompressionExtensions)}.{nameof(CompressionExtensions.TarGZipTo)} as {nameof(AbsolutePath)} extension method")]
+    public static void CompressTarGZip(
+        AbsolutePath directory,
+        AbsolutePath archiveFile,
+        Predicate<FileInfo> filter = null,
+        FileMode fileMode = FileMode.CreateNew)
+    {
+        filter ??= _ => true;
+        directory.TarGZipTo(archiveFile, x => filter(new FileInfo(x)), fileMode);
+    }
 
-                foreach (var file in files)
-                {
-                    var relativePath = PathConstruction.GetRelativePath(directory, file);
-                    var entryName = ZipEntry.CleanName(relativePath);
-                    zipArchive.CreateEntryFromFile(file, entryName, compressionLevel);
-                }
-            }
-        }
+    [Obsolete($"Use {nameof(CompressionExtensions)}.{nameof(CompressionExtensions.TarGZipTo)} as {nameof(AbsolutePath)} extension method")]
+    public static void CompressTarGZip(
+        AbsolutePath baseDirectory,
+        AbsolutePath archiveFile,
+        IEnumerable<AbsolutePath> files,
+        FileMode fileMode = FileMode.CreateNew)
+    {
+        baseDirectory.TarGZipTo(archiveFile, files, fileMode);
+    }
 
-        public static void UncompressZip(string archiveFile, string directory)
-        {
-            Log.Information("Uncompressing {File} to {Directory} ...", Path.GetFileName(archiveFile), directory);
+    [Obsolete($"Use {nameof(CompressionExtensions)}.{nameof(CompressionExtensions.TarBZip2To)} as {nameof(AbsolutePath)} extension method")]
+    public static void CompressTarBZip2(
+        AbsolutePath directory,
+        AbsolutePath archiveFile,
+        Predicate<FileInfo> filter = null,
+        FileMode fileMode = FileMode.CreateNew)
+    {
+        filter ??= _ => true;
+        directory.TarBZip2To(archiveFile, x => filter(new FileInfo(x)), fileMode);
+    }
 
-            using var fileStream = File.OpenRead(archiveFile);
-            using var zipFile = new ICSharpCode.SharpZipLib.Zip.ZipFile(fileStream);
+    [Obsolete($"Use {nameof(CompressionExtensions)}.{nameof(CompressionExtensions.UnTarGZipTo)} as {nameof(AbsolutePath)} extension method")]
+    public static void UncompressTarGZip(AbsolutePath archiveFile, AbsolutePath directory)
+    {
+        archiveFile.UnTarGZipTo(directory);
+    }
 
-            var entries = zipFile.Cast<ZipEntry>().Where(x => !x.IsDirectory);
-            foreach (var entry in entries)
-            {
-                var file = PathConstruction.Combine(directory, entry.Name);
-                FileSystemTasks.EnsureExistingParentDirectory(file);
-
-                using var entryStream = zipFile.GetInputStream(entry);
-                using var outputStream = File.Open(file, FileMode.Create);
-                entryStream.CopyTo(outputStream);
-            }
-        }
-
-        public static void CompressTarGZip(
-            string directory,
-            string archiveFile,
-            Predicate<FileInfo> filter = null,
-            FileMode fileMode = FileMode.CreateNew)
-        {
-            CompressTar(directory, archiveFile, filter, fileMode, x => new GZipOutputStream(x));
-        }
-
-        public static void CompressTarBZip2(
-            string directory,
-            string archiveFile,
-            Predicate<FileInfo> filter = null,
-            FileMode fileMode = FileMode.CreateNew)
-        {
-            CompressTar(directory, archiveFile, filter, fileMode, x => new BZip2OutputStream(x));
-        }
-
-        public static void UncompressTarGZip(string archiveFile, string directory)
-        {
-            UncompressTar(archiveFile, directory, x => new GZipInputStream(x));
-        }
-
-        public static void UncompressTarBZip2(string archiveFile, string directory)
-        {
-            UncompressTar(archiveFile, directory, x => new BZip2InputStream(x));
-        }
-
-        private static void CompressTar(
-            string directory,
-            string archiveFile,
-            Predicate<FileInfo> filter,
-            FileMode fileMode,
-            Func<Stream, Stream> outputStreamFactory)
-        {
-            Log.Information("Compressing content of {Directory} to {File} ...", directory, Path.GetFileName(archiveFile));
-
-            FileSystemTasks.EnsureExistingParentDirectory(archiveFile);
-
-            var files = GetFiles(directory, filter);
-            using var fileStream = File.Open(archiveFile, fileMode, FileAccess.ReadWrite);
-            using var outputStream = outputStreamFactory(fileStream);
-            using var tarArchive = TarArchive.CreateOutputTarArchive(outputStream);
-
-            foreach (var file in files)
-            {
-                var entry = TarEntry.CreateEntryFromFile(file);
-                var relativePath = PathConstruction.GetRelativePath(directory, file);
-                entry.Name = PathConstruction.NormalizePath(relativePath, separator: '/');
-
-                tarArchive.WriteEntry(entry, recurse: false);
-            }
-        }
-
-        private static void UncompressTar(string archiveFile, string directory, Func<Stream, Stream> inputStreamFactory)
-        {
-            Log.Information("Uncompressing {File} to {Directory} ...", Path.GetFileName(archiveFile), directory);
-
-            using var fileStream = File.OpenRead(archiveFile);
-            using var inputStream = inputStreamFactory(fileStream);
-            using var tarArchive = TarArchive.CreateInputTarArchive(inputStream, nameEncoding: null);
-
-            FileSystemTasks.EnsureExistingDirectory(directory);
-
-            tarArchive.ExtractContents(directory);
-        }
-
-        private static bool EndsWithAny(this string fileName, params string[] extensions)
-        {
-            return extensions.Any(fileName.EndsWithOrdinalIgnoreCase);
-        }
-
-        private static List<string> GetFiles(string directory, [CanBeNull] Predicate<FileInfo> filter)
-        {
-            return Directory.GetFiles(directory, "*", SearchOption.AllDirectories)
-                .Where(x => filter == null || filter(new FileInfo(x)))
-                .OrderBy(x => x)
-                .ToList();
-        }
+    [Obsolete($"Use {nameof(CompressionExtensions)}.{nameof(CompressionExtensions.UnTarBZip2To)} as {nameof(AbsolutePath)} extension method")]
+    public static void UncompressTarBZip2(AbsolutePath archiveFile, AbsolutePath directory)
+    {
+        archiveFile.UnTarBZip2To(directory);
     }
 }

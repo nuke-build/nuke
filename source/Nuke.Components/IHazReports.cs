@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,11 +7,10 @@ using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
 
-namespace Nuke.Components
+namespace Nuke.Components;
+
+[PublicAPI]
+public interface IHazReports : IHazArtifacts
 {
-    [PublicAPI]
-    public interface IHazReports : IHazArtifacts
-    {
-        AbsolutePath ReportDirectory => ArtifactsDirectory / "reports";
-    }
+    AbsolutePath ReportDirectory => ArtifactsDirectory / "reports";
 }

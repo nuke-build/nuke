@@ -1,12 +1,12 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://developer.xamarin.com/guides/testcloud/uitest/working-with/submitting-tests-at-command-line#//div[@class='doc-content']/table"
   ],
   "name": "TestCloud",
   "officialUrl": "https://developer.xamarin.com/guides/testcloud/",
   "help": "Test Cloud is a cloud based service consisting of thousands of physical mobile devices. Users upload their apps and tests to Test Cloud, which will install the apps on the devices and run the tests. When the tests are complete, Test Cloud, the results made available to users through an easy to use and informative web-based front end.",
-  "packageId": "Xamarin.UITest",
+  "nugetPackageId": "Xamarin.UITest",
   "packageExecutable": "test-cloud.exe",
   "tasks": [
     {

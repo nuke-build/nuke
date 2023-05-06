@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -14,7 +14,7 @@ using Nuke.Common.Utilities.Collections;
 
 partial class Build
 {
-    static string PublicApiFile => RootDirectory / "PUBLIC_API.md";
+    AbsolutePath PublicApiFile => RootDirectory / "PUBLIC_API.md";
 
     [UsedImplicitly]
     Target GeneratePublicApi => _ => _
@@ -89,6 +89,6 @@ partial class Build
                 builder.AppendLine();
             }
 
-            TextTasks.WriteAllText(PublicApiFile, builder.ToString());
+            PublicApiFile.WriteAllText(builder.ToString());
         });
 }

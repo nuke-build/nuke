@@ -1,28 +1,27 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Linq;
 
-namespace Nuke.Common.Tools.Unity.Logging
+namespace Nuke.Common.Tools.Unity.Logging;
+
+internal class MatchedBlock
 {
-    internal class MatchedBlock
+    public BlockMatcher BlockMatcher { get; }
+    public string Name { get; }
+    public MatchType MatchType { get; }
+
+    public MatchedBlock(BlockMatcher blockMatcher, string name, MatchType matchType)
     {
-        public BlockMatcher BlockMatcher { get; }
-        public string Name { get; }
-        public MatchType MatchType { get; }
+        BlockMatcher = blockMatcher;
+        Name = name;
+        MatchType = matchType;
+    }
 
-        public MatchedBlock(BlockMatcher blockMatcher, string name, MatchType matchType)
-        {
-            BlockMatcher = blockMatcher;
-            Name = name;
-            MatchType = matchType;
-        }
-
-        public MatchType MatchesEnd(string message)
-        {
-            return BlockMatcher.MatchesEnd(message);
-        }
+    public MatchType MatchesEnd(string message)
+    {
+        return BlockMatcher.MatchesEnd(message);
     }
 }

@@ -1,12 +1,12 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://github.com/dotnet/SignService#client-configuration"
   ],
   "name": "SignClient",
   "officialUrl": "https://discoverdot.net/projects/sign-service",
   "help": "Code Signing client for Authenticode, NuGet, VSIX, and more",
-  "packageId": "SignClient",
+  "nugetPackageId": "SignClient",
   "packageExecutable": "SignClient.exe",
   "tasks": [
     {

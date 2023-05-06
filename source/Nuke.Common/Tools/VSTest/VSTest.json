@@ -1,12 +1,12 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://msdn.microsoft.com/en-us/library/jj155796.aspx#//div[@class='content']"
   ],
   "name": "VSTest",
   "officialUrl": "https://msdn.microsoft.com/en-us/library/jj155796.aspx",
   "help": "VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.",
-  "packageId": "Microsoft.TestPlatform",
+  "nugetPackageId": "Microsoft.TestPlatform",
   "packageExecutable": "vstest.console.exe",
   "tasks": [
     {

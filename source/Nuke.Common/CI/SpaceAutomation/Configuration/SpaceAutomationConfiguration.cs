@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -7,60 +7,59 @@ using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
-namespace Nuke.Common.CI.SpaceAutomation.Configuration
+namespace Nuke.Common.CI.SpaceAutomation.Configuration;
+
+[PublicAPI]
+public class SpaceAutomationConfiguration : ConfigurationEntity
 {
-    [PublicAPI]
-    public class SpaceAutomationConfiguration : ConfigurationEntity
+    public string Name { get; set; }
+    public string VolumeSize { get; set; }
+    public string[] RefSpec { get; set; }
+    public SpaceAutomationContainer Container { get; set; }
+    public SpaceAutomationTrigger[] Triggers { get; set; }
+    public int? TimeoutInMinutes { get; set; }
+
+    public override void Write(CustomFileWriter writer)
     {
-        public string Name { get; set; }
-        public string VolumeSize { get; set; }
-        public string[] RefSpec { get; set; }
-        public SpaceAutomationContainer Container { get; set; }
-        public SpaceAutomationTrigger[] Triggers { get; set; }
-        public int? TimeoutInMinutes { get; set; }
-
-        public override void Write(CustomFileWriter writer)
+        using (writer.WriteBlock($"job({Name.DoubleQuote()})"))
         {
-            using (writer.WriteBlock($"job({Name.DoubleQuote()})"))
+            if (VolumeSize != null)
             {
-                if (VolumeSize != null)
-                {
-                    writer.WriteLine($"volumeSize = {VolumeSize}");
-                    writer.WriteLine();
-                }
-
-                using (writer.WriteBlock("git"))
-                {
-                    writer.WriteLine("depth = UNLIMITED_DEPTH");
-
-                    if (RefSpec != null)
-                    {
-                        using (writer.WriteBlock("refSpec"))
-                        {
-                            RefSpec.ForEach(x => writer.WriteLine($"+{x.DoubleQuote()}"));
-                        }
-                    }
-                }
-
+                writer.WriteLine($"volumeSize = {VolumeSize}");
                 writer.WriteLine();
-                Container.Write(writer);
+            }
 
-                if (Triggers.Any())
+            using (writer.WriteBlock("git"))
+            {
+                writer.WriteLine("depth = UNLIMITED_DEPTH");
+
+                if (RefSpec != null)
                 {
-                    writer.WriteLine();
-                    using (writer.WriteBlock("startOn"))
+                    using (writer.WriteBlock("refSpec"))
                     {
-                        Triggers.ForEach(x => x.Write(writer));
+                        RefSpec.ForEach(x => writer.WriteLine($"+{x.DoubleQuote()}"));
                     }
                 }
+            }
 
-                if (TimeoutInMinutes != null)
+            writer.WriteLine();
+            Container.Write(writer);
+
+            if (Triggers.Any())
+            {
+                writer.WriteLine();
+                using (writer.WriteBlock("startOn"))
                 {
-                    writer.WriteLine();
-                    using (writer.WriteBlock("failOn"))
-                    {
-                        writer.WriteLine($"timeOut {{ timeOutInMinutes = {TimeoutInMinutes} }}");
-                    }
+                    Triggers.ForEach(x => x.Write(writer));
+                }
+            }
+
+            if (TimeoutInMinutes != null)
+            {
+                writer.WriteLine();
+                using (writer.WriteBlock("failOn"))
+                {
+                    writer.WriteLine($"timeOut {{ timeOutInMinutes = {TimeoutInMinutes} }}");
                 }
             }
         }

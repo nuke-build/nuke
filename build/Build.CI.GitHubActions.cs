@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -6,18 +6,39 @@ using Nuke.Common.CI.GitHubActions;
 using Nuke.Components;
 
 [GitHubActions(
-    "continuous",
+    "windows-latest",
     GitHubActionsImage.WindowsLatest,
-    GitHubActionsImage.UbuntuLatest,
-    GitHubActionsImage.MacOsLatest,
-    Submodules = GitHubActionsSubmodules.Recursive,
     FetchDepth = 0,
     OnPushBranchesIgnore = new[] { MasterBranch, $"{ReleaseBranchPrefix}/*" },
     OnPullRequestBranches = new[] { DevelopBranch },
-    PublishArtifacts = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
-    CacheKeyFiles = new[] { "global.json", "source/**/*.csproj" },
-    EnableGitHubToken = true)]
+    PublishArtifacts = false)]
+[GitHubActions(
+    "macos-latest",
+    GitHubActionsImage.MacOsLatest,
+    FetchDepth = 0,
+    OnPushBranchesIgnore = new[] { MasterBranch, $"{ReleaseBranchPrefix}/*" },
+    OnPullRequestBranches = new[] { DevelopBranch },
+    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
+    PublishArtifacts = false)]
+[GitHubActions(
+    "ubuntu-latest",
+    GitHubActionsImage.UbuntuLatest,
+    FetchDepth = 0,
+    OnPushBranchesIgnore = new[] { MasterBranch, $"{ReleaseBranchPrefix}/*" },
+    OnPullRequestBranches = new[] { DevelopBranch },
+    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
+    PublishArtifacts = false)]
+[GitHubActions(
+    AlphaDeployment,
+    GitHubActionsImage.UbuntuLatest,
+    FetchDepth = 0,
+    OnPushBranches = new[] { DevelopBranch },
+    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack), nameof(IPublish.Publish) },
+    EnableGitHubToken = true,
+    PublishArtifacts = false,
+    ImportSecrets = new[] { nameof(FeedzNuGetApiKey) })]
 partial class Build
 {
+    const string AlphaDeployment = "alpha-deployment";
 }

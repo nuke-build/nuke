@@ -1,10 +1,11 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NuGet.Packaging;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
@@ -18,11 +19,9 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Utilities.Collections;
 using Nuke.Components;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.ReSharper.ReSharperTasks;
 
 [DotNetVerbosityMapping]
@@ -41,7 +40,8 @@ partial class Build
         IReportCoverage,
         IReportIssues,
         IReportDuplicates,
-        IPublish
+        IPublish,
+        ICreateGitHubRelease
 {
     /// Support plugins are available for:
     ///   - JetBrains ReSharper        https://nuke.build/resharper
@@ -77,8 +77,8 @@ partial class Build
         .Before<IRestore>()
         .Executes(() =>
         {
-            SourceDirectory.GlobDirectories("*/bin", "*/obj").ForEach(DeleteDirectory);
-            EnsureCleanDirectory(OutputDirectory);
+            SourceDirectory.GlobDirectories("*/bin", "*/obj").DeleteDirectories();
+            OutputDirectory.CreateOrCleanDirectory();
         });
 
     Configure<DotNetBuildSettings> ICompile.CompileSettings => _ => _
@@ -89,12 +89,15 @@ partial class Build
         .When(!ScheduledTargets.Contains(((IPublish)this).Publish) && !ScheduledTargets.Contains(Install), _ => _
             .ClearProperties());
 
-    IEnumerable<(Project Project, string Framework)> ICompile.PublishConfigurations =>
+    IEnumerable<(Nuke.Common.ProjectModel.Project Project, string Framework)> ICompile.PublishConfigurations =>
         from project in new[] { Solution.Nuke_GlobalTool, Solution.Nuke_MSBuildTasks }
         from framework in project.GetTargetFrameworks()
         select (project, framework);
 
-    IEnumerable<Project> ITest.TestProjects => Partition.GetCurrent(Solution.GetProjects("*.Tests"));
+    IEnumerable<Nuke.Common.ProjectModel.Project> ITest.TestProjects => Partition.GetCurrent(Solution.GetProjects("*.Tests"));
+
+    [Parameter]
+    public int TestDegreeOfParallelism { get; } = 1;
 
     Configure<DotNetTestSettings> ITest.TestSettings => _ => _
         .SetProcessEnvironmentVariable("NUKE_TELEMETRY_OPTOUT", bool.TrueString);
@@ -114,35 +117,73 @@ partial class Build
 
     bool IReportIssues.InspectCodeFailOnWarning => false;
     bool IReportIssues.InspectCodeReportWarnings => true;
-    IEnumerable<string> IReportIssues.InspectCodeFailOnIssues => new[] { "CognitiveComplexity" };
+    IEnumerable<string> IReportIssues.InspectCodeFailOnIssues => new string[0];
     IEnumerable<string> IReportIssues.InspectCodeFailOnCategories => new string[0];
 
-    string PublicNuGetSource => "https://api.nuget.org/v3/index.json";
+    Configure<DotNetPackSettings> IPack.PackSettings => _ => _
+        .When(Host is Terminal or GitHubActions { Workflow: AlphaDeployment }, _ => _
+            .SetVersion(DefaultDeploymentVersion));
 
-    string GitHubRegistrySource => GitHubActions != null
-        ? $"https://nuget.pkg.github.com/{GitHubActions.RepositoryOwner}/index.json"
-        : null;
+    string PublicNuGetSource => "https://api.nuget.org/v3/index.json";
+    string FeedzNuGetSource => "https://f.feedz.io/nuke/alpha/nuget";
+    string DefaultDeploymentVersion => "9999.0.0";
 
     [Parameter] [Secret] readonly string PublicNuGetApiKey;
-    [Parameter] [Secret] readonly string GitHubRegistryApiKey;
+    [Parameter] [Secret] readonly string FeedzNuGetApiKey;
 
-    bool IsOriginalRepository => GitRepository.Identifier == "nuke-build/nuke";
-    string IPublish.NuGetApiKey => IsOriginalRepository ? PublicNuGetApiKey : GitHubRegistryApiKey;
-    string IPublish.NuGetSource => IsOriginalRepository ? PublicNuGetSource : GitHubRegistrySource;
+    bool IsPublicRelease => GitRepository.IsOnMasterBranch() || GitRepository.IsOnReleaseBranch();
+    string IPublish.NuGetSource => IsPublicRelease ? PublicNuGetSource : FeedzNuGetSource;
+    string IPublish.NuGetApiKey => IsPublicRelease ? PublicNuGetApiKey : FeedzNuGetApiKey;
 
     Target IPublish.Publish => _ => _
         .Inherit<IPublish>()
         .Consumes(From<IPack>().Pack)
-        .Requires(() => IsOriginalRepository && AppVeyor != null && (GitRepository.IsOnMasterBranch() || GitRepository.IsOnReleaseBranch()) ||
-                        !IsOriginalRepository)
+        .Requires(() => IsPublicRelease && Host is AppVeyor || GitRepository.IsOnDevelopBranch() && Host is GitHubActions && GitHubActions.Workflow == AlphaDeployment)
         .WhenSkipped(DependencyBehavior.Execute);
+
+    IEnumerable<AbsolutePath> NuGetPackageFiles
+        => From<IPack>().PackagesDirectory.GlobFiles("*.nupkg");
+
+    Target DeletePackages => _ => _
+        .DependentFor<IPublish>()
+        .After<IPack>()
+        .OnlyWhenStatic(() => Host is Terminal or GitHubActions { Workflow: AlphaDeployment })
+        .Executes(() =>
+        {
+            if (Host is Terminal)
+            {
+                var packagesDirectory = NuGetPackageResolver.GetPackagesDirectory(packagesConfigFile: BuildProjectFile);
+                var packageDirectories = packagesDirectory.GlobDirectories($"nuke.*/{DefaultDeploymentVersion}");
+                packageDirectories.DeleteDirectories();
+            }
+            else if (Host is GitHubActions)
+            {
+                void DeletePackage(string id, string version)
+                    => DotNet(
+                        $"nuget delete {id} {version} --source {FeedzNuGetSource} --api-key {FeedzNuGetApiKey} --non-interactive",
+                        logOutput: false);
+
+                var packageIds = NuGetPackageFiles.Select(x => new PackageArchiveReader(x).NuspecReader.GetId());
+                foreach (var packageId in packageIds)
+                    SuppressErrors(() => DeletePackage(packageId, DefaultDeploymentVersion), logWarning: false);
+            }
+        });
+
+    string ICreateGitHubRelease.Name => MajorMinorPatchVersion;
+    IEnumerable<AbsolutePath> ICreateGitHubRelease.AssetFiles => NuGetPackageFiles;
+
+    Target ICreateGitHubRelease.CreateGitHubRelease => _ => _
+        .Inherit<ICreateGitHubRelease>()
+        .TriggeredBy<IPublish>()
+        .ProceedAfterFailure()
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch());
 
     Target Install => _ => _
         .DependsOn<IPack>()
         .Executes(() =>
         {
             SuppressErrors(() => DotNet($"tool uninstall -g {Solution.Nuke_GlobalTool.Name}"));
-            DotNet($"tool install -g {Solution.Nuke_GlobalTool.Name} --add-source {OutputDirectory} --version {GitVersion.NuGetVersionV2}");
+            DotNet($"tool install -g {Solution.Nuke_GlobalTool.Name} --add-source {OutputDirectory} --version {DefaultDeploymentVersion}");
         });
 
     T From<T>()

@@ -1,11 +1,11 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://github.com/OctopusDeploy/OctoVersion/blob/main/README.md"
   ],
   "name": "OctoVersion",
   "officialUrl": "https://github.com/OctopusDeploy/OctoVersion",
-  "packageId": "OctoVersion.Tool",
+  "nugetPackageId": "OctoVersion.Tool",
   "packageExecutable": "OctoVersion.Tool.dll",
   "customExecutable": true,
   "tasks": [

@@ -2,18 +2,19 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>netcoreapp3.1;net6.0</TargetFrameworks>
+    <TargetFramework>net6.0</TargetFramework>
     <RollForward>LatestMajor</RollForward>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>nuke</ToolCommandName>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nuke.Build\Nuke.Build.csproj" />
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
-    <ProjectReference Include="..\..\external\spectre.console\src\Spectre.Console\Spectre.Console.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="matkoch.spectre.console" Version="0.46.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.2.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.2.0" />

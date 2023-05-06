@@ -1,12 +1,12 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "references": [
     "https://github.com/Squirrel/Squirrel.Windows/blob/master/src/Update/Program.cs"
   ],
   "name": "Squirrel",
   "officialUrl": "https://github.com/Squirrel/Squirrel.Windows",
   "help": "Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).",
-  "packageId": "Squirrel.Windows",
+  "nugetPackageId": "Squirrel.Windows",
   "packageExecutable": "Squirrel.exe",
   "tasks": [
     {

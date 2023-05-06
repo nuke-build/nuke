@@ -11,10 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nuke.Build.Shared\Nuke.Build.Shared.csproj" />
+    <ProjectReference Include="..\Nuke.SolutionModel\Nuke.SolutionModel.csproj" />
+    <ProjectReference Include="..\Nuke.Utilities\Nuke.Utilities.csproj" />
+    <ProjectReference Include="..\Nuke.Utilities.IO.Globbing\Nuke.Utilities.IO.Globbing.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="3.9.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.2" PrivateAssets="all" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" PrivateAssets="all" GeneratePathProperty="true" />
-    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" GeneratePathProperty="true" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" PrivateAssets="all" GeneratePathProperty="true" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,31 +32,17 @@
     <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
   </PropertyGroup>
 
+  <!-- TODO: check for easier method https://github.com/dotnet/roslyn/issues/52017#issuecomment-809113013 -->
   <Target Name="GetDependencyTargetPaths">
     <ItemGroup>
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgNewtonsoft_Json)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
-      <TargetPathWithTargetPlatformMoniker Include="$(PkgJetBrains_Annotations)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\Nuke.Build.Shared.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\Nuke.SolutionModel.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\Nuke.Utilities.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(MSBuildProjectDirectory)\bin\$(Configuration)\$(TargetFramework)\Nuke.Utilities.IO.Globbing.dll" IncludeRuntimeDependency="false" />
+
+      <TargetPathWithTargetPlatformMoniker Include="$(PkgNewtonsoft_Json)\lib\$(TargetFramework)\*.dll" IncludeRuntimeDependency="false" />
+      <TargetPathWithTargetPlatformMoniker Include="$(PkgJetBrains_Annotations)\lib\$(TargetFramework)\*.dll" IncludeRuntimeDependency="false" />
     </ItemGroup>
   </Target>
-
-  <ItemGroup>
-    <Compile Include="..\Nuke.Common\Assert.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Common\CallerArgumentExpressionAttribute.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Common\Constants.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Common\EnvironmentInfo.Platform.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Common\EnvironmentInfo.SpecialFolder.cs" LinkBase=".\Linked" />
-    <Compile Include="..\Nuke.Common\IO\AbsolutePath.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\IO\PathConstruction.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\IO\RelativePath.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\IO\WinRelativePath.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\IO\UnixRelativePath.cs" LinkBase=".\Linked\IO" />
-    <Compile Include="..\Nuke.Common\ProjectModel\*.cs" LinkBase=".\Linked\ProjectModel" />
-    <Compile Include="..\Nuke.Common\Utilities\Collections\*.cs" LinkBase=".\Linked\Utilities" />
-    <Compile Include="..\Nuke.Common\Utilities\String.*.cs" LinkBase=".\Linked\Utilities" />
-
-    <Compile Remove="..\Nuke.Common\ProjectModel\SolutionAttribute.cs" LinkBase=".\Linked\ProjectModel" />
-    <Compile Remove="..\Nuke.Common\ProjectModel\ProjectExtensions.cs" LinkBase=".\Linked\ProjectModel" />
-    <Compile Remove="..\Nuke.Common\ProjectModel\ProjectModelTasks.cs" LinkBase=".\Linked\ProjectModel" />
-  </ItemGroup>
 
 </Project>

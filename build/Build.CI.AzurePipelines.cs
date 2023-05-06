@@ -1,4 +1,4 @@
-// Copyright 2021 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -17,7 +17,6 @@ using Nuke.Components;
     AzurePipelinesImage.WindowsLatest,
     AzurePipelinesImage.MacOsLatest,
     PullRequestsDisabled = true,
-    Submodules = true,
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     NonEntryTargets = new[] { nameof(IRestore.Restore), nameof(DownloadLicenses), nameof(ICompile.Compile), nameof(InstallFonts), nameof(ReleaseImage) },
     ExcludedTargets = new[] { nameof(Clean), nameof(ISignPackages.SignPackages) },

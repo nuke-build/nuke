@@ -1,5 +1,5 @@
 {
-  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.CodeGeneration/schema.json",
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
   "name": "CorFlags",
   "officialUrl": "https://docs.microsoft.com/en-us/dotnet/framework/tools/corflags-exe-corflags-conversion-tool",
   "help": "The CorFlags Conversion tool allows you to configure the CorFlags section of the header of a portable executable image.",
