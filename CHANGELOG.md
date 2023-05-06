@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [7.0.0] / 2023-05-06
 - Refactored out multiple projects
 - Renamed `ProcessCustomLogger` to `ProcessLogger`
 - Renamed `LocalExecutableAttribute` to `LocalPathAttribute`
@@ -1048,7 +1050,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/6.3.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/7.0.0...HEAD
+[7.0.0]: https://github.com/nuke-build/nuke/compare/6.3.0...7.0.0
 [6.3.0]: https://github.com/nuke-build/nuke/compare/6.2.1...6.3.0
 [6.2.1]: https://github.com/nuke-build/nuke/compare/6.2.0...6.2.1
 [6.2.0]: https://github.com/nuke-build/nuke/compare/6.1.2...6.2.0
