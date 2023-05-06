@@ -5,6 +5,64 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Refactored out multiple projects
+- Renamed `ProcessCustomLogger` to `ProcessLogger`
+- Renamed `LocalExecutableAttribute` to `LocalPathAttribute`
+- Renamed `NpmExecutableAttribute` to `NpmPackageAttribute`
+- Renamed `PackageExecutableAttribute` to `NuGetPackageAttribute`
+- Renamed `PathExecutableAttribute` to `PathVariableAttribute`
+- Changed bootstrapping scripts to use `STS` instead of `Current` channel
+- Changed `Target` conditions to use regular delegates captured using `CallerArgumentExpressionAttribute`
+- Changed `AbsolutePath` to implicit cast to `string`
+- Changed `HandleSIngleFileExecutionAttribute` to be opt-in
+- Changed string-based command-line tool tasks to use `ArgumentStringHandler`
+- Changed `LatestMavenVersionAttribute` to exclude previously hardcoded `m2` suffix
+- Changed `OctoVersionTasks` to use replacement package
+- Removed legacy project setup
+- Removed YAML shell completion
+- Removed `ExternalFilesTask`
+- Removed `CheckBuildProjectConfigurationsAttribute`
+- Removed obsolete members in `OctoVersionAttribute`
+- Removed `Nuke.MSBuildLocator` package
+- Updated package dependencies
+- Updated AzureKeyVault integration
+- Added assertion against `Target` self-dependence
+- Added support for tool requirements and automatic installation
+- Added `ProcessExitHandler` for CLT tasks
+- Added auto-resolution of appropriate framework in `NuGetToolPathResolver`
+- Added `windowsPath` and `unixPath` to `LocalPathAttribute`
+- Added `LatestMavenVersionAttribute.IncludePrerelease`
+- Added `DelegateDisposable.SetAndRestore`
+- Added `Solution` implicit cast to `AbsolutePath`
+- Added `AbsolutePath` extension methods for `TextTasks`, `FileSystemTasks`, `CompressionTasks`, `SerializationTasks`
+- Added `AbsolutePath` plus operator
+- Added `EnvironmentInfo.Paths`
+- Added `IFormattable` to `AbsolutePath`
+- Added properties for permissions in GitHubActions generation
+- Added support for job timeout and concurrency configuration in GitHubActions generation
+- Added `PublishCondition` and `LFS` property in GitHubActions generation
+- Added `Directory.Packages.props` to default cache key files in GitHubActions generation
+- Added names for actions in GitHubActions generation
+- Added display names for tasks in AzurePipelines generation
+- Added resolution of GitHub token in `GitHubTasks` through `GITHUB_TOKEN` environment variable
+- Added `StaticWebAppsTasks`
+- Added `PwshTasks`
+- Fixed linking of `Directory.Build` files in build project view
+- Fixed skipping of trigger dependencies when original target is skipped
+- Fixed `continue` parameter to retry previously skipped targets
+- Fixed missing `Log.CloseAndFlush()` for logging
+- Fixed newlines in bootstrapping scripts
+- Fixed log-level check for `ProcessException`
+- Fixed case-sensitivity in `nuget.config` discovery
+- Fixed `ProcessException` to retain exit code
+- Fixed `StronglyTypedSolutionGenerator` to add auto-generated XML header
+- Fixed NPM integration
+- Fixed `Repository.IsGitHubRepository` to consider nullable `Endpoint`
+- Fixed casing for `PublishBuildArtifacts` in AzurePipelines generation
+- Fixed missing environment variables for SpaceAutomation
+- Fixed missing environment variables for GitHubActions
+- Fixed escaping of GitHubActions workflow values
+- Fixed missing arguments in `KubernetesTasks`
 
 ## [6.3.0] / 2022-12-12
 - Added new version of `Octokit`
@@ -1084,4 +1142,3 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 [0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
 [0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
 [0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
-
