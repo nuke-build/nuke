@@ -15,7 +15,7 @@ public class SystemConsoleHostTheme : SystemConsoleTheme, IHostTheme
         new SystemConsoleThemeStyle { Foreground = ConsoleColor.Green },
         new Dictionary<ConsoleThemeStyle, SystemConsoleThemeStyle>
         {
-            [ConsoleThemeStyle.Text] = new(),
+            [ConsoleThemeStyle.Text] = new() { Foreground = ConsoleColor.Gray },
             [ConsoleThemeStyle.SecondaryText] = new() { Foreground = ConsoleColor.Gray },
             [ConsoleThemeStyle.TertiaryText] = new() { Foreground = ConsoleColor.Gray },
             [ConsoleThemeStyle.Name] = new() { Foreground = ConsoleColor.Blue },
@@ -26,7 +26,7 @@ public class SystemConsoleHostTheme : SystemConsoleTheme, IHostTheme
             [ConsoleThemeStyle.Boolean] = new() { Foreground = ConsoleColor.Magenta },
             [ConsoleThemeStyle.Scalar] = new() { Foreground = ConsoleColor.Magenta },
             [ConsoleThemeStyle.LevelVerbose] = new() { Foreground = ConsoleColor.Gray },
-            [ConsoleThemeStyle.LevelDebug] = new(),
+            [ConsoleThemeStyle.LevelDebug] = new() { Foreground = ConsoleColor.Gray },
             [ConsoleThemeStyle.LevelInformation] = new() { Foreground = ConsoleColor.Cyan },
             [ConsoleThemeStyle.LevelWarning] = new() { Foreground = ConsoleColor.Yellow },
             [ConsoleThemeStyle.LevelError] = new() { Foreground = ConsoleColor.Red },

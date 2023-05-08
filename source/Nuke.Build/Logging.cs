@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.Execution.Theming;
@@ -25,7 +26,9 @@ public static class Logging
 {
     public static readonly LoggingLevelSwitch LevelSwitch = new();
 
-    internal static bool SupportsAnsiOutput => Environment.GetEnvironmentVariable("TERM") is { } term && term.StartsWithOrdinalIgnoreCase("xterm");
+    internal static bool SupportsAnsiOutput => Environment.GetEnvironmentVariable("TERM") is { } term && term.StartsWithOrdinalIgnoreCase("xterm")
+            || RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && Environment.OSVersion.Version.Major >= 10;
+
     internal static IHostTheme DefaultTheme { get; } = SupportsAnsiOutput
         ? AnsiConsoleHostTheme.Default256AnsiColorTheme
         : SystemConsoleHostTheme.DefaultSystemColorTheme;
