@@ -22,6 +22,7 @@ public partial class AzurePipelines : Host, IBuildServer
 {
     public new static AzurePipelines Instance => Host.Instance as AzurePipelines;
 
+    [UsedImplicitly]
     internal static bool IsRunningAzurePipelines => EnvironmentInfo.HasVariable("TF_BUILD");
 
     private readonly Action<string> _messageSink;

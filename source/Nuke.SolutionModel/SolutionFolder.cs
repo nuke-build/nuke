@@ -32,12 +32,18 @@ public class SolutionFolder : PrimitiveProject
     public IReadOnlyCollection<SolutionFolder> SolutionFolders => Solution.AllSolutionFolders.Where(x => x.SolutionFolder == this).ToList();
     public IReadOnlyCollection<Project> Projects => Solution.AllProjects.Where(x => x.SolutionFolder == this).ToList();
 
+    /// <summary>
+    /// Gets a solution folder by its name.
+    /// </summary>
     [CanBeNull]
     public SolutionFolder GetSolutionFolder(string name)
     {
         return SolutionFolders.SingleOrDefault(x => name.Equals(x.Name, StringComparison.Ordinal));
     }
 
+    /// <summary>
+    /// Gets a project by its name.
+    /// </summary>
     [CanBeNull]
     public Project GetProject(string name)
     {

@@ -46,5 +46,5 @@ public class Project : PrimitiveProject
         return Path;
     }
 
-    internal override string RelativePath => PathConstruction.GetRelativePath(Solution.Directory, Path);
+    internal override string RelativePath => Solution.Directory.GetRelativePathTo(Path);
 }

@@ -14,6 +14,7 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common;
 
+[PublicAPI]
 public interface INukeBuild
 {
     void ReportSummary(Configure<IDictionary<string, string>> configurator = null);

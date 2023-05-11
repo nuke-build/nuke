@@ -26,6 +26,7 @@ public partial class TeamCity : Host, IBuildServer
 {
     public new static TeamCity Instance => Host.Instance as TeamCity;
 
+    [UsedImplicitly]
     internal static bool IsRunningTeamCity => EnvironmentInfo.HasVariable("TEAMCITY_VERSION");
 
     [CanBeNull]

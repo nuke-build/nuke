@@ -4,17 +4,20 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Execution;
 
 public class Terminal : Host
 {
+    [UsedImplicitly]
     public static bool IsRunningTerminal => true;
 }
 
 public class Rider : Terminal
 {
+    [UsedImplicitly]
     internal static bool IsRunningRider
         => !Environment.GetEnvironmentVariable("IDEA_INITIAL_DIRECTORY").IsNullOrEmpty() ||
            (Environment.GetEnvironmentVariable("XPC_SERVICE_NAME")?.ContainsOrdinalIgnoreCase("com.jetbrains.rider") ?? false) ||
@@ -23,6 +26,7 @@ public class Rider : Terminal
 
 public class VSCode : Terminal
 {
+    [UsedImplicitly]
     internal static bool IsRunningVSCode
         => !Environment.GetEnvironmentVariable("VSCODE_GIT_IPC_HANDLE").IsNullOrEmpty() ||
            !Environment.GetEnvironmentVariable("VSCODE_PID").IsNullOrEmpty();
@@ -30,6 +34,7 @@ public class VSCode : Terminal
 
 public class VisualStudio : Terminal
 {
+    [UsedImplicitly]
     internal static bool IsRunningVisualStudio
         => !Environment.GetEnvironmentVariable("VisualStudioVersion").IsNullOrEmpty();
 }
