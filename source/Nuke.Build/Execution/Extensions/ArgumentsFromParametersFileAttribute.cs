@@ -52,7 +52,9 @@ internal class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBas
             => scalarType == typeof(AbsolutePath) ||
                typeof(Solution).IsAssignableFrom(scalarType) ||
                scalarType == typeof(Project)
-                ? EnvironmentInfo.WorkingDirectory.GetUnixRelativePathTo(Build.RootDirectory / value)
+                ? PathConstruction.HasPathRoot(value)
+                    ? value
+                    : EnvironmentInfo.WorkingDirectory.GetUnixRelativePathTo(Build.RootDirectory / value)
                 : value;
 
         var arguments = GetParameters().SelectMany(x => ConvertToArguments(x.Profile, x.Name, x.Values)).ToArray();
