@@ -5,10 +5,12 @@
 using System;
 using System.ComponentModel;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.DotNet;
 
+[PublicAPI]
 [TypeConverter(typeof(TypeConverter<DotNetRuntimeIdentifier>))]
 public class DotNetRuntimeIdentifier : Enumeration
 {
