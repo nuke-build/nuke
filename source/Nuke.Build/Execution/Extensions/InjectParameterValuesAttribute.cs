@@ -13,6 +13,6 @@ internal class InjectParameterValuesAttribute : BuildExtensionAttributeBase, IOn
 {
     public void OnBuildCreated(IReadOnlyCollection<ExecutableTarget> executableTargets)
     {
-        ValueInjectionUtility.InjectValues(Build, x => x is ParameterAttribute);
+        ValueInjectionUtility.InjectValues(Build, x => x.GetType() == typeof(ParameterAttribute));
     }
 }
