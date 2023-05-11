@@ -15,6 +15,6 @@ internal class InjectNonParameterValuesAttribute : BuildExtensionAttributeBase, 
         IReadOnlyCollection<ExecutableTarget> executableTargets,
         IReadOnlyCollection<ExecutableTarget> executionPlan)
     {
-        ValueInjectionUtility.InjectValues(Build, x => x is not ParameterAttribute);
+        ValueInjectionUtility.InjectValues(Build, x => x.GetType() != typeof(ParameterAttribute));
     }
 }
