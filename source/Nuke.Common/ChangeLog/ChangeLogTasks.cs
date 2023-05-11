@@ -83,7 +83,7 @@ public static class ChangelogTasks
             return new ChangeLog(changelogFile, unreleased.First(), releaseNotes);
         }
 
-        Assert.True(releaseNotes.Count(x => !x.Unreleased) >= 1, "Changelog should have at lease one released version section");
+        Assert.True(releaseNotes.Any(x => !x.Unreleased), "Changelog should have at lease one released version section");
         return new ChangeLog(changelogFile, releaseNotes);
     }
 
@@ -177,11 +177,6 @@ public static class ChangelogTasks
     {
         static bool IsReleaseHead(string str)
             => str.StartsWith("## ");
-
-        static bool IsReleaseContent(string str) => str.StartsWith("###")
-                                                    || str.Trim().StartsWith("-")
-                                                    || str.Trim().StartsWith("*")
-                                                    || str.Trim().StartsWith("+");
 
         static string GetCaption(string str)
             => str

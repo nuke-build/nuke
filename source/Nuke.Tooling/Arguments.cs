@@ -11,6 +11,7 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tooling;
 
+[PublicAPI]
 public interface IArguments
 {
     string FilterSecrets(string text);
@@ -19,6 +20,7 @@ public interface IArguments
 }
 
 // TODO: extract {value} and {key} into constants
+[PublicAPI]
 public sealed class Arguments : IArguments
 {
     internal const string Redacted = "[REDACTED]";

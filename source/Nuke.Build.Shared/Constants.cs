@@ -16,6 +16,7 @@ namespace Nuke.Common;
 /// <summary>
 /// Set of constants shared between libraries and IDE extensions.
 /// </summary>
+[UsedImplicitly]
 internal static class Constants
 {
     internal const string NukeFileName = NukeDirectoryName;

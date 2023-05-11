@@ -62,7 +62,7 @@ internal partial class ParameterService
 
     public static string GetParameterMemberName(MemberInfo member)
     {
-        var attribute = member.GetCustomAttribute<ParameterAttribute>();
+        var attribute = member.GetCustomAttribute<ParameterAttribute>().NotNull();
         var prefix = member.DeclaringType.NotNull().GetCustomAttribute<ParameterPrefixAttribute>()?.Prefix;
         return prefix + (attribute.Name ?? member.Name);
     }
@@ -70,14 +70,14 @@ internal partial class ParameterService
     [CanBeNull]
     public static string GetParameterDescription(MemberInfo member)
     {
-        var attribute = member.GetCustomAttribute<ParameterAttribute>();
+        var attribute = member.GetCustomAttribute<ParameterAttribute>().NotNull();
         return attribute.Description?.TrimEnd('.');
     }
 
     [CanBeNull]
     public static IEnumerable<(string Text, object Object)> GetParameterValueSet(MemberInfo member, object instance)
     {
-        var attribute = member.GetCustomAttribute<ParameterAttribute>();
+        var attribute = member.GetCustomAttribute<ParameterAttribute>().NotNull();
         var memberType = member.GetMemberType().GetScalarType();
 
         IEnumerable<(string Text, object Object)> TryGetFromValueProvider()
@@ -131,7 +131,7 @@ internal partial class ParameterService
     [CanBeNull]
     public static object GetFromMemberInfo(MemberInfo member, [CanBeNull] Type destinationType, Func<string, Type, char?, object> provider)
     {
-        var attribute = member.GetCustomAttribute<ParameterAttribute>();
+        var attribute = member.GetCustomAttribute<ParameterAttribute>().NotNull();
         var separator = (attribute.Separator ?? string.Empty).SingleOrDefault();
         return provider.Invoke(GetParameterMemberName(member), destinationType ?? member.GetMemberType(), separator);
     }
