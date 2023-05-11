@@ -112,7 +112,7 @@
           },
           {
             "name": "JobId",
-            "type": "int",
+            "type": "string",
             "format": "--jobId {value}",
             "help": "The job Id to provide to coveralls.io. Default is <c>0</c>."
           },
