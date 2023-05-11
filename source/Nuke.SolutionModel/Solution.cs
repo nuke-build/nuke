@@ -107,7 +107,7 @@ public class Solution
     /// <summary>
     /// Gets all projects matching a wildcard pattern.
     /// </summary>
-    public IEnumerable<Project> GetProjects(string wildcardPattern)
+    public IEnumerable<Project> GetAllProjects(string wildcardPattern)
     {
         wildcardPattern = $"^{wildcardPattern}$";
         var regex = new Regex(wildcardPattern
