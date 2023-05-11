@@ -12,6 +12,7 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Utilities;
 
+[PublicAPI]
 public static partial class ReflectionUtility
 {
     public const BindingFlags All = Static | Instance | BindingFlags.FlattenHierarchy;
@@ -75,13 +76,12 @@ public static partial class ReflectionUtility
 
     public static Type GetScalarType(this Type type)
     {
-        return Nullable.GetUnderlyingType(type) is { } underlyingType
-            ? underlyingType
-            : type.IsArray
-                ? type.GetElementType()
-                : type.IsCollectionLike()
-                    ? type.GetGenericArguments().Single()
-                    : type;
+        return Nullable.GetUnderlyingType(type)
+               ?? (type.IsArray
+                   ? type.GetElementType()
+                   : type.IsCollectionLike()
+                       ? type.GetGenericArguments().Single()
+                       : type);
     }
 
     public static bool IsPublic(this MemberInfo member)
@@ -92,7 +92,7 @@ public static partial class ReflectionUtility
             ConstructorInfo constructor => constructor.IsPublic,
             FieldInfo field => field.IsPublic,
             MethodInfo method => method.IsPublic,
-            PropertyInfo property => property.GetMethod.IsPublic,
+            PropertyInfo property => (property.GetMethod ?? property.SetMethod).NotNull().IsPublic,
             _ => throw new NotSupportedException(member.ToString())
         };
     }
@@ -104,7 +104,7 @@ public static partial class ReflectionUtility
             ConstructorInfo constructor => constructor.IsFamily,
             FieldInfo field => field.IsFamily,
             MethodInfo method => method.IsFamily,
-            PropertyInfo property => property.GetMethod.IsFamily,
+            PropertyInfo property => (property.GetMethod ?? property.SetMethod).NotNull().IsFamily,
             _ => throw new NotSupportedException(member.ToString())
         };
     }
@@ -116,7 +116,7 @@ public static partial class ReflectionUtility
             ConstructorInfo constructor => constructor.IsAssembly,
             FieldInfo field => field.IsAssembly,
             MethodInfo method => method.IsAssembly,
-            PropertyInfo property => property.GetMethod.IsAssembly,
+            PropertyInfo property => (property.GetMethod ?? property.SetMethod).NotNull().IsAssembly,
             _ => throw new NotSupportedException(member.ToString())
         };
     }
@@ -128,7 +128,7 @@ public static partial class ReflectionUtility
             ConstructorInfo constructor => constructor.IsStatic,
             FieldInfo field => field.IsStatic,
             MethodInfo method => method.IsStatic,
-            PropertyInfo property => property.GetMethod.IsStatic,
+            PropertyInfo property => (property.GetMethod ?? property.SetMethod).NotNull().IsStatic,
             _ => throw new NotSupportedException(member.ToString())
         };
     }
@@ -154,9 +154,9 @@ public static partial class ReflectionUtility
     {
         Assert.True(classType.IsClass);
         return member.DeclaringType != classType
-            ? classType.GetMember(member.Name).SingleOrDefault() ??
-              classType.GetMember(member.GetPossibleExplicitName(), Instance).SingleOrDefault() ??
-              member
+            ? classType.GetMember(member.Name).SingleOrDefault()
+              ?? classType.GetMember(member.GetPossibleExplicitName(), Instance).SingleOrDefault()
+              ?? member
             : member;
     }
 

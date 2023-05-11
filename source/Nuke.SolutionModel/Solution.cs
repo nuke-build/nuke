@@ -225,7 +225,7 @@ public class Solution
 
         IDictionary<string, string> GetItems(SolutionFolder solutionFolder)
             => solutionFolder.Items.Keys
-                .Select(x => (string) PathConstruction.GetWinRelativePath(Directory, solution.Directory / x))
+                .Select(x => (string) Directory.GetWinRelativePathTo(solution.Directory / x))
                 .ToDictionary(x => x, x => x);
 
         solution.AllSolutionFolders.ForEach(x => AddSolutionFolder(x.Name, x.ProjectId, GetParentFolder(x) ?? folder));

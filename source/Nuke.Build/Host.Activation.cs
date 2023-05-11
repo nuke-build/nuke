@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 
 namespace Nuke.Common;
 
+[UsedImplicitly(ImplicitUseKindFlags.InstantiatedNoFixedConstructorSignature)]
 public partial class Host
 {
     internal static Host Instance { get; private set; }

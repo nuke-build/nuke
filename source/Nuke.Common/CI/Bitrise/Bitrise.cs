@@ -18,6 +18,7 @@ public class Bitrise : Host, IBuildServer
 {
     public new static Bitrise Instance => Host.Instance as Bitrise;
 
+    [UsedImplicitly]
     internal static bool IsRunningBitrise => EnvironmentInfo.HasVariable("BITRISE_BUILD_URL");
 
     private static DateTime ConvertUnixTimestamp(long timestamp)

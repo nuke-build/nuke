@@ -18,6 +18,7 @@ public partial class TravisCI : Host, IBuildServer
 {
     public new static TravisCI Instance => Host.Instance as TravisCI;
 
+    [UsedImplicitly]
     internal static bool IsRunningTravisCI => EnvironmentInfo.HasVariable("TRAVIS");
 
     internal TravisCI()

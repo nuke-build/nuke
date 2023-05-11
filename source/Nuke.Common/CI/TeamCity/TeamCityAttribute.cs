@@ -275,7 +275,7 @@ public class TeamCityAttribute : ChainedConfigurationAttributeBase
     {
         var attribute = member.GetCustomAttribute<ParameterAttribute>();
         var valueSet = ParameterService.GetParameterValueSet(member, Build);
-        var valueSeparator = attribute.Separator ?? " ";
+        var valueSeparator = attribute.NotNull().Separator ?? " ";
 
         // TODO: Abstract AbsolutePath/Solution/Project etc.
         var defaultValue = !member.HasCustomAttribute<SecretAttribute>() ? member.GetValue(Build) : default(string);
@@ -284,7 +284,7 @@ public class TeamCityAttribute : ChainedConfigurationAttributeBase
             (member.GetMemberType() == typeof(AbsolutePath) ||
              member.GetMemberType() == typeof(Solution) ||
              member.GetMemberType() == typeof(Project)))
-            defaultValue = (UnixRelativePath) GetRelativePath(Build.RootDirectory, defaultValue.ToString());
+            defaultValue = Build.RootDirectory.GetUnixRelativePathTo(defaultValue.ToString());
 
         TeamCityParameterType GetParameterType()
         {
