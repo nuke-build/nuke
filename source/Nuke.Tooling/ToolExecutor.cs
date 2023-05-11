@@ -29,6 +29,7 @@ internal class ToolExecutor
         bool? logOutput = null,
         bool? logInvocation = null,
         Action<OutputType, string> customLogger = null,
+        Action<IProcess> exitHandler = null,
         Func<string, string> outputFilter = null)
     {
         var process = ProcessTasks.StartProcess(
@@ -45,7 +46,7 @@ internal class ToolExecutor
             logInvocation,
             customLogger,
             outputFilter);
-        process.AssertZeroExitCode();
+        (exitHandler ?? (p => ProcessTasks.DefaultExitHandler(toolSettings: null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
 }
