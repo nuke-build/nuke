@@ -38,7 +38,7 @@ public class SolutionModelTest
     {
         var solution = SolutionModelTasks.ParseSolution(SolutionFile);
 
-        solution.GetProjects("*.Tests").Should().HaveCountGreaterOrEqualTo(2);
+        solution.GetAllProjects("*.Tests").Should().HaveCountGreaterOrEqualTo(2);
     }
 
     [Fact]
