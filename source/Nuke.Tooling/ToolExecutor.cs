@@ -17,12 +17,29 @@ internal class ToolExecutor
         _toolPath = toolPath;
     }
 
-    public IReadOnlyCollection<Output> Execute(
 #if NET6_0_OR_GREATER
+    public IReadOnlyCollection<Output> Execute(
         ref ArgumentStringHandler arguments,
+        string workingDirectory = null,
+        IReadOnlyDictionary<string, string> environmentVariables = null,
+        int? timeout = null,
+        bool? logOutput = null,
+        bool? logInvocation = null,
+        Action<OutputType, string> customLogger = null,
+        Action<IProcess> exitHandler = null)
+    {
+        var process = ProcessTasks.StartProcess(
+            _toolPath,
+            ref arguments,
+            workingDirectory,
+            environmentVariables,
+            timeout,
+            logOutput,
+            logInvocation,
+            customLogger);
 #else
-            string arguments = null,
-#endif
+    public IReadOnlyCollection<Output> Execute(
+        string arguments,
         string workingDirectory = null,
         IReadOnlyDictionary<string, string> environmentVariables = null,
         int? timeout = null,
@@ -34,11 +51,7 @@ internal class ToolExecutor
     {
         var process = ProcessTasks.StartProcess(
             _toolPath,
-#if NET6_0_OR_GREATER
-            arguments.ToStringAndClear(),
-#else
-                arguments,
-#endif
+            arguments,
             workingDirectory,
             environmentVariables,
             timeout,
@@ -46,6 +59,7 @@ internal class ToolExecutor
             logInvocation,
             customLogger,
             outputFilter);
+#endif
         (exitHandler ?? (p => ProcessTasks.DefaultExitHandler(toolSettings: null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
