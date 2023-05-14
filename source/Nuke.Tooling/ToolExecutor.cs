@@ -25,7 +25,7 @@ internal class ToolExecutor
         int? timeout = null,
         bool? logOutput = null,
         bool? logInvocation = null,
-        Action<OutputType, string> customLogger = null,
+        Action<OutputType, string> logger = null,
         Action<IProcess> exitHandler = null)
     {
         var process = ProcessTasks.StartProcess(
@@ -36,7 +36,7 @@ internal class ToolExecutor
             timeout,
             logOutput,
             logInvocation,
-            customLogger);
+            logger);
 #else
     public IReadOnlyCollection<Output> Execute(
         string arguments,
@@ -45,7 +45,7 @@ internal class ToolExecutor
         int? timeout = null,
         bool? logOutput = null,
         bool? logInvocation = null,
-        Action<OutputType, string> customLogger = null,
+        Action<OutputType, string> logger = null,
         Action<IProcess> exitHandler = null,
         Func<string, string> outputFilter = null)
     {
@@ -57,7 +57,7 @@ internal class ToolExecutor
             timeout,
             logOutput,
             logInvocation,
-            customLogger,
+            logger,
             outputFilter);
 #endif
         (exitHandler ?? (p => ProcessTasks.DefaultExitHandler(toolSettings: null, p))).Invoke(process.AssertWaitForExit());
