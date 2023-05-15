@@ -2526,7 +2526,7 @@
       "postfix": "StackDeploy",
       "definiteArgument": "stack deploy",
       "settingsClass": {
-        "baseClass": "DockerStackSettings",
+        "baseClass": "DockerSettings",
         "properties": [
           {
             "name": "BundleFile",
