@@ -15365,7 +15365,7 @@ public partial class DockerCommitSettings : DockerSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class DockerStackDeploySettings : DockerStackSettings
+public partial class DockerStackDeploySettings : DockerSettings
 {
     /// <summary>
     ///   Path to the Docker executable.
