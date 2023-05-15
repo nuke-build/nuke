@@ -1,0 +1,32 @@
+﻿[
+  {
+    IsEmpty: false,
+    Unreleased: true,
+    Notes: [
+      ,
+      ### Added,
+      ,
+      - Some text that spans,
+        multiple lines,
+      ,
+      - A text on a single line,
+      ,
+      
+    ],
+    StartIndex: 4,
+    EndIndex: 13
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 1.0.0,
+    Notes: [
+      ,
+      ### Fixed,
+      ,
+      - Fixed something
+    ],
+    StartIndex: 14,
+    EndIndex: 18
+  }
+]

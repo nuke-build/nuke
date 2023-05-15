@@ -9,13 +9,20 @@ using Nuke.Common.ValueInjection;
 
 namespace Nuke.Common.Tools.AzureKeyVault
 {
-    public abstract class AzureKeyVaultAttributeBase : ValueInjectionAttributeBase
+    public abstract class AzureKeyVaultAttributeBase : ParameterAttribute
     {
         public string ConfigurationMemberName { get; set; }
 
         public override object GetValue(MemberInfo member, object instance)
         {
+            var value = base.GetValue(member, instance);
+            if (value != null)
+                return value;
+
             var configuration = GetConfiguration(instance);
+            if (configuration == null)
+                return null;
+
             return GetValue(configuration, member);
         }
 
@@ -35,7 +42,7 @@ namespace Nuke.Common.Tools.AzureKeyVault
             var memberWithAttribute = membersWithAttributes.Length == 1
                 ? membersWithAttributes.Single()
                 : membersWithAttributes.SingleOrDefault(x => x.Member.Name == ConfigurationMemberName);
-            Assert.True(memberWithAttribute is not (null, null), $"No field with the name '{ConfigurationMemberName}' exists");
+            Assert.True(memberWithAttribute is not (null, null), $"No member with the name '{ConfigurationMemberName}' exists");
 
             return (AzureKeyVaultConfiguration) memberWithAttribute.Attribute.GetValue(memberWithAttribute.Member, instance);
         }

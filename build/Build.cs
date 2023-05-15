@@ -94,7 +94,7 @@ partial class Build
         from framework in project.GetTargetFrameworks()
         select (project, framework);
 
-    IEnumerable<Nuke.Common.ProjectModel.Project> ITest.TestProjects => Partition.GetCurrent(Solution.GetProjects("*.Tests"));
+    IEnumerable<Nuke.Common.ProjectModel.Project> ITest.TestProjects => Partition.GetCurrent(Solution.GetAllProjects("*.Tests"));
 
     [Parameter]
     public int TestDegreeOfParallelism { get; } = 1;

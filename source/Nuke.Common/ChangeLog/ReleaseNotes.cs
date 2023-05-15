@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using NuGet.Versioning;
 
@@ -15,7 +16,7 @@ public class ReleaseNotes
     /// <summary>
     /// Gets a value indicating whether this release notes section contains notes.
     /// </summary>
-    public bool IsEmpty => Notes.Count == 0;
+    public bool IsEmpty => Notes.All(string.IsNullOrWhiteSpace);
 
     /// <summary>
     /// Gets a value indicating whether this release notes section is unreleased (vNext).

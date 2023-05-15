@@ -25,6 +25,17 @@ public static partial class StringExtensions
     }
 
     /// <summary>
+    /// Trims all whitespaces to single spaces.
+    /// </summary>
+    /// <param name="str"></param>
+    /// <returns></returns>
+    [Pure]
+    public static string TrimWhitespaces(this string str)
+    {
+        return str.Replace("\r", string.Empty).Replace("\n", string.Empty).TrimToOne(" ");
+    }
+
+    /// <summary>
     /// Trims the occurrence of a string from the end of another string.
     /// </summary>
     [Pure]

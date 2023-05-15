@@ -21,8 +21,6 @@ public class NSwagSettings : ToolSettings
 
     private bool IsNetCore => NSwagRuntime != null && NSwagRuntime.StartsWith("Net", StringComparison.OrdinalIgnoreCase);
 
-    public override Action<OutputType, string> ProcessLogger { get; internal set; }
-
     [NotNull]
     protected override Arguments ConfigureProcessArguments([NotNull] Arguments arguments)
     {

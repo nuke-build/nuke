@@ -8,16 +8,25 @@ using System.Linq;
 
 namespace Nuke.Common.Tooling;
 
-public delegate IReadOnlyCollection<Output> Tool(
 #if NET6_0_OR_GREATER
+public delegate IReadOnlyCollection<Output> Tool(
     ref ArgumentStringHandler arguments,
-#else
-        string arguments = null,
-#endif
     string workingDirectory = null,
     IReadOnlyDictionary<string, string> environmentVariables = null,
     int? timeout = null,
     bool? logOutput = null,
     bool? logInvocation = null,
-    Action<OutputType, string> customLogger = null,
+    Action<OutputType, string> logger = null,
+    Action<IProcess> exitHandler = null);
+#else
+public delegate IReadOnlyCollection<Output> Tool(
+    string arguments,
+    string workingDirectory = null,
+    IReadOnlyDictionary<string, string> environmentVariables = null,
+    int? timeout = null,
+    bool? logOutput = null,
+    bool? logInvocation = null,
+    Action<OutputType, string> logger = null,
+    Action<IProcess> exitHandler = null,
     Func<string, string> outputFilter = null);
+#endif

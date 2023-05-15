@@ -36,18 +36,18 @@ artifacts:
 environment:
   PublicNuGetApiKey:
     secure: dSaquYHVNEAZO+hhGGoGqeHaVP99BP8koHTTqcD3WInWBTmB7yE4CzxZ1pWypnX2
+  GitHubReleaseGitHubToken:
+    secure: a5UfxXiDEere9GkCCN9TUZJWacHMSkLKJi5UIqUDk7eB0DyoZomXaK918QWkyrbGlkz7hWIRIBGT/z2lCld/DgM9QP5Gx8PvEglDpTSILmGiQ2wTDySc78gG7h3dfQxg
   SignPathApiToken:
     secure: uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn
   TwitterConsumerKey:
-    secure: C+ETCF4nwvdQjX00z613rtdBfLePQnoU+KDajdxuUJM=
+    secure: mYr1Uw8bcVUyl1P0prdaUFurdiF7V283BSRlQHxe2Zg=
   TwitterConsumerSecret:
-    secure: KtMo935mJ2UmINXevKZyr1cmin1Ho7g8f/+VMxAQKvvw0eLSKqJHHfZNqhg/dMWc+Sh6BxzDlW+MGWkDGvSTSA==
+    secure: pGt5X6KOwj/bLM4A5mnDRBqPxt7o7UreSlZSFmbfZwyfKZnhfFRnr20fXWjVqToVw7NSp30s6GxjswTrQSIogw==
   TwitterAccessToken:
-    secure: nnv1h5nkNm4MS50soQHiYV0sAK3Jpmc3RqRNiCWmBJc1iS8bYmOTSmaUVcjUbY/U2wJ2SpeNgZffswsaKY3qVw==
+    secure: nnv1h5nkNm4MS50soQHiYUZLERgkft/ooq73B02sLValeUDZFypI3tk1TzUwACzJPOdjqRSvY9efvQbt2MoNaQ==
   TwitterAccessTokenSecret:
-    secure: RlLDa3WfOftTieTJ30hY8jM54FrA/z6FPxv5QmowPlgTuxRCGxKiEXcux5DQO9fx
-  GitterAuthToken:
-    secure: Fy//YC4mL9IipkXG3OENTpC9g2qOtU32/5WU6PHw/HLty8YjvHXHsnTkk0HWJJMw
+    secure: odqmaAfKaVzNj8Ph/q2sLVmM/1COuix8NoqtDwayr8KEli3kmtGFThrN4g5k6aKT
   SlackWebhook:
     secure: xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hmM/XDRPsJCxvZvTHFhtfLsQ3cF7GQi3xDaShkVVR7zoXHsIYT+KT0zLnq9FSEvr5c=
   DiscordWebhook:

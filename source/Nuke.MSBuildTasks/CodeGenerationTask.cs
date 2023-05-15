@@ -16,10 +16,10 @@ namespace Nuke.MSBuildTasks;
 [UsedImplicitly]
 public class CodeGenerationTask : ContextAwareTask
 {
-    [Microsoft.Build.Framework.Required]
+    [Required]
     public ITaskItem[] SpecificationFiles { get; set; }
 
-    [Microsoft.Build.Framework.Required]
+    [Required]
     public string BaseDirectory { get; set; }
 
     public bool UseNestedNamespaces { get; set; }

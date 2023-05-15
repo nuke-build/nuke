@@ -20,6 +20,7 @@ public partial class GitLab : Host, IBuildServer
 {
     public new static GitLab Instance => Host.Instance as GitLab;
 
+    [UsedImplicitly]
     internal static bool IsRunningGitLab => EnvironmentInfo.HasVariable("GITLAB_CI");
 
     private const string SectionStartSequence = "\u001b[0K";

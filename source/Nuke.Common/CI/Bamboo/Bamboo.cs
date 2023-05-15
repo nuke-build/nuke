@@ -18,6 +18,7 @@ public class Bamboo : Host, IBuildServer
 {
     public new static Bamboo Instance => Host.Instance as Bamboo;
 
+    [UsedImplicitly]
     internal static bool IsRunningBamboo => EnvironmentInfo.HasVariable("bamboo_planKey");
 
     internal Bamboo()

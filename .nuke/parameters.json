@@ -3,6 +3,5 @@
   "Solution": "nuke-common.sln",
   "SignPathOrganizationId": "0fdaf334-6910-41f4-83d2-e58e4cccb087",
   "SignPathProjectSlug": "nuke",
-  "SignPathPolicySlug": "release-signing",
-  "GitterRoomId": "593f3dadd73408ce4f66db89"
+  "SignPathPolicySlug": "release-signing"
 }

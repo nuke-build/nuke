@@ -19,6 +19,7 @@ public class Jenkins : Host, IBuildServer
 {
     public new static Jenkins Instance => Host.Instance as Jenkins;
 
+    [UsedImplicitly]
     internal static bool IsRunningJenkins => EnvironmentInfo.HasVariable("JENKINS_HOME");
 
     internal Jenkins()

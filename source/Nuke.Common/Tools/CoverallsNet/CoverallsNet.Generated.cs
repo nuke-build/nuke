@@ -228,7 +228,7 @@ public partial class CoverallsNetSettings : ToolSettings
     /// <summary>
     ///   The job Id to provide to coveralls.io. Default is <c>0</c>.
     /// </summary>
-    public virtual int? JobId { get; internal set; }
+    public virtual string JobId { get; internal set; }
     /// <summary>
     ///   The service-name for the coverage report. Default is <c>coveralls.net</c>.
     /// </summary>
@@ -859,7 +859,7 @@ public static partial class CoverallsNetSettingsExtensions
     ///   <p>The job Id to provide to coveralls.io. Default is <c>0</c>.</p>
     /// </summary>
     [Pure]
-    public static T SetJobId<T>(this T toolSettings, int? jobId) where T : CoverallsNetSettings
+    public static T SetJobId<T>(this T toolSettings, string jobId) where T : CoverallsNetSettings
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.JobId = jobId;

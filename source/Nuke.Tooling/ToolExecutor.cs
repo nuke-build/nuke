@@ -17,35 +17,50 @@ internal class ToolExecutor
         _toolPath = toolPath;
     }
 
-    public IReadOnlyCollection<Output> Execute(
 #if NET6_0_OR_GREATER
+    public IReadOnlyCollection<Output> Execute(
         ref ArgumentStringHandler arguments,
-#else
-            string arguments = null,
-#endif
         string workingDirectory = null,
         IReadOnlyDictionary<string, string> environmentVariables = null,
         int? timeout = null,
         bool? logOutput = null,
         bool? logInvocation = null,
-        Action<OutputType, string> customLogger = null,
-        Func<string, string> outputFilter = null)
+        Action<OutputType, string> logger = null,
+        Action<IProcess> exitHandler = null)
     {
         var process = ProcessTasks.StartProcess(
             _toolPath,
-#if NET6_0_OR_GREATER
-            arguments.ToStringAndClear(),
-#else
-                arguments,
-#endif
+            ref arguments,
             workingDirectory,
             environmentVariables,
             timeout,
             logOutput,
             logInvocation,
-            customLogger,
+            logger);
+#else
+    public IReadOnlyCollection<Output> Execute(
+        string arguments,
+        string workingDirectory = null,
+        IReadOnlyDictionary<string, string> environmentVariables = null,
+        int? timeout = null,
+        bool? logOutput = null,
+        bool? logInvocation = null,
+        Action<OutputType, string> logger = null,
+        Action<IProcess> exitHandler = null,
+        Func<string, string> outputFilter = null)
+    {
+        var process = ProcessTasks.StartProcess(
+            _toolPath,
+            arguments,
+            workingDirectory,
+            environmentVariables,
+            timeout,
+            logOutput,
+            logInvocation,
+            logger,
             outputFilter);
-        process.AssertZeroExitCode();
+#endif
+        (exitHandler ?? (p => ProcessTasks.DefaultExitHandler(toolSettings: null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
 }

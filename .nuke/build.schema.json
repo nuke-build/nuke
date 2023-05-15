@@ -32,16 +32,9 @@
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
         },
-        "GitHubToken": {
+        "GitHubReleaseGitHubToken": {
           "type": "string",
           "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-        },
-        "GitterAuthToken": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-        },
-        "GitterRoomId": {
-          "type": "string"
         },
         "Help": {
           "type": "boolean",
@@ -127,7 +120,6 @@
             "enum": [
               "Announce",
               "AnnounceDiscord",
-              "AnnounceGitter",
               "AnnounceMastodon",
               "AnnounceSlack",
               "AnnounceTwitter",
@@ -178,7 +170,6 @@
             "enum": [
               "Announce",
               "AnnounceDiscord",
-              "AnnounceGitter",
               "AnnounceMastodon",
               "AnnounceSlack",
               "AnnounceTwitter",
