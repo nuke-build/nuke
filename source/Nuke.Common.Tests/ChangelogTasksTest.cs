@@ -75,8 +75,8 @@ namespace Nuke.Common.Tests
         [Fact]
         public void GetReleaseSections_ChangelogReferenceFileWithoutReleaseHead_ReturnsEmpty()
         {
-            var changeLogFilePath = PathToChangelogReferenceFiles / "changelog_reference_invalid_variant_1.md";
-            var lines = changeLogFilePath.ReadAllLines().ToList();
+            var file = PathToChangelogReferenceFiles / "changelog_reference_invalid_variant_1.md";
+            var lines = file.ReadAllLines().ToList();
 
             ChangelogTasks.GetReleaseSections(lines).Should().BeEmpty();
         }
@@ -97,45 +97,43 @@ namespace Nuke.Common.Tests
         [InlineData("changelog_reference_1.0.0_variant_5.md", "9.9.9")]
         public void ExtractChangelogSection_WithNonExistingTag_ThrowsInformativeException(string fileName, string tag)
         {
-            var changeLogFilePath = PathToChangelogReferenceFiles / fileName;
+            var file = PathToChangelogReferenceFiles / fileName;
 
-            Action act = () => ChangelogTasks.ExtractChangelogSectionNotes(changeLogFilePath, tag);
+            Action act = () => ChangelogTasks.ExtractChangelogSectionNotes(file, tag);
 
-            act.Should().Throw<Exception>().Where(ex => ex.Message == $"Could not find release section for '{tag}'.");
+            act.Should().Throw<Exception>().WithMessage($"Could not find release section for '{tag}'.");
         }
 
         [Theory]
         [InlineData("changelog_reference_invalid_variant_2.md")]
         public void ReadChangelog_ChangelogFileThatHasMultipleUnreleasedSection_ThrowsInformativeException(string fileName)
         {
-            var changeLogFilePath = PathToChangelogReferenceFiles / fileName;
+            var file = PathToChangelogReferenceFiles / fileName;
 
-            Action act = () => ChangelogTasks.ReadChangelog(changeLogFilePath);
+            Action act = () => ChangelogTasks.ReadChangelog(file);
 
-            act.Should().Throw<Exception>().Where(ex => ex.Message == "Changelog should have only one draft section");
+            act.Should().Throw<Exception>().WithMessage("Changelog should have only one draft section");
         }
 
         [Theory]
         [InlineData("changelog_reference_invalid_variant_1.md")]
         public void ReadChangelog_EmptyChangelogFile_ThrowsInformativeException(string fileName)
         {
-            var changeLogFilePath = PathToChangelogReferenceFiles / fileName;
+            var file = PathToChangelogReferenceFiles / fileName;
 
-            Action act = () => ChangelogTasks.ReadChangelog(changeLogFilePath);
+            Action act = () => ChangelogTasks.ReadChangelog(file);
 
-            act.Should().Throw<Exception>().Where(ex => ex.Message == "Changelog should have at least one release note section");
+            act.Should().Throw<Exception>().WithMessage("Changelog should have at least one release note section");
         }
 
         [UsedImplicitly]
         public static IEnumerable<object[]> AllChangelogReference_1_0_0_Files
         {
-            get => PathToChangelogReferenceFiles.GlobFiles("changelog_reference_1.0.0*.md").Select(file => new object[] { file });
+            get => PathToChangelogReferenceFiles.GlobFiles("changelog_reference_1.0.0*.md").Select(x => new object[] { x });
         }
-        
+
         [UsedImplicitly]
         public static IEnumerable<object[]> AllChangelogReference_NUKE_Files
-        {
-            get => PathToChangelogReferenceFiles.GlobFiles("changelog_reference_NUKE*.md").Select(file => new object[] { file });
-        }
+            => PathToChangelogReferenceFiles.GlobFiles("changelog_reference_NUKE*.md").Select(x => new object[] { x });
     }
 }
