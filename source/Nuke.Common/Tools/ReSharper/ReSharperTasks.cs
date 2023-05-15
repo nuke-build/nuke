@@ -70,8 +70,3 @@ partial class ReSharperTasks
         return Path.Combine(NukeBuild.TemporaryDirectory, $"ReSharper-{wave}-{hashCode[..4]}");
     }
 }
-
-partial class ReSharperSettingsBase
-{
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? ProcessTasks.DefaultLogger;
-}

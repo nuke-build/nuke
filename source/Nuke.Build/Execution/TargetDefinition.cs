@@ -107,13 +107,13 @@ internal class TargetDefinition : ITargetDefinition
 
     public ITargetDefinition OnlyWhenDynamic(Func<bool> condition, string conditionExpression = null)
     {
-        DynamicConditions.Add((conditionExpression, condition));
+        DynamicConditions.Add((conditionExpression.NotNull().TrimWhitespaces(), condition));
         return this;
     }
 
     public ITargetDefinition OnlyWhenStatic(Func<bool> condition, string conditionExpression = null)
     {
-        StaticConditions.Add((conditionExpression, condition));
+        StaticConditions.Add((conditionExpression.NotNull().TrimWhitespaces(), condition));
         return this;
     }
 

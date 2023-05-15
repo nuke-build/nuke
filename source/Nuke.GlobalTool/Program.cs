@@ -73,14 +73,13 @@ public partial class Program
                 Assert.Fail($"No command specified. Usage is: nuke {CommandPrefix}<command> [args]");
 
             var availableCommands = typeof(Program).GetMethods(ReflectionUtility.Static).Where(x => x.ReturnType == typeof(int)).ToList();
-            var commandHandler = availableCommands.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command));
-            Assert.NotNull(commandHandler,
-                new[] { $"Command '{command}' is not supported, available commands are:" }
+            var commandHandler = availableCommands.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(command))
+                .NotNull(new[] { $"Command '{command}' is not supported, available commands are:" }
                     .Concat(availableCommands.Where(x => x.IsPublic).Select(x => $"  - {x.Name}").OrderBy(x => x)).JoinNewLine());
             // TODO: add assertions about return type and parameters
 
             var commandArguments = new object[] { args.Skip(count: 1).ToArray(), rootDirectory, buildScript };
-            return (int)commandHandler.Invoke(obj: null, commandArguments);
+            return (int)commandHandler.Invoke(obj: null, commandArguments).NotNull($"Command '{command}' did not return exit code");
         }
 
         if (rootDirectory == null || buildScript == null)

@@ -1,6 +1,8 @@
-name: Qodana Scan
+name: qodana-scan
 
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
 
 jobs:
   qodana-scan:
@@ -10,9 +12,9 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: 'Qodana Scan'
-        uses: JetBrains/qodana-action@main
+      - uses: JetBrains/qodana-action@main
         with:
           upload-result: false
+          args: --baseline,qodana.sarif.json
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}

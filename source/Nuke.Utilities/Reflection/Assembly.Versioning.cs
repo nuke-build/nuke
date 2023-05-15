@@ -24,6 +24,6 @@ public static class AssemblyExtensions
 
     private static string GetAssemblyInformationalVersion(this Assembly assembly)
     {
-        return assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion;
+        return assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().NotNull().InformationalVersion;
     }
 }

@@ -37,7 +37,7 @@ public static partial class ReflectionUtility
     {
         Assert.True(member is PropertyInfo or MethodInfo);
         var method = member is PropertyInfo property
-            ? property.GetMethod
+            ? property.GetMethod.NotNull()
             : (MethodInfo) member;
 
         var funcType = Expression.GetFuncType(method.GetParameters().Select(x => x.ParameterType)
@@ -87,7 +87,7 @@ public static partial class ReflectionUtility
             else
             {
                 Assert.True(property.SetMethod != null, $"Property '{member.Name}' is not settable");
-                property.SetValue(property.GetMethod.IsStatic ? null : instance, value);
+                property.SetValue(property.IsStatic() ? null : instance, value);
             }
         }
     }

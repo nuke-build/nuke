@@ -32,7 +32,7 @@ public static class ProcessTasks
         int? timeout = null,
         bool? logOutput = null,
         bool? logInvocation = null,
-        Action<OutputType, string> customLogger = null,
+        Action<OutputType, string> logger = null,
         Func<string, string> outputFilter = null)
     {
         // TODO: fallback to sh
@@ -44,7 +44,7 @@ public static class ProcessTasks
             timeout,
             logOutput,
             logInvocation,
-            customLogger,
+            logger,
             outputFilter);
     }
 
@@ -74,7 +74,7 @@ public static class ProcessTasks
             int? timeout = null,
             bool? logOutput = null,
             bool? logInvocation = null,
-            Action<OutputType, string> customLogger = null)
+            Action<OutputType, string> logger = null)
         {
             static Func<string, string> GetOutputFilterForArgumentStringHandler(ref ArgumentStringHandler arguments)
             {
@@ -90,7 +90,7 @@ public static class ProcessTasks
                 timeout,
                 logOutput,
                 logInvocation,
-                customLogger,
+                logger,
                 GetOutputFilterForArgumentStringHandler(ref arguments));
         }
 
@@ -104,7 +104,7 @@ public static class ProcessTasks
         int? timeout = null,
         bool? logOutput = null,
         bool? logInvocation = null,
-        Action<OutputType, string> customLogger = null,
+        Action<OutputType, string> logger = null,
         Func<string, string> outputFilter = null)
     {
         Assert.True(toolPath != null);
@@ -134,7 +134,7 @@ public static class ProcessTasks
             environmentVariables,
             timeout,
             logOutput ?? DefaultLogOutput
-                ? customLogger ?? DefaultLogger
+                ? logger ?? DefaultLogger
                 : null,
             outputFilter);
     }

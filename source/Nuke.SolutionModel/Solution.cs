@@ -87,44 +87,27 @@ public class Solution
     }
 
     /// <summary>
-    /// Finds a solution folder by its project ID.
-    /// </summary>
-    public SolutionFolder GetSolutionFolder(Guid projectId)
-    {
-        return AllSolutionFolders.Single(x => x.ProjectId == projectId);
-    }
-
-    /// <summary>
-    /// Finds a project by its project ID.
-    /// </summary>
-    public Project GetProject(Guid projectId)
-    {
-        return AllProjects.Single(x => x.ProjectId == projectId);
-    }
-
-    /// <summary>
-    /// Finds a solution folder by its name.
+    /// Gets a solution folder by its name.
     /// </summary>
     [CanBeNull]
     public SolutionFolder GetSolutionFolder(string name)
     {
-        return AllSolutionFolders.SingleOrDefault(x => name.Equals(x.Name, StringComparison.Ordinal));
+        return SolutionFolders.SingleOrDefault(x => name.Equals(x.Name, StringComparison.Ordinal));
     }
 
     /// <summary>
-    /// Finds a project by its name or full path.
+    /// Gets a project by its name.
     /// </summary>
     [CanBeNull]
-    public Project GetProject(string nameOrFullPath)
+    public Project GetProject(string name)
     {
-        return AllProjects.SingleOrDefault(x => nameOrFullPath.Equals(x.Name, StringComparison.Ordinal)) ??
-               AllProjects.SingleOrDefault(x => x.Path.ToString().EqualsOrdinalIgnoreCase(nameOrFullPath));
+        return Projects.SingleOrDefault(x => name.Equals(x.Name, StringComparison.Ordinal));
     }
 
     /// <summary>
-    /// Finds all projects matching a wildcard pattern.
+    /// Gets all projects matching a wildcard pattern.
     /// </summary>
-    public IEnumerable<Project> GetProjects(string wildcardPattern)
+    public IEnumerable<Project> GetAllProjects(string wildcardPattern)
     {
         wildcardPattern = $"^{wildcardPattern}$";
         var regex = new Regex(wildcardPattern
@@ -242,11 +225,11 @@ public class Solution
 
         IDictionary<string, string> GetItems(SolutionFolder solutionFolder)
             => solutionFolder.Items.Keys
-                .Select(x => (string) PathConstruction.GetWinRelativePath(Directory, solution.Directory / x))
+                .Select(x => (string) Directory.GetWinRelativePathTo(solution.Directory / x))
                 .ToDictionary(x => x, x => x);
 
         solution.AllSolutionFolders.ForEach(x => AddSolutionFolder(x.Name, x.ProjectId, GetParentFolder(x) ?? folder));
-        solution.AllSolutionFolders.ForEach(x => GetSolutionFolder(x.ProjectId).Items = GetItems(x));
+        solution.AllSolutionFolders.ForEach(x => AllSolutionFolders.Single(y => y.ProjectId == x.ProjectId).Items = GetItems(x));
         solution.AllProjects.ForEach(x => AddProject(x.Name, x.TypeId, x.Path, x.ProjectId, x.Configurations, GetParentFolder(x) ?? folder));
     }
 

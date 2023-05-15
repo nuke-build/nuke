@@ -19,7 +19,6 @@ using Nuke.Components;
 using Tweetinvi;
 using Tweetinvi.Models;
 using Tweetinvi.Parameters;
-using static Nuke.Common.Gitter.GitterTasks;
 using static Nuke.Common.Tools.Discord.DiscordTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.Mastodon.MastodonTasks;
@@ -184,21 +183,5 @@ partial class Build
                     .AddMediaFiles(ReleaseImageFile),
                 "https://dotnet.social",
                 MastodonAccessToken);
-        });
-
-    [Parameter] readonly string GitterRoomId;
-    [Parameter] [Secret] readonly string GitterAuthToken;
-
-    Target AnnounceGitter => _ => _
-        .TriggeredBy(Announce)
-        .Requires(() => GitterAuthToken)
-        .Executes(() =>
-        {
-            SendGitterMessage(new StringBuilder()
-                    .AppendLine($"@/all :mega::shipit: **{AnnouncementTitle}**")
-                    .AppendLine()
-                    .AppendLine(ChangelogSectionNotes.Select(x => x.Replace("- ", "* ")).JoinNewLine()).ToString(),
-                GitterRoomId,
-                GitterAuthToken);
         });
 }

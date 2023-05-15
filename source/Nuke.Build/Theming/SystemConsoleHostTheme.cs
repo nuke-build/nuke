@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using Nuke.Common.Utilities;
+using Serilog;
 using Serilog.Sinks.SystemConsole.Themes;
 
 namespace Nuke.Common.Execution.Theming;
@@ -107,8 +108,8 @@ public class SystemConsoleHostTheme : SystemConsoleTheme, IHostTheme
 
     private void Write(string text, SystemConsoleThemeStyle style)
     {
-        using (DelegateDisposable.SetAndRestore(() => Console.ForegroundColor, style.Foreground))
-        using (DelegateDisposable.SetAndRestore(() => Console.BackgroundColor, style.Background))
+        using (DelegateDisposable.SetAndRestore(() => Console.ForegroundColor, style.Foreground ?? Console.ForegroundColor))
+        using (DelegateDisposable.SetAndRestore(() => Console.BackgroundColor, style.Background ?? Console.BackgroundColor))
         {
             Console.WriteLine(!text.IsNullOrWhiteSpace() ? text : "​");
         }

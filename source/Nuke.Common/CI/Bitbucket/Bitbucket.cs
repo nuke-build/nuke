@@ -19,6 +19,7 @@ public class Bitbucket : Host, IBuildServer
 {
     public new static Bitbucket Instance => Host.Instance as Bitbucket;
 
+    [UsedImplicitly]
     internal static bool IsRunningBitbucket => EnvironmentInfo.HasVariable("BITBUCKET_PIPELINE_UUID");
 
     internal Bitbucket()

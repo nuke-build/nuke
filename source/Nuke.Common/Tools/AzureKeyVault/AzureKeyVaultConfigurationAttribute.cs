@@ -6,8 +6,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
-using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
+using Serilog;
 
 namespace Nuke.Common.Tools.AzureKeyVault
 {
@@ -36,16 +36,38 @@ namespace Nuke.Common.Tools.AzureKeyVault
         /// <summary><p>The name of the parameter or environment variable which contains the secret of the AzureAd application.</p></summary>
         public string ClientSecretParameterName { get; set; }
 
-        [NotNull]
         public override object GetValue(MemberInfo member, object instance)
         {
-            return new AzureKeyVaultConfiguration
-                   {
-                       BaseUrl = (BaseUrl ?? GetMemberValue<string>(BaseUrlParameterName.NotNull(), instance)).NotNull(),
-                       TenantId = (TenantId ?? GetMemberValue<string>(TenantIdParameterName.NotNull(), instance)).NotNull(),
-                       ClientId = (ClientId ?? GetMemberValue<string>(ClientIdParameterName.NotNull(), instance)).NotNull(),
-                       ClientSecret = GetMemberValue<string>(ClientSecretParameterName.NotNull(), instance).NotNull()
-                   };
+            var configuration = new AzureKeyVaultConfiguration
+                                {
+                                    BaseUrl = BaseUrl ?? GetMemberValueOrNull<string>(BaseUrlParameterName, instance),
+                                    TenantId = TenantId ?? GetMemberValueOrNull<string>(TenantIdParameterName, instance),
+                                    ClientId = ClientId ?? GetMemberValueOrNull<string>(ClientIdParameterName, instance),
+                                    ClientSecret = GetMemberValueOrNull<string>(ClientSecretParameterName, instance)
+                                };
+
+            if (configuration.BaseUrl == null ||
+                configuration.TenantId == null ||
+                configuration.ClientId == null ||
+                configuration.ClientSecret == null)
+            {
+                string IsProvided(string value) => value != null ? "<provided>" : "<null>";
+
+                Log.Warning("Could not initialize {Member} with Azure KeyVault (" +
+                            "BaseUrl={BaseUrl}, " +
+                            "TenantId={TenantId}, " +
+                            "ClientId={ClientId}, " +
+                            "ClientSecret={ClientSecret})",
+                    member.Name,
+                    IsProvided(configuration.BaseUrl),
+                    IsProvided(configuration.TenantId),
+                    IsProvided(configuration.ClientId),
+                    IsProvided(configuration.ClientSecret));
+
+                return null;
+            }
+
+            return configuration;
         }
 
         public AzureKeyVaultConfiguration GetValue(object instance)

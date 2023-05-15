@@ -85,7 +85,7 @@ partial class EnvironmentInfo
     /// Indicates the target framework of the current process.
     /// </summary>
     public static FrameworkName Framework
-        => new(Assembly.GetEntryAssembly().NotNull().GetCustomAttribute<TargetFrameworkAttribute>().FrameworkName);
+        => new(Assembly.GetEntryAssembly().NotNull().GetCustomAttribute<TargetFrameworkAttribute>().NotNull().FrameworkName);
 
     /// <summary>
     /// Indicates the operating-system platform.

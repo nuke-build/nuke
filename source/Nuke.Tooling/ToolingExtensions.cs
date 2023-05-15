@@ -4,11 +4,13 @@
 
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.IO;
 using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tooling;
 
+[PublicAPI]
 public static class ToolingExtensions
 {
     public static AbsolutePath SetExecutable(this AbsolutePath path, bool updateVcsIndex = false)
