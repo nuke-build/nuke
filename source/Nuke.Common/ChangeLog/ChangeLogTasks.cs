@@ -166,14 +166,14 @@ public static class ChangelogTasks
         var sections = GetReleaseSections(content);
         var section = tag == null
             ? sections.First(x => x.StartIndex < x.EndIndex)
-            : sections.First(x => x.Caption.EqualsOrdinalIgnoreCase(tag)).NotNull($"Could not find release section for '{tag}'.");
+            : sections.FirstOrDefault(x => x.Caption.EqualsOrdinalIgnoreCase(tag)).NotNull($"Could not find release section for '{tag}'.");
 
         return content
             .Skip(section.StartIndex + 1)
             .Take(section.EndIndex - section.StartIndex);
     }
 
-    private static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
+    internal static IEnumerable<ReleaseSection> GetReleaseSections(List<string> content)
     {
         static bool IsReleaseHead(string str)
             => str.StartsWith("## ");
@@ -204,15 +204,15 @@ public static class ChangelogTasks
             }
 
             var caption = GetCaption(line);
-            var nextNonReleaseContentIndex = content.FindIndex(index + 1, x => IsReleaseHead(x) || !IsReleaseContent(x));
+            var nextReleaseHeadIndex = content.FindIndex(index + 1, IsReleaseHead);
 
             var releaseData =
                 new ReleaseSection
                 {
                     Caption = caption,
                     StartIndex = index,
-                    EndIndex = nextNonReleaseContentIndex != -1
-                        ? nextNonReleaseContentIndex - 1
+                    EndIndex = nextReleaseHeadIndex >= 0
+                        ? nextReleaseHeadIndex - 1
                         : content.Count - 1
                 };
 
@@ -242,7 +242,7 @@ public static class ChangelogTasks
     }
 
     [DebuggerDisplay("{" + nameof(Caption) + "} [{" + nameof(StartIndex) + "}-{" + nameof(EndIndex) + "}]")]
-    private class ReleaseSection
+    internal class ReleaseSection
     {
         public string Caption;
         public int StartIndex;

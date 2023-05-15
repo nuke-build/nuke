@@ -1,0 +1,57 @@
+﻿[
+  {
+    IsEmpty: true,
+    Unreleased: true,
+    Notes: [
+      
+    ],
+    StartIndex: 6,
+    EndIndex: 7
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 1.2.3,
+    Notes: [
+      - Added something,
+      - Fixed something,
+      
+    ],
+    StartIndex: 8,
+    EndIndex: 11
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 1.2.2,
+    Notes: [
+      - Fixed something,
+      
+    ],
+    StartIndex: 12,
+    EndIndex: 14
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 0.2.0,
+    Notes: [
+      - Added something,
+      
+    ],
+    StartIndex: 15,
+    EndIndex: 17
+  },
+  {
+    IsEmpty: false,
+    Unreleased: false,
+    Version: 0.1.0,
+    Notes: [
+      - Added something,
+      ,
+      Some text at the end of the changelog
+    ],
+    StartIndex: 18,
+    EndIndex: 21
+  }
+]
