@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed system console colors to fall back to current colors
+- Fixed trimming of `OnlyWhen` conditions
+- Fixed lightweight tool API to expose exit handler
+- Fixed `Tool` delegate with `ArgumentStringHandler`
+- Fixed AzureKeyVault attributes to print shorter warning and fall back to parameters
+- Fixed resolution of absolute paths from `parameters.json`
+- Fixed `Solution.GetProject` and `GetSolutionFolder` to only consider root children
+- Fixed `ChangelogTasks` for empty lines
+- Fixed serialization for `HelmTasks`, `KubernetesTasks`, `NSwagTasks`, and `ReSharperTasks`
+- Fixed `DockerTasks.DockerStackDeploy`
+- Fixed `CoverallsNetSettings.Job`
 
 ## [7.0.0] / 2023-05-06
 - Refactored out multiple projects
