@@ -104,3 +104,7 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 Thanks to [JetBrains](https://jetbrains.com) for providing licenses for [Rider](https://jetbrains.com/rider) and access to a [TeamCity Cloud](https://jetbrains.com/teamcity) instance, which both make open-source development a real pleasure!
 
 [<img src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/jetbrains.png" width="450" />](https://jetbrains.com/)
+
+Thanks to [SignPath](https://signpath.io?utm_source=foundation&utm_medium=github&utm_campaign=nukebuild) for providing free code signing serivce and to the [SignPath Foundation](https://signpath.org?utm_source=foundation&utm_medium=github&utm_campaign=nukebuild) for a free code signing certificate.
+
+[<img src="https://raw.githubusercontent.com/SignPath/website/3168d6c7f0e60e647c13fd746df18b52cd52f59c/docs/assets/logo_signpath_500.png" width="450" />](https://signpath.io?utm_source=foundation&utm_medium=github&utm_campaign=nukebuild)
