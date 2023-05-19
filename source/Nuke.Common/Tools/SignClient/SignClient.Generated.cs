@@ -40,9 +40,9 @@ public partial class SignClientTasks
     ///   <p>Code Signing client for Authenticode, NuGet, VSIX, and more</p>
     ///   <p>For more details, visit the <a href="https://discoverdot.net/projects/sign-service">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> SignClient(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> SignClient(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(SignClientPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? SignClientLogger);
+        using var process = ProcessTasks.StartProcess(SignClientPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? SignClientLogger);
         (exitHandler ?? (p => SignClientExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

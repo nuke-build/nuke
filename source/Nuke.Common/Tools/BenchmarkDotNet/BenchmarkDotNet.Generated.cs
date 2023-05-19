@@ -40,9 +40,9 @@ public partial class BenchmarkDotNetTasks
     ///   <p>Powerful .NET library for benchmarking</p>
     ///   <p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> BenchmarkDotNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> BenchmarkDotNet(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(BenchmarkDotNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? BenchmarkDotNetLogger);
+        using var process = ProcessTasks.StartProcess(BenchmarkDotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? BenchmarkDotNetLogger);
         (exitHandler ?? (p => BenchmarkDotNetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

@@ -40,9 +40,9 @@ public partial class PwshTasks
     ///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Pwsh(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> Pwsh(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(PwshPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? PwshLogger);
+        using var process = ProcessTasks.StartProcess(PwshPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? PwshLogger);
         (exitHandler ?? (p => PwshExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
