@@ -79,7 +79,7 @@ public static class ProcessTasks
             static Func<string, string> GetOutputFilterForArgumentStringHandler(ref ArgumentStringHandler arguments)
             {
                 var redactedValues = arguments.SecretValues;
-                return x => redactedValues.Aggregate(x, (arguments, value) => arguments.ReplaceRegex(value, _ => Arguments.Redacted));
+                return x => redactedValues.Aggregate(x, (arguments, value) => arguments.Replace(value, Arguments.Redacted));
             }
 
             return StartProcess(
