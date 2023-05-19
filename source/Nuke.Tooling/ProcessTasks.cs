@@ -68,7 +68,7 @@ public static class ProcessTasks
 
         public static IProcess StartProcess(
             string toolPath,
-            ref ArgumentStringHandler arguments,
+            ArgumentStringHandler arguments,
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
@@ -76,12 +76,6 @@ public static class ProcessTasks
             bool? logInvocation = null,
             Action<OutputType, string> logger = null)
         {
-            static Func<string, string> GetOutputFilterForArgumentStringHandler(ref ArgumentStringHandler arguments)
-            {
-                var redactedValues = arguments.SecretValues;
-                return x => redactedValues.Aggregate(x, (arguments, value) => arguments.ReplaceRegex(value, _ => Arguments.Redacted));
-            }
-
             return StartProcess(
                 toolPath,
                 arguments.ToStringAndClear(),
@@ -91,7 +85,7 @@ public static class ProcessTasks
                 logOutput,
                 logInvocation,
                 logger,
-                GetOutputFilterForArgumentStringHandler(ref arguments));
+                arguments.GetFilter());
         }
 
 #endif

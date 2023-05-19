@@ -38,7 +38,7 @@ public static class ProjectModelTasks
 
             string TryFromBasePath()
             {
-                var output = dotnet.Invoke($"--info", logInvocation: false, logOutput: false);
+                var output = dotnet.Invoke("--info", logInvocation: false, logOutput: false);
                 return output
                     .Select(x => x.Text.Trim())
                     .SingleOrDefault(x => x.StartsWith("Base Path:"))
@@ -47,7 +47,7 @@ public static class ProjectModelTasks
 
             string TryFromSdkList()
             {
-                var output = dotnet.Invoke($"--list-sdks", logInvocation: false, logOutput: false);
+                var output = dotnet.Invoke("--list-sdks", logInvocation: false, logOutput: false);
                 var latestInstalledSdkParts = output.Last().Text.Split(' ');
                 return (AbsolutePath)latestInstalledSdkParts.ElementAt(1).Trim('[', ']') / latestInstalledSdkParts.ElementAt(0);
             }

@@ -40,9 +40,9 @@ public partial class XunitTasks
     ///   <p>xUnit.net is a free, open source, community-focused unit testing tool for the .NET Framework. Written by the original inventor of NUnit v2, xUnit.net is the latest technology for unit testing C#, F#, VB.NET and other .NET languages. xUnit.net works with ReSharper, CodeRush, TestDriven.NET and Xamarin. It is part of the <a href="https://www.dotnetfoundation.org/">.NET Foundation</a>, and operates under their <a href="https://www.dotnetfoundation.org/code-of-conduct">code of conduct</a>. It is licensed under <a href="https://opensource.org/licenses/Apache-2.0">Apache 2</a> (an OSI approved license).</p>
     ///   <p>For more details, visit the <a href="https://xunit.github.io">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Xunit(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> Xunit(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(XunitPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? XunitLogger);
+        using var process = ProcessTasks.StartProcess(XunitPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? XunitLogger);
         (exitHandler ?? (p => XunitExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

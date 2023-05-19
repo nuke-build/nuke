@@ -10,7 +10,7 @@ namespace Nuke.Common.Tooling;
 
 #if NET6_0_OR_GREATER
 public delegate IReadOnlyCollection<Output> Tool(
-    ref ArgumentStringHandler arguments,
+    ArgumentStringHandler arguments,
     string workingDirectory = null,
     IReadOnlyDictionary<string, string> environmentVariables = null,
     int? timeout = null,

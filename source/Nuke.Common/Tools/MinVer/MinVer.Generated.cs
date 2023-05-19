@@ -40,9 +40,9 @@ public partial class MinVerTasks
     ///   <p>Minimalistic versioning using Git tags.</p>
     ///   <p>For more details, visit the <a href="https://github.com/adamralph/minver">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> MinVer(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> MinVer(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(MinVerPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? MinVerLogger);
+        using var process = ProcessTasks.StartProcess(MinVerPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? MinVerLogger);
         (exitHandler ?? (p => MinVerExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

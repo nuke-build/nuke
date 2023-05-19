@@ -19,7 +19,7 @@ internal class ToolExecutor
 
 #if NET6_0_OR_GREATER
     public IReadOnlyCollection<Output> Execute(
-        ref ArgumentStringHandler arguments,
+        ArgumentStringHandler arguments,
         string workingDirectory = null,
         IReadOnlyDictionary<string, string> environmentVariables = null,
         int? timeout = null,
@@ -30,7 +30,7 @@ internal class ToolExecutor
     {
         var process = ProcessTasks.StartProcess(
             _toolPath,
-            ref arguments,
+            arguments,
             workingDirectory,
             environmentVariables,
             timeout,

@@ -58,7 +58,7 @@ public static class TaskGenerator
         var tool = writer.Tool;
         var parameters = new[]
                          {
-                             "ref ArgumentStringHandler arguments",
+                             "ArgumentStringHandler arguments",
                              "string workingDirectory = null",
                              "IReadOnlyDictionary<string, string> environmentVariables = null",
                              "int? timeout = null",
@@ -70,7 +70,7 @@ public static class TaskGenerator
         var arguments = new[]
                         {
                             $"{tool.Name}Path",
-                            "ref arguments",
+                            "arguments",
                             "workingDirectory",
                             "environmentVariables",
                             "timeout",

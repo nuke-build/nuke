@@ -40,9 +40,9 @@ public partial class FixieTasks
     ///   <p>Fixie is a .NET modern test framework similar to NUnit and xUnit, but with an emphasis on low-ceremony defaults and flexible customization.</p>
     ///   <p>For more details, visit the <a href="https://fixie.github.io/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Fixie(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> Fixie(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(FixiePath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? FixieLogger);
+        using var process = ProcessTasks.StartProcess(FixiePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? FixieLogger);
         (exitHandler ?? (p => FixieExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

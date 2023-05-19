@@ -38,9 +38,9 @@ public partial class OctoVersionTasks
     /// <summary>
     ///   <p>For more details, visit the <a href="https://github.com/OctopusDeploy/OctoVersion">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> OctoVersion(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> OctoVersion(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(OctoVersionPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? OctoVersionLogger);
+        using var process = ProcessTasks.StartProcess(OctoVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? OctoVersionLogger);
         (exitHandler ?? (p => OctoVersionExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
