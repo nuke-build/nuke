@@ -76,12 +76,6 @@ public static class ProcessTasks
             bool? logInvocation = null,
             Action<OutputType, string> logger = null)
         {
-            static Func<string, string> GetOutputFilterForArgumentStringHandler(ref ArgumentStringHandler arguments)
-            {
-                var redactedValues = arguments.SecretValues;
-                return x => redactedValues.Aggregate(x, (arguments, value) => arguments.ReplaceRegex(value, _ => Arguments.Redacted));
-            }
-
             return StartProcess(
                 toolPath,
                 arguments.ToStringAndClear(),
@@ -91,7 +85,7 @@ public static class ProcessTasks
                 logOutput,
                 logInvocation,
                 logger,
-                GetOutputFilterForArgumentStringHandler(ref arguments));
+                arguments.GetFilter());
         }
 
 #endif

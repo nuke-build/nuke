@@ -19,6 +19,7 @@ namespace Nuke.Common.Tooling;
 public ref struct ArgumentStringHandler
 {
     private DefaultInterpolatedStringHandler _builder;
+    private readonly List<string> _secretValues;
 
     public ArgumentStringHandler(
         int literalLength,
@@ -26,11 +27,9 @@ public ref struct ArgumentStringHandler
         out bool handlerIsValid)
     {
         _builder = new(literalLength, formattedCount);
-        SecretValues = new List<string>();
+        _secretValues = new List<string>();
         handlerIsValid = true;
     }
-
-    public List<string> SecretValues { get; }
 
     public void AppendLiteral(string value)
     {
@@ -45,7 +44,7 @@ public ref struct ArgumentStringHandler
     public void AppendFormatted(string value, int alignment = 0, string format = null)
     {
         if (format == "r")
-            SecretValues.Add(value);
+            _secretValues.Add(value);
         else if (!(value.IsDoubleQuoted() || value.IsSingleQuoted() || format == "nq"))
             (value, format) = (value.DoubleQuoteIfNeeded(), null);
 
@@ -60,6 +59,12 @@ public ref struct ArgumentStringHandler
     public string ToStringAndClear()
     {
         return _builder.ToStringAndClear();
+    }
+
+    public Func<string, string> GetFilter()
+    {
+        var secretValues = _secretValues;
+        return x => secretValues.Aggregate(x, (arguments, value) => arguments.Replace(value, Arguments.Redacted));
     }
 }
 #endif
