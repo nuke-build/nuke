@@ -40,9 +40,9 @@ public partial class InnoSetupTasks
     ///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
     ///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> InnoSetup(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> InnoSetup(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(InnoSetupPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? InnoSetupLogger);
+        using var process = ProcessTasks.StartProcess(InnoSetupPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? InnoSetupLogger);
         (exitHandler ?? (p => InnoSetupExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

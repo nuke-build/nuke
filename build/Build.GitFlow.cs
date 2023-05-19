@@ -104,11 +104,11 @@ partial class Build
         var hasCleanWorkingCopy = GitHasCleanWorkingCopy();
 
         if (!hasCleanWorkingCopy && AutoStash)
-            Git($"stash");
+            Git("stash");
 
         Git($"checkout -b {branch} {start}");
 
         if (!hasCleanWorkingCopy && AutoStash)
-            Git($"stash apply");
+            Git("stash apply");
     }
 }

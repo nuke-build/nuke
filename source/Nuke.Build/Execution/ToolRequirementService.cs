@@ -89,7 +89,7 @@ internal static class ToolRequirementService
 
         packageJsonFile.WriteAllText(content);
         var npm = ToolResolver.GetEnvironmentOrPathTool("npm");
-        npm.Invoke($"install", workingDirectory: packageJsonFile.Parent, logInvocation: false, logOutput: false);
+        npm.Invoke("install", workingDirectory: packageJsonFile.Parent, logInvocation: false, logOutput: false);
     }
 
     private static void InstallAptGetPackages(IReadOnlyCollection<AptGetPackageRequirement> requirements, AbsolutePath directory)

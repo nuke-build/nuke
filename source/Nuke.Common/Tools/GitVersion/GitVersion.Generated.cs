@@ -40,9 +40,9 @@ public partial class GitVersionTasks
     ///   <p>GitVersion is a tool to help you achieve Semantic Versioning on your project.</p>
     ///   <p>For more details, visit the <a href="http://gitversion.readthedocs.io/en/stable/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> GitVersion(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> GitVersion(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(GitVersionPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? GitVersionLogger);
+        using var process = ProcessTasks.StartProcess(GitVersionPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? GitVersionLogger);
         (exitHandler ?? (p => GitVersionExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

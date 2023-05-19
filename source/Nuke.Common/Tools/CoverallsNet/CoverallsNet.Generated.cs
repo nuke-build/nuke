@@ -40,9 +40,9 @@ public partial class CoverallsNetTasks
     ///   <p>Coveralls uploader for .Net Code coverage of your C# source code. Should work with any code files that get reported with the supported coverage tools, but the primary focus is CSharp.</p>
     ///   <p>For more details, visit the <a href="https://coverallsnet.readthedocs.io">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> CoverallsNet(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> CoverallsNet(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(CoverallsNetPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? CoverallsNetLogger);
+        using var process = ProcessTasks.StartProcess(CoverallsNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? CoverallsNetLogger);
         (exitHandler ?? (p => CoverallsNetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

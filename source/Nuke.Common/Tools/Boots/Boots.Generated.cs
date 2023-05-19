@@ -40,9 +40,9 @@ public partial class BootsTasks
     ///   <p>boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.</p>
     ///   <p>For more details, visit the <a href="https://github.com/jonathanpeppers/boots">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Boots(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> Boots(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(BootsPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? BootsLogger);
+        using var process = ProcessTasks.StartProcess(BootsPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? BootsLogger);
         (exitHandler ?? (p => BootsExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

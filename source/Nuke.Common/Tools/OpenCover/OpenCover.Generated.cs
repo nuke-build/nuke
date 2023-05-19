@@ -40,9 +40,9 @@ public partial class OpenCoverTasks
     ///   <p>OpenCover is a code coverage tool for .NET 2 and above (Windows OSs only - no MONO), with support for 32 and 64 processes and covers both branch and sequence points.</p>
     ///   <p>For more details, visit the <a href="https://github.com/OpenCover/opencover">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> OpenCover(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> OpenCover(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(OpenCoverPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? OpenCoverLogger);
+        using var process = ProcessTasks.StartProcess(OpenCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? OpenCoverLogger);
         (exitHandler ?? (p => OpenCoverExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

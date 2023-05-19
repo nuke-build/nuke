@@ -40,9 +40,9 @@ public partial class AzureSignToolTasks
     ///   <p>Azure Sign Tool is similar to <c>signtool</c> in the Windows SDK, with the major difference being that it uses Azure Key Vault for performing the signing process. The usage is like <c>signtool</c>, except with a limited set of options for signing and options for authenticating to Azure Key Vault.</p>
     ///   <p>For more details, visit the <a href="https://github.com/vcsjones/AzureSignTool">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> AzureSignTool(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> AzureSignTool(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(AzureSignToolPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? AzureSignToolLogger);
+        using var process = ProcessTasks.StartProcess(AzureSignToolPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? AzureSignToolLogger);
         (exitHandler ?? (p => AzureSignToolExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }

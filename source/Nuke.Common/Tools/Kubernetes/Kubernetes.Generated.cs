@@ -38,9 +38,9 @@ public partial class KubernetesTasks
     /// <summary>
     ///   <p>For more details, visit the <a href="https://kubernetes.io/">official website</a>.</p>
     /// </summary>
-    public static IReadOnlyCollection<Output> Kubernetes(ref ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
+    public static IReadOnlyCollection<Output> Kubernetes(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
     {
-        using var process = ProcessTasks.StartProcess(KubernetesPath, ref arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? KubernetesLogger);
+        using var process = ProcessTasks.StartProcess(KubernetesPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? KubernetesLogger);
         (exitHandler ?? (p => KubernetesExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
