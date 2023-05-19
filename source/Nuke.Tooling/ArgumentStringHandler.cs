@@ -31,6 +31,11 @@ public ref struct ArgumentStringHandler
         handlerIsValid = true;
     }
 
+    public static implicit operator ArgumentStringHandler(string value)
+    {
+        return $"{value.NotNull()}";
+    }
+
     public void AppendLiteral(string value)
     {
         _builder.AppendLiteral(value);
