@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed string-based command-line tool tasks to not require interpolated strings
+- Fixed secret filtering
 
 ## [7.0.1] / 2023-05-15
 - Fixed system console colors to fall back to current colors
