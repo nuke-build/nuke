@@ -68,7 +68,7 @@ public static class ProcessTasks
 
         public static IProcess StartProcess(
             string toolPath,
-            ref ArgumentStringHandler arguments,
+            ArgumentStringHandler arguments,
             string workingDirectory = null,
             IReadOnlyDictionary<string, string> environmentVariables = null,
             int? timeout = null,
