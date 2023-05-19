@@ -63,7 +63,7 @@ public ref struct ArgumentStringHandler
 
     public string ToStringAndClear()
     {
-        return _builder.ToStringAndClear();
+        return _builder.ToStringAndClear().TrimMatchingDoubleQuotes();
     }
 
     public Func<string, string> GetFilter()
