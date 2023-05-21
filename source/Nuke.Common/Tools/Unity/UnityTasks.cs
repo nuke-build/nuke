@@ -79,7 +79,7 @@ public partial class UnityTasks
 
         var editorVersion = ReadUnityEditorVersion(unitySettings.ProjectPath);
         var hubToolPath = GetToolPathViaHubVersion(editorVersion);
-        if (hubToolPath.Exists())
+        if (hubToolPath.FileExists())
         {
             unitySettings.HubVersion = editorVersion;
             return;
