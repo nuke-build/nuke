@@ -873,9 +873,69 @@
           {
             "name": "ValidAuthenticationTypes",
             "type": "List<DotNetNuGetAuthentication>",
-            "format": "--valid-authentication-types",
+            "format": "--valid-authentication-types {value}",
             "separator": ",",
             "help": "List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href=\"https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior\">Common NuGet Configurations</a>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Updates a NuGet source.",
+      "postfix": "NuGetUpdateSource",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget update source",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "{value}",
+            "help": "Name of the source."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "URL of the source."
+          },
+          {
+            "name": "Username",
+            "type": "string",
+            "format": "--username {value}",
+            "help": "Username to be used when connecting to an authenticated source."
+          },
+          {
+            "name": "Password",
+            "type": "string",
+            "format": "--password {value}",
+            "secret": true,
+            "help": "Password to be used when connecting to an authenticated source."
+          },
+          {
+            "name": "StorePasswordInClearText",
+            "type": "bool",
+            "format": "--store-password-in-clear-text",
+            "help": "Enables storing portable package source credentials by disabling password encryption."
+          },
+          {
+            "name": "ValidAuthenticationTypes",
+            "type": "List<DotNetNuGetAuthentication>",
+            "format": "--valid-authentication-types {value}",
+            "separator": ",",
+            "help": "List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href=\"https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior\">Common NuGet Configurations</a>."
           }
         ]
       }
