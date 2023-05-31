@@ -2,7 +2,6 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
@@ -20,8 +19,14 @@ partial class SignToolTasks
                 : SpecialFolders.ProgramFiles).NotNull();
 
         var platformIdentifier = EnvironmentInfo.Is64Bit ? "x64" : "x86";
+        const string windowsKitLastVersion = "10";
 
-        return new[]
+        var windowsKitsRootDirectory = programDirectory / "Windows Kits" / windowsKitLastVersion / "bin";
+        var signToolPath = windowsKitsRootDirectory.GlobFiles($"{windowsKitLastVersion}.*/{platformIdentifier}/signtool.exe").LastOrDefault();
+
+        return signToolPath ?? 
+
+        new[]
                {
                    programDirectory / "Windows Kits" / "10" / "bin" / "10.0.15063.0",
                    programDirectory / "Windows Kits" / "10" / "App Certification Kit",
