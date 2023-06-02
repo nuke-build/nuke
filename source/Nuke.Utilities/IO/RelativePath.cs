@@ -46,6 +46,11 @@ public class RelativePath
         return new RelativePath(NormalizePath(Combine(left, (RelativePath) right, separator), separator), separator);
     }
 
+    public static RelativePath operator +(RelativePath left, [CanBeNull] string right)
+    {
+        return new RelativePath(left.ToString() + right);
+    }
+
     public override string ToString()
     {
         return _path;

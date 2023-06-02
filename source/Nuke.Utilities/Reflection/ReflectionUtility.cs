@@ -39,6 +39,11 @@ public static partial class ReflectionUtility
         return type.IsNullableType() ? type : typeof(Nullable<>).MakeGenericType(type);
     }
 
+    public static bool IsDelegateType(this Type type)
+    {
+        return typeof(MulticastDelegate).IsAssignableFrom(type);
+    }
+
     public static bool IsCollectionLike(this Type type)
     {
         return type != typeof(string) &&
