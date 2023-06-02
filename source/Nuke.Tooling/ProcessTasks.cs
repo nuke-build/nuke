@@ -224,9 +224,8 @@ public static class ProcessTasks
             if (e.Data == null)
                 return;
 
-            output.Add(new Output { Text = e.Data, Type = OutputType.Std });
-
             var filteredOutput = outputFilter(e.Data);
+            output.Add(new Output { Text = filteredOutput, Type = OutputType.Std });
             logger?.Invoke(OutputType.Std, filteredOutput);
         };
         process.ErrorDataReceived += (_, e) =>
@@ -234,9 +233,8 @@ public static class ProcessTasks
             if (e.Data == null)
                 return;
 
-            output.Add(new Output { Text = e.Data, Type = OutputType.Err });
-
             var filteredOutput = outputFilter(e.Data);
+            output.Add(new Output { Text = filteredOutput, Type = OutputType.Err });
             logger?.Invoke(OutputType.Err, filteredOutput);
         };
 
