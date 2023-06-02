@@ -9,13 +9,13 @@ using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.Unity;
 
-public static partial class UnitySettingsExtensions
+public static partial class UnityProjectSettingsExtensions
 {
     #region BuildTarget
 
-    /// <summary><p><em>Sets <see cref="UnitySettings.BuildTarget"/>.</em></p><p>Allows the selection of an active build target before a project is loaded.</p></summary>
+    /// <summary><p><em>Sets <see cref="UnityProjectSettings.BuildTarget"/>.</em></p><p>Allows the selection of an active build target before a project is loaded.</p></summary>
     [Pure]
-    public static UnitySettings SetBuildTarget(this UnitySettings toolSettings, UnityBuildTarget buildTarget)
+    public static UnityProjectSettings SetBuildTarget(this UnityProjectSettings toolSettings, UnityBuildTarget buildTarget)
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.BuildTarget = buildTarget.ToString();
