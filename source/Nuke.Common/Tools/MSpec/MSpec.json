@@ -23,34 +23,34 @@
           {
             "name": "Filters",
             "type": "List<string>",
-            "format": "-f={value}",
+            "format": "-filters {value}",
             "separator": ",",
             "help": "Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags."
           },
           {
             "name": "Includes",
             "type": "List<string>",
-            "format": "-i={value}",
+            "format": "-include {value}",
             "separator": ",",
             "help": "Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>."
           },
           {
             "name": "Excludes",
             "type": "List<string>",
-            "format": "-x={value}",
+            "format": "-exclude {value}",
             "separator": ",",
             "help": "Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>."
           },
           {
             "name": "HtmlOutput",
             "type": "string",
-            "format": "--html={value}",
+            "format": "--html {value}",
             "help": "Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c>"
           },
           {
             "name": "XmlOutput",
             "type": "string",
-            "format": "--xml={value}",
+            "format": "--xml {value}",
             "help": "Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c>"
           },
           {
