@@ -30,14 +30,14 @@
           {
             "name": "Includes",
             "type": "List<string>",
-            "format": "-i={value}",
+            "format": "-i {value}",
             "separator": ",",
             "help": "Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>."
           },
           {
             "name": "Excludes",
             "type": "List<string>",
-            "format": "-x={value}",
+            "format": "-x {value}",
             "separator": ",",
             "help": "Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>."
           },
