@@ -78,15 +78,15 @@ public partial class UnityTasks
             return;
 
         var editorVersion = ReadUnityEditorVersion(unitySettings.ProjectPath);
-        var hubToolPath = GetToolPathViaHubVersion(editorVersion);
-        if (hubToolPath.Exists())
+        var hubToolExe = GetToolPathViaHubVersion(editorVersion);
+        if (hubToolExe.Exists())
         {
             unitySettings.HubVersion = editorVersion;
             return;
         }
 
-        var manualInstallationToolPath = GetToolPathViaManualInstallation();
-        Assert.FileExists(manualInstallationToolPath, $"Required Unity Hub installation for version '{editorVersion}' was not found");
+        var manualInstallationToolExe = GetToolPathViaManualInstallation();
+        Assert.FileExists(manualInstallationToolExe, $"Required Unity Hub installation for version '{editorVersion}' was not found");
     }
 
     private static string ReadUnityEditorVersion(AbsolutePath projectPath)
