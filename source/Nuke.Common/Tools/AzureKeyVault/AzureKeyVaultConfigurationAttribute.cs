@@ -47,7 +47,7 @@ namespace Nuke.Common.Tools.AzureKeyVault
                                 };
 
             if (configuration.BaseUrl == null ||
-                configuration.TenantId == null ||
+                //configuration.TenantId == null || //TenantId is not mandatory
                 configuration.ClientId == null ||
                 configuration.ClientSecret == null)
             {
