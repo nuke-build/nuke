@@ -1,0 +1,15 @@
+pool:
+  vmImage: 'ubuntu-latest'
+
+jobs:
+  - job: QodanaScan
+    displayName: 'Qodana Scan'
+    steps:
+      - task: Cache@2  # Not required, but Qodana will open projects with cache faster.
+        inputs:
+          key: '"$(Build.Repository.Name)" | "$(Build.SourceBranchName)" | "$(Build.SourceVersion)"'
+          path: '$(Agent.TempDirectory)/qodana/cache'
+          restoreKeys: |
+            "$(Build.Repository.Name)" | "$(Build.SourceBranchName)"
+            "$(Build.Repository.Name)"
+      - task: QodanaScan@2023
