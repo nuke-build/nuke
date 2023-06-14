@@ -22,11 +22,17 @@ public class NerdbankGitVersioningAttribute : ValueInjectionAttributeBase
 {
     public bool UpdateBuildNumber { get; set; }
 
+    /// <summary>
+    /// Relative path inside <see cref="INukeBuild.RootDirectory" />  where configuration file is located.
+    /// </summary>
+    public string WorkingDirectoryRelativePath { get; set; }
+
     public override object GetValue(MemberInfo member, object instance)
     {
         var version = NerdbankGitVersioningTasks.NerdbankGitVersioningGetVersion(s => s
                 .DisableProcessLogOutput()
-                .SetFormat(NerdbankGitVersioningFormat.json))
+                .SetFormat(NerdbankGitVersioningFormat.json)
+                .When(WorkingDirectoryRelativePath != null, x => x.SetProcessWorkingDirectory(Build.RootDirectory / WorkingDirectoryRelativePath)))
             .Result;
 
         if (UpdateBuildNumber)
