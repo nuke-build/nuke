@@ -21,12 +21,24 @@ namespace Nuke.Common.Tools.MinVer;
 [UsedImplicitly(ImplicitUseKindFlags.Default)]
 public class MinVerAttribute : ValueInjectionAttributeBase
 {
+    public MinVerVersionPart AutoIncrement { get; internal set; }
+    public string BuildMetadata { get; set; }
+    public string DefaultPreReleasePhase { get; set; }
+    public string MinimumMajorMinor { get; set; }
+    public string TagPrefix { get; set; }
+    public MinVerVerbosity Verbosity { get; set; }
     public string Framework { get; set; }
     public bool UpdateBuildNumber { get; set; }
 
     public override object GetValue(MemberInfo member, object instance)
     {
         var version = MinVerTasks.MinVer(s => s
+                .SetAutoIncrement(AutoIncrement)
+                .SetBuildMetadata(BuildMetadata)
+                .SetDefaultPreReleasePhase(DefaultPreReleasePhase)
+                .SetMinimumMajorMinor(MinimumMajorMinor)
+                .SetTagPrefix(TagPrefix)
+                .SetVerbosity(Verbosity)
                 .SetFramework(Framework)
                 .DisableProcessLogOutput())
             .Result;
