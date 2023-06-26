@@ -157,6 +157,47 @@
       "settingsClass": {
         "baseClass": "UnityBaseSettings"
       }
+    },
+    {
+      "help": "(2019.2+) Run tests in the project using Unity Test Framework. This argument requires the <c>projectPath</c>, and it's good practice to run it with <c>batchmode</c> argument. <c>quit</c> is not required, because the Editor automatically closes down after the run is finished.",
+      "postfix": "RunTests",
+      "preProcess": true,
+      "customStart": true,
+      "customAssertion": true,
+      "definiteArgument": "-runTests",
+      "settingsClass": {
+        "baseClass": "UnityBaseSettings",
+        "properties": [
+          {
+            "name": "TestCategories",
+            "type": "List<string>",
+            "format": "-testCategory {value}",
+            "separator": ";",
+            "quoteMultiple": true,
+            "help": "A list of test categories to include in the run, or a regular expression pattern to match category names. If using both <c>TestFilters</c> and <c>TestCategories</c>, then only tests that match both are run. This argument supports negation using '!'. If using '!MyCategory' then no tests with the 'MyCategory' category will be included in the run."
+          },
+          {
+            "name": "TestFilters",
+            "type": "List<string>",
+            "format": "-testFilter {value}",
+            "separator": ";",
+            "quoteMultiple": true,
+            "help": "A list of test names to run, or a regular expression pattern to match tests by their full name. This argument supports negation using '!'. If using the test filter '!MyNamespace.Something.MyTest', then all tests except that test will be run. It is also possible to run a specific variation of a parameterized test like so: 'ClassName.MethodName(Param1,Param2)'."
+          },
+          {
+            "name": "TestResultFile",
+            "type": "string",
+            "format": "-testResults {value}",
+            "help": "Path where the result file should be placed. If the path is a folder, a default file name is used. If not specified, the results are placed in the project's root folder."
+          },
+          {
+            "name": "TestPlatform",
+            "type": "string",
+            "format": "-testPlatform {value}",
+            "help": "The platform to run tests on."
+          }
+        ]
+      }
     }
   ],
   "commonTaskProperties": [
@@ -425,6 +466,13 @@
         "etc",
         "etc2",
         "astc"
+      ]
+    },
+    {
+      "name": "UnityTestPlatform",
+      "values": [
+        "EditMode",
+        "PlayMode"
       ]
     }
   ]
