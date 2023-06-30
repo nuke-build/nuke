@@ -7,6 +7,8 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Xunit;
 
+// ReSharper disable StringLiteralAsInterpolationArgument
+
 namespace Nuke.Common.Tests;
 
 public class ArgumentStringHandlerTest
@@ -80,5 +82,5 @@ public class ArgumentStringHandlerTest
         filteredOutput.Should().Be("There is a [REDACTED]!");
     }
 
-    string ArgsToString(ArgumentStringHandler args) => args.ToStringAndClear();
+    private string ArgsToString(ArgumentStringHandler args) => args.ToStringAndClear();
 }
