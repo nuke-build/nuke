@@ -61,6 +61,17 @@ public ref struct ArgumentStringHandler
         _builder.AppendFormatted(path, alignment, format ?? "dn");
     }
 
+    public void AppendFormatted(IEnumerable<AbsolutePath> paths, int alignment = 0, string format = null)
+    {
+        var list = paths.ToList();
+        for (var i = 0; i < list.Count; i++)
+        {
+            _builder.AppendFormatted(list[i], alignment, format ?? "dn");
+            if (i + 1 < list.Count)
+                _builder.AppendLiteral(" ");
+        }
+    }
+
     public string ToStringAndClear()
     {
         return _builder.ToStringAndClear().TrimMatchingDoubleQuotes();
