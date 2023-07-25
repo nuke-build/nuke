@@ -31,10 +31,11 @@ public class StronglyTypedSolutionGenerator : ISourceGenerator
         var compilation = context.Compilation;
         var allTypes = compilation.Assembly.GlobalNamespace.GetAllTypes();
         var members = allTypes.SelectMany(x => x.GetMembers())
-            .Where(x => x is IPropertySymbol || x is IFieldSymbol)
+            .Where(x => x is IPropertySymbol or IFieldSymbol)
             .Select(x => (Member: x, AttributeData: x.GetAttributeData("global::Nuke.Common.ProjectModel.SolutionAttribute")))
             .Where(x => x.AttributeData?.NamedArguments.SingleOrDefault(x => x.Key == "GenerateProjects").Value.Value as bool? ?? false)
-            .Select(x => x.Member).ToList();
+            .ToList();
+
         if (members.Count == 0)
             return;
 
@@ -42,9 +43,12 @@ public class StronglyTypedSolutionGenerator : ISourceGenerator
         var compilationUnit = CompilationUnit()
             .AddUsings(UsingDirective(IdentifierName("Nuke.Common.ProjectModel")));
 
-        foreach (var member in members)
+        foreach (var (member, attributeData) in members)
         {
-            var solutionFile = GetSolutionFileFromParametersFile(rootDirectory, member.Name);
+            var solutionFile = attributeData.ConstructorArguments.FirstOrDefault().Value is string { Length: > 0 } relativeSlnPath
+                ? rootDirectory / relativeSlnPath
+                : GetSolutionFileFromParametersFile(rootDirectory, member.Name);
+
             var solution = SolutionSerializer.DeserializeFromFile<Solution>(solutionFile);
 
             var classDeclaration = GetSolutionFolderDeclaration(member.Name, solution.SolutionFolders, solution.Projects, isSolution: true);
@@ -104,13 +108,13 @@ public class StronglyTypedSolutionGenerator : ISourceGenerator
                 .ToArray<MemberDeclarationSyntax>());
     }
 
-    private static string GetSolutionFileFromParametersFile(AbsolutePath rootDirectory, string memberName)
+    private static AbsolutePath GetSolutionFileFromParametersFile(AbsolutePath rootDirectory, string memberName)
     {
         var parametersFile = Constants.GetDefaultParametersFile(rootDirectory);
         Assert.FileExists(parametersFile);
         var jobject = JObject.Parse(File.ReadAllText(parametersFile));
         var solutionRelativePath = jobject[memberName].NotNull($"Property '{memberName}' does not exist in '{parametersFile}'.").Value<string>();
-        return Path.Combine(rootDirectory, solutionRelativePath.NotNull());
+        return rootDirectory / solutionRelativePath.NotNull();
     }
 
     private static AbsolutePath GetRootDirectoryFrom(Compilation compilation)
