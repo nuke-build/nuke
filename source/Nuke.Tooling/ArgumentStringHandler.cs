@@ -43,30 +43,36 @@ public ref struct ArgumentStringHandler
 
     public void AppendFormatted(object obj, int alignment = 0, string format = null)
     {
-        AppendFormatted(obj.ToString(), alignment, format);
+        if (obj is string value)
+        {
+            if (format == "r")
+                _secretValues.Add(value);
+            else if (!(value.IsDoubleQuoted() || value.IsSingleQuoted() || format == "nq"))
+                (value, format) = (value.DoubleQuoteIfNeeded(), null);
+            AppendFormatted(value, alignment, format);
+        }
+        else if (obj is IAbsolutePathHolder holder)
+            AppendFormatted(holder, alignment, format);
+        else
+            AppendFormatted(obj.ToString(), alignment, format);
     }
 
-    public void AppendFormatted(string value, int alignment = 0, string format = null)
+    private void AppendFormatted(string value, int alignment, string format)
     {
-        if (format == "r")
-            _secretValues.Add(value);
-        else if (!(value.IsDoubleQuoted() || value.IsSingleQuoted() || format == "nq"))
-            (value, format) = (value.DoubleQuoteIfNeeded(), null);
-
         _builder.AppendFormatted(value, alignment, format);
     }
 
-    public void AppendFormatted(AbsolutePath path, int alignment = 0, string format = null)
+    private void AppendFormatted(IAbsolutePathHolder holder, int alignment, string format)
     {
-        _builder.AppendFormatted(path, alignment, format ?? "dn");
+        _builder.AppendFormatted(holder.Path, alignment, format ?? AbsolutePath.DoubleQuoteIfNeeded);
     }
 
-    public void AppendFormatted(IEnumerable<AbsolutePath> paths, int alignment = 0, string format = null)
+    public void AppendFormatted(IEnumerable<IAbsolutePathHolder> paths, int alignment = 0, string format = null)
     {
         var list = paths.ToList();
         for (var i = 0; i < list.Count; i++)
         {
-            _builder.AppendFormatted(list[i], alignment, format ?? "dn");
+            _builder.AppendFormatted(list[i], alignment, format ?? AbsolutePath.DoubleQuoteIfNeeded);
             if (i + 1 < list.Count)
                 _builder.AppendLiteral(" ");
         }

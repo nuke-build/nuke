@@ -49,9 +49,7 @@ internal class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBas
 
         // TODO: Abstract AbsolutePath/Solution/Project etc.
         string ConvertValue(Type scalarType, string value)
-            => scalarType == typeof(AbsolutePath) ||
-               typeof(Solution).IsAssignableFrom(scalarType) ||
-               scalarType == typeof(Project)
+            => scalarType.IsAssignableTo(typeof(IAbsolutePathHolder))
                 ? PathConstruction.HasPathRoot(value)
                     ? value
                     : EnvironmentInfo.WorkingDirectory.GetUnixRelativePathTo(Build.RootDirectory / value)
