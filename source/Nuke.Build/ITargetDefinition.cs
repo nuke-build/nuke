@@ -37,6 +37,11 @@ public interface ITargetDefinition
     ///   Adds a <see cref="Task"/> that will be executed for this target.
     /// </summary>
     ITargetDefinition Executes(Func<Task> action);
+    
+    /// <summary>
+    ///   Adds a <see cref="Task"/> that will be executed for this target.
+    /// </summary>
+    ITargetDefinition Executes<T>(Func<Task<T>> action);
 
     /// <summary>
     ///   Adds a set of dependent targets that will be executed before this target.
