@@ -37,16 +37,14 @@ On macOS you can also choose to generate a password and save it to your [keychai
 
 Afterwards, you can choose from a list of secret parameters, to either set or update their values, and finally accept or discard your changes:
 
-<p style={{maxWidth:'700px'}}>
-    <AsciinemaPlayer
-        src="/casts/secrets.cast"
-        idleTimeLimit={2}
-        // autoplay={true}
-        poster="npt:4.947343"
-        preload={true}
-        // terminalFontFamily="'JetBrains Mono', Consolas, Menlo, 'Bitstream Vera Sans Mono', monospace"
-        loop={true}/>
-</p>
+<AsciinemaPlayer
+    src="/casts/secrets.cast"
+    idleTimeLimit={2}
+    // autoplay={true}
+    poster="npt:4.947343"
+    preload={true}
+    // terminalFontFamily="'JetBrains Mono', Consolas, Menlo, 'Bitstream Vera Sans Mono', monospace"
+    loop={true}/>
 
 When secrets are saved to a parameters file, they are prefixed with `v1:` to indicate the underlying encryption method:
 
