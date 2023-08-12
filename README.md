@@ -84,6 +84,7 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Daniel Valadas](https://avatars.githubusercontent.com/valadas?s=60&v=4)](https://github.com/valadas)
 [![Anton Wieslander](https://avatars.githubusercontent.com/T0shik?s=60&v=4)](https://github.com/T0shik)
 [![business//acts](https://avatars.githubusercontent.com/BusinessActs?s=60&v=4)](https://github.com/BusinessActs)
+[![Petabridge](https://avatars.githubusercontent.com/petabridge?s=60&v=4)](https://github.com/petabridge)
 [![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=60&v=4)](https://github.com/stevenkuhn)
 
 [![Stephan Müller](https://avatars.githubusercontent.com/chaquotay?s=45&v=4)](https://github.com/chaquotay)
@@ -96,6 +97,8 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 [![Derek Beattie](https://avatars.githubusercontent.com/dbeattie71?s=45&v=4)](https://github.com/dbeattie71)
 [![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
 [![patrik53](https://avatars.githubusercontent.com/patrik53?s=45&v=4)](https://github.com/patrik53)
+[![Cesare Caoduro](https://avatars.githubusercontent.com/Cesare-Caoduro_aecom?s=45&v=4)](https://github.com/Cesare-Caoduro_aecom)
+[![Kirill Osenkov](https://avatars.githubusercontent.com/KirillOsenkov?s=45&v=4)](https://github.com/KirillOsenkov)
 [<img height="45px" src="https://images.opencollective.com/archon-systems-inc/85fa9b1/logo/256.png" alt="Archon Systems Inc." />](https://opencollective.com/archon-systems-inc/)
 [<img height="45px" src="https://images.opencollective.com/bitzer-electronics-as/39862ac/logo/256.png" alt="BITZER Electronics A/S" />](https://opencollective.com/bitzer-electronics-as)
 
