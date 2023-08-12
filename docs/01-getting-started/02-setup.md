@@ -17,16 +17,14 @@ Preferably, you should run the setup from inside an existing repository. NUKE wi
 
 During the setup, you'll be asked several questions to configure your build to your preferences:
 
-<p style={{maxWidth:'700px'}}>
-    <AsciinemaPlayer
-        src="/casts/setup.cast"
-        idleTimeLimit={2}
-        // autoplay={true}
-        poster="npt:5.715135"
-        preload={true}
-        // terminalFontFamily="'JetBrains Mono', Consolas, Menlo, 'Bitstream Vera Sans Mono', monospace"
-        loop={true}/>
-</p>
+<AsciinemaPlayer
+    src="/casts/setup.cast"
+    idleTimeLimit={2}
+    // autoplay={true}
+    poster="npt:5.715135"
+    preload={true}
+    // terminalFontFamily="'JetBrains Mono', Consolas, Menlo, 'Bitstream Vera Sans Mono', monospace"
+    loop={true}/>
 
 **Congratulations!** 🥳 Your first build has now been set up, and you can [run the build](03-execution.md) with the default implementation!
 
