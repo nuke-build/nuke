@@ -5,10 +5,10 @@ title: Visual Studio
 import InstallButton from '@site/src/components/InstallButton';
 
 <InstallButton
-    url="https://marketplace.visualstudio.com/items?itemName=nuke.visualstudio"
+    url="/download/visualstudio"
     event="ICIIXSN5" />
 
-In [Visual Studio](https://visualstudio.microsoft.com/) you can install the [NUKE Support extension](https://marketplace.visualstudio.com/items?itemName=nuke.visualstudio) to be more productive in writing, running, and debugging your builds.
+In [Visual Studio](https://visualstudio.microsoft.com/) you can install the _NUKE Support extension_ to be more productive in writing, running, and debugging your builds.
 
 From the _Task Runner Explorer_, you can double-click a target to run it. Additionally, you can use toggle buttons to attach the debugger or skip dependencies:
 
