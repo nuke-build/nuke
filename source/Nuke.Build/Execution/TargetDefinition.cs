@@ -72,6 +72,11 @@ internal class TargetDefinition : ITargetDefinition
     {
         return Executes(() => action().GetAwaiter().GetResult());
     }
+    
+    public ITargetDefinition Executes<T>(Func<Task<T>> action)
+    {
+        return Executes(() => action().GetAwaiter().GetResult());
+    }
 
     public ITargetDefinition DependsOn(params Target[] targets)
     {
