@@ -1,0 +1,3145 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "references": [
+    "https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-deploy-drift-report.md",
+    "https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-download.md",
+    "https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-export.md",
+    "https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-extract.md",
+    "https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md",
+    "https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-pipelines.md",
+    "https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-publish.md",
+    "https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-script.md"
+  ],
+  "name": "SqlPackage",
+  "officialUrl": "https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage",
+  "help": "SqlPackage is a command-line utility that automates the following database development tasks by exposing some of the public Data-Tier Application Framework (DacFx) APIs",
+  "packageExecutable": "sqlpackage.exe",
+  "tasks": [
+    {
+      "postfix": "Version",
+      "definiteArgument": "/Version",
+      "officialUrl": "https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage?view=sql-server-ver16#version",
+      "settingsClass": {}
+    },
+    {
+      "help": "<p>The SqlPackage publish operation incrementally updates the schema of a target database to match the structure of a source database. Publishing a deployment package that contains user data for all or a subset of tables update the table data in addition to the schema. Data deployment overwrites the schema and data in existing tables of the target database. Data deployment will not change existing schema or data in the target database for tables not included in the deployment package. A new database can be created by the publish action when the authenticated user has create database permissions. The required permissions for the publish action on an existing database is db_owner.</p>",
+      "postfix": "Publish",
+      "definiteArgument": "/Action:Publish",
+      "officialUrl": "https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-publish",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AccessToken",
+            "type": "string",
+            "format": "/AccessToken:{value}",
+            "help": "Specifies the token-based authentication access token to use when connect to the target database."
+          },
+          {
+            "name": "AzureCloudConfig",
+            "type": "string",
+            "format": "/AzureCloudConfig:{value}",
+            "help": "Specifies the custom endpoints for connecting to Azure Active Directory in the format: AzureActiveDirectoryAuthority={value};DatabaseServicePrincipalName={value}\" ."
+          },
+          {
+            "name": "AzureKeyVaultAuthMethod",
+            "type": "AzureKeyVaultAuthMethod",
+            "format": "/AzureKeyVaultAuthMethod:{value}",
+            "help": "Specifies what authentication method is used for accessing Azure KeyVault if a publish operation includes modifications to an encrypted table/column."
+          },
+          {
+            "name": "ClientId",
+            "type": "string",
+            "format": "/ClientId:{value}",
+            "help": "Specifies the Client ID to be used in authenticating against Azure KeyVault, when necessary"
+          },
+          {
+            "name": "DeployReportPath",
+            "type": "string",
+            "format": "/DeployReportPath:{value}",
+            "help": "Specifies an optional file path to output the deployment report xml file."
+          },
+          {
+            "name": "DeployScriptPath",
+            "type": "string",
+            "format": "/DeployScriptPath:{value}",
+            "help": "Specifies an optional file path to output the deployment script. For Azure deployments, if there are TSQL commands to create or modify the master database, a script will be written to the same path but with \"Filename_Master.sql\" as the output file name."
+          },
+          {
+            "name": "Diagnostics",
+            "type": "bool",
+            "format": "/Diagnostics:{value}",
+            "help": "Specifies whether diagnostic logging is output to the console. Defaults to False."
+          },
+          {
+            "name": "DiagnosticsFile",
+            "type": "string",
+            "format": "/DiagnosticsFile:{value}",
+            "help": "Specifies a file to store diagnostic logs."
+          },
+          {
+            "name": "MaxParallelism",
+            "type": "int",
+            "format": "/MaxParallelism:{value}",
+            "help": "Specifies the degree of parallelism for concurrent operations running against a database. The default value is 8."
+          },
+          {
+            "name": "ModelFilePath",
+            "type": "string",
+            "format": "/ModelFilePath:{value}",
+            "help": "Specifies the file path to override the model.xml in the source file. Use of this setting may result in deployment failure and/or unintended data loss. This setting is intended only for use when troubleshooting issues with publish, import, or script generation."
+          },
+          {
+            "name": "OverwriteFiles",
+            "type": "bool",
+            "format": "/OverwriteFiles:{value}",
+            "help": "Specifies if SqlPackage should overwrite existing files. Specifying false causes SqlPackage to abort action if an existing file is encountered. Default value is True."
+          },
+          {
+            "name": "Profile",
+            "type": "string",
+            "format": "/Profile:{value}",
+            "help": "Specifies the file path to a DAC Publish Profile. The profile defines a collection of properties and variables to use when generating outputs."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "/p:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies a name value pair for an [action-specific property](#properties-specific-to-the-publish-action);{PropertyName}={Value}.",
+            "delegates": [
+              {
+                "name": "AdditionalDeploymentContributorArguments",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies additional deployment contributor arguments for the deployment contributors. This property should be a semi-colon delimited list of values."
+              },
+              {
+                "name": "AdditionalDeploymentContributorPaths",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies paths to load additional deployment contributors. This property should be a semi-colon delimited list of values."
+              },
+              {
+                "name": "AdditionalDeploymentContributors",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies additional deployment contributors, which should run when the dacpac is deployed. This property should be a semi-colon delimited list of fully qualified build contributor names or IDs."
+              },
+              {
+                "name": "AllowDropBlockingAssemblies",
+                "type": "bool",
+                "help": "This property is used by SqlClr deployment to cause any blocking assemblies to be dropped as part of the deployment plan. By default, any blocking/referencing assemblies will block an assembly update if the referencing assembly needs to be dropped."
+              },
+              {
+                "name": "AllowExternalLanguagePaths",
+                "type": "bool",
+                "help": "Allows file paths, if available, to be used to generate external language statements."
+              },
+              {
+                "name": "AllowExternalLibraryPaths",
+                "type": "bool",
+                "help": "Allows file paths, if available, to be used to generate external library statements."
+              },
+              {
+                "name": "AllowIncompatiblePlatform",
+                "type": "bool",
+                "help": "Specifies whether to attempt the action despite incompatible SQL Server platforms."
+              },
+              {
+                "name": "AllowUnsafeRowLevelSecurityDataMovement",
+                "type": "bool",
+                "help": "Do not block data motion on a table that has Row Level Security if this property is set to true. Default is false."
+              },
+              {
+                "name": "AzureSharedAccessSignatureToken",
+                "type": "string",
+                "help": "Azure shared access signature (SAS) token. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#publish-import-data)."
+              },
+              {
+                "name": "AzureStorageBlobEndpoint",
+                "type": "string",
+                "help": "Azure Blob Storage endpoint, see [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#publish-import-data)."
+              },
+              {
+                "name": "AzureStorageContainer",
+                "type": "string",
+                "help": "Azure Blob Storage container, see [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#publish-import-data)."
+              },
+              {
+                "name": "AzureStorageKey",
+                "type": "string",
+                "help": "Azure storage account key, see [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#publish-import-data)."
+              },
+              {
+                "name": "AzureStorageRootPath",
+                "type": "string",
+                "help": "Storage root path within the container. Without this property, the path defaults to `servername/databasename/timestamp/`. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#publish-import-data)."
+              },
+              {
+                "name": "BackupDatabaseBeforeChanges",
+                "type": "bool",
+                "help": "Backups the database before deploying any changes. This property is not applicable to Azure SQL Database."
+              },
+              {
+                "name": "BlockOnPossibleDataLoss",
+                "type": "bool",
+                "help": "Specifies that the operation will be terminated during the schema validation step if the resulting schema changes could incur a loss of data, including due to data precision reduction or a data type change that requires a cast operation. The default (`True`) value causes the operation to terminate regardless if the target database contains data.  An execution with a `False` value for BlockOnPossibleDataLoss can still fail during deployment plan execution if data is present on the target that cannot be converted to the new column type."
+              },
+              {
+                "name": "BlockWhenDriftDetected",
+                "type": "bool",
+                "help": "Specifies whether to block updating a database whose schema no longer matches its registration or is unregistered."
+              },
+              {
+                "name": "CommandTimeout",
+                "type": "int",
+                "help": "Specifies the command timeout in seconds when executing queries against SQL Server."
+              },
+              {
+                "name": "CommentOutSetVarDeclarations",
+                "type": "bool",
+                "help": "Specifies whether the declaration of SETVAR variables should be commented out in the generated publish script. You might choose to do this if you plan to specify the values on the command line when you publish by using a tool such as SQLCMD.EXE."
+              },
+              {
+                "name": "CompareUsingTargetCollation",
+                "type": "bool",
+                "help": "This setting dictates how the database's collation is handled during deployment; by default the target database's collation will be updated if it does not match the collation specified by the source. When this option is set, the target database's (or server's) collation should be used."
+              },
+              {
+                "name": "CreateNewDatabase",
+                "type": "bool",
+                "help": "Specifies whether the target database should be updated or whether it should be dropped and re-created when you publish to a database."
+              },
+              {
+                "name": "DatabaseEdition",
+                "type": "DatabaseEdition",
+                "help": "Defines the edition of an Azure SQL Database. See [Azure SQL Database service tiers](/azure/azure-sql/database/service-tiers-general-purpose-business-critical)."
+              },
+              {
+                "name": "DatabaseLockTimeout",
+                "type": "int",
+                "help": "Specifies the database lock timeout in seconds when executing queries against SQLServer. Use -1 to wait indefinitely."
+              },
+              {
+                "name": "DatabaseMaximumSize",
+                "type": "int",
+                "help": "Defines the maximum size in GB of an Azure SQL Database."
+              },
+              {
+                "name": "DatabaseServiceObjective",
+                "type": "string",
+                "help": "Defines the performance level of an Azure SQL Database such as \"P0\" or \"S1\"."
+              },
+              {
+                "name": "DeployDatabaseInSingleUserMode",
+                "type": "bool",
+                "help": "if true, the database is set to Single User Mode before deploying."
+              },
+              {
+                "name": "DisableAndReenableDdlTriggers",
+                "type": "bool",
+                "help": "Specifies whether Data Definition Language (DDL) triggers are disabled at the beginning of the publish process and re-enabled at the end of the publish action."
+              },
+              {
+                "name": "DisableIndexesForDataPhase",
+                "type": "bool",
+                "help": "Disable indexes before importing data into SQL Server."
+              },
+              {
+                "name": "DisableParallelismForEnablingIndexes",
+                "type": "bool",
+                "help": "Not using parallelism when rebuilding indexes while importing data into SQL Server."
+              },
+              {
+                "name": "DoNotAlterChangeDataCaptureObjects",
+                "type": "bool",
+                "help": "If true, Change Data Capture objects are not altered."
+              },
+              {
+                "name": "DoNotAlterReplicatedObjects",
+                "type": "bool",
+                "help": "Specifies whether objects that are replicated are identified during verification."
+              },
+              {
+                "name": "DoNotDropDatabaseWorkloadGroups",
+                "type": "bool",
+                "help": "When false, Database WorkloadGroups in the target database that are not defined in the source will be dropped during deployment."
+              },
+              {
+                "name": "DoNotDropObjectType",
+                "type": "string",
+                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages. This property may be specified multiple times to indicate multiple options."
+              },
+              {
+                "name": "DoNotDropObjectTypes",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "A semicolon-delimited list of object types that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
+              },
+              {
+                "name": "DoNotDropWorkloadClassifiers",
+                "type": "bool",
+                "help": "When false, WorkloadClassifiers in the target database that are not defined in the source will be dropped during deployment."
+              },
+              {
+                "name": "DoNotEvaluateSqlCmdVariables",
+                "type": "bool",
+                "help": "Specifies whether SQLCMD variables to not replace with values"
+              },
+              {
+                "name": "DropConstraintsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether constraints that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropDmlTriggersNotInSource",
+                "type": "bool",
+                "help": "Specifies whether DML triggers that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropExtendedPropertiesNotInSource",
+                "type": "bool",
+                "help": "Specifies whether extended properties that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropIndexesNotInSource",
+                "type": "bool",
+                "help": "Specifies whether indexes that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropObjectsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether objects that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database. This value takes precedence over DropExtendedProperties."
+              },
+              {
+                "name": "DropPermissionsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether permissions that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish updates to a database."
+              },
+              {
+                "name": "DropRoleMembersNotInSource",
+                "type": "bool",
+                "help": "Specifies whether role members that are not defined in the database snapshot (.dacpac) file will be dropped from the target database when you publish updates to a database."
+              },
+              {
+                "name": "DropStatisticsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether statistics that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "EnclaveAttestationProtocol",
+                "type": "string",
+                "help": "Specifies an attestation protocol to be used with enclave based Always Encrypted."
+              },
+              {
+                "name": "EnclaveAttestationUrl",
+                "type": "string",
+                "help": "Specifies the enclave attestation URL (an attestation service endpoint) to be used with enclave based Always Encrypted."
+              },
+              {
+                "name": "ExcludeObjectType",
+                "type": "string",
+                "help": "An object type that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages. This property may be specified multiple times to indicate multiple options."
+              },
+              {
+                "name": "ExcludeObjectTypes",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "A semicolon delimited list of object types that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
+              },
+              {
+                "name": "GenerateSmartDefaults",
+                "type": "bool",
+                "help": "Automatically provides a default value when updating a table that contains data with a column that does not allow null values."
+              },
+              {
+                "name": "HashObjectNamesInLogs",
+                "type": "bool",
+                "help": "Specifies whether to replace all object names in logs with a random hash value."
+              },
+              {
+                "name": "IgnoreAnsiNulls",
+                "type": "bool",
+                "help": "Specifies whether differences in the ANSI NULLS setting should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreAuthorizer",
+                "type": "bool",
+                "help": "Specifies whether differences in the Authorizer should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreColumnCollation",
+                "type": "bool",
+                "help": "Specifies whether differences in the column collations should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreColumnOrder",
+                "type": "bool",
+                "help": "Specifies whether differences in table column order should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreComments",
+                "type": "bool",
+                "help": "Specifies whether differences in the comments should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreCryptographicProviderFilePath",
+                "type": "bool",
+                "help": "Specifies whether differences in the file path for the cryptographic provider should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDatabaseWorkloadGroups",
+                "type": "bool",
+                "help": "Specifies whether to exclude workload groups that exist on the target during deployment.  No Database Workload Groups will be added, modified, or dropped."
+              },
+              {
+                "name": "IgnoreDdlTriggerOrder",
+                "type": "bool",
+                "help": "Specifies whether differences in the order of Data Definition Language (DDL) triggers should be ignored or updated when you publish to a database or server."
+              },
+              {
+                "name": "IgnoreDdlTriggerState",
+                "type": "bool",
+                "help": "Specifies whether differences in the enabled or disabled state of Data Definition Language (DDL) triggers should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDefaultSchema",
+                "type": "bool",
+                "help": "Specifies whether differences in the default schema should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDmlTriggerOrder",
+                "type": "bool",
+                "help": "Specifies whether differences in the order of Data Manipulation Language (DML) triggers should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDmlTriggerState",
+                "type": "bool",
+                "help": "Specifies whether differences in the enabled or disabled state of DML triggers should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreExtendedProperties",
+                "type": "bool",
+                "help": "Specifies whether differences in the extended properties should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreFileAndLogFilePath",
+                "type": "bool",
+                "help": "Specifies whether differences in the paths for files and log files should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreFilegroupPlacement",
+                "type": "bool",
+                "help": "Specifies whether differences in the placement of objects in FILEGROUPs should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreFileSize",
+                "type": "bool",
+                "help": "Specifies whether differences in the file sizes should be ignored or whether a warning should be issued when you publish to a database."
+              },
+              {
+                "name": "IgnoreFillFactor",
+                "type": "bool",
+                "help": "Specifies whether differences in the fill factor for index storage should be ignored or whether a warning should be issued when you publish to a database."
+              },
+              {
+                "name": "IgnoreFullTextCatalogFilePath",
+                "type": "bool",
+                "help": "Specifies whether differences in the file path for the full-text catalog should be ignored or whether a warning should be issued when you publish to a database."
+              },
+              {
+                "name": "IgnoreIdentitySeed",
+                "type": "bool",
+                "help": "Specifies whether differences in the seed for an identity column should be ignored or updated when you publish updates to a database."
+              },
+              {
+                "name": "IgnoreIncrement",
+                "type": "bool",
+                "help": "Specifies whether differences in the increment for an identity column should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreIndexOptions",
+                "type": "bool",
+                "help": "Specifies whether differences in the index options should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreIndexPadding",
+                "type": "bool",
+                "help": "Specifies whether differences in the index padding should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreKeywordCasing",
+                "type": "bool",
+                "help": "Specifies whether differences in the casing of keywords should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreLockHintsOnIndexes",
+                "type": "bool",
+                "help": "Specifies whether differences in the lock hints on indexes should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreLoginSids",
+                "type": "bool",
+                "help": "Specifies whether differences in the security identification number (SID) should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreNotForReplication",
+                "type": "bool",
+                "help": "Specifies whether the not for replication settings should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreObjectPlacementOnPartitionScheme",
+                "type": "bool",
+                "help": "Specifies whether an object's placement on a partition scheme should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnorePartitionSchemes",
+                "type": "bool",
+                "help": "Specifies whether differences in partition schemes and functions should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnorePermissions",
+                "type": "bool",
+                "help": "Specifies whether differences in the permissions should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreQuotedIdentifiers",
+                "type": "bool",
+                "help": "Specifies whether differences in the quoted identifiers setting should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreRoleMembership",
+                "type": "bool",
+                "help": "Specifies whether differences in the role membership of logins should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreRouteLifetime",
+                "type": "bool",
+                "help": "Specifies whether differences in the amount of time that SQL Server retains the route in the routing table should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreSemicolonBetweenStatements",
+                "type": "bool",
+                "help": "Specifies whether differences in the semi-colons between T-SQL statements will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreSensitivityClassifications",
+                "type": "bool",
+                "help": "Specifies whether data sensitivity classifications on columns should be ignored when comparing schema models. This only works for classifications added with the ADD SENSITIVITY CLASSIFICATION syntax introduced in SQL 2019."
+              },
+              {
+                "name": "IgnoreTableOptions",
+                "type": "bool",
+                "help": "Specifies whether differences in the table options will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreTablePartitionOptions",
+                "type": "bool",
+                "help": "Specifies whether differences in the table partition options will be ignored or updated when you publish to a database.  This option applies only to Azure Synapse Analytics dedicated SQL pool databases."
+              },
+              {
+                "name": "IgnoreUserSettingsObjects",
+                "type": "bool",
+                "help": "Specifies whether differences in the user settings objects will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreWhitespace",
+                "type": "bool",
+                "help": "Specifies whether differences in white space will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreWithNocheckOnCheckConstraints",
+                "type": "bool",
+                "help": "Specifies whether differences in the value of the WITH NOCHECK clause for check constraints will be ignored or updated when you publish."
+              },
+              {
+                "name": "IgnoreWithNocheckOnForeignKeys",
+                "type": "bool",
+                "help": "Specifies whether differences in the value of the WITH NOCHECK clause for foreign keys will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreWorkloadClassifiers",
+                "type": "bool",
+                "help": "Specifies whether to exclude workload classifiers that exist on the target during deployment."
+              },
+              {
+                "name": "IncludeCompositeObjects",
+                "type": "bool",
+                "help": "Include all composite elements with the same database as part of a single publish operation."
+              },
+              {
+                "name": "IncludeTransactionalScripts",
+                "type": "bool",
+                "help": "Specifies whether transactional statements should be used where possible when you publish to a database."
+              },
+              {
+                "name": "IsAlwaysEncryptedParameterizationEnabled",
+                "type": "bool",
+                "help": "Enables variable parameterization on Always Encrypted columns in pre/post deployment scripts."
+              },
+              {
+                "name": "LongRunningCommandTimeout",
+                "type": "int",
+                "help": "Specifies the long running command timeout in seconds when executing queries against SQL Server. Use 0 to wait indefinitely."
+              },
+              {
+                "name": "NoAlterStatementsToChangeClrTypes",
+                "type": "bool",
+                "help": "Specifies that publish should always drop and re-create an assembly if there is a difference instead of issuing an ALTER ASSEMBLY statement."
+              },
+              {
+                "name": "PopulateFilesOnFileGroups",
+                "type": "bool",
+                "help": "Specifies whether a new file is also created when a new FileGroup is created in the target database."
+              },
+              {
+                "name": "PreserveIdentityLastValues",
+                "type": "bool",
+                "help": "Specifies whether last values for identity columns should be preserved during deployment."
+              },
+              {
+                "name": "RebuildIndexesOfflineForDataPhase",
+                "type": "bool",
+                "help": "Rebuild indexes offline after importing data."
+              },
+              {
+                "name": "RegisterDataTierApplication",
+                "type": "bool",
+                "help": "Specifies whether the schema is registered with the database server."
+              },
+              {
+                "name": "RestoreSequenceCurrentValue",
+                "type": "bool",
+                "help": "Specifies whether sequence object current value should be deployed with dacpac file, the default value is True."
+              },
+              {
+                "name": "RunDeploymentPlanExecutors",
+                "type": "bool",
+                "help": "Specifies whether DeploymentPlanExecutor contributors should be run when other operations are executed."
+              },
+              {
+                "name": "ScriptDatabaseCollation",
+                "type": "bool",
+                "help": "Specifies whether differences in the database collation should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "ScriptDatabaseCompatibility",
+                "type": "bool",
+                "help": "Specifies whether differences in the database compatibility should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "ScriptDatabaseOptions",
+                "type": "bool",
+                "help": "Specifies whether target database properties should be set or updated as part of the publish action."
+              },
+              {
+                "name": "ScriptDeployStateChecks",
+                "type": "bool",
+                "help": "Specifies whether statements are generated in the publish script to verify that the database name and server name match the names specified in the database project."
+              },
+              {
+                "name": "ScriptFileSize",
+                "type": "bool",
+                "help": "Controls whether size is specified when adding a file to a filegroup."
+              },
+              {
+                "name": "ScriptNewConstraintValidation",
+                "type": "bool",
+                "help": "At the end of publish all of the constraints will be verified as one set, avoiding data errors caused by a check or foreign key constraint in the middle of publish. If set to False, your constraints are published without checking the corresponding data."
+              },
+              {
+                "name": "ScriptRefreshModule",
+                "type": "bool",
+                "help": "Include refresh statements at the end of the publish script."
+              },
+              {
+                "name": "Storage",
+                "type": "StorageType",
+                "help": "Specifies how elements are stored when building the database model. For performance reasons the default is InMemory. For large databases, File backed storage may be required and is only available for .NET Framework version of SqlPackage."
+              },
+              {
+                "name": "TreatVerificationErrorsAsWarnings",
+                "type": "bool",
+                "help": "Specifies whether errors encountered during publish verification should be treated as warnings. The check is performed against the generated deployment plan before the plan is executed against your target database. Plan verification detects problems such as the loss of target-only objects (such as indexes) that must be dropped to make a change. Verification will also detect situations where dependencies (such as a table or view) exist because of a reference to a composite project, but do not exist in the target database. You might choose to do this to get a complete list of all issues, instead of having the publish action stop on the first error."
+              },
+              {
+                "name": "UnmodifiableObjectWarnings",
+                "type": "bool",
+                "help": "Specifies whether warnings should be generated when differences are found in objects that cannot be modified, for example, if the file size or file paths were different for a file."
+              },
+              {
+                "name": "VerifyCollationCompatibility",
+                "type": "bool",
+                "help": "Specifies whether collation compatibility is verified."
+              },
+              {
+                "name": "VerifyDeployment",
+                "type": "bool",
+                "help": "Specifies whether checks should be performed before publishing that will stop the publish action if issues are present that might block successful publishing. For example, your publish action might stop if you have foreign keys on the target database that do not exist in the database project, and that causes errors when you publish."
+              }
+            ]
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "/Quiet:{value}",
+            "help": "Specifies whether detailed feedback is suppressed. Defaults to False."
+          },
+          {
+            "name": "ReferencePaths",
+            "type": "Dictionary<string, object>",
+            "format": "/rp:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies the additional directories to search for .dacpac references."
+          },
+          {
+            "name": "Secret",
+            "type": "string",
+            "format": "/Secret:{value}",
+            "help": "Specifies the Client Secret to be used in authenticating against Azure KeyVault, when necessary"
+          },
+          {
+            "name": "SourceFile",
+            "type": "string",
+            "format": "/SourceFile:{value}",
+            "help": "Specifies a source file to be used as the source of action instead of a database from local storage. If this name is used, no other source name shall be valid."
+          },
+          {
+            "name": "SourceConnectionString",
+            "type": "string",
+            "format": "/SourceConnectionString:{value}",
+            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the source database. If this name is specified, it shall be used exclusively of all other source names."
+          },
+          {
+            "name": "SourceDatabaseName",
+            "type": "string",
+            "format": "/SourceDatabaseName:{value}",
+            "help": "Defines the name of the source database."
+          },
+          {
+            "name": "SourceEncryptConnection",
+            "type": "bool",
+            "format": "/SourceEncryptConnection:{value}",
+            "help": "Specifies if SQL encryption should be used for the source database connection. Default value is True."
+          },
+          {
+            "name": "SourceHostNameInCertificate",
+            "type": "string",
+            "format": "/SourceHostNameInCertificate:{value}",
+            "help": "Specifies value that is used to validate the source SQL Server TLS/SSL certificate when the communication layer is encrypted by using TLS."
+          },
+          {
+            "name": "SourcePassword",
+            "type": "string",
+            "format": "/SourcePassword:{value}",
+            "help": "For SQL Server Auth scenarios, defines the password to use to access the source database."
+          },
+          {
+            "name": "SourceServerName",
+            "type": "string",
+            "format": "/SourceServerName:{value}",
+            "help": "Defines the name of the server hosting the source database."
+          },
+          {
+            "name": "SourceTimeout",
+            "type": "int",
+            "format": "/SourceTimeout:{value}",
+            "help": "Specifies the timeout for establishing a connection to the source database in seconds."
+          },
+          {
+            "name": "SourceTrustServerCertificate",
+            "type": "bool",
+            "format": "/SourceTrustServerCertificate:{value}",
+            "help": "Specifies whether to use TLS to encrypt the source database connection and bypass walking the certificate chain to validate trust. Default value is False."
+          },
+          {
+            "name": "SourceUser",
+            "type": "string",
+            "format": "/SourceUser:{value}",
+            "help": "For SQL Server Auth scenarios, defines the SQL Server user to use to access the source database."
+          },
+          {
+            "name": "TargetConnectionString",
+            "type": "string",
+            "format": "/TargetConnectionString:{value}",
+            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the target database. If this name is specified, it shall be used exclusively of all other target names."
+          },
+          {
+            "name": "TargetDatabaseName",
+            "type": "string",
+            "format": "/TargetDatabaseName:{value}",
+            "help": "Specifies an override for the name of the database that is the target of SqlPackage Action."
+          },
+          {
+            "name": "TargetEncryptConnection",
+            "type": "bool",
+            "format": "/TargetEncryptConnection:{value}",
+            "help": "Specifies if SQL encryption should be used for the target database connection. Default value is True."
+          },
+          {
+            "name": "TargetHostNameInCertificate",
+            "type": "string",
+            "format": "/TargetHostNameInCertificate:{value}",
+            "help": "Specifies value that is used to validate the target SQL Server TLS/SSL certificate when the communication layer is encrypted by using TLS."
+          },
+          {
+            "name": "TargetPassword",
+            "type": "string",
+            "format": "/TargetPassword:{value}",
+            "help": "For SQL Server Auth scenarios, defines the password to use to access the target database."
+          },
+          {
+            "name": "TargetServerName",
+            "type": "string",
+            "format": "/TargetServerName:{value}",
+            "help": "Defines the name of the server hosting the target database."
+          },
+          {
+            "name": "TargetTimeout",
+            "type": "int",
+            "format": "/TargetTimeout:{value}",
+            "help": "Specifies the timeout for establishing a connection to the target database in seconds. For Azure AD, it is recommended that this value be greater than or equal to 30 seconds."
+          },
+          {
+            "name": "TargetTrustServerCertificate",
+            "type": "bool",
+            "format": "/TargetTrustServerCertificate:{value}",
+            "help": "Specifies whether to use TLS to encrypt the target database connection and bypass walking the certificate chain to validate trust. Default value is False."
+          },
+          {
+            "name": "TargetUser",
+            "type": "string",
+            "format": "/TargetUser:{value}",
+            "help": "For SQL Server Auth scenarios, defines the SQL Server user to use to access the target database."
+          },
+          {
+            "name": "TenantId",
+            "type": "string",
+            "format": "/TenantId:{value}",
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this name is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          },
+          {
+            "name": "ThreadMaxStackSize",
+            "type": "int",
+            "format": "/ThreadMaxStackSize:{value}",
+            "help": "Specifies the maximum size in megabytes for the thread running the SqlPackage action. This option should only be used when encountering stack overflow exceptions that occur when parsing very large TSQL statements."
+          },
+          {
+            "name": "UniversalAuthentication",
+            "type": "bool",
+            "format": "/UniversalAuthentication:{value}",
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string, object>",
+            "format": "/v:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies a name value pair for an action-specific variable;{VariableName}={Value}. The DACPAC file contains the list of valid SQLCMD variables. An error results if a value is not provided for every variable."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The SqlPackage DeployReport action creates an XML report of the changes that would be made by a publish action",
+      "postfix": "DeployReport",
+      "definiteArgument": "/Action:DeployReport",
+      "officialUrl": "https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-deploy-drift-report",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AccessToken",
+            "type": "string",
+            "format": "/AccessToken:{value}",
+            "help": "Specifies the token based authentication access token to use when connect to the target database."
+          },
+          {
+            "name": "Diagnostics",
+            "type": "bool",
+            "format": "/Diagnostics:{value}",
+            "help": "Specifies whether diagnostic logging is output to the console. Defaults to False."
+          },
+          {
+            "name": "DiagnosticsFile",
+            "type": "string",
+            "format": "/DiagnosticsFile:{value}",
+            "help": "Specifies a file to store diagnostic logs."
+          },
+          {
+            "name": "MaxParallelism",
+            "type": "int",
+            "format": "/MaxParallelism:{value}",
+            "help": "Specifies the degree of parallelism for concurrent operations running against a database. The default value is 8."
+          },
+          {
+            "name": "OutputPath",
+            "type": "string",
+            "format": "/OutputPath:{value}",
+            "help": "Specifies the file path where the output files are generated."
+          },
+          {
+            "name": "OverwriteFiles",
+            "type": "bool",
+            "format": "/OverwriteFiles:{value}",
+            "help": "Specifies if SqlPackage should overwrite existing files. Specifying false causes SqlPackage to abort action if an existing file is encountered. Default value is True."
+          },
+          {
+            "name": "Profile",
+            "type": "string",
+            "format": "/Profile:{value}",
+            "help": "Specifies the file path to a DAC Publish Profile. The profile defines a collection of properties and variables to use when generating outputs."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "/p:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies a name value pair for an [action-specific property](#deployreport-action-properties); {key}={value}.",
+            "delegates": [
+              {
+                "name": "AdditionalDeploymentContributorArguments",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies additional deployment contributor arguments for the deployment contributors. This should be a semi-colon delimited list of values."
+              },
+              {
+                "name": "AdditionalDeploymentContributors",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies additional deployment contributors, which should run when the dacpac is deployed. This should be a semi-colon delimited list of fully qualified build contributor names or IDs."
+              },
+              {
+                "name": "AdditionalDeploymentContributorPaths",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies paths to load additional deployment contributors. This should be a semi-colon delimited list of values."
+              },
+              {
+                "name": "AllowDropBlockingAssemblies",
+                "type": "bool",
+                "help": "This property is used by SqlClr deployment to cause any blocking assemblies to be dropped as part of the deployment plan. By default, any blocking/referencing assemblies will block an assembly update if the referencing assembly needs to be dropped."
+              },
+              {
+                "name": "AllowIncompatiblePlatform",
+                "type": "bool",
+                "help": "Specifies whether to attempt the action despite incompatible SQL Server platforms."
+              },
+              {
+                "name": "AllowUnsafeRowLevelSecurityDataMovement",
+                "type": "bool",
+                "help": "Do not block data motion on a table that has Row Level Security if this property is set to true. Default is false."
+              },
+              {
+                "name": "BackupDatabaseBeforeChanges",
+                "type": "bool",
+                "help": "Backups the database before deploying any changes."
+              },
+              {
+                "name": "BlockOnPossibleDataLoss",
+                "type": "bool",
+                "help": "Specifies that the operation will be terminated during the schema validation step if the resulting schema changes could incur a loss of data, including due to data precision reduction or a data type change that requires a cast operation. The default (`True`) value causes the operation to terminate regardless if the target database contains data.  An execution with a `False` value for BlockOnPossibleDataLoss can still fail during deployment plan execution if data is present on the target that cannot be converted to the new column type."
+              },
+              {
+                "name": "BlockWhenDriftDetected",
+                "type": "bool",
+                "help": "Specifies whether to block updating a database whose schema no longer matches its registration or is unregistered."
+              },
+              {
+                "name": "CommandTimeout",
+                "type": "int",
+                "help": "Specifies the command timeout in seconds when executing queries against SQL Server."
+              },
+              {
+                "name": "CommentOutSetVarDeclarations",
+                "type": "bool",
+                "help": "Specifies whether the declaration of SETVAR variables should be commented out in the generated publish script. You might choose to do this if you plan to specify the values on the command line when you publish by using a tool such as SQLCMD.EXE."
+              },
+              {
+                "name": "CompareUsingTargetCollation",
+                "type": "bool",
+                "help": "This setting dictates how the database's collation is handled during deployment; by default the target database's collation will be updated if it does not match the collation specified by the source. When this option is set, the target database's (or server's) collation should be used."
+              },
+              {
+                "name": "CreateNewDatabase",
+                "type": "bool",
+                "help": "Specifies whether the target database should be updated or whether it should be dropped and re-created when you publish to a database."
+              },
+              {
+                "name": "DatabaseEdition",
+                "type": "DatabaseEdition",
+                "help": "Defines the edition of an Azure SQL Database. See [Azure SQL Database service tiers](/azure/azure-sql/database/service-tiers-general-purpose-business-critical)."
+              },
+              {
+                "name": "DatabaseLockTimeout",
+                "type": "int",
+                "help": "Specifies the database lock timeout in seconds when executing queries against SQLServer. Use -1 to wait indefinitely."
+              },
+              {
+                "name": "DatabaseMaximumSize",
+                "type": "int",
+                "help": "Defines the maximum size in GB of an Azure SQL Database."
+              },
+              {
+                "name": "DatabaseServiceObjective",
+                "type": "string",
+                "help": "Defines the performance level of an Azure SQL Database such as \"P0\" or \"S1\"."
+              },
+              {
+                "name": "DeployDatabaseInSingleUserMode",
+                "type": "bool",
+                "help": "if true, the database is set to Single User Mode before deploying."
+              },
+              {
+                "name": "DisableAndReenableDdlTriggers",
+                "type": "bool",
+                "help": "Specifies whether Data Definition Language (DDL) triggers are disabled at the beginning of the publish process and re-enabled at the end of the publish action."
+              },
+              {
+                "name": "DoNotAlterChangeDataCaptureObjects",
+                "type": "bool",
+                "help": "If true, Change Data Capture objects are not altered."
+              },
+              {
+                "name": "DoNotAlterReplicatedObjects",
+                "type": "bool",
+                "help": "Specifies whether objects that are replicated are identified during verification."
+              },
+              {
+                "name": "DoNotDropObjectType",
+                "type": "string",
+                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers. This property may be specified multiple times to indicate multiple options."
+              },
+              {
+                "name": "DoNotDropObjectTypes",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "A semicolon-delimited list of object types that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers."
+              },
+              {
+                "name": "DropConstraintsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether constraints that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropDmlTriggersNotInSource",
+                "type": "bool",
+                "help": "Specifies whether DML triggers that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropExtendedPropertiesNotInSource",
+                "type": "bool",
+                "help": "Specifies whether extended properties that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropIndexesNotInSource",
+                "type": "bool",
+                "help": "Specifies whether indexes that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropObjectsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether objects that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database. This value takes precedence over DropExtendedProperties."
+              },
+              {
+                "name": "DropPermissionsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether permissions that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish updates to a database."
+              },
+              {
+                "name": "DropRoleMembersNotInSource",
+                "type": "bool",
+                "help": "Specifies whether role members that are not defined in the database snapshot (.dacpac) file will be dropped from the target database when you publish updates to a database."
+              },
+              {
+                "name": "DropStatisticsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether statistics that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "ExcludeObjectType",
+                "type": "string",
+                "help": "An object type that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers."
+              },
+              {
+                "name": "ExcludeObjectTypes",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "A semicolon-delimited list of object types that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers."
+              },
+              {
+                "name": "GenerateSmartDefaults",
+                "type": "bool",
+                "help": "Automatically provides a default value when updating a table that contains data with a column that does not allow null values."
+              },
+              {
+                "name": "IgnoreAnsiNulls",
+                "type": "bool",
+                "help": "Specifies whether differences in the ANSI NULLS setting should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreAuthorizer",
+                "type": "bool",
+                "help": "Specifies whether differences in the Authorizer should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreColumnCollation",
+                "type": "bool",
+                "help": "Specifies whether differences in the column collations should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreColumnOrder",
+                "type": "bool",
+                "help": "Specifies whether differences in table column order should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreComments",
+                "type": "bool",
+                "help": "Specifies whether differences in the comments should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreCryptographicProviderFilePath",
+                "type": "bool",
+                "help": "Specifies whether differences in the file path for the cryptographic provider should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDdlTriggerOrder",
+                "type": "bool",
+                "help": "Specifies whether differences in the order of Data Definition Language (DDL) triggers should be ignored or updated when you publish to a database or server."
+              },
+              {
+                "name": "IgnoreDdlTriggerState",
+                "type": "bool",
+                "help": "Specifies whether differences in the enabled or disabled state of Data Definition Language (DDL) triggers should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDefaultSchema",
+                "type": "bool",
+                "help": "Specifies whether differences in the default schema should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDmlTriggerOrder",
+                "type": "bool",
+                "help": "Specifies whether differences in the order of Data Manipulation Language (DML) triggers should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDmlTriggerState",
+                "type": "bool",
+                "help": "Specifies whether differences in the enabled or disabled state of DML triggers should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreExtendedProperties",
+                "type": "bool",
+                "help": "Specifies whether differences in the extended properties should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreFileAndLogFilePath",
+                "type": "bool",
+                "help": "Specifies whether differences in the paths for files and log files should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreFilegroupPlacement",
+                "type": "bool",
+                "help": "Specifies whether differences in the placement of objects in FILEGROUPs should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreFileSize",
+                "type": "bool",
+                "help": "Specifies whether differences in the file sizes should be ignored or whether a warning should be issued when you publish to a database."
+              },
+              {
+                "name": "IgnoreFillFactor",
+                "type": "bool",
+                "help": "Specifies whether differences in the fill factor for index storage should be ignored or whether a warning should be issued when you publish to a database"
+              },
+              {
+                "name": "IgnoreFullTextCatalogFilePath",
+                "type": "bool",
+                "help": "Specifies whether differences in the file path for the full-text catalog should be ignored or whether a warning should be issued when you publish to a database."
+              },
+              {
+                "name": "IgnoreIdentitySeed",
+                "type": "bool",
+                "help": "Specifies whether differences in the seed for an identity column should be ignored or updated when you publish updates to a database."
+              },
+              {
+                "name": "IgnoreIncrement",
+                "type": "bool",
+                "help": "Specifies whether differences in the increment for an identity column should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreIndexOptions",
+                "type": "bool",
+                "help": "Specifies whether differences in the index options should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreIndexPadding",
+                "type": "bool",
+                "help": "Specifies whether differences in the index padding should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreKeywordCasing",
+                "type": "bool",
+                "help": "Specifies whether differences in the casing of keywords should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreLockHintsOnIndexes",
+                "type": "bool",
+                "help": "Specifies whether differences in the lock hints on indexes should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreLoginSids",
+                "type": "bool",
+                "help": "Specifies whether differences in the security identification number (SID) should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreNotForReplication",
+                "type": "bool",
+                "help": "Specifies whether the not for replication settings should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreObjectPlacementOnPartitionScheme",
+                "type": "bool",
+                "help": "Specifies whether an object's placement on a partition scheme should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnorePartitionSchemes",
+                "type": "bool",
+                "help": "Stypepecifies whether differences in partition schemes and functions should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnorePermissions",
+                "type": "bool",
+                "help": "Specifies whether differences in the permissions should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreQuotedIdentifiers",
+                "type": "bool",
+                "help": "Specifies whether differences in the quoted identifiers setting should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreRoleMembership",
+                "type": "bool",
+                "help": "Specifies whether differences in the role membership of logins should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreRouteLifetime",
+                "type": "bool",
+                "help": "Specifies whether differences in the amount of time that SQL Server retains the route in the routing table should be ignored or updated when you publish to a database"
+              },
+              {
+                "name": "IgnoreSemicolonBetweenStatements",
+                "type": "bool",
+                "help": "Specifies whether differences in the semi-colons between T-SQL statements will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreTableOptions",
+                "type": "bool",
+                "help": "Specifies whether differences in the table options will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreTablePartitionOptions",
+                "type": "bool",
+                "help": "Specifies whether differences in the table partition options will be ignored or updated when you publish to a database.  This option applies only to Azure Synapse Analytics data warehouse databases."
+              },
+              {
+                "name": "IgnoreUserSettingsObjects",
+                "type": "bool",
+                "help": "Specifies whether differences in the user settings objects will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreWhitespace",
+                "type": "bool",
+                "help": "Specifies whether differences in white space will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreWithNocheckOnCheckConstraints",
+                "type": "bool",
+                "help": "Specifies whether differences in the value of the WITH NOCHECK clause for check constraints will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreWithNocheckOnForeignKeys",
+                "type": "bool",
+                "help": "Specifies whether differences in the value of the WITH NOCHECK clause for foreign keys will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IncludeCompositeObjects",
+                "type": "bool",
+                "help": "Include all composite elements with the same database as part of a single publish operation."
+              },
+              {
+                "name": "IncludeTransactionalScripts",
+                "type": "bool",
+                "help": "Specifies whether transactional statements should be used where possible when you publish to a database."
+              },
+              {
+                "name": "LongRunningCommandTimeout",
+                "type": "int",
+                "help": "Specifies the long running command timeout in seconds when executing queries against SQL Server. Use 0 to wait indefinitely."
+              },
+              {
+                "name": "NoAlterStatementsToChangeClrTypes",
+                "type": "bool",
+                "help": "Specifies that publish should always drop and re-create an assembly if there is a difference instead of issuing an ALTER ASSEMBLY statement."
+              },
+              {
+                "name": "PopulateFilesOnFileGroups",
+                "type": "bool",
+                "help": "Specifies whether a new file is also created when a new FileGroup is created in the target database."
+              },
+              {
+                "name": "RegisterDataTierApplication",
+                "type": "bool",
+                "help": "Specifies whether the schema is registered with the database server."
+              },
+              {
+                "name": "RunDeploymentPlanExecutors",
+                "type": "bool",
+                "help": "Specifies whether DeploymentPlanExecutor contributors should be run when other operations are executed."
+              },
+              {
+                "name": "ScriptDatabaseCollation",
+                "type": "bool",
+                "help": "Specifies whether differences in the database collation should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "ScriptDatabaseCompatibility",
+                "type": "bool",
+                "help": "Specifies whether differences in the database compatibility should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "ScriptDatabaseOptions",
+                "type": "bool",
+                "help": "Specifies whether target database properties should be set or updated as part of the publish action."
+              },
+              {
+                "name": "ScriptDeployStateChecks",
+                "type": "bool",
+                "help": "Specifies whether statements are generated in the publish script to verify that the database name and server name match the names specified in the database project."
+              },
+              {
+                "name": "ScriptFileSize",
+                "type": "bool",
+                "help": "Controls whether size is specified when adding a file to a filegroup."
+              },
+              {
+                "name": "ScriptNewConstraintValidation",
+                "type": "bool",
+                "help": "At the end of publish all of the constraints will be verified as one set, avoiding data errors caused by a check or foreign key constraint in the middle of publish. If set to False, your constraints are published without checking the corresponding data."
+              },
+              {
+                "name": "ScriptRefreshModule",
+                "type": "bool",
+                "help": "Include refresh statements at the end of the publish script."
+              },
+              {
+                "name": "Storage",
+                "type": "StorageType",
+                "help": "Specifies how elements are stored when building the database model. For performance reasons the default is InMemory. For large databases, File backed storage may be required and is only available for .NET Framework version of SqlPackage."
+              },
+              {
+                "name": "TreatVerificationErrorsAsWarnings",
+                "type": "bool",
+                "help": "Specifies whether errors encountered during publish verification should be treated as warnings. The check is performed against the generated deployment plan before the plan is executed against your target database. Plan verification detects problems such as the loss of target-only objects (such as indexes) that must be dropped to make a change. Verification will also detect situations where dependencies (such as a table or view) exist because of a reference to a composite project, but do not exist in the target database. You might choose to do this to get a complete list of all issues, instead of having the publish action stop on the first error."
+              },
+              {
+                "name": "UnmodifiableObjectWarnings",
+                "type": "bool",
+                "help": "Specifies whether warnings should be generated when differences are found in objects that cannot be modified, for example, if the file size or file paths were different for a file."
+              },
+              {
+                "name": "VerifyCollationCompatibility",
+                "type": "bool",
+                "help": "Specifies whether collation compatibility is verified."
+              },
+              {
+                "name": "VerifyDeployment",
+                "type": "bool",
+                "help": "Specifies whether checks should be performed before publishing that will stop the publish action if issues are present that might block successful publishing. For example, your publish action might stop if you have foreign keys on the target database that do not exist in the database project, and that causes errors when you publish."
+              }
+            ]
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "/Quiet:{value}",
+            "help": "Specifies whether detailed feedback is suppressed. Defaults to False."
+          },
+          {
+            "name": "SourceFile",
+            "type": "string",
+            "format": "/SourceFile:{value}",
+            "help": "Specifies a source file to be used as the source of action instead of a database. If this name is ed, no other source name sha beva."
+          },
+          {
+            "name": "SourceConnectionString",
+            "type": "string",
+            "format": "/SourceConnectionString:{value}",
+            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the source database. If this name is ecified, it shall be used exclusively of all other sourcen."
+          },
+          {
+            "name": "SourceDatabaseName",
+            "type": "string",
+            "format": "/SourceDatabaseName:{value}",
+            "help": "Defines the name of the source database."
+          },
+          {
+            "name": "SourceEncryptConnection",
+            "type": "EncryptionType",
+            "format": "/SourceEncryptConnection:{value}",
+            "help": "Specifies if SQL encryption should be used for the source database connection. Default value is True."
+          },
+          {
+            "name": "SourceHostNameInCertificate",
+            "type": "string",
+            "format": "/SourceHostNameInCertificate:{value}",
+            "help": "Specifies value that is used to validate the source SQL Server TLS/SSL certificate when the communication layer is encrypted by using TLS."
+          },
+          {
+            "name": "SourcePassword",
+            "type": "string",
+            "format": "/SourcePassword:{value}",
+            "help": "For SQL Server Auth scenarios, defines the password to use to access the source database."
+          },
+          {
+            "name": "SourceServerName",
+            "type": "string",
+            "format": "/SourceServerName:{value}",
+            "help": "Defines the name of the server hosting the source database."
+          },
+          {
+            "name": "SourceTimeout",
+            "type": "int",
+            "format": "/SourceTimeout:{value}",
+            "help": "Specifies the timeout for establishing a connection to the source database in seconds."
+          },
+          {
+            "name": "SourceTrustServerCertificate",
+            "type": "bool",
+            "format": "/SourceTrustServerCertificate:{value}",
+            "help": "Specifies whether to use TLS to encrypt the source database connection and bypass walking the certificate chain to validate trust. Default value is False."
+          },
+          {
+            "name": "SourceUser",
+            "type": "string",
+            "format": "/SourceUser:{value}",
+            "help": "For SQL Server Auth scenarios, defines the SQL Server user to use to access the source database."
+          },
+          {
+            "name": "TargetFile",
+            "type": "string",
+            "format": "/TargetFile:{value}",
+            "help": "Specifies a target file (that is, a .dacpac file) to be used as the target of action instead of a database. If this name is ed, no other target name sha be valid. This name sha be invalid for actions that only support databasetarg."
+          },
+          {
+            "name": "TargetConnectionString",
+            "type": "string",
+            "format": "/TargetConnectionString:{value}",
+            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the target database. If this name is ecified, it shall be used exclusively of all other targetn "
+          },
+          {
+            "name": "TargetDatabaseName",
+            "type": "string",
+            "format": "/TargetDatabaseName:{value}",
+            "help": "Specifies an override for the name of the database that is the target of SqlPackage Action."
+          },
+          {
+            "name": "TargetEncryptConnection",
+            "type": "EncryptionType",
+            "format": "/TargetEncryptConnection:{value}",
+            "help": "Specifies if SQL encryption should be used for the target database connection. Default value is True."
+          },
+          {
+            "name": "TargetHostNameInCertificate",
+            "type": "string",
+            "format": "/TargetHostNameInCertificate:{value}",
+            "help": "Specifies value that is used to validate the target SQL Server TLS/SSL certificate when the communication layer is encrypted by using TLS."
+          },
+          {
+            "name": "TargetPassword",
+            "type": "string",
+            "format": "/TargetPassword:{value}",
+            "help": "For SQL Server Auth scenarios, defines the password to use to access the target database."
+          },
+          {
+            "name": "TargetServerName",
+            "type": "string",
+            "format": "/TargetServerName:{value}",
+            "help": "Defines the name of the server hosting the target database."
+          },
+          {
+            "name": "TargetTimeout",
+            "type": "int",
+            "format": "/TargetTimeout:{value}",
+            "help": "Specifies the timeout for establishing a connection to the target database in seconds. For Azure AD, it is recommended that this value be greater than or equal to 30 seconds."
+          },
+          {
+            "name": "TargetTrustServerCertificate",
+            "type": "bool",
+            "format": "/TargetTrustServerCertificate:{value}",
+            "help": "Specifies whether to use TLS to encrypt the target database connection and bypass walking the certificate chain to validate trust. Default value is False."
+          },
+          {
+            "name": "TargetUser",
+            "type": "string",
+            "format": "/TargetUser:{value}",
+            "help": "For SQL Server Auth scenarios, defines the SQL Server user to use to access the target database."
+          },
+          {
+            "name": "TenantId",
+            "type": "string",
+            "format": "/TenantId:{value}",
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this name is itted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfaauthenticati."
+          },
+          {
+            "name": "UniversalAuthentication",
+            "type": "bool",
+            "format": "/UniversalAuthentication:{value}",
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string, object>",
+            "format": "/v:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies a name value pair for an action-specific variable; {VariableName}={Value}. The DACPAC file contains the list of valid SQLCMD variables. An error results if a value is not provided for every variable."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The SqlPackage DriftReport action creates an XML report of the changes that have been made to the registered database since it was last registered.",
+      "postfix": "DriftReport",
+      "definiteArgument": "/Action:DriftReport",
+      "officialUrl": "https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-deploy-drift-report",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AccessToken",
+            "type": "string",
+            "format": "/AccessToken:{value}",
+            "help": "Specifies the token based authentication access token to use when connect to the target database."
+          },
+          {
+            "name": "Diagnostics",
+            "type": "bool",
+            "format": "/Diagnostics:{value}",
+            "help": "Specifies whether diagnostic logging is output to the console. Defaults to False."
+          },
+          {
+            "name": "DiagnosticsFile",
+            "type": "string",
+            "format": "/DiagnosticsFile:{value}",
+            "help": "Specifies a file to store diagnostic logs."
+          },
+          {
+            "name": "MaxParallelism",
+            "type": "int",
+            "format": "/MaxParallelism:{value}",
+            "help": "Specifies the degree of parallelism for concurrent operations running against a database. The default value is 8."
+          },
+          {
+            "name": "OutputPath",
+            "type": "string",
+            "format": "/OutputPath:{value}",
+            "help": "Specifies the file path where the output files are generated."
+          },
+          {
+            "name": "OverwriteFiles",
+            "type": "bool",
+            "format": "/OverwriteFiles:{value}",
+            "help": "Specifies if SqlPackage should overwrite existing files. Specifying false causes SqlPackage to abort action if an existing file is encountered. Default value is True."
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "/Quiet:{value}",
+            "help": "Specifies whether detailed feedback is suppressed. Defaults to False."
+          },
+          {
+            "name": "TargetConnectionString",
+            "type": "string",
+            "format": "/TargetConnectionString:{value}",
+            "help": "Specifies a valid SQL Server/Azure connection string to the target database. If this parameter is specified, it shall be used exclusively of all other target parameters."
+          },
+          {
+            "name": "TargetDatabaseName",
+            "type": "string",
+            "format": "/TargetDatabaseName:{value}",
+            "help": "Specifies an override for the name of the database that is the target of SqlPackage Action."
+          },
+          {
+            "name": "TargetEncryptConnection",
+            "type": "EncryptionType",
+            "format": "/TargetEncryptConnection:{value}",
+            "help": "Specifies if SQL encryption should be used for the target database connection. Default value is True."
+          },
+          {
+            "name": "TargetHostNameInCertificate",
+            "type": "string",
+            "format": "/TargetHostNameInCertificate:{value}",
+            "help": "Specifies value that is used to validate the target SQL Server TLS/SSL certificate when the communication layer is encrypted by using TLS."
+          },
+          {
+            "name": "TargetPassword",
+            "type": "string",
+            "format": "/TargetPassword:{value}",
+            "help": "For SQL Server Auth scenarios, defines the password to use to access the target database."
+          },
+          {
+            "name": "TargetServerName",
+            "type": "string",
+            "format": "/TargetServerName:{value}",
+            "help": "Defines the name of the server hosting the target database."
+          },
+          {
+            "name": "TargetTimeout",
+            "type": "int",
+            "format": "/TargetTimeout:{value}",
+            "help": "Specifies the timeout for establishing a connection to the target database in seconds. For Azure AD, it is recommended that this value be greater than or equal to 30 seconds."
+          },
+          {
+            "name": "TargetTrustServerCertificate",
+            "type": "bool",
+            "format": "/TargetTrustServerCertificate:{value}",
+            "help": "Specifies whether to use TLS to encrypt the target database connection and bypass walking the certificate chain to validate trust. Default value is False."
+          },
+          {
+            "name": "TargetUser",
+            "type": "string",
+            "format": "/TargetUser:{value}",
+            "help": "For SQL Server Auth scenarios, defines the SQL Server user to use to access the target database."
+          },
+          {
+            "name": "TenantId",
+            "type": "string",
+            "format": "/TenantId:{value}",
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          },
+          {
+            "name": "UniversalAuthentication",
+            "type": "bool",
+            "format": "/UniversalAuthentication:{value}",
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The SqlPackage Script action creates a Transact-SQL incremental update script that updates the schema of a target database to match the schema of a source database.",
+      "postfix": "Script",
+      "definiteArgument": "/Action:Script",
+      "officialUrl": "https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-script",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AccessToken",
+            "type": "string",
+            "format": "/AccessToken:{value}",
+            "help": "Specifies the token based authentication access token to use when connect to the target database."
+          },
+          {
+            "name": "AzureCloudConfig",
+            "type": "string",
+            "format": "/AzureCloudConfig:{value}",
+            "help": "Specifies the custom endpoints for connecting to Azure Active Directory in the format: AzureActiveDirectoryAuthority={value};DatabaseServicePrincipalName={value}\" ."
+          },
+          {
+            "name": "DeployReportPath",
+            "type": "string",
+            "format": "/DeployReportPath:{value}",
+            "help": "Specifies an optional file path to output the deployment report xml file."
+          },
+          {
+            "name": "DeployScriptPath",
+            "type": "string",
+            "format": "/DeployScriptPath:{value}",
+            "help": "Specifies an optional file path to output the deployment script. For Azure deployments, if there are TSQL commands to create or modify the master database, a script will be written to the same path but with \"Filename_Master.sql\" as the output file name."
+          },
+          {
+            "name": "Diagnostics",
+            "type": "bool",
+            "format": "/Diagnostics:{value}",
+            "help": "Specifies whether diagnostic logging is output to the console. Defaults to False."
+          },
+          {
+            "name": "DiagnosticsFile",
+            "type": "string",
+            "format": "/DiagnosticsFile:{value}",
+            "help": "Specifies a file to store diagnostic logs."
+          },
+          {
+            "name": "MaxParallelism",
+            "type": "int",
+            "format": "/MaxParallelism:{value}",
+            "help": "Specifies the degree of parallelism for concurrent operations running against a database. The default value is 8."
+          },
+          {
+            "name": "ModelFilePath",
+            "type": "string",
+            "format": "/ModelFilePath:{value}",
+            "help": "Specifies the file path to override the model.xml in the source file. Use of this setting may result in deployment failure and/or unintended data loss. This setting is intended only for use when troubleshooting issues with publish, import, or script generation."
+          },
+          {
+            "name": "OutputPath",
+            "type": "string",
+            "format": "/OutputPath:{value}",
+            "help": "Specifies the file path where the output files are generated."
+          },
+          {
+            "name": "OverwriteFiles",
+            "type": "bool",
+            "format": "/OverwriteFiles:{value}",
+            "help": "Specifies if SqlPackage should overwrite existing files. Specifying false causes SqlPackage to abort action if an existing file is encountered. Default value is True."
+          },
+          {
+            "name": "Profile",
+            "type": "string",
+            "format": "/Profile:{value}",
+            "help": "Specifies the file path to a DAC Publish Profile. The profile defines a collection of properties and variables to use when generating outputs."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "/p:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies a name value pair for an [action-specific property](#properties-specific-to-the-script-action); {PropertyValue}={Value}.",
+            "delegates": [
+              {
+                "name": "AdditionalDeploymentContributorArguments",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies additional deployment contributor arguments for the deployment contributors. This should be a semi-colon delimited list of values."
+              },
+              {
+                "name": "AdditionalDeploymentContributors",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies additional deployment contributors, which should run when the dacpac is deployed. This should be a semi-colon delimited list of fully qualified build contributor names or IDs."
+              },
+              {
+                "name": "AdditionalDeploymentContributorPaths",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies paths to load additional deployment contributors. This should be a semi-colon delimited list of values."
+              },
+              {
+                "name": "AllowDropBlockingAssemblies",
+                "type": "bool",
+                "help": "This property is used by SqlClr deployment to cause any blocking assemblies to be dropped as part of the deployment plan. By default, any blocking/referencing assemblies will block an assembly update if the referencing assembly needs to be dropped."
+              },
+              {
+                "name": "AllowExternalLanguagePaths",
+                "type": "bool",
+                "help": "Allows file paths, if available, to be used to generate external language statements."
+              },
+              {
+                "name": "AllowExternalLibraryPaths",
+                "type": "bool",
+                "help": "Allows file paths, if available, to be used to generate external library statements."
+              },
+              {
+                "name": "AllowIncompatiblePlatform",
+                "type": "bool",
+                "help": "Specifies whether to attempt the action despite incompatible SQL Server platforms."
+              },
+              {
+                "name": "AllowUnsafeRowLevelSecurityDataMovement",
+                "type": "bool",
+                "help": "Do not block data motion on a table that has Row Level Security if this property is set to true. Default is false."
+              },
+              {
+                "name": "BackupDatabaseBeforeChanges",
+                "type": "bool",
+                "help": "Backups the database before deploying any changes."
+              },
+              {
+                "name": "BlockOnPossibleDataLoss",
+                "type": "bool",
+                "help": "Specifies that the operation will be terminated during the schema validation step if the resulting schema changes could incur a loss of data, including due to data precision reduction or a data type change that requires a cast operation. The default (`True`) value causes the operation to terminate regardless if the target database contains data.  An execution with a `False` value for BlockOnPossibleDataLoss can still fail during deployment plan execution if data is present on the target that cannot be converted to the new column type."
+              },
+              {
+                "name": "BlockWhenDriftDetected",
+                "type": "bool",
+                "help": "Specifies whether to block updating a database whose schema no longer matches its registration or is unregistered."
+              },
+              {
+                "name": "CommandTimeout",
+                "type": "int",
+                "help": "Specifies the command timeout in seconds when executing queries against SQL Server."
+              },
+              {
+                "name": "CommentOutSetVarDeclarations",
+                "type": "bool",
+                "help": "Specifies whether the declaration of SETVAR variables should be commented out in the generated publish script. You might choose to do this if you plan to specify the values on the command line when you publish by using a tool such as SQLCMD.EXE."
+              },
+              {
+                "name": "CompareUsingTargetCollation",
+                "type": "bool",
+                "help": "This setting dictates how the database's collation is handled during deployment; by default the target database's collation will be updated if it does not match the collation specified by the source. When this option is set, the target database's (or server's) collation should be used."
+              },
+              {
+                "name": "CreateNewDatabase",
+                "type": "bool",
+                "help": "Specifies whether the target database should be updated or whether it should be dropped and re-created when you publish to a database."
+              },
+              {
+                "name": "DatabaseEdition",
+                "type": "DatabaseEdition",
+                "help": "Defines the edition of an Azure SQL Database. See [Azure SQL Database service tiers](/azure/azure-sql/database/service-tiers-general-purpose-business-critical)."
+              },
+              {
+                "name": "DatabaseLockTimeout",
+                "type": "int",
+                "help": "Specifies the database lock timeout in seconds when executing queries against SQLServer. Use -1 to wait indefinitely."
+              },
+              {
+                "name": "DatabaseMaximumSize",
+                "type": "int",
+                "help": "Defines the maximum size in GB of an Azure SQL Database."
+              },
+              {
+                "name": "DatabaseServiceObjective",
+                "type": "string",
+                "help": "Defines the performance level of an Azure SQL Database such as \"P0\" or \"S1\"."
+              },
+              {
+                "name": "DeployDatabaseInSingleUserMode",
+                "type": "bool",
+                "help": "if true, the database is set to Single User Mode before deploying."
+              },
+              {
+                "name": "DisableAndReenableDdlTriggers",
+                "type": "bool",
+                "help": "Specifies whether Data Definition Language (DDL) triggers are disabled at the beginning of the publish process and re-enabled at the end of the publish action."
+              },
+              {
+                "name": "DoNotAlterChangeDataCaptureObjects",
+                "type": "bool",
+                "help": "If true, Change Data Capture objects are not altered."
+              },
+              {
+                "name": "DoNotAlterReplicatedObjects",
+                "type": "bool",
+                "help": "Specifies whether objects that are replicated are identified during verification."
+              },
+              {
+                "name": "DoNotDropObjectType",
+                "type": "string",
+                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages. This property may be specified multiple times to indicate multiple options."
+              },
+              {
+                "name": "DoNotDropObjectTypes",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "A semicolon-delimited list of object types that should not be dropped whenDropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
+              },
+              {
+                "name": "DoNotDropWorkloadClassifiers",
+                "type": "bool",
+                "help": "When false, WorkloadClassifiers in the target database that are not defined in the source will be dropped during deployment."
+              },
+              {
+                "name": "DoNotEvaluateSqlCmdVariables",
+                "type": "bool",
+                "help": "Specifies whether SQLCMD variables to not replace with values"
+              },
+              {
+                "name": "DropConstraintsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether constraints that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropDmlTriggersNotInSource",
+                "type": "bool",
+                "help": "Specifies whether DML triggers that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropExtendedPropertiesNotInSource",
+                "type": "bool",
+                "help": "Specifies whether extended properties that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropIndexesNotInSource",
+                "type": "bool",
+                "help": "Specifies whether indexes that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "DropObjectsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether objects that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database. This value takes precedence over DropExtendedProperties."
+              },
+              {
+                "name": "DropPermissionsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether permissions that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish updates to a database."
+              },
+              {
+                "name": "DropRoleMembersNotInSource",
+                "type": "bool",
+                "help": "Specifies whether role members that are not defined in the database snapshot (.dacpac) file will be dropped from the target database when you publish updates to a database."
+              },
+              {
+                "name": "DropStatisticsNotInSource",
+                "type": "bool",
+                "help": "Specifies whether statistics that do not exist in the database snapshot (.dacpac) file will be dropped from the target database when you publish to a database."
+              },
+              {
+                "name": "EnclaveAttestationProtocol",
+                "type": "string",
+                "help": "Specifies an attestation protocol to be used with enclave based Always Encrypted."
+              },
+              {
+                "name": "EnclaveAttestationUrl",
+                "type": "string",
+                "help": "Specifies the enclave attestation URL (an attestation service endpoint) to be used with enclave based Always Encrypted."
+              },
+              {
+                "name": "ExcludeObjectType",
+                "type": "string",
+                "help": "An object type that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
+              },
+              {
+                "name": "ExcludeObjectTypes",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "A semicolon-delimited list of object types that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
+              },
+              {
+                "name": "GenerateSmartDefaults",
+                "type": "bool",
+                "help": "Automatically provides a default value when updating a table that contains data with a column that does not allow null values."
+              },
+              {
+                "name": "HashObjectNamesInLogs",
+                "type": "bool",
+                "help": "Specifies whether to replace all object names in logs with a random hash value."
+              },
+              {
+                "name": "IgnoreAnsiNulls",
+                "type": "bool",
+                "help": "Specifies whether differences in the ANSI NULLS setting should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreAuthorizer",
+                "type": "bool",
+                "help": "Specifies whether differences in the Authorizer should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreColumnCollation",
+                "type": "bool",
+                "help": "Specifies whether differences in the column collations should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreColumnOrder",
+                "type": "bool",
+                "help": "Specifies whether differences in table column order should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreComments",
+                "type": "bool",
+                "help": "Specifies whether differences in the comments should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreCryptographicProviderFilePath",
+                "type": "bool",
+                "help": "Specifies whether differences in the file path for the cryptographic provider should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDatabaseWorkloadGroups",
+                "type": "bool",
+                "help": "Specifies whether to exclude workload groups that exist on the target during deployment.  No Database Workload Groups will be added, modified, or dropped."
+              },
+              {
+                "name": "IgnoreDdlTriggerOrder",
+                "type": "bool",
+                "help": "Specifies whether differences in the order of Data Definition Language (DDL) triggers should be ignored or updated when you publish to a database or server."
+              },
+              {
+                "name": "IgnoreDdlTriggerState",
+                "type": "bool",
+                "help": "Specifies whether differences in the enabled or disabled state of Data Definition Language (DDL) triggers should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDefaultSchema",
+                "type": "bool",
+                "help": "Specifies whether differences in the default schema should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDmlTriggerOrder",
+                "type": "bool",
+                "help": "Specifies whether differences in the order of Data Manipulation Language (DML) triggers should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreDmlTriggerState",
+                "type": "bool",
+                "help": "Specifies whether differences in the enabled or disabled state of DML triggers should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreExtendedProperties",
+                "type": "bool",
+                "help": "Specifies whether differences in the extended properties should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreFileAndLogFilePath",
+                "type": "bool",
+                "help": "Specifies whether differences in the paths for files and log files should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreFilegroupPlacement",
+                "type": "bool",
+                "help": "Specifies whether differences in the placement of objects in FILEGROUPs should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreFileSize",
+                "type": "bool",
+                "help": "Specifies whether differences in the file sizes should be ignored or whether a warning should be issued when you publish to a database."
+              },
+              {
+                "name": "IgnoreFillFactor",
+                "type": "bool",
+                "help": "Specifies whether differences in the fill factor for index storage should be ignored or whether a warning should be issued when you publish."
+              },
+              {
+                "name": "IgnoreFullTextCatalogFilePath",
+                "type": "bool",
+                "help": "Specifies whether differences in the file path for the full-text be ignored or whether a warning should be issued when you publish to a database."
+              },
+              {
+                "name": "IgnoreIdentitySeed",
+                "type": "bool",
+                "help": "Specifies whether differences in the seed for an identity column should be ignored or updated when you publish updates to a database."
+              },
+              {
+                "name": "IgnoreIncrement",
+                "type": "bool",
+                "help": "Specifies whether differences in the increment for an identity column should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreIndexOptions",
+                "type": "bool",
+                "help": "Specifies whether differences in the index options should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreIndexPadding",
+                "type": "bool",
+                "help": "Specifies whether differences in the index padding should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreKeywordCasing",
+                "type": "bool",
+                "help": "Specifies whether differences in the casing of keywords should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreLockHintsOnIndexes",
+                "type": "bool",
+                "help": "Specifies whether differences in the lock hints on indexes should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreLoginSids",
+                "type": "bool",
+                "help": "Specifies whether differences in the security identification number (SID) should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreNotForReplication",
+                "type": "bool",
+                "help": "Specifies whether the not for replication settings should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreObjectPlacementOnPartitionScheme",
+                "type": "bool",
+                "help": "Specifies whether an object's placement on a partition scheme should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnorePartitionSchemes",
+                "type": "bool",
+                "help": "Specifies whether differences in partition schemes and functions should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnorePermissions",
+                "type": "bool",
+                "help": "Specifies whether differences in the permissions should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreQuotedIdentifiers",
+                "type": "bool",
+                "help": "Specifies whether differences in the quoted identifiers setting should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreRoleMembership",
+                "type": "bool",
+                "help": "Specifies whether differences in the role membership of logins should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreRouteLifetime",
+                "type": "bool",
+                "help": "Specifies whether differences in the amount of time that SQL Server retains the route in the routing table should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreSemicolonBetweenStatements",
+                "type": "bool",
+                "help": "Specifies whether differences in the semi-colons between T-SQL statements will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreSensitivityClassifications",
+                "type": "bool",
+                "help": "Specifies whether data sensitivity classifications on columns should be ignored when comparing schema models. This only works for classifications added with the ADD SENSITIVITY CLASSIFICATION syntax introduced in SQL 2019."
+              },
+              {
+                "name": "IgnoreTableOptions",
+                "type": "bool",
+                "help": "Specifies whether differences in the table options will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreTablePartitionOptions",
+                "type": "bool",
+                "help": "Specifies whether differences in the table partition options will be ignored or updated when you publish to a database.  This option applies only to Azure Synapse Analytics data warehouse databases."
+              },
+              {
+                "name": "IgnoreUserSettingsObjects",
+                "type": "bool",
+                "help": "Specifies whether differences in the user settings objects will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreWhitespace",
+                "type": "bool",
+                "help": "Specifies whether differences in white space will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreWithNocheckOnCheckConstraints",
+                "type": "bool",
+                "help": "Specifies whether differences in the value of the WITH NOCHECK clause for check constraints will be ignored or updated when you publish."
+              },
+              {
+                "name": "IgnoreWithNocheckOnForeignKeys",
+                "type": "bool",
+                "help": "Specifies whether differences in the value of the WITH NOCHECK clause for foreign keys will be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "IgnoreWorkloadClassifiers",
+                "type": "bool",
+                "help": "Specifies whether to exclude workload classifiers that exist on the target during deployment."
+              },
+              {
+                "name": "IncludeCompositeObjects",
+                "type": "bool",
+                "help": "Include all composite elements with the same database as part of a single publish operation."
+              },
+              {
+                "name": "IncludeTransactionalScripts",
+                "type": "bool",
+                "help": "Specifies whether transactional statements should be used where possible when you publish to a database."
+              },
+              {
+                "name": "IsAlwaysEncryptedParameterizationEnabled",
+                "type": "bool",
+                "help": "Enables variable parameterization on Always Encrypted columns in pre/post deployment scripts."
+              },
+              {
+                "name": "LongRunningCommandTimeout",
+                "type": "int",
+                "help": "Specifies the long running command timeout in seconds when executing queries against SQL Server. Use 0 to wait indefinitely."
+              },
+              {
+                "name": "NoAlterStatementsToChangeClrTypes",
+                "type": "bool",
+                "help": "Specifies that publish should always drop and re-create an assembly if there is a difference instead of issuing an ALTER ASSEMBLY statement."
+              },
+              {
+                "name": "PopulateFilesOnFileGroups",
+                "type": "bool",
+                "help": "Specifies whether a new file is also created when a new FileGroup is created in the target database."
+              },
+              {
+                "name": "PreserveIdentityLastValues",
+                "type": "bool",
+                "help": "Specifies whether last values for identity columns should be preserved during deployment."
+              },
+              {
+                "name": "RegisterDataTierApplication",
+                "type": "bool",
+                "help": "Specifies whether the schema is registered with the database server."
+              },
+              {
+                "name": "RestoreSequenceCurrentValue",
+                "type": "bool",
+                "help": "Specifies whether sequence object current value should be deployed with dacpac file, the default value is True."
+              },
+              {
+                "name": "RunDeploymentPlanExecutors",
+                "type": "bool",
+                "help": "Specifies whether DeploymentPlanExecutor contributors should be run when other operations are executed."
+              },
+              {
+                "name": "ScriptDatabaseCollation",
+                "type": "bool",
+                "help": "Specifies whether differences in the database collation should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "ScriptDatabaseCompatibility",
+                "type": "bool",
+                "help": "Specifies whether differences in the database compatibility should be ignored or updated when you publish to a database."
+              },
+              {
+                "name": "ScriptDatabaseOptions",
+                "type": "bool",
+                "help": "Specifies whether target database properties should be set or updated as part of the publish action."
+              },
+              {
+                "name": "ScriptDeployStateChecks",
+                "type": "bool",
+                "help": "Specifies whether statements are generated in the publish script to verify that the database name and server name match the names specified in the database project."
+              },
+              {
+                "name": "ScriptFileSize",
+                "type": "bool",
+                "help": "Controls whether size is specified when adding a file to a filegroup."
+              },
+              {
+                "name": "ScriptNewConstraintValidation",
+                "type": "bool",
+                "help": "At the end of publish all of the constraints will be verified as one set, avoiding data errors caused by a check or foreign key constraint in the middle of publish. If set to False, your constraints are published without checking the corresponding data."
+              },
+              {
+                "name": "ScriptRefreshModule",
+                "type": "bool",
+                "help": "Include refresh statements at the end of the publish script."
+              },
+              {
+                "name": "Storage",
+                "type": "StorageType",
+                "help": "Specifies how elements are stored when building the database model. For performance reasons the default is InMemory. For large databases, File backed storage may be required and is only available for .NET Framework version of SqlPackage."
+              },
+              {
+                "name": "TreatVerificationErrorsAsWarnings",
+                "type": "bool",
+                "help": "Specifies whether errors encountered during publish verification should be treated as warnings. The check is performed against the generated deployment plan before the plan is executed against your target database. Plan verification detects problems such as the loss of target-only objects (such as indexes) that must be dropped to make a change. Verification will also detect situations where dependencies (such as a table or view) exist because of a reference to a composite project, but do not exist in the target database. You might choose to do this to get a complete list of all issues, instead of having the publish action stop on the first error."
+              },
+              {
+                "name": "UnmodifiableObjectWarnings",
+                "type": "bool",
+                "help": "Specifies whether warnings should be generated when differences are found in objects that cannot be modified, for example, if the file size or file paths were different for a file."
+              },
+              {
+                "name": "VerifyCollationCompatibility",
+                "type": "bool",
+                "help": "Specifies whether collation compatibility is verified."
+              },
+              {
+                "name": "VerifyDeployment",
+                "type": "bool",
+                "help": "Specifies whether checks should be performed before publishing that will stop the publish action if issues are present that might block successful publishing. For example, your publish action might stop if you have foreign keys on the target database that do not exist in the database project, and that causes errors when you publish."
+              }
+            ]
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "/Quiet:{value}",
+            "help": "Specifies whether detailed feedback is suppressed. Defaults to False."
+          },
+          {
+            "name": "ReferencePaths",
+            "type": "Dictionary<string, object>",
+            "format": "/rp:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies the additional directories to search for .dacpac references."
+          },
+          {
+            "name": "SourceFile",
+            "type": "string",
+            "format": "/SourceFile:{value}",
+            "help": "Specifies a source file to be used as the source of action. If this parameter is used, no other source parameter shall be valid."
+          },
+          {
+            "name": "SourceConnectionString",
+            "type": "string",
+            "format": "/SourceConnectionString:{value}",
+            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the source database. If this parameter is specified, it shall be used exclusively of all other source parameters."
+          },
+          {
+            "name": "SourceDatabaseName",
+            "type": "string",
+            "format": "/SourceDatabaseName:{value}",
+            "help": "Defines the name of the source database."
+          },
+          {
+            "name": "SourceEncryptConnection",
+            "type": "EncryptionType",
+            "format": "/SourceEncryptConnection:{value}",
+            "help": "Specifies if SQL encryption should be used for the source database connection. Default value is True."
+          },
+          {
+            "name": "SourceHostNameInCertificate",
+            "type": "string",
+            "format": "/SourceHostNameInCertificate:{value}",
+            "help": "Specifies value that is used to validate the source SQL Server TLS/SSL certificate when the communication layer is encrypted by using TLS."
+          },
+          {
+            "name": "SourcePassword",
+            "type": "string",
+            "format": "/SourcePassword:{value}",
+            "help": "For SQL Server Auth scenarios, defines the password to use to access the source database."
+          },
+          {
+            "name": "SourceServerName",
+            "type": "string",
+            "format": "/SourceServerName:{value}",
+            "help": "Defines the name of the server hosting the source database."
+          },
+          {
+            "name": "SourceTimeout",
+            "type": "int",
+            "format": "/SourceTimeout:{value}",
+            "help": "Specifies the timeout for establishing a connection to the source database in seconds."
+          },
+          {
+            "name": "SourceTrustServerCertificate",
+            "type": "bool",
+            "format": "/SourceTrustServerCertificate:{value}",
+            "help": "Specifies whether to use TLS to encrypt the source database connection and bypass walking the certificate chain to validate trust. Default value is False."
+          },
+          {
+            "name": "SourceUser",
+            "type": "string",
+            "format": "/SourceUser:{value}",
+            "help": "For SQL Server Auth scenarios, defines the SQL Server user to use to access the source database."
+          },
+          {
+            "name": "TargetFile",
+            "type": "string",
+            "format": "/TargetFile:{value}",
+            "help": "Specifies a target file (that is, a .dacpac file) to be used as the target of action instead of a database. If this parameter is used, no other target parameter shall be valid. This parameter shall be invalid for actions that only support database targets."
+          },
+          {
+            "name": "TargetConnectionString",
+            "type": "string",
+            "format": "/TargetConnectionString:{value}",
+            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the target database. If this parameter is specified, it shall be used exclusively of all other target parameters."
+          },
+          {
+            "name": "TargetDatabaseName",
+            "type": "string",
+            "format": "/TargetDatabaseName:{value}",
+            "help": "Specifies an override for the name of the database that is the target of SqlPackage Action."
+          },
+          {
+            "name": "TargetEncryptConnection",
+            "type": "EncryptionType",
+            "format": "/TargetEncryptConnection:{value}",
+            "help": "Specifies if SQL encryption should be used for the target database connection. Default value is True."
+          },
+          {
+            "name": "TargetHostNameInCertificate",
+            "type": "string",
+            "format": "/TargetHostNameInCertificate:{value}",
+            "help": "Specifies value that is used to validate the target SQL Server TLS/SSL certificate when the communication layer is encrypted by using TLS."
+          },
+          {
+            "name": "TargetPassword",
+            "type": "string",
+            "format": "/TargetPassword:{value}",
+            "help": "For SQL Server Auth scenarios, defines the password to use to access the target database."
+          },
+          {
+            "name": "TargetServerName",
+            "type": "string",
+            "format": "/TargetServerName:{value}",
+            "help": "Defines the name of the server hosting the target database."
+          },
+          {
+            "name": "TargetTimeout",
+            "type": "int",
+            "format": "/TargetTimeout:{value}",
+            "help": "Specifies the timeout for establishing a connection to the target database in seconds. For Azure AD, it is recommended that this value be greater than or equal to 30 seconds."
+          },
+          {
+            "name": "TargetTrustServerCertificate",
+            "type": "bool",
+            "format": "/TargetTrustServerCertificate:{value}",
+            "help": "Specifies whether to use TLS to encrypt the target database connection and bypass walking the certificate chain to validate trust. Default value is False."
+          },
+          {
+            "name": "TargetUser",
+            "type": "string",
+            "format": "/TargetUser:{value}",
+            "help": "For SQL Server Auth scenarios, defines the SQL Server user to use to access the target database."
+          },
+          {
+            "name": "TenantId",
+            "type": "string",
+            "format": "/TenantId:{value}",
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          },
+          {
+            "name": "ThreadMaxStackSize",
+            "type": "int",
+            "format": "/ThreadMaxStackSize:{value}",
+            "help": "Specifies the maximum size in megabytes for the thread running the SqlPackage action. This option should only be used when encountering stack overflow exceptions that occur when parsing very large TSQL statements."
+          },
+          {
+            "name": "UniversalAuthentication",
+            "type": "bool",
+            "format": "/UniversalAuthentication:{value}",
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          },
+          {
+            "name": "Variables",
+            "type": "Dictionary<string, object>",
+            "format": "/v:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies a name value pair for an action-specific variable;{VariableName}={Value}. The DACPAC file contains the list of valid SQLCMD variables. An error results if a value is not provided for every variable."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The SqlPackage Import action imports the schema and table data from a BACPAC file (.bacpac) into a new or empty database in SQL Server or Azure SQL Database. At the time of the import operation to an existing database the target database cannot contain any user-defined schema objects. Alternatively, a new database can be created by the import action when the authenticated user has create database permissions.",
+      "postfix": "Import",
+      "definiteArgument": "/Action:Import",
+      "officialUrl": "https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-import",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AccessToken",
+            "type": "string",
+            "format": "/AccessToken:{value}",
+            "help": "Specifies the token-based authentication access token to use when connect to the target database."
+          },
+          {
+            "name": "AzureCloudConfig",
+            "type": "string",
+            "format": "/AzureCloudConfig:{value}",
+            "help": "Specifies the custom endpoints for connecting to Azure Active Directory in the format: AzureActiveDirectoryAuthority={value};DatabaseServicePrincipalName={value}\" ."
+          },
+          {
+            "name": "Diagnostics",
+            "type": "bool",
+            "format": "/Diagnostics:{value}",
+            "help": "Specifies whether diagnostic logging is output to the console. Defaults to False."
+          },
+          {
+            "name": "DiagnosticsFile",
+            "type": "string",
+            "format": "/DiagnosticsFile:{value}",
+            "help": "Specifies a file to store diagnostic logs."
+          },
+          {
+            "name": "MaxParallelism",
+            "type": "int",
+            "format": "/MaxParallelism:{value}",
+            "help": "Specifies the degree of parallelism for concurrent operations running against a database. The default value is 8."
+          },
+          {
+            "name": "ModelFilePath",
+            "type": "string",
+            "format": "/ModelFilePath:{value}",
+            "help": "Specifies the file path to override the model.xml in the source file. Use of this setting may result in deployment failure and/or unintended data loss. This setting is intended only for use when troubleshooting issues with publish, import, or script generation."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "/p:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies a name value pair for an [action-specific property](#properties-specific-to-the-import-action); {PropertyName}={Value}.",
+            "delegates": [
+              {
+                "name": "CommandTimeout",
+                "type": "int",
+                "help": "Specifies the command timeout in seconds when executing queries against SQL Server."
+              },
+              {
+                "name": "DatabaseEdition",
+                "type": "DatabaseEdition",
+                "help": "Defines the edition of an Azure SQL Database. See [Azure SQL Database service tiers](/azure/azure-sql/database/service-tiers-general-purpose-business-critical)."
+              },
+              {
+                "name": "DatabaseLockTimeout",
+                "type": "int",
+                "help": "Specifies the database lock timeout in seconds when executing queries against SQLServer. Use -1 to wait indefinitely."
+              },
+              {
+                "name": "DatabaseMaximumSize",
+                "type": "int",
+                "help": "Defines the maximum size in GB of an Azure SQL Database."
+              },
+              {
+                "name": "DatabaseServiceObjective",
+                "type": "string",
+                "help": "Defines the performance level of an Azure SQL Database such as \"P0\" or \"S1\"."
+              },
+              {
+                "name": "DisableIndexesForDataPhase",
+                "type": "bool",
+                "help": "When true (default), disables indexes before importing data. When false, indexes are not rebuilt."
+              },
+              {
+                "name": "DisableParallelismForEnablingIndexes",
+                "type": "bool",
+                "help": "Not using parallelism when rebuilding indexes while importing data into SQL Server."
+              },
+              {
+                "name": "HashObjectNamesInLogs",
+                "type": "bool",
+                "help": "Specifies whether to replace all object names in logs with a random hash value."
+              },
+              {
+                "name": "ImportContributorArguments",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies deployment contributor arguments for the deployment contributors. This property should be a semi-colon delimited list of values."
+              },
+              {
+                "name": "ImportContributorPaths",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies paths to load additional import contributors. This property should be a semi-colon delimited list of values."
+              },
+              {
+                "name": "ImportContributors",
+                "type": "List<string>",
+                "separator": ";",
+                "help": "Specifies the deployment contributors, which should run when the bacpac is imported. This property should be a semi-colon delimited list of fully qualified build contributor names or IDs."
+              },
+              {
+                "name": "LongRunningCommandTimeout",
+                "type": "int",
+                "help": "Specifies the long running command timeout in seconds when executing queries against SQL Server. Use 0 to wait indefinitely."
+              },
+              {
+                "name": "PreserveIdentityLastValues",
+                "type": "bool",
+                "help": "Specifies whether last values for identity columns should be preserved during deployment."
+              },
+              {
+                "name": "RebuildIndexesOfflineForDataPhase",
+                "type": "bool",
+                "help": "When true, rebuilds indexes offline after importing data into SQL Server."
+              },
+              {
+                "name": "Storage",
+                "type": "StorageType",
+                "help": "Specifies how elements are stored when building the database model. For performance reasons the default is InMemory. For large databases, File backed storage is required."
+              }
+            ]
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "/Quiet:{value}",
+            "help": "Specifies whether detailed feedback is suppressed. Defaults to False."
+          },
+          {
+            "name": "SourceFile",
+            "type": "string",
+            "format": "/SourceFile:{value}",
+            "help": "Specifies a source file to be used as the source of action from local storage. If this parameter is used, no other source parameter shall be valid."
+          },
+          {
+            "name": "TargetConnectionString",
+            "type": "string",
+            "format": "/TargetConnectionString:{value}",
+            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the target database. If this parameter is specified, it shall be used exclusively of all other target parameters."
+          },
+          {
+            "name": "TargetDatabaseName",
+            "type": "string",
+            "format": "/TargetDatabaseName:{value}",
+            "help": "Specifies an override for the name of the database that is the target of SqlPackage Action."
+          },
+          {
+            "name": "TargetEncryptConnection",
+            "type": "EncryptionType",
+            "format": "/TargetEncryptConnection:{value}",
+            "help": "Specifies if SQL encryption should be used for the target database connection. Default value is True."
+          },
+          {
+            "name": "TargetHostNameInCertificate",
+            "type": "string",
+            "format": "/TargetHostNameInCertificate:{value}",
+            "help": "Specifies value that is used to validate the target SQL Server TLS/SSL certificate when the communication layer is encrypted by using TLS."
+          },
+          {
+            "name": "TargetPassword",
+            "type": "string",
+            "format": "/TargetPassword:{value}",
+            "help": "For SQL Server Auth scenarios, defines the password to use to access the target database."
+          },
+          {
+            "name": "TargetServerName",
+            "type": "string",
+            "format": "/TargetServerName:{value}",
+            "help": "Defines the name of the server hosting the target database."
+          },
+          {
+            "name": "TargetTimeout",
+            "type": "int",
+            "format": "/TargetTimeout:{value}",
+            "help": "Specifies the timeout for establishing a connection to the target database in seconds. For Azure AD, it is recommended that this value be greater than or equal to 30 seconds."
+          },
+          {
+            "name": "TargetTrustServerCertificate",
+            "type": "bool",
+            "format": "/TargetTrustServerCertificate:{value}",
+            "help": "Specifies whether to use TLS to encrypt the target database connection and bypass walking the certificate chain to validate trust. Default value is False."
+          },
+          {
+            "name": "TargetUser",
+            "type": "string",
+            "format": "/TargetUser:{value}",
+            "help": "For SQL Server Auth scenarios, defines the SQL Server user to use to access the target database."
+          },
+          {
+            "name": "TenantId",
+            "type": "string",
+            "format": "/TenantId:{value}",
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          },
+          {
+            "name": "ThreadMaxStackSize",
+            "type": "int",
+            "format": "/ThreadMaxStackSize:{value}",
+            "help": "Specifies the maximum size in megabytes for the thread running the SqlPackage action. This option should only be used when encountering stack overflow exceptions that occur when parsing very large TSQL statements."
+          },
+          {
+            "name": "UniversalAuthentication",
+            "type": "bool",
+            "format": "/UniversalAuthentication:{value}",
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The SqlPackage Export action exports a connected database to a BACPAC file (.bacpac). By default, data for all tables will be included in the .bacpac file. Optionally, you can specify only a subset of tables for which to export data. Validation for the Export action ensures Azure SQL Database compatibility for the complete targeted database even if a subset of tables is specified for the export.",
+      "postfix": "Export",
+      "definiteArgument": "/Action:Export",
+      "officialUrl": "https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-export",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AccessToken",
+            "type": "string",
+            "format": "/AccessToken:{value}",
+            "help": "Specifies the token-based authentication access token to use when connect to the target database."
+          },
+          {
+            "name": "AzureCloudConfig",
+            "type": "string",
+            "format": "/AzureCloudConfig:{value}",
+            "help": "Specifies the custom endpoints for connecting to Azure Active Directory in the format: AzureActiveDirectoryAuthority={value};DatabaseServicePrincipalName={value}\" ."
+          },
+          {
+            "name": "Diagnostics",
+            "type": "bool",
+            "format": "/Diagnostics:{value}",
+            "help": "Specifies whether diagnostic logging is output to the console. Defaults to False."
+          },
+          {
+            "name": "DiagnosticsFile",
+            "type": "string",
+            "format": "/DiagnosticsFile:{value}",
+            "help": "Specifies a file to store diagnostic logs."
+          },
+          {
+            "name": "MaxParallelism",
+            "type": "int",
+            "format": "/MaxParallelism:{value}",
+            "help": "Specifies the degree of parallelism for concurrent operations running against a database. The default value is 8."
+          },
+          {
+            "name": "OverwriteFiles",
+            "type": "bool",
+            "format": "/OverwriteFiles:{value}",
+            "help": "Specifies if SqlPackage should overwrite existing files. Specifying false causes SqlPackage to abort action if an existing file is encountered. Default value is True."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "/p:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies a name value pair for an [action-specific property](#properties-specific-to-the-export-action);{PropertyName}={Value}.",
+            "delegates": [
+              {
+                "name": "CommandTimeout",
+                "type": "int",
+                "help": "Specifies the command timeout in seconds when executing queries against SQL Server."
+              },
+              {
+                "name": "CompressionOption",
+                "type": "CompressionOption",
+                "help": "Specifies the type of compression."
+              },
+              {
+                "name": "DatabaseLockTimeout",
+                "type": "int",
+                "help": "Specifies the database lock timeout in seconds when executing queries against SQLServer. Use -1 to wait indefinitely."
+              },
+              {
+                "name": "HashObjectNamesInLogs",
+                "type": "bool",
+                "help": "Specifies whether to replace all object names in logs with a random hash value."
+              },
+              {
+                "name": "IgnoreIndexesStatisticsOnEnclaveEnabledColumns",
+                "type": "bool",
+                "help": "Specifies whether indexes or statistics on columns encrypted using randomized encryption and enclave-enabled column encryption keys should be ignored (not included in the generated bacpac). By default (false) any index or a statistic on a column encrypted using randomized encryption and an enclave-enabled column encryption key will block the export action."
+              },
+              {
+                "name": "LongRunningCommandTimeout",
+                "type": "int",
+                "help": "Specifies the long running command timeout in seconds when executing queries against SQL Server. Use 0 to wait indefinitely."
+              },
+              {
+                "name": "Storage",
+                "type": "StorageType",
+                "help": "Specifies the type of backing storage for the schema model used during extraction. 'Memory' is default for .NET Core version of SqlPackage. 'File' is only available and default for .NET Framework version of SqlPackage."
+              },
+              {
+                "name": "TableData",
+                "type": "string",
+                "help": "Indicates the table from which data will be extracted. Specify the table name with or without the brackets surrounding the name parts in the following format: schema_name.table_identifier. This property may be specified multiple times to indicate multiple options."
+              },
+              {
+                "name": "TargetEngineVersion",
+                "type": "TargetEngineVersion",
+                "help": "This property is deprecated and use is not recommended. Specifies the version the target engine for Azure SQL Database is expected to be."
+              },
+              {
+                "name": "TempDirectoryForTableData",
+                "type": "string",
+                "help": "Specifies an alternative temporary directory used to buffer table data before being written to the package file. The space required in this location may be large and is relative to the full size of the database."
+              },
+              {
+                "name": "VerifyExtraction",
+                "type": "bool",
+                "help": "Specifies whether the extracted schema model should be verified. If set to true, schema validation rules are run on the dacpac or bacpac."
+              },
+              {
+                "name": "VerifyFullTextDocumentTypesSupported",
+                "type": "bool",
+                "help": "Specifies whether the supported full-text document types for Microsoft Azure SQL Database v12 should be verified."
+              }
+            ]
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "/Quiet:{value}",
+            "help": "Specifies whether detailed feedback is suppressed. Defaults to False."
+          },
+          {
+            "name": "SourceConnectionString",
+            "type": "string",
+            "format": "/SourceConnectionString:{value}",
+            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the source database. If this parameter is specified, it shall be used exclusively of all other source parameters."
+          },
+          {
+            "name": "SourceDatabaseName",
+            "type": "string",
+            "format": "/SourceDatabaseName:{value}",
+            "help": "Defines the name of the source database."
+          },
+          {
+            "name": "SourceEncryptConnection",
+            "type": "EncryptionType",
+            "format": "/SourceEncryptConnection:{value}",
+            "help": "Specifies if SQL encryption should be used for the source database connection. Default value is True."
+          },
+          {
+            "name": "SourceHostNameInCertificate",
+            "type": "string",
+            "format": "/SourceHostNameInCertificate:{value}",
+            "help": "Specifies value that is used to validate the source SQL Server TLS/SSL certificate when the communication layer is encrypted by using TLS."
+          },
+          {
+            "name": "SourcePassword",
+            "type": "string",
+            "format": "/SourcePassword:{value}",
+            "help": "For SQL Server Auth scenarios, defines the password to use to access the source database."
+          },
+          {
+            "name": "SourceServerName",
+            "type": "string",
+            "format": "/SourceServerName:{value}",
+            "help": "Defines the name of the server hosting the source database."
+          },
+          {
+            "name": "SourceTimeout",
+            "type": "int",
+            "format": "/SourceTimeout:{value}",
+            "help": "Specifies the timeout for establishing a connection to the source database in seconds."
+          },
+          {
+            "name": "SourceTrustServerCertificate",
+            "type": "bool",
+            "format": "/SourceTrustServerCertificate:{value}",
+            "help": "Specifies whether to use TLS to encrypt the source database connection and bypass walking the certificate chain to validate trust. Default value is False."
+          },
+          {
+            "name": "SourceUser",
+            "type": "string",
+            "format": "/SourceUser:{value}",
+            "help": "For SQL Server Auth scenarios, defines the SQL Server user to use to access the source database."
+          },
+          {
+            "name": "TargetFile",
+            "type": "string",
+            "format": "/TargetFile:{value}",
+            "help": "Specifies a target file (that is, a .dacpac file) to be used as the target of action instead of a database. If this parameter is used, no other target parameter shall be valid. This parameter shall be invalid for actions that only support database targets."
+          },
+          {
+            "name": "TenantId",
+            "type": "string",
+            "format": "/TenantId:{value}",
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          },
+          {
+            "name": "ThreadMaxStackSize",
+            "type": "int",
+            "format": "/ThreadMaxStackSize:{value}",
+            "help": "Specifies the maximum size in megabytes for the thread running the SqlPackage action. This option should only be used when encountering stack overflow exceptions that occur when parsing very large TSQL statements."
+          },
+          {
+            "name": "UniversalAuthentication",
+            "type": "bool",
+            "format": "/UniversalAuthentication:{value}",
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The SqlPackage Extract action creates a schema of a connected database in a DACPAC file (.dacpac). By default, data is not included in the .dacpac file. To include data, utilize the Export action or use the Extract properties ExtractAllTableData/TableData.",
+      "postfix": "Extract",
+      "definiteArgument": "/Action:Extract",
+      "officialUrl": "https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-extract",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AccessToken",
+            "type": "string",
+            "format": "/AccessToken:{value}",
+            "help": "Specifies the token based authentication access token to use when connect to the target database."
+          },
+          {
+            "name": "AzureCloudConfig",
+            "type": "string",
+            "format": "/AzureCloudConfig:{value}",
+            "help": "Specifies the custom endpoints for connecting to Azure Active Directory in the format: AzureActiveDirectoryAuthority={value};DatabaseServicePrincipalName={value}\" ."
+          },
+          {
+            "name": "Diagnostics",
+            "type": "bool",
+            "format": "/Diagnostics:{value}",
+            "help": "Specifies whether diagnostic logging is output to the console. Defaults to False."
+          },
+          {
+            "name": "DiagnosticsFile",
+            "type": "string",
+            "format": "/DiagnosticsFile:{value}",
+            "help": "Specifies a file to store diagnostic logs."
+          },
+          {
+            "name": "MaxParallelism",
+            "type": "int",
+            "format": "/MaxParallelism:{value}",
+            "help": "Specifies the degree of parallelism for concurrent operations running against a database. The default value is 8."
+          },
+          {
+            "name": "OverwriteFiles",
+            "type": "bool",
+            "format": "/OverwriteFiles:{value}",
+            "help": "Specifies if SqlPackage should overwrite existing files. Specifying false causes SqlPackage to abort action if an existing file is encountered. Default value is True."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "/p:{value}",
+            "itemFormat": "{key}={value}",
+            "help": "Specifies a name value pair for an [action-specific property](#properties-specific-to-the-extract-action); {PropertyName}={Value}.",
+            "delegates": [
+              {
+                "name": "AzureStorageBlobEndpoint",
+                "type": "string",
+                "help": "Azure Blob Storage endpoint. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#extract-export-data)."
+              },
+              {
+                "name": "AzureStorageContainer",
+                "type": "string",
+                "help": "Azure Blob Storage container. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#extract-export-data)."
+              },
+              {
+                "name": "AzureStorageKey",
+                "type": "string",
+                "help": "Azure storage account key. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#extract-export-data)."
+              },
+              {
+                "name": "AzureStorageRootPath",
+                "type": "string",
+                "help": "Storage root path within the container. Without this property, the path defaults to `servername/databasename/timestamp/`. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#extract-export-data)."
+              },
+              {
+                "name": "CommandTimeout",
+                "type": "int",
+                "help": "Specifies the command timeout in seconds when executing queries against SQL Server."
+              },
+              {
+                "name": "CompressionOption",
+                "type": "CompressionOption",
+                "help": "Specifies the type of compression."
+              },
+              {
+                "name": "DacApplicationDescription",
+                "type": "string",
+                "help": "Defines the Application description to be stored in the DACPAC metadata."
+              },
+              {
+                "name": "DacApplicationName",
+                "type": "string",
+                "help": "Defined the Application name to be stored in the DACPAC metadata. The default value is the database name."
+              },
+              {
+                "name": "DacMajorVersion",
+                "type": "int",
+                "help": "Defines the major version to be stored in the DACPAC metadata."
+              },
+              {
+                "name": "DacMinorVersion",
+                "type": "int",
+                "help": "Defines the minor version to be stored in the DACPAC metadata."
+              },
+              {
+                "name": "DatabaseLockTimeout",
+                "type": "int",
+                "help": "Specifies the database lock timeout in seconds when executing queries against SQLServer. Use -1 to wait indefinitely."
+              },
+              {
+                "name": "ExtractAllTableData",
+                "type": "bool",
+                "help": "Indicates whether data from all user tables is extracted. If 'true', data from all user tables is extracted, and you cannot specify individual user tables for extracting data. If 'false', specify one or more user tables to extract data from."
+              },
+              {
+                "name": "ExtractApplicationScopedObjectsOnly",
+                "type": "bool",
+                "help": "If true, only extract application-scoped objects for the specified source. If false, extract all objects for the specified source."
+              },
+              {
+                "name": "ExtractReferencedServerScopedElements",
+                "type": "bool",
+                "help": "If true, extract login, server audit, and credential objects referenced by source database objects."
+              },
+              {
+                "name": "ExtractTarget",
+                "type": "ExtractTarget",
+                "help": "Specifies alternative output formats of the database schema, default is 'DacPac' to output a `.dacpac` single file. Additional options output one or more `.sql` files organized by either 'SchemaObjectType' (files in folders for each schema and object type), 'Schema' (files in folders for each schema), 'ObjectType' (files in folders for each object type), 'Flat' (all files in the same folder), or 'File' (1 single file)."
+              },
+              {
+                "name": "ExtractUsageProperties",
+                "type": "bool",
+                "help": "Specifies whether usage properties, such as table row count and index size, will be extracted from the database."
+              },
+              {
+                "name": "HashObjectNamesInLogs",
+                "type": "bool",
+                "help": "Specifies whether to replace all object names in logs with a random hash value."
+              },
+              {
+                "name": "IgnoreExtendedProperties",
+                "type": "bool",
+                "help": "Specifies whether extended properties should be ignored."
+              },
+              {
+                "name": "IgnorePermissions",
+                "type": "bool",
+                "help": "Specifies whether permissions should be ignored."
+              },
+              {
+                "name": "IgnoreUserLoginMappings",
+                "type": "bool",
+                "help": "Specifies whether relationships between users and logins are ignored."
+              },
+              {
+                "name": "LongRunningCommandTimeout",
+                "type": "int",
+                "help": "Specifies the long running command timeout in seconds when executing queries against SQL Server. Use 0 to wait indefinitely."
+              },
+              {
+                "name": "Storage",
+                "type": "StorageType",
+                "help": "Specifies the type of backing storage for the schema model used during extraction. 'Memory' is default for .NET Core version of SqlPackage. 'File' is only available and default for .NET Framework version of SqlPackage."
+              },
+              {
+                "name": "TableData",
+                "type": "string",
+                "help": "Indicates the table from which data will be extracted. Specify the table name with or without the brackets surrounding the name parts in the following format: schema_name.table_identifier.  This property may be specified multiple times to indicate multiple options."
+              },
+              {
+                "name": "TempDirectoryForTableData",
+                "type": "string",
+                "help": "Specifies the temporary directory used to buffer table data before being written to the package file."
+              },
+              {
+                "name": "VerifyExtraction",
+                "type": "bool",
+                "help": "Specifies whether the extracted schema model should be verified."
+              }
+            ]
+          },
+          {
+            "name": "Quiet",
+            "type": "bool",
+            "format": "/Quiet:{value}",
+            "help": "Specifies whether detailed feedback is suppressed. Defaults to False."
+          },
+          {
+            "name": "SourceConnectionString",
+            "type": "string",
+            "format": "/SourceConnectionString:{value}",
+            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the source database. If this parameter is specified, it shall be used exclusively of all other source parameters."
+          },
+          {
+            "name": "SourceDatabaseName",
+            "type": "string",
+            "format": "/SourceDatabaseName:{value}",
+            "help": "Defines the name of the source database."
+          },
+          {
+            "name": "SourceEncryptConnection",
+            "type": "EncryptionType",
+            "format": "/SourceEncryptConnection:{value}",
+            "help": "Specifies if SQL encryption should be used for the source database connection. Default value is True."
+          },
+          {
+            "name": "SourceHostNameInCertificate",
+            "type": "string",
+            "format": "/SourceHostNameInCertificate:{value}",
+            "help": "Specifies value that is used to validate the source SQL Server TLS/SSL certificate when the communication layer is encrypted by using TLS."
+          },
+          {
+            "name": "SourcePassword",
+            "type": "string",
+            "format": "/SourcePassword:{value}",
+            "help": "For SQL Server Auth scenarios, defines the password to use to access the source database."
+          },
+          {
+            "name": "SourceServerName",
+            "type": "string",
+            "format": "/SourceServerName:{value}",
+            "help": "Defines the name of the server hosting the source database."
+          },
+          {
+            "name": "SourceTimeout",
+            "type": "int",
+            "format": "/SourceTimeout:{value}",
+            "help": "Specifies the timeout for establishing a connection to the source database in seconds."
+          },
+          {
+            "name": "SourceTrustServerCertificate",
+            "type": "bool",
+            "format": "/SourceTrustServerCertificate:{value}",
+            "help": "Specifies whether to use TLS to encrypt the source database connection and bypass walking the certificate chain to validate trust. Default value is False."
+          },
+          {
+            "name": "SourceUser",
+            "type": "string",
+            "format": "/SourceUser:{value}",
+            "help": "For SQL Server Auth scenarios, defines the SQL Server user to use to access the source database."
+          },
+          {
+            "name": "TargetFile",
+            "type": "string",
+            "format": "/TargetFile:{value}",
+            "help": "Specifies a target file (that is, a .dacpac file) in local storage to be used as the target of action instead of a database. If this parameter is used, no other target parameter shall be valid. This parameter shall be invalid for actions that only support database targets."
+          },
+          {
+            "name": "TenantId",
+            "type": "string",
+            "format": "/TenantId:{value}",
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          },
+          {
+            "name": "ThreadMaxStackSize",
+            "type": "int",
+            "format": "/ThreadMaxStackSize:{value}",
+            "help": "Specifies the maximum size in megabytes for the thread running the SqlPackage action. This option should only be used when encountering stack overflow exceptions that occur when parsing very large TSQL statements."
+          },
+          {
+            "name": "UniversalAuthentication",
+            "type": "bool",
+            "format": "/UniversalAuthentication:{value}",
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "AzureKeyVaultAuthMethod",
+      "values": [
+        "Interactive",
+        "ClientIdSecret"
+      ]
+    },
+    {
+      "name": "EncryptionType",
+      "values": [
+        "Optional",
+        "Mandatory",
+        "Strict",
+        "True",
+        "False"
+      ]
+    },
+    {
+      "name": "DatabaseEdition",
+      "values": [
+        "Basic",
+        "Standard",
+        "Premium",
+        "Datawarehouse",
+        "GeneralPurpose",
+        "BusinessCritical",
+        "Hyperscale",
+        "Default"
+      ]
+    },
+    {
+      "name": "StorageType",
+      "values": [
+        "File",
+        "Memory"
+      ]
+    },
+    {
+      "name": "CompressionOption",
+      "values": [
+        "Normal",
+        "Maximum",
+        "Fast",
+        "SuperFast",
+        "NotCompressed"
+      ]
+    },
+    {
+      "name": "TargetEngineVersion",
+      "values": [
+        "Default",
+        "Latest",
+        "V11",
+        "V12"
+      ]
+    },
+    {
+      "name": "ExtractTarget",
+      "values": [
+        "DacPac",
+        "File",
+        "Flat",
+        "ObjectType",
+        "Schema",
+        "SchemaObjectType"
+      ]
+    }
+  ]
+}
