@@ -188,7 +188,7 @@
             "name": "Labels",
             "type": "NUnitLabelType",
             "format": "--labels={value}",
-            "help": "Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>"
+            "help": "Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>, <c>OnOutputOnly</c>, <c>Before</c>, <c>After</c>, <c>BeforeAndAfter</c>"
           },
           {
             "name": "Trace",
@@ -270,7 +270,11 @@
       "values": [
         "Off",
         "On",
-        "All"
+        "All",
+        "OnOutputOnly",
+        "Before",
+        "After",
+        "BeforeAndAfter"
       ]
     },
     {
