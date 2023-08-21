@@ -51,7 +51,7 @@ partial class Build
             System.Console.ReadKey();
 
             Git($"add {changelogFile}");
-            Git($"commit -m \"Finalize {Path.GetFileName(changelogFile)} for {MajorMinorPatchVersion}\"");
+            Git($"commit -m \"chore: {Path.GetFileName(changelogFile)} for {MajorMinorPatchVersion}\"");
         });
 
     [UsedImplicitly]
