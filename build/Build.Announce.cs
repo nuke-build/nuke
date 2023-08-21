@@ -78,10 +78,12 @@ partial class Build
             ("Amazon Web Services", "https://aws.amazon.com/"),
         };
 
+    // https://api.slack.com/apps/A050ZLH0V40/incoming-webhooks?
     [Parameter] [Secret] readonly string SlackWebhook;
 
     Target AnnounceSlack => _ => _
         .TriggeredBy(Announce)
+        .ProceedAfterFailure()
         .Requires(() => SlackWebhook)
         .Executes(async () =>
         {
@@ -105,10 +107,12 @@ partial class Build
                 SlackWebhook);
         });
 
+    // Server settings | Apps | Integrations | Webhooks | NUKE
     [Parameter] [Secret] readonly string DiscordWebhook;
 
     Target AnnounceDiscord => _ => _
         .TriggeredBy(Announce)
+        .ProceedAfterFailure()
         .Requires(() => DiscordWebhook)
         .Executes(async () =>
         {
@@ -143,6 +147,7 @@ partial class Build
 
     Target AnnounceTwitter => _ => _
         .TriggeredBy(Announce)
+        .ProceedAfterFailure()
         .Requires(() => TwitterCredentials.ConsumerKey)
         .Requires(() => TwitterCredentials.ConsumerSecret)
         .Requires(() => TwitterCredentials.AccessToken)
@@ -171,10 +176,12 @@ partial class Build
         });
 
     string AnnouncementTootText => AnnouncementTweetText;
+    // https://dotnet.social/settings/applications/496
     [Parameter] [Secret] readonly string MastodonAccessToken;
 
     Target AnnounceMastodon => _ => _
         .TriggeredBy(Announce)
+        .ProceedAfterFailure()
         .Requires(() => MastodonAccessToken)
         .Executes(async () =>
         {
