@@ -35,7 +35,7 @@ using Nuke.Components;
     InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack) },
     Secrets = new string[0])]
 [AppVeyorSecret(nameof(PublicNuGetApiKey), "dSaquYHVNEAZO+hhGGoGqeHaVP99BP8koHTTqcD3WInWBTmB7yE4CzxZ1pWypnX2")]
-[AppVeyorSecret(ICreateGitHubRelease.GitHubRelease + nameof(ICreateGitHubRelease.GitHubToken), "a5UfxXiDEere9GkCCN9TUZJWacHMSkLKJi5UIqUDk7eB0DyoZomXaK918QWkyrbGlkz7hWIRIBGT/z2lCld/DgM9QP5Gx8PvEglDpTSILmGiQ2wTDySc78gG7h3dfQxg")]
+[AppVeyorSecret(ICreateGitHubRelease.GitHubRelease + nameof(ICreateGitHubRelease.GitHubToken), "a5UfxXiDEere9GkCCN9TUZMUdyzjC01cvHthbMLtSl0w+/giDwOyApiHRRRrwyKL5yd/vjD6xDBTBj+W/ZxKzMtzC+gDCSTNO8bSJG9Rh2n9eGzLtWzEFDw/zDYZXe5N")]
 [AppVeyorSecret(ISignPackages.SignPath + nameof(ISignPackages.ApiToken), "uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerKey), "mYr1Uw8bcVUyl1P0prdaUFurdiF7V283BSRlQHxe2Zg=")]
 [AppVeyorSecret(IHazTwitterCredentials.Twitter + nameof(IHazTwitterCredentials.ConsumerSecret), "pGt5X6KOwj/bLM4A5mnDRBqPxt7o7UreSlZSFmbfZwyfKZnhfFRnr20fXWjVqToVw7NSp30s6GxjswTrQSIogw==")]
