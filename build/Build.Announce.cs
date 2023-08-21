@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using LinqToTwitter;
+using LinqToTwitter.OAuth;
 using Nuke.Common;
 using Nuke.Common.ChangeLog;
 using Nuke.Common.Git;
@@ -16,9 +18,6 @@ using Nuke.Common.Tools.Mastodon;
 using Nuke.Common.Tools.Slack;
 using Nuke.Common.Utilities;
 using Nuke.Components;
-using Tweetinvi;
-using Tweetinvi.Models;
-using Tweetinvi.Parameters;
 using static Nuke.Common.Tools.Discord.DiscordTasks;
 using static Nuke.Common.Tools.Git.GitTasks;
 using static Nuke.Common.Tools.Mastodon.MastodonTasks;
@@ -154,25 +153,25 @@ partial class Build
         .Requires(() => TwitterCredentials.AccessTokenSecret)
         .Executes(async () =>
         {
-            var client = new TwitterClient(
-                new TwitterCredentials(
-                    TwitterCredentials.ConsumerKey,
-                    TwitterCredentials.ConsumerSecret,
-                    TwitterCredentials.AccessToken,
-                    TwitterCredentials.AccessTokenSecret));
-
-            var media = await client.Upload.UploadTweetImageAsync(
-                new UploadTweetImageParameters(ReleaseImageFile.ReadAllBytes())
+            var context = new TwitterContext(
+                new SingleUserAuthorizer
                 {
-                    MediaCategory = MediaCategory.Image
+                    CredentialStore =
+                        new SingleUserInMemoryCredentialStore
+                        {
+                            ConsumerKey = TwitterCredentials.ConsumerKey,
+                            ConsumerSecret = TwitterCredentials.ConsumerSecret,
+                            AccessToken = TwitterCredentials.AccessToken,
+                            AccessTokenSecret = TwitterCredentials.AccessTokenSecret
+                        }
                 });
 
-            await client.Tweets.PublishTweetAsync(
-                new PublishTweetParameters
-                {
-                    Text = AnnouncementTweetText,
-                    Medias = new List<IMedia> { media }
-                });
+            var media = await context.UploadMediaAsync(
+                media: ReleaseImageFile.ReadAllBytes(),
+                mediaType: "image/png",
+                mediaCategory: "tweet_image");
+
+            await context.TweetMediaAsync(AnnouncementTweetText, mediaIds: new[] { media.NotNull().MediaID.ToString() });
         });
 
     string AnnouncementTootText => AnnouncementTweetText;
