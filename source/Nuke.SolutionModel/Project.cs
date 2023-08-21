@@ -14,7 +14,7 @@ namespace Nuke.Common.ProjectModel;
 /// Represents a project.
 /// </summary>
 [PublicAPI]
-public class Project : PrimitiveProject
+public class Project : PrimitiveProject, IAbsolutePathHolder
 {
     private readonly Func<string> _pathProvider;
 

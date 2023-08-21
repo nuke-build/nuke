@@ -98,7 +98,7 @@ internal partial class ParameterService
 
         IEnumerable<(string Text, object Object)> TryGetFromEnumerationClass() =>
             memberType.IsSubclassOf(typeof(Enumeration))
-                ? memberType.GetFields(Static).Select(x => (x.Name, x.GetValue()))
+                ? memberType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => (x.Name, x.GetValue()))
                 : null;
 
         IEnumerable<(string Text, object Object)> TryGetFromEnum()

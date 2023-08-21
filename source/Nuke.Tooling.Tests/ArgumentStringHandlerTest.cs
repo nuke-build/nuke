@@ -48,6 +48,18 @@ public class ArgumentStringHandlerTest
     }
 
     [Fact]
+    public void TestAbsolutePathCollection()
+    {
+        var paths = new AbsolutePath[]
+                    {
+                        "C:\\foo\\bar",
+                        "/foo bar/foo"
+                    };
+        ArgsToString($"start {paths} end").Should().Be("start C:\\foo\\bar \"/foo bar/foo\" end");
+        ArgsToString($"start {paths:sn} end").Should().Be("start C:\\foo\\bar '/foo bar/foo' end");
+    }
+
+    [Fact]
     public void TestFormat()
     {
         ArgsToString($"start {"spaced args":nq} end").Should().Be("start spaced args end");

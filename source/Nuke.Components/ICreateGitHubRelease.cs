@@ -33,6 +33,7 @@ public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
     IEnumerable<AbsolutePath> AssetFiles { get; }
 
     Target CreateGitHubRelease => _ => _
+        .Requires(() => GitHubToken)
         .Executes(async () =>
         {
             async Task<Release> GetOrCreateRelease()

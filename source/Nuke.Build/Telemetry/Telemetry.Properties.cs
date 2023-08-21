@@ -124,7 +124,9 @@ internal partial class Telemetry
 
     private static bool IsCommonType(Type type)
     {
-        return type.Assembly == typeof(NukeBuild).Assembly;
+        return type.Assembly
+            .GetCustomAttributes<AssemblyMetadataAttribute>()
+            .Any(x => x is { Key: "RepositoryUrl", Value: "https://github.com/nuke-build/nuke" });
     }
 
     private static bool IsCustomType(Type type)
