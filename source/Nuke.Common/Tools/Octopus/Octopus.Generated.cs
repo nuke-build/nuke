@@ -236,6 +236,8 @@ public partial class OctopusTasks
     ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusCreateReleaseSettings.EnableServiceMessages"/></li>
     ///     <li><c>--force</c> via <see cref="OctopusCreateReleaseSettings.Force"/></li>
     ///     <li><c>--forcepackagedownload</c> via <see cref="OctopusCreateReleaseSettings.ForcePackageDownload"/></li>
+    ///     <li><c>--gitCommit</c> via <see cref="OctopusCreateReleaseSettings.GitCommit"/></li>
+    ///     <li><c>--gitRef</c> via <see cref="OctopusCreateReleaseSettings.GitRef"/></li>
     ///     <li><c>--guidedfailure</c> via <see cref="OctopusCreateReleaseSettings.GuidedFailure"/></li>
     ///     <li><c>--ignorechannelrules</c> via <see cref="OctopusCreateReleaseSettings.IgnoreChannelRules"/></li>
     ///     <li><c>--ignoreexisting</c> via <see cref="OctopusCreateReleaseSettings.IgnoreExisting"/></li>
@@ -295,6 +297,8 @@ public partial class OctopusTasks
     ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusCreateReleaseSettings.EnableServiceMessages"/></li>
     ///     <li><c>--force</c> via <see cref="OctopusCreateReleaseSettings.Force"/></li>
     ///     <li><c>--forcepackagedownload</c> via <see cref="OctopusCreateReleaseSettings.ForcePackageDownload"/></li>
+    ///     <li><c>--gitCommit</c> via <see cref="OctopusCreateReleaseSettings.GitCommit"/></li>
+    ///     <li><c>--gitRef</c> via <see cref="OctopusCreateReleaseSettings.GitRef"/></li>
     ///     <li><c>--guidedfailure</c> via <see cref="OctopusCreateReleaseSettings.GuidedFailure"/></li>
     ///     <li><c>--ignorechannelrules</c> via <see cref="OctopusCreateReleaseSettings.IgnoreChannelRules"/></li>
     ///     <li><c>--ignoreexisting</c> via <see cref="OctopusCreateReleaseSettings.IgnoreExisting"/></li>
@@ -351,6 +355,8 @@ public partial class OctopusTasks
     ///     <li><c>--enableServiceMessages</c> via <see cref="OctopusCreateReleaseSettings.EnableServiceMessages"/></li>
     ///     <li><c>--force</c> via <see cref="OctopusCreateReleaseSettings.Force"/></li>
     ///     <li><c>--forcepackagedownload</c> via <see cref="OctopusCreateReleaseSettings.ForcePackageDownload"/></li>
+    ///     <li><c>--gitCommit</c> via <see cref="OctopusCreateReleaseSettings.GitCommit"/></li>
+    ///     <li><c>--gitRef</c> via <see cref="OctopusCreateReleaseSettings.GitRef"/></li>
     ///     <li><c>--guidedfailure</c> via <see cref="OctopusCreateReleaseSettings.GuidedFailure"/></li>
     ///     <li><c>--ignorechannelrules</c> via <see cref="OctopusCreateReleaseSettings.IgnoreChannelRules"/></li>
     ///     <li><c>--ignoreexisting</c> via <see cref="OctopusCreateReleaseSettings.IgnoreExisting"/></li>
@@ -851,6 +857,14 @@ public partial class OctopusCreateReleaseSettings : ToolSettings
     /// </summary>
     public virtual string DefaultPackageVersion { get; internal set; }
     /// <summary>
+    ///   Git commit to use when creating the release. Use in conjunction with the --gitRef parameter to select any previous commit.
+    /// </summary>
+    public virtual string GitCommit { get; internal set; }
+    /// <summary>
+    ///   Git reference to use when creating the release.
+    /// </summary>
+    public virtual string GitRef { get; internal set; }
+    /// <summary>
     ///   Release number to use for the new release.
     /// </summary>
     public virtual string Version { get; internal set; }
@@ -1025,6 +1039,8 @@ public partial class OctopusCreateReleaseSettings : ToolSettings
           .Add("create-release")
           .Add("--project={value}", Project)
           .Add("--packageversion={value}", DefaultPackageVersion)
+          .Add("--gitCommit={value}", GitCommit)
+          .Add("--gitRef={value}", GitRef)
           .Add("--version={value}", Version)
           .Add("--channel={value}", Channel)
           .Add("--package={value}", PackageVersions, "{key}:{value}")
@@ -2512,6 +2528,54 @@ public static partial class OctopusCreateReleaseSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.DefaultPackageVersion = null;
+        return toolSettings;
+    }
+    #endregion
+    #region GitCommit
+    /// <summary>
+    ///   <p><em>Sets <see cref="OctopusCreateReleaseSettings.GitCommit"/></em></p>
+    ///   <p>Git commit to use when creating the release. Use in conjunction with the --gitRef parameter to select any previous commit.</p>
+    /// </summary>
+    [Pure]
+    public static T SetGitCommit<T>(this T toolSettings, string gitCommit) where T : OctopusCreateReleaseSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.GitCommit = gitCommit;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="OctopusCreateReleaseSettings.GitCommit"/></em></p>
+    ///   <p>Git commit to use when creating the release. Use in conjunction with the --gitRef parameter to select any previous commit.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetGitCommit<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.GitCommit = null;
+        return toolSettings;
+    }
+    #endregion
+    #region GitRef
+    /// <summary>
+    ///   <p><em>Sets <see cref="OctopusCreateReleaseSettings.GitRef"/></em></p>
+    ///   <p>Git reference to use when creating the release.</p>
+    /// </summary>
+    [Pure]
+    public static T SetGitRef<T>(this T toolSettings, string gitRef) where T : OctopusCreateReleaseSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.GitRef = gitRef;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="OctopusCreateReleaseSettings.GitRef"/></em></p>
+    ///   <p>Git reference to use when creating the release.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetGitRef<T>(this T toolSettings) where T : OctopusCreateReleaseSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.GitRef = null;
         return toolSettings;
     }
     #endregion
