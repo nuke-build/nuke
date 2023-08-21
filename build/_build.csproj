@@ -52,6 +52,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="linqtotwitter" Version="6.15.0" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta14" />
     <PackageDownload Include="Codecov.Tool" Version="[1.12.3]" />
     <PackageDownload Include="GitVersion.Tool" Version="[5.8.0]" />
