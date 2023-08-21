@@ -61,7 +61,7 @@ public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
                 }
             }
 
-            GitHubTasks.GitHubClient.Credentials ??= new Credentials(GitHubToken.NotNull());
+            GitHubTasks.GitHubClient.Credentials = new Credentials(GitHubToken.NotNull());
 
             var release = await GetOrCreateRelease();
 
