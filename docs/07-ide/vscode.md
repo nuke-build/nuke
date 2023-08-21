@@ -2,10 +2,10 @@
 title: Visual Studio Code
 ---
 
-import InstallButton from '@site/src/components/InstallButton';
+import DownloadButton from '@site/src/components/DownloadButton';
 import ControlKey from '@site/src/components/ControlKey';
 
-<InstallButton
+<DownloadButton
     url="/download/vscode"
     event="DR2GVCBB" />
 

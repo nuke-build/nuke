@@ -2,9 +2,9 @@
 title: Visual Studio
 ---
 
-import InstallButton from '@site/src/components/InstallButton';
+import DownloadButton from '@site/src/components/DownloadButton';
 
-<InstallButton
+<DownloadButton
     url="/download/visualstudio"
     event="ICIIXSN5" />
 

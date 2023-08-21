@@ -2,9 +2,9 @@
 title: ReSharper
 ---
 
-import InstallButton from '@site/src/components/InstallButton';
+import DownloadButton from '@site/src/components/DownloadButton';
 
-<InstallButton
+<DownloadButton
     url="/download/resharper"
     event="WOA4OHK6" />
 

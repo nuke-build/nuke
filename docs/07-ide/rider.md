@@ -3,9 +3,9 @@ title: JetBrains Rider
 sidebar_position: 1
 ---
 
-import InstallButton from '@site/src/components/InstallButton';
+import DownloadButton from '@site/src/components/DownloadButton';
 
-<InstallButton
+<DownloadButton
     url="/download/rider"
     event="CDWS3QRP" />
 
