@@ -5,6 +5,22 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed enumeration value sets to exclude non-public fields
+- Fixed check for `NUKE_ENTERPRISE_TOKEN` in `build.sh` bootstrapping script
+- Fixed default warnings with suppression
+- Fixed telemetry to treat types as _common_ when their assembly points to home repository
+- Fixed filtering of secrets in CLT `Output` collection
+- Fixed handling of `AbsolutePath` collections in `ArgumentStringHandler`
+- Fixed handling of `IAbsolutePathHolder` in `ArgumentStringHandler`
+- Fixed handling of `relativePath` for `SolutionAttribute` in `StronglyTypedSolutionGenerator`
+- Fixed error reporting in `StronglyTypedSolutionGenerator`
+- Fixed TeamCity `pom.xml` template to use HTTPS
+- Fixed duplicated payload serialization in `TeamsTasks`
+- Fixed missing arguments in `OctopusTasks`
+- Fixed missing command in `UnityTasks`
+- Fixed missing members in `UnitBuildTarget`
+- Fixed argument formatting in `MSpecTasks`
+- Fixed assertion in `UnityTasks`
 
 ## [7.0.2] / 2023-05-19
 - Fixed string-based command-line tool tasks to not require interpolated strings
