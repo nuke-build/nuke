@@ -1,0 +1,14 @@
+﻿{
+  Configuration: [
+    Debug,
+    Release
+  ],
+  NoLogo: [],
+  Profile: [
+    dev
+  ],
+  Target: [
+    Restore,
+    Compile
+  ]
+}
