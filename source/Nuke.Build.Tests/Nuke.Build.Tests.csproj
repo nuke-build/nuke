@@ -8,4 +8,8 @@
     <ProjectReference Include="..\Nuke.Build\Nuke.Build.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NJsonSchema" Version="10.9.0" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,7 @@
+{
+  "$schema": "./SchemaUtilityTest.TestParameterBuild.received.json",
+  "Verbosity": "Minimal",
+  "Target": ["ExplicitTarget"],
+  "NullableBooleanParam": false,
+  "CustomEnumerationArrayParam": ["Debug", "Release"]
+}
