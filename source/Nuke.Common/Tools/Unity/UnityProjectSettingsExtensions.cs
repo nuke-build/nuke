@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.Unity;
 
@@ -15,11 +14,10 @@ public static partial class UnityProjectSettingsExtensions
 
     /// <summary><p><em>Sets <see cref="UnityProjectSettings.BuildTarget"/>.</em></p><p>Allows the selection of an active build target before a project is loaded.</p></summary>
     [Pure]
-    public static UnityProjectSettings SetBuildTarget(this UnityProjectSettings toolSettings, UnityBuildTarget buildTarget)
+    public static T SetBuildTarget<T>(this T toolSettings, UnityBuildTarget buildTarget)
+        where T : UnityProjectSettings
     {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.BuildTarget = buildTarget.ToString();
-        return toolSettings;
+        return toolSettings.SetBuildTarget(buildTarget.ToString());
     }
 
     #endregion
