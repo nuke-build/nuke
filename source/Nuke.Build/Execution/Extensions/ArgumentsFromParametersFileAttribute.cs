@@ -49,11 +49,16 @@ internal class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBas
 
         // TODO: Abstract AbsolutePath/Solution/Project etc.
         string ConvertValue(Type scalarType, string value)
-            => scalarType.IsAssignableTo(typeof(IAbsolutePathHolder))
+        {
+            if (scalarType is null)
+                return value;
+            
+            return scalarType.IsAssignableTo(typeof(IAbsolutePathHolder))
                 ? PathConstruction.HasPathRoot(value)
                     ? value
                     : EnvironmentInfo.WorkingDirectory.GetUnixRelativePathTo(Build.RootDirectory / value)
                 : value;
+        }
 
         var arguments = GetParameters().SelectMany(x => ConvertToArguments(x.Profile, x.Name, x.Values)).ToArray();
         ParameterService.Instance.ArgumentsFromFilesService = new ArgumentParser(arguments);
