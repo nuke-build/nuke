@@ -37,7 +37,7 @@ public class ChangeLog
     /// Initializes a new instance of the <see cref="ChangeLog"/> class.
     /// </summary>
     /// <param name="path">The path to the changelog file.</param>
-    /// <param name="unreleased">The unreleased notes sectioon.</param>
+    /// <param name="unreleased">The unreleased notes section.</param>
     /// <param name="releaseNotes">The release notes of the changelog.</param>
     public ChangeLog(string path, [CanBeNull] ReleaseNotes unreleased, IReadOnlyList<ReleaseNotes> releaseNotes)
     {
