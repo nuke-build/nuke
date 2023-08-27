@@ -72,7 +72,7 @@ public abstract partial class NukeBuild
     /// <summary>
     /// Gets the logging verbosity during build execution. Default is <see cref="Nuke.Common.Verbosity.Normal"/>.
     /// </summary>
-    [Parameter("Logging verbosity during build execution. Default is 'Normal'.")]
+    [Parameter("Logging verbosity during build execution. Accepted values are 'Verbose', 'Normal', 'Minimal', 'Quiet'. Default is 'Normal'.")]
     public static Verbosity Verbosity
     {
         get => (Verbosity) Logging.Level;
