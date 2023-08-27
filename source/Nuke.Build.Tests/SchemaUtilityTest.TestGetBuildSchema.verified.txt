@@ -101,7 +101,7 @@
         },
         "Verbosity": {
           "type": "string",
-          "description": "Logging verbosity during build execution. Default is 'Normal'",
+          "description": "Logging verbosity during build execution. Accepted values are 'Verbose', 'Normal', 'Minimal', 'Quiet'. Default is 'Normal'",
           "enum": [
             "Minimal",
             "Normal",

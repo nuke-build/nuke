@@ -80,7 +80,7 @@ project {
         select (
             "env.Verbosity",
             label = "Verbosity",
-            description = "Logging verbosity during build execution. Default is 'Normal'.",
+            description = "Logging verbosity during build execution. Accepted values are 'Verbose', 'Normal', 'Minimal', 'Quiet'. Default is 'Normal'.",
             value = "Normal",
             options = listOf("Minimal" to "Minimal", "Normal" to "Normal", "Quiet" to "Quiet", "Verbose" to "Verbose"),
             display = ParameterDisplay.NORMAL)
