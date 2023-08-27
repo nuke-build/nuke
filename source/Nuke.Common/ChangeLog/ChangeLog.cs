@@ -31,7 +31,7 @@ public class ChangeLog
     /// <summary>
     /// The latest release notes section. Returns null if the changelog does not contain a release section.
     /// </summary>
-    [CanBeNull] public NuGetVersion LatestVersion => ReleaseNotes.FirstOrDefault()?.Version;
+    [CanBeNull] public NuGetVersion LatestVersion => ReleaseNotes.LastOrDefault()?.Version;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChangeLog"/> class.
