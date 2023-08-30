@@ -134,7 +134,17 @@ public class AppVeyorConfiguration : ConfigurationEntity
             writer.WriteLine();
             using (writer.WriteBlock("artifacts:"))
             {
-                Artifacts.ForEach(x => writer.WriteLine($"- path: {x}"));
+                Artifacts.ForEach(x =>
+                {
+                    // If a path starts with a wildcard, we need to wrap it in single quotes
+                    // https://www.appveyor.com/docs/packaging-artifacts/
+                    if (x.Length > 0 && x[0] == '*')
+                    {
+                        x = $"'{x}'";
+                    }
+
+                    writer.WriteLine($"- path: {x}");
+                });
             }
         }
 
