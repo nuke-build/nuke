@@ -67,6 +67,9 @@ public partial class AppVeyor : Host, IBuildServer
     public string BuildWorkerImage => EnvironmentInfo.GetVariable("APPVEYOR_BUILD_WORKER_IMAGE");
     [CanBeNull] public int? PullRequestNumber => EnvironmentInfo.GetVariable<int?>("APPVEYOR_PULL_REQUEST_NUMBER");
     [CanBeNull] public string PullRequestTitle => EnvironmentInfo.GetVariable("APPVEYOR_PULL_REQUEST_TITLE");
+    [CanBeNull] public string PullRequestHeadRepositoryName => EnvironmentInfo.GetVariable("APPVEYOR_PULL_REQUEST_HEAD_REPO_NAME");
+    [CanBeNull] public string PullRequestHeadRepositoryBranch => EnvironmentInfo.GetVariable("APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH");
+    [CanBeNull] public string PullRequestHeadCommit => EnvironmentInfo.GetVariable("APPVEYOR_PULL_REQUEST_HEAD_COMMIT");
     public string JobId => EnvironmentInfo.GetVariable("APPVEYOR_JOB_ID");
     [CanBeNull] public string JobName => EnvironmentInfo.GetVariable("APPVEYOR_JOB_NAME");
     public int JobNumber => EnvironmentInfo.GetVariable<int>("APPVEYOR_JOB_NUMBER");
