@@ -136,11 +136,9 @@ public class AppVeyorConfiguration : ConfigurationEntity
             {
                 Artifacts.ForEach(x =>
                 {
-                    // If a path starts with a wildcard, we need to wrap it in single quotes
-                    // https://www.appveyor.com/docs/packaging-artifacts/
                     if (x.Length > 0 && x[0] == '*')
                     {
-                        x = $"'{x}'";
+                        x = x.SingleQuoteIfNeeded();
                     }
 
                     writer.WriteLine($"- path: {x}");
