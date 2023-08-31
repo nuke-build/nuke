@@ -6,10 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.CI;
 using Nuke.Common.IO;
-using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
@@ -48,11 +48,10 @@ internal class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBas
                 name);
 
         // TODO: Abstract AbsolutePath/Solution/Project etc.
-        string ConvertValue(Type scalarType, string value)
-            => scalarType.IsAssignableTo(typeof(IAbsolutePathHolder))
-                ? PathConstruction.HasPathRoot(value)
-                    ? value
-                    : EnvironmentInfo.WorkingDirectory.GetUnixRelativePathTo(Build.RootDirectory / value)
+        string ConvertValue([CanBeNull] Type scalarType, string value)
+            => typeof(IAbsolutePathHolder).IsAssignableFrom(scalarType) &&
+               !PathConstruction.HasPathRoot(value)
+                ? EnvironmentInfo.WorkingDirectory.GetUnixRelativePathTo(Build.RootDirectory / value)
                 : value;
 
         var arguments = GetParameters().SelectMany(x => ConvertToArguments(x.Profile, x.Name, x.Values)).ToArray();

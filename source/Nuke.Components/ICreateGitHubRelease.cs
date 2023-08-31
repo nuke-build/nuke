@@ -36,18 +36,34 @@ public interface ICreateGitHubRelease : IHazGitRepository, IHazChangelog
         .Requires(() => GitHubToken)
         .Executes(async () =>
         {
-            GitHubTasks.GitHubClient.Credentials ??= new Credentials(GitHubToken.NotNull());
-
-            var release = await GitHubTasks.GitHubClient.Repository.Release.Create(
-                GitRepository.GetGitHubOwner(),
-                GitRepository.GetGitHubName(),
-                new NewRelease(Name)
+            async Task<Release> GetOrCreateRelease()
+            {
+                try
                 {
-                    Name = Name,
-                    Prerelease = Prerelease,
-                    Draft = Draft,
-                    Body = ChangelogTasks.ExtractChangelogSectionNotes(ChangelogFile).JoinNewLine()
-                });
+                    return await GitHubTasks.GitHubClient.Repository.Release.Create(
+                        GitRepository.GetGitHubOwner(),
+                        GitRepository.GetGitHubName(),
+                        new NewRelease(Name)
+                        {
+                            Name = Name,
+                            Prerelease = Prerelease,
+                            Draft = Draft,
+                            Body = ChangelogTasks.ExtractChangelogSectionNotes(ChangelogFile).JoinNewLine()
+                        });
+
+                }
+                catch
+                {
+                    return await GitHubTasks.GitHubClient.Repository.Release.Get(
+                        GitRepository.GetGitHubOwner(),
+                        GitRepository.GetGitHubName(),
+                        Name);
+                }
+            }
+
+            GitHubTasks.GitHubClient.Credentials = new Credentials(GitHubToken.NotNull());
+
+            var release = await GetOrCreateRelease();
 
             var uploadTasks = AssetFiles.Select(async x =>
             {
