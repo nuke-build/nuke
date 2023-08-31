@@ -752,7 +752,7 @@ public partial class UnityReturnLicenseSettings : UnityBaseSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class UnityRunTestsSettings : UnityBaseSettings
+public partial class UnityRunTestsSettings : UnityProjectSettings
 {
     /// <summary>
     ///   Path to the Unity executable.

@@ -166,7 +166,7 @@
       "customAssertion": true,
       "definiteArgument": "-runTests",
       "settingsClass": {
-        "baseClass": "UnityBaseSettings",
+        "baseClass": "UnityProjectSettings",
         "properties": [
           {
             "name": "TestCategories",
