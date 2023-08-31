@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -27,7 +27,7 @@ public abstract class ToolSettings : ISettingsEntity
     public virtual string ProcessToolPath { get; internal set; }
     public virtual string ProcessWorkingDirectory { get; internal set; }
 
-    public IReadOnlyDictionary<string, string> ProcessEnvironmentVariables => ProcessEnvironmentVariablesInternal.AsReadOnly();
+    public IReadOnlyDictionary<string, string> ProcessEnvironmentVariables => DictionaryExtensions.AsReadOnly(ProcessEnvironmentVariablesInternal);
     internal Dictionary<string, string> ProcessEnvironmentVariablesInternal { get; set; }
     public int? ProcessExecutionTimeout { get; internal set; }
     public bool? ProcessLogOutput { get; internal set; }

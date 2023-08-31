@@ -1,9 +1,8 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Linq;
 using System.Runtime.Serialization;
 
 namespace Nuke.Common.Execution;
@@ -16,6 +15,9 @@ internal class TargetExecutionException : Exception
     {
     }
 
+#if NET8_0_OR_GREATER
+    [Obsolete(DiagnosticId = "SYSLIB0051")] 
+#endif
     protected TargetExecutionException(
         SerializationInfo info,
         StreamingContext context)

@@ -2,12 +2,8 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-using System;
-using System.IO;
-using System.Linq;
-using System.Runtime.Serialization.Formatters.Binary;
 using JetBrains.Annotations;
-#pragma warning disable SYSLIB0011
+using System.Text.Json;
 
 namespace Nuke.Common.Tooling;
 
@@ -17,18 +13,15 @@ public static partial class SettingsEntityExtensions
     public static T NewInstance<T>(this T settingsEntity)
         where T : ISettingsEntity
     {
-        var binaryFormatter = new BinaryFormatter();
+        var json = JsonSerializer.Serialize(settingsEntity);
+        var newInstance = JsonSerializer.Deserialize<T>(json);
 
-        using var memoryStream = new MemoryStream();
-        binaryFormatter.Serialize(memoryStream, settingsEntity);
-        memoryStream.Seek(offset: 0, loc: SeekOrigin.Begin);
-
-        var newInstance = (T) binaryFormatter.Deserialize(memoryStream);
         if (newInstance is ToolSettings toolSettings)
         {
-            toolSettings.ProcessArgumentConfigurator = ((ToolSettings) (object) settingsEntity).ProcessArgumentConfigurator;
-            toolSettings.ProcessLogger = ((ToolSettings) (object) settingsEntity).ProcessLogger;
-            toolSettings.ProcessExitHandler = ((ToolSettings) (object) settingsEntity).ProcessExitHandler;
+            var originalToolSettings = settingsEntity as ToolSettings;
+            toolSettings.ProcessArgumentConfigurator = originalToolSettings.ProcessArgumentConfigurator;
+            toolSettings.ProcessLogger = originalToolSettings.ProcessLogger;
+            toolSettings.ProcessExitHandler = originalToolSettings.ProcessExitHandler;
         }
 
         return newInstance;

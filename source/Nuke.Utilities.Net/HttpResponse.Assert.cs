@@ -83,6 +83,9 @@ public class HttpResponseException : Exception
     {
     }
 
+#if NET8_0_OR_GREATER
+    [Obsolete(DiagnosticId = "SYSLIB0051")] 
+#endif
     protected HttpResponseException(
         SerializationInfo info,
         StreamingContext context)
