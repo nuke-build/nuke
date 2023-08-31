@@ -7,7 +7,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using Nuke.Common.Execution;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
@@ -29,6 +32,42 @@ public static class DockerTargetDefinitionExtensions
 
     private static readonly AbsolutePath UnixRootDirectory = @"/nuke";
     private static readonly AbsolutePath UnixNuGetDirectory = @"/nuget";
+
+    private class StateContractResolver : DefaultContractResolver
+    {
+        protected override List<MemberInfo> GetSerializableMembers(Type objectType)
+        {
+            bool Filter(MemberInfo info) =>
+                info is FieldInfo or PropertyInfo &&
+                info.GetMemberType() != typeof(Target) &&
+                info.DeclaringType != typeof(NukeBuild) &&
+                info.DeclaringType != typeof(INukeBuild);
+
+            var serializableMembers = objectType.GetAllMembers(
+                    Filter,
+                    ReflectionUtility.All,
+                    allowAmbiguity: true)
+                .ToList();
+            var types = serializableMembers.Select(x => x.DeclaringType).Where(x => x.HasCustomAttribute<SerializableAttribute>()).Distinct();
+            return serializableMembers
+                .Concat(types.SelectMany(x =>
+                {
+                    var memberInfos = x.GetAllMembers(Filter, ReflectionUtility.All, allowAmbiguity: true).ToList();
+                    return memberInfos;
+                })).ToList();
+        }
+
+        protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
+        {
+            var property = base.CreateProperty(member, memberSerialization);
+            property.Writable = true;
+            property.ShouldSerialize = x =>
+            {
+                return true;
+            };
+            return property;
+        }
+    }
 
     /// <summary>
     /// Execute this target within a Docker container
@@ -54,6 +93,13 @@ public static class DockerTargetDefinitionExtensions
                 .Select(x => build.BuildAssemblyDirectory.GetRelativePathTo(x))
                 .All(x => File.Exists(buildAssemblyDirectory / x) &&
                           File.GetLastWriteTime(buildAssemblyDirectory / x) >= File.GetLastWriteTime(build.BuildAssemblyDirectory / x));
+
+            SerializationTasks.JsonSerializeToFile(definition.Build,
+                buildAssemblyDirectory / $".state.{definition.Target.Name}",
+                _ => new JsonSerializerSettings
+                     {
+                         ContractResolver = new StateContractResolver()
+                     });
 
             if ((!settings.BuildCaching ?? true) || !IsUpToDate())
             {
