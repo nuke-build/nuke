@@ -5,7 +5,6 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.Unity;
 
@@ -18,11 +17,10 @@ public static partial class UnityRunTestsSettingsExtensions
     ///   <p>The platform to run tests on.</p>
     /// </summary>
     [Pure]
-    public static UnityRunTestsSettings SetTestPlatform(this UnityRunTestsSettings toolSettings, UnityTestPlatform testPlatform)
+    public static T SetTestPlatform<T>(this T toolSettings, UnityTestPlatform testPlatform)
+        where T : UnityRunTestsSettings
     {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestPlatform = testPlatform.ToString();
-        return toolSettings;
+        return toolSettings.SetTestPlatform(testPlatform.ToString());
     }
 
     /// <summary>
@@ -30,11 +28,10 @@ public static partial class UnityRunTestsSettingsExtensions
     ///   <p>The platform to run tests on.</p>
     /// </summary>
     [Pure]
-    public static UnityRunTestsSettings SetTestPlatform(this UnityRunTestsSettings toolSettings, UnityBuildTarget buildTarget)
+    public static T SetTestPlatform<T>(this T toolSettings, UnityBuildTarget buildTarget)
+        where T : UnityRunTestsSettings
     {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestPlatform = buildTarget.ToString();
-        return toolSettings;
+        return toolSettings.SetTestPlatform(buildTarget.ToString());
     }
 
     #endregion
