@@ -126,7 +126,7 @@ internal partial class Telemetry
     {
         return type.Assembly
             .GetCustomAttributes<AssemblyMetadataAttribute>()
-            .Any(x => x is { Key: "RepositoryUrl", Value: "https://github.com/nuke-build/nuke" });
+            .Any(x => x is { Key: "RepositoryUrl", Value: "https://github.com/nuke-build/nuke.git" });
     }
 
     private static bool IsCustomType(Type type)
