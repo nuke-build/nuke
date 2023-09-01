@@ -130,6 +130,11 @@ public static class ChangelogTasks
     /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
     public static void FinalizeChangelog(AbsolutePath changelogFile, string tag, [CanBeNull] GitRepository repository = null)
     {
+        FinalizeChangelogInternal(changelogFile, tag, repository);
+    }
+
+    internal static void FinalizeChangelogInternal(AbsolutePath changelogFile, string tag, [CanBeNull] GitRepository repository = null, DateTime? dateTime = null)
+    {
         Log.Information("Finalizing {File} for {Tag} ...", PathConstruction.GetRelativePath(NukeBuild.RootDirectory, changelogFile), tag);
 
         var content = changelogFile.ReadAllLines().ToList();
@@ -143,8 +148,10 @@ public static class ChangelogTasks
         Assert.True(secondSection == null || NuGetVersion.Parse(tag).CompareTo(NuGetVersion.Parse(secondSection.Caption)) > 0,
             $"Tag '{tag}' is not greater compared to last tag '{secondSection?.Caption}'");
 
+        var now = dateTime ?? DateTime.Now;
+        
         content.Insert(firstSection.StartIndex + 1, string.Empty);
-        content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
+        content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {now:yyyy-MM-dd}");
 
         UpdateVersionSummary(tag, content, repository);
 

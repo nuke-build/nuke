@@ -139,11 +139,15 @@ public class ChangelogTasksTest
 
         var copy = Path.Combine(Path.GetTempPath(), "CHANGELOG.md");
         File.Copy(file, copy, overwrite: true);
-        
-        ChangelogTasks.FinalizeChangelog(copy, "6.3.0", new GitRepository(GitProtocol.Https, "github.com", "nuke-build/nuke", "", RootDirectory, "", "", new []{""}, "", ""));
+
+        ChangelogTasks.FinalizeChangelogInternal(
+            copy,
+            "6.3.0",
+            new GitRepository(GitProtocol.Https, "github.com", "nuke-build/nuke", "", RootDirectory, "", "", new[] { "" }, "", ""),
+            new DateTime(year: 2022, month: 12, day: 12));
 
         var contentAfterFinalizing = File.ReadAllText(copy);
-        
+
         return Verifier.Verify(contentAfterFinalizing).UseDirectory(PathToChangelogReferenceFiles).UseFileName(file.NameWithoutExtension);
     }
 
