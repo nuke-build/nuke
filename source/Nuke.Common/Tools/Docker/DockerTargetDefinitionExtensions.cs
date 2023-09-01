@@ -102,25 +102,23 @@ public static class DockerTargetDefinitionExtensions
 
             try
             {
-                using (DelegateDisposable.SetAndRestore(() => DockerLogger, (_, message) => Log.Write(LogEventReader.ReadFromString(message))))
-                {
-                    Log.Information("Launching target in {Image}...", settings.Image);
-                    DockerTasks.DockerRun(_ => settings
-                        .When(!settings.Rm.HasValue, _ => _
-                            .EnableRm())
-                        .AddVolume($"{build.RootDirectory}:{rootDirectory}")
-                        .AddVolume($"{NuGetPackageResolver.GetPackagesDirectory(NuGetToolPathResolver.NuGetPackagesConfigFile)}:{nugetDirectory}")
-                        .SetPlatform(settings.Platform)
-                        .SetWorkdir(rootDirectory)
-                        .SetEnvFile(envFile)
-                        .SetEntrypoint(rootDirectory / build.RootDirectory.GetRelativePathTo(buildAssembly))
-                        .SetArgs(new[]
-                                 {
-                                     definition.Target.Name,
-                                     $"--{ParameterService.GetParameterDashedName(Constants.SkippedTargetsParameterName)}"
-                                 }.Concat(settings.Args))
-                        .DisableProcessLogInvocation());
-                }
+                Log.Information("Launching target in {Image}...", settings.Image);
+                DockerTasks.DockerRun(_ => settings
+                    .When(!settings.Rm.HasValue, _ => _
+                        .EnableRm())
+                    .AddVolume($"{build.RootDirectory}:{rootDirectory}")
+                    .AddVolume($"{NuGetPackageResolver.GetPackagesDirectory(NuGetToolPathResolver.NuGetPackagesConfigFile)}:{nugetDirectory}")
+                    .SetPlatform(settings.Platform)
+                    .SetWorkdir(rootDirectory)
+                    .SetEnvFile(envFile)
+                    .SetEntrypoint(rootDirectory / build.RootDirectory.GetRelativePathTo(buildAssembly))
+                    .SetArgs(new[]
+                             {
+                                 definition.Target.Name,
+                                 $"--{ParameterService.GetParameterDashedName(Constants.SkippedTargetsParameterName)}"
+                             }.Concat(settings.Args))
+                    .DisableProcessLogInvocation()
+                    .SetProcessLogger((_, message) => Log.Write(LogEventReader.ReadFromString(message))));
             }
             finally
             {
