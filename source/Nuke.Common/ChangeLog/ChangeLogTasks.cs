@@ -184,6 +184,9 @@ public static class ChangelogTasks
     {
         static bool IsReleaseHead(string str)
             => str.StartsWith("## ");
+        
+        static bool IsVersionSummary(string str)
+            => str.StartsWith("[");
 
         static string GetCaption(string str)
             => str
@@ -206,7 +209,7 @@ public static class ChangelogTasks
             }
 
             var caption = GetCaption(line);
-            var nextReleaseHeadIndex = content.FindIndex(index + 1, IsReleaseHead);
+            var nextReleaseHeadIndex = content.FindIndex(index + 1, s => IsReleaseHead(s) || IsVersionSummary(s));
 
             var releaseData =
                 new ReleaseSection
@@ -235,7 +238,6 @@ public static class ChangelogTasks
 
             content.RemoveRange(lastSection.EndIndex + 1, content.Count - lastSection.EndIndex - 1);
 
-            content.Add(string.Empty);
             content.Add($"[{firstSection.Caption}]: {repository.GetGitHubCompareTagToHeadUrl(tag)}");
             for (var i = 1; i + 1 < sections.Count; i++)
                 content.Add($"[{sections[i].Caption}]: {repository.GetGitHubCompareTagsUrl(sections[i].Caption, sections[i + 1].Caption)}");
