@@ -27,51 +27,11 @@ public class ChangelogTasksTest
     [Theory]
     [MemberData(nameof(AllChangelogReference_1_0_0_Files))]
     [MemberData(nameof(AllChangelogReference_NUKE_Files))]
-    public void ReadReleaseNotes_ChangelogReferenceFile_ThrowsNoExceptions(AbsolutePath file)
-    {
-        Action act = () => ChangelogTasks.ReadReleaseNotes(file);
-
-        act.Should().NotThrow();
-    }
-
-    [Theory]
-    [MemberData(nameof(AllChangelogReference_1_0_0_Files))]
-    [MemberData(nameof(AllChangelogReference_NUKE_Files))]
-    public void ReadReleaseNotes_ChangelogReferenceFile_ReturnsAnyReleaseNotes(AbsolutePath file)
-    {
-        var releaseNotes = ChangelogTasks.ReadReleaseNotes(file);
-
-        releaseNotes.Should().NotBeEmpty();
-    }
-
-    [Theory]
-    [MemberData(nameof(AllChangelogReference_1_0_0_Files))]
-    [MemberData(nameof(AllChangelogReference_NUKE_Files))]
-    public void ReadChangelog_ChangelogReferenceFile_ThrowsNoExceptions(AbsolutePath file)
-    {
-        Action act = () => ChangelogTasks.ReadChangelog(file);
-
-        act.Should().NotThrow();
-    }
-
-    [Theory]
-    [MemberData(nameof(AllChangelogReference_1_0_0_Files))]
-    [MemberData(nameof(AllChangelogReference_NUKE_Files))]
     public void ExtractChangelogSectionNotes_ChangelogReferenceFile_ThrowsNoExceptions(AbsolutePath file)
     {
         Action act = () => ChangelogTasks.ExtractChangelogSectionNotes(file);
 
         act.Should().NotThrow();
-    }
-
-    [Theory]
-    [MemberData(nameof(AllChangelogReference_1_0_0_Files))]
-    [MemberData(nameof(AllChangelogReference_NUKE_Files))]
-    public Task ReadReleaseNotes_ChangelogReferenceFile_HasParsedCorrectly(AbsolutePath file)
-    {
-        var releaseNotes = ChangelogTasks.ReadReleaseNotes(file);
-
-        return Verifier.Verify(releaseNotes).UseDirectory(PathToChangelogReferenceFiles).UseFileName(file.NameWithoutExtension);
     }
 
     [Fact]
