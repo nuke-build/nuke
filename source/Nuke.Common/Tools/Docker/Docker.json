@@ -90,6 +90,7 @@
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_system_prune.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_builder.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/buildx/docker_buildx_build.yaml",
+    "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/buildx/docker_buildx_create.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_container_pause.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_container_commit.yaml",
     "https://raw.githubusercontent.com/docker/docker.github.io/50fe61e/_data/engine-cli/docker_context_ls.yaml",
@@ -8516,6 +8517,88 @@
       }
     },
     {
+      "help": "Create a new builder instance using Docker Buildx plugin.",
+      "postfix": "BuildxCreate",
+      "definiteArgument": "buildx create",
+      "settingsClass": {
+        "baseClass": "DockerSettings",
+        "properties": [
+          {
+            "name": "Append",
+            "type": "bool",
+            "format": "--append",
+            "help": "Append a node to builder instead of changing it."
+          },
+          {
+            "name": "Bootstrap",
+            "type": "bool",
+            "format": "--bootstrap",
+            "help": "Boot builder after creation."
+          },
+          {
+            "name": "BuildKitDaemonFlags",
+            "type": "string",
+            "format": "--buildkitd-flags {value}",
+            "help": "Flags for buildkitd daemon."
+          },
+          {
+            "name": "BuildKitDFlags",
+            "type": "string",
+            "format": "--buildkitd-flags {value}",
+            "help": "Flags for buildkitd daemon."
+          },
+          {
+            "name": "Config",
+            "type": "string",
+            "format": "--config {value}",
+            "help": "BuildKit config file."
+          },
+          {
+            "name": "Driver",
+            "type": "DriverType",
+            "format": "--driver {value}",
+            "help": "Driver to use (available: <c>docker-container</c>, <c>kubernetes</c>, <c>remote</c>)."
+          },
+          {
+            "name": "DriverOpt",
+            "type": "string",
+            "format": "--driver-opt {value}",
+            "help": "Options for the driver."
+          },
+          {
+            "name": "Leave",
+            "type": "bool",
+            "format": "--leave",
+            "help": "Remove a node from builder instead of changing it."
+          },
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "--name {value}",
+            "help": "Builder instance name."
+          },
+          {
+            "name": "Node",
+            "type": "string",
+            "format": "--node {value}",
+            "help": "Create/modify node with given name."
+          },
+          {
+            "name": "Platform",
+            "type": "string",
+            "format": "--platform {value}",
+            "help": "Fixed platforms for current node."
+          },
+          {
+            "name": "Use",
+            "type": "bool",
+            "format": "--use",
+            "help": "Set the current builder instance."
+          }
+        ]
+      }
+    },
+    {
       "help": "Display a live stream of container(s) resource usage statistics.",
       "postfix": "Stats",
       "definiteArgument": "stats",
@@ -10078,6 +10161,14 @@
         "auto",
         "plain",
         "tty"
+      ]
+    },
+    {
+      "name": "DriverType",
+      "values": [
+        "docker-container",
+        "kubernetes",
+        "remote"
       ]
     }
   ]
