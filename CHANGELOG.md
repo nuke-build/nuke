@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed filtering environment variables with newlines in Docker target execution
+- Fixed logging in Docker target execution
+- Fixed update of version summary in `ChangelogTasks`
+- Fixed missing `DockerTasks` command
 
 ## [7.0.4] / 2023-08-31
 - Fixed check on nullable parameter type
