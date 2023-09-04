@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [7.0.5] / 2023-09-05
 - Fixed filtering environment variables with newlines in Docker target execution
 - Fixed logging in Docker target execution
 - Fixed update of version summary in `ChangelogTasks`
@@ -1098,7 +1100,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/7.0.4...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/7.0.5...HEAD
+[7.0.5]: https://github.com/nuke-build/nuke/compare/7.0.4...7.0.5
 [7.0.4]: https://github.com/nuke-build/nuke/compare/7.0.3...7.0.4
 [7.0.3]: https://github.com/nuke-build/nuke/compare/7.0.2...7.0.3
 [7.0.2]: https://github.com/nuke-build/nuke/compare/7.0.1...7.0.2
