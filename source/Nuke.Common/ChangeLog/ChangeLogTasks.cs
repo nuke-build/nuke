@@ -178,12 +178,6 @@ public static class ChangelogTasks
         static bool IsReleaseHead(string str)
             => str.StartsWith("## ");
 
-        static bool IsReleaseContent(string str)
-            => str.StartsWith("###")
-               || str.Trim().StartsWith("-")
-               || str.Trim().StartsWith("*")
-               || str.Trim().StartsWith("+");
-
         static string GetCaption(string str)
             => str
                 .TrimStart('#', ' ', '[')
@@ -205,7 +199,7 @@ public static class ChangelogTasks
             }
 
             var caption = GetCaption(line);
-            var nextReleaseHeadIndex = content.FindIndex(index + 1,  x => IsReleaseHead(x) || !IsReleaseContent(x));
+            var nextReleaseHeadIndex = content.FindIndex(index + 1, IsReleaseHead);
 
             var releaseData =
                 new ReleaseSection
