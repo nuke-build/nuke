@@ -1,4 +1,4 @@
-﻿// Copyright 2023 Maintainers of NUKE.
+// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -129,7 +129,7 @@ public class ChangelogTasksTest
 
         act.Should().Throw<Exception>().WithMessage("Changelog should have at least one release note section");
     }
-    
+
     [Theory]
     [InlineData("changelog_reference_NUKE_finalize_variant_1.md")]
     [InlineData("changelog_reference_1.0.0_finalize_variant_1.md")]
@@ -149,6 +149,42 @@ public class ChangelogTasksTest
         var contentAfterFinalizing = File.ReadAllText(copy);
 
         return Verifier.Verify(contentAfterFinalizing).UseDirectory(PathToChangelogReferenceFiles).UseFileName(file.NameWithoutExtension);
+    }
+
+    [Theory]
+    [InlineData("changelog_reference_1.0.0_variant_1.md", "1.4.0")]
+    [InlineData("changelog_reference_1.0.0_variant_2.md", "1.0.0")]
+    [InlineData("changelog_reference_1.0.0_variant_3.md", "1.4.0")]
+    [InlineData("changelog_reference_1.0.0_variant_5.md", "0.2.3")]
+    [InlineData("changelog_reference_NUKE_variant_1.md", "1.2.3")]
+    [InlineData("changelog_reference_NUKE_variant_2.md", "1.0.0")]
+    public void ReadChangelogLatestVersion_ValidChangelogFile_ReturnsLatestVersion(string fileName, string latestVersion)
+    {
+        var file = PathToChangelogReferenceFiles / fileName;
+        ChangelogTasks.ReadChangelog(file).LatestVersion.ToNormalizedString().Should().Be(latestVersion);
+    }
+
+    [Theory]
+    [InlineData("changelog_reference_1.0.0_variant_1.md")]
+    [InlineData("changelog_reference_1.0.0_variant_2.md")]
+    [InlineData("changelog_reference_1.0.0_variant_3.md")]
+    [InlineData("changelog_reference_1.0.0_variant_5.md")]
+    [InlineData("changelog_reference_NUKE_variant_1.md")]
+    [InlineData("changelog_reference_NUKE_variant_2.md")]
+    public void ReadChangelogLatestVersion_ValidChangelogFile_ReturnsAVersion(string fileName)
+    {
+        var file = PathToChangelogReferenceFiles / fileName;
+
+        ChangelogTasks.ReadChangelog(file).LatestVersion.Should().NotBeNull();
+    }
+
+    [Theory]
+    [InlineData("changelog_reference_1.0.0_variant_4.md")]
+    public void ReadChangelogLatestVersion_ValidChangelogFileButNoReleaseSection_ReturnsNull(string fileName)
+    {
+        var file = PathToChangelogReferenceFiles / fileName;
+
+        ChangelogTasks.ReadChangelog(file).LatestVersion.Should().BeNull();
     }
 
     [UsedImplicitly]
