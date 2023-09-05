@@ -4,11 +4,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using JetBrains.Annotations;
 using Nuke.Common.ChangeLog;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using VerifyXunit;
 using Xunit;
@@ -127,14 +129,31 @@ public class ChangelogTasksTest
 
         act.Should().Throw<Exception>().WithMessage("Changelog should have at least one release note section");
     }
+    
+    [Theory]
+    [InlineData("changelog_reference_NUKE_finalize_variant_1.md")]
+    [InlineData("changelog_reference_1.0.0_finalize_variant_1.md")]
+    public Task FinalizeChangelog_NUKEChangelogFile_ChangelogIsCorrectlyFinalized(string fileName)
+    {
+        var file = PathToChangelogReferenceFiles / fileName;
+
+        var copy = Path.Combine(Path.GetTempPath(), "CHANGELOG.md");
+        File.Copy(file, copy, overwrite: true);
+        
+        ChangelogTasks.FinalizeChangelog(copy, "6.3.0", new GitRepository(GitProtocol.Https, "github.com", "nuke-build/nuke", "", RootDirectory, "", "", new []{""}, "", ""));
+
+        var contentAfterFinalizing = File.ReadAllText(copy);
+        
+        return Verifier.Verify(contentAfterFinalizing).UseDirectory(PathToChangelogReferenceFiles).UseFileName(file.NameWithoutExtension);
+    }
 
     [UsedImplicitly]
     public static IEnumerable<object[]> AllChangelogReference_1_0_0_Files
     {
-        get => PathToChangelogReferenceFiles.GlobFiles("changelog_reference_1.0.0*.md").Select(x => new object[] { x });
+        get => PathToChangelogReferenceFiles.GlobFiles("changelog_reference_1.0.0_variant*.md").Select(x => new object[] { x });
     }
 
     [UsedImplicitly]
     public static IEnumerable<object[]> AllChangelogReference_NUKE_Files
-        => PathToChangelogReferenceFiles.GlobFiles("changelog_reference_NUKE*.md").Select(x => new object[] { x });
+        => PathToChangelogReferenceFiles.GlobFiles("changelog_reference_NUKE_variant*.md").Select(x => new object[] { x });
 }

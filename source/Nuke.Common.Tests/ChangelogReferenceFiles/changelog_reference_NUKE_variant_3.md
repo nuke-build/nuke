@@ -1,0 +1,34 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
+and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+## [vNext]
+- Added something
+
+## [6.2.1] / 2022-08-19
+- Fixed something
+
+## [6.2.0] / 2022-08-19
+- Added something
+
+## [0.4.0] / 2018-05-02
+- Deprecated something
+
+## [0.3.1] / 2018-03-26
+- Deprecated something
+
+## [0.2.10] / 2018-03-05
+- Fixed something
+
+## [0.2.0] / 2018-02-26
+- Deprecated something
+
+[vNext]: https://github.com/nuke-build/nuke/compare/6.2.1...HEAD
+[6.2.1]: https://github.com/nuke-build/nuke/compare/6.2.0...6.2.1
+[6.2.0]: https://github.com/nuke-build/nuke/compare/6.1.2...6.2.0
+[0.4.0]: https://github.com/nuke-build/nuke/compare/0.3.1...0.4.0
+[0.3.1]: https://github.com/nuke-build/nuke/compare/0.2.10...0.3.1
+[0.2.10]: https://github.com/nuke-build/nuke/compare/0.2.0...0.2.10
+[0.2.0]: https://github.com/nuke-build/nuke/tree/0.2.0
