@@ -12,13 +12,18 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Nuke.GlobalTool")]
 [assembly: InternalsVisibleTo("Nuke.GlobalTool.Tests")]
 [assembly: InternalsVisibleTo("Nuke.ProjectModel.Tests")]
-[assembly: InternalsVisibleTo("Nuke.Remote.Functions")]
 [assembly: InternalsVisibleTo("Nuke.SourceGenerators")]
 [assembly: InternalsVisibleTo("Nuke.SolutionModel")]
 [assembly: InternalsVisibleTo("Nuke.SolutionModel.Tests")]
 [assembly: InternalsVisibleTo("Nuke.Tooling.Tests")]
 [assembly: InternalsVisibleTo("Nuke.Utilities.IO.Globbing")]
 [assembly: InternalsVisibleTo("Nuke.Utilities.Tests")]
+
+// Extensions
 [assembly: InternalsVisibleTo("Nuke.VisualStudio")]
 [assembly: InternalsVisibleTo("ReSharper.Nuke")]
 [assembly: InternalsVisibleTo("ReSharper.Nuke.Rider")]
+
+// Functions
+[assembly: InternalsVisibleTo("Nuke.Remote.Functions")]
+[assembly: InternalsVisibleTo("Nuke.Website.Functions")]
