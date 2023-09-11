@@ -1159,6 +1159,22 @@
       }
     },
     {
+      "help": "The <c>dotnet workload uninstall</c> command uninstalls one or more workloads.",
+      "postfix": "WorkloadUninstall",
+      "omitCommonProperties": true,
+      "definiteArgument": "workload uninstall",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "WorkloadId",
+            "type": "List<string>",
+            "format": "{value}",
+            "help": "The workload ID or multiple IDs to install."
+          }
+        ]
+      }
+    },
+    {
       "help": "The <c>dotnet workload restore</c> command analyzes a project or solution to determine which workloads it needs, then installs any workloads that are missing.",
       "postfix": "WorkloadRestore",
       "omitCommonProperties": true,
