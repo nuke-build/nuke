@@ -29,7 +29,6 @@ There are a number of minimal to zero efforts you can make to show your support 
 - Follow [@nukebuildnet](https://twitter.com/nukebuildnet) and [@nuke@dotnet.social](https://dotnet.social/@nuke)
 - Upvote, share, and comment our content (see [#mentions](https://app.slack.com/client/T9QUKHC4A/CDJD8CGQ5) on Slack)
 - Talk about NUKE on social media and let others know where it can help (tag us!)
-- Give ratings where possible (e.g., extensions for [Rider](https://plugins.jetbrains.com/plugin/10803-nuke-support/reviews) or [Visual Studio](https://marketplace.visualstudio.com/items?itemName=nuke.visualstudio&ssr=false#review-details)) 
 
 The above points are considered somewhat of the norm in exchange for using the project free of charge.
 

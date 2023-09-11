@@ -10116,6 +10116,87 @@ public partial class DockerTasks
         return configurator.Invoke(DockerBuildxBuild, DockerLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
+    ///   <p>Create a new builder instance using Docker Buildx plugin.</p>
+    ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerBuildxCreateSettings.CliSettings"/></li>
+    ///     <li><c>--append</c> via <see cref="DockerBuildxCreateSettings.Append"/></li>
+    ///     <li><c>--bootstrap</c> via <see cref="DockerBuildxCreateSettings.Bootstrap"/></li>
+    ///     <li><c>--buildkitd-flags</c> via <see cref="DockerBuildxCreateSettings.BuildKitDaemonFlags"/></li>
+    ///     <li><c>--buildkitd-flags</c> via <see cref="DockerBuildxCreateSettings.BuildKitDFlags"/></li>
+    ///     <li><c>--config</c> via <see cref="DockerBuildxCreateSettings.Config"/></li>
+    ///     <li><c>--driver</c> via <see cref="DockerBuildxCreateSettings.Driver"/></li>
+    ///     <li><c>--driver-opt</c> via <see cref="DockerBuildxCreateSettings.DriverOpt"/></li>
+    ///     <li><c>--leave</c> via <see cref="DockerBuildxCreateSettings.Leave"/></li>
+    ///     <li><c>--name</c> via <see cref="DockerBuildxCreateSettings.Name"/></li>
+    ///     <li><c>--node</c> via <see cref="DockerBuildxCreateSettings.Node"/></li>
+    ///     <li><c>--platform</c> via <see cref="DockerBuildxCreateSettings.Platform"/></li>
+    ///     <li><c>--use</c> via <see cref="DockerBuildxCreateSettings.Use"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DockerBuildxCreate(DockerBuildxCreateSettings toolSettings = null)
+    {
+        toolSettings = toolSettings ?? new DockerBuildxCreateSettings();
+        using var process = ProcessTasks.StartProcess(toolSettings);
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        return process.Output;
+    }
+    /// <summary>
+    ///   <p>Create a new builder instance using Docker Buildx plugin.</p>
+    ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerBuildxCreateSettings.CliSettings"/></li>
+    ///     <li><c>--append</c> via <see cref="DockerBuildxCreateSettings.Append"/></li>
+    ///     <li><c>--bootstrap</c> via <see cref="DockerBuildxCreateSettings.Bootstrap"/></li>
+    ///     <li><c>--buildkitd-flags</c> via <see cref="DockerBuildxCreateSettings.BuildKitDaemonFlags"/></li>
+    ///     <li><c>--buildkitd-flags</c> via <see cref="DockerBuildxCreateSettings.BuildKitDFlags"/></li>
+    ///     <li><c>--config</c> via <see cref="DockerBuildxCreateSettings.Config"/></li>
+    ///     <li><c>--driver</c> via <see cref="DockerBuildxCreateSettings.Driver"/></li>
+    ///     <li><c>--driver-opt</c> via <see cref="DockerBuildxCreateSettings.DriverOpt"/></li>
+    ///     <li><c>--leave</c> via <see cref="DockerBuildxCreateSettings.Leave"/></li>
+    ///     <li><c>--name</c> via <see cref="DockerBuildxCreateSettings.Name"/></li>
+    ///     <li><c>--node</c> via <see cref="DockerBuildxCreateSettings.Node"/></li>
+    ///     <li><c>--platform</c> via <see cref="DockerBuildxCreateSettings.Platform"/></li>
+    ///     <li><c>--use</c> via <see cref="DockerBuildxCreateSettings.Use"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DockerBuildxCreate(Configure<DockerBuildxCreateSettings> configurator)
+    {
+        return DockerBuildxCreate(configurator(new DockerBuildxCreateSettings()));
+    }
+    /// <summary>
+    ///   <p>Create a new builder instance using Docker Buildx plugin.</p>
+    ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;cliSettings&gt;</c> via <see cref="DockerBuildxCreateSettings.CliSettings"/></li>
+    ///     <li><c>--append</c> via <see cref="DockerBuildxCreateSettings.Append"/></li>
+    ///     <li><c>--bootstrap</c> via <see cref="DockerBuildxCreateSettings.Bootstrap"/></li>
+    ///     <li><c>--buildkitd-flags</c> via <see cref="DockerBuildxCreateSettings.BuildKitDaemonFlags"/></li>
+    ///     <li><c>--buildkitd-flags</c> via <see cref="DockerBuildxCreateSettings.BuildKitDFlags"/></li>
+    ///     <li><c>--config</c> via <see cref="DockerBuildxCreateSettings.Config"/></li>
+    ///     <li><c>--driver</c> via <see cref="DockerBuildxCreateSettings.Driver"/></li>
+    ///     <li><c>--driver-opt</c> via <see cref="DockerBuildxCreateSettings.DriverOpt"/></li>
+    ///     <li><c>--leave</c> via <see cref="DockerBuildxCreateSettings.Leave"/></li>
+    ///     <li><c>--name</c> via <see cref="DockerBuildxCreateSettings.Name"/></li>
+    ///     <li><c>--node</c> via <see cref="DockerBuildxCreateSettings.Node"/></li>
+    ///     <li><c>--platform</c> via <see cref="DockerBuildxCreateSettings.Platform"/></li>
+    ///     <li><c>--use</c> via <see cref="DockerBuildxCreateSettings.Use"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IEnumerable<(DockerBuildxCreateSettings Settings, IReadOnlyCollection<Output> Output)> DockerBuildxCreate(CombinatorialConfigure<DockerBuildxCreateSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+    {
+        return configurator.Invoke(DockerBuildxCreate, DockerLogger, degreeOfParallelism, completeOnFailure);
+    }
+    /// <summary>
     ///   <p>Display a live stream of container(s) resource usage statistics.</p>
     ///   <p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p>
     /// </summary>
@@ -21844,6 +21925,90 @@ public partial class DockerBuildxBuildSettings : DockerSettings
           .Add("--target {value}", Target)
           .Add("--ulimit {value}", Ulimit)
           .Add("{value}", Path)
+          .Add("{value}", GetCliSettings(), customValue: true);
+        return base.ConfigureProcessArguments(arguments);
+    }
+}
+#endregion
+#region DockerBuildxCreateSettings
+/// <summary>
+///   Used within <see cref="DockerTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Serializable]
+public partial class DockerBuildxCreateSettings : DockerSettings
+{
+    /// <summary>
+    ///   Path to the Docker executable.
+    /// </summary>
+    public override string ProcessToolPath => base.ProcessToolPath ?? DockerTasks.DockerPath;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DockerTasks.DockerLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DockerTasks.DockerExitHandler;
+    /// <summary>
+    ///   Append a node to builder instead of changing it.
+    /// </summary>
+    public virtual bool? Append { get; internal set; }
+    /// <summary>
+    ///   Boot builder after creation.
+    /// </summary>
+    public virtual bool? Bootstrap { get; internal set; }
+    /// <summary>
+    ///   Flags for buildkitd daemon.
+    /// </summary>
+    public virtual string BuildKitDaemonFlags { get; internal set; }
+    /// <summary>
+    ///   Flags for buildkitd daemon.
+    /// </summary>
+    public virtual string BuildKitDFlags { get; internal set; }
+    /// <summary>
+    ///   BuildKit config file.
+    /// </summary>
+    public virtual string Config { get; internal set; }
+    /// <summary>
+    ///   Driver to use (available: <c>docker-container</c>, <c>kubernetes</c>, <c>remote</c>).
+    /// </summary>
+    public virtual DriverType Driver { get; internal set; }
+    /// <summary>
+    ///   Options for the driver.
+    /// </summary>
+    public virtual string DriverOpt { get; internal set; }
+    /// <summary>
+    ///   Remove a node from builder instead of changing it.
+    /// </summary>
+    public virtual bool? Leave { get; internal set; }
+    /// <summary>
+    ///   Builder instance name.
+    /// </summary>
+    public virtual string Name { get; internal set; }
+    /// <summary>
+    ///   Create/modify node with given name.
+    /// </summary>
+    public virtual string Node { get; internal set; }
+    /// <summary>
+    ///   Fixed platforms for current node.
+    /// </summary>
+    public virtual string Platform { get; internal set; }
+    /// <summary>
+    ///   Set the current builder instance.
+    /// </summary>
+    public virtual bool? Use { get; internal set; }
+    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    {
+        arguments
+          .Add("buildx create")
+          .Add("--append", Append)
+          .Add("--bootstrap", Bootstrap)
+          .Add("--buildkitd-flags {value}", BuildKitDaemonFlags)
+          .Add("--buildkitd-flags {value}", BuildKitDFlags)
+          .Add("--config {value}", Config)
+          .Add("--driver {value}", Driver)
+          .Add("--driver-opt {value}", DriverOpt)
+          .Add("--leave", Leave)
+          .Add("--name {value}", Name)
+          .Add("--node {value}", Node)
+          .Add("--platform {value}", Platform)
+          .Add("--use", Use)
           .Add("{value}", GetCliSettings(), customValue: true);
         return base.ConfigureProcessArguments(arguments);
     }
@@ -74499,6 +74664,436 @@ public static partial class DockerBuildxBuildSettingsExtensions
     #endregion
 }
 #endregion
+#region DockerBuildxCreateSettingsExtensions
+/// <summary>
+///   Used within <see cref="DockerTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DockerBuildxCreateSettingsExtensions
+{
+    #region Append
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.Append"/></em></p>
+    ///   <p>Append a node to builder instead of changing it.</p>
+    /// </summary>
+    [Pure]
+    public static T SetAppend<T>(this T toolSettings, bool? append) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Append = append;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.Append"/></em></p>
+    ///   <p>Append a node to builder instead of changing it.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetAppend<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Append = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DockerBuildxCreateSettings.Append"/></em></p>
+    ///   <p>Append a node to builder instead of changing it.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableAppend<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Append = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DockerBuildxCreateSettings.Append"/></em></p>
+    ///   <p>Append a node to builder instead of changing it.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableAppend<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Append = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DockerBuildxCreateSettings.Append"/></em></p>
+    ///   <p>Append a node to builder instead of changing it.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleAppend<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Append = !toolSettings.Append;
+        return toolSettings;
+    }
+    #endregion
+    #region Bootstrap
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.Bootstrap"/></em></p>
+    ///   <p>Boot builder after creation.</p>
+    /// </summary>
+    [Pure]
+    public static T SetBootstrap<T>(this T toolSettings, bool? bootstrap) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Bootstrap = bootstrap;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.Bootstrap"/></em></p>
+    ///   <p>Boot builder after creation.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetBootstrap<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Bootstrap = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DockerBuildxCreateSettings.Bootstrap"/></em></p>
+    ///   <p>Boot builder after creation.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableBootstrap<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Bootstrap = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DockerBuildxCreateSettings.Bootstrap"/></em></p>
+    ///   <p>Boot builder after creation.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableBootstrap<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Bootstrap = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DockerBuildxCreateSettings.Bootstrap"/></em></p>
+    ///   <p>Boot builder after creation.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleBootstrap<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Bootstrap = !toolSettings.Bootstrap;
+        return toolSettings;
+    }
+    #endregion
+    #region BuildKitDaemonFlags
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.BuildKitDaemonFlags"/></em></p>
+    ///   <p>Flags for buildkitd daemon.</p>
+    /// </summary>
+    [Pure]
+    public static T SetBuildKitDaemonFlags<T>(this T toolSettings, string buildKitDaemonFlags) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.BuildKitDaemonFlags = buildKitDaemonFlags;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.BuildKitDaemonFlags"/></em></p>
+    ///   <p>Flags for buildkitd daemon.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetBuildKitDaemonFlags<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.BuildKitDaemonFlags = null;
+        return toolSettings;
+    }
+    #endregion
+    #region BuildKitDFlags
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.BuildKitDFlags"/></em></p>
+    ///   <p>Flags for buildkitd daemon.</p>
+    /// </summary>
+    [Pure]
+    public static T SetBuildKitDFlags<T>(this T toolSettings, string buildKitDFlags) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.BuildKitDFlags = buildKitDFlags;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.BuildKitDFlags"/></em></p>
+    ///   <p>Flags for buildkitd daemon.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetBuildKitDFlags<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.BuildKitDFlags = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Config
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.Config"/></em></p>
+    ///   <p>BuildKit config file.</p>
+    /// </summary>
+    [Pure]
+    public static T SetConfig<T>(this T toolSettings, string config) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Config = config;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.Config"/></em></p>
+    ///   <p>BuildKit config file.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetConfig<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Config = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Driver
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.Driver"/></em></p>
+    ///   <p>Driver to use (available: <c>docker-container</c>, <c>kubernetes</c>, <c>remote</c>).</p>
+    /// </summary>
+    [Pure]
+    public static T SetDriver<T>(this T toolSettings, DriverType driver) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Driver = driver;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.Driver"/></em></p>
+    ///   <p>Driver to use (available: <c>docker-container</c>, <c>kubernetes</c>, <c>remote</c>).</p>
+    /// </summary>
+    [Pure]
+    public static T ResetDriver<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Driver = null;
+        return toolSettings;
+    }
+    #endregion
+    #region DriverOpt
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.DriverOpt"/></em></p>
+    ///   <p>Options for the driver.</p>
+    /// </summary>
+    [Pure]
+    public static T SetDriverOpt<T>(this T toolSettings, string driverOpt) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DriverOpt = driverOpt;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.DriverOpt"/></em></p>
+    ///   <p>Options for the driver.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetDriverOpt<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DriverOpt = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Leave
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.Leave"/></em></p>
+    ///   <p>Remove a node from builder instead of changing it.</p>
+    /// </summary>
+    [Pure]
+    public static T SetLeave<T>(this T toolSettings, bool? leave) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Leave = leave;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.Leave"/></em></p>
+    ///   <p>Remove a node from builder instead of changing it.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetLeave<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Leave = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DockerBuildxCreateSettings.Leave"/></em></p>
+    ///   <p>Remove a node from builder instead of changing it.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableLeave<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Leave = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DockerBuildxCreateSettings.Leave"/></em></p>
+    ///   <p>Remove a node from builder instead of changing it.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableLeave<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Leave = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DockerBuildxCreateSettings.Leave"/></em></p>
+    ///   <p>Remove a node from builder instead of changing it.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleLeave<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Leave = !toolSettings.Leave;
+        return toolSettings;
+    }
+    #endregion
+    #region Name
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.Name"/></em></p>
+    ///   <p>Builder instance name.</p>
+    /// </summary>
+    [Pure]
+    public static T SetName<T>(this T toolSettings, string name) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Name = name;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.Name"/></em></p>
+    ///   <p>Builder instance name.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetName<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Name = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Node
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.Node"/></em></p>
+    ///   <p>Create/modify node with given name.</p>
+    /// </summary>
+    [Pure]
+    public static T SetNode<T>(this T toolSettings, string node) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Node = node;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.Node"/></em></p>
+    ///   <p>Create/modify node with given name.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetNode<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Node = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Platform
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.Platform"/></em></p>
+    ///   <p>Fixed platforms for current node.</p>
+    /// </summary>
+    [Pure]
+    public static T SetPlatform<T>(this T toolSettings, string platform) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Platform = platform;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.Platform"/></em></p>
+    ///   <p>Fixed platforms for current node.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetPlatform<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Platform = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Use
+    /// <summary>
+    ///   <p><em>Sets <see cref="DockerBuildxCreateSettings.Use"/></em></p>
+    ///   <p>Set the current builder instance.</p>
+    /// </summary>
+    [Pure]
+    public static T SetUse<T>(this T toolSettings, bool? use) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Use = use;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DockerBuildxCreateSettings.Use"/></em></p>
+    ///   <p>Set the current builder instance.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetUse<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Use = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DockerBuildxCreateSettings.Use"/></em></p>
+    ///   <p>Set the current builder instance.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableUse<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Use = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DockerBuildxCreateSettings.Use"/></em></p>
+    ///   <p>Set the current builder instance.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableUse<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Use = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DockerBuildxCreateSettings.Use"/></em></p>
+    ///   <p>Set the current builder instance.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleUse<T>(this T toolSettings) where T : DockerBuildxCreateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Use = !toolSettings.Use;
+        return toolSettings;
+    }
+    #endregion
+}
+#endregion
 #region DockerStatsSettingsExtensions
 /// <summary>
 ///   Used within <see cref="DockerTasks"/>.
@@ -82239,6 +82834,25 @@ public partial class ProgressType : Enumeration
     public static implicit operator ProgressType(string value)
     {
         return new ProgressType { Value = value };
+    }
+}
+#endregion
+#region DriverType
+/// <summary>
+///   Used within <see cref="DockerTasks"/>.
+/// </summary>
+[PublicAPI]
+[Serializable]
+[ExcludeFromCodeCoverage]
+[TypeConverter(typeof(TypeConverter<DriverType>))]
+public partial class DriverType : Enumeration
+{
+    public static DriverType docker_container = (DriverType) "docker-container";
+    public static DriverType kubernetes = (DriverType) "kubernetes";
+    public static DriverType remote = (DriverType) "remote";
+    public static implicit operator DriverType(string value)
+    {
+        return new DriverType { Value = value };
     }
 }
 #endregion

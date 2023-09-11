@@ -22,7 +22,7 @@ namespace Nuke.Common.IO;
 [Serializable]
 [TypeConverter(typeof(TypeConverter))]
 [DebuggerDisplay("{" + nameof(_path) + "}")]
-public class AbsolutePath : IFormattable
+public class AbsolutePath : IAbsolutePathHolder, IFormattable
 {
     public const string DoubleQuote = "d";
     public const string DoubleQuoteIfNeeded = "dn";
@@ -64,6 +64,8 @@ public class AbsolutePath : IFormattable
     {
         _path = NormalizePath(path);
     }
+
+    AbsolutePath IAbsolutePathHolder.Path => this;
 
     [ContractAnnotation("null => null")]
     public static implicit operator AbsolutePath([CanBeNull] string path)
