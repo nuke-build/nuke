@@ -13,7 +13,12 @@
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-uninstall.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-update.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-msbuild.md",
-    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-format.md"
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-format.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-workload-install.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-workload-repair.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-workload-restore.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-workload-uninstall.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-workload-update.md"
   ],
   "name": "DotNet",
   "officialUrl": "https://docs.microsoft.com/en-us/dotnet/core/tools/",
