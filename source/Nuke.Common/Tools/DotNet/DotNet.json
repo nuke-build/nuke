@@ -1081,6 +1081,82 @@
           }
         ]
       }
+    },
+    {
+      "help": "The <c>dotnet workload install</c> command installs one or more optional workloads. Optional workloads can be installed on top of the .NET SDK to provide support for various application types, such as .NET MAUI and Blazor WebAssembly AOT.",
+      "postfix": "WorkloadInstall",
+      "omitCommonProperties": true,
+      "definiteArgument": "workload install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "WorkloadId",
+            "type": "List<string>",
+            "format": "{value}",
+            "help": "The workload ID or multiple IDs to install."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configFile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used."
+          },
+          {
+            "name": "DisableParallel",
+            "type": "bool",
+            "format": "--disable-parallel",
+            "help": "Prevents restoring multiple projects in parallel."
+          },
+          {
+            "name": "IgnoreFailedSources",
+            "type": "bool",
+            "format": "--ignore-failed-sources",
+            "help": "Treats package source failures as warnings."
+          },
+          {
+            "name": "IncludePreviews",
+            "type": "bool",
+            "format": "--include-previews",
+            "help": "Allows prerelease workload manifests."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "--no-cache",
+            "help": "Prevents caching of packages and http requests."
+          },
+          {
+            "name": "SkipManifestUpdate",
+            "type": "bool",
+            "format": "--skip-manifest-update",
+            "help": "Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times."
+          },
+          {
+            "name": "TempDir",
+            "type": "string",
+            "format": "--temp-dir {value}",
+            "help": "Specify the temporary directory used to download and extract NuGet packages (must be secure)."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
     }
   ],
   "commonTaskProperties": [
