@@ -1233,6 +1233,82 @@
           }
         ]
       }
+    },
+    {
+      "help": "The <c>dotnet workload update</c> command updates all installed workloads to the newest available versions. It queries Nuget.org for updated workload manifests. It then updates local manifests, downloads new versions of the installed workloads, and removes all old versions of each workload.",
+      "postfix": "WorkloadUpdate",
+      "omitCommonProperties": true,
+      "definiteArgument": "workload update",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AdvertisingManifestsOnly",
+            "type": "bool",
+            "format": "--advertising-manifests-only",
+            "help": "Downloads advertising manifests but doesn't update any workloads."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configFile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used."
+          },
+          {
+            "name": "DisableParallel",
+            "type": "bool",
+            "format": "--disable-parallel",
+            "help": "Prevents restoring multiple projects in parallel."
+          },
+          {
+            "name": "FromPreviousSdk",
+            "type": "bool",
+            "format": "--from-previous-sdk",
+            "help": "Include workloads installed with previous SDK versions in the update."
+          },
+          {
+            "name": "IgnoreFailedSources",
+            "type": "bool",
+            "format": "--ignore-failed-sources",
+            "help": "Treats package source failures as warnings."
+          },
+          {
+            "name": "IncludePreviews",
+            "type": "bool",
+            "format": "--include-previews",
+            "help": "Allows prerelease workload manifests."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "--no-cache",
+            "help": "Prevents caching of packages and http requests."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times."
+          },
+          {
+            "name": "TempDir",
+            "type": "string",
+            "format": "--temp-dir {value}",
+            "help": "Specify the temporary directory used to download and extract NuGet packages (must be secure)."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
     }
   ],
   "commonTaskProperties": [
