@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities.Net;
 
