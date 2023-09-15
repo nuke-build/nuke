@@ -27,7 +27,7 @@ partial class AbsolutePathExtensions
             return Enumerable.Empty<AbsolutePath>();
 
         var files = Directory.EnumerateFiles(path, pattern, SearchOption.TopDirectoryOnly)
-            .Where(x => (File.GetAttributes(x) & attributes) == 0)
+            .Where(x => (File.GetAttributes(x) & attributes) == attributes)
             .OrderBy(x => x)
             .Select(AbsolutePath.Create);
 
@@ -50,7 +50,7 @@ partial class AbsolutePathExtensions
         {
             var matchingDirectories = paths
                 .SelectMany(x => Directory.EnumerateDirectories(x, pattern, SearchOption.TopDirectoryOnly))
-                .Where(x => (File.GetAttributes(x) & attributes) == 0)
+                .Where(x => (File.GetAttributes(x) & attributes) == attributes)
                 .OrderBy(x => x)
                 .Select(AbsolutePath.Create).ToList();
 
