@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed logging of Docker target execution to fall back to debug messages
 
 ## [7.0.5] / 2023-09-05
 - Fixed filtering environment variables with newlines in Docker target execution
