@@ -74,5 +74,5 @@ You can complete targets, parameters, and enumeration values by hitting the <kbd
     autoplay={true}
     poster="npt:12.077312"
     preload={true}
-    // terminalFontFamily="'JetBrains Mono', Consolas, Menlo, 'Bitstream Vera Sans Mono', monospace"
+    terminalFontFamily="'JetBrains Mono', Consolas, Menlo, 'Bitstream Vera Sans Mono', monospace"
     loop={true}/>
