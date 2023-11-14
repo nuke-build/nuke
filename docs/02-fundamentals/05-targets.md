@@ -131,7 +131,7 @@ When choosing a direction, you should ask yourself which target should know abou
 
 :::caution
 
-Dependencies between targets are solely defined between the individual targets and _not_ through the position they take in a dependency call. The following examples illustrate the difference between the **partial and total order** of targets:
+Dependencies between targets are ONLY defined between the individual targets and NOT through their positions in a dependency call. The following examples illustrate the difference between the **partial and total order** of targets:
 
 <Tabs>
   <TabItem value="partial" label="Partial Order">
