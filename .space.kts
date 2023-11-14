@@ -22,7 +22,7 @@ job("continuous") {
         }
     }
 
-    container("mcr.microsoft.com/dotnet/sdk:6.0") {
+    container("mcr.microsoft.com/dotnet/sdk:8.0") {
         shellScript {
             content = "./build.sh Test"
         }
