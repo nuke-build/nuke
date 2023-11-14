@@ -26,7 +26,7 @@ public class ProjectModelTest
         var action = new Action(() => project.GetMSBuildProject());
         action.Should().NotThrow();
 
-        project.GetTargetFrameworks().Should().Equal("net6.0", "net7.0");
+        project.GetTargetFrameworks().Should().Equal("net6.0", "net7.0", "net8.0");
         project.HasPackageReference("Microsoft.Build.Locator").Should().BeTrue();
         project.GetPackageReferenceVersion("Microsoft.Build.Locator").Should().Be("1.6.10");
     }
