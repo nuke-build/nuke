@@ -71,7 +71,7 @@ partial class Build
                 .DrawText(
                     text: "New Release".ToUpperInvariant(),
                     color: Color.WhiteSmoke,
-                    textOptions: new TextOptions(thinFont.CreateFont(100))
+                    textOptions: new RichTextOptions(thinFont.CreateFont(100))
                                  {
                                      Origin = new PointF(image.Width / 2f, image.Height / 2f - 120),
                                      HorizontalAlignment = HorizontalAlignment.Center,
@@ -80,7 +80,7 @@ partial class Build
                 .DrawText(
                     text: MajorMinorPatchVersion,
                     color: Color.WhiteSmoke,
-                    textOptions: new TextOptions(boldFont.CreateFont(230))
+                    textOptions: new RichTextOptions(boldFont.CreateFont(230))
                                  {
                                      Origin = new PointF(image.Width / 2f, image.Height / 2f + 60),
                                      HorizontalAlignment = HorizontalAlignment.Center,
