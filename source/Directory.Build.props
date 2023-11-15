@@ -3,11 +3,12 @@
   <PropertyGroup>
     <LangVersion>preview</LangVersion>
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
-    <NoWarn>CS1591;NU5129;NU5118</NoWarn>
+    <NoWarn>CS1591;NU5129;NU5118;SYSLIB0050;SYSLIB0051</NoWarn>
     <DefineConstants>$(DefineConstants);JETBRAINS_ANNOTATIONS</DefineConstants>
     <DebugType>embedded</DebugType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
 
   <PropertyGroup>
