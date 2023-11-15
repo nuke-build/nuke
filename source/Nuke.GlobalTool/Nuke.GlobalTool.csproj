@@ -15,9 +15,9 @@
 
   <ItemGroup>
     <PackageReference Include="matkoch.spectre.console" Version="0.46.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.2.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.2.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.2.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.7.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.7.0" />
   </ItemGroup>
 
   <ItemGroup>
