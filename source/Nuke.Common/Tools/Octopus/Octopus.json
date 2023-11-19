@@ -87,7 +87,7 @@
           },
           {
             "name": "Include",
-            "type": "string",
+            "type": "List<string>",
             "format": "--include={value}",
             "help": "Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>."
           },
