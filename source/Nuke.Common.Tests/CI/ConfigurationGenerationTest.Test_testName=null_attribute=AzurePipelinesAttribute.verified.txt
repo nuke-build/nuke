@@ -36,11 +36,11 @@ trigger:
       - excluded_path
 
 stages:
-  - stage: ubuntu_18_04
-    displayName: 'ubuntu-18.04'
+  - stage: ubuntu_22_04
+    displayName: 'ubuntu-22.04'
     dependsOn: [  ]
     pool:
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-22.04'
     jobs:
       - job: Restore
         displayName: 'Restore'
