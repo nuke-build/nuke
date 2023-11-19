@@ -20,6 +20,8 @@ partial class NpmTasks
             {
                 if (output.StartsWith("npmWARN") || output.StartsWith("npm WARN"))
                     Log.Warning(output);
+                else if(output.StartsWith("npm notice"))
+                    Log.Debug(output);
                 else
                     Log.Error(output);
 
