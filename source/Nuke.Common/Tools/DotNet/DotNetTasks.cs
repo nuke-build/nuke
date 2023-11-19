@@ -16,10 +16,10 @@ public class DotNetVerbosityMappingAttribute : VerbosityMappingAttribute
     public DotNetVerbosityMappingAttribute()
         : base(typeof(DotNetVerbosity))
     {
-        Quiet = nameof(DotNetVerbosity.Quiet);
-        Minimal = nameof(DotNetVerbosity.Minimal);
-        Normal = nameof(DotNetVerbosity.Minimal);
-        Verbose = nameof(DotNetVerbosity.Detailed);
+        Quiet = nameof(DotNetVerbosity.quiet);
+        Minimal = nameof(DotNetVerbosity.minimal);
+        Normal = nameof(DotNetVerbosity.minimal);
+        Verbose = nameof(DotNetVerbosity.detailed);
     }
 }
 
