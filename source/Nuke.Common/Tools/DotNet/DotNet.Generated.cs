@@ -23121,11 +23121,11 @@ public static partial class DotNetToolUpdateSettingsExtensions
 [TypeConverter(typeof(TypeConverter<DotNetVerbosity>))]
 public partial class DotNetVerbosity : Enumeration
 {
-    public static DotNetVerbosity Quiet = (DotNetVerbosity) "Quiet";
-    public static DotNetVerbosity Minimal = (DotNetVerbosity) "Minimal";
-    public static DotNetVerbosity Normal = (DotNetVerbosity) "Normal";
-    public static DotNetVerbosity Detailed = (DotNetVerbosity) "Detailed";
-    public static DotNetVerbosity Diagnostic = (DotNetVerbosity) "Diagnostic";
+    public static DotNetVerbosity quiet = (DotNetVerbosity) "quiet";
+    public static DotNetVerbosity minimal = (DotNetVerbosity) "minimal";
+    public static DotNetVerbosity normal = (DotNetVerbosity) "normal";
+    public static DotNetVerbosity detailed = (DotNetVerbosity) "detailed";
+    public static DotNetVerbosity diagnostic = (DotNetVerbosity) "diagnostic";
     public static implicit operator DotNetVerbosity(string value)
     {
         return new DotNetVerbosity { Value = value };

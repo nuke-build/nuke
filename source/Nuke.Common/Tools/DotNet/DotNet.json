@@ -1626,11 +1626,11 @@
     {
       "name": "DotNetVerbosity",
       "values": [
-        "Quiet",
-        "Minimal",
-        "Normal",
-        "Detailed",
-        "Diagnostic"
+        "quiet",
+        "minimal",
+        "normal",
+        "detailed",
+        "diagnostic"
       ]
     },
     {
