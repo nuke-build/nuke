@@ -134,15 +134,7 @@ public class AppVeyorConfiguration : ConfigurationEntity
             writer.WriteLine();
             using (writer.WriteBlock("artifacts:"))
             {
-                Artifacts.ForEach(x =>
-                {
-                    if (x.Length > 0 && x[0] == '*')
-                    {
-                        x = x.SingleQuoteIfNeeded();
-                    }
-
-                    writer.WriteLine($"- path: {x}");
-                });
+                Artifacts.ForEach(x => writer.WriteLine($"- path: {x.SingleQuoteIfNeeded(disallowed: '*')}"));
             }
         }
 
