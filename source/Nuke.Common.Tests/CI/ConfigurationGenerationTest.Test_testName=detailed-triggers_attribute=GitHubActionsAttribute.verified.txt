@@ -44,13 +44,17 @@ on:
   schedule:
     - cron: '* 0 * * *'
 
+concurrency:
+  group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   macos-latest:
     name: macos-latest
     runs-on: macos-latest
     timeout-minutes: 30
     concurrency:
-      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      group: custom-job-group
       cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3
@@ -93,7 +97,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     concurrency:
-      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      group: custom-job-group
       cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3
@@ -136,7 +140,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 30
     concurrency:
-      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      group: custom-job-group
       cancel-in-progress: true
     steps:
       - uses: actions/checkout@v3

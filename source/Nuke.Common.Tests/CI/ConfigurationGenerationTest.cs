@@ -158,7 +158,9 @@ public class ConfigurationGenerationTest
                     Lfs = true,
                     FetchDepth = 2,
                     TimeoutMinutes = 30,
-                    JobConcurrencyCancelInProgress = true
+                    ConcurrencyCancelInProgress = true,
+                    JobConcurrencyCancelInProgress = true,
+                    JobConcurrencyGroup = "custom-job-group"
                 }
             );
 
