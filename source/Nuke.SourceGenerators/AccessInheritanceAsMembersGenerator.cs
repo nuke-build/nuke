@@ -68,27 +68,6 @@ public class AccessInheritanceAsMembersGenerator : ISourceGenerator
                          classDeclarationSyntax.Modifiers.Any(y => y.Kind() == SyntaxKind.PartialKeyword)))
                 continue;
             
-            
-            // generate a partial class with the same name
-            switch (type.DeclaredAccessibility)
-            {
-                case Accessibility.Public:
-                    generatedSource.Append("public ");
-                    break;
-                case Accessibility.Protected:
-                    generatedSource.Append("protected ");
-                    break;
-                case Accessibility.Internal:
-                    generatedSource.Append("internal ");
-                    break;
-                case Accessibility.ProtectedAndInternal:
-                    generatedSource.Append("protected internal ");
-                    break;
-                case Accessibility.Private:
-                    generatedSource.Append("private ");
-                    break;
-            }
-
             generatedSource.Append("partial class ");
             generatedSource.AppendLine(type.Name);
             generatedSource.AppendLine("{");
