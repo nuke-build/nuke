@@ -31,7 +31,7 @@ public class AccessInheritanceAsMembersGenerator : ISourceGenerator
         catch (Exception exception)
         {
             var diagnostic = Diagnostic.Create(
-                "NUKE001",
+                "NUKE002",
                 nameof(AccessInheritanceAsMembersGenerator),
                 exception.Message,
                 DiagnosticSeverity.Error,
