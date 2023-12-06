@@ -42,9 +42,9 @@
           {
             "name": "Parameters",
             "type": "Dictionary<string, string>",
-            "format": "--params={value}",
+            "format": "--testparam={value}",
             "itemFormat": "{key}={value}",
-            "help": "A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times."
+            "help": "A test parameter specified in the form NAME=VALUE for consumption by tests. Multiple parameters must be specified separated using a <c>--testparam</c> option for each."
           },
           {
             "name": "Configuration",
