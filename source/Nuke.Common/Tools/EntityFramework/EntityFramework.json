@@ -234,6 +234,39 @@
       }
     },
     {
+      "help": "The <c>dotnet ef migrations bundle</c> command is used to create a bundle.",
+      "postfix": "MigrationsBundle",
+      "definiteArgument": "ef migrations bundle",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "The path of executable file to create. Paths are relative to the project directory."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Overwrite existing files."
+          },
+          {
+            "name": "SelfContained",
+            "type": "bool",
+            "format": "--self-contained",
+            "help": "Create a self-contained executable file. No installed Framework required when this file is executed on the target system."
+          },
+          {
+            "name": "TargetRuntime",
+            "type": "string",
+            "format": "--target-runtime {value}",
+            "help": "The target runtime to bundle for. Example: <c>linux-x64</c>"
+          }          
+        ]
+      }
+    },        
+    {
       "help": "The <c>dotnet ef migrations script</c> command is used to generate a SQL script from migrations.",
       "postfix": "MigrationsScript",
       "definiteArgument": "ef migrations script",
