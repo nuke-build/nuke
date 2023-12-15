@@ -27,7 +27,8 @@ var extensionWithDot = IndexFile.Extension;
 
 // Get the parent directory
 var parent1 = IndexFile.Parent;
-var parent2 = IndexFile / ".."; // gets normalized
+var parent2 = IndexFile / ..;   // gets normalized
+var parent3 = IndexFile / ".."; // gets normalized
 
 // Check if one path contains another
 var containsFile = SourceDirectory.Contains(IndexFile);

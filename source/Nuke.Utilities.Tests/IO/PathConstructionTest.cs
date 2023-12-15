@@ -24,6 +24,7 @@ public class PathConstructionTest
     {
         ((AbsolutePath) path).Parent.Should().Be((AbsolutePath) expected);
         ((string) ((AbsolutePath) path).Parent).Should().Be(expected);
+        ((AbsolutePath)path / ..).Should().Be((AbsolutePath)expected);
     }
 
     [Theory]
@@ -212,6 +213,14 @@ public class PathConstructionTest
 
         ((string) (UnixRelativePath) "foo\\bar").Should().Be("foo/bar");
         ((string) (WinRelativePath) "foo/bar").Should().Be("foo\\bar");
+    }
+
+    [Fact]
+    public void RelativePath_Parent()
+    {
+        ((string) ((UnixRelativePath) "foo/bar/foo" / ..)).Should().Be("foo/bar");
+        ((string) ((WinRelativePath) "foo/bar/foo" / ..)).Should().Be("foo\\bar");
+        ((string) ((RelativePath) "foo/bar" / ..)).Should().Be("foo");
     }
 
     private static string ParseRelativePath(object[] parts)
