@@ -40,10 +40,25 @@ public class RelativePath
         return path?._path;
     }
 
+#if NET6_0_OR_GREATER
+
+    public static RelativePath operator /(RelativePath left, [CanBeNull] Range range)
+    {
+        Assert.True(range.Equals(Range.All));
+        return left / "..";
+    }
+
+#endif
+
     public static RelativePath operator /(RelativePath left, [CanBeNull] string right)
     {
         var separator = left.NotNull()._separator;
         return new RelativePath(NormalizePath(Combine(left, (RelativePath) right, separator), separator), separator);
+    }
+
+    public static RelativePath operator +(RelativePath left, [CanBeNull] string right)
+    {
+        return new RelativePath(left.ToString() + right);
     }
 
     public override string ToString()
