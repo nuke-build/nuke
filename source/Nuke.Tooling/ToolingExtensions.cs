@@ -6,7 +6,10 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.IO;
+using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
+using Serilog;
+using Serilog.Events;
 
 namespace Nuke.Common.Tooling;
 
@@ -64,5 +67,14 @@ public static class ToolingExtensions
         Assert.True(path.DirectoryExists() || path.FileExists());
         var verb = EnvironmentInfo.IsUnix ? "open" : path.DirectoryExists() ? "explorer.exe" : "call";
         ProcessTasks.StartShell($"{verb} {path}");
+    }
+
+    /// <summary>
+    /// Prints the content of a file using the specified <see cref="LogEventLevel"/>.
+    /// </summary>
+    public static AbsolutePath Print(this AbsolutePath path, LogEventLevel level = LogEventLevel.Information)
+    {
+        Log.Write(level, "Content of {Path}".Append(Environment.NewLine).Append(path.ReadAllText()), path);
+        return path;
     }
 }
