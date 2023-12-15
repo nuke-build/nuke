@@ -25,8 +25,8 @@ internal static class DelegateRequirementService
             if (requirement is Expression<Func<bool>> boolExpression)
                 // TODO: same as HasSkippingCondition.GetSkipReason
                 Assert.True(boolExpression.Compile().Invoke(), $"Target '{target.Name}' requires '{requirement.Body}'");
-            else if (IsMemberNull(requirement.GetMemberInfo(), build, target))
-                Assert.Fail($"Target '{target.Name}' requires member '{GetMemberName(requirement.GetMemberInfo())}' to be not null");
+            else if (IsMemberNullOrEmpty(requirement.GetMemberInfo(), build, target))
+                Assert.Fail($"Target '{target.Name}' requires member '{GetMemberName(requirement.GetMemberInfo())}' to be not null or empty");
         }
 
         var requiredMembers = ValueInjectionUtility.GetInjectionMembers(build.GetType())
@@ -34,12 +34,12 @@ internal static class DelegateRequirementService
             .Where(x => x.HasCustomAttribute<RequiredAttribute>());
         foreach (var member in requiredMembers)
         {
-            if (IsMemberNull(member, build))
-                Assert.Fail($"Member '{GetMemberName(member)}' is required to be not null");
+            if (IsMemberNullOrEmpty(member, build))
+                Assert.Fail($"Member '{GetMemberName(member)}' is required to be not null or empty");
         }
     }
 
-    private static bool IsMemberNull(MemberInfo member, INukeBuild build, ExecutableTarget target = null)
+    private static bool IsMemberNullOrEmpty(MemberInfo member, INukeBuild build, ExecutableTarget target = null)
     {
         member = member.DeclaringType != build.GetType()
             ? build.GetType().GetMember(member.Name).SingleOrDefault() ?? member
@@ -52,7 +52,9 @@ internal static class DelegateRequirementService
         if (build.Host is Terminal)
             TryInjectValueInteractive(member, build);
 
-        return member.GetValue(build) == null;
+        return member.GetMemberType() != typeof(string)
+            ? member.GetValue(build) == null
+            : member.GetValue<string>(build).IsNullOrWhiteSpace();
     }
 
     private static void TryInjectValueInteractive(MemberInfo member, INukeBuild build)
