@@ -60,8 +60,8 @@ public interface IProcess : IDisposable
     /// Calls platform specific code to kill entire process tree.
     /// </summary>
     /// <remarks>
-    ///     For Windows it call "taskkill /T /F /PID {process.Id}"
-    ///     For Unix it call combination of "pgrep and kill commands"
+    ///     For Windows it call "<c>taskkill /T /F /PID {process.Id}</c>".
+    ///     For Unix it call combination of <c>pgrep</c> and <c>kill</c> commands
     /// </remarks>
     void KillTree();
 
