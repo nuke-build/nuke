@@ -57,7 +57,16 @@ public interface IProcess : IDisposable
     void Kill();
 
     /// <summary>
-    /// Waits for the process to exit. If the process is not exiting within a given timeout, <see cref="Kill"/> is called.
+    /// Calls platform specific code to kill entire process tree.
+    /// </summary>
+    /// <remarks>
+    ///     For Windows it call "taskkill /T /F /PID {process.Id}"
+    ///     For Unix it call combination of "pgrep and kill commands"
+    /// </remarks>
+    void KillTree();
+
+    /// <summary>
+    /// Waits for the process to exit. If the process is not exiting within a given timeout, <see cref="KillTree"/> is called.
     /// </summary>
     /// <returns>
     /// Returns <c>true</c>, if the process exited on its own.
