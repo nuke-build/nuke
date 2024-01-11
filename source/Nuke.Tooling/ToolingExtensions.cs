@@ -29,6 +29,14 @@ public static class ToolingExtensions
         return path;
     }
 
+    public static AbsolutePath AddUnixSymlink(this AbsolutePath path, AbsolutePath linkPath, bool force = false)
+    {
+        if (EnvironmentInfo.IsUnix)
+            ProcessTasks.StartProcess("ln", $"-s{(force ? "f" : "")} {path} {linkPath}", logInvocation: false, logOutput: false);
+
+        return path;
+    }
+
     public static AbsolutePath SetUnixPermissions(this AbsolutePath path, string permissions)
     {
         if (EnvironmentInfo.IsUnix)
