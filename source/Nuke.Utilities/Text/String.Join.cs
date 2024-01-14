@@ -156,4 +156,18 @@ public static partial class StringExtensions
                 : "\n";
         return values.Join(newLine);
     }
+
+    /// <summary>
+    /// Joins all strings as paragraphs (double new-line).
+    /// </summary>
+    [Pure]
+    public static string JoinParagraph(this IEnumerable<string> values, PlatformFamily? platformFamily = null)
+    {
+        var newLine = !platformFamily.HasValue
+            ? Environment.NewLine
+            : platformFamily.Value == PlatformFamily.Windows
+                ? "\r\n"
+                : "\n";
+        return values.Join(newLine + newLine);
+    }
 }
