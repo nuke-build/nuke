@@ -6,8 +6,6 @@
     "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/ListWebApiControllersCommand.cs",
     "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/TypesToOpenApiCommand.cs",
     "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/TypesToSwaggerCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/WebApi/WebApiToOpenApiCommand.cs",
-    "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/WebApi/WebApiToSwaggerCommand.cs",
     "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/AspNetCore/AspNetCoreToOpenApiCommand.cs",
     "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Generation/AspNetCore/AspNetCoreToSwaggerCommand.cs",
     "https://raw.githubusercontent.com/RSuter/NSwag//src/NSwag.Commands/Commands/Document/CreateDocumentCommand.cs",
@@ -180,7 +178,8 @@
       "definiteArgument": "webapi2openapi",
       "settingsClass": {
         "baseClass": "NSwagSettings"
-      }
+      },
+      "deprecationMessage": "Removed in NSwag v5. See https://github.com/valadas/WebApiToOpenApiReflector for alternate solution."
     },
     {
       "help": "Generates a Swagger/OpenAPI specification for a controller or controlles contained in a .NET Web API assembly (obsolete: use webapi2openapi instead).",
@@ -237,7 +236,8 @@
             "help": "Specifies whether to resolve MvcJsonOptions to infer serializer settings (recommended, default: false, only available when IsAspNetCore is set)."
           }
         ]
-      }
+      },
+      "deprecationMessage": "Removed in NSwag v5. See https://github.com/valadas/WebApiToOpenApiReflector for alternate solution."
     },
     {
       "help": "Generates a Swagger specification ASP.NET Core Mvc application using ApiExplorer.",
