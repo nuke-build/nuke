@@ -5,6 +5,28 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Changed string parameters to violate requirement when empty or whitespace
+- Added on-demand value injection using `OnDemandAttribute` and `OnDemandValueInjectionAttribute`
+- Added `AbsolutePath` division operator for `..` range expression
+- Added `DOTNET_NOLOGO` to bootstrapping files
+- Fixed `BinaryFormatterSerialization` warning by suppression
+- Fixed .NET SDK discovery in bootstrapping files
+- Fixed exclusion of invoked targets from skipping
+- Fixed quotation for bootstrapping script invocation
+- Fixed filtering on `FileAttributes`
+- Fixed quoting in `AppVeyor` generation
+- Fixed members in `AzurePipelinesImage`
+- Fixed members in `GitHubActionsImage`
+- Fixed lower-case naming in `DotNetVerbosity` members
+- Fixed missing `DotNetTasks` commands
+- Fixed missing `EntityFrameworkTasks` command
+- Fixed logging in `NpmTasks`
+- Fixed argument type in `OctopusTasks`
+- Fixed missing argument in `SonarScannerTasks`
+- Fixed value formatting in `SonarScannerTasks`
+- Fixed members in `NUnitLabelType`
+- Fixed deprecated argument in `NUnitTasks`
+- Fixed members in `ReportGeneratorReportTypes`
 
 ## [7.0.6] / 2023-09-24
 - Fixed logging of Docker target execution to fall back to debug messages
