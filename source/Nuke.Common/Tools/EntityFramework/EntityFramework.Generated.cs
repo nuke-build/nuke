@@ -794,6 +794,93 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkMigrationsRemove, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
+    ///   <p>The <c>dotnet ef migrations bundle</c> command is used to create a bundle.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>--configuration</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Configuration"/></li>
+    ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Context"/></li>
+    ///     <li><c>--force</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Force"/></li>
+    ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Framework"/></li>
+    ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Json"/></li>
+    ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsBundleSettings.NoBuild"/></li>
+    ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsBundleSettings.NoColor"/></li>
+    ///     <li><c>--output</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Output"/></li>
+    ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsBundleSettings.PrefixOutput"/></li>
+    ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Project"/></li>
+    ///     <li><c>--runtime</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Runtime"/></li>
+    ///     <li><c>--self-contained</c> via <see cref="EntityFrameworkMigrationsBundleSettings.SelfContained"/></li>
+    ///     <li><c>--startup-project</c> via <see cref="EntityFrameworkMigrationsBundleSettings.StartupProject"/></li>
+    ///     <li><c>--target-runtime</c> via <see cref="EntityFrameworkMigrationsBundleSettings.TargetRuntime"/></li>
+    ///     <li><c>--verbose</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Verbose"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> EntityFrameworkMigrationsBundle(EntityFrameworkMigrationsBundleSettings toolSettings = null)
+    {
+        toolSettings = toolSettings ?? new EntityFrameworkMigrationsBundleSettings();
+        using var process = ProcessTasks.StartProcess(toolSettings);
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        return process.Output;
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet ef migrations bundle</c> command is used to create a bundle.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>--configuration</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Configuration"/></li>
+    ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Context"/></li>
+    ///     <li><c>--force</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Force"/></li>
+    ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Framework"/></li>
+    ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Json"/></li>
+    ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsBundleSettings.NoBuild"/></li>
+    ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsBundleSettings.NoColor"/></li>
+    ///     <li><c>--output</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Output"/></li>
+    ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsBundleSettings.PrefixOutput"/></li>
+    ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Project"/></li>
+    ///     <li><c>--runtime</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Runtime"/></li>
+    ///     <li><c>--self-contained</c> via <see cref="EntityFrameworkMigrationsBundleSettings.SelfContained"/></li>
+    ///     <li><c>--startup-project</c> via <see cref="EntityFrameworkMigrationsBundleSettings.StartupProject"/></li>
+    ///     <li><c>--target-runtime</c> via <see cref="EntityFrameworkMigrationsBundleSettings.TargetRuntime"/></li>
+    ///     <li><c>--verbose</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Verbose"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> EntityFrameworkMigrationsBundle(Configure<EntityFrameworkMigrationsBundleSettings> configurator)
+    {
+        return EntityFrameworkMigrationsBundle(configurator(new EntityFrameworkMigrationsBundleSettings()));
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet ef migrations bundle</c> command is used to create a bundle.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>--configuration</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Configuration"/></li>
+    ///     <li><c>--context</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Context"/></li>
+    ///     <li><c>--force</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Force"/></li>
+    ///     <li><c>--framework</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Framework"/></li>
+    ///     <li><c>--json</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Json"/></li>
+    ///     <li><c>--no-build</c> via <see cref="EntityFrameworkMigrationsBundleSettings.NoBuild"/></li>
+    ///     <li><c>--no-color</c> via <see cref="EntityFrameworkMigrationsBundleSettings.NoColor"/></li>
+    ///     <li><c>--output</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Output"/></li>
+    ///     <li><c>--prefix-output</c> via <see cref="EntityFrameworkMigrationsBundleSettings.PrefixOutput"/></li>
+    ///     <li><c>--project</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Project"/></li>
+    ///     <li><c>--runtime</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Runtime"/></li>
+    ///     <li><c>--self-contained</c> via <see cref="EntityFrameworkMigrationsBundleSettings.SelfContained"/></li>
+    ///     <li><c>--startup-project</c> via <see cref="EntityFrameworkMigrationsBundleSettings.StartupProject"/></li>
+    ///     <li><c>--target-runtime</c> via <see cref="EntityFrameworkMigrationsBundleSettings.TargetRuntime"/></li>
+    ///     <li><c>--verbose</c> via <see cref="EntityFrameworkMigrationsBundleSettings.Verbose"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IEnumerable<(EntityFrameworkMigrationsBundleSettings Settings, IReadOnlyCollection<Output> Output)> EntityFrameworkMigrationsBundle(CombinatorialConfigure<EntityFrameworkMigrationsBundleSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+    {
+        return configurator.Invoke(EntityFrameworkMigrationsBundle, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
+    }
+    /// <summary>
     ///   <p>The <c>dotnet ef migrations script</c> command is used to generate a SQL script from migrations.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
@@ -1693,6 +1780,104 @@ public partial class EntityFrameworkMigrationsRemoveSettings : ToolSettings
         arguments
           .Add("ef migrations remove")
           .Add("--force", Force)
+          .Add("--json", Json)
+          .Add("--context {value}", Context)
+          .Add("--project {value}", Project)
+          .Add("--startup-project {value}", StartupProject)
+          .Add("--framework {value}", Framework)
+          .Add("--configuration {value}", Configuration)
+          .Add("--runtime {value}", Runtime)
+          .Add("--no-build", NoBuild)
+          .Add("--no-color", NoColor)
+          .Add("--prefix-output", PrefixOutput)
+          .Add("--verbose", Verbose);
+        return base.ConfigureProcessArguments(arguments);
+    }
+}
+#endregion
+#region EntityFrameworkMigrationsBundleSettings
+/// <summary>
+///   Used within <see cref="EntityFrameworkTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Serializable]
+public partial class EntityFrameworkMigrationsBundleSettings : ToolSettings
+{
+    /// <summary>
+    ///   Path to the EntityFramework executable.
+    /// </summary>
+    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
+    /// <summary>
+    ///   The path of executable file to create. Paths are relative to the project directory.
+    /// </summary>
+    public virtual string Output { get; internal set; }
+    /// <summary>
+    ///   Overwrite existing files.
+    /// </summary>
+    public virtual bool? Force { get; internal set; }
+    /// <summary>
+    ///   Create a self-contained executable file. No installed Framework required when this file is executed on the target system.
+    /// </summary>
+    public virtual bool? SelfContained { get; internal set; }
+    /// <summary>
+    ///   The target runtime to bundle for. Example: <c>linux-x64</c>
+    /// </summary>
+    public virtual string TargetRuntime { get; internal set; }
+    /// <summary>
+    ///   Show JSON output.
+    /// </summary>
+    public virtual bool? Json { get; internal set; }
+    /// <summary>
+    ///   The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.
+    /// </summary>
+    public virtual string Context { get; internal set; }
+    /// <summary>
+    ///   Relative path to the project folder of the target project. Default value is the current folder.
+    /// </summary>
+    public virtual string Project { get; internal set; }
+    /// <summary>
+    ///   Relative path to the project folder of the startup project. Default value is the current folder.
+    /// </summary>
+    public virtual string StartupProject { get; internal set; }
+    /// <summary>
+    ///   The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.
+    /// </summary>
+    public virtual string Framework { get; internal set; }
+    /// <summary>
+    ///   The build configuration, for example: <c>Debug</c> or <c>Release.</c>
+    /// </summary>
+    public virtual string Configuration { get; internal set; }
+    /// <summary>
+    ///   The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
+    /// </summary>
+    public virtual string Runtime { get; internal set; }
+    /// <summary>
+    ///   Don't build the project. Intended to be used when the build is up-to-date.
+    /// </summary>
+    public virtual bool? NoBuild { get; internal set; }
+    /// <summary>
+    ///   Don't colorize output.
+    /// </summary>
+    public virtual bool? NoColor { get; internal set; }
+    /// <summary>
+    ///   Prefix output with level.
+    /// </summary>
+    public virtual bool? PrefixOutput { get; internal set; }
+    /// <summary>
+    ///   Show verbose output.
+    /// </summary>
+    public virtual bool? Verbose { get; internal set; }
+    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    {
+        arguments
+          .Add("ef migrations bundle")
+          .Add("--output {value}", Output)
+          .Add("--force", Force)
+          .Add("--self-contained", SelfContained)
+          .Add("--target-runtime {value}", TargetRuntime)
           .Add("--json", Json)
           .Add("--context {value}", Context)
           .Add("--project {value}", Project)
@@ -6741,6 +6926,607 @@ public static partial class EntityFrameworkMigrationsRemoveSettingsExtensions
     /// </summary>
     [Pure]
     public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsRemoveSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbose = !toolSettings.Verbose;
+        return toolSettings;
+    }
+    #endregion
+}
+#endregion
+#region EntityFrameworkMigrationsBundleSettingsExtensions
+/// <summary>
+///   Used within <see cref="EntityFrameworkTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class EntityFrameworkMigrationsBundleSettingsExtensions
+{
+    #region Output
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.Output"/></em></p>
+    ///   <p>The path of executable file to create. Paths are relative to the project directory.</p>
+    /// </summary>
+    [Pure]
+    public static T SetOutput<T>(this T toolSettings, string output) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Output = output;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.Output"/></em></p>
+    ///   <p>The path of executable file to create. Paths are relative to the project directory.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Output = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Force
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.Force"/></em></p>
+    ///   <p>Overwrite existing files.</p>
+    /// </summary>
+    [Pure]
+    public static T SetForce<T>(this T toolSettings, bool? force) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Force = force;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.Force"/></em></p>
+    ///   <p>Overwrite existing files.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetForce<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Force = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="EntityFrameworkMigrationsBundleSettings.Force"/></em></p>
+    ///   <p>Overwrite existing files.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableForce<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Force = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="EntityFrameworkMigrationsBundleSettings.Force"/></em></p>
+    ///   <p>Overwrite existing files.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableForce<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Force = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsBundleSettings.Force"/></em></p>
+    ///   <p>Overwrite existing files.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleForce<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Force = !toolSettings.Force;
+        return toolSettings;
+    }
+    #endregion
+    #region SelfContained
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.SelfContained"/></em></p>
+    ///   <p>Create a self-contained executable file. No installed Framework required when this file is executed on the target system.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSelfContained<T>(this T toolSettings, bool? selfContained) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SelfContained = selfContained;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.SelfContained"/></em></p>
+    ///   <p>Create a self-contained executable file. No installed Framework required when this file is executed on the target system.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSelfContained<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SelfContained = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="EntityFrameworkMigrationsBundleSettings.SelfContained"/></em></p>
+    ///   <p>Create a self-contained executable file. No installed Framework required when this file is executed on the target system.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableSelfContained<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SelfContained = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="EntityFrameworkMigrationsBundleSettings.SelfContained"/></em></p>
+    ///   <p>Create a self-contained executable file. No installed Framework required when this file is executed on the target system.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableSelfContained<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SelfContained = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsBundleSettings.SelfContained"/></em></p>
+    ///   <p>Create a self-contained executable file. No installed Framework required when this file is executed on the target system.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleSelfContained<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SelfContained = !toolSettings.SelfContained;
+        return toolSettings;
+    }
+    #endregion
+    #region TargetRuntime
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.TargetRuntime"/></em></p>
+    ///   <p>The target runtime to bundle for. Example: <c>linux-x64</c></p>
+    /// </summary>
+    [Pure]
+    public static T SetTargetRuntime<T>(this T toolSettings, string targetRuntime) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TargetRuntime = targetRuntime;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.TargetRuntime"/></em></p>
+    ///   <p>The target runtime to bundle for. Example: <c>linux-x64</c></p>
+    /// </summary>
+    [Pure]
+    public static T ResetTargetRuntime<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TargetRuntime = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Json
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.Json"/></em></p>
+    ///   <p>Show JSON output.</p>
+    /// </summary>
+    [Pure]
+    public static T SetJson<T>(this T toolSettings, bool? json) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Json = json;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.Json"/></em></p>
+    ///   <p>Show JSON output.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Json = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="EntityFrameworkMigrationsBundleSettings.Json"/></em></p>
+    ///   <p>Show JSON output.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Json = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="EntityFrameworkMigrationsBundleSettings.Json"/></em></p>
+    ///   <p>Show JSON output.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Json = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsBundleSettings.Json"/></em></p>
+    ///   <p>Show JSON output.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleJson<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Json = !toolSettings.Json;
+        return toolSettings;
+    }
+    #endregion
+    #region Context
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.Context"/></em></p>
+    ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
+    /// </summary>
+    [Pure]
+    public static T SetContext<T>(this T toolSettings, string context) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Context = context;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.Context"/></em></p>
+    ///   <p>The <c>DbContext</c> class to use. Class name only or fully qualified with namespaces. If this option is omitted, EF Core will find the context class. If there are multiple context classes, this option is required.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetContext<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Context = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Project
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.Project"/></em></p>
+    ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
+    /// </summary>
+    [Pure]
+    public static T SetProject<T>(this T toolSettings, string project) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Project = project;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.Project"/></em></p>
+    ///   <p>Relative path to the project folder of the target project. Default value is the current folder.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetProject<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Project = null;
+        return toolSettings;
+    }
+    #endregion
+    #region StartupProject
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.StartupProject"/></em></p>
+    ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
+    /// </summary>
+    [Pure]
+    public static T SetStartupProject<T>(this T toolSettings, string startupProject) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.StartupProject = startupProject;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.StartupProject"/></em></p>
+    ///   <p>Relative path to the project folder of the startup project. Default value is the current folder.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetStartupProject<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.StartupProject = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Framework
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.Framework"/></em></p>
+    ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
+    /// </summary>
+    [Pure]
+    public static T SetFramework<T>(this T toolSettings, string framework) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Framework = framework;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.Framework"/></em></p>
+    ///   <p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks#supported-target-framework-versions">Target Framework Moniker</a> for the <a href="https://docs.microsoft.com/en-us/dotnet/standard/frameworks">target framework</a>. Use when the project file specifies multiple target frameworks, and you want to select one of them.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetFramework<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Framework = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Configuration
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.Configuration"/></em></p>
+    ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
+    /// </summary>
+    [Pure]
+    public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Configuration = configuration;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.Configuration"/></em></p>
+    ///   <p>The build configuration, for example: <c>Debug</c> or <c>Release.</c></p>
+    /// </summary>
+    [Pure]
+    public static T ResetConfiguration<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Configuration = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Runtime
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.Runtime"/></em></p>
+    ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetRuntime<T>(this T toolSettings, string runtime) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Runtime = runtime;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.Runtime"/></em></p>
+    ///   <p>The identifier of the target runtime to restore packages for. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetRuntime<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Runtime = null;
+        return toolSettings;
+    }
+    #endregion
+    #region NoBuild
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.NoBuild"/></em></p>
+    ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+    /// </summary>
+    [Pure]
+    public static T SetNoBuild<T>(this T toolSettings, bool? noBuild) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoBuild = noBuild;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.NoBuild"/></em></p>
+    ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoBuild = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="EntityFrameworkMigrationsBundleSettings.NoBuild"/></em></p>
+    ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoBuild = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="EntityFrameworkMigrationsBundleSettings.NoBuild"/></em></p>
+    ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoBuild = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsBundleSettings.NoBuild"/></em></p>
+    ///   <p>Don't build the project. Intended to be used when the build is up-to-date.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleNoBuild<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoBuild = !toolSettings.NoBuild;
+        return toolSettings;
+    }
+    #endregion
+    #region NoColor
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.NoColor"/></em></p>
+    ///   <p>Don't colorize output.</p>
+    /// </summary>
+    [Pure]
+    public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoColor = noColor;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.NoColor"/></em></p>
+    ///   <p>Don't colorize output.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoColor = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="EntityFrameworkMigrationsBundleSettings.NoColor"/></em></p>
+    ///   <p>Don't colorize output.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoColor = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="EntityFrameworkMigrationsBundleSettings.NoColor"/></em></p>
+    ///   <p>Don't colorize output.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoColor = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsBundleSettings.NoColor"/></em></p>
+    ///   <p>Don't colorize output.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleNoColor<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoColor = !toolSettings.NoColor;
+        return toolSettings;
+    }
+    #endregion
+    #region PrefixOutput
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.PrefixOutput"/></em></p>
+    ///   <p>Prefix output with level.</p>
+    /// </summary>
+    [Pure]
+    public static T SetPrefixOutput<T>(this T toolSettings, bool? prefixOutput) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.PrefixOutput = prefixOutput;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.PrefixOutput"/></em></p>
+    ///   <p>Prefix output with level.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetPrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.PrefixOutput = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="EntityFrameworkMigrationsBundleSettings.PrefixOutput"/></em></p>
+    ///   <p>Prefix output with level.</p>
+    /// </summary>
+    [Pure]
+    public static T EnablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.PrefixOutput = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="EntityFrameworkMigrationsBundleSettings.PrefixOutput"/></em></p>
+    ///   <p>Prefix output with level.</p>
+    /// </summary>
+    [Pure]
+    public static T DisablePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.PrefixOutput = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsBundleSettings.PrefixOutput"/></em></p>
+    ///   <p>Prefix output with level.</p>
+    /// </summary>
+    [Pure]
+    public static T TogglePrefixOutput<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.PrefixOutput = !toolSettings.PrefixOutput;
+        return toolSettings;
+    }
+    #endregion
+    #region Verbose
+    /// <summary>
+    ///   <p><em>Sets <see cref="EntityFrameworkMigrationsBundleSettings.Verbose"/></em></p>
+    ///   <p>Show verbose output.</p>
+    /// </summary>
+    [Pure]
+    public static T SetVerbose<T>(this T toolSettings, bool? verbose) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbose = verbose;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="EntityFrameworkMigrationsBundleSettings.Verbose"/></em></p>
+    ///   <p>Show verbose output.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbose = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="EntityFrameworkMigrationsBundleSettings.Verbose"/></em></p>
+    ///   <p>Show verbose output.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbose = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="EntityFrameworkMigrationsBundleSettings.Verbose"/></em></p>
+    ///   <p>Show verbose output.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbose = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="EntityFrameworkMigrationsBundleSettings.Verbose"/></em></p>
+    ///   <p>Show verbose output.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleVerbose<T>(this T toolSettings) where T : EntityFrameworkMigrationsBundleSettings
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.Verbose = !toolSettings.Verbose;

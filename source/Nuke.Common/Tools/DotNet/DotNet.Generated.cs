@@ -1048,6 +1048,7 @@ public partial class DotNetTasks
     ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
     ///   <ul>
     ///     <li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li>
+    ///     <li><c>--configfile</c> via <see cref="DotNetNuGetAddSourceSettings.ConfigFile"/></li>
     ///     <li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li>
     ///     <li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li>
     ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li>
@@ -1070,6 +1071,7 @@ public partial class DotNetTasks
     ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
     ///   <ul>
     ///     <li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li>
+    ///     <li><c>--configfile</c> via <see cref="DotNetNuGetAddSourceSettings.ConfigFile"/></li>
     ///     <li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li>
     ///     <li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li>
     ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li>
@@ -1089,6 +1091,7 @@ public partial class DotNetTasks
     ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
     ///   <ul>
     ///     <li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li>
+    ///     <li><c>--configfile</c> via <see cref="DotNetNuGetAddSourceSettings.ConfigFile"/></li>
     ///     <li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li>
     ///     <li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li>
     ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li>
@@ -1099,6 +1102,69 @@ public partial class DotNetTasks
     public static IEnumerable<(DotNetNuGetAddSourceSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetAddSource(CombinatorialConfigure<DotNetNuGetAddSourceSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
     {
         return configurator.Invoke(DotNetNuGetAddSource, DotNetLogger, degreeOfParallelism, completeOnFailure);
+    }
+    /// <summary>
+    ///   <p>Updates a NuGet source.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;name&gt;</c> via <see cref="DotNetNuGetUpdateSourceSettings.Name"/></li>
+    ///     <li><c>--configfile</c> via <see cref="DotNetNuGetUpdateSourceSettings.ConfigFile"/></li>
+    ///     <li><c>--password</c> via <see cref="DotNetNuGetUpdateSourceSettings.Password"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetNuGetUpdateSourceSettings.Source"/></li>
+    ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetUpdateSourceSettings.StorePasswordInClearText"/></li>
+    ///     <li><c>--username</c> via <see cref="DotNetNuGetUpdateSourceSettings.Username"/></li>
+    ///     <li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetUpdateSourceSettings.ValidAuthenticationTypes"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetNuGetUpdateSource(DotNetNuGetUpdateSourceSettings toolSettings = null)
+    {
+        toolSettings = toolSettings ?? new DotNetNuGetUpdateSourceSettings();
+        using var process = ProcessTasks.StartProcess(toolSettings);
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        return process.Output;
+    }
+    /// <summary>
+    ///   <p>Updates a NuGet source.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;name&gt;</c> via <see cref="DotNetNuGetUpdateSourceSettings.Name"/></li>
+    ///     <li><c>--configfile</c> via <see cref="DotNetNuGetUpdateSourceSettings.ConfigFile"/></li>
+    ///     <li><c>--password</c> via <see cref="DotNetNuGetUpdateSourceSettings.Password"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetNuGetUpdateSourceSettings.Source"/></li>
+    ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetUpdateSourceSettings.StorePasswordInClearText"/></li>
+    ///     <li><c>--username</c> via <see cref="DotNetNuGetUpdateSourceSettings.Username"/></li>
+    ///     <li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetUpdateSourceSettings.ValidAuthenticationTypes"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetNuGetUpdateSource(Configure<DotNetNuGetUpdateSourceSettings> configurator)
+    {
+        return DotNetNuGetUpdateSource(configurator(new DotNetNuGetUpdateSourceSettings()));
+    }
+    /// <summary>
+    ///   <p>Updates a NuGet source.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;name&gt;</c> via <see cref="DotNetNuGetUpdateSourceSettings.Name"/></li>
+    ///     <li><c>--configfile</c> via <see cref="DotNetNuGetUpdateSourceSettings.ConfigFile"/></li>
+    ///     <li><c>--password</c> via <see cref="DotNetNuGetUpdateSourceSettings.Password"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetNuGetUpdateSourceSettings.Source"/></li>
+    ///     <li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetUpdateSourceSettings.StorePasswordInClearText"/></li>
+    ///     <li><c>--username</c> via <see cref="DotNetNuGetUpdateSourceSettings.Username"/></li>
+    ///     <li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetUpdateSourceSettings.ValidAuthenticationTypes"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IEnumerable<(DotNetNuGetUpdateSourceSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetUpdateSource(CombinatorialConfigure<DotNetNuGetUpdateSourceSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+    {
+        return configurator.Invoke(DotNetNuGetUpdateSource, DotNetLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
     ///   <p>The <c>dotnet tool install</c> command provides a way for you to install .NET Core Global Tools on your machine. To use the command, you either have to specify that you want a user-wide installation using the <c>--global</c> option or you specify a path to install it using the <c>--tool-path</c> option.<para/>Global Tools are installed in the following directories by default when you specify the <c>-g</c> (or <c>--global</c>) option:<ul><li>Linux/macOS: <c>$HOME/.dotnet/tools</c></li><li>Windows: <c>%USERPROFILE%\.dotnet\tools</c></li></ul></p>
@@ -1348,6 +1414,345 @@ public partial class DotNetTasks
     public static IEnumerable<(DotNetToolUpdateSettings Settings, IReadOnlyCollection<Output> Output)> DotNetToolUpdate(CombinatorialConfigure<DotNetToolUpdateSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
     {
         return configurator.Invoke(DotNetToolUpdate, DotNetLogger, degreeOfParallelism, completeOnFailure);
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload install</c> command installs one or more optional workloads. Optional workloads can be installed on top of the .NET SDK to provide support for various application types, such as .NET MAUI and Blazor WebAssembly AOT.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;workloadId&gt;</c> via <see cref="DotNetWorkloadInstallSettings.WorkloadId"/></li>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadInstallSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadInstallSettings.DisableParallel"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadInstallSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadInstallSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadInstallSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadInstallSettings.NoCache"/></li>
+    ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadInstallSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadInstallSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadInstallSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetWorkloadInstall(DotNetWorkloadInstallSettings toolSettings = null)
+    {
+        toolSettings = toolSettings ?? new DotNetWorkloadInstallSettings();
+        using var process = ProcessTasks.StartProcess(toolSettings);
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        return process.Output;
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload install</c> command installs one or more optional workloads. Optional workloads can be installed on top of the .NET SDK to provide support for various application types, such as .NET MAUI and Blazor WebAssembly AOT.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;workloadId&gt;</c> via <see cref="DotNetWorkloadInstallSettings.WorkloadId"/></li>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadInstallSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadInstallSettings.DisableParallel"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadInstallSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadInstallSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadInstallSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadInstallSettings.NoCache"/></li>
+    ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadInstallSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadInstallSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadInstallSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetWorkloadInstall(Configure<DotNetWorkloadInstallSettings> configurator)
+    {
+        return DotNetWorkloadInstall(configurator(new DotNetWorkloadInstallSettings()));
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload install</c> command installs one or more optional workloads. Optional workloads can be installed on top of the .NET SDK to provide support for various application types, such as .NET MAUI and Blazor WebAssembly AOT.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;workloadId&gt;</c> via <see cref="DotNetWorkloadInstallSettings.WorkloadId"/></li>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadInstallSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadInstallSettings.DisableParallel"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadInstallSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadInstallSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadInstallSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadInstallSettings.NoCache"/></li>
+    ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadInstallSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadInstallSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadInstallSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IEnumerable<(DotNetWorkloadInstallSettings Settings, IReadOnlyCollection<Output> Output)> DotNetWorkloadInstall(CombinatorialConfigure<DotNetWorkloadInstallSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+    {
+        return configurator.Invoke(DotNetWorkloadInstall, DotNetLogger, degreeOfParallelism, completeOnFailure);
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload uninstall</c> command uninstalls one or more workloads.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;workloadId&gt;</c> via <see cref="DotNetWorkloadUninstallSettings.WorkloadId"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetWorkloadUninstall(DotNetWorkloadUninstallSettings toolSettings = null)
+    {
+        toolSettings = toolSettings ?? new DotNetWorkloadUninstallSettings();
+        using var process = ProcessTasks.StartProcess(toolSettings);
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        return process.Output;
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload uninstall</c> command uninstalls one or more workloads.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;workloadId&gt;</c> via <see cref="DotNetWorkloadUninstallSettings.WorkloadId"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetWorkloadUninstall(Configure<DotNetWorkloadUninstallSettings> configurator)
+    {
+        return DotNetWorkloadUninstall(configurator(new DotNetWorkloadUninstallSettings()));
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload uninstall</c> command uninstalls one or more workloads.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;workloadId&gt;</c> via <see cref="DotNetWorkloadUninstallSettings.WorkloadId"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IEnumerable<(DotNetWorkloadUninstallSettings Settings, IReadOnlyCollection<Output> Output)> DotNetWorkloadUninstall(CombinatorialConfigure<DotNetWorkloadUninstallSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+    {
+        return configurator.Invoke(DotNetWorkloadUninstall, DotNetLogger, degreeOfParallelism, completeOnFailure);
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload restore</c> command analyzes a project or solution to determine which workloads it needs, then installs any workloads that are missing.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetWorkloadRestoreSettings.Project"/></li>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadRestoreSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadRestoreSettings.DisableParallel"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadRestoreSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadRestoreSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRestoreSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRestoreSettings.NoCache"/></li>
+    ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadRestoreSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRestoreSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRestoreSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetWorkloadRestore(DotNetWorkloadRestoreSettings toolSettings = null)
+    {
+        toolSettings = toolSettings ?? new DotNetWorkloadRestoreSettings();
+        using var process = ProcessTasks.StartProcess(toolSettings);
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        return process.Output;
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload restore</c> command analyzes a project or solution to determine which workloads it needs, then installs any workloads that are missing.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetWorkloadRestoreSettings.Project"/></li>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadRestoreSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadRestoreSettings.DisableParallel"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadRestoreSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadRestoreSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRestoreSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRestoreSettings.NoCache"/></li>
+    ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadRestoreSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRestoreSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRestoreSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetWorkloadRestore(Configure<DotNetWorkloadRestoreSettings> configurator)
+    {
+        return DotNetWorkloadRestore(configurator(new DotNetWorkloadRestoreSettings()));
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload restore</c> command analyzes a project or solution to determine which workloads it needs, then installs any workloads that are missing.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetWorkloadRestoreSettings.Project"/></li>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadRestoreSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadRestoreSettings.DisableParallel"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadRestoreSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadRestoreSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRestoreSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRestoreSettings.NoCache"/></li>
+    ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadRestoreSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRestoreSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRestoreSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IEnumerable<(DotNetWorkloadRestoreSettings Settings, IReadOnlyCollection<Output> Output)> DotNetWorkloadRestore(CombinatorialConfigure<DotNetWorkloadRestoreSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+    {
+        return configurator.Invoke(DotNetWorkloadRestore, DotNetLogger, degreeOfParallelism, completeOnFailure);
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload update</c> command updates all installed workloads to the newest available versions. It queries Nuget.org for updated workload manifests. It then updates local manifests, downloads new versions of the installed workloads, and removes all old versions of each workload.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>--advertising-manifests-only</c> via <see cref="DotNetWorkloadUpdateSettings.AdvertisingManifestsOnly"/></li>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadUpdateSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadUpdateSettings.DisableParallel"/></li>
+    ///     <li><c>--from-previous-sdk</c> via <see cref="DotNetWorkloadUpdateSettings.FromPreviousSdk"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadUpdateSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadUpdateSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadUpdateSettings.NoCache"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadUpdateSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadUpdateSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadUpdateSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetWorkloadUpdate(DotNetWorkloadUpdateSettings toolSettings = null)
+    {
+        toolSettings = toolSettings ?? new DotNetWorkloadUpdateSettings();
+        using var process = ProcessTasks.StartProcess(toolSettings);
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        return process.Output;
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload update</c> command updates all installed workloads to the newest available versions. It queries Nuget.org for updated workload manifests. It then updates local manifests, downloads new versions of the installed workloads, and removes all old versions of each workload.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>--advertising-manifests-only</c> via <see cref="DotNetWorkloadUpdateSettings.AdvertisingManifestsOnly"/></li>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadUpdateSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadUpdateSettings.DisableParallel"/></li>
+    ///     <li><c>--from-previous-sdk</c> via <see cref="DotNetWorkloadUpdateSettings.FromPreviousSdk"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadUpdateSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadUpdateSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadUpdateSettings.NoCache"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadUpdateSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadUpdateSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadUpdateSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetWorkloadUpdate(Configure<DotNetWorkloadUpdateSettings> configurator)
+    {
+        return DotNetWorkloadUpdate(configurator(new DotNetWorkloadUpdateSettings()));
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload update</c> command updates all installed workloads to the newest available versions. It queries Nuget.org for updated workload manifests. It then updates local manifests, downloads new versions of the installed workloads, and removes all old versions of each workload.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>--advertising-manifests-only</c> via <see cref="DotNetWorkloadUpdateSettings.AdvertisingManifestsOnly"/></li>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadUpdateSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadUpdateSettings.DisableParallel"/></li>
+    ///     <li><c>--from-previous-sdk</c> via <see cref="DotNetWorkloadUpdateSettings.FromPreviousSdk"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadUpdateSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadUpdateSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadUpdateSettings.NoCache"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadUpdateSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadUpdateSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadUpdateSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IEnumerable<(DotNetWorkloadUpdateSettings Settings, IReadOnlyCollection<Output> Output)> DotNetWorkloadUpdate(CombinatorialConfigure<DotNetWorkloadUpdateSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+    {
+        return configurator.Invoke(DotNetWorkloadUpdate, DotNetLogger, degreeOfParallelism, completeOnFailure);
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload repair</c>  command reinstalls all installed workloads. Workloads are made up of multiple workload packs and it's possible to get into a state where some installed successfully but others didn't. For example, a dotnet workload install command might not finish installing because of a dropped internet connection.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadRepairSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadRepairSettings.DisableParallel"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadRepairSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRepairSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRepairSettings.NoCache"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadRepairSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRepairSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRepairSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetWorkloadRepair(DotNetWorkloadRepairSettings toolSettings = null)
+    {
+        toolSettings = toolSettings ?? new DotNetWorkloadRepairSettings();
+        using var process = ProcessTasks.StartProcess(toolSettings);
+        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
+        return process.Output;
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload repair</c>  command reinstalls all installed workloads. Workloads are made up of multiple workload packs and it's possible to get into a state where some installed successfully but others didn't. For example, a dotnet workload install command might not finish installing because of a dropped internet connection.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadRepairSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadRepairSettings.DisableParallel"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadRepairSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRepairSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRepairSettings.NoCache"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadRepairSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRepairSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRepairSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IReadOnlyCollection<Output> DotNetWorkloadRepair(Configure<DotNetWorkloadRepairSettings> configurator)
+    {
+        return DotNetWorkloadRepair(configurator(new DotNetWorkloadRepairSettings()));
+    }
+    /// <summary>
+    ///   <p>The <c>dotnet workload repair</c>  command reinstalls all installed workloads. Workloads are made up of multiple workload packs and it's possible to get into a state where some installed successfully but others didn't. For example, a dotnet workload install command might not finish installing because of a dropped internet connection.</p>
+    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p>
+    /// </summary>
+    /// <remarks>
+    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
+    ///   <ul>
+    ///     <li><c>--configFile</c> via <see cref="DotNetWorkloadRepairSettings.ConfigFile"/></li>
+    ///     <li><c>--disable-parallel</c> via <see cref="DotNetWorkloadRepairSettings.DisableParallel"/></li>
+    ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetWorkloadRepairSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRepairSettings.Interactive"/></li>
+    ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRepairSettings.NoCache"/></li>
+    ///     <li><c>--source</c> via <see cref="DotNetWorkloadRepairSettings.Source"/></li>
+    ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRepairSettings.TempDir"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRepairSettings.Verbosity"/></li>
+    ///   </ul>
+    /// </remarks>
+    public static IEnumerable<(DotNetWorkloadRepairSettings Settings, IReadOnlyCollection<Output> Output)> DotNetWorkloadRepair(CombinatorialConfigure<DotNetWorkloadRepairSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
+    {
+        return configurator.Invoke(DotNetWorkloadRepair, DotNetLogger, degreeOfParallelism, completeOnFailure);
     }
 }
 #region DotNetTestSettings
@@ -2599,6 +3004,10 @@ public partial class DotNetNuGetAddSourceSettings : ToolSettings
     /// </summary>
     public virtual IReadOnlyList<DotNetNuGetAuthentication> ValidAuthenticationTypes => ValidAuthenticationTypesInternal.AsReadOnly();
     internal List<DotNetNuGetAuthentication> ValidAuthenticationTypesInternal { get; set; } = new List<DotNetNuGetAuthentication>();
+    /// <summary>
+    ///   The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet Configurations</a>.
+    /// </summary>
+    public virtual string ConfigFile { get; internal set; }
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
@@ -2608,7 +3017,67 @@ public partial class DotNetNuGetAddSourceSettings : ToolSettings
           .Add("--username {value}", Username)
           .Add("--password {value}", Password, secret: true)
           .Add("--store-password-in-clear-text", StorePasswordInClearText)
-          .Add("--valid-authentication-types", ValidAuthenticationTypes, separator: ',');
+          .Add("--valid-authentication-types {value}", ValidAuthenticationTypes, separator: ',')
+          .Add("--configfile {value}", ConfigFile);
+        return base.ConfigureProcessArguments(arguments);
+    }
+}
+#endregion
+#region DotNetNuGetUpdateSourceSettings
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Serializable]
+public partial class DotNetNuGetUpdateSourceSettings : ToolSettings
+{
+    /// <summary>
+    ///   Path to the DotNet executable.
+    /// </summary>
+    public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
+    /// <summary>
+    ///   Name of the source.
+    /// </summary>
+    public virtual string Name { get; internal set; }
+    /// <summary>
+    ///   URL of the source.
+    /// </summary>
+    public virtual string Source { get; internal set; }
+    /// <summary>
+    ///   Username to be used when connecting to an authenticated source.
+    /// </summary>
+    public virtual string Username { get; internal set; }
+    /// <summary>
+    ///   Password to be used when connecting to an authenticated source.
+    /// </summary>
+    public virtual string Password { get; internal set; }
+    /// <summary>
+    ///   Enables storing portable package source credentials by disabling password encryption.
+    /// </summary>
+    public virtual bool? StorePasswordInClearText { get; internal set; }
+    /// <summary>
+    ///   List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.
+    /// </summary>
+    public virtual IReadOnlyList<DotNetNuGetAuthentication> ValidAuthenticationTypes => ValidAuthenticationTypesInternal.AsReadOnly();
+    internal List<DotNetNuGetAuthentication> ValidAuthenticationTypesInternal { get; set; } = new List<DotNetNuGetAuthentication>();
+    /// <summary>
+    ///   The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet Configurations</a>.
+    /// </summary>
+    public virtual string ConfigFile { get; internal set; }
+    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    {
+        arguments
+          .Add("nuget update source")
+          .Add("{value}", Name)
+          .Add("--source {value}", Source)
+          .Add("--username {value}", Username)
+          .Add("--password {value}", Password, secret: true)
+          .Add("--store-password-in-clear-text", StorePasswordInClearText)
+          .Add("--valid-authentication-types {value}", ValidAuthenticationTypes, separator: ',')
+          .Add("--configfile {value}", ConfigFile);
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -2839,6 +3308,338 @@ public partial class DotNetToolUpdateSettings : ToolSettings
           .Add("--tool-path {value}", ToolInstallationPath)
           .Add("--verbosity {value}", Verbosity)
           .Add("--version {value}", Version);
+        return base.ConfigureProcessArguments(arguments);
+    }
+}
+#endregion
+#region DotNetWorkloadInstallSettings
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Serializable]
+public partial class DotNetWorkloadInstallSettings : ToolSettings
+{
+    /// <summary>
+    ///   Path to the DotNet executable.
+    /// </summary>
+    public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
+    /// <summary>
+    ///   The workload ID or multiple IDs to install.
+    /// </summary>
+    public virtual IReadOnlyList<string> WorkloadId => WorkloadIdInternal.AsReadOnly();
+    internal List<string> WorkloadIdInternal { get; set; } = new List<string>();
+    /// <summary>
+    ///   The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.
+    /// </summary>
+    public virtual string ConfigFile { get; internal set; }
+    /// <summary>
+    ///   Prevents restoring multiple projects in parallel.
+    /// </summary>
+    public virtual bool? DisableParallel { get; internal set; }
+    /// <summary>
+    ///   Treats package source failures as warnings.
+    /// </summary>
+    public virtual bool? IgnoreFailedSources { get; internal set; }
+    /// <summary>
+    ///   Allows prerelease workload manifests.
+    /// </summary>
+    public virtual bool? IncludePreviews { get; internal set; }
+    /// <summary>
+    ///   Allows the command to stop and wait for user input or action. For example, to complete authentication.
+    /// </summary>
+    public virtual bool? Interactive { get; internal set; }
+    /// <summary>
+    ///   Prevents caching of packages and http requests.
+    /// </summary>
+    public virtual bool? NoCache { get; internal set; }
+    /// <summary>
+    ///   Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.
+    /// </summary>
+    public virtual bool? SkipManifestUpdate { get; internal set; }
+    /// <summary>
+    ///   Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.
+    /// </summary>
+    public virtual string Source { get; internal set; }
+    /// <summary>
+    ///   Specify the temporary directory used to download and extract NuGet packages (must be secure).
+    /// </summary>
+    public virtual string TempDir { get; internal set; }
+    /// <summary>
+    ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
+    /// </summary>
+    public virtual DotNetVerbosity Verbosity { get; internal set; }
+    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    {
+        arguments
+          .Add("workload install")
+          .Add("{value}", WorkloadId)
+          .Add("--configFile {value}", ConfigFile)
+          .Add("--disable-parallel", DisableParallel)
+          .Add("--ignore-failed-sources", IgnoreFailedSources)
+          .Add("--include-previews", IncludePreviews)
+          .Add("--interactive", Interactive)
+          .Add("--no-cache", NoCache)
+          .Add("--skip-manifest-update", SkipManifestUpdate)
+          .Add("--source {value}", Source)
+          .Add("--temp-dir {value}", TempDir)
+          .Add("--verbosity {value}", Verbosity);
+        return base.ConfigureProcessArguments(arguments);
+    }
+}
+#endregion
+#region DotNetWorkloadUninstallSettings
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Serializable]
+public partial class DotNetWorkloadUninstallSettings : ToolSettings
+{
+    /// <summary>
+    ///   Path to the DotNet executable.
+    /// </summary>
+    public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
+    /// <summary>
+    ///   The workload ID or multiple IDs to install.
+    /// </summary>
+    public virtual IReadOnlyList<string> WorkloadId => WorkloadIdInternal.AsReadOnly();
+    internal List<string> WorkloadIdInternal { get; set; } = new List<string>();
+    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    {
+        arguments
+          .Add("workload uninstall")
+          .Add("{value}", WorkloadId);
+        return base.ConfigureProcessArguments(arguments);
+    }
+}
+#endregion
+#region DotNetWorkloadRestoreSettings
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Serializable]
+public partial class DotNetWorkloadRestoreSettings : ToolSettings
+{
+    /// <summary>
+    ///   Path to the DotNet executable.
+    /// </summary>
+    public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
+    /// <summary>
+    ///   The project or solution file to install workloads for. If a file is not specified, the command searches the current directory for one.
+    /// </summary>
+    public virtual string Project { get; internal set; }
+    /// <summary>
+    ///   The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.
+    /// </summary>
+    public virtual string ConfigFile { get; internal set; }
+    /// <summary>
+    ///   Prevents restoring multiple projects in parallel.
+    /// </summary>
+    public virtual bool? DisableParallel { get; internal set; }
+    /// <summary>
+    ///   Treats package source failures as warnings.
+    /// </summary>
+    public virtual bool? IgnoreFailedSources { get; internal set; }
+    /// <summary>
+    ///   Allows prerelease workload manifests.
+    /// </summary>
+    public virtual bool? IncludePreviews { get; internal set; }
+    /// <summary>
+    ///   Allows the command to stop and wait for user input or action. For example, to complete authentication.
+    /// </summary>
+    public virtual bool? Interactive { get; internal set; }
+    /// <summary>
+    ///   Prevents caching of packages and http requests.
+    /// </summary>
+    public virtual bool? NoCache { get; internal set; }
+    /// <summary>
+    ///   Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.
+    /// </summary>
+    public virtual bool? SkipManifestUpdate { get; internal set; }
+    /// <summary>
+    ///   Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.
+    /// </summary>
+    public virtual string Source { get; internal set; }
+    /// <summary>
+    ///   Specify the temporary directory used to download and extract NuGet packages (must be secure).
+    /// </summary>
+    public virtual string TempDir { get; internal set; }
+    /// <summary>
+    ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
+    /// </summary>
+    public virtual DotNetVerbosity Verbosity { get; internal set; }
+    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    {
+        arguments
+          .Add("workload restore")
+          .Add("{value}", Project)
+          .Add("--configFile {value}", ConfigFile)
+          .Add("--disable-parallel", DisableParallel)
+          .Add("--ignore-failed-sources", IgnoreFailedSources)
+          .Add("--include-previews", IncludePreviews)
+          .Add("--interactive", Interactive)
+          .Add("--no-cache", NoCache)
+          .Add("--skip-manifest-update", SkipManifestUpdate)
+          .Add("--source {value}", Source)
+          .Add("--temp-dir {value}", TempDir)
+          .Add("--verbosity {value}", Verbosity);
+        return base.ConfigureProcessArguments(arguments);
+    }
+}
+#endregion
+#region DotNetWorkloadUpdateSettings
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Serializable]
+public partial class DotNetWorkloadUpdateSettings : ToolSettings
+{
+    /// <summary>
+    ///   Path to the DotNet executable.
+    /// </summary>
+    public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
+    /// <summary>
+    ///   Downloads advertising manifests but doesn't update any workloads.
+    /// </summary>
+    public virtual bool? AdvertisingManifestsOnly { get; internal set; }
+    /// <summary>
+    ///   The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.
+    /// </summary>
+    public virtual string ConfigFile { get; internal set; }
+    /// <summary>
+    ///   Prevents restoring multiple projects in parallel.
+    /// </summary>
+    public virtual bool? DisableParallel { get; internal set; }
+    /// <summary>
+    ///   Include workloads installed with previous SDK versions in the update.
+    /// </summary>
+    public virtual bool? FromPreviousSdk { get; internal set; }
+    /// <summary>
+    ///   Treats package source failures as warnings.
+    /// </summary>
+    public virtual bool? IgnoreFailedSources { get; internal set; }
+    /// <summary>
+    ///   Allows prerelease workload manifests.
+    /// </summary>
+    public virtual bool? IncludePreviews { get; internal set; }
+    /// <summary>
+    ///   Allows the command to stop and wait for user input or action. For example, to complete authentication.
+    /// </summary>
+    public virtual bool? Interactive { get; internal set; }
+    /// <summary>
+    ///   Prevents caching of packages and http requests.
+    /// </summary>
+    public virtual bool? NoCache { get; internal set; }
+    /// <summary>
+    ///   Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.
+    /// </summary>
+    public virtual string Source { get; internal set; }
+    /// <summary>
+    ///   Specify the temporary directory used to download and extract NuGet packages (must be secure).
+    /// </summary>
+    public virtual string TempDir { get; internal set; }
+    /// <summary>
+    ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
+    /// </summary>
+    public virtual DotNetVerbosity Verbosity { get; internal set; }
+    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    {
+        arguments
+          .Add("workload update")
+          .Add("--advertising-manifests-only", AdvertisingManifestsOnly)
+          .Add("--configFile {value}", ConfigFile)
+          .Add("--disable-parallel", DisableParallel)
+          .Add("--from-previous-sdk", FromPreviousSdk)
+          .Add("--ignore-failed-sources", IgnoreFailedSources)
+          .Add("--include-previews", IncludePreviews)
+          .Add("--interactive", Interactive)
+          .Add("--no-cache", NoCache)
+          .Add("--source {value}", Source)
+          .Add("--temp-dir {value}", TempDir)
+          .Add("--verbosity {value}", Verbosity);
+        return base.ConfigureProcessArguments(arguments);
+    }
+}
+#endregion
+#region DotNetWorkloadRepairSettings
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Serializable]
+public partial class DotNetWorkloadRepairSettings : ToolSettings
+{
+    /// <summary>
+    ///   Path to the DotNet executable.
+    /// </summary>
+    public override string ProcessToolPath => base.ProcessToolPath ?? DotNetTasks.DotNetPath;
+    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
+    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
+    /// <summary>
+    ///   The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.
+    /// </summary>
+    public virtual string ConfigFile { get; internal set; }
+    /// <summary>
+    ///   Prevents restoring multiple projects in parallel.
+    /// </summary>
+    public virtual bool? DisableParallel { get; internal set; }
+    /// <summary>
+    ///   Treats package source failures as warnings.
+    /// </summary>
+    public virtual bool? IgnoreFailedSources { get; internal set; }
+    /// <summary>
+    ///   Allows prerelease workload manifests.
+    /// </summary>
+    public virtual bool? IncludePreviews { get; internal set; }
+    /// <summary>
+    ///   Allows the command to stop and wait for user input or action. For example, to complete authentication.
+    /// </summary>
+    public virtual bool? Interactive { get; internal set; }
+    /// <summary>
+    ///   Prevents caching of packages and http requests.
+    /// </summary>
+    public virtual bool? NoCache { get; internal set; }
+    /// <summary>
+    ///   Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.
+    /// </summary>
+    public virtual string Source { get; internal set; }
+    /// <summary>
+    ///   Specify the temporary directory used to download and extract NuGet packages (must be secure).
+    /// </summary>
+    public virtual string TempDir { get; internal set; }
+    /// <summary>
+    ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
+    /// </summary>
+    public virtual DotNetVerbosity Verbosity { get; internal set; }
+    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    {
+        arguments
+          .Add("workload repair")
+          .Add("--configFile {value}", ConfigFile)
+          .Add("--disable-parallel", DisableParallel)
+          .Add("--ignore-failed-sources", IgnoreFailedSources)
+          .Add("--include-previews", IncludePreviews)
+          .Add("--interactive", Interactive)
+          .Add("--no-cache", NoCache)
+          .Add("--source {value}", Source)
+          .Add("--temp-dir {value}", TempDir)
+          .Add("--verbosity {value}", Verbosity);
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -22019,6 +22820,298 @@ public static partial class DotNetNuGetAddSourceSettingsExtensions
         return toolSettings;
     }
     #endregion
+    #region ConfigFile
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetNuGetAddSourceSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet Configurations</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DotNetNuGetAddSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = configFile;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetNuGetAddSourceSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet Configurations</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetConfigFile<T>(this T toolSettings) where T : DotNetNuGetAddSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = null;
+        return toolSettings;
+    }
+    #endregion
+}
+#endregion
+#region DotNetNuGetUpdateSourceSettingsExtensions
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetNuGetUpdateSourceSettingsExtensions
+{
+    #region Name
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetNuGetUpdateSourceSettings.Name"/></em></p>
+    ///   <p>Name of the source.</p>
+    /// </summary>
+    [Pure]
+    public static T SetName<T>(this T toolSettings, string name) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Name = name;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetNuGetUpdateSourceSettings.Name"/></em></p>
+    ///   <p>Name of the source.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetName<T>(this T toolSettings) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Name = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Source
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetNuGetUpdateSourceSettings.Source"/></em></p>
+    ///   <p>URL of the source.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSource<T>(this T toolSettings, string source) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Source = source;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetNuGetUpdateSourceSettings.Source"/></em></p>
+    ///   <p>URL of the source.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSource<T>(this T toolSettings) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Source = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Username
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetNuGetUpdateSourceSettings.Username"/></em></p>
+    ///   <p>Username to be used when connecting to an authenticated source.</p>
+    /// </summary>
+    [Pure]
+    public static T SetUsername<T>(this T toolSettings, string username) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Username = username;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetNuGetUpdateSourceSettings.Username"/></em></p>
+    ///   <p>Username to be used when connecting to an authenticated source.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetUsername<T>(this T toolSettings) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Username = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Password
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetNuGetUpdateSourceSettings.Password"/></em></p>
+    ///   <p>Password to be used when connecting to an authenticated source.</p>
+    /// </summary>
+    [Pure]
+    public static T SetPassword<T>(this T toolSettings, [Secret] string password) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Password = password;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetNuGetUpdateSourceSettings.Password"/></em></p>
+    ///   <p>Password to be used when connecting to an authenticated source.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetPassword<T>(this T toolSettings) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Password = null;
+        return toolSettings;
+    }
+    #endregion
+    #region StorePasswordInClearText
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetNuGetUpdateSourceSettings.StorePasswordInClearText"/></em></p>
+    ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+    /// </summary>
+    [Pure]
+    public static T SetStorePasswordInClearText<T>(this T toolSettings, bool? storePasswordInClearText) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.StorePasswordInClearText = storePasswordInClearText;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetNuGetUpdateSourceSettings.StorePasswordInClearText"/></em></p>
+    ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.StorePasswordInClearText = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetNuGetUpdateSourceSettings.StorePasswordInClearText"/></em></p>
+    ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.StorePasswordInClearText = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetNuGetUpdateSourceSettings.StorePasswordInClearText"/></em></p>
+    ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.StorePasswordInClearText = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetNuGetUpdateSourceSettings.StorePasswordInClearText"/></em></p>
+    ///   <p>Enables storing portable package source credentials by disabling password encryption.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleStorePasswordInClearText<T>(this T toolSettings) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.StorePasswordInClearText = !toolSettings.StorePasswordInClearText;
+        return toolSettings;
+    }
+    #endregion
+    #region ValidAuthenticationTypes
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetNuGetUpdateSourceSettings.ValidAuthenticationTypes"/> to a new list</em></p>
+    ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+    /// </summary>
+    [Pure]
+    public static T SetValidAuthenticationTypes<T>(this T toolSettings, params DotNetNuGetAuthentication[] validAuthenticationTypes) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ValidAuthenticationTypesInternal = validAuthenticationTypes.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetNuGetUpdateSourceSettings.ValidAuthenticationTypes"/> to a new list</em></p>
+    ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+    /// </summary>
+    [Pure]
+    public static T SetValidAuthenticationTypes<T>(this T toolSettings, IEnumerable<DotNetNuGetAuthentication> validAuthenticationTypes) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ValidAuthenticationTypesInternal = validAuthenticationTypes.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="DotNetNuGetUpdateSourceSettings.ValidAuthenticationTypes"/></em></p>
+    ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+    /// </summary>
+    [Pure]
+    public static T AddValidAuthenticationTypes<T>(this T toolSettings, params DotNetNuGetAuthentication[] validAuthenticationTypes) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ValidAuthenticationTypesInternal.AddRange(validAuthenticationTypes);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="DotNetNuGetUpdateSourceSettings.ValidAuthenticationTypes"/></em></p>
+    ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+    /// </summary>
+    [Pure]
+    public static T AddValidAuthenticationTypes<T>(this T toolSettings, IEnumerable<DotNetNuGetAuthentication> validAuthenticationTypes) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ValidAuthenticationTypesInternal.AddRange(validAuthenticationTypes);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Clears <see cref="DotNetNuGetUpdateSourceSettings.ValidAuthenticationTypes"/></em></p>
+    ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+    /// </summary>
+    [Pure]
+    public static T ClearValidAuthenticationTypes<T>(this T toolSettings) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ValidAuthenticationTypesInternal.Clear();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="DotNetNuGetUpdateSourceSettings.ValidAuthenticationTypes"/></em></p>
+    ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveValidAuthenticationTypes<T>(this T toolSettings, params DotNetNuGetAuthentication[] validAuthenticationTypes) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<DotNetNuGetAuthentication>(validAuthenticationTypes);
+        toolSettings.ValidAuthenticationTypesInternal.RemoveAll(x => hashSet.Contains(x));
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="DotNetNuGetUpdateSourceSettings.ValidAuthenticationTypes"/></em></p>
+    ///   <p>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveValidAuthenticationTypes<T>(this T toolSettings, IEnumerable<DotNetNuGetAuthentication> validAuthenticationTypes) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<DotNetNuGetAuthentication>(validAuthenticationTypes);
+        toolSettings.ValidAuthenticationTypesInternal.RemoveAll(x => hashSet.Contains(x));
+        return toolSettings;
+    }
+    #endregion
+    #region ConfigFile
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetNuGetUpdateSourceSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet Configurations</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = configFile;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetNuGetUpdateSourceSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet Configurations</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetConfigFile<T>(this T toolSettings) where T : DotNetNuGetUpdateSourceSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = null;
+        return toolSettings;
+    }
+    #endregion
 }
 #endregion
 #region DotNetToolInstallSettingsExtensions
@@ -23106,6 +24199,1994 @@ public static partial class DotNetToolUpdateSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.Version = null;
+        return toolSettings;
+    }
+    #endregion
+}
+#endregion
+#region DotNetWorkloadInstallSettingsExtensions
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetWorkloadInstallSettingsExtensions
+{
+    #region WorkloadId
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.WorkloadId"/> to a new list</em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T SetWorkloadId<T>(this T toolSettings, params string[] workloadId) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.WorkloadIdInternal = workloadId.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.WorkloadId"/> to a new list</em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T SetWorkloadId<T>(this T toolSettings, IEnumerable<string> workloadId) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.WorkloadIdInternal = workloadId.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="DotNetWorkloadInstallSettings.WorkloadId"/></em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T AddWorkloadId<T>(this T toolSettings, params string[] workloadId) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.WorkloadIdInternal.AddRange(workloadId);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="DotNetWorkloadInstallSettings.WorkloadId"/></em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T AddWorkloadId<T>(this T toolSettings, IEnumerable<string> workloadId) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.WorkloadIdInternal.AddRange(workloadId);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Clears <see cref="DotNetWorkloadInstallSettings.WorkloadId"/></em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T ClearWorkloadId<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.WorkloadIdInternal.Clear();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="DotNetWorkloadInstallSettings.WorkloadId"/></em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveWorkloadId<T>(this T toolSettings, params string[] workloadId) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<string>(workloadId);
+        toolSettings.WorkloadIdInternal.RemoveAll(x => hashSet.Contains(x));
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="DotNetWorkloadInstallSettings.WorkloadId"/></em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveWorkloadId<T>(this T toolSettings, IEnumerable<string> workloadId) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<string>(workloadId);
+        toolSettings.WorkloadIdInternal.RemoveAll(x => hashSet.Contains(x));
+        return toolSettings;
+    }
+    #endregion
+    #region ConfigFile
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.</p>
+    /// </summary>
+    [Pure]
+    public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = configFile;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetConfigFile<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = null;
+        return toolSettings;
+    }
+    #endregion
+    #region DisableParallel
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = disableParallel;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadInstallSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadInstallSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadInstallSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = !toolSettings.DisableParallel;
+        return toolSettings;
+    }
+    #endregion
+    #region IgnoreFailedSources
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = ignoreFailedSources;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadInstallSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadInstallSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadInstallSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
+        return toolSettings;
+    }
+    #endregion
+    #region IncludePreviews
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T SetIncludePreviews<T>(this T toolSettings, bool? includePreviews) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = includePreviews;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadInstallSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadInstallSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadInstallSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = !toolSettings.IncludePreviews;
+        return toolSettings;
+    }
+    #endregion
+    #region Interactive
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T SetInteractive<T>(this T toolSettings, bool? interactive) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = interactive;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetInteractive<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadInstallSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableInteractive<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadInstallSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableInteractive<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadInstallSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleInteractive<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = !toolSettings.Interactive;
+        return toolSettings;
+    }
+    #endregion
+    #region NoCache
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = noCache;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetNoCache<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadInstallSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableNoCache<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadInstallSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableNoCache<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadInstallSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = !toolSettings.NoCache;
+        return toolSettings;
+    }
+    #endregion
+    #region SkipManifestUpdate
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></em></p>
+    ///   <p>Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSkipManifestUpdate<T>(this T toolSettings, bool? skipManifestUpdate) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipManifestUpdate = skipManifestUpdate;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></em></p>
+    ///   <p>Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSkipManifestUpdate<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipManifestUpdate = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></em></p>
+    ///   <p>Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableSkipManifestUpdate<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipManifestUpdate = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></em></p>
+    ///   <p>Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableSkipManifestUpdate<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipManifestUpdate = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></em></p>
+    ///   <p>Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleSkipManifestUpdate<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipManifestUpdate = !toolSettings.SkipManifestUpdate;
+        return toolSettings;
+    }
+    #endregion
+    #region Source
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.Source"/></em></p>
+    ///   <p>Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSource<T>(this T toolSettings, string source) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Source = source;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.Source"/></em></p>
+    ///   <p>Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSource<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Source = null;
+        return toolSettings;
+    }
+    #endregion
+    #region TempDir
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.TempDir"/></em></p>
+    ///   <p>Specify the temporary directory used to download and extract NuGet packages (must be secure).</p>
+    /// </summary>
+    [Pure]
+    public static T SetTempDir<T>(this T toolSettings, string tempDir) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TempDir = tempDir;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.TempDir"/></em></p>
+    ///   <p>Specify the temporary directory used to download and extract NuGet packages (must be secure).</p>
+    /// </summary>
+    [Pure]
+    public static T ResetTempDir<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TempDir = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Verbosity
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.Verbosity"/></em></p>
+    ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbosity = verbosity;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.Verbosity"/></em></p>
+    ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbosity = null;
+        return toolSettings;
+    }
+    #endregion
+}
+#endregion
+#region DotNetWorkloadUninstallSettingsExtensions
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetWorkloadUninstallSettingsExtensions
+{
+    #region WorkloadId
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUninstallSettings.WorkloadId"/> to a new list</em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T SetWorkloadId<T>(this T toolSettings, params string[] workloadId) where T : DotNetWorkloadUninstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.WorkloadIdInternal = workloadId.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUninstallSettings.WorkloadId"/> to a new list</em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T SetWorkloadId<T>(this T toolSettings, IEnumerable<string> workloadId) where T : DotNetWorkloadUninstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.WorkloadIdInternal = workloadId.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="DotNetWorkloadUninstallSettings.WorkloadId"/></em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T AddWorkloadId<T>(this T toolSettings, params string[] workloadId) where T : DotNetWorkloadUninstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.WorkloadIdInternal.AddRange(workloadId);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="DotNetWorkloadUninstallSettings.WorkloadId"/></em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T AddWorkloadId<T>(this T toolSettings, IEnumerable<string> workloadId) where T : DotNetWorkloadUninstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.WorkloadIdInternal.AddRange(workloadId);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Clears <see cref="DotNetWorkloadUninstallSettings.WorkloadId"/></em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T ClearWorkloadId<T>(this T toolSettings) where T : DotNetWorkloadUninstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.WorkloadIdInternal.Clear();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="DotNetWorkloadUninstallSettings.WorkloadId"/></em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveWorkloadId<T>(this T toolSettings, params string[] workloadId) where T : DotNetWorkloadUninstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<string>(workloadId);
+        toolSettings.WorkloadIdInternal.RemoveAll(x => hashSet.Contains(x));
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="DotNetWorkloadUninstallSettings.WorkloadId"/></em></p>
+    ///   <p>The workload ID or multiple IDs to install.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveWorkloadId<T>(this T toolSettings, IEnumerable<string> workloadId) where T : DotNetWorkloadUninstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<string>(workloadId);
+        toolSettings.WorkloadIdInternal.RemoveAll(x => hashSet.Contains(x));
+        return toolSettings;
+    }
+    #endregion
+}
+#endregion
+#region DotNetWorkloadRestoreSettingsExtensions
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetWorkloadRestoreSettingsExtensions
+{
+    #region Project
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.Project"/></em></p>
+    ///   <p>The project or solution file to install workloads for. If a file is not specified, the command searches the current directory for one.</p>
+    /// </summary>
+    [Pure]
+    public static T SetProject<T>(this T toolSettings, string project) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Project = project;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.Project"/></em></p>
+    ///   <p>The project or solution file to install workloads for. If a file is not specified, the command searches the current directory for one.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetProject<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Project = null;
+        return toolSettings;
+    }
+    #endregion
+    #region ConfigFile
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.</p>
+    /// </summary>
+    [Pure]
+    public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = configFile;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetConfigFile<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = null;
+        return toolSettings;
+    }
+    #endregion
+    #region DisableParallel
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = disableParallel;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRestoreSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRestoreSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRestoreSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = !toolSettings.DisableParallel;
+        return toolSettings;
+    }
+    #endregion
+    #region IgnoreFailedSources
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = ignoreFailedSources;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRestoreSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRestoreSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRestoreSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
+        return toolSettings;
+    }
+    #endregion
+    #region IncludePreviews
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T SetIncludePreviews<T>(this T toolSettings, bool? includePreviews) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = includePreviews;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRestoreSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRestoreSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRestoreSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = !toolSettings.IncludePreviews;
+        return toolSettings;
+    }
+    #endregion
+    #region Interactive
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T SetInteractive<T>(this T toolSettings, bool? interactive) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = interactive;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetInteractive<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRestoreSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableInteractive<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRestoreSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableInteractive<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRestoreSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleInteractive<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = !toolSettings.Interactive;
+        return toolSettings;
+    }
+    #endregion
+    #region NoCache
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = noCache;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetNoCache<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRestoreSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableNoCache<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRestoreSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableNoCache<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRestoreSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = !toolSettings.NoCache;
+        return toolSettings;
+    }
+    #endregion
+    #region SkipManifestUpdate
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></em></p>
+    ///   <p>Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSkipManifestUpdate<T>(this T toolSettings, bool? skipManifestUpdate) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipManifestUpdate = skipManifestUpdate;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></em></p>
+    ///   <p>Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSkipManifestUpdate<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipManifestUpdate = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></em></p>
+    ///   <p>Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableSkipManifestUpdate<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipManifestUpdate = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></em></p>
+    ///   <p>Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableSkipManifestUpdate<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipManifestUpdate = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></em></p>
+    ///   <p>Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleSkipManifestUpdate<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipManifestUpdate = !toolSettings.SkipManifestUpdate;
+        return toolSettings;
+    }
+    #endregion
+    #region Source
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.Source"/></em></p>
+    ///   <p>Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSource<T>(this T toolSettings, string source) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Source = source;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.Source"/></em></p>
+    ///   <p>Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSource<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Source = null;
+        return toolSettings;
+    }
+    #endregion
+    #region TempDir
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.TempDir"/></em></p>
+    ///   <p>Specify the temporary directory used to download and extract NuGet packages (must be secure).</p>
+    /// </summary>
+    [Pure]
+    public static T SetTempDir<T>(this T toolSettings, string tempDir) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TempDir = tempDir;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.TempDir"/></em></p>
+    ///   <p>Specify the temporary directory used to download and extract NuGet packages (must be secure).</p>
+    /// </summary>
+    [Pure]
+    public static T ResetTempDir<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TempDir = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Verbosity
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.Verbosity"/></em></p>
+    ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbosity = verbosity;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.Verbosity"/></em></p>
+    ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbosity = null;
+        return toolSettings;
+    }
+    #endregion
+}
+#endregion
+#region DotNetWorkloadUpdateSettingsExtensions
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetWorkloadUpdateSettingsExtensions
+{
+    #region AdvertisingManifestsOnly
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.AdvertisingManifestsOnly"/></em></p>
+    ///   <p>Downloads advertising manifests but doesn't update any workloads.</p>
+    /// </summary>
+    [Pure]
+    public static T SetAdvertisingManifestsOnly<T>(this T toolSettings, bool? advertisingManifestsOnly) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.AdvertisingManifestsOnly = advertisingManifestsOnly;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.AdvertisingManifestsOnly"/></em></p>
+    ///   <p>Downloads advertising manifests but doesn't update any workloads.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetAdvertisingManifestsOnly<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.AdvertisingManifestsOnly = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadUpdateSettings.AdvertisingManifestsOnly"/></em></p>
+    ///   <p>Downloads advertising manifests but doesn't update any workloads.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableAdvertisingManifestsOnly<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.AdvertisingManifestsOnly = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadUpdateSettings.AdvertisingManifestsOnly"/></em></p>
+    ///   <p>Downloads advertising manifests but doesn't update any workloads.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableAdvertisingManifestsOnly<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.AdvertisingManifestsOnly = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadUpdateSettings.AdvertisingManifestsOnly"/></em></p>
+    ///   <p>Downloads advertising manifests but doesn't update any workloads.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleAdvertisingManifestsOnly<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.AdvertisingManifestsOnly = !toolSettings.AdvertisingManifestsOnly;
+        return toolSettings;
+    }
+    #endregion
+    #region ConfigFile
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.</p>
+    /// </summary>
+    [Pure]
+    public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = configFile;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetConfigFile<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = null;
+        return toolSettings;
+    }
+    #endregion
+    #region DisableParallel
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = disableParallel;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadUpdateSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadUpdateSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadUpdateSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = !toolSettings.DisableParallel;
+        return toolSettings;
+    }
+    #endregion
+    #region FromPreviousSdk
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.FromPreviousSdk"/></em></p>
+    ///   <p>Include workloads installed with previous SDK versions in the update.</p>
+    /// </summary>
+    [Pure]
+    public static T SetFromPreviousSdk<T>(this T toolSettings, bool? fromPreviousSdk) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.FromPreviousSdk = fromPreviousSdk;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.FromPreviousSdk"/></em></p>
+    ///   <p>Include workloads installed with previous SDK versions in the update.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetFromPreviousSdk<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.FromPreviousSdk = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadUpdateSettings.FromPreviousSdk"/></em></p>
+    ///   <p>Include workloads installed with previous SDK versions in the update.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableFromPreviousSdk<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.FromPreviousSdk = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadUpdateSettings.FromPreviousSdk"/></em></p>
+    ///   <p>Include workloads installed with previous SDK versions in the update.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableFromPreviousSdk<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.FromPreviousSdk = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadUpdateSettings.FromPreviousSdk"/></em></p>
+    ///   <p>Include workloads installed with previous SDK versions in the update.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleFromPreviousSdk<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.FromPreviousSdk = !toolSettings.FromPreviousSdk;
+        return toolSettings;
+    }
+    #endregion
+    #region IgnoreFailedSources
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = ignoreFailedSources;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadUpdateSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadUpdateSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadUpdateSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
+        return toolSettings;
+    }
+    #endregion
+    #region IncludePreviews
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T SetIncludePreviews<T>(this T toolSettings, bool? includePreviews) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = includePreviews;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = !toolSettings.IncludePreviews;
+        return toolSettings;
+    }
+    #endregion
+    #region Interactive
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T SetInteractive<T>(this T toolSettings, bool? interactive) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = interactive;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetInteractive<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadUpdateSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableInteractive<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadUpdateSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableInteractive<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadUpdateSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleInteractive<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = !toolSettings.Interactive;
+        return toolSettings;
+    }
+    #endregion
+    #region NoCache
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = noCache;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetNoCache<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadUpdateSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableNoCache<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadUpdateSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableNoCache<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadUpdateSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = !toolSettings.NoCache;
+        return toolSettings;
+    }
+    #endregion
+    #region Source
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.Source"/></em></p>
+    ///   <p>Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSource<T>(this T toolSettings, string source) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Source = source;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.Source"/></em></p>
+    ///   <p>Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSource<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Source = null;
+        return toolSettings;
+    }
+    #endregion
+    #region TempDir
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.TempDir"/></em></p>
+    ///   <p>Specify the temporary directory used to download and extract NuGet packages (must be secure).</p>
+    /// </summary>
+    [Pure]
+    public static T SetTempDir<T>(this T toolSettings, string tempDir) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TempDir = tempDir;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.TempDir"/></em></p>
+    ///   <p>Specify the temporary directory used to download and extract NuGet packages (must be secure).</p>
+    /// </summary>
+    [Pure]
+    public static T ResetTempDir<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TempDir = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Verbosity
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.Verbosity"/></em></p>
+    ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbosity = verbosity;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.Verbosity"/></em></p>
+    ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbosity = null;
+        return toolSettings;
+    }
+    #endregion
+}
+#endregion
+#region DotNetWorkloadRepairSettingsExtensions
+/// <summary>
+///   Used within <see cref="DotNetTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetWorkloadRepairSettingsExtensions
+{
+    #region ConfigFile
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRepairSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.</p>
+    /// </summary>
+    [Pure]
+    public static T SetConfigFile<T>(this T toolSettings, string configFile) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = configFile;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRepairSettings.ConfigFile"/></em></p>
+    ///   <p>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetConfigFile<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.ConfigFile = null;
+        return toolSettings;
+    }
+    #endregion
+    #region DisableParallel
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRepairSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T SetDisableParallel<T>(this T toolSettings, bool? disableParallel) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = disableParallel;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRepairSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRepairSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRepairSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRepairSettings.DisableParallel"/></em></p>
+    ///   <p>Prevents restoring multiple projects in parallel.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleDisableParallel<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableParallel = !toolSettings.DisableParallel;
+        return toolSettings;
+    }
+    #endregion
+    #region IgnoreFailedSources
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRepairSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T SetIgnoreFailedSources<T>(this T toolSettings, bool? ignoreFailedSources) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = ignoreFailedSources;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRepairSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRepairSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRepairSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRepairSettings.IgnoreFailedSources"/></em></p>
+    ///   <p>Treats package source failures as warnings.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleIgnoreFailedSources<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IgnoreFailedSources = !toolSettings.IgnoreFailedSources;
+        return toolSettings;
+    }
+    #endregion
+    #region IncludePreviews
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T SetIncludePreviews<T>(this T toolSettings, bool? includePreviews) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = includePreviews;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></em></p>
+    ///   <p>Allows prerelease workload manifests.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleIncludePreviews<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludePreviews = !toolSettings.IncludePreviews;
+        return toolSettings;
+    }
+    #endregion
+    #region Interactive
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRepairSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T SetInteractive<T>(this T toolSettings, bool? interactive) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = interactive;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRepairSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetInteractive<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRepairSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableInteractive<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRepairSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableInteractive<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRepairSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleInteractive<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = !toolSettings.Interactive;
+        return toolSettings;
+    }
+    #endregion
+    #region NoCache
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRepairSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T SetNoCache<T>(this T toolSettings, bool? noCache) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = noCache;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRepairSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetNoCache<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRepairSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableNoCache<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRepairSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableNoCache<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRepairSettings.NoCache"/></em></p>
+    ///   <p>Prevents caching of packages and http requests.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleNoCache<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoCache = !toolSettings.NoCache;
+        return toolSettings;
+    }
+    #endregion
+    #region Source
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRepairSettings.Source"/></em></p>
+    ///   <p>Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSource<T>(this T toolSettings, string source) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Source = source;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRepairSettings.Source"/></em></p>
+    ///   <p>Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSource<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Source = null;
+        return toolSettings;
+    }
+    #endregion
+    #region TempDir
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRepairSettings.TempDir"/></em></p>
+    ///   <p>Specify the temporary directory used to download and extract NuGet packages (must be secure).</p>
+    /// </summary>
+    [Pure]
+    public static T SetTempDir<T>(this T toolSettings, string tempDir) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TempDir = tempDir;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRepairSettings.TempDir"/></em></p>
+    ///   <p>Specify the temporary directory used to download and extract NuGet packages (must be secure).</p>
+    /// </summary>
+    [Pure]
+    public static T ResetTempDir<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TempDir = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Verbosity
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRepairSettings.Verbosity"/></em></p>
+    ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbosity = verbosity;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRepairSettings.Verbosity"/></em></p>
+    ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbosity = null;
         return toolSettings;
     }
     #endregion

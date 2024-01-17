@@ -72,7 +72,6 @@ public partial class NUnitTasks
     ///     <li><c>--noheader</c> via <see cref="NUnit3Settings.NoHeader"/></li>
     ///     <li><c>--noresult</c> via <see cref="NUnit3Settings.NoResults"/></li>
     ///     <li><c>--output</c> via <see cref="NUnit3Settings.OutputFile"/></li>
-    ///     <li><c>--params</c> via <see cref="NUnit3Settings.Parameters"/></li>
     ///     <li><c>--pause</c> via <see cref="NUnit3Settings.Pause"/></li>
     ///     <li><c>--process</c> via <see cref="NUnit3Settings.Process"/></li>
     ///     <li><c>--result</c> via <see cref="NUnit3Settings.Results"/></li>
@@ -84,6 +83,7 @@ public partial class NUnitTasks
     ///     <li><c>--teamcity</c> via <see cref="NUnit3Settings.TeamCity"/></li>
     ///     <li><c>--test</c> via <see cref="NUnit3Settings.Tests"/></li>
     ///     <li><c>--testlist</c> via <see cref="NUnit3Settings.TestListFile"/></li>
+    ///     <li><c>--testparam</c> via <see cref="NUnit3Settings.Parameters"/></li>
     ///     <li><c>--timeout</c> via <see cref="NUnit3Settings.Timeout"/></li>
     ///     <li><c>--trace</c> via <see cref="NUnit3Settings.Trace"/></li>
     ///     <li><c>--wait</c> via <see cref="NUnit3Settings.Wait"/></li>
@@ -126,7 +126,6 @@ public partial class NUnitTasks
     ///     <li><c>--noheader</c> via <see cref="NUnit3Settings.NoHeader"/></li>
     ///     <li><c>--noresult</c> via <see cref="NUnit3Settings.NoResults"/></li>
     ///     <li><c>--output</c> via <see cref="NUnit3Settings.OutputFile"/></li>
-    ///     <li><c>--params</c> via <see cref="NUnit3Settings.Parameters"/></li>
     ///     <li><c>--pause</c> via <see cref="NUnit3Settings.Pause"/></li>
     ///     <li><c>--process</c> via <see cref="NUnit3Settings.Process"/></li>
     ///     <li><c>--result</c> via <see cref="NUnit3Settings.Results"/></li>
@@ -138,6 +137,7 @@ public partial class NUnitTasks
     ///     <li><c>--teamcity</c> via <see cref="NUnit3Settings.TeamCity"/></li>
     ///     <li><c>--test</c> via <see cref="NUnit3Settings.Tests"/></li>
     ///     <li><c>--testlist</c> via <see cref="NUnit3Settings.TestListFile"/></li>
+    ///     <li><c>--testparam</c> via <see cref="NUnit3Settings.Parameters"/></li>
     ///     <li><c>--timeout</c> via <see cref="NUnit3Settings.Timeout"/></li>
     ///     <li><c>--trace</c> via <see cref="NUnit3Settings.Trace"/></li>
     ///     <li><c>--wait</c> via <see cref="NUnit3Settings.Wait"/></li>
@@ -177,7 +177,6 @@ public partial class NUnitTasks
     ///     <li><c>--noheader</c> via <see cref="NUnit3Settings.NoHeader"/></li>
     ///     <li><c>--noresult</c> via <see cref="NUnit3Settings.NoResults"/></li>
     ///     <li><c>--output</c> via <see cref="NUnit3Settings.OutputFile"/></li>
-    ///     <li><c>--params</c> via <see cref="NUnit3Settings.Parameters"/></li>
     ///     <li><c>--pause</c> via <see cref="NUnit3Settings.Pause"/></li>
     ///     <li><c>--process</c> via <see cref="NUnit3Settings.Process"/></li>
     ///     <li><c>--result</c> via <see cref="NUnit3Settings.Results"/></li>
@@ -189,6 +188,7 @@ public partial class NUnitTasks
     ///     <li><c>--teamcity</c> via <see cref="NUnit3Settings.TeamCity"/></li>
     ///     <li><c>--test</c> via <see cref="NUnit3Settings.Tests"/></li>
     ///     <li><c>--testlist</c> via <see cref="NUnit3Settings.TestListFile"/></li>
+    ///     <li><c>--testparam</c> via <see cref="NUnit3Settings.Parameters"/></li>
     ///     <li><c>--timeout</c> via <see cref="NUnit3Settings.Timeout"/></li>
     ///     <li><c>--trace</c> via <see cref="NUnit3Settings.Trace"/></li>
     ///     <li><c>--wait</c> via <see cref="NUnit3Settings.Wait"/></li>
@@ -237,7 +237,7 @@ public partial class NUnit3Settings : ToolSettings
     /// </summary>
     public virtual string WhereExpression { get; internal set; }
     /// <summary>
-    ///   A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.
+    ///   A test parameter specified in the form NAME=VALUE for consumption by tests. Multiple parameters must be specified separated using a <c>--testparam</c> option for each.
     /// </summary>
     public virtual IReadOnlyDictionary<string, string> Parameters => ParametersInternal.AsReadOnly();
     internal Dictionary<string, string> ParametersInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
@@ -336,7 +336,7 @@ public partial class NUnit3Settings : ToolSettings
     /// </summary>
     public virtual bool? NoResults { get; internal set; }
     /// <summary>
-    ///   Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>
+    ///   Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>, <c>OnOutputOnly</c>, <c>Before</c>, <c>After</c>, <c>BeforeAndAfter</c>
     /// </summary>
     public virtual NUnitLabelType Labels { get; internal set; }
     /// <summary>
@@ -382,7 +382,7 @@ public partial class NUnit3Settings : ToolSettings
           .Add("--test={value}", Tests, separator: ',')
           .Add("--testlist={value}", TestListFile)
           .Add("--where={value}", WhereExpression)
-          .Add("--params={value}", Parameters, "{key}={value}")
+          .Add("--testparam={value}", Parameters, "{key}={value}")
           .Add("--config={value}", Configuration)
           .Add("--process={value}", Process)
           .Add("--inprocess", InProcess)
@@ -641,7 +641,7 @@ public static partial class NUnit3SettingsExtensions
     #region Parameters
     /// <summary>
     ///   <p><em>Sets <see cref="NUnit3Settings.Parameters"/> to a new dictionary</em></p>
-    ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.</p>
+    ///   <p>A test parameter specified in the form NAME=VALUE for consumption by tests. Multiple parameters must be specified separated using a <c>--testparam</c> option for each.</p>
     /// </summary>
     [Pure]
     public static T SetParameters<T>(this T toolSettings, IDictionary<string, string> parameters) where T : NUnit3Settings
@@ -652,7 +652,7 @@ public static partial class NUnit3SettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <see cref="NUnit3Settings.Parameters"/></em></p>
-    ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.</p>
+    ///   <p>A test parameter specified in the form NAME=VALUE for consumption by tests. Multiple parameters must be specified separated using a <c>--testparam</c> option for each.</p>
     /// </summary>
     [Pure]
     public static T ClearParameters<T>(this T toolSettings) where T : NUnit3Settings
@@ -663,7 +663,7 @@ public static partial class NUnit3SettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds a new key-value-pair <see cref="NUnit3Settings.Parameters"/></em></p>
-    ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.</p>
+    ///   <p>A test parameter specified in the form NAME=VALUE for consumption by tests. Multiple parameters must be specified separated using a <c>--testparam</c> option for each.</p>
     /// </summary>
     [Pure]
     public static T AddParameter<T>(this T toolSettings, string parameterKey, string parameterValue) where T : NUnit3Settings
@@ -674,7 +674,7 @@ public static partial class NUnit3SettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes a key-value-pair from <see cref="NUnit3Settings.Parameters"/></em></p>
-    ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.</p>
+    ///   <p>A test parameter specified in the form NAME=VALUE for consumption by tests. Multiple parameters must be specified separated using a <c>--testparam</c> option for each.</p>
     /// </summary>
     [Pure]
     public static T RemoveParameter<T>(this T toolSettings, string parameterKey) where T : NUnit3Settings
@@ -685,7 +685,7 @@ public static partial class NUnit3SettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets a key-value-pair in <see cref="NUnit3Settings.Parameters"/></em></p>
-    ///   <p>A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times.</p>
+    ///   <p>A test parameter specified in the form NAME=VALUE for consumption by tests. Multiple parameters must be specified separated using a <c>--testparam</c> option for each.</p>
     /// </summary>
     [Pure]
     public static T SetParameter<T>(this T toolSettings, string parameterKey, string parameterValue) where T : NUnit3Settings
@@ -1694,7 +1694,7 @@ public static partial class NUnit3SettingsExtensions
     #region Labels
     /// <summary>
     ///   <p><em>Sets <see cref="NUnit3Settings.Labels"/></em></p>
-    ///   <p>Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c></p>
+    ///   <p>Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>, <c>OnOutputOnly</c>, <c>Before</c>, <c>After</c>, <c>BeforeAndAfter</c></p>
     /// </summary>
     [Pure]
     public static T SetLabels<T>(this T toolSettings, NUnitLabelType labels) where T : NUnit3Settings
@@ -1705,7 +1705,7 @@ public static partial class NUnit3SettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <see cref="NUnit3Settings.Labels"/></em></p>
-    ///   <p>Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c></p>
+    ///   <p>Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>, <c>OnOutputOnly</c>, <c>Before</c>, <c>After</c>, <c>BeforeAndAfter</c></p>
     /// </summary>
     [Pure]
     public static T ResetLabels<T>(this T toolSettings) where T : NUnit3Settings
@@ -2182,6 +2182,10 @@ public partial class NUnitLabelType : Enumeration
     public static NUnitLabelType Off = (NUnitLabelType) "Off";
     public static NUnitLabelType On = (NUnitLabelType) "On";
     public static NUnitLabelType All = (NUnitLabelType) "All";
+    public static NUnitLabelType OnOutputOnly = (NUnitLabelType) "OnOutputOnly";
+    public static NUnitLabelType Before = (NUnitLabelType) "Before";
+    public static NUnitLabelType After = (NUnitLabelType) "After";
+    public static NUnitLabelType BeforeAndAfter = (NUnitLabelType) "BeforeAndAfter";
     public static implicit operator NUnitLabelType(string value)
     {
         return new NUnitLabelType { Value = value };
