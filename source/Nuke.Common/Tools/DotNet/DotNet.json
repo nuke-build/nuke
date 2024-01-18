@@ -1203,6 +1203,12 @@
             "help": "Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload."
           },
           {
+            "name": "SkipSignCheck",
+            "type": "bool",
+            "format": "--skip-sign-check",
+            "help": "Skipping the nuget package signature verification."
+          },
+          {
             "name": "Source",
             "type": "string",
             "format": "--source {value}",
@@ -1295,6 +1301,12 @@
             "help": "Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload."
           },
           {
+            "name": "SkipSignCheck",
+            "type": "bool",
+            "format": "--skip-sign-check",
+            "help": "Skipping the nuget package signature verification."
+          },
+          {
             "name": "Source",
             "type": "string",
             "format": "--source {value}",
@@ -1371,6 +1383,12 @@
             "help": "Prevents caching of packages and http requests."
           },
           {
+            "name": "SkipSignCheck",
+            "type": "bool",
+            "format": "--skip-sign-check",
+            "help": "Skipping the nuget package signature verification."
+          },
+          {
             "name": "Source",
             "type": "string",
             "format": "--source {value}",
@@ -1433,6 +1451,12 @@
             "type": "bool",
             "format": "--no-cache",
             "help": "Prevents caching of packages and http requests."
+          },
+          {
+            "name": "SkipSignCheck",
+            "type": "bool",
+            "format": "--skip-sign-check",
+            "help": "Skipping the nuget package signature verification."
           },
           {
             "name": "Source",
