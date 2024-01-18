@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,9 +40,13 @@ using static Nuke.Common.EnvironmentInfo;
 class Build : NukeBuild
 {
     AbsolutePath LocalPackagesDir => RootDirectory / ".." / "LocalPackages";
+
     AbsolutePath SourceFolder => RootDirectory / "source";
+
     AbsolutePath PublishDir => RootDirectory / "publish";
+
     AbsolutePath SignToolPath => RootDirectory / "certificates" / "signtool.exe";
+
     private string Convert(AbsolutePath file)
     {
         file = (AbsolutePath)file;

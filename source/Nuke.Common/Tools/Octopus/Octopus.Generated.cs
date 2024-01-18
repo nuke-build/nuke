@@ -701,7 +701,8 @@ public partial class OctopusPackSettings : ToolSettings
     /// <summary>
     ///   Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.
     /// </summary>
-    public virtual string Include { get; internal set; }
+    public virtual IReadOnlyList<string> Include => IncludeInternal.AsReadOnly();
+    internal List<string> IncludeInternal { get; set; } = new List<string>();
     /// <summary>
     ///   Allow an existing package file of the same ID/version to be overwritten.
     /// </summary>
@@ -1767,25 +1768,82 @@ public static partial class OctopusPackSettingsExtensions
     #endregion
     #region Include
     /// <summary>
-    ///   <p><em>Sets <see cref="OctopusPackSettings.Include"/></em></p>
+    ///   <p><em>Sets <see cref="OctopusPackSettings.Include"/> to a new list</em></p>
     ///   <p>Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.</p>
     /// </summary>
     [Pure]
-    public static T SetInclude<T>(this T toolSettings, string include) where T : OctopusPackSettings
+    public static T SetInclude<T>(this T toolSettings, params string[] include) where T : OctopusPackSettings
     {
         toolSettings = toolSettings.NewInstance();
-        toolSettings.Include = include;
+        toolSettings.IncludeInternal = include.ToList();
         return toolSettings;
     }
     /// <summary>
-    ///   <p><em>Resets <see cref="OctopusPackSettings.Include"/></em></p>
+    ///   <p><em>Sets <see cref="OctopusPackSettings.Include"/> to a new list</em></p>
     ///   <p>Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.</p>
     /// </summary>
     [Pure]
-    public static T ResetInclude<T>(this T toolSettings) where T : OctopusPackSettings
+    public static T SetInclude<T>(this T toolSettings, IEnumerable<string> include) where T : OctopusPackSettings
     {
         toolSettings = toolSettings.NewInstance();
-        toolSettings.Include = null;
+        toolSettings.IncludeInternal = include.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="OctopusPackSettings.Include"/></em></p>
+    ///   <p>Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T AddInclude<T>(this T toolSettings, params string[] include) where T : OctopusPackSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludeInternal.AddRange(include);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="OctopusPackSettings.Include"/></em></p>
+    ///   <p>Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T AddInclude<T>(this T toolSettings, IEnumerable<string> include) where T : OctopusPackSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludeInternal.AddRange(include);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Clears <see cref="OctopusPackSettings.Include"/></em></p>
+    ///   <p>Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T ClearInclude<T>(this T toolSettings) where T : OctopusPackSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.IncludeInternal.Clear();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="OctopusPackSettings.Include"/></em></p>
+    ///   <p>Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveInclude<T>(this T toolSettings, params string[] include) where T : OctopusPackSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<string>(include);
+        toolSettings.IncludeInternal.RemoveAll(x => hashSet.Contains(x));
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="OctopusPackSettings.Include"/></em></p>
+    ///   <p>Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveInclude<T>(this T toolSettings, IEnumerable<string> include) where T : OctopusPackSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<string>(include);
+        toolSettings.IncludeInternal.RemoveAll(x => hashSet.Contains(x));
         return toolSettings;
     }
     #endregion

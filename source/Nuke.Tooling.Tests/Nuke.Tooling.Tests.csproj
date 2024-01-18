@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageDownload Include="xunit.runner.console" Version="[2.4.1]" />
+    <PackageDownload Include="xunit.runner.console" Version="[2.6.1]" />
   </ItemGroup>
 
 </Project>

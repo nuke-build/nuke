@@ -76,7 +76,7 @@ public class ConfigurationGenerationTest
             (
                 null,
                 new TestAzurePipelinesAttribute(
-                    AzurePipelinesImage.Ubuntu1804,
+                    AzurePipelinesImage.Ubuntu2204,
                     AzurePipelinesImage.Windows2019)
                 {
                     NonEntryTargets = new[] { nameof(Clean) },

@@ -1,7 +1,7 @@
 # docker build --no-cache --progress=plain -t my-image .
 ARG registryUrl
 
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS builder
 
 WORKDIR /
 COPY ./ /code

@@ -14,7 +14,7 @@ namespace Nuke.Common.Utilities;
 [PublicAPI]
 [DebuggerNonUserCode]
 [DebuggerStepThrough]
-public static class ObjectExtensions
+public static partial class ObjectExtensions
 {
     /// <summary>
     /// Clones an object via <see cref="DataContractSerializer"/>.

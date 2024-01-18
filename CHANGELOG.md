@@ -6,6 +6,29 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [8.0.0] / 2024-01-18
+- Changed string parameters to violate requirement when empty or whitespace
+- Added on-demand value injection using `OnDemandAttribute` and `OnDemandValueInjectionAttribute`
+- Added `AbsolutePath` division operator for `..` range expression
+- Added `DOTNET_NOLOGO` to bootstrapping files
+- Fixed `BinaryFormatterSerialization` warning by suppression
+- Fixed .NET SDK discovery in bootstrapping files
+- Fixed quotation for bootstrapping script invocation
+- Fixed filtering on `FileAttributes`
+- Fixed quoting in `AppVeyor` generation
+- Fixed members in `AzurePipelinesImage`
+- Fixed members in `GitHubActionsImage`
+- Fixed lower-case naming in `DotNetVerbosity` members
+- Fixed missing `DotNetTasks` commands
+- Fixed missing `EntityFrameworkTasks` command
+- Fixed logging in `NpmTasks`
+- Fixed argument type in `OctopusTasks`
+- Fixed missing argument in `SonarScannerTasks`
+- Fixed value formatting in `SonarScannerTasks`
+- Fixed members in `NUnitLabelType`
+- Fixed deprecated argument in `NUnitTasks`
+- Fixed members in `ReportGeneratorReportTypes`
+
 ## [7.0.6] / 2023-09-24
 - Fixed logging of Docker target execution to fall back to debug messages
 
@@ -1103,7 +1126,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/7.0.6...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/8.0.0...HEAD
+[8.0.0]: https://github.com/nuke-build/nuke/compare/7.0.6...8.0.0
 [7.0.6]: https://github.com/nuke-build/nuke/compare/7.0.5...7.0.6
 [7.0.5]: https://github.com/nuke-build/nuke/compare/7.0.4...7.0.5
 [7.0.4]: https://github.com/nuke-build/nuke/compare/7.0.3...7.0.4

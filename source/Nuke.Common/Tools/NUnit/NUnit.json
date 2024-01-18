@@ -42,9 +42,9 @@
           {
             "name": "Parameters",
             "type": "Dictionary<string, string>",
-            "format": "--params={value}",
+            "format": "--testparam={value}",
             "itemFormat": "{key}={value}",
-            "help": "A test parameter specified in the form NAME=VALUE. Multiple parameters may be specified, separated by semicolons or by repeating the <c>--params</c> option multiple times."
+            "help": "A test parameter specified in the form NAME=VALUE for consumption by tests. Multiple parameters must be specified separated using a <c>--testparam</c> option for each."
           },
           {
             "name": "Configuration",
@@ -188,7 +188,7 @@
             "name": "Labels",
             "type": "NUnitLabelType",
             "format": "--labels={value}",
-            "help": "Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>"
+            "help": "Specify whether to write test case names to the output. Values: <c>Off</c>, <c>On</c>, <c>All</c>, <c>OnOutputOnly</c>, <c>Before</c>, <c>After</c>, <c>BeforeAndAfter</c>"
           },
           {
             "name": "Trace",
@@ -270,7 +270,11 @@
       "values": [
         "Off",
         "On",
-        "All"
+        "All",
+        "OnOutputOnly",
+        "Before",
+        "After",
+        "BeforeAndAfter"
       ]
     },
     {

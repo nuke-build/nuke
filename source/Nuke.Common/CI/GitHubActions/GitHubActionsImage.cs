@@ -25,5 +25,6 @@ public enum GitHubActionsImage
     [EnumValue("macos-10.15")] MacOs1015,
     [EnumValue("windows-latest")] WindowsLatest,
     [EnumValue("ubuntu-latest")] UbuntuLatest,
-    [EnumValue("macos-latest")] MacOsLatest
+    [EnumValue("macos-latest")] MacOsLatest,
+    [EnumValue("self-hosted")] SelfHosted
 }

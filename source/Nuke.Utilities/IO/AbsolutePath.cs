@@ -106,6 +106,16 @@ public class AbsolutePath : IAbsolutePathHolder, IFormattable
             ? this / ".."
             : null;
 
+#if NET6_0_OR_GREATER
+
+    public static AbsolutePath operator /(AbsolutePath left, [CanBeNull] Range range)
+    {
+        Assert.True(range.Equals(Range.All));
+        return left.Parent;
+    }
+
+#endif
+
     public static AbsolutePath operator /(AbsolutePath left, [CanBeNull] string right)
     {
         return new AbsolutePath(Combine(left.NotNull(), right));

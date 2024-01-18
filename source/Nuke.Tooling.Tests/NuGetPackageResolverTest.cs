@@ -17,7 +17,7 @@ public class NuGetPackageResolverTest
     private static AbsolutePath ProjectFile => RootDirectory / "source" / "Nuke.Tooling.Tests" / "Nuke.Tooling.Tests.csproj";
     private static AbsolutePath AssetsFile => ProjectFile.Parent / "obj" / "project.assets.json";
 
-    private const string XunitConsolePackageVersion = "2.4.1";
+    private const string XunitConsolePackageVersion = "2.6.1";
 
     [Theory]
     [InlineData("SpecK", true, true, "1.0.1-ci00055")]

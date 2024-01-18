@@ -90,6 +90,7 @@ public partial class SonarScannerTasks
     ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
     ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
     ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
+    ///     <li><c>/d:sonar.token</c> via <see cref="SonarScannerBeginSettings.Token"/></li>
     ///     <li><c>/d:sonar.verbose</c> via <see cref="SonarScannerBeginSettings.Verbose"/></li>
     ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
     ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
@@ -149,6 +150,7 @@ public partial class SonarScannerTasks
     ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
     ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
     ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
+    ///     <li><c>/d:sonar.token</c> via <see cref="SonarScannerBeginSettings.Token"/></li>
     ///     <li><c>/d:sonar.verbose</c> via <see cref="SonarScannerBeginSettings.Verbose"/></li>
     ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
     ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
@@ -205,6 +207,7 @@ public partial class SonarScannerTasks
     ///     <li><c>/d:sonar.sourceEncoding</c> via <see cref="SonarScannerBeginSettings.SourceEncoding"/></li>
     ///     <li><c>/d:sonar.test.exclusions</c> via <see cref="SonarScannerBeginSettings.TestFileExclusions"/></li>
     ///     <li><c>/d:sonar.test.inclusions</c> via <see cref="SonarScannerBeginSettings.TestFileInclusions"/></li>
+    ///     <li><c>/d:sonar.token</c> via <see cref="SonarScannerBeginSettings.Token"/></li>
     ///     <li><c>/d:sonar.verbose</c> via <see cref="SonarScannerBeginSettings.Verbose"/></li>
     ///     <li><c>/d:sonar.ws.timeout</c> via <see cref="SonarScannerBeginSettings.WebServiceTimeout"/></li>
     ///     <li><c>/k</c> via <see cref="SonarScannerBeginSettings.ProjectKey"/></li>
@@ -227,6 +230,7 @@ public partial class SonarScannerTasks
     ///     <li><c>/d:sonar.clientcert.password</c> via <see cref="SonarScannerEndSettings.ClientCertificatePassword"/></li>
     ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerEndSettings.Login"/></li>
     ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerEndSettings.Password"/></li>
+    ///     <li><c>/d:sonar.token</c> via <see cref="SonarScannerEndSettings.Token"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> SonarScannerEnd(SonarScannerEndSettings toolSettings = null)
@@ -246,6 +250,7 @@ public partial class SonarScannerTasks
     ///     <li><c>/d:sonar.clientcert.password</c> via <see cref="SonarScannerEndSettings.ClientCertificatePassword"/></li>
     ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerEndSettings.Login"/></li>
     ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerEndSettings.Password"/></li>
+    ///     <li><c>/d:sonar.token</c> via <see cref="SonarScannerEndSettings.Token"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> SonarScannerEnd(Configure<SonarScannerEndSettings> configurator)
@@ -262,6 +267,7 @@ public partial class SonarScannerTasks
     ///     <li><c>/d:sonar.clientcert.password</c> via <see cref="SonarScannerEndSettings.ClientCertificatePassword"/></li>
     ///     <li><c>/d:sonar.login</c> via <see cref="SonarScannerEndSettings.Login"/></li>
     ///     <li><c>/d:sonar.password</c> via <see cref="SonarScannerEndSettings.Password"/></li>
+    ///     <li><c>/d:sonar.token</c> via <see cref="SonarScannerEndSettings.Token"/></li>
     ///   </ul>
     /// </remarks>
     public static IEnumerable<(SonarScannerEndSettings Settings, IReadOnlyCollection<Output> Output)> SonarScannerEnd(CombinatorialConfigure<SonarScannerEndSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -316,6 +322,10 @@ public partial class SonarScannerBeginSettings : ToolSettings
     ///   Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step.
     /// </summary>
     public virtual string Password { get; internal set; }
+    /// <summary>
+    ///   Specifies the authentication token used to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added to the end step.
+    /// </summary>
+    public virtual string Token { get; internal set; }
     /// <summary>
     ///   Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting.
     /// </summary>
@@ -484,7 +494,8 @@ public partial class SonarScannerBeginSettings : ToolSettings
           .Add("/d:sonar.host.url={value}", Server)
           .Add("/d:sonar.login={value}", Login, secret: true)
           .Add("/d:sonar.password={value}", Password, secret: true)
-          .Add("/d:sonar.verbose={value}", Verbose)
+          .Add("/d:sonar.token={value}", Token, secret: true)
+          .Add("/d:sonar.verbose={value}", GetVerbose(), customValue: true)
           .Add("/d:sonar.cs.vstest.reportsPaths={value}", VSTestReports, separator: ',')
           .Add("/d:sonar.cs.nunit.reportsPaths={value}", NUnitTestReports, separator: ',')
           .Add("/d:sonar.cs.xunit.reportsPaths={value}", XUnitTestReports, separator: ',')
@@ -547,6 +558,10 @@ public partial class SonarScannerEndSettings : ToolSettings
     /// </summary>
     public virtual string Password { get; internal set; }
     /// <summary>
+    ///   Specifies the authentication token used to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added to the end step.
+    /// </summary>
+    public virtual string Token { get; internal set; }
+    /// <summary>
     ///   Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used.
     /// </summary>
     public virtual string ClientCertificatePassword { get; internal set; }
@@ -557,6 +572,7 @@ public partial class SonarScannerEndSettings : ToolSettings
           .Add("end")
           .Add("/d:sonar.login={value}", Login, secret: true)
           .Add("/d:sonar.password={value}", Password, secret: true)
+          .Add("/d:sonar.token={value}", Token, secret: true)
           .Add("/d:sonar.clientcert.password={value}", ClientCertificatePassword);
         return base.ConfigureProcessArguments(arguments);
     }
@@ -759,6 +775,30 @@ public static partial class SonarScannerBeginSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.Password = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Token
+    /// <summary>
+    ///   <p><em>Sets <see cref="SonarScannerBeginSettings.Token"/></em></p>
+    ///   <p>Specifies the authentication token used to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added to the end step.</p>
+    /// </summary>
+    [Pure]
+    public static T SetToken<T>(this T toolSettings, [Secret] string token) where T : SonarScannerBeginSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = token;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="SonarScannerBeginSettings.Token"/></em></p>
+    ///   <p>Specifies the authentication token used to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added to the end step.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetToken<T>(this T toolSettings) where T : SonarScannerBeginSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = null;
         return toolSettings;
     }
     #endregion
@@ -2651,6 +2691,30 @@ public static partial class SonarScannerEndSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.Password = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Token
+    /// <summary>
+    ///   <p><em>Sets <see cref="SonarScannerEndSettings.Token"/></em></p>
+    ///   <p>Specifies the authentication token used to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added to the end step.</p>
+    /// </summary>
+    [Pure]
+    public static T SetToken<T>(this T toolSettings, [Secret] string token) where T : SonarScannerEndSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = token;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="SonarScannerEndSettings.Token"/></em></p>
+    ///   <p>Specifies the authentication token used to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added to the end step.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetToken<T>(this T toolSettings) where T : SonarScannerEndSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Token = null;
         return toolSettings;
     }
     #endregion

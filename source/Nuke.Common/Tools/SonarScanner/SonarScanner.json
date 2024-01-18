@@ -67,9 +67,17 @@
             "help": "Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step."
           },
           {
+            "name": "Token",
+            "type": "string",
+            "format": "/d:sonar.token={value}",
+            "secret": true,
+            "help": "Specifies the authentication token used to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added to the end step."
+          },
+          {
             "name": "Verbose",
             "type": "bool",
             "format": "/d:sonar.verbose={value}",
+            "customValue": true,
             "help": "Sets the logging verbosity to detailed. Add this argument before sending logs for troubleshooting."
           },
           {
@@ -312,6 +320,13 @@
             "format": "/d:sonar.password={value}",
             "secret": true,
             "help": "Specifies the password for the SonarQube username in the <c>sonar.login</c> argument. This argument is not needed if you use authentication token. If this argument is added to the begin step, it must also be added on the end step."
+          },
+          {
+            "name": "Token",
+            "type": "string",
+            "format": "/d:sonar.token={value}",
+            "secret": true,
+            "help": "Specifies the authentication token used to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added to the end step."
           },
           {
             "name": "ClientCertificatePassword",
