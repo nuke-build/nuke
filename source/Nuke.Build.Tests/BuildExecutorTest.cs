@@ -47,8 +47,8 @@ public class BuildExecutorTest
     {
         C.Invoked = true;
         ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
-        AssertSucceeded();
-        AssertSkipped(A, B, C);
+        AssertSucceeded(C);
+        AssertSkipped(A, B);
     }
 
     [Fact]
@@ -106,27 +106,6 @@ public class BuildExecutorTest
         AssertSkipped(A, B);
         A.Skipped.Should().Be("because of B");
         B.OnlyWhen.Should().Be("false");
-    }
-
-    [Fact]
-    public void TestStaticCondition_Invoked_DependencyBehavior_Skip()
-    {
-        C.StaticConditions.Add(("() => false", () => false));
-        C.DependencyBehavior = DependencyBehavior.Skip;
-        C.Invoked = true;
-        ExecuteBuild();
-        AssertSkipped(A, B, C);
-    }
-
-    [Fact]
-    public void TestStaticCondition_Invoked_DependencyBehavior_Execute()
-    {
-        C.StaticConditions.Add(("() => false", () => false));
-        C.DependencyBehavior = DependencyBehavior.Execute;
-        C.Invoked = true;
-        ExecuteBuild();
-        AssertSkipped(C);
-        AssertSucceeded(A, B);
     }
 
     [Fact]

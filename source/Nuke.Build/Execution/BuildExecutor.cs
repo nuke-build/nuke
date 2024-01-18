@@ -180,7 +180,7 @@ internal static class BuildExecutor
 
     private static void MarkTargetSkipped(INukeBuild build, ExecutableTarget target, string reason = null)
     {
-        if (target.Status != ExecutionStatus.Scheduled)
+        if (target.Invoked || target.Status != ExecutionStatus.Scheduled)
             return;
 
         target.Status = ExecutionStatus.Skipped;

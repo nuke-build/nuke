@@ -11,7 +11,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added `DOTNET_NOLOGO` to bootstrapping files
 - Fixed `BinaryFormatterSerialization` warning by suppression
 - Fixed .NET SDK discovery in bootstrapping files
-- Fixed exclusion of invoked targets from skipping
 - Fixed quotation for bootstrapping script invocation
 - Fixed filtering on `FileAttributes`
 - Fixed quoting in `AppVeyor` generation
