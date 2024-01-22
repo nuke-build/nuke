@@ -6,7 +6,7 @@ import DownloadButton from '@site/src/components/DownloadButton';
 import ControlKey from '@site/src/components/ControlKey';
 
 <DownloadButton
-    url="/download/vscode"
+    url={null}
     event="DR2GVCBB" />
 
 In [Visual Studio Code](https://code.visualstudio.com/) you can install the _NUKE Support extension_ to be more productive in writing, running, and debugging your builds.
