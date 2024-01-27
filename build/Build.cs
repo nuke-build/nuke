@@ -48,7 +48,7 @@ partial class Build
     ///   - JetBrains Rider            https://nuke.build/rider
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
-    public static int Main() => Execute<Build>(x => ((IPack)x).Pack);
+    public static int Main() => Execute<Build>(x => x.Clean);
 
     [CI] readonly TeamCity TeamCity;
     [CI] readonly AzurePipelines AzurePipelines;
@@ -72,6 +72,24 @@ partial class Build
     const string HotfixBranchPrefix = "hotfix";
 
     AbsolutePath IHazArtifacts.ArtifactsDirectory => RootDirectory / "output";
+
+
+#if NET7_0
+        [NuGetPackage(
+            packageId: "ReportGenerator",
+            packageExecutable: "ReportGenerator.dll",
+            Framework = "net7.0",
+            Version = "5.2.0"
+        )]
+#elif NET8_0
+    [NuGetPackage(
+        packageId: "ReportGenerator",
+        packageExecutable: "ReportGenerator.dll",
+        Framework = "net8.0",
+        Version = "5.2.0"
+    )]
+#endif
+    public Tool ReportGenerator { get; set; }
 
     Target Clean => _ => _
         .Before<IRestore>()

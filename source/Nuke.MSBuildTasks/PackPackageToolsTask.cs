@@ -31,7 +31,7 @@ public class PackPackageToolsTask : ContextAwareTask
 
     protected override bool ExecuteInner()
     {
-        var packages = NuGetPackageResolver.GetLocalInstalledPackages(ProjectAssetsFile);
+        var packages = NuGetPackageResolver.GetLocalInstalledPackages(ProjectAssetsFile, TargetFramework);
         TargetOutputs = packages.SelectMany(x => GetFiles(x.Id, x.Version.ToString())).ToArray();
         return true;
     }

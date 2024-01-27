@@ -27,7 +27,7 @@ public class EmbedPackagesForSelfContainedTask : ContextAwareTask
 
     protected override bool ExecuteInner()
     {
-        var packages = NuGetPackageResolver.GetLocalInstalledPackages(ProjectAssetsFile);
+        var packages = NuGetPackageResolver.GetLocalInstalledPackages(ProjectAssetsFile, TargetFramework);
         TargetOutputs = packages
             .Where(x => !x.Id.StartsWithOrdinalIgnoreCase("microsoft.netcore.app.runtime"))
             .Where(x => Directory.GetDirectories(x.Directory, "tools").Any())

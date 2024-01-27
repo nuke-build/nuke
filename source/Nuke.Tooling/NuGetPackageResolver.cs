@@ -24,11 +24,13 @@ public static class NuGetPackageResolver
     public static InstalledPackage GetLocalInstalledPackage(
         string packageId,
         AbsolutePath packagesConfigFile,
+        string framework = null,
         string version = null,
         bool resolveDependencies = true)
     {
         return GetLocalInstalledPackages(
                 packagesConfigFile,
+                framework,
                 resolveDependencies,
                 x => x.PackageId.EqualsOrdinalIgnoreCase(packageId))
             .SingleOrDefaultOrError(
@@ -39,28 +41,27 @@ public static class NuGetPackageResolver
     // TODO: add HasLocalInstalledPackage() ?
     public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
         AbsolutePath packagesConfigFile,
+        string framework,
         bool resolveDependencies = true,
         Func<(string PackageId, string Version), bool> preFilter = null)
     {
         return packagesConfigFile.HasExtension("json")
-            ? GetLocalInstalledPackagesFromAssetsFile(packagesConfigFile, resolveDependencies, preFilter)
+            ? GetLocalInstalledPackagesFromAssetsFile(packagesConfigFile, framework, resolveDependencies, preFilter)
             : GetLocalInstalledPackagesFromConfigFile(packagesConfigFile, resolveDependencies);
     }
 
     private static IEnumerable<(string PackageId, string Version)> GetLocalInstalledPackagesFromAssetsFileWithoutLoading(
         AbsolutePath packagesConfigFile,
+        string framework = null,
         bool resolveDependencies = true)
     {
+        framework = "net8.0";
         var assetsContent = packagesConfigFile.ReadAllText();
         var assetsObject = JObject.Parse(assetsContent);
 
         // ReSharper disable HeapView.BoxingAllocation
-        var directPackageReferences =
-            assetsObject["project"].NotNull()["frameworks"].NotNull()
-                .Single().Single()["dependencies"]
-                ?.Children<JProperty>()
-                .Select(x => x.Name).ToList()
-            ?? new List<string>();
+        var frameworkProperty = assetsObject["project"]?["frameworks"]?.Children<JProperty>().Single(x => x.Name == framework || framework == null);
+        var directPackageReferences = frameworkProperty?.Single()["dependencies"]?.Children<JProperty>().Select(x => x.Name).ToList() ?? [];
 
         var packageReferences =
             assetsObject["libraries"].NotNull()
@@ -75,9 +76,7 @@ public static class NuGetPackageResolver
                 .OrderByDescending(x => directPackageReferences.Contains(x.PackageId))
                 .ToList();
 
-        var packageDownloads =
-            assetsObject["project"].NotNull()["frameworks"].NotNull()
-                .Single().Single()["downloadDependencies"]
+        var packageDownloads = frameworkProperty?.Single()["downloadDependencies"]
                 ?.Children<JObject>()
                 .Select(x => (
                     PackageId: x.Property("name").NotNull().Value.ToString(),
@@ -92,10 +91,11 @@ public static class NuGetPackageResolver
     [ItemNotNull]
     private static IEnumerable<InstalledPackage> GetLocalInstalledPackagesFromAssetsFile(
         AbsolutePath packagesConfigFile,
+        string framework,
         bool resolveDependencies = true,
         Func<(string PackageId, string Version), bool> preFilter = null)
     {
-        return GetLocalInstalledPackagesFromAssetsFileWithoutLoading(packagesConfigFile, resolveDependencies)
+        return GetLocalInstalledPackagesFromAssetsFileWithoutLoading(packagesConfigFile, resolveDependencies: resolveDependencies)
             .Where(x => preFilter == null || preFilter.Invoke(x))
             .Select(x => GetGlobalInstalledPackage(x.PackageId, x.Version, packagesConfigFile))
             .WhereNotNull();
