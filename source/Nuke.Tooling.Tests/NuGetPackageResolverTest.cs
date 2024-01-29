@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -41,32 +41,40 @@ public class NuGetPackageResolverTest
         result.Version.OriginalVersion.Should().Be(XunitConsolePackageVersion);
     }
 
-    [Fact]
-    public void TestGetLocalInstalledPackageViaProjectFile()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("net6.0")]
+    public void TestGetLocalInstalledPackageViaProjectFile(string framework)
     {
-        var result = NuGetPackageResolver.GetLocalInstalledPackage("xunit.runner.console", ProjectFile, resolveDependencies: false);
+        var result = NuGetPackageResolver.GetLocalInstalledPackage("xunit.runner.console", ProjectFile, framework: framework, resolveDependencies: false);
         result.Should().NotBeNull();
         result.Version.OriginalVersion.Should().Be(XunitConsolePackageVersion);
     }
 
-    [Fact]
-    public void TestGetLocalInstalledPackageViaAssetsFile()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("net6.0")]
+    public void TestGetLocalInstalledPackageViaAssetsFile(string framework)
     {
-        var result = NuGetPackageResolver.GetLocalInstalledPackage("xunit.runner.console", AssetsFile, resolveDependencies: false);
+        var result = NuGetPackageResolver.GetLocalInstalledPackage("xunit.runner.console", AssetsFile, framework: framework, resolveDependencies: false);
         result.Version.OriginalVersion.Should().Be(XunitConsolePackageVersion);
     }
 
-    [Fact]
-    public void TestGetLocalInstalledPackagesViaProjectFile()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("net6.0")]
+    public void TestGetLocalInstalledPackagesViaProjectFile(string framework)
     {
-        var result = NuGetPackageResolver.GetLocalInstalledPackages(ProjectFile, resolveDependencies: false);
+        var result = NuGetPackageResolver.GetLocalInstalledPackages(ProjectFile, framework: framework, resolveDependencies: false);
         result.Should().Contain(x => x.Id == "xunit.runner.console");
     }
 
-    [Fact]
-    public void TestGetLocalInstalledPackagesViaAssetsFile()
+    [Theory]
+    [InlineData(null)]
+    [InlineData("net6.0")]
+    public void TestGetLocalInstalledPackagesViaAssetsFile(string framework)
     {
-        var result = NuGetPackageResolver.GetLocalInstalledPackages(AssetsFile, resolveDependencies: false);
+        var result = NuGetPackageResolver.GetLocalInstalledPackages(AssetsFile, framework: framework, resolveDependencies: false);
         result.Should().Contain(x => x.Id == "xunit.runner.console");
     }
 }

@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -41,7 +41,7 @@ public static class NuGetPackageResolver
     // TODO: add HasLocalInstalledPackage() ?
     public static IEnumerable<InstalledPackage> GetLocalInstalledPackages(
         AbsolutePath packagesConfigFile,
-        string framework,
+        string framework = null,
         bool resolveDependencies = true,
         Func<(string PackageId, string Version), bool> preFilter = null)
     {
@@ -54,8 +54,7 @@ public static class NuGetPackageResolver
         AbsolutePath packagesConfigFile,
         string framework = null,
         bool resolveDependencies = true)
-    {
-        framework = "net8.0";
+    {                                                                                                                                                              
         var assetsContent = packagesConfigFile.ReadAllText();
         var assetsObject = JObject.Parse(assetsContent);
 
@@ -95,7 +94,7 @@ public static class NuGetPackageResolver
         bool resolveDependencies = true,
         Func<(string PackageId, string Version), bool> preFilter = null)
     {
-        return GetLocalInstalledPackagesFromAssetsFileWithoutLoading(packagesConfigFile, resolveDependencies: resolveDependencies)
+        return GetLocalInstalledPackagesFromAssetsFileWithoutLoading(packagesConfigFile, framework, resolveDependencies: resolveDependencies)
             .Where(x => preFilter == null || preFilter.Invoke(x))
             .Select(x => GetGlobalInstalledPackage(x.PackageId, x.Version, packagesConfigFile))
             .WhereNotNull();

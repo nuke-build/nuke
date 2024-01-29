@@ -26,10 +26,15 @@ public static class NuGetToolPathResolver
     {
         Assert.True(packageId != null && packageExecutable != null);
 
-        var packageDirectory = GetPackageDirectory(packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries), version);
+        if (framework == null)
+        {
+            framework = $".net{EnvironmentInfo.Framework.Version}";
+        }
+
+        var packageDirectory = GetPackageDirectory(packageId.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries), framework, version);
         var packageExecutables = packageExecutable.Split(new[] { '|' }, StringSplitOptions.RemoveEmptyEntries);
 #if !NETSTANDARD2_0
-            var enumerationOptions = new EnumerationOptions { RecurseSubdirectories = true, MatchCasing = MatchCasing.CaseInsensitive };
+        var enumerationOptions = new EnumerationOptions { RecurseSubdirectories = true, MatchCasing = MatchCasing.CaseInsensitive };
 #endif
         var packageExecutablePaths = packageExecutables
 #if !NETSTANDARD2_0
@@ -78,7 +83,7 @@ public static class NuGetToolPathResolver
         return GetPackageExecutable(frameworks[sortedFrameworks.First()]);
     }
 
-    private static string GetPackageDirectory(string[] packageIds, [CanBeNull] string version)
+    private static string GetPackageDirectory(string[] packageIds, [CanBeNull] string framework, [CanBeNull] string version)
     {
         try
         {
@@ -90,10 +95,10 @@ public static class NuGetToolPathResolver
                             ? Path.Combine(EmbeddedPackagesDirectory, x)
                             : null,
                         () => NuGetAssetsConfigFile != null
-                            ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetAssetsConfigFile, version)?.Directory
+                            ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetAssetsConfigFile, framework: framework, version: version)?.Directory
                             : null,
                         () => NuGetPackagesConfigFile != null
-                            ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetPackagesConfigFile, version)?.Directory
+                            ? NuGetPackageResolver.GetLocalInstalledPackage(x, NuGetPackagesConfigFile, framework: framework, version: version)?.Directory
                             : null,
                         () => PaketPackagesConfigFile != null
                             ? PaketPackageResolver.GetLocalInstalledPackageDirectory(x, PaketPackagesConfigFile)
