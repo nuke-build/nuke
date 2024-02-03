@@ -23,23 +23,22 @@ Therefore, **everything that benefits a larger audience is prioritized** over di
 
 ## Baseline Contributions
 
-There are a number of minimal to zero efforts you can make to show your support for the project:
+There are several minimal to zero efforts you can make to show your support for the project:
 
 - Give the [GitHub project](https://github.com/nuke-build/nuke/stargazers) a star (and tell your team)
 - Follow [@nukebuildnet](https://twitter.com/nukebuildnet) and [@nuke@dotnet.social](https://dotnet.social/@nuke)
-- Upvote, share, and comment our content (see [#mentions](https://app.slack.com/client/T9QUKHC4A/CDJD8CGQ5) on Slack)
+- Upvote, share, and comment on our content (see [#mentions](https://app.slack.com/client/T9QUKHC4A/CDJD8CGQ5) on Slack)
 - Talk about NUKE on social media and let others know where it can help (tag us!)
 
 The above points are considered somewhat of the norm in exchange for using the project free of charge.
 
 ## Sustainability Contributions
 
-There are plenty of ways to show your commitment to the project and strengthen its longevity. These are typically tied to contributing time or money, but also allow for prioritizing your individual issues in return:
+There are plenty of ways to show your commitment to the project and strengthen its longevity. These are typically tied to contributing time or money, but also allow for prioritizing your own issues in return:
 
 - [Convince your company to sponsor](https://humanwhocodes.com/blog/2021/05/talk-to-your-company-sponsoring-open-source/)
 - Sponsor personally (e.g., when the project improves your work performance reviews)
-- Fix or investigate issues that are marked as [`good first issue`](https://github.com/nuke-build/nuke/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
-- Take ownership for a tool wrapper or CI/CD service (.NET CLI, GitHub Actions, ...)
+- Take ownership of a tool wrapper or CI/CD service (.NET CLI, GitHub Actions, ...)
 - Write a blog post or give a meetup talk (let us know!)
 - Help others in GitHub issues/discussions or on Slack and Discord
 
@@ -61,7 +60,7 @@ Evaluate whether your topic is going to be a valid issue:
 
 ### When creating an issue
 
-Choose one of the [issue templates](https://github.com/nuke-build/nuke/issues/new/choose) and fill it out as good as possible. This includes, but is not limited to:
+Choose one of the [issue templates](https://github.com/nuke-build/nuke/issues/new/choose) and fill it out as well as possible. This includes, but is not limited to:
 
 - State the issue as short as possible (more likely there's time to comprehend it)
 - Use [markdown](https://docs.github.com/en/get-started/writing-on-github) for code, logs, and other special text fragments
