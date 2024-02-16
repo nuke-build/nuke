@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NuGet.Packaging" Version="6.7.0" />
+    <PackageReference Include="NuGet.Packaging" Version="6.9.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NuGet.Packaging" Version="6.7.0" />
+    <PackageReference Include="NuGet.Packaging" Version="6.9.1" />
     <PackageReference Include="Serilog" Version="3.1.1" />
   </ItemGroup>
 
