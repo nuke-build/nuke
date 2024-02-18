@@ -3,7 +3,7 @@
 bash --version 2>&1 | head -n 1
 
 set -eo pipefail
-SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
+SCRIPT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 ###########################################################################
 # CONFIGURATION
@@ -23,10 +23,6 @@ export DOTNET_NOLOGO=1
 # EXECUTION
 ###########################################################################
 
-function FirstJsonValue {
-    perl -nle 'print $1 if m{"'"$1"'": "([^"]+)",?}' <<< "${@:2}"
-}
-
 # If dotnet CLI is installed globally and it matches requested version, use for execution
 if [ -x "$(command -v dotnet)" ] && dotnet --version &>/dev/null; then
     export DOTNET_EXE="$(command -v dotnet)"
@@ -37,20 +33,14 @@ else
     curl -Lsfo "$DOTNET_INSTALL_FILE" "$DOTNET_INSTALL_URL"
     chmod +x "$DOTNET_INSTALL_FILE"
 
-    # If global.json exists, load expected version
-    if [[ -f "$DOTNET_GLOBAL_FILE" ]]; then
-        DOTNET_VERSION=$(FirstJsonValue "version" "$(cat "$DOTNET_GLOBAL_FILE")")
-        if [[ "$DOTNET_VERSION" == ""  ]]; then
-            unset DOTNET_VERSION
-        fi
-    fi
-
     # Install by channel or version
     DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
-    if [[ -z ${DOTNET_VERSION+x} ]]; then
-        "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
-    else
+    if [[ -n ${DOTNET_VERSION+x} ]]; then
         "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --version "$DOTNET_VERSION" --no-path
+    elif [[ -f $DOTNET_GLOBAL_FILE ]]; then
+        "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --jsonfile "$DOTNET_GLOBAL_FILE" --no-path
+    else
+        "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path
     fi
     export DOTNET_EXE="$DOTNET_DIRECTORY/dotnet"
     export PATH="$DOTNET_DIRECTORY:$PATH"

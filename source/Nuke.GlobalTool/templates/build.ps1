@@ -1,6 +1,6 @@
 [CmdletBinding()]
 Param(
-    [Parameter(Position=0,Mandatory=$false,ValueFromRemainingArguments=$true)]
+    [Parameter(Position = 0, Mandatory = $false, ValueFromRemainingArguments = $true)]
     [string[]]$BuildArguments
 )
 
@@ -34,7 +34,7 @@ function ExecSafe([scriptblock] $cmd) {
 
 # If dotnet CLI is installed globally and it matches requested version, use for execution
 if ($null -ne (Get-Command "dotnet" -ErrorAction SilentlyContinue) -and `
-     $(dotnet --version) -and $LASTEXITCODE -eq 0) {
+    $(dotnet --version) -and $LASTEXITCODE -eq 0) {
     $env:DOTNET_EXE = (Get-Command "dotnet").Path
 }
 else {
@@ -44,20 +44,16 @@ else {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     (New-Object System.Net.WebClient).DownloadFile($DotNetInstallUrl, $DotNetInstallFile)
 
-    # If global.json exists, load expected version
-    if (Test-Path $DotNetGlobalFile) {
-        $DotNetGlobal = $(Get-Content $DotNetGlobalFile | Out-String | ConvertFrom-Json)
-        if ($DotNetGlobal.PSObject.Properties["sdk"] -and $DotNetGlobal.sdk.PSObject.Properties["version"]) {
-            $DotNetVersion = $DotNetGlobal.sdk.version
-        }
-    }
-
     # Install by channel or version
     $DotNetDirectory = "$TempDirectory\dotnet-win"
-    if (!(Test-Path variable:DotNetVersion)) {
-        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
-    } else {
+    if (Test-Path variable:DotNetVersion) {
         ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
+    }
+    elseif (Test-Path $DotNetGlobalFile) {
+        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -JSonFile $DotNetGlobalFile -NoPath }
+    }
+    else {
+        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Channel $DotNetChannel -NoPath }
     }
     $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
     $env:PATH = "$DotNetDirectory;$env:PATH"
