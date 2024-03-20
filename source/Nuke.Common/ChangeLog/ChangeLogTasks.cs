@@ -130,6 +130,11 @@ public static class ChangelogTasks
     /// <seealso cref="FinalizeChangelog(ChangeLog,NuGetVersion,GitRepository)"/>
     public static void FinalizeChangelog(AbsolutePath changelogFile, string tag, [CanBeNull] GitRepository repository = null)
     {
+        FinalizeChangelogInternal(changelogFile, tag, repository);
+    }
+
+    internal static void FinalizeChangelogInternal(AbsolutePath changelogFile, string tag, [CanBeNull] GitRepository repository = null, DateTime? dateTime = null)
+    {
         Log.Information("Finalizing {File} for {Tag} ...", PathConstruction.GetRelativePath(NukeBuild.RootDirectory, changelogFile), tag);
 
         var content = changelogFile.ReadAllLines().ToList();
@@ -143,8 +148,10 @@ public static class ChangelogTasks
         Assert.True(secondSection == null || NuGetVersion.Parse(tag).CompareTo(NuGetVersion.Parse(secondSection.Caption)) > 0,
             $"Tag '{tag}' is not greater compared to last tag '{secondSection?.Caption}'");
 
+        var now = dateTime ?? DateTime.Now;
+        
         content.Insert(firstSection.StartIndex + 1, string.Empty);
-        content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {DateTime.Now:yyyy-MM-dd}");
+        content.Insert(firstSection.StartIndex + 2, $"## [{tag}] / {now:yyyy-MM-dd}");
 
         UpdateVersionSummary(tag, content, repository);
 
@@ -177,12 +184,9 @@ public static class ChangelogTasks
     {
         static bool IsReleaseHead(string str)
             => str.StartsWith("## ");
-
-        static bool IsReleaseContent(string str)
-            => str.StartsWith("###")
-               || str.Trim().StartsWith("-")
-               || str.Trim().StartsWith("*")
-               || str.Trim().StartsWith("+");
+        
+        static bool IsVersionSummary(string str)
+            => str.StartsWith("[");
 
         static string GetCaption(string str)
             => str
@@ -205,7 +209,7 @@ public static class ChangelogTasks
             }
 
             var caption = GetCaption(line);
-            var nextReleaseHeadIndex = content.FindIndex(index + 1,  x => IsReleaseHead(x) || !IsReleaseContent(x));
+            var nextReleaseHeadIndex = content.FindIndex(index + 1, s => IsReleaseHead(s) || IsVersionSummary(s));
 
             var releaseData =
                 new ReleaseSection
@@ -234,7 +238,6 @@ public static class ChangelogTasks
 
             content.RemoveRange(lastSection.EndIndex + 1, content.Count - lastSection.EndIndex - 1);
 
-            content.Add(string.Empty);
             content.Add($"[{firstSection.Caption}]: {repository.GetGitHubCompareTagToHeadUrl(tag)}");
             for (var i = 1; i + 1 < sections.Count; i++)
                 content.Add($"[{sections[i].Caption}]: {repository.GetGitHubCompareTagsUrl(sections[i].Caption, sections[i + 1].Caption)}");

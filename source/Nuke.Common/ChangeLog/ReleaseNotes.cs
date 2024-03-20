@@ -14,7 +14,7 @@ namespace Nuke.Common.ChangeLog;
 public class ReleaseNotes
 {
     /// <summary>
-    /// Gets a value indicating whether this release notes section contains notes.
+    /// Gets a value indicating whether this release notes section does not contain any notes.
     /// </summary>
     public bool IsEmpty => Notes.All(string.IsNullOrWhiteSpace);
 

@@ -31,13 +31,13 @@ public class ChangeLog
     /// <summary>
     /// The latest release notes section. Returns null if the changelog does not contain a release section.
     /// </summary>
-    [CanBeNull] public NuGetVersion LatestVersion => ReleaseNotes.FirstOrDefault()?.Version;
+    [CanBeNull] public NuGetVersion LatestVersion => ReleaseNotes.LastOrDefault()?.Version;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="ChangeLog"/> class.
     /// </summary>
     /// <param name="path">The path to the changelog file.</param>
-    /// <param name="unreleased">The unreleased notes sectioon.</param>
+    /// <param name="unreleased">The unreleased notes section.</param>
     /// <param name="releaseNotes">The release notes of the changelog.</param>
     public ChangeLog(string path, [CanBeNull] ReleaseNotes unreleased, IReadOnlyList<ReleaseNotes> releaseNotes)
     {
