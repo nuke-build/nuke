@@ -12,6 +12,6 @@ partial class DotCoverTasks
     {
         return NuGetToolPathResolver.GetPackageExecutable(
             "JetBrains.dotCover.DotNetCliTool|JetBrains.dotCover.CommandLineTools",
-            EnvironmentInfo.IsWin ? "dotCover.exe" : "dotCover.sh|dotCover.exe");
+            EnvironmentInfo.IsWin ? "dotCover.exe" : "dotCover.sh|dotCover.dll");
     }
 }
