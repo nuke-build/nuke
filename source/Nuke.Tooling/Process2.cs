@@ -44,7 +44,12 @@ public class Process2 : IProcess
 
     public void Kill()
     {
-        _process.Kill();
+        _process.Kill(); 
+    }
+
+    public void KillTree()
+    {
+        _process.KillTree();
     }
 
     public bool WaitForExit()
@@ -53,7 +58,7 @@ public class Process2 : IProcess
         // use _process.StartTime
         var hasExited = _process.WaitForExit(_timeout ?? -1);
         if (!hasExited)
-            _process.Kill();
+            _process.KillTree();
         return hasExited;
     }
 }
