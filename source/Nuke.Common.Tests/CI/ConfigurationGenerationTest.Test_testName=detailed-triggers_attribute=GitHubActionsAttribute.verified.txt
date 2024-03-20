@@ -53,11 +53,13 @@ jobs:
       group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
           lfs: true
           fetch-depth: 2
+          progress: false
+          filter: tree:0
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v4
         with:
@@ -96,11 +98,13 @@ jobs:
       group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
           lfs: true
           fetch-depth: 2
+          progress: false
+          filter: tree:0
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v4
         with:
@@ -139,11 +143,13 @@ jobs:
       group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
       cancel-in-progress: true
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
           lfs: true
           fetch-depth: 2
+          progress: false
+          filter: tree:0
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
         uses: actions/cache@v4
         with:

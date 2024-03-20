@@ -157,6 +157,8 @@ public class ConfigurationGenerationTest
                     Submodules = GitHubActionsSubmodules.Recursive,
                     Lfs = true,
                     FetchDepth = 2,
+                    Progress = false,
+                    Filter = "tree:0",
                     TimeoutMinutes = 30,
                     JobConcurrencyCancelInProgress = true
                 }
