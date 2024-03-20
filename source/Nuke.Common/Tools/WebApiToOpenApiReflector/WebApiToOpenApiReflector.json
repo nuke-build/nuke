@@ -1,0 +1,88 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "references": [
+    "https://raw.githubusercontent.com/valadas/WebApiToOpenApiReflector/develop/Tool/Commands.cs"
+  ],
+  "name": "WebApiToOpenApiReflector",
+  "officialUrl": "https://github.com/valadas/WebApiToOpenApiReflector",
+  "help": "A dotnet tool that can use reflection to generate OpenApi from .NetFramework assemblies.",
+  "nugetPackageId": "WebApiToOpenApiReflector",
+  "packageExecutable": "WebApiToOpenApiReflector.dll",
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AssemblyPaths",
+            "type": "string[]",
+            "format": "{value}",
+            "help": "The assembly or assemblies to process. (Required)"
+          },
+          {
+            "name": "ControllerNames",
+            "type": "string[]",
+            "format": "--controller-names {value}",
+            "help": "Can optionally be used to limit the results to some controllers."
+          },
+          {
+            "name": "DefaultUrlTemplate",
+            "type": "string",
+            "format": "--default-url-template {value}",
+            "help": "The Web API default URL template: (default for Web API: 'api/{controller}/{id}'; (default for MVC: '{controller}/{action}/{id?}'). (Default: api/{controller}/{id})"
+          },
+          {
+            "name": "AddMissingPathParameters",
+            "type": "bool",
+            "format": "--add-missing-path-parameters",
+            "help": "If true, adds missing path parameters which are missing in the action method."
+          },
+          {
+            "name": "DefaultResponseReferenceTypeNullHandling",
+            "type": "ReferenceTypeNullHandling",
+            "format": "--default-response-reference-type-null-handling {value}",
+            "help": "Specifies the default null handling for reference types when no nullability information is available. NotNull (default) or Null. (Default: Null) (Allowed values: Null, NotNull)"
+          },
+          {
+            "name": "GenerateOriginalParameterNames",
+            "type": "bool",
+            "format": "--generate-original-parameter-names {value}",
+            "help": "Generate x-originalName properties when parameter name is different in .NET and HTTP. (Default: True)."
+          },
+          {
+            "name": "Title",
+            "type": "string",
+            "format": "--title {value}",
+            "help": "Specifies the title of the Swagger specification, ignored when the document template is provided."
+          },
+          {
+            "name": "Description",
+            "type": "string",
+            "format": "--description {value}",
+            "help": "Specifies the description of the Swagger specification, ignored when the document template is provided."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--info-version {value}",
+            "help": "Specifies the version of the Swagger specification (default: 1.0.0). (Default: 1.0.0)"
+          },
+          {
+            "name": "DocumentTemplate",
+            "type": "string",
+            "format": "--document-template {value}",
+            "help": "Specifies the Swagger document template (may be a path or JSON, default: none)."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "ReferenceTypeNullHandling",
+      "values": [
+        "Null",
+        "NotNull"
+      ]
+    }
+  ]
+}
