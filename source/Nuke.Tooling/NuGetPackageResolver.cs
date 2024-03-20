@@ -214,6 +214,13 @@ public static class NuGetPackageResolver
             .OrderByDescending(x => x.Version)
             .ToList();
 
+        if (candidatePackages.GroupBy(g => g.Version).Any(p => p.Count() > 1))
+            // skip duplicated packages with the packageId as name
+            candidatePackages = candidatePackages
+                .GroupBy(g => g.Version)
+                .SelectMany(g => g.Count() <= 1 ? g : g.Where(p => !p.File.NameWithoutExtension.EqualsOrdinalIgnoreCase(packageId)))
+                .ToList();
+
         return versionRange == null
             ? candidatePackages.FirstOrDefault()
             : candidatePackages.SingleOrDefault(x => x.Version == versionRange.FindBestMatch(candidatePackages.Select(y => y.Version)));
