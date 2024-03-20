@@ -12,7 +12,6 @@ namespace Nuke.Common.CI.GitLab;
 
 /// <summary>
 ///     Interface according to the <a href="https://docs.gitlab.com/ce/ci/variables/README.html">official website</a>.
-///     Updated for Version v16.10
 /// </summary>
 [PublicAPI]
 [CI]
