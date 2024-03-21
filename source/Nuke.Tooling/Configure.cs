@@ -29,7 +29,7 @@ public static class ConfigureExtensions
     public static IReadOnlyCollection<(TSettings Settings, IReadOnlyCollection<Output> Output)> Invoke<TSettings>(
         this CombinatorialConfigure<TSettings> configurator,
         Func<TSettings, IReadOnlyCollection<Output>> executor,
-        Action<OutputType, string> logger,
+        Action<OutputType, string> defaultLogger,
         int degreeOfParallelism,
         bool completeOnFailure)
         where TSettings : ToolSettings, new()
@@ -38,7 +38,7 @@ public static class ConfigureExtensions
             configurator,
             x => (Settings: x, Output: executor(x)),
             x => x.Output,
-            logger,
+            defaultLogger,
             degreeOfParallelism,
             completeOnFailure);
     }
@@ -46,7 +46,7 @@ public static class ConfigureExtensions
     public static IReadOnlyCollection<(TSettings Settings, TResult Result, IReadOnlyCollection<Output> Output)> Invoke<TSettings, TResult>(
         this CombinatorialConfigure<TSettings> configurator,
         Func<TSettings, (TResult Result, IReadOnlyCollection<Output> Output)> executor,
-        Action<OutputType, string> logger,
+        Action<OutputType, string> defaultLogger,
         int degreeOfParallelism,
         bool completeOnFailure)
         where TSettings : ToolSettings, new()
@@ -55,7 +55,7 @@ public static class ConfigureExtensions
                 configurator,
                 x => (Settings: x, ReturnValue: executor(x)),
                 x => x.ReturnValue.Output,
-                logger,
+                defaultLogger,
                 degreeOfParallelism,
                 completeOnFailure)
             .Select(x => (x.Settings, x.ReturnValue.Result, x.ReturnValue.Output)).ToList();
@@ -65,7 +65,7 @@ public static class ConfigureExtensions
         CombinatorialConfigure<TSettings> configurator,
         Func<TSettings, TResult> executor,
         Func<TResult, IReadOnlyCollection<Output>> outputSelector,
-        Action<OutputType, string> logger,
+        Action<OutputType, string> defaultLogger,
         int degreeOfParallelism,
         bool completeOnFailure)
         where TSettings : ToolSettings, new()
@@ -106,10 +106,18 @@ public static class ConfigureExtensions
                 invocations
                     .Where(x => x.Settings.ProcessLogOutput ?? ProcessTasks.DefaultLogOutput)
                     .SelectMany(x =>
-                        x.Exception is not ProcessException processException
-                            ? outputSelector(x.Result)
-                            : processException.Process.Output)
-                    .ForEach(x => logger(x.Type, x.Text));
+                    {
+                        var (settings, result, exception) = x;
+                        var logger = settings.ProcessLogger ?? defaultLogger;
+                        var output = exception switch
+                        {
+                            ProcessException processException => processException.Process.Output,
+                            _ => outputSelector(result),
+                        };
+
+                        return output.Select(line => (logger, line));
+                    })
+                    .ForEach(x => x.logger(x.line.Type, x.line.Text));
             }
         }
     }
