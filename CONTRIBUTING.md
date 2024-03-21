@@ -54,6 +54,7 @@ Evaluate whether your topic is going to be a valid issue:
 - Have you checked the [FAQ](https://nuke.build/faq/)?
 - Is your issue more of a question? Ask on [GitHub discussions](https://github.com/nuke-build/nuke/discussions), [Slack](https://nuke.build/slack), or [Discord](https://nuke.build/discord)!
 - Have you checked existing/closed issues? Is your version behind?
+- Have you read the relevant [changelog notes](https://github.com/nuke-build/nuke/blob/develop/CHANGELOG.md)?
 - Have you verified it's not an external tool issue? Invoke the command manually!
 - Don't file issues for tool wrappers. Send a pull request instead!
 - Refrain from debating the governance or state of the project out of your own interests (see [consumer expectations](#consumer-expectations) & [sustainability contributions](#sustainability-contributions))
