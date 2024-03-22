@@ -691,6 +691,12 @@
             "help": "The project to publish, which defaults to the current directory if not specified."
           },
           {
+            "name": "Arch",
+            "type": "string",
+            "format": "--arch {value}",
+            "help": "Specifies the target architecture. This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7."
+          },
+          {
             "name": "Configuration",
             "type": "string",
             "format": "--configuration {value}",
@@ -725,6 +731,12 @@
             "type": "string",
             "format": "--output {value}",
             "help": "Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory."
+          },
+          {
+            "name": "OS",
+            "type": "string",
+            "format": "--os {value}",
+            "help": "Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6."
           },
           {
             "name": "SelfContained",
