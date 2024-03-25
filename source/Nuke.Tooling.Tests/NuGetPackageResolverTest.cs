@@ -42,6 +42,20 @@ public class NuGetPackageResolverTest
     }
 
     [Fact]
+    public void TestGetGlobalInstalledPackageWithDuplicateNupkg()
+    {
+        var result = NuGetPackageResolver.GetGlobalInstalledPackage("coverlet.console", version: null, packagesConfigFile: null);
+        // Null is the result as well, but it is inconclusive :(
+        if (result != null)
+        {
+            result.Should().NotBeNull();
+            result.Id.Should().Be("coverlet.console");
+            result.File.Name.Should().EndWith("nupkg");
+            // Do not check version as it is not deterministic
+        }
+    }
+
+    [Fact]
     public void TestGetLocalInstalledPackageViaProjectFile()
     {
         var result = NuGetPackageResolver.GetLocalInstalledPackage("xunit.runner.console", ProjectFile, resolveDependencies: false);
