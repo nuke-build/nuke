@@ -17,6 +17,8 @@ public static partial class SettingsEntityExtensions
     public static T NewInstance<T>(this T settingsEntity)
         where T : ISettingsEntity
     {
+        AppContext.SetSwitch("System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization", true);
+
         var binaryFormatter = new BinaryFormatter();
 
         using var memoryStream = new MemoryStream();
