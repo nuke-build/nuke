@@ -10,17 +10,25 @@ partial class CodecovSettings
 {
     private string GetProcessToolPath()
     {
-        return CodecovTasks.GetToolPath(Framework);
+        return CodecovTasks.GetToolPath();
     }
 }
 
 partial class CodecovTasks
 {
-    internal static string GetToolPath(string framework = null)
+    internal static string GetToolPath()
     {
         return NuGetToolPathResolver.GetPackageExecutable(
-            packageId: "Codecov.Tool",
-            packageExecutable: "codecov.dll",
-            framework: framework);
+            packageId: "CodecovUploader",
+            packageExecutable: GetPackageExecutable());
+    }
+
+    private static string GetPackageExecutable()
+    {
+        if (EnvironmentInfo.IsWin)
+            return "codecov.exe";
+        if (EnvironmentInfo.IsOsx)
+            return "codecov-macos";
+        return "codecov-linux";
     }
 }
