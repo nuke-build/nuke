@@ -23,7 +23,7 @@ public class GitHubActionsCacheStep : GitHubActionsStep
         writer.WriteLine("- name: " + $"Cache: {IncludePatterns.JoinCommaSpace()}".SingleQuote());
         using (writer.Indent())
         {
-            writer.WriteLine("uses: actions/cache@v3");
+            writer.WriteLine("uses: actions/cache@v4");
             writer.WriteLine("with:");
             using (writer.Indent())
             {
