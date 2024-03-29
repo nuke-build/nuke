@@ -767,6 +767,12 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "Target",
+            "type": "string",
+            "format": "/t:{value}",
+            "help": "TODO: I couldn't find anything about this parameter..."
           }
         ]
       }
