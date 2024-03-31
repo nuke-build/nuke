@@ -88,20 +88,14 @@ public static class TemplateUtility
             FillTemplateFile(file, tokens);
 
             if (ShouldMove(file))
-                FileSystemTasks.RenameFile(file, file.Name.Replace(tokens), FileExistsPolicy.OverwriteIfNewer);
+                file.Rename(file.Name.Replace(tokens), ExistsPolicy.FileOverwriteIfNewer);
         }
 
         directory.GetDirectories()
             .ForEach(x => FillTemplateDirectoryRecursivelyInternal(x, tokens, excludeDirectory, excludeFile));
 
         if (ShouldMove(directory))
-        {
-            FileSystemTasks.RenameDirectory(
-                directory,
-                directory.Name.Replace(tokens),
-                DirectoryExistsPolicy.Merge,
-                FileExistsPolicy.OverwriteIfNewer);
-        }
+            directory.Rename(directory.Name.Replace(tokens), ExistsPolicy.MergeAndOverwriteIfNewer);
     }
 
     public static void FillTemplateFile(
