@@ -45,12 +45,9 @@ public class MoveCopyTest : FileSystemDependentTest
     [Fact]
     public void TestMoveFile()
     {
-        var source1 = TestTempDirectory / "source1.txt";
-        var source2 = TestTempDirectory / "source2.txt";
-        var source3 = TestTempDirectory / "source3.txt";
-        source1.WriteAllText(nameof(source1));
-        source2.WriteAllText(nameof(source2));
-        source3.WriteAllText(nameof(source3));
+        var source1 = (TestTempDirectory / "source1.txt").TouchFile();
+        var source2 = (TestTempDirectory / "source2.txt").TouchFile();
+        var source3 = (TestTempDirectory / "source3.txt").TouchFile();
 
         var target = TestTempDirectory / "target.txt";
         source2.Move(target);
