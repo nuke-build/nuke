@@ -63,6 +63,8 @@ public class MoveCopyTest : FileSystemDependentTest
 
         source1.Move(target, policy: ExistsPolicy.FileSkip).Should().Be(source1);
         source1.Move(target, policy: ExistsPolicy.FileOverwriteIfNewer).Should().Be(source1);
+
+        source3.TouchFile();
         source3.Move(target, policy: ExistsPolicy.FileOverwriteIfNewer).Should().Be(target);
     }
 
