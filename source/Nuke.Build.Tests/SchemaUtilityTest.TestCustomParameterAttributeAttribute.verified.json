@@ -1,111 +1,11 @@
 ﻿{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "properties": {
-    "BooleanParam": {
-      "type": "boolean"
-    },
-    "ComplexTypeArrayParam": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/ComplexType"
-      }
-    },
-    "ComplexTypeParam": {
-      "$ref": "#/definitions/ComplexType"
-    },
-    "ComponentInheritedParam": {
+    "ComplexTypeParamWithAttribute": {
       "type": "string"
-    },
-    "CustomEnumerationArrayParam": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "enum": [
-          "Debug",
-          "Release"
-        ]
-      }
-    },
-    "CustomEnumerationParam": {
-      "type": "string",
-      "enum": [
-        "Debug",
-        "Release"
-      ]
-    },
-    "IntegerArrayParam": {
-      "type": "array",
-      "items": {
-        "type": "integer",
-        "format": "int32"
-      }
-    },
-    "NullableBooleanParam": {
-      "type": [
-        "boolean",
-        "null"
-      ]
-    },
-    "RegularParam": {
-      "type": "string"
-    },
-    "SecretParam": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "StringArrayParam": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
     }
   },
   "definitions": {
-    "ComplexType": {
-      "type": "object",
-      "properties": {
-        "String": {
-          "type": [
-            "null",
-            "string"
-          ]
-        },
-        "Number": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "Paths": {
-          "type": [
-            "array",
-            "null"
-          ],
-          "items": {
-            "type": "string"
-          }
-        },
-        "SubObject": {
-          "oneOf": [
-            {
-              "type": "null"
-            },
-            {
-              "$ref": "#/definitions/ComplexSubType"
-            }
-          ]
-        }
-      }
-    },
-    "ComplexSubType": {
-      "type": "object",
-      "properties": {
-        "Boolean": {
-          "type": [
-            "boolean",
-            "null"
-          ]
-        }
-      }
-    },
     "Host": {
       "type": "string",
       "enum": [

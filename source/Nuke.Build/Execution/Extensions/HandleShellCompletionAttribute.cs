@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Nuke.Common.CI;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
 using static Nuke.Common.Constants;
 
@@ -31,12 +32,23 @@ internal class HandleShellCompletionAttribute : BuildExtensionAttributeBase, IOn
         }
         else if (Build.BuildProjectFile != null)
         {
-            SchemaUtility.WriteBuildSchemaFile(Build);
-            SchemaUtility.WriteDefaultParametersFile(Build);
+            var buildSchema = SchemaUtility.GetJsonString(Build);
+            var buildSchemaFile = GetBuildSchemaFile(Build.RootDirectory);
+            buildSchemaFile.WriteAllText(buildSchema);
+
+            var parametersFile = GetDefaultParametersFile(Build.RootDirectory);
+            if (!parametersFile.Exists())
+            {
+                parametersFile.WriteAllText($$"""
+                    {
+                      "$schema": "./{{BuildSchemaFileName}}"
+                    }
+                    """);
+            }
         }
         else if (ParameterService.GetPositionalArgument<string>(0) == ":complete")
         {
-            var schema = SchemaUtility.GetBuildSchema(Build);
+            var schema = SchemaUtility.GetJsonDocument(Build);
             var profileNames = GetProfileNames(Build.RootDirectory);
             var completionItems = CompletionUtility.GetItemsFromSchema(schema, profileNames);
 

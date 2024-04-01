@@ -1,0 +1,38 @@
+﻿{
+  BooleanParam: [],
+  ComponentInheritedParam: [],
+  Continue: [],
+  CustomEnumerationArrayParam: [
+    Debug,
+    Release
+  ],
+  CustomEnumerationParam: [
+    Debug,
+    Release
+  ],
+  Help: [],
+  Host: [
+    Rider,
+    Terminal,
+    VisualStudio,
+    VSCode
+  ],
+  IntegerArrayParam: [],
+  NoLogo: [],
+  NullableBooleanParam: [],
+  Partition: [],
+  Plan: [],
+  Profile: [],
+  RegularParam: [],
+  Root: [],
+  SecretParam: [],
+  Skip: [],
+  StringArrayParam: [],
+  Target: [],
+  Verbosity: [
+    Verbose,
+    Normal,
+    Minimal,
+    Quiet
+  ]
+}
