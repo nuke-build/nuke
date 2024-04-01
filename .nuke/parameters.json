@@ -1,21 +1,9 @@
 {
   "$schema": "./build.schema.json",
   "Solution": "nuke-common.sln",
-  "SignPathOrganizationId": "0fdaf334-6910-41f4-83d2-e58e4cccb087",
-  "SignPathProjectSlug": "nuke",
-  "SignPathPolicySlug": "release-signing",
-  "Data2": [
-    {
-      "FirstName": "foo",
-      "Nested": {
-        "FirstName": "bar"
-      }
-    },
-    {
-      "FirstName": "foo2",
-      "Nested": {
-        "FirstName": "bar2"
-      }
-    }
-  ]
+  "SignPathSettings": {
+    "OrganizationId": "0fdaf334-6910-41f4-83d2-e58e4cccb087",
+    "ProjectSlug": "nuke",
+    "PolicySlug": "release-signing"
+  }
 }

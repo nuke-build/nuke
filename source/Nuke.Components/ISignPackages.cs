@@ -52,16 +52,19 @@ public interface ISignPackages : INukeBuild
 {
     public const string SignPath = nameof(SignPath);
 
+    public record SignPathSettings(
+        string OrganizationId,
+        string ProjectSlug,
+        string PolicySlug);
+
+    [Parameter] SignPathSettings Settings => TryGetValue(() => Settings);
     [Parameter] [Secret] string ApiToken => TryGetValue(() => ApiToken);
-    [Parameter] string OrganizationId => TryGetValue(() => OrganizationId);
-    [Parameter] string ProjectSlug => TryGetValue(() => ProjectSlug);
-    [Parameter] string PolicySlug => TryGetValue(() => PolicySlug);
 
     AbsolutePath SignPathTemporaryDirectory => TemporaryDirectory / "signpath";
     AbsolutePath SignPathRequestDirectory => SignPathTemporaryDirectory / "signing-request";
     AbsolutePath SignPathResponseDirectory => SignPathTemporaryDirectory / "signing-response";
-    AbsolutePath SignPathRequestArchive => Path.ChangeExtension(SignPathRequestDirectory, ".zip");
-    AbsolutePath SignPathResponseArchive => Path.ChangeExtension(SignPathResponseDirectory, ".zip");
+    AbsolutePath SignPathRequestArchive => SignPathRequestDirectory.WithExtension(".zip");
+    AbsolutePath SignPathResponseArchive => SignPathResponseDirectory.WithExtension(".zip");
 
     IEnumerable<AbsolutePath> SignPathPackages { get; }
     bool SignPathReplacePackages => true;
@@ -72,10 +75,8 @@ public interface ISignPackages : INukeBuild
         .TryDependsOn<IPack>()
         .TryDependentFor<IPublish>()
         .OnlyWhenStatic(() => AppVeyor != null)
+        .Requires(() => Settings)
         .Requires(() => ApiToken)
-        .Requires(() => OrganizationId)
-        .Requires(() => ProjectSlug)
-        .Requires(() => PolicySlug)
         .Executes(async () =>
         {
             SignPathRequestDirectory.CreateOrCleanDirectory();
@@ -86,9 +87,9 @@ public interface ISignPackages : INukeBuild
 
             var signingRequestUrl = await GetSigningRequestUrlViaAppVeyor(
                 ApiToken,
-                OrganizationId,
-                ProjectSlug,
-                PolicySlug);
+                Settings.OrganizationId,
+                Settings.ProjectSlug,
+                Settings.PolicySlug);
 
             ReportSummary(_ => _
                 .AddPair("Approve/Deny Request", signingRequestUrl.Replace("api/v1", "Web")));

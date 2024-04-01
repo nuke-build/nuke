@@ -47,12 +47,6 @@ project {
             value = "Release",
             options = listOf("Debug" to "Debug", "Release" to "Release"),
             display = ParameterDisplay.NORMAL)
-        text (
-            "env.Data2",
-            label = "Data2",
-            value = "Build+Data Build+Data",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
         checkbox (
             "env.IgnoreFailedSources",
             label = "IgnoreFailedSources",
@@ -69,21 +63,9 @@ project {
             unchecked = "False",
             display = ParameterDisplay.NORMAL)
         text (
-            "env.SignPathOrganizationId",
-            label = "SignPathOrganizationId",
-            value = "0fdaf334-6910-41f4-83d2-e58e4cccb087",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathPolicySlug",
-            label = "SignPathPolicySlug",
-            value = "release-signing",
-            allowEmpty = true,
-            display = ParameterDisplay.NORMAL)
-        text (
-            "env.SignPathProjectSlug",
-            label = "SignPathProjectSlug",
-            value = "nuke",
+            "env.SignPathSettings",
+            label = "SignPathSettings",
+            value = "",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (

@@ -46,14 +46,8 @@
       "type": "string",
       "default": "Secrets must be entered via 'nuke :secrets [profile]'"
     },
-    "SignPathOrganizationId": {
-      "type": "string"
-    },
-    "SignPathPolicySlug": {
-      "type": "string"
-    },
-    "SignPathProjectSlug": {
-      "type": "string"
+    "SignPathSettings": {
+      "$ref": "#/definitions/SignPathSettings"
     },
     "SlackWebhook": {
       "type": "string",
@@ -107,6 +101,29 @@
         "VisualStudio",
         "VSCode"
       ]
+    },
+    "SignPathSettings": {
+      "type": "object",
+      "properties": {
+        "OrganizationId": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "ProjectSlug": {
+          "type": [
+            "null",
+            "string"
+          ]
+        },
+        "PolicySlug": {
+          "type": [
+            "null",
+            "string"
+          ]
+        }
+      }
     },
     "ExecutableTarget": {
       "type": "string",
