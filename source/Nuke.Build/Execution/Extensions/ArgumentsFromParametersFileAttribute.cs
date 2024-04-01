@@ -10,7 +10,6 @@ using JetBrains.Annotations;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.CI;
 using Nuke.Common.IO;
-using Nuke.Common.ProjectModel;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Nuke.Common.ValueInjection;
@@ -76,10 +75,8 @@ public class ArgumentsFromParametersFileAttribute : BuildExtensionAttributeBase,
 
             var member = parameterMembers.SingleOrDefault(x => ParameterService.GetParameterMemberName(x).EqualsOrdinalIgnoreCase(parameter));
             var scalarType = member?.GetMemberType().GetScalarType();
-            if (scalarType == typeof(AbsolutePath) ||
-                typeof(Solution).IsAssignableFrom(scalarType) ||
-                scalarType == typeof(Project))
-                return NukeBuild.RootDirectory / property.Value.ToObject<string>();
+            if (typeof(IAbsolutePathHolder).IsAssignableFrom(scalarType))
+                return property.Value.ToObject<string>().Apply(x => !PathConstruction.HasPathRoot(x) ? NukeBuild.RootDirectory / x : (AbsolutePath)x);
 
             if ((member?.HasCustomAttribute<SecretAttribute>() ?? false) &&
                 !BuildServerConfigurationGeneration.IsActive)
