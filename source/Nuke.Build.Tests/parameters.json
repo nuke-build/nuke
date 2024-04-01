@@ -1,7 +1,5 @@
 {
-  "$schema": "./SchemaUtilityTest.TestParameterBuild.received.json",
+  "$schema": "./SchemaUtilityTest.TestTargetBuild.verified.json",
   "Verbosity": "Minimal",
-  "Target": ["ExplicitTarget"],
-  "NullableBooleanParam": false,
-  "CustomEnumerationArrayParam": ["Debug", "Release"]
+  "Target": ["ExplicitTarget", "InheritedTarget"]
 }

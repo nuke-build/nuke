@@ -1,4 +1,4 @@
-{
+﻿{
   "$schema": "http://json-schema.org/draft-04/schema#",
   "properties": {
     "BooleanParam": {
@@ -7,11 +7,11 @@
     "ComplexTypeArrayParam": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/ComplexType"
+        "$ref": "#/definitions/OfSchemaUtilityTestF9E5B3352D3C7B2A09EBB8075A0ECA7D376B43F377AA6CCDDF0E21014566A9E2E__ComplexType"
       }
     },
     "ComplexTypeParam": {
-      "$ref": "#/definitions/ComplexType"
+      "$ref": "#/definitions/OfSchemaUtilityTestF9E5B3352D3C7B2A09EBB8075A0ECA7D376B43F377AA6CCDDF0E21014566A9E2E__ComplexType"
     },
     "ComponentInheritedParam": {
       "type": "string"
@@ -61,7 +61,7 @@
     }
   },
   "definitions": {
-    "ComplexType": {
+    "OfSchemaUtilityTestF9E5B3352D3C7B2A09EBB8075A0ECA7D376B43F377AA6CCDDF0E21014566A9E2E__ComplexType": {
       "type": "object",
       "properties": {
         "String": {
@@ -89,13 +89,13 @@
               "type": "null"
             },
             {
-              "$ref": "#/definitions/ComplexSubType"
+              "$ref": "#/definitions/OfSchemaUtilityTestF9E5B3352D3C7B2A09EBB8075A0ECA7D376B43F377AA6CCDDF0E21014566A9E2E__ComplexSubType"
             }
           ]
         }
       }
     },
-    "ComplexSubType": {
+    "OfSchemaUtilityTestF9E5B3352D3C7B2A09EBB8075A0ECA7D376B43F377AA6CCDDF0E21014566A9E2E__ComplexSubType": {
       "type": "object",
       "properties": {
         "Boolean": {
