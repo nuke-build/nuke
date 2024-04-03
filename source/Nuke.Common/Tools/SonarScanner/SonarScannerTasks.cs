@@ -12,6 +12,11 @@ partial class SonarScannerBeginSettings
     {
         return SonarScannerTasks.GetToolPath(Framework);
     }
+
+    private string GetVerbose()
+    {
+        return Verbose.ToString().ToLowerInvariant();
+    }
 }
 
 partial class SonarScannerEndSettings

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -46,6 +46,7 @@ class Build : NukeBuild
         System.Console.WriteLine();
     });
 
+
     Target B => _ => _
         .DependsOn(A)
         .DependentFor(A)
@@ -53,6 +54,7 @@ class Build : NukeBuild
     {
         System.Console.WriteLine();
     });
+
 
     Target C_1 => _ => _
         .DependsOn(B)

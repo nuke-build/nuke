@@ -4,7 +4,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <LangVersion>preview</LangVersion>
     <RootNamespace></RootNamespace>
     <NoWarn>CS0649;CS0169</NoWarn>
@@ -52,12 +52,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta14" />
-    <PackageDownload Include="Codecov.Tool" Version="[1.12.3]" />
-    <PackageDownload Include="GitVersion.Tool" Version="[5.8.0]" />
-    <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2022.3.2]" />
-    <PackageDownload Include="ReportGenerator" Version="[4.6.1]" />
-    <PackageDownload Include="xunit.runner.console" Version="[2.4.1]" />
+    <PackageReference Include="linqtotwitter" Version="6.15.0" />
+    <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="2.0.1" />
+    <PackageDownload Include="Codecov.Tool" Version="[1.13.0]" />
+    <PackageDownload Include="GitVersion.Tool" Version="[5.12.0]" />
+    <PackageDownload Include="JetBrains.ReSharper.GlobalTools" Version="[2023.2.3]" />
+    <PackageDownload Include="ReportGenerator" Version="[5.2.0]" />
+    <PackageDownload Include="xunit.runner.console" Version="[2.6.1]" />
   </ItemGroup>
 
   <ItemGroup>

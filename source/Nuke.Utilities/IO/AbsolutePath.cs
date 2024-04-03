@@ -22,7 +22,7 @@ namespace Nuke.Common.IO;
 [Serializable]
 [TypeConverter(typeof(TypeConverter))]
 [DebuggerDisplay("{" + nameof(_path) + "}")]
-public class AbsolutePath : IFormattable
+public class AbsolutePath : IAbsolutePathHolder, IFormattable
 {
     public const string DoubleQuote = "d";
     public const string DoubleQuoteIfNeeded = "dn";
@@ -65,6 +65,8 @@ public class AbsolutePath : IFormattable
         _path = NormalizePath(path);
     }
 
+    AbsolutePath IAbsolutePathHolder.Path => this;
+
     [ContractAnnotation("null => null")]
     public static implicit operator AbsolutePath([CanBeNull] string path)
     {
@@ -103,6 +105,16 @@ public class AbsolutePath : IFormattable
         !IsWinRoot(_path.TrimEnd(WinSeparator)) && !IsUncRoot(_path) && !IsUnixRoot(_path)
             ? this / ".."
             : null;
+
+#if NET6_0_OR_GREATER
+
+    public static AbsolutePath operator /(AbsolutePath left, [CanBeNull] Range range)
+    {
+        Assert.True(range.Equals(Range.All));
+        return left.Parent;
+    }
+
+#endif
 
     public static AbsolutePath operator /(AbsolutePath left, [CanBeNull] string right)
     {

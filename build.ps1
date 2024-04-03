@@ -20,9 +20,8 @@ $DotNetGlobalFile = "$PSScriptRoot\global.json"
 $DotNetInstallUrl = "https://dot.net/v1/dotnet-install.ps1"
 $DotNetChannel = "STS"
 
-$env:DOTNET_SKIP_FIRST_TIME_EXPERIENCE = 1
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = 1
-$env:DOTNET_MULTILEVEL_LOOKUP = 0
+$env:DOTNET_NOLOGO = 1
 $env:DOTNET_ROLL_FORWARD = "Major"
 $env:NUKE_TELEMETRY_OPTOUT = 1
 
@@ -72,6 +71,7 @@ else {
         ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
     }
     $env:DOTNET_EXE = "$DotNetDirectory\dotnet.exe"
+    $env:PATH = "$DotNetDirectory;$env:PATH"
 }
 
 Write-Output "Microsoft (R) .NET SDK version $(& $env:DOTNET_EXE --version)"

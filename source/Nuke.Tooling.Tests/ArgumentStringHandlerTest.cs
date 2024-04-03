@@ -7,6 +7,8 @@ using Nuke.Common.IO;
 using Nuke.Common.Tooling;
 using Xunit;
 
+// ReSharper disable StringLiteralAsInterpolationArgument
+
 namespace Nuke.Common.Tests;
 
 public class ArgumentStringHandlerTest
@@ -46,6 +48,18 @@ public class ArgumentStringHandlerTest
     }
 
     [Fact]
+    public void TestAbsolutePathCollection()
+    {
+        var paths = new AbsolutePath[]
+                    {
+                        "C:\\foo\\bar",
+                        "/foo bar/foo"
+                    };
+        ArgsToString($"start {paths} end").Should().Be("start C:\\foo\\bar \"/foo bar/foo\" end");
+        ArgsToString($"start {paths:sn} end").Should().Be("start C:\\foo\\bar '/foo bar/foo' end");
+    }
+
+    [Fact]
     public void TestFormat()
     {
         ArgsToString($"start {"spaced args":nq} end").Should().Be("start spaced args end");
@@ -80,5 +94,5 @@ public class ArgumentStringHandlerTest
         filteredOutput.Should().Be("There is a [REDACTED]!");
     }
 
-    string ArgsToString(ArgumentStringHandler args) => args.ToStringAndClear();
+    private string ArgsToString(ArgumentStringHandler args) => args.ToStringAndClear();
 }

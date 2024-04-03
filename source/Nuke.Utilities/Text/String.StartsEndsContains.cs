@@ -21,6 +21,15 @@ public static partial class StringExtensions
     }
 
     /// <summary>
+    /// Indicates whether a collection of strings contains any other string under <see cref="StringComparison.OrdinalIgnoreCase"/> comparison.
+    /// </summary>
+    [Pure]
+    public static bool ContainsAnyOrdinalIgnoreCase(this IEnumerable<string> str, params string[] others)
+    {
+        return others.Any(x => str.Contains(x, StringComparer.OrdinalIgnoreCase));
+    }
+
+    /// <summary>
     /// Indicates whether a string equals another string under <see cref="StringComparison.OrdinalIgnoreCase"/> comparison.
     /// </summary>
     [Pure]

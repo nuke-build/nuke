@@ -64,9 +64,9 @@ public partial class MSpecTasks
     ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
     ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
     ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
-    ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
-    ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
-    ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
+    ///     <li><c>-exclude</c> via <see cref="MSpecSettings.Excludes"/></li>
+    ///     <li><c>-filters</c> via <see cref="MSpecSettings.Filters"/></li>
+    ///     <li><c>-include</c> via <see cref="MSpecSettings.Includes"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> MSpec(MSpecSettings toolSettings = null)
@@ -94,9 +94,9 @@ public partial class MSpecTasks
     ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
     ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
     ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
-    ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
-    ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
-    ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
+    ///     <li><c>-exclude</c> via <see cref="MSpecSettings.Excludes"/></li>
+    ///     <li><c>-filters</c> via <see cref="MSpecSettings.Filters"/></li>
+    ///     <li><c>-include</c> via <see cref="MSpecSettings.Includes"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> MSpec(Configure<MSpecSettings> configurator)
@@ -121,9 +121,9 @@ public partial class MSpecTasks
     ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
     ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
     ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
-    ///     <li><c>-f</c> via <see cref="MSpecSettings.Filters"/></li>
-    ///     <li><c>-i</c> via <see cref="MSpecSettings.Includes"/></li>
-    ///     <li><c>-x</c> via <see cref="MSpecSettings.Excludes"/></li>
+    ///     <li><c>-exclude</c> via <see cref="MSpecSettings.Excludes"/></li>
+    ///     <li><c>-filters</c> via <see cref="MSpecSettings.Filters"/></li>
+    ///     <li><c>-include</c> via <see cref="MSpecSettings.Includes"/></li>
     ///   </ul>
     /// </remarks>
     public static IEnumerable<(MSpecSettings Settings, IReadOnlyCollection<Output> Output)> MSpec(CombinatorialConfigure<MSpecSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -210,11 +210,11 @@ public partial class MSpecSettings : ToolSettings
     {
         arguments
           .Add("{value}", Assemblies, separator: ' ')
-          .Add("-f={value}", Filters, separator: ',')
-          .Add("-i={value}", Includes, separator: ',')
-          .Add("-x={value}", Excludes, separator: ',')
-          .Add("--html={value}", HtmlOutput)
-          .Add("--xml={value}", XmlOutput)
+          .Add("-filters {value}", Filters, separator: ',')
+          .Add("-include {value}", Includes, separator: ',')
+          .Add("-exclude {value}", Excludes, separator: ',')
+          .Add("--html {value}", HtmlOutput)
+          .Add("--xml {value}", XmlOutput)
           .Add("--teamcity", TeamCity)
           .Add("--no-teamcity-autodetect", NoTeamCity)
           .Add("--appveyor", AppVeyor)

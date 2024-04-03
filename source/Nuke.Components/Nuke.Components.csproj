@@ -8,8 +8,4 @@
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="TweetinviAPI" Version="5.0.4" />
-  </ItemGroup>
-
 </Project>

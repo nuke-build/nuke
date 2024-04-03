@@ -29,27 +29,27 @@ build_script:
   - sh: ./build.cmd Pack Test SignPackages Publish
 
 artifacts:
-  - path: output/packages/*.nupkg
-  - path: output/test-results/*.trx
-  - path: output/test-results/*.xml
+  - path: 'output/packages/*.nupkg'
+  - path: 'output/test-results/*.trx'
+  - path: 'output/test-results/*.xml'
 
 environment:
   PublicNuGetApiKey:
-    secure: dSaquYHVNEAZO+hhGGoGqeHaVP99BP8koHTTqcD3WInWBTmB7yE4CzxZ1pWypnX2
+    secure: AzhHrKZGYyWnvMtPg06Q7PMJPp47dl5NxAHaE9ZB9tjIWVqmySx3F26YtVhRSPGa
   GitHubReleaseGitHubToken:
-    secure: a5UfxXiDEere9GkCCN9TUZJWacHMSkLKJi5UIqUDk7eB0DyoZomXaK918QWkyrbGlkz7hWIRIBGT/z2lCld/DgM9QP5Gx8PvEglDpTSILmGiQ2wTDySc78gG7h3dfQxg
+    secure: a5UfxXiDEere9GkCCN9TURaC8CmN/ZaqWIeoHbHNshmXWLedwrEAdwGNzPf3dusKEykOMB7T/fIorZHPIqSRuuR3JsMya/3zPrvozT5o1A5qf6LpNAtWpdB20+3rvupZ
   SignPathApiToken:
     secure: uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn
   TwitterConsumerKey:
-    secure: mYr1Uw8bcVUyl1P0prdaUFurdiF7V283BSRlQHxe2Zg=
+    secure: T61zL4r+xtyj7b0aOGYCsyixrXHooXE759T8z3M67Lw=
   TwitterConsumerSecret:
-    secure: pGt5X6KOwj/bLM4A5mnDRBqPxt7o7UreSlZSFmbfZwyfKZnhfFRnr20fXWjVqToVw7NSp30s6GxjswTrQSIogw==
+    secure: CZwdlO4PHT51Xr0Pe/mT6WpfBzQXsL0C3yWfHgXqdYrf22rx8ePEt5qpszWckbHE5Vh5ErtVfIAQgLeFrqe2Gg==
   TwitterAccessToken:
-    secure: nnv1h5nkNm4MS50soQHiYUZLERgkft/ooq73B02sLValeUDZFypI3tk1TzUwACzJPOdjqRSvY9efvQbt2MoNaQ==
+    secure: nnv1h5nkNm4MS50soQHiYZk9hnPkWEMQP/5cdf6RJfDIL1gUYxLR7uBaAi1M4sswT0TQ7oL4TBIN/yziq33N5A==
   TwitterAccessTokenSecret:
-    secure: odqmaAfKaVzNj8Ph/q2sLVmM/1COuix8NoqtDwayr8KEli3kmtGFThrN4g5k6aKT
+    secure: /RrBl2p46rlgpzBHweWeD0spt3JNZDsM8vABoI9Ao29+Z9D4rUYvpM5oHUWA8Lb6
   SlackWebhook:
-    secure: xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hmM/XDRPsJCxvZvTHFhtfLsQ3cF7GQi3xDaShkVVR7zoXHsIYT+KT0zLnq9FSEvr5c=
+    secure: xENxLITTR28hBLEY51YWMeHhxkhg1h1tLY1zGre1/hl7LyoC3HT+0Ft9rXAZBoUij6kag6PsFaF+7siaJIG7EFgnyXe9uK3sstrgKNl1bk0=
   DiscordWebhook:
     secure: K5WG8m71vcB56C75b0ErFPLYTsqywhPy8hSn49uqc5XBE7txUnZqWBHfbWCuU9AdFkm3TNgSYLoejjF59OgiACEn45fghVe7XCwAXo2l54ZXl08MZyBkJ8by9HsZirL9W+SeysNdw/Cfc0sxKrWcpDkn1IH2zZ+iXAgqBsW2CNY=
   MastodonAccessToken:

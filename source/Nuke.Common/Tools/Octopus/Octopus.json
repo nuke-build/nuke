@@ -87,7 +87,7 @@
           },
           {
             "name": "Include",
-            "type": "string",
+            "type": "List<string>",
             "format": "--include={value}",
             "help": "Add a file pattern to include, relative to the base path. E.g. <c>/bin/-*.dll</c> - if none are specified, defaults to <c>**</c>."
           },
@@ -143,6 +143,18 @@
             "type": "string",
             "format": "--packageversion={value}",
             "help": "Default version number of all packages to use for this release."
+          },
+          {
+            "name": "GitCommit",
+            "type": "string",
+            "format": "--gitCommit={value}",
+            "help": "Git commit to use when creating the release. Use in conjunction with the --gitRef parameter to select any previous commit."
+          },
+          {
+            "name": "GitRef",
+            "type": "string",
+            "format": "--gitRef={value}",
+            "help": "Git reference to use when creating the release."
           },
           {
             "name": "Version",

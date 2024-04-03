@@ -3,10 +3,15 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.Utilities;
 
+[PublicAPI]
+[DebuggerNonUserCode]
+[DebuggerStepThrough]
 public static class ExceptionExtensions
 {
     /// <summary>
