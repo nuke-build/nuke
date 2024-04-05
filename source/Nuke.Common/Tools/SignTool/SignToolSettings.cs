@@ -4,6 +4,7 @@
 
 using System.Linq;
 using JetBrains.Annotations;
+using NuGet.Configuration;
 using Nuke.Common.IO;
 
 namespace Nuke.Common.Tools.SignTool;
@@ -20,11 +21,25 @@ partial class SignToolTasks
 
         var platformIdentifier = EnvironmentInfo.Is64Bit ? "x64" : "x86";
         const string windowsKitLastVersion = "10";
+        const string windowsKitVersionWildcard = windowsKitLastVersion + ".*";
+        const string signtoolExe = "signtool.exe";
+        const string microsoftBuildToolsNugetPackage = "microsoft.windows.sdk.buildtools";
 
         var windowsKitsRootDirectory = programDirectory / "Windows Kits" / windowsKitLastVersion;
 
-        var signToolPath = windowsKitsRootDirectory.GlobFiles($"bin/{windowsKitLastVersion}.*/{platformIdentifier}/signtool.exe").LastOrDefault();
+        var signToolPath = windowsKitsRootDirectory.GlobFiles($"bin/{windowsKitVersionWildcard}/{platformIdentifier}/{signtoolExe}").LastOrDefault();
 
-        return signToolPath ?? windowsKitsRootDirectory.GlobFiles("App Certification Kit/signtool.exe").SingleOrDefault();
+        if(signToolPath == null)
+        {
+            var nugetPath = SettingsUtility.GetGlobalPackagesFolder(Settings.LoadDefaultSettings(null));
+
+            signToolPath = AbsolutePath.Create(nugetPath)
+                .GlobFiles($"{microsoftBuildToolsNugetPackage}/{windowsKitVersionWildcard}/bin/{windowsKitVersionWildcard}/{platformIdentifier}/{signtoolExe}")
+                .LastOrDefault();
+
+            signToolPath ??= windowsKitsRootDirectory.GlobFiles($"App Certification Kit/{signtoolExe}").SingleOrDefault();
+        }
+
+        return signToolPath;
     }
 }
