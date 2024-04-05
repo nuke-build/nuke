@@ -31,9 +31,9 @@ partial class SignToolTasks
 
         if(signToolPath == null)
         {
-            var nugetPath = SettingsUtility.GetGlobalPackagesFolder(Settings.LoadDefaultSettings(null));
+            var nugetPackagesPath = SettingsUtility.GetGlobalPackagesFolder(Settings.LoadDefaultSettings(null));
 
-            signToolPath = AbsolutePath.Create(nugetPath)
+            signToolPath = AbsolutePath.Create(nugetPackagesPath)
                 .GlobFiles($"{microsoftBuildToolsNugetPackage}/{windowsKitVersionWildcard}/bin/{windowsKitVersionWildcard}/{platformIdentifier}/{signtoolExe}")
                 .LastOrDefault();
 
