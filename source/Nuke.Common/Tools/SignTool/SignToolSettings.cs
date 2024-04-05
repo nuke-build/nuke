@@ -2,9 +2,9 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-using System;
 using System.Linq;
 using JetBrains.Annotations;
+using NuGet.Configuration;
 using Nuke.Common.IO;
 
 namespace Nuke.Common.Tools.SignTool;
@@ -20,18 +20,26 @@ partial class SignToolTasks
                 : SpecialFolders.ProgramFiles).NotNull();
 
         var platformIdentifier = EnvironmentInfo.Is64Bit ? "x64" : "x86";
+        const string windowsKitLastVersion = "10";
+        const string windowsKitVersionWildcard = windowsKitLastVersion + ".*";
+        const string signtoolExe = "signtool.exe";
+        const string microsoftBuildToolsNugetPackage = "microsoft.windows.sdk.buildtools";
 
-        return new[]
-               {
-                   programDirectory / "Windows Kits" / "10" / "bin" / "10.0.15063.0",
-                   programDirectory / "Windows Kits" / "10" / "App Certification Kit",
-                   programDirectory / "Windows Kits" / "10" / "bin" / platformIdentifier,
-                   programDirectory / "Windows Kits" / "8.1" / "bin" / platformIdentifier,
-                   programDirectory / "Windows Kits" / "8.0" / "bin" / platformIdentifier,
-                   programDirectory / "Microsoft SDKs" / "Windows" / "v7.1A" / "Bin"
-               }
-            .Select(x => x / "signtool.exe")
-            .WhereFileExists()
-            .FirstOrDefault();
+        var windowsKitsRootDirectory = programDirectory / "Windows Kits" / windowsKitLastVersion;
+
+        var signToolPath = windowsKitsRootDirectory.GlobFiles($"bin/{windowsKitVersionWildcard}/{platformIdentifier}/{signtoolExe}").LastOrDefault();
+
+        if(signToolPath == null)
+        {
+            var nugetPackagesPath = SettingsUtility.GetGlobalPackagesFolder(Settings.LoadDefaultSettings(null));
+
+            signToolPath = AbsolutePath.Create(nugetPackagesPath)
+                .GlobFiles($"{microsoftBuildToolsNugetPackage}/{windowsKitVersionWildcard}/bin/{windowsKitVersionWildcard}/{platformIdentifier}/{signtoolExe}")
+                .LastOrDefault();
+
+            signToolPath ??= windowsKitsRootDirectory.GlobFiles($"App Certification Kit/{signtoolExe}").SingleOrDefault();
+        }
+
+        return signToolPath;
     }
 }
