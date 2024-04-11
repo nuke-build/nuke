@@ -8,4 +8,11 @@
     <ProjectReference Include="..\Nuke.Common\Nuke.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="CI\ConfigurationGenerationTest.Test_testName=self-hosted_attribute=GitHubActionsAttribute.verified.txt">
+      <ParentFile>$([System.String]::Copy('%(FileName)').Split('.')[0])</ParentFile>
+      <DependentUpon>%(ParentFile).cs</DependentUpon>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -80,6 +80,9 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
 
     public string[] InvokedTargets { get; set; } = new string[0];
 
+    public string[] CustomRunnerLabels { get; set; } = [];
+    public string CustomRunnerGroup { get; set; }
+
     public GitHubActionsSubmodules Submodules
     {
         set => _submodules = value;
@@ -130,6 +133,8 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
                    Name = image.GetValue().Replace(".", "_"),
                    Steps = GetSteps(image, relevantTargets).ToArray(),
                    Image = image,
+                   CustomRunnerGroup = CustomRunnerGroup,
+                   CustomRunnerLabels = CustomRunnerLabels,
                    TimeoutMinutes = TimeoutMinutes,
                    ConcurrencyGroup = JobConcurrencyGroup,
                    ConcurrencyCancelInProgress = JobConcurrencyCancelInProgress
