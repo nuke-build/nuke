@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,6 +16,8 @@ public class GitHubActionsJob : ConfigurationEntity
 {
     public string Name { get; set; }
     public GitHubActionsImage Image { get; set; }
+    public string[] CustomRunnerLabels { get; set; } = [];
+    public string CustomRunnerGroup { get; set; }
     public int TimeoutMinutes { get; set; }
     public string ConcurrencyGroup { get; set; }
     public bool ConcurrencyCancelInProgress { get; set; }
@@ -28,7 +30,8 @@ public class GitHubActionsJob : ConfigurationEntity
         using (writer.Indent())
         {
             writer.WriteLine($"name: {Name}");
-            writer.WriteLine($"runs-on: {Image.GetValue()}");
+
+            WriteRunsOn(writer);
 
             if (TimeoutMinutes > 0)
             {
@@ -61,6 +64,38 @@ public class GitHubActionsJob : ConfigurationEntity
             {
                 Steps.ForEach(x => x.Write(writer));
             }
+        }
+    }
+
+    private void WriteRunsOn(CustomFileWriter writer)
+    {
+        if (Image != GitHubActionsImage.SelfHosted)
+        {
+            writer.WriteLine($"runs-on: {Image.GetValue()}");
+            return;
+        }
+
+        if (!CustomRunnerGroup.IsNullOrWhiteSpace())
+        {
+            writer.WriteLine($"runs-on:");
+
+            using (writer.Indent())
+            {
+                writer.WriteLine($"group: {CustomRunnerGroup}");
+
+                if (CustomRunnerLabels.Length > 0)
+                {
+                    writer.WriteInlineArray("labels", [Image.GetValue(), .. CustomRunnerLabels]);
+                }
+            }
+        }
+        else if (CustomRunnerLabels.Length > 0)
+        {
+            writer.WriteInlineArray("runs-on", [Image.GetValue(), .. CustomRunnerLabels]);
+        }
+        else
+        {
+            writer.WriteLine($"runs-on: {Image.GetValue()}");
         }
     }
 }

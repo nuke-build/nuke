@@ -164,6 +164,41 @@ public class ConfigurationGenerationTest
 
             yield return
             (
+                "self-hosted",
+                new TestGitHubActionsAttribute(
+                    GitHubActionsImage.UbuntuLatest,
+                    GitHubActionsImage.SelfHosted)
+                {
+                    On = new[] { GitHubActionsTrigger.Push, GitHubActionsTrigger.PullRequest },
+                    CustomRunnerLabels = ["label1", "label2"],
+                    CustomRunnerGroup = "SomeGroup",
+                    InvokedTargets = new[] { nameof(Test) },
+                    ImportSecrets = new[] { nameof(ApiKey) },
+                    EnableGitHubToken = true,
+                    WritePermissions = new[] { GitHubActionsPermissions.Contents },
+                    ReadPermissions = new[] { GitHubActionsPermissions.Actions }
+                }
+            );
+
+            yield return
+            (
+                "self-hosted-NoCustomGroup",
+                new TestGitHubActionsAttribute(
+                    GitHubActionsImage.UbuntuLatest,
+                    GitHubActionsImage.SelfHosted)
+                {
+                    On = new[] { GitHubActionsTrigger.Push, GitHubActionsTrigger.PullRequest },
+                    CustomRunnerLabels = ["label1", "label2"],
+                    InvokedTargets = new[] { nameof(Test) },
+                    ImportSecrets = new[] { nameof(ApiKey) },
+                    EnableGitHubToken = true,
+                    WritePermissions = new[] { GitHubActionsPermissions.Contents },
+                    ReadPermissions = new[] { GitHubActionsPermissions.Actions }
+                }
+            );
+
+            yield return
+            (
                 null,
                 new TestSpaceAutomationAttribute("Name", "mcr.microsoft.com/dotnet/sdk:5.0")
                 {
