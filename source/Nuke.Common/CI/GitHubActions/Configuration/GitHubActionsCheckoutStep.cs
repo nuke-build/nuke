@@ -18,7 +18,7 @@ public class GitHubActionsCheckoutStep : GitHubActionsStep
 
     public override void Write(CustomFileWriter writer)
     {
-        writer.WriteLine("- uses: actions/checkout@v3");
+        writer.WriteLine("- uses: actions/checkout@v4");
 
         if (Submodules.HasValue || Lfs.HasValue || FetchDepth.HasValue)
         {
