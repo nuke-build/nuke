@@ -33,7 +33,7 @@ Once you confirm the notice, NUKE will either:
 
 ## Scope
 
-As a global tool and library, NUKE has [multiple events](https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Execution/Telemetry.Events.cs) where telemetry is collected:
+As a global tool and library, NUKE has [multiple events](https://github.com/nuke-build/nuke/blob/master/source/Nuke.Build/Telemetry/Telemetry.Events.cs) where telemetry is collected:
 
 - `BuildStarted` – when a build was started
 - `TargetSucceeded` – when a target succeeded (only `Restore`, `Compile`, `Test`)
@@ -46,7 +46,7 @@ Data for `BuildStarted` and `TargetSucceeded` is only collected when `IsServerBu
 
 ## Data Points
 
-The [telemetry data points](https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Execution/Telemetry.Properties.cs) do not collect personal data, such as usernames or email addresses. The data is sent securely to Microsoft servers using [Azure Monitor](https://azure.microsoft.com/services/monitor/) technology, held under restricted access, and published under strict security controls from secure [Azure Storage](https://azure.microsoft.com/services/storage/) systems.
+The [telemetry data points](https://github.com/nuke-build/nuke/blob/master/source/Nuke.Build/Telemetry/Telemetry.Properties.cs) do not collect personal data, such as usernames or email addresses. The data is sent securely to Microsoft servers using [Azure Monitor](https://azure.microsoft.com/services/monitor/) technology, held under restricted access, and published under strict security controls from secure [Azure Storage](https://azure.microsoft.com/services/storage/) systems.
 
 Protecting your privacy is important to us. If you suspect the telemetry is collecting sensitive data or the data is being insecurely or inappropriately handled, file an issue in the [nuke-build/nuke](https://github.com/nuke-build/nuke) repository or [email us](mailto:info@nuke.build?subject=Telemetry) for investigation.
 
