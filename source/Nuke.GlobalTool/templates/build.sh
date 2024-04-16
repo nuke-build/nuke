@@ -29,7 +29,8 @@ function FirstJsonValue {
 
 # If dotnet CLI is installed globally and it matches requested version, use for execution
 if [ -x "$(command -v dotnet)" ] && dotnet --version &>/dev/null; then
-    export DOTNET_EXE="$(command -v dotnet)"
+    DOTNET_EXE="$(command -v dotnet)"
+    export DOTNET_EXE
 else
     # Download install script
     DOTNET_INSTALL_FILE="$TEMP_DIRECTORY/dotnet-install.sh"
