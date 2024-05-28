@@ -216,7 +216,7 @@ public static class NuGetPackageResolver
 
         return versionRange == null
             ? candidatePackages.FirstOrDefault()
-            : candidatePackages.SingleOrDefault(x => x.Version == versionRange.FindBestMatch(candidatePackages.Select(y => y.Version)));
+            : candidatePackages.FirstOrDefault(x => x.Version == versionRange.FindBestMatch(candidatePackages.Select(y => y.Version)));
     }
 
     [CanBeNull]
