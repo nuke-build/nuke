@@ -76,6 +76,9 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     public string PublishCondition { get; set; }
 
     public int TimeoutMinutes { get; set; }
+    
+    public string EnvironmentName { get; set; }
+    public string EnvironmentUrl { get; set; }
 
     public string ConcurrencyGroup { get; set; }
     public bool ConcurrencyCancelInProgress { get; set; }
@@ -147,6 +150,8 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
         return new GitHubActionsJob
                {
                    Name = image.GetValue().Replace(".", "_"),
+                   EnvironmentName = EnvironmentName,
+                   EnvironmentUrl = EnvironmentUrl,
                    Steps = GetSteps(image, relevantTargets).ToArray(),
                    Image = image,
                    TimeoutMinutes = TimeoutMinutes,
