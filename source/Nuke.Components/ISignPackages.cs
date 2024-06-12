@@ -79,7 +79,7 @@ public interface ISignPackages : INukeBuild
         .Executes(async () =>
         {
             SignPathRequestDirectory.CreateOrCleanDirectory();
-            SignPathPackages.ForEach(x => CopyFileToDirectory(x, SignPathRequestDirectory));
+            SignPathPackages.ForEach(x => x.CopyToDirectory(SignPathRequestDirectory));
             SignPathRequestDirectory.ZipTo(SignPathRequestArchive);
 
             AppVeyor.PushArtifact(SignPathRequestArchive);
@@ -114,7 +114,7 @@ public interface ISignPackages : INukeBuild
                         x => Path.GetFileName(x),
                         x => Path.GetFileName(x),
                         (x, y) => (SignedPackage: x, UnsignedPackage: y))
-                    .ForEach(x => CopyFile(x.SignedPackage, x.UnsignedPackage, FileExistsPolicy.Overwrite));
+                    .ForEach(x => x.SignedPackage.Copy(x.UnsignedPackage, ExistsPolicy.FileOverwrite));
             }
         });
 }

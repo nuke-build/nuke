@@ -15,7 +15,6 @@ using Xunit;
 
 namespace Nuke.SourceGenerators.Tests;
 
-[UsesVerify]
 public class StronglyTypedSolutionGeneratorTest
 {
     [Fact]
