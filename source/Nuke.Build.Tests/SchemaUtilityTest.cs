@@ -13,7 +13,6 @@ using Xunit;
 
 namespace Nuke.Common.Tests;
 
-[UsesVerify]
 public class SchemaUtilityTest
 {
     [Fact]

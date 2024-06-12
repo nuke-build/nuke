@@ -21,7 +21,6 @@ using Xunit;
 
 namespace Nuke.Common.Tests.CI;
 
-[UsesVerify]
 public class ConfigurationGenerationTest
 {
     [Theory]
