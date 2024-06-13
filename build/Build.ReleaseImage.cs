@@ -20,7 +20,7 @@ using static Nuke.Common.IO.HttpTasks;
 
 partial class Build
 {
-    [LatestGitHubRelease("JetBrains/JetBrainsMono", TrimPrefix = true)]
+    [LatestGitHubRelease("JetBrains/JetBrainsMono")]
     readonly string JetBrainsMonoVersion;
 
     string[] FontDownloadUrls =>
