@@ -11,13 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NuGet.Packaging" Version="6.10.0" />
+    <PackageReference Include="NuGet.Packaging" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- MSBuild and dependencies only acquired through MSBuild shall not make it into the final package -->
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.10.4" CopyLocal="false" Publish="false" ExcludeAssets="runtime" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="17.10.4" CopyLocal="false" Publish="false" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" CopyLocal="false" Publish="false" ExcludeAssets="runtime" />
+    <PackageReference Include="Microsoft.Build.Framework" CopyLocal="false" Publish="false" ExcludeAssets="runtime" />
   </ItemGroup>
 
   <ItemGroup>
