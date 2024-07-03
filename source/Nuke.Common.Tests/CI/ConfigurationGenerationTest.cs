@@ -159,7 +159,9 @@ public class ConfigurationGenerationTest
                     Progress = false,
                     Filter = "tree:0",
                     TimeoutMinutes = 30,
-                    JobConcurrencyCancelInProgress = true
+                    ConcurrencyCancelInProgress = true,
+                    JobConcurrencyCancelInProgress = true,
+                    JobConcurrencyGroup = "custom-job-group"
                 }
             );
 
