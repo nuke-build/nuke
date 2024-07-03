@@ -133,7 +133,7 @@ Target Print => _ => _
 ```csharp title="Build.cs"
 [LatestGitHubRelease(
     identifier: "JetBrains/gradle-intellij-plugin",
-    TrimPrefix = true)]
+    Pattern = @"v?(?<version>\d+\.\d+(?:\.\d+)?(?:\.\d+)?(?:-\w+)?)")] // default pattern
 readonly string GradlePluginVersion;
 
 Target Print => _ => _
