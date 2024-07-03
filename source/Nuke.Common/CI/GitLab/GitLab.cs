@@ -281,17 +281,17 @@ public partial class GitLab : Host, IBuildServer
     /// <summary>
     /// The Source chat channel that triggered the ChatOps command.
     /// </summary>
-    public string ChatChannel => EnvironmentInfo.GetVariable("CHAT_CHANNEL");
+    [CanBeNull] public string ChatChannel => EnvironmentInfo.GetVariable("CHAT_CHANNEL");
 
     /// <summary>
     /// The additional arguments passed with the ChatOps command.
     /// </summary>
-    public string ChatInput => EnvironmentInfo.GetVariable("CHAT_INPUT");
+    [CanBeNull] public string ChatInput => EnvironmentInfo.GetVariable("CHAT_INPUT");
 
     /// <summary>
     /// The chat service's user ID of the user who triggered the ChatOps command.
     /// </summary>
-    public string ChatUserId => EnvironmentInfo.GetVariable("CHAT_USER_ID");
+    [CanBeNull] public string ChatUserId => EnvironmentInfo.GetVariable("CHAT_USER_ID");
 
     /// <summary>
     /// The GitLab API v4 root URL.
