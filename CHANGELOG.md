@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Added `AbsolutePath` extension methods for `AddUnixSymlink`, `Copy*`, `Move*`, `Rename*`
+- Added `Pattern` in favor of property in `LatestGitHubReleaseAttribute`
+- Added `ConcurrencyGroup`, `ConcurrencyCancelInProgress`, `EnvironmentName`, `EnvironmentUrl` in `GitHubActionsAttribute`
+- Fixed unquoting of multiple quoted arguments in `ArgumentStringHandler`
+- Fixed GitHubActions to use latest action versions
+- Fixed `DotCoverTasks` and `EntityFrameworkTasks` tool path resolution
+- Fixed missing members in `GitHubActionsImage`
+- Fixed missing properties in `GitLab`
+- Fixed missing parameters in `AzurePipelines.SetVariables`
+- Fixed missing arguments in `DotNetTasks`
 
 ## [8.0.0] / 2024-01-18
 - Changed string parameters to violate requirement when empty or whitespace
