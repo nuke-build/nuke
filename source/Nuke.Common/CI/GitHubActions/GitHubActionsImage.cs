@@ -17,6 +17,7 @@ public enum GitHubActionsImage
 {
     [EnumValue("windows-2022")] WindowsServer2022,
     [EnumValue("windows-2019")] WindowsServer2019,
+    [EnumValue("ubuntu-24.04")] Ubuntu2404,
     [EnumValue("ubuntu-22.04")] Ubuntu2204,
     [EnumValue("ubuntu-20.04")] Ubuntu2004,
     [EnumValue("ubuntu-18.04")] Ubuntu1804,
