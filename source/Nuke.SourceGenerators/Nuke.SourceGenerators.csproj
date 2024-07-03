@@ -5,6 +5,7 @@
     <IsPackable>false</IsPackable>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <NoWarn>$(NoWarn);NU5128;CS0649</NoWarn>
+    <EnforceExtendedAnalyzerRules>false</EnforceExtendedAnalyzerRules>
 
     <IncludeSymbols></IncludeSymbols>
     <SymbolPackageFormat></SymbolPackageFormat>
