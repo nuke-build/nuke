@@ -56,6 +56,9 @@ jobs:
     concurrency:
       group: custom-job-group
       cancel-in-progress: true
+    environment:
+      name: environment-name
+      url: environment-url
     steps:
       - uses: actions/checkout@v4
         with:
@@ -101,6 +104,9 @@ jobs:
     concurrency:
       group: custom-job-group
       cancel-in-progress: true
+    environment:
+      name: environment-name
+      url: environment-url
     steps:
       - uses: actions/checkout@v4
         with:
@@ -146,6 +152,9 @@ jobs:
     concurrency:
       group: custom-job-group
       cancel-in-progress: true
+    environment:
+      name: environment-name
+      url: environment-url
     steps:
       - uses: actions/checkout@v4
         with:
