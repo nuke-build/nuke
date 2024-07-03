@@ -77,6 +77,9 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
 
     public int TimeoutMinutes { get; set; }
 
+    public string ConcurrencyGroup { get; set; }
+    public bool ConcurrencyCancelInProgress { get; set; }
+
     public string JobConcurrencyGroup { get; set; }
     public bool JobConcurrencyCancelInProgress { get; set; }
 
@@ -126,6 +129,8 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
                                 DetailedTriggers = GetTriggers().ToArray(),
                                 Permissions = WritePermissions.Select(x => (x, "write"))
                                     .Concat(ReadPermissions.Select(x => (x, "read"))).ToArray(),
+                                ConcurrencyGroup = ConcurrencyGroup,
+                                ConcurrencyCancelInProgress = ConcurrencyCancelInProgress,
                                 Jobs = _images.Select(x => GetJobs(x, relevantTargets)).ToArray()
                             };
 
