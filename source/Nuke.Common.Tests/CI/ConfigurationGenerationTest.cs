@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
@@ -48,6 +49,7 @@ public class ConfigurationGenerationTest
         return TestBuild.GetAttributes().Select(x => new object[] { x.TestName, x.Generator });
     }
 
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     [AppVeyorSecret("GitHubToken", "encrypted-yaml")]
     [TeamCityToken("GitHubToken", "74928d76-46e8-45cc-ad22-6438915ac070")]
     public class TestBuild : NukeBuild
@@ -161,7 +163,9 @@ public class ConfigurationGenerationTest
                     TimeoutMinutes = 30,
                     ConcurrencyCancelInProgress = true,
                     JobConcurrencyCancelInProgress = true,
-                    JobConcurrencyGroup = "custom-job-group"
+                    JobConcurrencyGroup = "custom-job-group",
+                    EnvironmentName = "environment-name",
+                    EnvironmentUrl = "environment-url"
                 }
             );
 
