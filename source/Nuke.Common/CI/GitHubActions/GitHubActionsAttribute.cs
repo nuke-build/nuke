@@ -28,6 +28,8 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     private GitHubActionsSubmodules? _submodules;
     private bool? _lfs;
     private uint? _fetchDepth;
+    private bool? _progress;
+    private string _filter;
 
     public GitHubActionsAttribute(
         string name,
@@ -98,6 +100,18 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
         get => throw new NotSupportedException();
     }
 
+    public bool Progress
+    {
+        set => _progress = value;
+        get => throw new NotSupportedException();
+    }
+
+    public string Filter
+    {
+        set => _filter = value;
+        get => throw new NotSupportedException();
+    }
+
     public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
     {
         return new CustomFileWriter(streamWriter, indentationFactor: 2, commentPrefix: "#");
@@ -142,7 +156,9 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
                      {
                          Submodules = _submodules,
                          Lfs = _lfs,
-                         FetchDepth = _fetchDepth
+                         FetchDepth = _fetchDepth,
+                         Progress = _progress,
+                         Filter = _filter
                      };
 
         if (CacheKeyFiles.Any())

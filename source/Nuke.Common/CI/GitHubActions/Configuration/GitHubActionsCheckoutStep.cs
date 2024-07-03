@@ -15,12 +15,14 @@ public class GitHubActionsCheckoutStep : GitHubActionsStep
     public GitHubActionsSubmodules? Submodules { get; set; }
     public bool? Lfs { get; set; }
     public uint? FetchDepth { get; set; }
+    public bool? Progress { get; set; }
+    public string Filter { get; set; }
 
     public override void Write(CustomFileWriter writer)
     {
-        writer.WriteLine("- uses: actions/checkout@v3");
+        writer.WriteLine("- uses: actions/checkout@v4");
 
-        if (Submodules.HasValue || Lfs.HasValue || FetchDepth.HasValue)
+        if (Submodules.HasValue || Lfs.HasValue || FetchDepth.HasValue || Progress.HasValue || !Filter.IsNullOrWhiteSpace())
         {
             using (writer.Indent())
             {
@@ -33,6 +35,10 @@ public class GitHubActionsCheckoutStep : GitHubActionsStep
                         writer.WriteLine($"lfs: {Lfs.ToString().ToLowerInvariant()}");
                     if (FetchDepth.HasValue)
                         writer.WriteLine($"fetch-depth: {FetchDepth}");
+                    if (Progress.HasValue)
+                        writer.WriteLine($"progress: {Progress.ToString().ToLowerInvariant()}");
+                    if (!Filter.IsNullOrWhiteSpace())
+                        writer.WriteLine($"filter: {Filter}");
                 }
             }
         }
