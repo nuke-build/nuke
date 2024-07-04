@@ -86,7 +86,7 @@ Please refer to the [MinVer documentation](https://github.com/adamralph/minver#u
 
 ```powershell title="Tool Installation"
 # terminal-command
-nuke :add-package MinVer
+nuke :add-package minver-cli
 ```
 
 ```csharp title="Build.cs"
