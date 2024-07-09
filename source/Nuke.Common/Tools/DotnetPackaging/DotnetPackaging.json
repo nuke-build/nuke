@@ -13,24 +13,23 @@
       "help": "Creates a Debian package from the specified directory.",
       "postfix": "Deb",
       "definiteArgument": "deb",
-      "officialUrl": "https://github.com/superjmn/dotnetpackaging",
       "settingsClass": {
         "properties": [
           {
             "name": "Directory",
-            "type": "DirectoryInfo",
+            "type": "string",
             "format": "--directory={value}",
             "help": "The input directory from which to create the package."
           },
           {
             "name": "Metadata",
-            "type": "FileInfo",
+            "type": "string",
             "format": "--metadata={value}",
             "help": "The metadata file to include in the package."
           },
           {
             "name": "Output",
-            "type": "FileInfo",
+            "type": "string",
             "format": "--output={value}",
             "help": "The output DEB file to create."
           }
@@ -41,7 +40,6 @@
       "help": "Creates an AppImage package.",
       "postfix": "AppImage",
       "definiteArgument": "appimage",
-      "officialUrl": "https://github.com/dotnet-packaging/dotnet-packaging/wiki/AppImage",
       "settingsClass": {
         "properties": [
           {
@@ -64,13 +62,13 @@
           },
           {
             "name": "MainCategory",
-            "type": "MainCategory",
+            "type": "DotnetPackagingMainCategory",
             "format": "--main-category {value}",
             "help": "Main category of the application."
           },
           {
             "name": "AdditionalCategories",
-            "type": "List<AdditionalCategory>",
+            "type": "List<DotnetPackagingAdditionalCategory>",
             "format": "--additional-categories {value}",
             "help": "Additional categories for the application."
           },
@@ -78,11 +76,11 @@
             "name": "Icon",
             "type": "string",
             "format": "--icon {value}",
-            "help": "The icon path for the application. When not provided, the tool looks up for an image called 'AppImage.png'."
+            "help": "The icon path for the application. When not provided, the tool looks up for an image called <c>AppImage.png</c>."
           },
           {
-            "name": "HomePage",
-            "type": "Uri",
+            "name": "Homepage",
+            "type": "string",
             "format": "--homepage {value}",
             "help": "Home page of the application."
           },
@@ -100,7 +98,7 @@
           },
           {
             "name": "ScreenshotUrls",
-            "type": "IEnumerable<Uri>",
+            "type": "List<string>",
             "format": "--screenshot-urls {value}",
             "help": "URLs of screenshots of the application."
           },
@@ -114,7 +112,7 @@
             "name": "AppId",
             "type": "string",
             "format": "--appId {value}",
-            "help": "Application ID, usually a reverse DNS name like com.SomeCompany.SomeApplication."
+            "help": "Application ID, usually a reverse DNS name like <c>com.SomeCompany.SomeApplication</c>."
           }
         ]
       }
@@ -122,7 +120,7 @@
   ],
   "enumerations": [
     {
-      "name": "MainCategory",
+      "name": "DotnetPackagingMainCategory",
       "values": [
         "AudioVideo",
         "Audio",
@@ -138,7 +136,7 @@
       ]
     },
     {
-      "name": "AdditionalCategory",
+      "name": "DotnetPackagingAdditionalCategory",
       "values": [
         "Building",
         "Debugger",
