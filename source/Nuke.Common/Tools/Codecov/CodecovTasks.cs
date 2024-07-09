@@ -2,6 +2,7 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.Codecov;
@@ -25,10 +26,12 @@ partial class CodecovTasks
 
     private static string GetPackageExecutable()
     {
-        if (EnvironmentInfo.IsWin)
-            return "codecov.exe";
-        if (EnvironmentInfo.IsOsx)
-            return "codecov-macos";
-        return "codecov-linux";
+        return EnvironmentInfo.Platform switch
+        {
+            PlatformFamily.Windows => "codecov.exe",
+            PlatformFamily.OSX => "codecov-macos",
+            PlatformFamily.Linux => "codecov-linux",
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 }
