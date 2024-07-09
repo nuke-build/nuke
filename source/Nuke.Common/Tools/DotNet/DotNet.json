@@ -691,6 +691,12 @@
             "help": "The project to publish, which defaults to the current directory if not specified."
           },
           {
+            "name": "Architecture",
+            "type": "string",
+            "format": "--arch {value}",
+            "help": "Specifies the target architecture. This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7."
+          },
+          {
             "name": "Configuration",
             "type": "string",
             "format": "--configuration {value}",
@@ -727,6 +733,12 @@
             "help": "Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory."
           },
           {
+            "name": "OperatingSystem",
+            "type": "string",
+            "format": "--os {value}",
+            "help": "Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6."
+          },
+          {
             "name": "SelfContained",
             "type": "bool",
             "format": "--self-contained {value}",
@@ -755,6 +767,13 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "Targets",
+            "type": "List<string>",
+            "format": "/t:{value}",
+            "separator": ";",
+            "help": "<p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ee216359.aspx\">Target Build Order</a> and <a href=\"https://msdn.microsoft.com/en-us/library/ms171463.aspx\">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ms171462.aspx\">Targets</a>.</p>"
           }
         ]
       }
