@@ -7,11 +7,11 @@
     "ComplexTypeArrayParam": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/OfSchemaUtilityTestF9E5B3352D3C7B2A09EBB8075A0ECA7D376B43F377AA6CCDDF0E21014566A9E2E__ComplexType"
+        "$ref": "#/definitions/ComplexType"
       }
     },
     "ComplexTypeParam": {
-      "$ref": "#/definitions/OfSchemaUtilityTestF9E5B3352D3C7B2A09EBB8075A0ECA7D376B43F377AA6CCDDF0E21014566A9E2E__ComplexType"
+      "$ref": "#/definitions/ComplexType"
     },
     "ComponentInheritedParam": {
       "type": "string"
@@ -61,7 +61,7 @@
     }
   },
   "definitions": {
-    "OfSchemaUtilityTestF9E5B3352D3C7B2A09EBB8075A0ECA7D376B43F377AA6CCDDF0E21014566A9E2E__ComplexType": {
+    "ComplexType": {
       "type": "object",
       "properties": {
         "String": {
@@ -89,13 +89,13 @@
               "type": "null"
             },
             {
-              "$ref": "#/definitions/OfSchemaUtilityTestF9E5B3352D3C7B2A09EBB8075A0ECA7D376B43F377AA6CCDDF0E21014566A9E2E__ComplexSubType"
+              "$ref": "#/definitions/ComplexSubType"
             }
           ]
         }
       }
     },
-    "OfSchemaUtilityTestF9E5B3352D3C7B2A09EBB8075A0ECA7D376B43F377AA6CCDDF0E21014566A9E2E__ComplexSubType": {
+    "ComplexSubType": {
       "type": "object",
       "properties": {
         "Boolean": {

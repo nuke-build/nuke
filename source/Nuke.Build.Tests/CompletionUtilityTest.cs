@@ -18,7 +18,9 @@ namespace Nuke.Common.Tests;
 
 public class CompletionUtilityTest
 {
-    private VerifySettings _verifySettings;
+    private readonly VerifySettings _verifySettings;
+    private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory).NotNull();
+    private static AbsolutePath TestDirectory => RootDirectory / "source" / "Nuke.Build.Tests";
 
     public CompletionUtilityTest()
     {
@@ -29,7 +31,7 @@ public class CompletionUtilityTest
     [Fact]
     public async Task TestGetCompletionItemsTargetBuild()
     {
-        var file = (AbsolutePath)"/Users/matt/code/nuke/source/Nuke.Build.Tests/SchemaUtilityTest.TestTargetBuild.verified.json";
+        var file = TestDirectory / "SchemaUtilityTest.TestTargetBuild.verified.json";
         var schema = JsonDocument.Parse(file.ReadAllText());
         var items = CompletionUtility.GetItemsFromSchema(schema, new[] { "dev" });
         await Verifier.Verify(items, _verifySettings);
@@ -38,7 +40,7 @@ public class CompletionUtilityTest
     [Fact]
     public async Task TestGetCompletionItemsParameterBuild()
     {
-        var file = (AbsolutePath)"/Users/matt/code/nuke/source/Nuke.Build.Tests/SchemaUtilityTest.TestParameterBuild.verified.json";
+        var file = TestDirectory / "SchemaUtilityTest.TestParameterBuild.verified.json";
         var schema = JsonDocument.Parse(file.ReadAllText());
         var items = CompletionUtility.GetItemsFromSchema(schema, []);
         await Verifier.Verify(items, _verifySettings);
