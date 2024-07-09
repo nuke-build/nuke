@@ -1,5 +1,5 @@
 {
-  "$schema": "./build.schema.json",
+  "$schema": "build.schema.json",
   "Solution": "nuke-common.sln",
   "SignPathSettings": {
     "OrganizationId": "0fdaf334-6910-41f4-83d2-e58e4cccb087",
