@@ -106,10 +106,17 @@ public static class ConfigureExtensions
                 invocations
                     .Where(x => x.Settings.ProcessLogOutput ?? ProcessTasks.DefaultLogOutput)
                     .SelectMany(x =>
-                        x.Exception is not ProcessException processException
-                            ? outputSelector(x.Result)
-                            : processException.Process.Output)
-                    .ForEach(x => logger(x.Type, x.Text));
+                    {
+                        var (settings, result, exception) = x;
+                        var output = exception switch
+                        {
+                            ProcessException processException => processException.Process.Output,
+                            _ => outputSelector(result),
+                        };
+
+                        return output.Select(x => (Logger: logger ?? settings.ProcessLogger, Line: x));
+                    })
+                    .ForEach(x => x.Logger(x.Line.Type, x.Line.Text));
             }
         }
     }
