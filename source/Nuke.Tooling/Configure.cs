@@ -103,16 +103,15 @@ public static class ConfigureExtensions
                     .SelectMany(x =>
                     {
                         var (settings, result, exception) = x;
-                        var logger = settings.ProcessLogger ?? defaultLogger;
                         var output = exception switch
                         {
                             ProcessException processException => processException.Process.Output,
                             _ => outputSelector(result),
                         };
 
-                        return output.Select(line => (logger, line));
+                        return output.Select(x => (Logger: settings.ProcessLogger, Line: x));
                     })
-                    .ForEach(x => x.logger(x.line.Type, x.line.Text));
+                    .ForEach(x => x.Logger(x.Line.Type, x.Line.Text));
             }
         }
     }
