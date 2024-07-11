@@ -211,6 +211,7 @@ public static class NuGetPackageResolver
             // packages can contain false positives due to present/missing version specification
             .Where(x => x.Id.EqualsOrdinalIgnoreCase(packageId))
             .Where(x => !x.Version.IsPrerelease || !includePrereleases.HasValue || includePrereleases.Value)
+            .Distinct(x => x.Directory)
             .OrderByDescending(x => x.Version)
             .ToList();
 
