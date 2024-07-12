@@ -14,14 +14,12 @@ namespace Nuke.Common.CI.AzurePipelines.Configuration;
 [PublicAPI]
 public class AzurePipelinesCacheStep : AzurePipelinesStep
 {
-    public AzurePipelinesImage Image { get; set; }
+    public AzurePipelinesPool Pool { get; set; }
     public string[] KeyFiles { get; set; }
     public string Path { get; set; }
 
     private string AdjustedPath =>
-        Image.GetValue().StartsWithAnyOrdinalIgnoreCase("ubuntu", "macos")
-            ? Path.Replace("~", "$(HOME)")
-            : Path.Replace("~", "$(USERPROFILE)");
+        Path.Replace("~", Pool.GetUserHomeDirectory());
 
     private string Identifier => Path
         .Replace(".", "/")
