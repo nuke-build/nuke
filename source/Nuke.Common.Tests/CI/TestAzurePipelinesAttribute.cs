@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -11,8 +11,8 @@ namespace Nuke.Common.Tests.CI;
 
 public class TestAzurePipelinesAttribute : AzurePipelinesAttribute, ITestConfigurationGenerator
 {
-    public TestAzurePipelinesAttribute(AzurePipelinesImage image, params AzurePipelinesImage[] images)
-        : base(image, images)
+    public TestAzurePipelinesAttribute(AzurePipelinesImage image)
+        : base(image)
     {
     }
 

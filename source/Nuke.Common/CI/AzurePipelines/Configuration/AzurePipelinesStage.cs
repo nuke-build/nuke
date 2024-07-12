@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -16,7 +16,7 @@ public class AzurePipelinesStage : ConfigurationEntity
 {
     public string Name { get; set; }
     public string DisplayName { get; set; }
-    public AzurePipelinesImage? Image { get; set; }
+    public AzurePipelinesPool Pool { get; set; }
     public AzurePipelinesStage[] Dependencies { get; set; }
     public AzurePipelinesJob[] Jobs { get; set; }
 
@@ -27,12 +27,9 @@ public class AzurePipelinesStage : ConfigurationEntity
             writer.WriteLine($"displayName: {DisplayName.SingleQuote()}");
             writer.WriteLine($"dependsOn: [ {Dependencies.Select(x => x.Name).JoinCommaSpace()} ]");
 
-            if (Image != null)
+            if (Pool != null)
             {
-                using (writer.WriteBlock("pool:"))
-                {
-                    writer.WriteLine($"vmImage: {Image.Value.GetValue().SingleQuote()}");
-                }
+                Pool.Write(writer);
             }
 
             using (writer.WriteBlock("jobs:"))
