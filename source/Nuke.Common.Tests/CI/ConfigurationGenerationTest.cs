@@ -96,7 +96,9 @@ public class ConfigurationGenerationTest
                     Submodules = true,
                     LargeFileStorage = false,
                     Clean = true,
-                    FetchDepth = 1
+                    FetchDepth = 1,
+                    EnableNuGetAuthenticate = true,
+                    EnableNpmAuthenticate = true,
                 }
             );
 
