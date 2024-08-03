@@ -203,10 +203,22 @@
       "settingsClass": {
         "properties": [
           {
+            "name": "Architecture",
+            "type": "string",
+            "format": "--arch {value}",
+            "help": "Specifies the target architecture. This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7."
+          },
+          {
             "name": "Configuration",
             "type": "string",
             "format": "--configuration {value}",
             "help": "Configuration to use for building the project. The default value is Debug."
+          },
+          {
+            "name": "DisableBuildServers",
+            "type": "bool",
+            "format": "--disable-build-servers",
+            "help": "Force the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK."
           },
           {
             "name": "Framework",
@@ -219,6 +231,12 @@
             "type": "string",
             "format": "--launch-profile {value}",
             "help": "The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the <em>launchSettings.json</em> file and are typically called <c>Development</c>, <c>Staging</c> and <c>Production</c>. For more information, see <a href=\"https://docs.microsoft.com/en-us/aspnetcore/fundamentals/environments\">Working with multiple environments</a>."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK."
           },
           {
             "name": "NoBuild",
@@ -239,10 +257,40 @@
             "help": "Doesn't perform an implicit restore when running the command."
           },
           {
+            "name": "NoSelfContained",
+            "type": "bool",
+            "format": "--no-self-contained",
+            "help": "Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application."
+          },
+          {
+            "name": "OperatingSystem",
+            "type": "string",
+            "format": "--os {value}",
+            "help": "Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6."
+          },
+          {
             "name": "ProjectFile",
             "type": "string",
             "format": "--project {value}",
             "help": "Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified."
+          },
+          {
+            "name": "Runtime",
+            "type": "string",
+            "format": "--runtime {value}",
+            "help": "Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>."
+          },
+          {
+            "name": "SelfContained",
+            "type": "bool",
+            "format": "--self-contained {value}",
+            "help": "Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>false</c>. However, when targeting .NET 7 or lower, the default is <c>true</c> if a runtime identifier is specified."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
           },
           {
             "name": "ApplicationArguments",
@@ -736,7 +784,7 @@
             "name": "OperatingSystem",
             "type": "string",
             "format": "--os {value}",
-            "help": "Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6."
+            "help": "Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6."
           },
           {
             "name": "SelfContained",
@@ -1503,7 +1551,7 @@
     {
       "name": "Properties",
       "type": "Dictionary<string, object>",
-      "format": "/property:{value}",
+      "format": "--property:{value}",
       "itemFormat": "{key}={value}",
       "disallowedCharacter": ";",
       "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
