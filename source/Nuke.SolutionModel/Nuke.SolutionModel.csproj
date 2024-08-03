@@ -8,4 +8,8 @@
     <ProjectReference Include="..\Nuke.Utilities\Nuke.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" PrivateAssets="all" />
+  </ItemGroup>
+
 </Project>

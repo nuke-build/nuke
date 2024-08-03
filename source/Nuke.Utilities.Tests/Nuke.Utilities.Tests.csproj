@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Nuke.Utilities.Text.Yaml\Nuke.Utilities.Text.Yaml.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" PrivateAssets="all" />
+  </ItemGroup>
+
 </Project>

@@ -7,6 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" />
+    <PackageReference Include="JetBrains.Annotations" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" />
     <PackageReference Include="Humanizer" />
     <PackageReference Include="Serilog" />

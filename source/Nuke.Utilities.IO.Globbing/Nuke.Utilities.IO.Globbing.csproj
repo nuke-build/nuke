@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Glob" />
+    <PackageReference Include="JetBrains.Annotations" PrivateAssets="all" />
   </ItemGroup>
 
 </Project>

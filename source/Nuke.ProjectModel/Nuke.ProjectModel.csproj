@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" PrivateAssets="all" />
     <PackageReference Include="Microsoft.Build.Locator" />
     <PackageReference Include="Microsoft.Build" ExcludeAssets="runtime" />
     <PackageReference Include="Microsoft.Build.Framework" ExcludeAssets="runtime" />
