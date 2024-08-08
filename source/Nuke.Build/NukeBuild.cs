@@ -72,10 +72,28 @@ public abstract partial class NukeBuild : INukeBuild
     /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
     /// if no targets have been specified via command-line arguments.
     /// </summary>
+    /// <param name="defaultTargetExpressions">The default target expressions</param>
+    /// <returns>Built exit code</returns>
     protected static int Execute<T>(params Expression<Func<T, Target>>[] defaultTargetExpressions)
         where T : NukeBuild, new()
     {
         return BuildManager.Execute(defaultTargetExpressions);
+    }
+
+    /// <summary>
+    /// Executes the build. The provided expression defines the <em>default</em> target that is invoked,
+    /// if no targets have been specified via command-line arguments.
+    /// </summary>
+    /// <param name="executeOptions">The options for the execution of the build.</param>
+    /// <param name="defaultTargetExpressions">The default target expressions</param>
+    /// <returns>Built exit code</returns>
+    protected static int ExecuteWithOptions<T>(
+        ExecuteOptions executeOptions,
+        params Expression<Func<T, Target>>[] defaultTargetExpressions
+    )
+        where T : NukeBuild, new()
+    {
+        return BuildManager.ExecuteWithOptions(executeOptions, defaultTargetExpressions);
     }
 
     internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; set; }

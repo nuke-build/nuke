@@ -37,7 +37,26 @@ internal static class BuildManager
             .ForEach(x => AppDomain.CurrentDomain.Load(x));
     }
 
+    /// <summary>
+    /// Executes the specified build type with the specified default target expressions.
+    /// </summary>
+    /// <typeparam name="T">The build type</typeparam>
+    /// <param name="defaultTargetExpressions">The default target expressions</param>
+    /// <returns>Build exit code</returns>
     public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
+        where T : NukeBuild, new()
+    {
+        return ExecuteWithOptions<T>(null, defaultTargetExpressions);
+    }
+
+    /// <summary>
+    /// Executes the specified build type with the specified execute options and default target expressions.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="executeOptions"></param>
+    /// <param name="defaultTargetExpressions"></param>
+    /// <returns>Build exit code</returns>
+    public static int ExecuteWithOptions<T>(ExecuteOptions executeOptions, Expression<Func<T, Target>>[] defaultTargetExpressions)
         where T : NukeBuild, new()
     {
         Console.OutputEncoding = Encoding.UTF8;
@@ -49,7 +68,9 @@ internal static class BuildManager
 
         try
         {
-            Logging.Configure(build);
+            // Should we execute the default log configuration?
+            if (executeOptions?.DisableDefaultLogConfiguration != true)
+                Logging.Configure(build);
 
             build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
             build.ExecuteExtension<IOnBuildCreated>(x => x.OnBuildCreated(build.ExecutableTargets));
@@ -90,7 +111,10 @@ internal static class BuildManager
         finally
         {
             Finish();
-            Log.CloseAndFlush();
+
+            // Should we close and flush the log?
+            if (executeOptions?.DisableDefaultLogConfiguration != true)
+                Log.CloseAndFlush();
         }
 
         void Finish()
