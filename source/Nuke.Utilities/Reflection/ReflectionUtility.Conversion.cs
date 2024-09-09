@@ -44,7 +44,9 @@ public static partial class ReflectionUtility
     [CanBeNull]
     public static object Convert(string value, Type destinationType, char? separator)
     {
-        return Convert(separator.HasValue ? value.Split(separator.Value) : new[] { value }, destinationType);
+        var values = (separator.HasValue ? value.Split(separator.Value) : new[] { value })
+            .Where(x => !x.IsNullOrWhiteSpace()).ToArray();
+        return Convert(values, destinationType);
     }
 
     [CanBeNull]
