@@ -859,6 +859,7 @@ public partial class DotNetTasks
     ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
     ///   <ul>
     ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetPublishSettings.Project"/></li>
+    ///     <li><c>--arch</c> via <see cref="DotNetPublishSettings.Architecture"/></li>
     ///     <li><c>--configuration</c> via <see cref="DotNetPublishSettings.Configuration"/></li>
     ///     <li><c>--disable-parallel</c> via <see cref="DotNetPublishSettings.DisableParallel"/></li>
     ///     <li><c>--force</c> via <see cref="DotNetPublishSettings.Force"/></li>
@@ -873,6 +874,7 @@ public partial class DotNetTasks
     ///     <li><c>--no-dependencies</c> via <see cref="DotNetPublishSettings.NoDependencies"/></li>
     ///     <li><c>--no-restore</c> via <see cref="DotNetPublishSettings.NoRestore"/></li>
     ///     <li><c>--nologo</c> via <see cref="DotNetPublishSettings.NoLogo"/></li>
+    ///     <li><c>--os</c> via <see cref="DotNetPublishSettings.OperatingSystem"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li>
@@ -882,6 +884,7 @@ public partial class DotNetTasks
     ///     <li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li>
     ///     <li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li>
     ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
+    ///     <li><c>/t</c> via <see cref="DotNetPublishSettings.Targets"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetPublish(DotNetPublishSettings toolSettings = null)
@@ -899,6 +902,7 @@ public partial class DotNetTasks
     ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
     ///   <ul>
     ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetPublishSettings.Project"/></li>
+    ///     <li><c>--arch</c> via <see cref="DotNetPublishSettings.Architecture"/></li>
     ///     <li><c>--configuration</c> via <see cref="DotNetPublishSettings.Configuration"/></li>
     ///     <li><c>--disable-parallel</c> via <see cref="DotNetPublishSettings.DisableParallel"/></li>
     ///     <li><c>--force</c> via <see cref="DotNetPublishSettings.Force"/></li>
@@ -913,6 +917,7 @@ public partial class DotNetTasks
     ///     <li><c>--no-dependencies</c> via <see cref="DotNetPublishSettings.NoDependencies"/></li>
     ///     <li><c>--no-restore</c> via <see cref="DotNetPublishSettings.NoRestore"/></li>
     ///     <li><c>--nologo</c> via <see cref="DotNetPublishSettings.NoLogo"/></li>
+    ///     <li><c>--os</c> via <see cref="DotNetPublishSettings.OperatingSystem"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li>
@@ -922,6 +927,7 @@ public partial class DotNetTasks
     ///     <li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li>
     ///     <li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li>
     ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
+    ///     <li><c>/t</c> via <see cref="DotNetPublishSettings.Targets"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetPublish(Configure<DotNetPublishSettings> configurator)
@@ -936,6 +942,7 @@ public partial class DotNetTasks
     ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
     ///   <ul>
     ///     <li><c>&lt;project&gt;</c> via <see cref="DotNetPublishSettings.Project"/></li>
+    ///     <li><c>--arch</c> via <see cref="DotNetPublishSettings.Architecture"/></li>
     ///     <li><c>--configuration</c> via <see cref="DotNetPublishSettings.Configuration"/></li>
     ///     <li><c>--disable-parallel</c> via <see cref="DotNetPublishSettings.DisableParallel"/></li>
     ///     <li><c>--force</c> via <see cref="DotNetPublishSettings.Force"/></li>
@@ -950,6 +957,7 @@ public partial class DotNetTasks
     ///     <li><c>--no-dependencies</c> via <see cref="DotNetPublishSettings.NoDependencies"/></li>
     ///     <li><c>--no-restore</c> via <see cref="DotNetPublishSettings.NoRestore"/></li>
     ///     <li><c>--nologo</c> via <see cref="DotNetPublishSettings.NoLogo"/></li>
+    ///     <li><c>--os</c> via <see cref="DotNetPublishSettings.OperatingSystem"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li>
@@ -959,6 +967,7 @@ public partial class DotNetTasks
     ///     <li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li>
     ///     <li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li>
     ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
+    ///     <li><c>/t</c> via <see cref="DotNetPublishSettings.Targets"/></li>
     ///   </ul>
     /// </remarks>
     public static IEnumerable<(DotNetPublishSettings Settings, IReadOnlyCollection<Output> Output)> DotNetPublish(CombinatorialConfigure<DotNetPublishSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -1430,6 +1439,7 @@ public partial class DotNetTasks
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadInstallSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadInstallSettings.NoCache"/></li>
     ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadInstallSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadInstallSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadInstallSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadInstallSettings.Verbosity"/></li>
@@ -1457,6 +1467,7 @@ public partial class DotNetTasks
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadInstallSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadInstallSettings.NoCache"/></li>
     ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadInstallSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadInstallSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadInstallSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadInstallSettings.Verbosity"/></li>
@@ -1481,6 +1492,7 @@ public partial class DotNetTasks
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadInstallSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadInstallSettings.NoCache"/></li>
     ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadInstallSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadInstallSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadInstallSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadInstallSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadInstallSettings.Verbosity"/></li>
@@ -1550,6 +1562,7 @@ public partial class DotNetTasks
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRestoreSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRestoreSettings.NoCache"/></li>
     ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadRestoreSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadRestoreSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRestoreSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRestoreSettings.Verbosity"/></li>
@@ -1577,6 +1590,7 @@ public partial class DotNetTasks
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRestoreSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRestoreSettings.NoCache"/></li>
     ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadRestoreSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadRestoreSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRestoreSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRestoreSettings.Verbosity"/></li>
@@ -1601,6 +1615,7 @@ public partial class DotNetTasks
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRestoreSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRestoreSettings.NoCache"/></li>
     ///     <li><c>--skip-manifest-update</c> via <see cref="DotNetWorkloadRestoreSettings.SkipManifestUpdate"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadRestoreSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadRestoreSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRestoreSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRestoreSettings.Verbosity"/></li>
@@ -1625,6 +1640,7 @@ public partial class DotNetTasks
     ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></li>
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadUpdateSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadUpdateSettings.NoCache"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadUpdateSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadUpdateSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadUpdateSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadUpdateSettings.Verbosity"/></li>
@@ -1652,6 +1668,7 @@ public partial class DotNetTasks
     ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></li>
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadUpdateSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadUpdateSettings.NoCache"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadUpdateSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadUpdateSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadUpdateSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadUpdateSettings.Verbosity"/></li>
@@ -1676,6 +1693,7 @@ public partial class DotNetTasks
     ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadUpdateSettings.IncludePreviews"/></li>
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadUpdateSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadUpdateSettings.NoCache"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadUpdateSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadUpdateSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadUpdateSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadUpdateSettings.Verbosity"/></li>
@@ -1698,6 +1716,7 @@ public partial class DotNetTasks
     ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></li>
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRepairSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRepairSettings.NoCache"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadRepairSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadRepairSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRepairSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRepairSettings.Verbosity"/></li>
@@ -1723,6 +1742,7 @@ public partial class DotNetTasks
     ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></li>
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRepairSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRepairSettings.NoCache"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadRepairSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadRepairSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRepairSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRepairSettings.Verbosity"/></li>
@@ -1745,6 +1765,7 @@ public partial class DotNetTasks
     ///     <li><c>--include-previews</c> via <see cref="DotNetWorkloadRepairSettings.IncludePreviews"/></li>
     ///     <li><c>--interactive</c> via <see cref="DotNetWorkloadRepairSettings.Interactive"/></li>
     ///     <li><c>--no-cache</c> via <see cref="DotNetWorkloadRepairSettings.NoCache"/></li>
+    ///     <li><c>--skip-sign-check</c> via <see cref="DotNetWorkloadRepairSettings.SkipSignCheck"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetWorkloadRepairSettings.Source"/></li>
     ///     <li><c>--temp-dir</c> via <see cref="DotNetWorkloadRepairSettings.TempDir"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetWorkloadRepairSettings.Verbosity"/></li>
@@ -2761,6 +2782,10 @@ public partial class DotNetPublishSettings : ToolSettings
     /// </summary>
     public virtual string Project { get; internal set; }
     /// <summary>
+    ///   Specifies the target architecture. This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7.
+    /// </summary>
+    public virtual string Architecture { get; internal set; }
+    /// <summary>
     ///   Defines the build configuration. The default value is <c>Debug</c>.
     /// </summary>
     public virtual string Configuration { get; internal set; }
@@ -2785,6 +2810,10 @@ public partial class DotNetPublishSettings : ToolSettings
     /// </summary>
     public virtual string Output { get; internal set; }
     /// <summary>
+    ///   Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.
+    /// </summary>
+    public virtual string OperatingSystem { get; internal set; }
+    /// <summary>
     ///   Publishes the .NET Core runtime with your application so the runtime doesn't need to be installed on the target machine. If a runtime identifier is specified, its default value is <c>true</c>. For more information about the different deployment types, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core application deployment</a>.
     /// </summary>
     public virtual bool? SelfContained { get; internal set; }
@@ -2804,6 +2833,11 @@ public partial class DotNetPublishSettings : ToolSettings
     ///   Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.
     /// </summary>
     public virtual bool? NoLogo { get; internal set; }
+    /// <summary>
+    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+    /// </summary>
+    public virtual IReadOnlyList<string> Targets => TargetsInternal.AsReadOnly();
+    internal List<string> TargetsInternal { get; set; } = new List<string>();
     /// <summary>
     ///   Disables restoring multiple projects in parallel.
     /// </summary>
@@ -2859,17 +2893,20 @@ public partial class DotNetPublishSettings : ToolSettings
         arguments
           .Add("publish")
           .Add("{value}", Project)
+          .Add("--arch {value}", Architecture)
           .Add("--configuration {value}", Configuration)
           .Add("--framework {value}", Framework)
           .Add("--manifest {value}", Manifest)
           .Add("--no-restore", NoRestore)
           .Add("--no-build", NoBuild)
           .Add("--output {value}", Output)
+          .Add("--os {value}", OperatingSystem)
           .Add("--self-contained {value}", SelfContained)
           .Add("--runtime {value}", Runtime)
           .Add("--verbosity {value}", Verbosity)
           .Add("--version-suffix {value}", VersionSuffix)
           .Add("--nologo", NoLogo)
+          .Add("/t:{value}", Targets, separator: ';')
           .Add("--disable-parallel", DisableParallel)
           .Add("--force", Force)
           .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -3361,6 +3398,10 @@ public partial class DotNetWorkloadInstallSettings : ToolSettings
     /// </summary>
     public virtual bool? SkipManifestUpdate { get; internal set; }
     /// <summary>
+    ///   Skipping the nuget package signature verification.
+    /// </summary>
+    public virtual bool? SkipSignCheck { get; internal set; }
+    /// <summary>
     ///   Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.
     /// </summary>
     public virtual string Source { get; internal set; }
@@ -3384,6 +3425,7 @@ public partial class DotNetWorkloadInstallSettings : ToolSettings
           .Add("--interactive", Interactive)
           .Add("--no-cache", NoCache)
           .Add("--skip-manifest-update", SkipManifestUpdate)
+          .Add("--skip-sign-check", SkipSignCheck)
           .Add("--source {value}", Source)
           .Add("--temp-dir {value}", TempDir)
           .Add("--verbosity {value}", Verbosity);
@@ -3468,6 +3510,10 @@ public partial class DotNetWorkloadRestoreSettings : ToolSettings
     /// </summary>
     public virtual bool? SkipManifestUpdate { get; internal set; }
     /// <summary>
+    ///   Skipping the nuget package signature verification.
+    /// </summary>
+    public virtual bool? SkipSignCheck { get; internal set; }
+    /// <summary>
     ///   Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.
     /// </summary>
     public virtual string Source { get; internal set; }
@@ -3491,6 +3537,7 @@ public partial class DotNetWorkloadRestoreSettings : ToolSettings
           .Add("--interactive", Interactive)
           .Add("--no-cache", NoCache)
           .Add("--skip-manifest-update", SkipManifestUpdate)
+          .Add("--skip-sign-check", SkipSignCheck)
           .Add("--source {value}", Source)
           .Add("--temp-dir {value}", TempDir)
           .Add("--verbosity {value}", Verbosity);
@@ -3546,6 +3593,10 @@ public partial class DotNetWorkloadUpdateSettings : ToolSettings
     /// </summary>
     public virtual bool? NoCache { get; internal set; }
     /// <summary>
+    ///   Skipping the nuget package signature verification.
+    /// </summary>
+    public virtual bool? SkipSignCheck { get; internal set; }
+    /// <summary>
     ///   Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.
     /// </summary>
     public virtual string Source { get; internal set; }
@@ -3569,6 +3620,7 @@ public partial class DotNetWorkloadUpdateSettings : ToolSettings
           .Add("--include-previews", IncludePreviews)
           .Add("--interactive", Interactive)
           .Add("--no-cache", NoCache)
+          .Add("--skip-sign-check", SkipSignCheck)
           .Add("--source {value}", Source)
           .Add("--temp-dir {value}", TempDir)
           .Add("--verbosity {value}", Verbosity);
@@ -3616,6 +3668,10 @@ public partial class DotNetWorkloadRepairSettings : ToolSettings
     /// </summary>
     public virtual bool? NoCache { get; internal set; }
     /// <summary>
+    ///   Skipping the nuget package signature verification.
+    /// </summary>
+    public virtual bool? SkipSignCheck { get; internal set; }
+    /// <summary>
     ///   Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times.
     /// </summary>
     public virtual string Source { get; internal set; }
@@ -3637,6 +3693,7 @@ public partial class DotNetWorkloadRepairSettings : ToolSettings
           .Add("--include-previews", IncludePreviews)
           .Add("--interactive", Interactive)
           .Add("--no-cache", NoCache)
+          .Add("--skip-sign-check", SkipSignCheck)
           .Add("--source {value}", Source)
           .Add("--temp-dir {value}", TempDir)
           .Add("--verbosity {value}", Verbosity);
@@ -19814,6 +19871,30 @@ public static partial class DotNetPublishSettingsExtensions
         return toolSettings;
     }
     #endregion
+    #region Architecture
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetPublishSettings.Architecture"/></em></p>
+    ///   <p>Specifies the target architecture. This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7.</p>
+    /// </summary>
+    [Pure]
+    public static T SetArchitecture<T>(this T toolSettings, string architecture) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Architecture = architecture;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetPublishSettings.Architecture"/></em></p>
+    ///   <p>Specifies the target architecture. This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetArchitecture<T>(this T toolSettings) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Architecture = null;
+        return toolSettings;
+    }
+    #endregion
     #region Configuration
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetPublishSettings.Configuration"/></em></p>
@@ -20024,6 +20105,30 @@ public static partial class DotNetPublishSettingsExtensions
         return toolSettings;
     }
     #endregion
+    #region OperatingSystem
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetPublishSettings.OperatingSystem"/></em></p>
+    ///   <p>Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.</p>
+    /// </summary>
+    [Pure]
+    public static T SetOperatingSystem<T>(this T toolSettings, string operatingSystem) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.OperatingSystem = operatingSystem;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetPublishSettings.OperatingSystem"/></em></p>
+    ///   <p>Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetOperatingSystem<T>(this T toolSettings) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.OperatingSystem = null;
+        return toolSettings;
+    }
+    #endregion
     #region SelfContained
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetPublishSettings.SelfContained"/></em></p>
@@ -20207,6 +20312,87 @@ public static partial class DotNetPublishSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.NoLogo = !toolSettings.NoLogo;
+        return toolSettings;
+    }
+    #endregion
+    #region Targets
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetPublishSettings.Targets"/> to a new list</em></p>
+    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetTargets<T>(this T toolSettings, params string[] targets) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TargetsInternal = targets.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetPublishSettings.Targets"/> to a new list</em></p>
+    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetTargets<T>(this T toolSettings, IEnumerable<string> targets) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TargetsInternal = targets.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="DotNetPublishSettings.Targets"/></em></p>
+    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T AddTargets<T>(this T toolSettings, params string[] targets) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TargetsInternal.AddRange(targets);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="DotNetPublishSettings.Targets"/></em></p>
+    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T AddTargets<T>(this T toolSettings, IEnumerable<string> targets) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TargetsInternal.AddRange(targets);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Clears <see cref="DotNetPublishSettings.Targets"/></em></p>
+    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T ClearTargets<T>(this T toolSettings) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TargetsInternal.Clear();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="DotNetPublishSettings.Targets"/></em></p>
+    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveTargets<T>(this T toolSettings, params string[] targets) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<string>(targets);
+        toolSettings.TargetsInternal.RemoveAll(x => hashSet.Contains(x));
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="DotNetPublishSettings.Targets"/></em></p>
+    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveTargets<T>(this T toolSettings, IEnumerable<string> targets) where T : DotNetPublishSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<string>(targets);
+        toolSettings.TargetsInternal.RemoveAll(x => hashSet.Contains(x));
         return toolSettings;
     }
     #endregion
@@ -24659,6 +24845,63 @@ public static partial class DotNetWorkloadInstallSettingsExtensions
         return toolSettings;
     }
     #endregion
+    #region SkipSignCheck
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSkipSignCheck<T>(this T toolSettings, bool? skipSignCheck) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = skipSignCheck;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadInstallSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadInstallSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadInstallSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadInstallSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadInstallSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = !toolSettings.SkipSignCheck;
+        return toolSettings;
+    }
+    #endregion
     #region Source
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetWorkloadInstallSettings.Source"/></em></p>
@@ -25222,6 +25465,63 @@ public static partial class DotNetWorkloadRestoreSettingsExtensions
         return toolSettings;
     }
     #endregion
+    #region SkipSignCheck
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSkipSignCheck<T>(this T toolSettings, bool? skipSignCheck) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = skipSignCheck;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRestoreSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRestoreSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRestoreSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRestoreSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadRestoreSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = !toolSettings.SkipSignCheck;
+        return toolSettings;
+    }
+    #endregion
     #region Source
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetWorkloadRestoreSettings.Source"/></em></p>
@@ -25727,6 +26027,63 @@ public static partial class DotNetWorkloadUpdateSettingsExtensions
         return toolSettings;
     }
     #endregion
+    #region SkipSignCheck
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSkipSignCheck<T>(this T toolSettings, bool? skipSignCheck) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = skipSignCheck;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadUpdateSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadUpdateSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadUpdateSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadUpdateSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadUpdateSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = !toolSettings.SkipSignCheck;
+        return toolSettings;
+    }
+    #endregion
     #region Source
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetWorkloadUpdateSettings.Source"/></em></p>
@@ -26115,6 +26472,63 @@ public static partial class DotNetWorkloadRepairSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.NoCache = !toolSettings.NoCache;
+        return toolSettings;
+    }
+    #endregion
+    #region SkipSignCheck
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetWorkloadRepairSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSkipSignCheck<T>(this T toolSettings, bool? skipSignCheck) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = skipSignCheck;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetWorkloadRepairSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetWorkloadRepairSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetWorkloadRepairSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetWorkloadRepairSettings.SkipSignCheck"/></em></p>
+    ///   <p>Skipping the nuget package signature verification.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleSkipSignCheck<T>(this T toolSettings) where T : DotNetWorkloadRepairSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SkipSignCheck = !toolSettings.SkipSignCheck;
         return toolSettings;
     }
     #endregion

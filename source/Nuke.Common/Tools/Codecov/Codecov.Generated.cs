@@ -27,7 +27,7 @@ namespace Nuke.Common.Tools.Codecov;
 public partial class CodecovTasks
     : IRequireNuGetPackage
 {
-    public const string CodecovPackageId = "Codecov.Tool";
+    public const string CodecovPackageId = "CodecovUploader";
     /// <summary>
     ///   Path to the Codecov executable.
     /// </summary>

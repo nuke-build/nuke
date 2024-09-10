@@ -23,17 +23,17 @@ namespace Nuke.Common.Tools.EntityFramework;
 /// </summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[PathToolRequirement(EntityFrameworkPathExecutable)]
+[NuGetPackageRequirement(EntityFrameworkPackageId)]
 public partial class EntityFrameworkTasks
-    : IRequirePathTool
+    : IRequireNuGetPackage
 {
-    public const string EntityFrameworkPathExecutable = "dotnet";
+    public const string EntityFrameworkPackageId = "dotnet-ef";
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
     public static string EntityFrameworkPath =>
         ToolPathResolver.TryGetEnvironmentExecutable("ENTITYFRAMEWORK_EXE") ??
-        ToolPathResolver.GetPathExecutable("dotnet");
+        GetToolPath();
     public static Action<OutputType, string> EntityFrameworkLogger { get; set; } = ProcessTasks.DefaultLogger;
     public static Action<ToolSettings, IProcess> EntityFrameworkExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
     /// <summary>
@@ -978,12 +978,12 @@ public partial class EntityFrameworkTasks
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkDatabaseDropSettings : ToolSettings
+public partial class EntityFrameworkDatabaseDropSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
@@ -1066,12 +1066,12 @@ public partial class EntityFrameworkDatabaseDropSettings : ToolSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkDatabaseUpdateSettings : ToolSettings
+public partial class EntityFrameworkDatabaseUpdateSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
@@ -1154,12 +1154,12 @@ public partial class EntityFrameworkDatabaseUpdateSettings : ToolSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkDbContextInfoSettings : ToolSettings
+public partial class EntityFrameworkDbContextInfoSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
@@ -1232,12 +1232,12 @@ public partial class EntityFrameworkDbContextInfoSettings : ToolSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkDbContextListSettings : ToolSettings
+public partial class EntityFrameworkDbContextListSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
@@ -1310,12 +1310,12 @@ public partial class EntityFrameworkDbContextListSettings : ToolSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkDbContextScaffoldSettings : ToolSettings
+public partial class EntityFrameworkDbContextScaffoldSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
@@ -1455,12 +1455,12 @@ public partial class EntityFrameworkDbContextScaffoldSettings : ToolSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkDbContextScriptSettings : ToolSettings
+public partial class EntityFrameworkDbContextScriptSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
@@ -1538,12 +1538,12 @@ public partial class EntityFrameworkDbContextScriptSettings : ToolSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkMigrationsAddSettings : ToolSettings
+public partial class EntityFrameworkMigrationsAddSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
@@ -1631,12 +1631,12 @@ public partial class EntityFrameworkMigrationsAddSettings : ToolSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkMigrationsListSettings : ToolSettings
+public partial class EntityFrameworkMigrationsListSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
@@ -1719,12 +1719,12 @@ public partial class EntityFrameworkMigrationsListSettings : ToolSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkMigrationsRemoveSettings : ToolSettings
+public partial class EntityFrameworkMigrationsRemoveSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
@@ -1802,12 +1802,12 @@ public partial class EntityFrameworkMigrationsRemoveSettings : ToolSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkMigrationsBundleSettings : ToolSettings
+public partial class EntityFrameworkMigrationsBundleSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
@@ -1900,12 +1900,12 @@ public partial class EntityFrameworkMigrationsBundleSettings : ToolSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class EntityFrameworkMigrationsScriptSettings : ToolSettings
+public partial class EntityFrameworkMigrationsScriptSettings : EntityFrameworkSettings
 {
     /// <summary>
     ///   Path to the EntityFramework executable.
     /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? EntityFrameworkTasks.EntityFrameworkPath;
+    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? EntityFrameworkTasks.EntityFrameworkLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? EntityFrameworkTasks.EntityFrameworkExitHandler;
     /// <summary>
