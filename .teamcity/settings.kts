@@ -65,7 +65,7 @@ project {
         text (
             "env.SignPathSettings",
             label = "SignPathSettings",
-            value = "",
+            value = "SignPathSettings { OrganizationId = 0fdaf334-6910-41f4-83d2-e58e4cccb087, ProjectSlug = nuke, PolicySlug = release-signing }",
             allowEmpty = true,
             display = ParameterDisplay.NORMAL)
         text (
