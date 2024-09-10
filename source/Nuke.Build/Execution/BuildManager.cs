@@ -62,6 +62,7 @@ internal static class BuildManager
             if (!build.NoLogo)
                 build.WriteLogo();
 
+            // TODO: move InvokedTargets to ExecutableTargetFactory
             build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                 build.ExecutableTargets,
                 ParameterService.GetParameter<string[]>(() => build.InvokedTargets));

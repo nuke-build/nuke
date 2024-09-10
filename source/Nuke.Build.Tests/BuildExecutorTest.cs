@@ -36,14 +36,7 @@ public class BuildExecutorTest
     }
 
     [Fact]
-    public void TestParameterSkipped_All()
-    {
-        ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
-        AssertSkipped(A, B, C);
-    }
-
-    [Fact]
-    public void TestParameterSkipped_Single()
+    public void TestParameterSkipped()
     {
         ExecuteBuild(skippedTargets: new[] { A });
         AssertSucceeded(B, C);
@@ -52,9 +45,21 @@ public class BuildExecutorTest
     }
 
     [Fact]
-    public void TestParameterSkipped_Multiple()
+    public void TestParameterSkipped_Default()
     {
-        ExecuteBuild(skippedTargets: new[] { A, B });
+        C.IsDefault = true;
+        C.Invoked = false;
+
+        ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
+        AssertSkipped(A, B, C);
+    }
+
+    [Fact]
+    public void TestParameterSkipped_Invoked()
+    {
+        C.Invoked = true;
+
+        ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
         AssertSucceeded(C);
         AssertSkipped(A, B);
     }
@@ -66,6 +71,7 @@ public class BuildExecutorTest
         ExecuteBuild(skippedTargets: new[] { B });
         AssertSucceeded(C);
         AssertSkipped(A, B);
+        A.Skipped.Should().Be("because of B");
     }
 
     [Fact]
@@ -110,6 +116,16 @@ public class BuildExecutorTest
     }
 
     [Fact]
+    public void TestStaticCondition_Throwing()
+    {
+        A.StaticConditions.Add(("condition", () => throw new Exception()));
+        var action = () => ExecuteBuild();
+
+        action.Should().Throw<TargetExecutionException>()
+            .WithMessage("Target 'A' has thrown an exception.");
+    }
+
+    [Fact]
     public void TestDynamicCondition_Unchanged()
     {
         var condition = false;
@@ -131,6 +147,16 @@ public class BuildExecutorTest
     }
 
     [Fact]
+    public void TestDynamicCondition_Throwing()
+    {
+        B.DynamicConditions.Add(("condition", () => throw new Exception()));
+        var action = () => ExecuteBuild();
+
+        action.Should().Throw<TargetExecutionException>()
+            .WithMessage("Target 'B' has thrown an exception.");
+    }
+
+    [Fact]
     public void TestMixedConditions()
     {
         A.StaticConditions.Add(("condition", () => false));
@@ -140,22 +166,13 @@ public class BuildExecutorTest
     }
 
     [Fact]
-    public void TestThrowingCondition()
+    public void TestTriggers_Skipped()
     {
-        A.StaticConditions.Add(("condition", () => throw new Exception()));
-        var action = () => ExecuteBuild();
-
-        action.Should().Throw<TargetExecutionException>();
-    }
-
-    [Fact]
-    public void TestSkipTriggers()
-    {
+        B.ExecutionDependencies.Clear();
+        C.ExecutionDependencies.Clear();
         A.DynamicConditions.Add(("condition", () => false));
         A.Triggers.Add(B);
         B.Triggers.Add(C);
-        B.ExecutionDependencies.Clear();
-        C.ExecutionDependencies.Clear();
 
         ExecuteBuild();
 
