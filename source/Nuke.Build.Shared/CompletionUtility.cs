@@ -22,17 +22,47 @@ public static class CompletionUtility
 
     public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(JsonDocument schema, IEnumerable<string> profileNames)
     {
-        string[] GetEnumValues(JsonElement property)
-            => property.TryGetProperty("enum", out var enumProperty)
-                ? enumProperty.EnumerateArray().Select(x => x.GetString()).ToArray()
-                : property.TryGetProperty("items", out var itemsProperty)
-                    ? GetEnumValues(itemsProperty)
-                    : null;
+        var definitions = schema.RootElement.GetProperty("definitions").EnumerateObject().ToDictionary(x => x.Name, x => x);
 
-        var properties = schema.RootElement.GetProperty("definitions").GetProperty("build").GetProperty("properties")
-            .EnumerateObject().OfType<JsonProperty>();
-        return properties.ToDictionary(x => x.Name, x => GetEnumValues(x.Value))
+        var parameterProperties = schema.RootElement.GetProperty("definitions").TryGetProperty("NukeBuild", out var nukebuildProperty)
+            ? nukebuildProperty.GetProperty("properties").EnumerateObject()
+                .Concat(schema.RootElement.TryGetProperty("properties", out var properties) ? properties.EnumerateObject() : [])
+            : definitions["build"].Value.GetProperty("properties").EnumerateObject();
+
+        return parameterProperties
+            .Select(x => (x.Name, Values: GetValues(x)))
+            .Where(x => x.Values != null)
+            .ToDictionary(x => x.Name, x => x.Values)
             .SetKeyValue(Constants.LoadedLocalProfilesParameterName, profileNames.ToArray()).AsReadOnly();
+
+        string[] GetValues(JsonProperty property)
+        {
+            if (property.Value.TryGetProperty("type", out var typeProperty))
+            {
+                var types = typeProperty.ValueKind != JsonValueKind.Array
+                    ? [typeProperty.GetString()]
+                    : typeProperty.EnumerateArray().Select(x => x.GetString()).ToArray();
+                if (types.ContainsAnyOrdinalIgnoreCase(["string", "boolean", "integer"]))
+                {
+                    return property.Value.TryGetProperty("enum", out var enumProperty)
+                        ? enumProperty.EnumerateArray().Select(x => x.GetString()).ToArray()
+                        : [];
+                }
+
+                if (types.Single() == "array")
+                    return GetValues(property.Value.EnumerateObject().Single(x => x.Name == "items"));
+
+                if (types.Single() == "object")
+                    return null;
+            }
+            else if (property.Value.TryGetProperty("$ref", out var refProperty))
+            {
+                var definition = definitions.GetValueOrDefault(refProperty.GetString().NotNull().Split('/').LastOrDefault());
+                return GetValues(definition);
+            }
+
+            throw new NotSupportedException();
+        }
     }
 
     // ReSharper disable once CognitiveComplexity

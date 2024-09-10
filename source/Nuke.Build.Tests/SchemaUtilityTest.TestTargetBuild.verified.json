@@ -1,14 +1,36 @@
-﻿{
+{
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "$ref": "#/definitions/build",
-  "title": "Build Schema",
   "definitions": {
-    "build": {
-      "type": "object",
+    "Host": {
+      "type": "string",
+      "enum": [
+        "Rider",
+        "Terminal",
+        "VisualStudio",
+        "VSCode"
+      ]
+    },
+    "ExecutableTarget": {
+      "type": "string",
+      "enum": [
+        "ExplicitTarget",
+        "ImplementedTarget",
+        "InheritedTarget",
+        "RegularTarget"
+      ]
+    },
+    "Verbosity": {
+      "type": "string",
+      "description": "",
+      "enum": [
+        "Verbose",
+        "Normal",
+        "Minimal",
+        "Quiet"
+      ]
+    },
+    "NukeBuild": {
       "properties": {
-        "ComponentParam1": {
-          "type": "string"
-        },
         "Continue": {
           "type": "boolean",
           "description": "Indicates to continue a previously failed build attempt"
@@ -18,27 +40,12 @@
           "description": "Shows the help text for this build assembly"
         },
         "Host": {
-          "type": "string",
           "description": "Host for execution. Default is 'automatic'",
-          "enum": [
-            "Rider",
-            "Terminal",
-            "VisualStudio",
-            "VSCode"
-          ]
+          "$ref": "#/definitions/Host"
         },
         "NoLogo": {
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
-        },
-        "NullableBool": {
-          "type": "boolean"
-        },
-        "NullableInteger": {
-          "type": "integer"
-        },
-        "Param": {
-          "type": "string"
         },
         "Partition": {
           "type": "string",
@@ -59,57 +66,26 @@
           "type": "string",
           "description": "Root directory during build execution"
         },
-        "Secret": {
-          "type": "string",
-          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-        },
         "Skip": {
           "type": "array",
           "description": "List of targets to be skipped. Empty list skips all dependencies",
           "items": {
-            "type": "string",
-            "enum": [
-              "Bar",
-              "Foo",
-              "Zoo"
-            ]
+            "$ref": "#/definitions/ExecutableTarget"
           }
         },
         "Target": {
           "type": "array",
           "description": "List of targets to be invoked. Default is '{default_target}'",
           "items": {
-            "type": "string",
-            "enum": [
-              "Bar",
-              "Foo",
-              "Zoo"
-            ]
-          }
-        },
-        "Verbosities": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "Minimal",
-              "Normal",
-              "Quiet",
-              "Verbose"
-            ]
+            "$ref": "#/definitions/ExecutableTarget"
           }
         },
         "Verbosity": {
-          "type": "string",
           "description": "Logging verbosity during build execution. Default is 'Normal'",
-          "enum": [
-            "Minimal",
-            "Normal",
-            "Quiet",
-            "Verbose"
-          ]
+          "$ref": "#/definitions/Verbosity"
         }
       }
     }
-  }
+  },
+  "$ref": "#/definitions/NukeBuild"
 }

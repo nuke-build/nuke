@@ -86,13 +86,16 @@ public class ReflectionUtilityTest
             .Should().BeOfType<string[]>().Which
             .Should().BeEmpty();
 
+        ReflectionUtility.Convert(string.Empty, typeof(string[]), separator: '+')
+            .Should().BeOfType<string[]>().Which
+            .Should().BeEmpty();
+
         ReflectionUtility.Convert("A+B+C", typeof(string[]), separator: '+')
             .Should().BeOfType<string[]>().Which
-            .Should().HaveCount(3);
+            .Should().Equal("A", "B", "C");
 
         ReflectionUtility.Convert("1 2 3", typeof(int[]), separator: ' ')
             .Should().BeOfType<int[]>().Which
-            .Should().HaveCount(3)
-            .And.Contain(2);
+            .Should().Equal(1, 2, 3);
     }
 }

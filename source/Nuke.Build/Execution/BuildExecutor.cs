@@ -27,6 +27,7 @@ internal static class BuildExecutor
     {
         if (skippedTargets != null)
         {
+            skippedTargets = skippedTargets.Select(x => x.Replace("-", string.Empty)).ToArray();
             build.ExecutionPlan
                 .Where(x => skippedTargets.Count == 0 || skippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))
                 .ForEach(x => MarkTargetSkipped(build, x, reason: "via parameter"));
@@ -180,7 +181,7 @@ internal static class BuildExecutor
 
     private static void MarkTargetSkipped(INukeBuild build, ExecutableTarget target, string reason = null)
     {
-        if (target.Invoked || target.Status != ExecutionStatus.Scheduled)
+        if (target.Status != ExecutionStatus.Scheduled)
             return;
 
         target.Status = ExecutionStatus.Skipped;

@@ -245,7 +245,7 @@ partial class Program
     private static void WriteConfigurationFile(AbsolutePath rootDirectory, [CanBeNull] AbsolutePath solutionFile)
     {
         var parametersFile = GetDefaultParametersFile(rootDirectory);
-        var dictionary = new Dictionary<string, string> { ["$schema"] = $"./{BuildSchemaFileName}" };
+        var dictionary = new Dictionary<string, string> { ["$schema"] = BuildSchemaFileName };
         if (solutionFile != null)
             dictionary["Solution"] = rootDirectory.GetUnixRelativePathTo(solutionFile).ToString();
         parametersFile.WriteJson(dictionary);

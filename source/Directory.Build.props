@@ -8,7 +8,6 @@
     <DebugType>embedded</DebugType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -36,19 +35,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
-    <PackageReference Include="coverlet.msbuild" Version="6.0.0" />
-    <PackageReference Include="FluentAssertions" Version="6.12.0"/>
-    <PackageReference Include="GitHubActionsTestLogger" Version="2.3.3"/>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0"/>
-    <PackageReference Include="TeamCity.VSTest.TestAdapter" Version="1.0.38"/>
-    <PackageReference Include="Verify.Xunit" Version="22.4.1" />
-    <PackageReference Include="Verify.DiffPlex" Version="2.3.0" />
-    <PackageReference Include="xunit" Version="2.6.1"/>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3"/>
+    <PackageReference Include="coverlet.msbuild"  />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="GitHubActionsTestLogger" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="TeamCity.VSTest.TestAdapter" />
+    <PackageReference Include="Verify.Xunit"  />
+    <PackageReference Include="Verify.DiffPlex"  />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
   </ItemGroup>
 
   <ItemGroup>

@@ -26,11 +26,9 @@ partial class ReSharperTasks
         var wave = GetWave(toolSettings).NotNull("wave != null");
         var shadowDirectory = GetShadowDirectory(toolSettings, wave);
 
-        FileSystemTasks.CopyDirectoryRecursively(
-            Path.GetDirectoryName(toolSettings.ProcessToolPath).NotNull(),
-            shadowDirectory,
-            DirectoryExistsPolicy.Merge,
-            FileExistsPolicy.OverwriteIfNewer);
+        ((AbsolutePath)toolSettings.ProcessToolPath.NotNull()).Copy(
+            target: shadowDirectory,
+            policy: ExistsPolicy.MergeAndOverwriteIfNewer);
 
         toolSettings.Plugins
             .Select(x => (Plugin: x.Key, Version: x.Value == ReSharperPluginLatest ? null : x.Value))

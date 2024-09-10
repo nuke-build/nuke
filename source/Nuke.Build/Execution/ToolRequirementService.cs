@@ -19,19 +19,18 @@ internal static class ToolRequirementService
     {
         var requirements = build.GetType().GetCustomAttributes<RequiresAttribute>().Select(x => x.GetRequirement())
             .Concat(executionPlan.SelectMany(x => x.ToolRequirements)).ToList();
-        var directory = build.TemporaryDirectory;
 
-        InstallNuGetPackages(requirements.OfType<NuGetPackageRequirement>().ToList(), directory);
-        InstallNpmPackages(requirements.OfType<NpmPackageRequirement>().ToList(), directory);
-        InstallAptGetPackages(requirements.OfType<AptGetPackageRequirement>().ToList(), directory);
+        InstallNuGetPackages(requirements.OfType<NuGetPackageRequirement>().ToList(), build);
+        InstallNpmPackages(requirements.OfType<NpmPackageRequirement>().ToList(), build);
+        InstallAptGetPackages(requirements.OfType<AptGetPackageRequirement>().ToList(), build);
     }
 
-    private static void InstallNuGetPackages(IReadOnlyCollection<NuGetPackageRequirement> requirements, AbsolutePath directory)
+    private static void InstallNuGetPackages(IReadOnlyCollection<NuGetPackageRequirement> requirements, INukeBuild build)
     {
         if (requirements.Count == 0)
             return;
 
-        var projectFile = directory / "nuget.csproj";
+        var projectFile = build.TemporaryDirectory / "nuget.csproj";
         NuGetToolPathResolver.NuGetPackagesConfigFile = projectFile;
         NuGetToolPathResolver.NuGetAssetsConfigFile = projectFile.Parent / "obj" / "project.assets.json";
 
@@ -45,8 +44,10 @@ internal static class ToolRequirementService
                     <TargetFramework>net8.0</TargetFramework>
                   </PropertyGroup>
 
+                  <Import Project="{build.BuildProjectFile}" />
+
                   <ItemGroup>
-                {groupedPackages.Select(x => $"""    <PackageDownload Include="{x.Key}" Version="{x.JoinSemicolon()}" />""").JoinNewLine()}
+                {groupedPackages.Select(x => $"""    <PackageDownload Include="{x.Key}" Version="{x.JoinSemicolon()}" Exclude="@(PackageDownload)" />""").JoinNewLine()}
                   </ItemGroup>
 
                 </Project>
@@ -63,12 +64,12 @@ internal static class ToolRequirementService
         dotnet.Invoke($"restore", workingDirectory: projectFile.Parent, logInvocation: false, logOutput: false);
     }
 
-    private static void InstallNpmPackages(IReadOnlyCollection<NpmPackageRequirement> requirements, AbsolutePath directory)
+    private static void InstallNpmPackages(IReadOnlyCollection<NpmPackageRequirement> requirements, INukeBuild build)
     {
         if (requirements.Count == 0)
             return;
 
-        var packageJsonFile = directory / "package.json";
+        var packageJsonFile = build.TemporaryDirectory / "package.json";
         NpmToolPathResolver.NpmPackageJsonFile = packageJsonFile;
 
         var packages = requirements.OrderBy(x => x.PackageId).ToList();
@@ -92,7 +93,7 @@ internal static class ToolRequirementService
         npm.Invoke("install", workingDirectory: packageJsonFile.Parent, logInvocation: false, logOutput: false);
     }
 
-    private static void InstallAptGetPackages(IReadOnlyCollection<AptGetPackageRequirement> requirements, AbsolutePath directory)
+    private static void InstallAptGetPackages(IReadOnlyCollection<AptGetPackageRequirement> requirements, INukeBuild build)
     {
         if (requirements.Count == 0)
             return;
@@ -100,7 +101,7 @@ internal static class ToolRequirementService
         var packages = requirements.OrderBy(x => x.PackageId).ToList();
         Assert.True(EnvironmentInfo.IsLinux, "AptGet is only available on Linux");
 
-        var installScript = directory / "apt-get.sh";
+        var installScript = build.TemporaryDirectory / "apt-get.sh";
 
         var content = $"""
                 apt-get update

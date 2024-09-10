@@ -6,6 +6,30 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [8.1.0] / 2024-09-10
+- Added schema generation with references for `build.schema.json`
+- Added deserialization of full objects from `parameters.json`
+- Added `AbsolutePath` extension methods for `AddUnixSymlink`, `Copy*`, `Move*`, `Rename*`
+- Added support for preprocessor directives in solution parsing
+- Added `Pattern` in favor of property in `LatestGitHubReleaseAttribute`
+- Added `ConcurrencyGroup`, `ConcurrencyCancelInProgress`, `EnvironmentName`, `EnvironmentUrl` in `GitHubActionsAttribute`
+- Added `DotnetPackagingTasks`
+- Fixed invoked targets to not be excluded from skipping
+- Fixed stripping of hyphens in skipped target names
+- Fixed empty environment variables to be resolved as empty arrays
+- Fixed `EnableUnsafeBinaryFormatterSerialization` to be set through `AppContext`
+- Fixed unquoting of multiple quoted arguments in `ArgumentStringHandler`
+- Fixed using logger from settings in parallel execution
+- Fixed handling of duplicated NuGet package files
+- Fixed inclusion of original NuGet packages in requirements
+- Fixed GitHubActions to use latest action versions
+- Fixed `DotCoverTasks` and `EntityFrameworkTasks` tool path resolution
+- Fixed missing members in `GitHubActionsImage`
+- Fixed missing properties in `GitLab`
+- Fixed missing parameters in `AzurePipelines.SetVariables`
+- Fixed missing arguments in `DotNetTasks`
+- Fixed tool path in `CodecovTasks`
+
 ## [8.0.0] / 2024-01-18
 - Changed string parameters to violate requirement when empty or whitespace
 - Added on-demand value injection using `OnDemandAttribute` and `OnDemandValueInjectionAttribute`
@@ -1126,7 +1150,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/8.0.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/8.1.0...HEAD
+[8.1.0]: https://github.com/nuke-build/nuke/compare/8.0.0...8.1.0
 [8.0.0]: https://github.com/nuke-build/nuke/compare/7.0.6...8.0.0
 [7.0.6]: https://github.com/nuke-build/nuke/compare/7.0.5...7.0.6
 [7.0.5]: https://github.com/nuke-build/nuke/compare/7.0.4...7.0.5

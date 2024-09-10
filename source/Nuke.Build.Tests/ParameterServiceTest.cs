@@ -43,40 +43,43 @@ public class ParameterServiceTest
     [InlineData("arg2", typeof(string), "value3")]
     [InlineData("switch2", typeof(bool), true)]
     [InlineData("switch3", typeof(bool), false)]
+    [InlineData("array1", typeof(string[]), new[] { "element1", "element2" })]
+    [InlineData("array2", typeof(string[]), new string[0])]
+    [InlineData("array3", typeof(string[]), null)]
     [InlineData("notsupplied1", typeof(bool), false)]
     [InlineData("notsupplied2", typeof(int?), null)]
     public void TestEnvironmentVariables(string parameter, Type destinationType, object expectedValue)
     {
         var service = GetService(
-            new[]
-            {
+            [
                 "-arg1",
                 "value1",
                 "-switch1"
-            },
+            ],
             new Dictionary<string, string>
             {
                 { "arg1", "value2" },
                 { "arg2", "value3" },
                 { "switch2", "true" },
-                { "switch3", "false" }
+                { "switch3", "false" },
+                { "array1", "element1+element2" },
+                { "array2", "" },
             });
-        service.GetParameter(parameter, destinationType, separator: null).Should().Be(expectedValue);
+        service.GetParameter(parameter, destinationType, separator: '+').Should().BeEquivalentTo(expectedValue);
     }
 
     [Fact]
     public void TestExpression()
     {
         var service = GetService(
-            new[]
-            {
+            [
                 "--string",
                 "--set",
                 "1",
                 "2",
                 "3",
                 "--interface-param"
-            });
+            ]);
 
         var build = new TestBuild();
 
@@ -98,12 +101,12 @@ public class ParameterServiceTest
     {
         var build = new TestBuild();
         var verbosities = new[]
-                          {
-                              (nameof(Verbosity.Minimal), Verbosity.Minimal),
-                              (nameof(Verbosity.Normal), Verbosity.Normal),
-                              (nameof(Verbosity.Quiet), Verbosity.Quiet),
-                              (nameof(Verbosity.Verbose), Verbosity.Verbose),
-                          };
+        {
+            (nameof(Verbosity.Minimal), Verbosity.Minimal),
+            (nameof(Verbosity.Normal), Verbosity.Normal),
+            (nameof(Verbosity.Quiet), Verbosity.Quiet),
+            (nameof(Verbosity.Verbose), Verbosity.Verbose),
+        };
         ParameterService.GetParameterValueSet(GetMemberInfo(() => NukeBuild.Verbosity), instance: null)
             .Should().BeEquivalentTo(verbosities);
         ParameterService.GetParameterValueSet(GetMemberInfo(() => build.Verbosities), instance: null)
@@ -118,13 +121,13 @@ public class ParameterServiceTest
 
         var environmentVariables = new Dictionary<string, string> { ["string"] = "environmentVariables" };
         var commandLineArguments = new ArgumentParser("--string commandLine");
-        var parameterFileArguments = new ArgumentParser("--string parameterFile");
+        var parameterFileArguments = new Func<string, Type, object>((_, _) => "parameterFile");
         var commitMessageArguments = new ArgumentParser("--string commitMessage");
 
         var service = new ParameterService(() => emptyArguments, () => emptyEnvironmentVariables)
-                      {
-                          ArgumentsFromFilesService = parameterFileArguments
-                      };
+        {
+            ArgumentsFromFilesService = parameterFileArguments
+        };
         service.GetParameter("string", typeof(string), separator: null).Should().Be("parameterFile");
 
         service = new ParameterService(() => emptyArguments, () => environmentVariables) { ArgumentsFromFilesService = parameterFileArguments };
@@ -134,10 +137,10 @@ public class ParameterServiceTest
         service.GetParameter("string", typeof(string), separator: null).Should().Be("commandLine");
 
         service = new ParameterService(() => emptyArguments, () => emptyEnvironmentVariables)
-                  {
-                      ArgumentsFromFilesService = parameterFileArguments,
-                      ArgumentsFromCommitMessageService = commitMessageArguments
-                  };
+        {
+            ArgumentsFromFilesService = parameterFileArguments,
+            ArgumentsFromCommitMessageService = commitMessageArguments
+        };
         service.GetParameter("string", typeof(string), separator: null).Should().Be("commitMessage");
     }
 

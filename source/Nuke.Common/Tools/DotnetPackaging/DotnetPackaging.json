@@ -1,0 +1,264 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "references": [
+    "https://github.com/SuperJMN/DotnetPackaging/tree/master/src/DotnetPackaging.Console"
+  ],
+  "name": "DotnetPackaging",
+  "officialUrl": "https://github.com/superjmn/dotnetpackaging",
+  "help": "DotnetPackaging is able to package your application into various formats, including Deb and AppImage.",
+  "nugetPackageId": "DotnetPackaging.Console",
+  "packageExecutable": "DotnetPackaging.Console.dll",
+  "tasks": [
+    {
+      "help": "Creates a Debian package from the specified directory.",
+      "postfix": "Deb",
+      "definiteArgument": "deb",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Directory",
+            "type": "string",
+            "format": "--directory={value}",
+            "help": "The input directory from which to create the package."
+          },
+          {
+            "name": "Metadata",
+            "type": "string",
+            "format": "--metadata={value}",
+            "help": "The metadata file to include in the package."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output={value}",
+            "help": "The output DEB file to create."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Creates an AppImage package.",
+      "postfix": "AppImage",
+      "definiteArgument": "appimage",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Directory",
+            "type": "string",
+            "format": "--directory={value}",
+            "help": "The input directory from which to create the AppImage."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output={value}",
+            "help": "The output AppImage file to create."
+          },
+          {
+            "name": "ApplicationName",
+            "type": "string",
+            "format": "--application-name={value}",
+            "help": "The name of the application for the AppImage."
+          },
+          {
+            "name": "MainCategory",
+            "type": "DotnetPackagingMainCategory",
+            "format": "--main-category {value}",
+            "help": "Main category of the application."
+          },
+          {
+            "name": "AdditionalCategories",
+            "type": "List<DotnetPackagingAdditionalCategory>",
+            "format": "--additional-categories {value}",
+            "help": "Additional categories for the application."
+          },
+          {
+            "name": "Icon",
+            "type": "string",
+            "format": "--icon {value}",
+            "help": "The icon path for the application. When not provided, the tool looks up for an image called <c>AppImage.png</c>."
+          },
+          {
+            "name": "Homepage",
+            "type": "string",
+            "format": "--homepage {value}",
+            "help": "Home page of the application."
+          },
+          {
+            "name": "License",
+            "type": "string",
+            "format": "--license {value}",
+            "help": "License of the application."
+          },
+          {
+            "name": "Version",
+            "type": "string",
+            "format": "--version {value}",
+            "help": "Version of the application."
+          },
+          {
+            "name": "ScreenshotUrls",
+            "type": "List<string>",
+            "format": "--screenshot-urls {value}",
+            "help": "URLs of screenshots of the application."
+          },
+          {
+            "name": "Summary",
+            "type": "string",
+            "format": "--summary {value}",
+            "help": "Short description of the application."
+          },
+          {
+            "name": "AppId",
+            "type": "string",
+            "format": "--appId {value}",
+            "help": "Application ID, usually a reverse DNS name like <c>com.SomeCompany.SomeApplication</c>."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "DotnetPackagingMainCategory",
+      "values": [
+        "AudioVideo",
+        "Audio",
+        "Video",
+        "Development",
+        "Education",
+        "Game",
+        "Graphics",
+        "Network",
+        "Office",
+        "Settings",
+        "Utility"
+      ]
+    },
+    {
+      "name": "DotnetPackagingAdditionalCategory",
+      "values": [
+        "Building",
+        "Debugger",
+        "IDE",
+        "GUIDesigner",
+        "Profiling",
+        "RevisionControl",
+        "Translation",
+        "Calendar",
+        "ContactManagement",
+        "Database",
+        "Dictionary",
+        "Chart",
+        "Email",
+        "Finance",
+        "FlowChart",
+        "PDA",
+        "ProjectManagement",
+        "Presentation",
+        "Spreadsheet",
+        "WordProcessor",
+        "TwoDGraphics",
+        "VectorGraphics",
+        "RasterGraphics",
+        "ThreeDGraphics",
+        "Scanning",
+        "OCR",
+        "Photography",
+        "Publishing",
+        "Viewer",
+        "TextTools",
+        "DesktopSettings",
+        "HardwareSettings",
+        "Printing",
+        "PackageManager",
+        "Dialup",
+        "InstantMessaging",
+        "Chat",
+        "IRCClient",
+        "FileTransfer",
+        "HamRadio",
+        "News",
+        "P2P",
+        "RemoteAccess",
+        "Telephony",
+        "TelephonyTools",
+        "VideoConference",
+        "WebBrowser",
+        "WebDevelopment",
+        "Midi",
+        "Mixer",
+        "Sequencer",
+        "Tuner",
+        "TV",
+        "AudioVideoEditing",
+        "Player",
+        "Recorder",
+        "DiscBurning",
+        "ActionGame",
+        "AdventureGame",
+        "ArcadeGame",
+        "BoardGame",
+        "BlocksGame",
+        "CardGame",
+        "KidsGame",
+        "LogicGame",
+        "RolePlaying",
+        "Simulation",
+        "SportsGame",
+        "StrategyGame",
+        "Art",
+        "Construction",
+        "Music",
+        "Languages",
+        "Science",
+        "ArtificialIntelligence",
+        "Astronomy",
+        "Biology",
+        "Chemistry",
+        "ComputerScience",
+        "DataVisualization",
+        "Economy",
+        "Electricity",
+        "Geography",
+        "Geology",
+        "Geoscience",
+        "History",
+        "ImageProcessing",
+        "Literature",
+        "Math",
+        "NumericalAnalysis",
+        "MedicalSoftware",
+        "Physics",
+        "Robotics",
+        "Sports",
+        "ParallelComputing",
+        "Amusement",
+        "Archiving",
+        "Compression",
+        "Electronics",
+        "Emulator",
+        "Engineering",
+        "FileTools",
+        "FileManager",
+        "TerminalEmulator",
+        "Filesystem",
+        "Monitor",
+        "Security",
+        "Accessibility",
+        "Calculator",
+        "Clock",
+        "TextEditor",
+        "Documentation",
+        "Core",
+        "KDE",
+        "GNOME",
+        "GTK",
+        "Qt",
+        "Motif",
+        "Java",
+        "ConsoleOnly"
+      ]
+    }
+  ]
+}

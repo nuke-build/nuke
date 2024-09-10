@@ -28,6 +28,8 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     private GitHubActionsSubmodules? _submodules;
     private bool? _lfs;
     private uint? _fetchDepth;
+    private bool? _progress;
+    private string _filter;
 
     public GitHubActionsAttribute(
         string name,
@@ -74,6 +76,12 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     public string PublishCondition { get; set; }
 
     public int TimeoutMinutes { get; set; }
+    
+    public string EnvironmentName { get; set; }
+    public string EnvironmentUrl { get; set; }
+
+    public string ConcurrencyGroup { get; set; }
+    public bool ConcurrencyCancelInProgress { get; set; }
 
     public string JobConcurrencyGroup { get; set; }
     public bool JobConcurrencyCancelInProgress { get; set; }
@@ -98,6 +106,18 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
         get => throw new NotSupportedException();
     }
 
+    public bool Progress
+    {
+        set => _progress = value;
+        get => throw new NotSupportedException();
+    }
+
+    public string Filter
+    {
+        set => _filter = value;
+        get => throw new NotSupportedException();
+    }
+
     public override CustomFileWriter CreateWriter(StreamWriter streamWriter)
     {
         return new CustomFileWriter(streamWriter, indentationFactor: 2, commentPrefix: "#");
@@ -112,6 +132,8 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
                                 DetailedTriggers = GetTriggers().ToArray(),
                                 Permissions = WritePermissions.Select(x => (x, "write"))
                                     .Concat(ReadPermissions.Select(x => (x, "read"))).ToArray(),
+                                ConcurrencyGroup = ConcurrencyGroup,
+                                ConcurrencyCancelInProgress = ConcurrencyCancelInProgress,
                                 Jobs = _images.Select(x => GetJobs(x, relevantTargets)).ToArray()
                             };
 
@@ -128,6 +150,8 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
         return new GitHubActionsJob
                {
                    Name = image.GetValue().Replace(".", "_"),
+                   EnvironmentName = EnvironmentName,
+                   EnvironmentUrl = EnvironmentUrl,
                    Steps = GetSteps(image, relevantTargets).ToArray(),
                    Image = image,
                    TimeoutMinutes = TimeoutMinutes,
@@ -142,7 +166,9 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
                      {
                          Submodules = _submodules,
                          Lfs = _lfs,
-                         FetchDepth = _fetchDepth
+                         FetchDepth = _fetchDepth,
+                         Progress = _progress,
+                         Filter = _filter
                      };
 
         if (CacheKeyFiles.Any())

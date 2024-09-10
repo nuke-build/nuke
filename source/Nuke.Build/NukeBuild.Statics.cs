@@ -82,7 +82,7 @@ public abstract partial class NukeBuild
     /// <summary>
     /// Gets the host for execution. Default is <em>automatic</em>.
     /// </summary>
-    [Parameter("Host for execution. Default is 'automatic'.", ValueProviderMember = nameof(HostNames))]
+    [Parameter("Host for execution. Default is 'automatic'.")]
     public static Host Host { get; set; }
 
     [Parameter("Defines the profiles to load.", Name = LoadedLocalProfilesParameterName)]

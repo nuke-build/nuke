@@ -58,7 +58,10 @@ public static partial class ProjectExtensions
     /// </summary>
     public static string GetPackageReferenceVersion(this Project project, string packageId)
     {
-        return project.GetItemMetadataSingleOrDefault("PackageReference", packageId, "Version");
+        var version = project.GetItemMetadataSingleOrDefault("PackageReference", packageId, "Version");
+        return version == string.Empty
+            ? project.GetItemMetadataSingleOrDefault("PackageVersion", packageId, "Version")
+            : null;
     }
 
     [CanBeNull]

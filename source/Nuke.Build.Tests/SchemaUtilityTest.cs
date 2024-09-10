@@ -3,53 +3,128 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.ComponentModel;
 using System.Linq;
-using System.Text.Encodings.Web;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Nuke.Common.Execution;
+using Nuke.Common.IO;
+using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 using VerifyXunit;
 using Xunit;
 
+#pragma warning disable CS0169 // Field is never used
+
 namespace Nuke.Common.Tests;
 
-[UsesVerify]
 public class SchemaUtilityTest
 {
     [Fact]
-    public Task TestGetBuildSchema()
+    public Task TestEmptyBuild()
     {
-        var schema = SchemaUtility.GetBuildSchema(new TestBuild());
-        var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
-        var json = JsonSerializer.Serialize(schema, options);
-        return Verifier.Verify(json);
+        var jsonSchema = SchemaUtility.GetJsonString(new EmptyBuild());
+        return Verifier.Verify(jsonSchema, "json");
     }
 
-#pragma warning disable CS0649
-    private class TestBuild : NukeBuild, ITestComponent
+    [Fact]
+    public Task TestTargetBuild()
     {
-        [Parameter] public string Param;
-        [Parameter] public bool? NullableBool;
-        [Parameter] public int? NullableInteger;
-        [Parameter] public Verbosity[] Verbosities;
-        [Parameter] [Secret] public string Secret;
-        public string Param2 => "";
-        string ITestComponent.Param3 => "";
+        var jsonSchema = SchemaUtility.GetJsonString(new TargetBuild());
+        return Verifier.Verify(jsonSchema, "json");
+    }
 
-        Target ITestComponent.Bar => _ => _;
-        public Target Zoo => _ => _;
+    [Fact]
+    public Task TestParameterBuild()
+    {
+        var jsonSchema = SchemaUtility.GetJsonString(new ParameterBuild());
+        return Verifier.Verify(jsonSchema, "json");
+    }
+
+    [Fact]
+    public Task TestCustomParameterAttributeAttribute()
+    {
+        var jsonSchema = SchemaUtility.GetJsonString(new CustomParameterAttributeBuild());
+        return Verifier.Verify(jsonSchema, "json");
+    }
+
+    // ReSharper disable All
+#pragma warning disable CS0414 // Field is assigned but its value is never used
+#pragma warning disable CS0649 // Field is never assigned to, and will always have its default value
+    private class EmptyBuild : NukeBuild
+    {
+    }
+
+    private class TargetBuild : NukeBuild, ITargetComponent
+    {
+        Target RegularTarget => _ => _;
+        public Target ImplementedTarget => _ => _;
+        Target ITargetComponent.ExplicitTarget => _ => _;
+    }
+
+    private interface ITargetComponent : INukeBuild
+    {
+        Target InheritedTarget => _ => _;
+        Target ImplementedTarget => _ => _;
+        Target ExplicitTarget => _ => _;
+    }
+
+    private class ParameterBuild : NukeBuild, IParameterComponent
+    {
+        [Parameter] readonly string RegularParam;
+        [Parameter] [Secret] readonly string SecretParam;
+
+        [Parameter] readonly bool BooleanParam;
+        [Parameter] readonly bool? NullableBooleanParam;
+
+        [Parameter] readonly string[] StringArrayParam;
+        [Parameter] readonly int[] IntegerArrayParam;
+
+        [Parameter] readonly CustomEnumeration CustomEnumerationParam;
+        [Parameter] readonly CustomEnumeration[] CustomEnumerationArrayParam;
+
+        [Parameter] readonly ComplexType ComplexTypeParam;
+        [Parameter] readonly ComplexType[] ComplexTypeArrayParam;
     }
 
     [ParameterPrefix("Component")]
-    private interface ITestComponent : INukeBuild
+    private interface IParameterComponent : INukeBuild
     {
-        [Parameter] string Param1 => TryGetValue(() => Param1);
-        [Parameter] string Param2 => TryGetValue(() => Param2);
-        [Parameter] string Param3 => TryGetValue(() => Param3);
-
-        Target Foo => _ => _;
-        Target Bar => _ => _;
-        Target Zoo => _ => _;
+        [Parameter] string InheritedParam => TryGetValue(() => InheritedParam);
     }
-#pragma warning restore CS0649
+
+    private class ComplexType
+    {
+        public string String;
+        public int Number;
+        public AbsolutePath[] Paths;
+        public ComplexSubType SubObject;
+    }
+
+    private class ComplexSubType
+    {
+        public bool? Boolean;
+    }
+
+    [TypeConverter(typeof(TypeConverter<CustomEnumeration>))]
+    private class CustomEnumeration : Enumeration
+    {
+        public static CustomEnumeration Debug = new() { Value = nameof(Debug) };
+        public static CustomEnumeration Release = new() { Value = nameof(Release) };
+
+        public static implicit operator string(CustomEnumeration configuration)
+        {
+            return configuration.Value;
+        }
+    }
+
+    private class CustomParameterAttributeBuild : NukeBuild
+    {
+        [CustomParameter] readonly ComplexType ComplexTypeParamWithAttribute;
+    }
+
+    private class CustomParameterAttribute : ParameterAttribute;
+
+#pragma warning restore CS0649 // Field is never assigned to, and will always have its default value
+#pragma warning restore CS0414 // Field is assigned but its value is never used
+    // ReSharper restore All
 }

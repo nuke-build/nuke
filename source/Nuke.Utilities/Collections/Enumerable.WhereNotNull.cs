@@ -18,4 +18,13 @@ public static partial class EnumerableExtensions
     {
         return enumerable.Where(x => x != null);
     }
+
+    /// <summary>
+    /// Filters the collection to elements that don't meet the condition.
+    /// </summary>
+    public static IEnumerable<T> WhereNot<T>(this IEnumerable<T> enumerable, Func<T, bool> condition)
+        where T : class
+    {
+        return enumerable.Where(x => condition == null || !condition(x));
+    }
 }

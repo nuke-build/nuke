@@ -5,7 +5,6 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <MSBuildWarningsAsErrors>$(MSBuildWarningsAsErrors);CS8785</MSBuildWarningsAsErrors>
     <NoWarn>$(NoWarn);SYSLIB0050;SYSLIB0051</NoWarn>
-    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
   </PropertyGroup>
 
 </Project>

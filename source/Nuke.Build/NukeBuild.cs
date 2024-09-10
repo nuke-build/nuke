@@ -87,8 +87,7 @@ public abstract partial class NukeBuild : INukeBuild
     /// </summary>
     [Parameter("List of targets to be invoked. Default is '{default_target}'.",
         Name = InvokedTargetsParameterName,
-        Separator = TargetsSeparator,
-        ValueProviderMember = nameof(TargetNames))]
+        Separator = TargetsSeparator)]
     public IReadOnlyCollection<ExecutableTarget> InvokedTargets => ExecutionPlan.Where(x => x.Invoked).ToList();
 
     /// <summary>
@@ -96,8 +95,7 @@ public abstract partial class NukeBuild : INukeBuild
     /// </summary>
     [Parameter("List of targets to be skipped. Empty list skips all dependencies.",
         Name = SkippedTargetsParameterName,
-        Separator = TargetsSeparator,
-        ValueProviderMember = nameof(TargetNames))]
+        Separator = TargetsSeparator)]
     public IReadOnlyCollection<ExecutableTarget> SkippedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Skipped).ToList();
 
     /// <summary>

@@ -5,9 +5,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Encodings.Web;
+using System.Reflection;
 using System.Text.Json;
-using Nuke.Common.IO;
+using Namotion.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using NJsonSchema;
+using NJsonSchema.Generation;
+using NuGet.Packaging;
 using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
 using static Nuke.Common.Constants;
@@ -16,93 +22,146 @@ namespace Nuke.Common.Execution;
 
 public class SchemaUtility
 {
-    public static void WriteBuildSchemaFile(INukeBuild build)
+    private class SchemaGenerator : JsonSchemaGenerator
     {
-        var buildSchemaFile = GetBuildSchemaFile(build.RootDirectory);
-        var buildSchema = GetBuildSchema(build);
-        var options = new JsonSerializerOptions { WriteIndented = true, Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping };
-        var json = JsonSerializer.Serialize(buildSchema, options);
-        buildSchemaFile.WriteAllText(json);
-    }
-
-    // ReSharper disable once CognitiveComplexity
-    public static JsonDocument GetBuildSchema(INukeBuild build)
-    {
-        var parameters = ValueInjectionUtility
-            .GetParameterMembers(build.GetType(), includeUnlisted: true)
-            // .Where(x => x.DeclaringType != typeof(NukeBuild))
-            .Select(x =>
-                new
-                {
-                    Name = ParameterService.GetParameterMemberName(x),
-                    Description = ParameterService.GetParameterDescription(x),
-                    MemberType = x.GetMemberType(),
-                    ScalarType = x.GetMemberType().GetScalarType(),
-                    EnumValues = ParameterService.GetParameterValueSet(x, build)?.Select(x => x.Text),
-                    IsRequired = x.HasCustomAttribute<RequiredAttribute>(),
-                    IsSecret = x.HasCustomAttribute<SecretAttribute>()
-                }).ToList();
-
-        string GetJsonType(Type type)
-            => type.IsCollectionLike()
-                ? "array"
-                : type.GetScalarType() == typeof(int)
-                    ? "integer"
-                    : type.GetScalarType() == typeof(bool)
-                        ? "boolean"
-                        : "string";
-
-        var properties = new Dictionary<string, object>();
-        foreach (var parameter in parameters)
+        private class Resolver : DefaultContractResolver
         {
-            var property = new Dictionary<string, object>();
-            property["type"] = GetJsonType(parameter.MemberType);
-
-            if (parameter.Description != null)
-                property["description"] = parameter.Description;
-
-            if (parameter.IsSecret)
-                property["default"] = "Secrets must be entered via 'nuke :secrets [profile]'";
-
-            if (parameter.EnumValues != null && !parameter.MemberType.IsCollectionLike())
-                property["enum"] = parameter.EnumValues;
-
-            if (parameter.MemberType.IsCollectionLike())
+            protected override List<MemberInfo> GetSerializableMembers(Type objectType)
             {
-                var items = new Dictionary<string, object>();
-                items["type"] = GetJsonType(parameter.ScalarType);
-                if (parameter.EnumValues != null)
-                    items["enum"] = parameter.EnumValues;
-                property["items"] = items;
+                return objectType == typeof(ExecutableTarget) || objectType == typeof(Host)
+                    ? new List<MemberInfo>()
+                    : base.GetSerializableMembers(objectType);
             }
-
-            properties[parameter.Name] = property;
         }
 
-        var build2 = new Dictionary<string, object> { ["type"] = "object", ["properties"] = properties };
-        var definitions = new Dictionary<string, object> { ["build"] = build2 };
-        var jsonDictionary = new Dictionary<string, object>
-                             {
-                                 ["$schema"] = "http://json-schema.org/draft-04/schema#",
-                                 ["$ref"] = "#/definitions/build",
-                                 ["title"] = "Build Schema",
-                                 ["definitions"] = definitions
-                             };
-        return JsonDocument.Parse(JsonSerializer.Serialize(jsonDictionary));
+        public static JsonSchema Generate<T>(T build) where T : INukeBuild
+        {
+            return new SchemaGenerator(
+                build,
+                new JsonSchemaGeneratorSettings
+                {
+                    FlattenInheritanceHierarchy = true,
+                    SerializerSettings =
+                        new JsonSerializerSettings
+                        {
+                            ContractResolver = new Resolver(),
+                            Converters = new JsonConverter[] { new StringEnumConverter() }
+                        }
+                }).Generate();
+        }
+
+        private readonly INukeBuild _build;
+
+        private SchemaGenerator(INukeBuild build, JsonSchemaGeneratorSettings settings)
+            : base(settings)
+        {
+            _build = build;
+        }
+
+        private JsonSchema Generate()
+        {
+            var baseSchema = new JsonSchema();
+            var userSchema = new JsonSchema();
+            var schemaResolver = new JsonSchemaResolver(userSchema, Settings);
+
+            var parameterMembers = ValueInjectionUtility.GetParameterMembers(_build.GetType(), includeUnlisted: true);
+            foreach (var parameterMember in parameterMembers)
+            {
+                var schema = parameterMember.DeclaringType == typeof(NukeBuild) ? baseSchema : userSchema;
+                var name = ParameterService.GetParameterMemberName(parameterMember);
+                var property = CreateProperty(parameterMember, schemaResolver);
+                schema.Properties[name] = property;
+            }
+
+            // ValueInjectionUtility.GetParameterMembers(_build.GetType(), includeUnlisted: true)
+            //     // .Where(x => x.Name.EqualsAnyOrdinalIgnoreCase(
+            //     //     nameof(NukeBuild.SkippedTargets),
+            //     //     nameof(NukeBuild.InvokedTargets),
+            //     //     nameof(NukeBuild.Verbosity)
+            //     // ))
+            //     .ToDictionary(ParameterService.GetParameterMemberName, x => CreateProperty(x, schemaResolver))
+            //     .ForEach(x =>
+            //     {
+            //         baseSchema.Properties[x.Key] = x.Value;
+            //     });
+
+            userSchema.Reference = baseSchema;
+            userSchema.Definitions[nameof(NukeBuild)] = baseSchema;
+
+            // TODO: why can't this use value sets?
+            var targetNames = ExecutableTargetFactory.GetTargetProperties(_build.GetType()).Select(x => x.GetDisplayShortName()).OrderBy(x => x);
+            var executableTargetSchema = UpdatePropertySchema(nameof(ExecutableTarget), targetNames);
+            baseSchema.Properties[InvokedTargetsParameterName].Item =
+                baseSchema.Properties[SkippedTargetsParameterName].Item = new JsonSchema { Reference = executableTargetSchema };
+
+            var hostNames = Host.AvailableTypes.Select(x => x.Name).OrderBy(x => x);
+            var hostSchema = UpdatePropertySchema(nameof(NukeBuild.Host), hostNames);
+            baseSchema.Properties[nameof(NukeBuild.Host)].Reference = hostSchema;
+
+            RemoveXEnumValues();
+
+            return userSchema;
+
+            JsonSchema UpdatePropertySchema(string name, IEnumerable<string> values)
+            {
+                var schema = userSchema.Definitions[name];
+                schema.Type = JsonObjectType.String;
+                schema.AllowAdditionalProperties = true;
+                schema.Enumeration.AddRange(values);
+                return schema;
+            }
+
+            void RemoveXEnumValues()
+            {
+                foreach (var definition in userSchema.Definitions.Values)
+                {
+                    definition.EnumerationNames.Clear();
+                    definition.AllowAdditionalProperties = true;
+                }
+            }
+        }
+
+        private JsonSchemaProperty CreateProperty(MemberInfo parameterMember, JsonSchemaResolver schemaResolver)
+        {
+            var property = parameterMember.GetCustomAttribute<ParameterAttribute>().NotNull().GetType() == typeof(ParameterAttribute)
+                ? GenerateWithReference<JsonSchemaProperty>(
+                    parameterMember.ToContextualAccessor().AccessorType,
+                    schemaResolver)
+                : new JsonSchemaProperty { Type = JsonObjectType.String };
+
+            property.Description = ParameterService.GetParameterDescription(parameterMember);
+            property.Default = parameterMember.HasCustomAttribute<SecretAttribute>()
+                ? "Secrets must be entered via 'nuke :secrets [profile]'"
+                : null;
+
+            var values = ParameterService.GetParameterValueSet(parameterMember, _build)
+                ?.Select(x => (object)x.Text);
+            if (values != null && !parameterMember.GetMemberType().IsEnum)
+            {
+                property.Type = !parameterMember.GetMemberType().IsCollectionLike()
+                    ? JsonObjectType.String
+                    : JsonObjectType.Array;
+                var propertySchema = property.Reference ?? property;
+                if (property.Type == JsonObjectType.String)
+                    propertySchema.Enumeration.AddRange(values);
+                else
+                    propertySchema.Item.Enumeration.AddRange(values);
+            }
+
+            if (Nullable.GetUnderlyingType(parameterMember.GetMemberType()) != null)
+                property.Type |= JsonObjectType.Null;
+
+            return property;
+        }
     }
 
-    public static void WriteDefaultParametersFile(INukeBuild build)
+    public static string GetJsonString(INukeBuild build)
     {
-        var parametersFile = GetDefaultParametersFile(build.RootDirectory);
-        if (parametersFile.Exists())
-            return;
+        return SchemaGenerator.Generate(build).ToJson();
+    }
 
-        parametersFile.WriteAllLines(
-            new[]
-            {
-                "{",
-                $"  \"$schema\": \"./{BuildSchemaFileName}\"",
-                "}"
-            });
+    public static JsonDocument GetJsonDocument(INukeBuild build)
+    {
+        return JsonDocument.Parse(GetJsonString(build));
     }
 }

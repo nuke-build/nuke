@@ -36,19 +36,10 @@ public class BuildExecutorTest
     }
 
     [Fact]
-    public void TestParameterSkipped_AllWithoutInvoked()
+    public void TestParameterSkipped_All()
     {
         ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
         AssertSkipped(A, B, C);
-    }
-
-    [Fact]
-    public void TestParameterSkipped_AllWithInvoked()
-    {
-        C.Invoked = true;
-        ExecuteBuild(skippedTargets: new ExecutableTarget[0]);
-        AssertSucceeded(C);
-        AssertSkipped(A, B);
     }
 
     [Fact]
