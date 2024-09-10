@@ -56,7 +56,7 @@
     <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.10.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.10.0" />
   </ItemGroup>
-  
+
   <!-- MSBuild (Nuke.ProjectModel + Nuke.MSBuildTasks) -->
   <ItemGroup>
     <PackageVersion Include="Microsoft.Build.Locator" Version="1.7.8" />

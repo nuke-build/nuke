@@ -76,7 +76,7 @@ internal partial class Telemetry
                     .AddDictionary(GetRepositoryProperties(EnvironmentInfo.WorkingDirectory)));
     }
 
-    private static void TrackEvent(string eventName, Func<IDictionary<string, string>> propertiesProvider)
+    private static void TrackEvent(string eventName, Func<Dictionary<string, string>> propertiesProvider)
     {
         if (s_client == null)
             return;

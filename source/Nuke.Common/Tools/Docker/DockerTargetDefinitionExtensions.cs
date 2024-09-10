@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
@@ -142,7 +141,7 @@ public static class DockerTargetDefinitionExtensions
         return definition;
     }
 
-    private static IReadOnlyDictionary<string, string> GetEnvironmentVariables(
+    private static Dictionary<string, string> GetEnvironmentVariables(
         ToolSettings settings,
         AbsolutePath rootDirectory,
         AbsolutePath tempDirectory)
@@ -184,7 +183,6 @@ public static class DockerTargetDefinitionExtensions
                     !x.Key.Contains(' ') &&
                     !x.Key.EqualsAnyOrdinalIgnoreCase(excludedEnvironmentVariables) &&
                     !x.Value.Contains(EnvironmentInfo.NewLine))
-                .ToDictionary(x => x.Key, _ => default(string)).AsReadOnly())
-            .ToImmutableSortedDictionary();
+                .ToDictionary(x => x.Key, _ => default(string)));
     }
 }

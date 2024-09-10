@@ -17,7 +17,7 @@ namespace Nuke.Common;
 [PublicAPI]
 public interface INukeBuild
 {
-    void ReportSummary(Configure<IDictionary<string, string>> configurator = null);
+    void ReportSummary(Configure<Dictionary<string, string>> configurator = null);
 
     internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; }
     internal IReadOnlyCollection<IBuildExtension> BuildExtensions { get; }
