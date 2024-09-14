@@ -23,7 +23,7 @@ public class SolutionModelTest
     {
         var solution = SolutionModelTasks.ParseSolution(SolutionFile);
 
-        solution.SolutionFolders.Select(x => x.Name).Should().BeEquivalentTo("misc");
+        solution.SolutionFolders.Select(x => x.Name).Should().BeEquivalentTo("misc", "nested");
         solution.AllProjects.Where(x => x.Is(ProjectType.CSharpProject)).Should().HaveCountGreaterOrEqualTo(9);
 
         var buildProject = solution.AllProjects.SingleOrDefault(x => x.Name == "_build");

@@ -73,7 +73,7 @@ public class StronglyTypedSolutionGenerator : ISourceGenerator
 
             var solution = SolutionSerializer.DeserializeFromFile<Solution>(solutionFile);
 
-            var classDeclaration = GetSolutionFolderDeclaration(member.Name, solution.SolutionFolders, solution.Projects, isSolution: true);
+            var classDeclaration = GetSolutionFolderDeclaration(member.Name, solution.SolutionFolders, solution.Projects, parent: "_", isSolution: true);
             compilationUnit = compilationUnit
                 .AddMembers(member.ContainingType.ContainingNamespace.Equals(compilation.GlobalNamespace, SymbolEqualityComparer.Default)
                     ? NamespaceDeclaration(IdentifierName(member.ContainingType.ContainingNamespace.GetFullName()))
@@ -92,40 +92,40 @@ public class StronglyTypedSolutionGenerator : ISourceGenerator
         string name,
         IReadOnlyCollection<SolutionFolder> solutionFolders,
         IReadOnlyCollection<Project> projects,
+        string parent,
         bool isSolution = false)
     {
-        string GetMemberName(string name) => name
+        static string GetMemberName([CanBeNull] string name) => name?
             .ReplaceRegex(@"(^[\W^\d]|[\W])", _ => "_")
             .TrimToOne("_");
 
-        string GetSolutionFolderTypeName(string name)
-            => $"_{GetMemberName(name)}";
+        static string GetSolutionFolderTypeName(string name, string parent)
+            => $"{parent}{GetMemberName(name)}";
 
         MemberDeclarationSyntax GetSolutionFolderPropertyDeclaration()
             => isSolution
                 ? ParseMemberDeclaration($"private {typeof(Solution).FullName} SolutionFolder => this;")
                 : ParseMemberDeclaration("private SolutionFolder SolutionFolder { get; }");
 
-        MemberDeclarationSyntax GetSolutionFolderConstructorDeclaration()
-            => ParseMemberDeclaration($"public {GetSolutionFolderTypeName(name)}(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;");
+        MemberDeclarationSyntax GetSolutionFolderConstructorDeclaration(string parent)
+            => ParseMemberDeclaration($"public {GetSolutionFolderTypeName(name, parent)}(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;");
 
-        MemberDeclarationSyntax GetProjectPropertyDeclaration(string name)
+        static MemberDeclarationSyntax GetProjectPropertyDeclaration(string name)
             => ParseMemberDeclaration($@"public Project {GetMemberName(name)} => SolutionFolder.GetProject(""{name}"");");
 
-        MemberDeclarationSyntax GetSolutionFolderProperty(string name)
-            => ParseMemberDeclaration(
-                $@"public {GetSolutionFolderTypeName(name)} {GetMemberName(name)} => new(SolutionFolder.GetSolutionFolder(""{name}""));");
+        static MemberDeclarationSyntax GetSolutionFolderProperty(string name, string parent)
+            => ParseMemberDeclaration($@"public {GetSolutionFolderTypeName(name, parent)} {GetMemberName(name)} => new(SolutionFolder.GetSolutionFolder(""{name}""));");
 
-        return ClassDeclaration(isSolution ? name : GetSolutionFolderTypeName(name)) // TODO: check for multiple solution fields
+        string GetParentName([CanBeNull] SolutionFolder solutionFolder) => $"{parent}_{GetMemberName(solutionFolder?.Name)}".TrimToOne("_");
+
+        return ClassDeclaration(isSolution ? name : GetSolutionFolderTypeName(name, parent)) // TODO: check for multiple solution fields
             .AddModifiers(Token(SyntaxKind.InternalKeyword))
-            .When(isSolution, _ => _
-                .AddBaseListTypes(SimpleBaseType(ParseTypeName(typeof(Solution).FullName.NotNull()))))
+            .When(isSolution, syntax => syntax.AddBaseListTypes(SimpleBaseType(ParseTypeName(typeof(Solution).FullName.NotNull()))))
             .AddMembers(GetSolutionFolderPropertyDeclaration())
-            .When(!isSolution, _ => _
-                .AddMembers(GetSolutionFolderConstructorDeclaration()))
+            .When(!isSolution, syntax => syntax.AddMembers(GetSolutionFolderConstructorDeclaration(parent)))
             .AddMembers(projects.Select(project => GetProjectPropertyDeclaration(project.Name)).ToArray())
-            .AddMembers(solutionFolders.Select(x => GetSolutionFolderProperty(x.Name)).ToArray())
-            .AddMembers(solutionFolders.Select(x => GetSolutionFolderDeclaration(x.Name, x.SolutionFolders, x.Projects))
+            .AddMembers(solutionFolders.Select(x => GetSolutionFolderProperty(x.Name, GetParentName(x.SolutionFolder))).ToArray())
+            .AddMembers(solutionFolders.Select(x => GetSolutionFolderDeclaration(x.Name, x.SolutionFolders, x.Projects, GetParentName(x.SolutionFolder)))
                 .ToArray<MemberDeclarationSyntax>());
     }
 

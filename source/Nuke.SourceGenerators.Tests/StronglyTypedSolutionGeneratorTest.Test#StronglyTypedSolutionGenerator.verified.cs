@@ -32,11 +32,59 @@ internal class Solution : Nuke.Common.ProjectModel.Solution
     public Project Nuke_Utilities_Text_Yaml => SolutionFolder.GetProject("Nuke.Utilities.Text.Yaml");
     public Project Nuke_Utilities_IO_Compression => SolutionFolder.GetProject("Nuke.Utilities.IO.Compression");
     public _misc misc => new(SolutionFolder.GetSolutionFolder("misc"));
+    public _nested nested => new(SolutionFolder.GetSolutionFolder("nested"));
 
     internal class _misc
     {
         private SolutionFolder SolutionFolder { get; }
 
         public _misc(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;
+    }
+
+    internal class _nested
+    {
+        private SolutionFolder SolutionFolder { get; }
+
+        public _nested(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;
+        public _nestedfolder folder => new(SolutionFolder.GetSolutionFolder("folder"));
+        public _nestedother other => new(SolutionFolder.GetSolutionFolder("other"));
+        public _nestedsomething something => new(SolutionFolder.GetSolutionFolder("something"));
+
+        internal class _nestedfolder
+        {
+            private SolutionFolder SolutionFolder { get; }
+
+            public _nestedfolder(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;
+            public _nested_folderother other => new(SolutionFolder.GetSolutionFolder("other"));
+
+            internal class _nested_folderother
+            {
+                private SolutionFolder SolutionFolder { get; }
+
+                public _nested_folderother(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;
+            }
+        }
+
+        internal class _nestedother
+        {
+            private SolutionFolder SolutionFolder { get; }
+
+            public _nestedother(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;
+        }
+
+        internal class _nestedsomething
+        {
+            private SolutionFolder SolutionFolder { get; }
+
+            public _nestedsomething(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;
+            public _nested_somethingother other => new(SolutionFolder.GetSolutionFolder("other"));
+
+            internal class _nested_somethingother
+            {
+                private SolutionFolder SolutionFolder { get; }
+
+                public _nested_somethingother(SolutionFolder solutionFolder) => SolutionFolder = solutionFolder;
+            }
+        }
     }
 }
