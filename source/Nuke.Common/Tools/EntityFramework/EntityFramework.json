@@ -10,9 +10,9 @@
   "customExecutable": true,
   "tasks": [
     {
-      "help": "The <c>dotnet ef database drop</c> command is used to drop the database.",
+      "help": "The <c>dotnet-ef database drop</c> command is used to drop the database.",
       "postfix": "DatabaseDrop",
-      "definiteArgument": "ef database drop",
+      "definiteArgument": "database drop",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings",
         "properties": [
@@ -32,9 +32,9 @@
       }
     },
     {
-      "help": "The <c>dotnet ef database update</c> command is used to update the database to the last migration or to a specified migration.",
+      "help": "The <c>dotnet-ef database update</c> command is used to update the database to the last migration or to a specified migration.",
       "postfix": "DatabaseUpdate",
-      "definiteArgument": "ef database update",
+      "definiteArgument": "database update",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings",
         "properties": [
@@ -54,23 +54,23 @@
       }
     },
     {
-      "help": "The <c>dotnet ef dbcontext info</c> command is used to get information about a <c>DbContext</c> type.",
+      "help": "The <c>dotnet-ef dbcontext info</c> command is used to get information about a <c>DbContext</c> type.",
       "postfix": "DbContextInfo",
-      "definiteArgument": "ef dbcontext info",
+      "definiteArgument": "dbcontext info",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings"
       }
     },
     {
-      "help": "The <c>dotnet ef dbcontext list</c> command is used to list available <c>DbContext</c> types.",
+      "help": "The <c>dotnet-ef dbcontext list</c> command is used to list available <c>DbContext</c> types.",
       "postfix": "DbContextList",
-      "definiteArgument": "ef dbcontext list",
+      "definiteArgument": "dbcontext list",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings"
       }
     },
     {
-      "help": "The <c>dotnet ef dbcontext scaffold</c> command is used to generate code for a <c>DbContext</c> and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.",
+      "help": "The <c>dotnet-ef dbcontext scaffold</c> command is used to generate code for a <c>DbContext</c> and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.",
       "postfix": "DbContextScaffold",
       "definiteArgument": "ef dbcontext scaffold",
       "settingsClass": {
@@ -164,9 +164,9 @@
       }
     },
     {
-      "help": "The <c>dotnet ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.",
+      "help": "The <c>dotnet-ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.",
       "postfix": "DbContextScript",
-      "definiteArgument": "ef dbcontext script",
+      "definiteArgument": "dbcontext script",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings",
         "properties": [
@@ -180,9 +180,9 @@
       }
     },
     {
-      "help": "The <c>dotnet ef migrations add</c> command is used to add a new migration.",
+      "help": "The <c>dotnet-ef migrations add</c> command is used to add a new migration.",
       "postfix": "MigrationsAdd",
-      "definiteArgument": "ef migrations add",
+      "definiteArgument": "migrations add",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings",
         "properties": [
@@ -208,9 +208,9 @@
       }
     },
     {
-      "help": "The <c>dotnet ef migrations list</c> command is used to list available migrations.",
+      "help": "The <c>dotnet-ef migrations list</c> command is used to list available migrations.",
       "postfix": "MigrationsList",
-      "definiteArgument": "ef migrations list",
+      "definiteArgument": "migrations list",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings",
         "properties": [
@@ -230,9 +230,9 @@
       }
     },
     {
-      "help": "The <c>dotnet ef migrations remove</c> command is used to remove the last migration (rolls back the code changes that were done for the migration).",
+      "help": "The <c>dotnet-ef migrations remove</c> command is used to remove the last migration (rolls back the code changes that were done for the migration).",
       "postfix": "MigrationsRemove",
-      "definiteArgument": "ef migrations remove",
+      "definiteArgument": "migrations remove",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings",
         "properties": [
@@ -246,9 +246,9 @@
       }
     },
     {
-      "help": "The <c>dotnet ef migrations bundle</c> command is used to create a bundle.",
+      "help": "The <c>dotnet-ef migrations bundle</c> command is used to create a bundle.",
       "postfix": "MigrationsBundle",
-      "definiteArgument": "ef migrations bundle",
+      "definiteArgument": "migrations bundle",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings",
         "properties": [
@@ -280,9 +280,9 @@
       }
     },
     {
-      "help": "The <c>dotnet ef migrations script</c> command is used to generate a SQL script from migrations.",
+      "help": "The <c>dotnet-ef migrations script</c> command is used to generate a SQL script from migrations.",
       "postfix": "MigrationsScript",
-      "definiteArgument": "ef migrations script",
+      "definiteArgument": "migrations script",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings",
         "properties": [
