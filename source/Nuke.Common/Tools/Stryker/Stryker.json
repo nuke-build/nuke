@@ -45,6 +45,12 @@
             "help": "<p>With <c>mutate</c> you configure the subset of files to use for mutation testing. Only source files part of your project will be taken into account. When this option is not specified the whole project will be mutated. You can add an <c>!</c> in front of the pattern to exclude instead of include matching files. This can be used to for example ignore generated files while mutating.</p><p>When only exclude patterns are provided, all files will be included that do not match any exclude pattern. If both include and exclude patterns are provided, only the files that match an include pattern but not also an exclude pattern will be included. The order of the patterns is irrelevant.</p><p>The patterns support <a href=\"https://en.wikipedia.org/wiki/Glob_(programming)\">globbing syntax</a> to allow wildcards.</p><p><strong>Example</strong> :</p><table><thead><tr><th>Patterns</th><th>File</th><th>Will be mutated</th></tr></thead><tbody><tr><td>null</td><td>MyFolder/MyFactory.cs</td><td>Yes</td></tr><tr><td>'**/*.*'</td><td>MyFolder/MyFactory.cs</td><td>Yes</td></tr><tr><td>'!**/MyFactory.cs'</td><td>MyFolder/MyFactory.cs</td><td>No</td></tr></tbody></table><p>To allow more fine-grained filtering you can also specify the span of text that should be in- or excluded. A span is defined by the indices of the first character and the last character. <code>dotnet stryker -m \"MyFolder/MyService.cs{10..100}\"</code></p>"
           },
           {
+            "name": "Configuration",
+            "type": "string",
+            "format": "--configuration {value}",
+            "help": "Allows you to specify the build configuration to use when building the project. This can be useful when you want to test the release build of your project."
+          },
+          {
             "name": "TargetFramework",
             "type": "string",
             "format": "--target-framework {value}",
