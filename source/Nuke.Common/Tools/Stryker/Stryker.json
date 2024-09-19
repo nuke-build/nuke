@@ -4,7 +4,7 @@
     "https://raw.githubusercontent.com/stryker-mutator/stryker-net/master/src/Stryker.CLI/Stryker.CLI/Program.cs"
   ],
   "name": "Stryker",
-  "officialUrl": "https://stryker-mutator.io/docs/stryker-net",
+  "officialUrl": "https://stryker-mutator.io/docs/stryker-net/configuration",
   "help": "Stryker.NET offers you mutation testing for your .NET Core and .NET Framework projects. It allows you to test your tests by temporarily inserting bugs. Stryker.NET is installed using NuGet.  New to Stryker.NET? Begin with our guide on <a href='https://stryker-mutator.io/docs/stryker-net/Getting-started'>getting started</a>",
   "nugetPackageId": "dotnet-stryker",
   "packageExecutable": "Stryker.CLI.dll",
