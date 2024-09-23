@@ -64,14 +64,26 @@ public partial class UnityTasks
 
     private static void PreProcess(ref UnitySettings unitySettings)
     {
+        var projectSettings = (UnityProjectSettings)unitySettings;
+        PreProcessWithAutoDetect(ref projectSettings);
+    }
+
+    private static void PreProcess(ref UnityRunTestsSettings unitySettings)
+    {
+        var projectSettings = (UnityProjectSettings)unitySettings;
+        PreProcessWithAutoDetect(ref projectSettings);
+    }
+
+    private static void PreProcessWithAutoDetect(ref UnityProjectSettings unitySettings)
+    {
         if (unitySettings.ProjectPath == null)
             Log.Warning("ProjectPath is not set, using last opened/built project");
 
         DetectUnityVersion(ref unitySettings);
-        PreProcess<UnitySettings>(ref unitySettings);
+        PreProcess(ref unitySettings);
     }
 
-    private static void DetectUnityVersion(ref UnitySettings unitySettings)
+    private static void DetectUnityVersion(ref UnityProjectSettings unitySettings)
     {
         if (unitySettings.HubVersion != null ||
             unitySettings.ProjectPath == null)
