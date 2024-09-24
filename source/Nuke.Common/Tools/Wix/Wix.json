@@ -1,0 +1,195 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "references": [
+    "https://wixtoolset.org/docs/tools/wixexe/#wixexe-commands"
+  ],
+  "name": "Wix",
+  "officialUrl": "https://wixtoolset.org/",
+  "help": "The WiX toolset lets developers create installers for Windows Installer, the Windows installation engine.",
+  "nugetPackageId": "Wix",
+  "packageExecutable": "wix.exe",
+  "tasks": [
+    {
+      "help": "Build a wixlib, package, or bundle.",
+      "postfix": "Build",
+      "definiteArgument": "build",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Arch",
+            "type": "ArchType",
+            "format": "-arch {value}",
+            "help": "Architecture of the package or bundle. Valid values are: x86, x64, arm64. Default: x86. Equivalent MSBuild property: InstallerPlatform"
+          },
+          {
+            "name": "BindFiles",
+            "type": "bool",
+            "format": "-bindfiles",
+            "help": "Bind files into an output .wixlib. Ignored if not building a .wixlib."
+          },
+          {
+            "name": "BindPath",
+            "type": "string",
+            "format": "-bindpath {value}",
+            "help": "Bind path to search for content files."
+          },
+          {
+            "name": "BindPathTarget",
+            "type": "string",
+            "format": "-bindpath:target {value}",
+            "help": "Bind path to search for target package's content files. Only used when building a patch."
+          },
+          {
+            "name": "BindPathUpdate",
+            "type": "string",
+            "format": "-bindpath:update {value}",
+            "help": "Bind path to search for update package's content files. Only used when building a patch."
+          },
+          {
+            "name": "BindVariable",
+            "type": "List<string>",
+            "format": "-bindvariable {value}",
+            "help": "Sets a bind-time variable."
+          },
+          {
+            "name": "CabCache",
+            "type": "string",
+            "format": "-cabcache {value}",
+            "help": "Set a folder to cache cabinets across builds."
+          },
+          {
+            "name": "Culture",
+            "type": "string",
+            "format": "-culture {value}",
+            "help": "Adds a culture to filter localization files."
+          },
+          {
+            "name": "Preprocessor",
+            "type": "List<string>",
+            "format": "-define {value}",
+            "help": "Sets a preprocessor variable."
+          },
+          {
+            "name": "DefaultCompressionLevel",
+            "type": "CompressionLevel",
+            "format": "-defaultcompressionlevel {value}",
+            "help": "Specifies the compression level used when none is specified via MediaTemplate or Media."
+          },
+          {
+            "name": "Extension",
+            "type": "string",
+            "format": "-id {value}",
+            "help": "Load a WiX extension for use during the build."
+          },
+          {
+            "name": "IncludeFolder",
+            "type": "string",
+            "format": "-include {value}",
+            "help": "Folder to search for include files."
+          },
+          {
+            "name": "IntermediateFolder",
+            "type": "string",
+            "format": "-intermediateFolder {value}",
+            "help": "Optional working folder. If not specified, a folder in %TMP% is created."
+          },
+          {
+            "name": "Localization",
+            "type": "string",
+            "format": "-loc {value}",
+            "help": "Localization file to use in the build. By default, .wxl files are recognized as localization."
+          },
+          {
+            "name": "Library",
+            "type": "string",
+            "format": "-lib {value}",
+            "help": "Library file to use in the build. By default, .wixlib files are recognized as libraries."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "-src {value}",
+            "help": "Source file to use in the build. By default, .wxs files are recognized as source code."
+          },
+          {
+            "name": "OutputDestination",
+            "type": "string",
+            "format": "-out {value}",
+            "help": "Destination path of output. Required when there are multiple source files; otherwise, defaults to the base name of the source file."
+          },
+          {
+            "name": "OutputType",
+            "type": "string",
+            "format": "-outputtype {value}",
+            "help": "Explicitly set the output type if it cannot be determined from the output."
+          },
+          {
+            "name": "PDB",
+            "type": "string",
+            "format": "-pdb {value}",
+            "help": "Optional path to output .wixpdb. Default will write .wixpdb beside output path."
+          },
+          {
+            "name": "PDBType",
+            "type": "PDBType",
+            "format": "-pdbtype {value}",
+            "help": "Switch to disable creation of .wixpdb. Types: full or none."
+          },
+          {
+            "name": "BuildFiles",
+            "type": "List<string>",
+            "format": "{value}",
+            "help": "wxs source files"
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "Help",
+      "type": "bool",
+      "format": "--help",
+      "help": "Show command line help."
+    },
+    {
+      "name": "Version",
+      "type": "bool",
+      "format": "--version",
+      "help": "Display WiX Toolset version in use."
+    },
+    {
+      "name": "NoLogo",
+      "type": "bool",
+      "format": "--nologo",
+      "help": "Suppress displaying the logo information."
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "ArchType",
+      "values": [
+        "x86",
+        "x64",
+        "arm64"
+      ]
+    },
+    {
+      "name": "CompressionLevel",
+      "values": [
+        "none",
+        "low",
+        "medium",
+        "high",
+        "mszip"
+      ]
+    },
+    {
+      "name": "PDBType",
+      "values": [
+        "none",
+        "full"
+      ]
+    }
+  ]
+}
