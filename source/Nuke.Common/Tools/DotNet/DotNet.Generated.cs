@@ -2810,7 +2810,7 @@ public partial class DotNetPublishSettings : ToolSettings
     /// </summary>
     public virtual string Output { get; internal set; }
     /// <summary>
-    ///   Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.
+    ///   Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.
     /// </summary>
     public virtual string OperatingSystem { get; internal set; }
     /// <summary>
@@ -20108,7 +20108,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region OperatingSystem
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetPublishSettings.OperatingSystem"/></em></p>
-    ///   <p>Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.</p>
+    ///   <p>Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.</p>
     /// </summary>
     [Pure]
     public static T SetOperatingSystem<T>(this T toolSettings, string operatingSystem) where T : DotNetPublishSettings
@@ -20119,7 +20119,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <see cref="DotNetPublishSettings.OperatingSystem"/></em></p>
-    ///   <p>Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.</p>
+    ///   <p>Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.</p>
     /// </summary>
     [Pure]
     public static T ResetOperatingSystem<T>(this T toolSettings) where T : DotNetPublishSettings

@@ -149,7 +149,7 @@ public partial class GitHubActions : Host, IBuildServer
     public void WriteCommand(
         string command,
         string message = null,
-        Configure<IDictionary<string, object>> dictionaryConfigurator = null)
+        Configure<Dictionary<string, object>> dictionaryConfigurator = null)
     {
         var parameters = dictionaryConfigurator.InvokeSafe(new Dictionary<string, object>())
             .Select(x => $"{x.Key}={EscapeProperty(x.Value.ToString())}")

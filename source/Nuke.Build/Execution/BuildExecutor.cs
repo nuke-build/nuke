@@ -184,8 +184,11 @@ internal static class BuildExecutor
         if (target.Status != ExecutionStatus.Scheduled)
             return;
 
-        target.Status = ExecutionStatus.Skipped;
-        target.Skipped ??= reason;
+        if (!target.Invoked)
+        {
+            target.Status = ExecutionStatus.Skipped;
+            target.Skipped ??= reason;
+        }
 
         if (target.DependencyBehavior == DependencyBehavior.Execute)
             return;

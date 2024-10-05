@@ -736,7 +736,7 @@
             "name": "OperatingSystem",
             "type": "string",
             "format": "--os {value}",
-            "help": "Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6."
+            "help": "Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6."
           },
           {
             "name": "SelfContained",
