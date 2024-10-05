@@ -47,7 +47,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef database drop</c> command is used to drop the database.</p>
+    ///   <p>The <c>dotnet-ef database drop</c> command is used to drop the database.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -76,7 +76,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef database drop</c> command is used to drop the database.</p>
+    ///   <p>The <c>dotnet-ef database drop</c> command is used to drop the database.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -102,7 +102,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkDatabaseDrop(configurator(new EntityFrameworkDatabaseDropSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef database drop</c> command is used to drop the database.</p>
+    ///   <p>The <c>dotnet-ef database drop</c> command is used to drop the database.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -128,7 +128,7 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkDatabaseDrop, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef database update</c> command is used to update the database to the last migration or to a specified migration.</p>
+    ///   <p>The <c>dotnet-ef database update</c> command is used to update the database to the last migration or to a specified migration.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -157,7 +157,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef database update</c> command is used to update the database to the last migration or to a specified migration.</p>
+    ///   <p>The <c>dotnet-ef database update</c> command is used to update the database to the last migration or to a specified migration.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -183,7 +183,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkDatabaseUpdate(configurator(new EntityFrameworkDatabaseUpdateSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef database update</c> command is used to update the database to the last migration or to a specified migration.</p>
+    ///   <p>The <c>dotnet-ef database update</c> command is used to update the database to the last migration or to a specified migration.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -209,7 +209,7 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkDatabaseUpdate, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext info</c> command is used to get information about a <c>DbContext</c> type.</p>
+    ///   <p>The <c>dotnet-ef dbcontext info</c> command is used to get information about a <c>DbContext</c> type.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -236,7 +236,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext info</c> command is used to get information about a <c>DbContext</c> type.</p>
+    ///   <p>The <c>dotnet-ef dbcontext info</c> command is used to get information about a <c>DbContext</c> type.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -260,7 +260,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkDbContextInfo(configurator(new EntityFrameworkDbContextInfoSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext info</c> command is used to get information about a <c>DbContext</c> type.</p>
+    ///   <p>The <c>dotnet-ef dbcontext info</c> command is used to get information about a <c>DbContext</c> type.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -284,7 +284,7 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkDbContextInfo, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext list</c> command is used to list available <c>DbContext</c> types.</p>
+    ///   <p>The <c>dotnet-ef dbcontext list</c> command is used to list available <c>DbContext</c> types.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -311,7 +311,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext list</c> command is used to list available <c>DbContext</c> types.</p>
+    ///   <p>The <c>dotnet-ef dbcontext list</c> command is used to list available <c>DbContext</c> types.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -335,7 +335,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkDbContextList(configurator(new EntityFrameworkDbContextListSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext list</c> command is used to list available <c>DbContext</c> types.</p>
+    ///   <p>The <c>dotnet-ef dbcontext list</c> command is used to list available <c>DbContext</c> types.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -359,7 +359,7 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkDbContextList, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext scaffold</c> command is used to generate code for a <c>DbContext</c> and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.</p>
+    ///   <p>The <c>dotnet-ef dbcontext scaffold</c> command is used to generate code for a <c>DbContext</c> and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -399,7 +399,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext scaffold</c> command is used to generate code for a <c>DbContext</c> and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.</p>
+    ///   <p>The <c>dotnet-ef dbcontext scaffold</c> command is used to generate code for a <c>DbContext</c> and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -436,7 +436,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkDbContextScaffold(configurator(new EntityFrameworkDbContextScaffoldSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext scaffold</c> command is used to generate code for a <c>DbContext</c> and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.</p>
+    ///   <p>The <c>dotnet-ef dbcontext scaffold</c> command is used to generate code for a <c>DbContext</c> and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -473,7 +473,7 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkDbContextScaffold, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.</p>
+    ///   <p>The <c>dotnet-ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -501,7 +501,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.</p>
+    ///   <p>The <c>dotnet-ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -526,7 +526,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkDbContextScript(configurator(new EntityFrameworkDbContextScriptSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.</p>
+    ///   <p>The <c>dotnet-ef dbcontext script</c> command is used to generate a SQL script from the <c>DbContext</c>, bypassing any migrations.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -551,7 +551,7 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkDbContextScript, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations add</c> command is used to add a new migration.</p>
+    ///   <p>The <c>dotnet-ef migrations add</c> command is used to add a new migration.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -581,7 +581,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations add</c> command is used to add a new migration.</p>
+    ///   <p>The <c>dotnet-ef migrations add</c> command is used to add a new migration.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -608,7 +608,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkMigrationsAdd(configurator(new EntityFrameworkMigrationsAddSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations add</c> command is used to add a new migration.</p>
+    ///   <p>The <c>dotnet-ef migrations add</c> command is used to add a new migration.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -635,7 +635,7 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkMigrationsAdd, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations list</c> command is used to list available migrations.</p>
+    ///   <p>The <c>dotnet-ef migrations list</c> command is used to list available migrations.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -664,7 +664,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations list</c> command is used to list available migrations.</p>
+    ///   <p>The <c>dotnet-ef migrations list</c> command is used to list available migrations.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -690,7 +690,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkMigrationsList(configurator(new EntityFrameworkMigrationsListSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations list</c> command is used to list available migrations.</p>
+    ///   <p>The <c>dotnet-ef migrations list</c> command is used to list available migrations.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -716,7 +716,7 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkMigrationsList, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations remove</c> command is used to remove the last migration (rolls back the code changes that were done for the migration).</p>
+    ///   <p>The <c>dotnet-ef migrations remove</c> command is used to remove the last migration (rolls back the code changes that were done for the migration).</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -744,7 +744,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations remove</c> command is used to remove the last migration (rolls back the code changes that were done for the migration).</p>
+    ///   <p>The <c>dotnet-ef migrations remove</c> command is used to remove the last migration (rolls back the code changes that were done for the migration).</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -769,7 +769,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkMigrationsRemove(configurator(new EntityFrameworkMigrationsRemoveSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations remove</c> command is used to remove the last migration (rolls back the code changes that were done for the migration).</p>
+    ///   <p>The <c>dotnet-ef migrations remove</c> command is used to remove the last migration (rolls back the code changes that were done for the migration).</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -794,7 +794,7 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkMigrationsRemove, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations bundle</c> command is used to create a bundle.</p>
+    ///   <p>The <c>dotnet-ef migrations bundle</c> command is used to create a bundle.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -825,7 +825,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations bundle</c> command is used to create a bundle.</p>
+    ///   <p>The <c>dotnet-ef migrations bundle</c> command is used to create a bundle.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -853,7 +853,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkMigrationsBundle(configurator(new EntityFrameworkMigrationsBundleSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations bundle</c> command is used to create a bundle.</p>
+    ///   <p>The <c>dotnet-ef migrations bundle</c> command is used to create a bundle.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -881,7 +881,7 @@ public partial class EntityFrameworkTasks
         return configurator.Invoke(EntityFrameworkMigrationsBundle, EntityFrameworkLogger, degreeOfParallelism, completeOnFailure);
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations script</c> command is used to generate a SQL script from migrations.</p>
+    ///   <p>The <c>dotnet-ef migrations script</c> command is used to generate a SQL script from migrations.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -913,7 +913,7 @@ public partial class EntityFrameworkTasks
         return process.Output;
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations script</c> command is used to generate a SQL script from migrations.</p>
+    ///   <p>The <c>dotnet-ef migrations script</c> command is used to generate a SQL script from migrations.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -942,7 +942,7 @@ public partial class EntityFrameworkTasks
         return EntityFrameworkMigrationsScript(configurator(new EntityFrameworkMigrationsScriptSettings()));
     }
     /// <summary>
-    ///   <p>The <c>dotnet ef migrations script</c> command is used to generate a SQL script from migrations.</p>
+    ///   <p>The <c>dotnet-ef migrations script</c> command is used to generate a SQL script from migrations.</p>
     ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/ef/core/miscellaneous/cli/dotnet">official website</a>.</p>
     /// </summary>
     /// <remarks>
@@ -1041,7 +1041,7 @@ public partial class EntityFrameworkDatabaseDropSettings : EntityFrameworkSettin
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef database drop")
+          .Add("database drop")
           .Add("--force", Force)
           .Add("--dry-run", DryRun)
           .Add("--json", Json)
@@ -1129,7 +1129,7 @@ public partial class EntityFrameworkDatabaseUpdateSettings : EntityFrameworkSett
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef database update")
+          .Add("database update")
           .Add("{value}", Migration)
           .Add("--connection {value}", Connection)
           .Add("--json", Json)
@@ -1209,7 +1209,7 @@ public partial class EntityFrameworkDbContextInfoSettings : EntityFrameworkSetti
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef dbcontext info")
+          .Add("dbcontext info")
           .Add("--json", Json)
           .Add("--context {value}", Context)
           .Add("--project {value}", Project)
@@ -1287,7 +1287,7 @@ public partial class EntityFrameworkDbContextListSettings : EntityFrameworkSetti
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef dbcontext list")
+          .Add("dbcontext list")
           .Add("--json", Json)
           .Add("--context {value}", Context)
           .Add("--project {value}", Project)
@@ -1514,7 +1514,7 @@ public partial class EntityFrameworkDbContextScriptSettings : EntityFrameworkSet
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef dbcontext script")
+          .Add("dbcontext script")
           .Add("--output {value}", Output)
           .Add("--json", Json)
           .Add("--context {value}", Context)
@@ -1605,7 +1605,7 @@ public partial class EntityFrameworkMigrationsAddSettings : EntityFrameworkSetti
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef migrations add")
+          .Add("migrations add")
           .Add("{value}", Name)
           .Add("--output-dir {value}", OutputDirectory)
           .Add("--namespace {value}", Namespace)
@@ -1694,7 +1694,7 @@ public partial class EntityFrameworkMigrationsListSettings : EntityFrameworkSett
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef migrations list")
+          .Add("migrations list")
           .Add("--connection {value}", Connection)
           .Add("--no-connect", NoConnect)
           .Add("--json", Json)
@@ -1778,7 +1778,7 @@ public partial class EntityFrameworkMigrationsRemoveSettings : EntityFrameworkSe
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef migrations remove")
+          .Add("migrations remove")
           .Add("--force", Force)
           .Add("--json", Json)
           .Add("--context {value}", Context)
@@ -1873,7 +1873,7 @@ public partial class EntityFrameworkMigrationsBundleSettings : EntityFrameworkSe
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef migrations bundle")
+          .Add("migrations bundle")
           .Add("--output {value}", Output)
           .Add("--force", Force)
           .Add("--self-contained", SelfContained)
@@ -1975,7 +1975,7 @@ public partial class EntityFrameworkMigrationsScriptSettings : EntityFrameworkSe
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef migrations script")
+          .Add("migrations script")
           .Add("{value}", From)
           .Add("{value}", To)
           .Add("--output {value}", Output)
