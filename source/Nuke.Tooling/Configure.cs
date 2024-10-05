@@ -70,8 +70,6 @@ public static class ConfigureExtensions
         bool completeOnFailure)
         where TSettings : ToolSettings, new()
     {
-        var singleExecution = degreeOfParallelism == 1;
-
         var invocations = new ConcurrentBag<(TSettings Settings, TResult Result, Exception Exception)>();
 
         try
@@ -83,7 +81,7 @@ public static class ConfigureExtensions
                 {
                     try
                     {
-                        invocations.Add((x, executor(x.SetProcessLogOutput(singleExecution)), default));
+                        invocations.Add((x, executor(x.DisableProcessLogOutput()), default));
                     }
                     catch (Exception exception)
                     {
@@ -101,23 +99,20 @@ public static class ConfigureExtensions
         }
         finally
         {
-            if (!singleExecution)
-            {
-                invocations
-                    .Where(x => x.Settings.ProcessLogOutput ?? ProcessTasks.DefaultLogOutput)
-                    .SelectMany(x =>
+            invocations
+                .Where(x => x.Settings.ProcessLogOutput ?? ProcessTasks.DefaultLogOutput)
+                .SelectMany(x =>
+                {
+                    var (settings, result, exception) = x;
+                    var output = exception switch
                     {
-                        var (settings, result, exception) = x;
-                        var output = exception switch
-                        {
-                            ProcessException processException => processException.Process.Output,
-                            _ => outputSelector(result),
-                        };
+                        ProcessException processException => processException.Process.Output,
+                        _ => outputSelector(result),
+                    };
 
-                        return output.Select(x => (Logger: logger ?? settings.ProcessLogger, Line: x));
-                    })
-                    .ForEach(x => x.Logger(x.Line.Type, x.Line.Text));
-            }
+                    return output.Select(x => (Logger: logger ?? settings.ProcessLogger, Line: x));
+                })
+                .ForEach(x => x.Logger(x.Line.Type, x.Line.Text));
         }
     }
 }

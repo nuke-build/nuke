@@ -23,6 +23,8 @@ public class ArgumentStringHandlerTest
     public void TestString()
     {
         ArgsToString("start end").Should().Be("start end");
+        ArgsToString("").Should().Be("");
+        ArgsToString(" ").Should().Be("");
     }
 
     [Fact]

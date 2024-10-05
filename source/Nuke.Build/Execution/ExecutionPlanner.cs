@@ -21,9 +21,8 @@ internal static class ExecutionPlanner
         IReadOnlyCollection<ExecutableTarget> executableTargets,
         [CanBeNull] IReadOnlyCollection<string> invokedTargetNames)
     {
-        var invokedTargets = invokedTargetNames?.Select(x => GetExecutableTarget(x, executableTargets)).ToList() ??
-                             executableTargets.Where(x => x.IsDefault).ToList();
-        invokedTargets.ForEach(x => x.Invoked = true);
+        var invokedTargets = invokedTargetNames?.Select(x => GetExecutableTarget(x, executableTargets)).ToList();
+        invokedTargets?.ForEach(x => x.Invoked = true);
 
         // Repeat to create the plan with triggers taken into account until plan doesn't change
         IReadOnlyCollection<ExecutableTarget> executionPlan;
@@ -74,7 +73,8 @@ internal static class ExecutionPlanner
             graphAsList.Remove(independent);
 
             var executableTarget = independent.Value;
-            if (!invokedTargets.Contains(executableTarget) &&
+            if (!(invokedTargets != null && invokedTargets.Contains(executableTarget)) &&
+                !(invokedTargets == null && executableTarget.IsDefault) &&
                 !scheduledTargets.SelectMany(x => x.ExecutionDependencies).Contains(executableTarget))
                 continue;
 

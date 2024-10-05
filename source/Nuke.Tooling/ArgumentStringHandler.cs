@@ -81,7 +81,7 @@ public ref struct ArgumentStringHandler
     public string ToStringAndClear()
     {
         var value = _builder.ToStringAndClear();
-        return value.IndexOf(value: '"', startIndex: 1) == value.Length - 1
+        return value.Length > 1 &&  value.IndexOf(value: '"', startIndex: 1) == value.Length - 1
             ? value.TrimMatchingDoubleQuotes()
             : value;
     }

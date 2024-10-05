@@ -231,7 +231,7 @@ public partial class AzurePipelines : Host, IBuildServer
     public void WriteCommand(
         string command,
         string message = null,
-        Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator = null)
+        Func<Dictionary<string, object>, Dictionary<string, object>> dictionaryConfigurator = null)
     {
         var escapedTokens =
             dictionaryConfigurator?
