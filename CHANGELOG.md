@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed nested solution folders in `StronglyTypedSolutionGenerator`
+- Fixed whitespace arguments in `ArgumentStringHandler`
+- Fixed output logging in parallel execution
+- Fixed exclusion of invoked targets from skipping
+- Fixed definite argument in `EntityFrameworkTasks`
 
 ## [8.1.0] / 2024-09-10
 - Added schema generation with references for `build.schema.json`
