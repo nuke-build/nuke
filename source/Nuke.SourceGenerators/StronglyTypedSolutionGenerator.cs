@@ -92,14 +92,18 @@ public class StronglyTypedSolutionGenerator : ISourceGenerator
         string name,
         IReadOnlyCollection<SolutionFolder> solutionFolders,
         IReadOnlyCollection<Project> projects,
-        bool isSolution = false)
+        bool isSolution = false,
+        int depth = 0)
     {
         string GetMemberName(string name) => name
             .ReplaceRegex(@"(^[\W^\d]|[\W])", _ => "_")
             .TrimToOne("_");
 
+        string GetSolutionFolderReferenceName(string name)
+            => $"{new string('_', depth + 1)}{GetMemberName(name)}";
+
         string GetSolutionFolderTypeName(string name)
-            => $"_{GetMemberName(name)}";
+            => $"{new string('_', depth)}{GetMemberName(name)}";
 
         MemberDeclarationSyntax GetSolutionFolderPropertyDeclaration()
             => isSolution
@@ -114,7 +118,7 @@ public class StronglyTypedSolutionGenerator : ISourceGenerator
 
         MemberDeclarationSyntax GetSolutionFolderProperty(string name)
             => ParseMemberDeclaration(
-                $@"public {GetSolutionFolderTypeName(name)} {GetMemberName(name)} => new(SolutionFolder.GetSolutionFolder(""{name}""));");
+                $@"public {GetSolutionFolderReferenceName(name)} {GetMemberName(name)} => new(SolutionFolder.GetSolutionFolder(""{name}""));");
 
         return ClassDeclaration(isSolution ? name : GetSolutionFolderTypeName(name)) // TODO: check for multiple solution fields
             .AddModifiers(Token(SyntaxKind.InternalKeyword))
@@ -125,7 +129,7 @@ public class StronglyTypedSolutionGenerator : ISourceGenerator
                 .AddMembers(GetSolutionFolderConstructorDeclaration()))
             .AddMembers(projects.Select(project => GetProjectPropertyDeclaration(project.Name)).ToArray())
             .AddMembers(solutionFolders.Select(x => GetSolutionFolderProperty(x.Name)).ToArray())
-            .AddMembers(solutionFolders.Select(x => GetSolutionFolderDeclaration(x.Name, x.SolutionFolders, x.Projects))
+            .AddMembers(solutionFolders.Select(x => GetSolutionFolderDeclaration(x.Name, x.SolutionFolders, x.Projects, depth: depth + 1))
                 .ToArray<MemberDeclarationSyntax>());
     }
 
