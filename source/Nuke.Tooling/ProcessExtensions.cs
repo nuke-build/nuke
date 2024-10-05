@@ -2,7 +2,6 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -36,6 +35,19 @@ public static class ProcessExtensions
         process.AssertWaitForExit();
 
         if (process.ExitCode != 0)
+            throw new ProcessException(process);
+
+        return process;
+    }
+
+    [AssertionMethod]
+    public static IProcess AssertNonNegativeExitCode(
+        [AssertionCondition(AssertionConditionType.IS_NOT_NULL)] [NotNull]
+        this IProcess process)
+    {
+        process.AssertWaitForExit();
+
+        if (process.ExitCode < 0)
             throw new ProcessException(process);
 
         return process;
