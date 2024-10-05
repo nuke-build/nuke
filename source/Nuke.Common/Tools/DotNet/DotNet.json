@@ -203,10 +203,22 @@
       "settingsClass": {
         "properties": [
           {
+            "name": "Architecture",
+            "type": "string",
+            "format": "--arch {value}",
+            "help": "Specifies the target architecture. This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7."
+          },
+          {
             "name": "Configuration",
             "type": "string",
             "format": "--configuration {value}",
             "help": "Configuration to use for building the project. The default value is Debug."
+          },
+          {
+            "name": "DisableBuildServers",
+            "type": "bool",
+            "format": "--disable-build-servers",
+            "help": "Force the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK."
           },
           {
             "name": "Framework",
@@ -219,6 +231,12 @@
             "type": "string",
             "format": "--launch-profile {value}",
             "help": "The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the <em>launchSettings.json</em> file and are typically called <c>Development</c>, <c>Staging</c> and <c>Production</c>. For more information, see <a href=\"https://docs.microsoft.com/en-us/aspnetcore/fundamentals/environments\">Working with multiple environments</a>."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK."
           },
           {
             "name": "NoBuild",
@@ -239,10 +257,40 @@
             "help": "Doesn't perform an implicit restore when running the command."
           },
           {
+            "name": "NoSelfContained",
+            "type": "bool",
+            "format": "--no-self-contained",
+            "help": "Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application."
+          },
+          {
+            "name": "OperatingSystem",
+            "type": "string",
+            "format": "--os {value}",
+            "help": "Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6."
+          },
+          {
             "name": "ProjectFile",
             "type": "string",
             "format": "--project {value}",
             "help": "Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified."
+          },
+          {
+            "name": "Runtime",
+            "type": "string",
+            "format": "--runtime {value}",
+            "help": "Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>."
+          },
+          {
+            "name": "SelfContained",
+            "type": "bool",
+            "format": "--self-contained {value}",
+            "help": "Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>false</c>. However, when targeting .NET 7 or lower, the default is <c>true</c> if a runtime identifier is specified."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
           },
           {
             "name": "ApplicationArguments",
@@ -467,6 +515,7 @@
     {
       "help": "The <c>dotnet msbuild</c> command allows access to a fully functional MSBuild.<para/>The command has the exact same capabilities as the existing MSBuild command-line client for SDK-style projects only. The options are all the same. For more information about the available options, see the <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference\">MSBuild command-line reference</a>.<para/>The <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build\">dotnet build</a> command is equivalent to <c>dotnet msbuild -restore</c>. When you don't want to build the project and you have a specific target you want to run, use <c>dotnet build</c> or <c>dotnet msbuild</c> and specify the target.",
       "postfix": "MSBuild",
+      "omitCommonProperties": true,
       "definiteArgument": "msbuild",
       "settingsClass": {
         "properties": [
@@ -548,7 +597,153 @@
             "name": "BinaryLog",
             "type": "string",
             "format": "-bl:{value}",
-            "help": "Generare MSBuild <a href=\"https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md\">binary log</a>."
+            "help": "Generate MSBuild <a href=\"https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md\">binary log</a>."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "/property:{value}",
+            "itemFormat": "{key}={value}",
+            "disallowedCharacter": ";",
+            "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
+            "delegates": [
+              {
+                "name": "RunCodeAnalysis",
+                "type": "bool"
+              },
+              {
+                "name": "NoWarn",
+                "type": "List<int>",
+                "separator": ";"
+              },
+              {
+                "name": "WarningsAsErrors",
+                "type": "List<int>",
+                "separator": ";"
+              },
+              {
+                "name": "WarningLevel",
+                "type": "int"
+              },
+              {
+                "name": "TreatWarningsAsErrors",
+                "type": "bool"
+              },
+              {
+                "name": "AssemblyVersion",
+                "type": "string"
+              },
+              {
+                "name": "FileVersion",
+                "type": "string"
+              },
+              {
+                "name": "InformationalVersion",
+                "type": "string"
+              },
+              {
+                "name": "PackageId",
+                "type": "string"
+              },
+              {
+                "name": "Version",
+                "type": "string"
+              },
+              {
+                "name": "VersionPrefix",
+                "type": "string"
+              },
+              {
+                "name": "Authors",
+                "type": "List<string>",
+                "separator": ","
+              },
+              {
+                "name": "Title",
+                "type": "string"
+              },
+              {
+                "name": "Description",
+                "type": "string"
+              },
+              {
+                "name": "Copyright",
+                "type": "string"
+              },
+              {
+                "name": "PackageRequireLicenseAcceptance",
+                "type": "bool"
+              },
+              {
+                "name": "PackageLicenseUrl",
+                "type": "string"
+              },
+              {
+                "name": "PackageProjectUrl",
+                "type": "string"
+              },
+              {
+                "name": "PackageIconUrl",
+                "type": "string"
+              },
+              {
+                "name": "PackageTags",
+                "type": "List<string>",
+                "separator": " "
+              },
+              {
+                "name": "PackageReleaseNotes",
+                "type": "string"
+              },
+              {
+                "name": "RepositoryUrl",
+                "type": "string"
+              },
+              {
+                "name": "RepositoryType",
+                "type": "string"
+              },
+              {
+                "name": "SymbolPackageFormat",
+                "type": "DotNetSymbolPackageFormat",
+                "help": "Format for packaging symbols."
+              },
+              {
+                "name": "PublishReadyToRun",
+                "type": "bool",
+                "help": "Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run\">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+              },
+              {
+                "name": "PublishSingleFile",
+                "type": "bool",
+                "help": "Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href=\"https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md\">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+              },
+              {
+                "name": "PublishTrimmed",
+                "type": "bool",
+                "help": "Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained\">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+              },
+              {
+                "name": "PublishProfile",
+                "type": "string"
+              },
+              {
+                "name": "Platform",
+                "type": "string"
+              },
+              {
+                "name": "ContinuousIntegrationBuild",
+                "type": "bool"
+              },
+              {
+                "name": "DeterministicSourcePaths",
+                "type": "bool"
+              },
+              {
+                "name": "Deterministic",
+                "type": "bool"
+              }
+            ]
           }
         ]
       }
@@ -1503,10 +1698,10 @@
     {
       "name": "Properties",
       "type": "Dictionary<string, object>",
-      "format": "/property:{value}",
+      "format": "--property:{value}",
       "itemFormat": "{key}={value}",
       "disallowedCharacter": ";",
-      "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
+      "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
       "delegates": [
         {
           "name": "RunCodeAnalysis",
