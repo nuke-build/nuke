@@ -71,11 +71,9 @@ partial class Build
     }
 
     IEnumerable<(string Text, string Url)> AnnouncementSponsors =>
-        new (string Text, string Url)[]
-        {
-            ("Octopus Deploy", "https://octopus.com/"),
-            ("Amazon Web Services", "https://aws.amazon.com/"),
-        };
+    [
+        ("Octopus Deploy", "https://octopus.com/")
+    ];
 
     // https://api.slack.com/apps/A050ZLH0V40/incoming-webhooks?
     [Parameter] [Secret] readonly string SlackWebhook;

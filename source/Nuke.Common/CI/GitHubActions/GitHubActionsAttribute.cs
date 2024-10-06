@@ -61,8 +61,11 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     public string[] OnPullRequestExcludePaths { get; set; } = new string[0];
     public string[] OnWorkflowDispatchOptionalInputs { get; set; } = new string[0];
     public string[] OnWorkflowDispatchRequiredInputs { get; set; } = new string[0];
+    public GitHubActionsIssueCommentType[] OnIssueCommentTypes {get; set;} = new GitHubActionsIssueCommentType[0];
+    public GitHubActionsIssueType[] OnIssueTypes {get; set;} = new GitHubActionsIssueType[0];
+    public GitHubActionsLabelType[] OnLabelTypes {get; set;} = new GitHubActionsLabelType[0];
     public string OnCronSchedule { get; set; }
-
+    
     public string[] ImportSecrets { get; set; } = new string[0];
     public bool EnableGitHubToken { get; set; }
     public GitHubActionsPermissions[] WritePermissions { get; set; } = new GitHubActionsPermissions[0];
@@ -278,5 +281,14 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
 
         if (OnCronSchedule != null)
             yield return new GitHubActionsScheduledTrigger { Cron = OnCronSchedule };
+
+        if (OnIssueCommentTypes.Length > 0)
+            yield return new GitHubActionsIssueCommentTrigger { Types = OnIssueCommentTypes };
+        
+        if (OnIssueTypes.Length > 0)
+            yield return new GitHubActionsIssueTrigger { Types = OnIssueTypes };
+        
+        if (OnLabelTypes.Length > 0)
+            yield return new GitHubActionsLabelTrigger { Types = OnLabelTypes };
     }
 }
