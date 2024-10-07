@@ -121,6 +121,9 @@ public partial class GitHubActions : Host, IBuildServer
 
     public AbsolutePath StepSummaryFile => EnvironmentInfo.GetVariable("GITHUB_STEP_SUMMARY");
 
+    /// <summary>This is set only if debug logging is enabled, and always has the value of 1. It can be useful as an indicator to enable additional debugging or verbose logging in your own job steps.</summary>
+    public bool IsDebugLoggingEnabled => EnvironmentInfo.HasVariable("RUNNER_DEBUG");
+
     public void Group(string group)
     {
         WriteCommand("group", group);
