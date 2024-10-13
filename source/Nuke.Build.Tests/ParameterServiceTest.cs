@@ -41,8 +41,12 @@ public class ParameterServiceTest
     [Theory]
     [InlineData("arg1", typeof(string), "value1")]
     [InlineData("arg2", typeof(string), "value3")]
+    [InlineData("arg3", typeof(string), "value4")]
+    [InlineData("switch1", typeof(bool), true)]
     [InlineData("switch2", typeof(bool), true)]
     [InlineData("switch3", typeof(bool), false)]
+    [InlineData("switch4", typeof(bool), false)]
+    [InlineData("switch5", typeof(bool), true)]
     [InlineData("array1", typeof(string[]), new[] { "element1", "element2" })]
     [InlineData("array2", typeof(string[]), new string[0])]
     [InlineData("array3", typeof(string[]), null)]
@@ -60,8 +64,11 @@ public class ParameterServiceTest
             {
                 { "arg1", "value2" },
                 { "arg2", "value3" },
+                { "nuke_arg_3", "value4" },
                 { "switch2", "true" },
                 { "switch3", "false" },
+                { "switch4", "" },
+                { "nuke_switch_5", "true" },
                 { "array1", "element1+element2" },
                 { "array2", "" },
             });

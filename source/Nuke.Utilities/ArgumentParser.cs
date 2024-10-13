@@ -151,7 +151,7 @@ internal class ArgumentParser
     {
         try
         {
-            return ReflectionUtility.Convert(values, destinationType);
+            return ReflectionUtility.Convert(values, destinationType, booleanDefault: true);
         }
         catch (Exception ex)
         {

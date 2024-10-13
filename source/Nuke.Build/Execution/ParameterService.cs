@@ -214,7 +214,7 @@ internal partial class ParameterService
 
         try
         {
-            return Convert(value, destinationType, separator);
+            return Convert(value, destinationType, separator, booleanDefault: false);
         }
         catch (Exception ex)
         {

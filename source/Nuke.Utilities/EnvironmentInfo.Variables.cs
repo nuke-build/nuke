@@ -62,7 +62,7 @@ public static partial class EnvironmentInfo
         if (value == null)
             return default;
 
-        return (T)ReflectionUtility.Convert(value, typeof(T), separator);
+        return (T)ReflectionUtility.Convert(value, typeof(T), separator, booleanDefault: false);
     }
 
     /// <summary>
