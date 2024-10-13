@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed exclusion of skipped target from lookup for skippable dependencies
+- Fixed resolution of empty environment variables to false
+- Fixed parallel execution to prefer logger from settings
 
 ## [8.1.1] / 2024-10-05
 - Fixed nested solution folders in `StronglyTypedSolutionGenerator`
