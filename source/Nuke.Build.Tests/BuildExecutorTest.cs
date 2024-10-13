@@ -106,6 +106,19 @@ public class BuildExecutorTest
     }
 
     [Fact]
+    public void TestStaticCondition_DependencyBehavior_Skip_Invoked()
+    {
+        C.Invoked = true;
+        C.StaticConditions.Add(("() => false", () => false));
+        B.DependencyBehavior = DependencyBehavior.Skip;
+        ExecuteBuild();
+        AssertSkipped(A, B, C);
+        A.Skipped.Should().Be("because of B");
+        B.Skipped.Should().Be("because of C");
+        C.OnlyWhen.Should().Be("false");
+    }
+
+    [Fact]
     public void TestStaticCondition_Multiple()
     {
         A.StaticConditions.Add(("A", () => false));

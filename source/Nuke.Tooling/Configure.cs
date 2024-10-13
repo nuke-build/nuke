@@ -29,7 +29,7 @@ public static class ConfigureExtensions
     public static IReadOnlyCollection<(TSettings Settings, IReadOnlyCollection<Output> Output)> Invoke<TSettings>(
         this CombinatorialConfigure<TSettings> configurator,
         Func<TSettings, IReadOnlyCollection<Output>> executor,
-        Action<OutputType, string> logger,
+        Action<OutputType, string> defaultLogger,
         int degreeOfParallelism,
         bool completeOnFailure)
         where TSettings : ToolSettings, new()
@@ -38,7 +38,7 @@ public static class ConfigureExtensions
             configurator,
             x => (Settings: x, Output: executor(x)),
             x => x.Output,
-            logger,
+            defaultLogger,
             degreeOfParallelism,
             completeOnFailure);
     }
@@ -46,16 +46,16 @@ public static class ConfigureExtensions
     public static IReadOnlyCollection<(TSettings Settings, TResult Result, IReadOnlyCollection<Output> Output)> Invoke<TSettings, TResult>(
         this CombinatorialConfigure<TSettings> configurator,
         Func<TSettings, (TResult Result, IReadOnlyCollection<Output> Output)> executor,
-        Action<OutputType, string> logger,
+        Action<OutputType, string> defaultLogger,
         int degreeOfParallelism,
         bool completeOnFailure)
         where TSettings : ToolSettings, new()
     {
         return Invoke(
                 configurator,
-                x => (Settings: x, ReturnValue: executor(x)),
-                x => x.ReturnValue.Output,
-                logger,
+                executor: x => (Settings: x, ReturnValue: executor(x)),
+                outputSelector: x => x.ReturnValue.Output,
+                defaultLogger,
                 degreeOfParallelism,
                 completeOnFailure)
             .Select(x => (x.Settings, x.ReturnValue.Result, x.ReturnValue.Output)).ToList();
@@ -65,12 +65,12 @@ public static class ConfigureExtensions
         CombinatorialConfigure<TSettings> configurator,
         Func<TSettings, TResult> executor,
         Func<TResult, IReadOnlyCollection<Output>> outputSelector,
-        Action<OutputType, string> logger,
+        Action<OutputType, string> defaultLogger,
         int degreeOfParallelism,
         bool completeOnFailure)
         where TSettings : ToolSettings, new()
     {
-        var invocations = new ConcurrentBag<(TSettings Settings, TResult Result, Exception Exception)>();
+        var invocations = new ConcurrentBag<(TSettings Settings, Action<OutputType, string> logger, TResult Result, Exception Exception)>();
 
         try
         {
@@ -79,13 +79,15 @@ public static class ConfigureExtensions
                 .WithDegreeOfParallelism(degreeOfParallelism)
                 .ForAll(x =>
                 {
+                    var logger = x.ProcessLogger ?? defaultLogger;
                     try
                     {
-                        invocations.Add((x, executor(x.DisableProcessLogOutput()), default));
+                        var result = executor(x.DisableProcessLogOutput());
+                        invocations.Add((x, logger, result, default));
                     }
                     catch (Exception exception)
                     {
-                        invocations.Add((x, default, exception));
+                        invocations.Add((x, logger, default, exception));
 
                         if (!completeOnFailure)
                             throw;
@@ -103,14 +105,14 @@ public static class ConfigureExtensions
                 .Where(x => x.Settings.ProcessLogOutput ?? ProcessTasks.DefaultLogOutput)
                 .SelectMany(x =>
                 {
-                    var (settings, result, exception) = x;
+                    var (_, logger, result, exception) = x;
                     var output = exception switch
                     {
                         ProcessException processException => processException.Process.Output,
                         _ => outputSelector(result),
                     };
 
-                    return output.Select(x => (Logger: logger ?? settings.ProcessLogger, Line: x));
+                    return output.Select(x => (Logger: logger, Line: x));
                 })
                 .ForEach(x => x.Logger(x.Line.Type, x.Line.Text));
         }

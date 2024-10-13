@@ -195,12 +195,12 @@ internal static class BuildExecutor
 
         bool HasOtherDependencies(ExecutableTarget dependentTarget)
             => build.ExecutionPlan
-                .Where(x => x.Status == ExecutionStatus.Scheduled)
+                .Where(x => x != target && x.Status == ExecutionStatus.Scheduled)
                 .Any(x => x.ExecutionDependencies.Contains(dependentTarget) || x.Triggers.Contains(dependentTarget));
 
-        var skippableTargets = target.ExecutionDependencies.Concat(target.Triggers)
+        var skippableDependencies = target.ExecutionDependencies.Concat(target.Triggers)
             .Where(x => !HasOtherDependencies(x)).ToList();
-        skippableTargets.ForEach(x => MarkTargetSkipped(build, x, $"because of {target.Name}"));
+        skippableDependencies.ForEach(x => MarkTargetSkipped(build, x, $"because of {target.Name}"));
     }
 
     private static void AppendToBuildAttemptFile(string value)
