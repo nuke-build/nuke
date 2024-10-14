@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -200,12 +200,14 @@ public static class DataClassGenerator
         if (hasArguments)
             argumentAdditions[argumentAdditions.Count - 1] += ";";
 
+        var isSettingsEntity = string.Equals(writer.DataClass.BaseClass, "ISettingsEntity");
+
         return writer
-            .WriteLine("protected override Arguments ConfigureProcessArguments(Arguments arguments)")
+            .WriteLine(isSettingsEntity ? "protected Arguments ConfigureProcessArguments(Arguments arguments)" : "protected override Arguments ConfigureProcessArguments(Arguments arguments)")
             .WriteBlock(w => w
                 .WriteLine("arguments")
                 .ForEachWriteLine(argumentAdditions)
-                .WriteLine("return base.ConfigureProcessArguments(arguments);"));
+                .WriteLine(isSettingsEntity ? "return arguments;" : "return base.ConfigureProcessArguments(arguments);"));
     }
 
     private static string GetArgumentAddition(Property property)

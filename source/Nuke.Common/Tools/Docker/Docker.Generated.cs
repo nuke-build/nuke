@@ -23833,7 +23833,7 @@ public partial class DockerRunTargetSettings : DockerRunSettings
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Serializable]
-public partial class CliSettings : ToolSettings
+public partial class CliSettings : ISettingsEntity
 {
     /// <summary>
     ///   Set the logging level.
@@ -23844,9 +23844,18 @@ public partial class CliSettings : ToolSettings
     /// </summary>
     public virtual string Config { get; internal set; }
     /// <summary>
+    ///   Name of the context to use to connect to the daemon.
+    /// </summary>
+    public virtual string Context { get; internal set; }
+    /// <summary>
     ///   Enable debug mode.
     /// </summary>
     public virtual bool? Debug { get; internal set; }
+    /// <summary>
+    ///   Daemon socket to connect to.
+    /// </summary>
+    public virtual IReadOnlyList<string> Hosts => HostsInternal.AsReadOnly();
+    internal List<string> HostsInternal { get; set; } = new List<string>();
     /// <summary>
     ///   Use TLS; implied by --tlsverify.
     /// </summary>
@@ -23867,18 +23876,20 @@ public partial class CliSettings : ToolSettings
     ///   Path to TLS key file (default ~/.docker/key.pem).
     /// </summary>
     public virtual string TLSKey { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
+    protected Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
           .Add("--log-level {value}", LogLevel)
           .Add("--config {value}", Config)
+          .Add("--context {value}", Context)
           .Add("--debug", Debug)
+          .Add("--host {value}", Hosts)
           .Add("--tls", TLS)
           .Add("--tlsverify", TLSVerify)
           .Add("--tlscacert {value}", TLSCaCert)
           .Add("--tlscert {value}", TLSCert)
           .Add("--tlskey {value}", TLSKey);
-        return base.ConfigureProcessArguments(arguments);
+        return arguments;
     }
 }
 #endregion
@@ -82644,6 +82655,412 @@ public static partial class DockerRunTargetSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.Server = null;
+        return toolSettings;
+    }
+    #endregion
+}
+#endregion
+#region CliSettingsExtensions
+/// <summary>
+///   Used within <see cref="DockerTasks"/>.
+/// </summary>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class CliSettingsExtensions
+{
+    #region LogLevel
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.LogLevel"/></em></p>
+    ///   <p>Set the logging level.</p>
+    /// </summary>
+    [Pure]
+    public static T SetLogLevel<T>(this T toolSettings, LogLevel logLevel) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.LogLevel = logLevel;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="CliSettings.LogLevel"/></em></p>
+    ///   <p>Set the logging level.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetLogLevel<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.LogLevel = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Config
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.Config"/></em></p>
+    ///   <p>Location of client config files (default ~/.docker).</p>
+    /// </summary>
+    [Pure]
+    public static T SetConfig<T>(this T toolSettings, string config) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Config = config;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="CliSettings.Config"/></em></p>
+    ///   <p>Location of client config files (default ~/.docker).</p>
+    /// </summary>
+    [Pure]
+    public static T ResetConfig<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Config = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Context
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.Context"/></em></p>
+    ///   <p>Name of the context to use to connect to the daemon.</p>
+    /// </summary>
+    [Pure]
+    public static T SetContext<T>(this T toolSettings, string context) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Context = context;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="CliSettings.Context"/></em></p>
+    ///   <p>Name of the context to use to connect to the daemon.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetContext<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Context = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Debug
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.Debug"/></em></p>
+    ///   <p>Enable debug mode.</p>
+    /// </summary>
+    [Pure]
+    public static T SetDebug<T>(this T toolSettings, bool? debug) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Debug = debug;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="CliSettings.Debug"/></em></p>
+    ///   <p>Enable debug mode.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetDebug<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Debug = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="CliSettings.Debug"/></em></p>
+    ///   <p>Enable debug mode.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableDebug<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Debug = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="CliSettings.Debug"/></em></p>
+    ///   <p>Enable debug mode.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableDebug<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Debug = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="CliSettings.Debug"/></em></p>
+    ///   <p>Enable debug mode.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleDebug<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Debug = !toolSettings.Debug;
+        return toolSettings;
+    }
+    #endregion
+    #region Hosts
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.Hosts"/> to a new list</em></p>
+    ///   <p>Daemon socket to connect to.</p>
+    /// </summary>
+    [Pure]
+    public static T SetHosts<T>(this T toolSettings, params string[] hosts) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.HostsInternal = hosts.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.Hosts"/> to a new list</em></p>
+    ///   <p>Daemon socket to connect to.</p>
+    /// </summary>
+    [Pure]
+    public static T SetHosts<T>(this T toolSettings, IEnumerable<string> hosts) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.HostsInternal = hosts.ToList();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="CliSettings.Hosts"/></em></p>
+    ///   <p>Daemon socket to connect to.</p>
+    /// </summary>
+    [Pure]
+    public static T AddHosts<T>(this T toolSettings, params string[] hosts) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.HostsInternal.AddRange(hosts);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Adds values to <see cref="CliSettings.Hosts"/></em></p>
+    ///   <p>Daemon socket to connect to.</p>
+    /// </summary>
+    [Pure]
+    public static T AddHosts<T>(this T toolSettings, IEnumerable<string> hosts) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.HostsInternal.AddRange(hosts);
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Clears <see cref="CliSettings.Hosts"/></em></p>
+    ///   <p>Daemon socket to connect to.</p>
+    /// </summary>
+    [Pure]
+    public static T ClearHosts<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.HostsInternal.Clear();
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="CliSettings.Hosts"/></em></p>
+    ///   <p>Daemon socket to connect to.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveHosts<T>(this T toolSettings, params string[] hosts) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<string>(hosts);
+        toolSettings.HostsInternal.RemoveAll(x => hashSet.Contains(x));
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Removes values from <see cref="CliSettings.Hosts"/></em></p>
+    ///   <p>Daemon socket to connect to.</p>
+    /// </summary>
+    [Pure]
+    public static T RemoveHosts<T>(this T toolSettings, IEnumerable<string> hosts) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        var hashSet = new HashSet<string>(hosts);
+        toolSettings.HostsInternal.RemoveAll(x => hashSet.Contains(x));
+        return toolSettings;
+    }
+    #endregion
+    #region TLS
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.TLS"/></em></p>
+    ///   <p>Use TLS; implied by --tlsverify.</p>
+    /// </summary>
+    [Pure]
+    public static T SetTLS<T>(this T toolSettings, bool? tls) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLS = tls;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="CliSettings.TLS"/></em></p>
+    ///   <p>Use TLS; implied by --tlsverify.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetTLS<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLS = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="CliSettings.TLS"/></em></p>
+    ///   <p>Use TLS; implied by --tlsverify.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableTLS<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLS = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="CliSettings.TLS"/></em></p>
+    ///   <p>Use TLS; implied by --tlsverify.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableTLS<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLS = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="CliSettings.TLS"/></em></p>
+    ///   <p>Use TLS; implied by --tlsverify.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleTLS<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLS = !toolSettings.TLS;
+        return toolSettings;
+    }
+    #endregion
+    #region TLSVerify
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.TLSVerify"/></em></p>
+    ///   <p>Use TLS and verify the remote.</p>
+    /// </summary>
+    [Pure]
+    public static T SetTLSVerify<T>(this T toolSettings, bool? tlsverify) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSVerify = tlsverify;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="CliSettings.TLSVerify"/></em></p>
+    ///   <p>Use TLS and verify the remote.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetTLSVerify<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSVerify = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="CliSettings.TLSVerify"/></em></p>
+    ///   <p>Use TLS and verify the remote.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableTLSVerify<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSVerify = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="CliSettings.TLSVerify"/></em></p>
+    ///   <p>Use TLS and verify the remote.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableTLSVerify<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSVerify = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="CliSettings.TLSVerify"/></em></p>
+    ///   <p>Use TLS and verify the remote.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleTLSVerify<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSVerify = !toolSettings.TLSVerify;
+        return toolSettings;
+    }
+    #endregion
+    #region TLSCaCert
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.TLSCaCert"/></em></p>
+    ///   <p>Trust certs signed only by this CA (default ~/.docker/ca.pem).</p>
+    /// </summary>
+    [Pure]
+    public static T SetTLSCaCert<T>(this T toolSettings, string tlscaCert) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSCaCert = tlscaCert;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="CliSettings.TLSCaCert"/></em></p>
+    ///   <p>Trust certs signed only by this CA (default ~/.docker/ca.pem).</p>
+    /// </summary>
+    [Pure]
+    public static T ResetTLSCaCert<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSCaCert = null;
+        return toolSettings;
+    }
+    #endregion
+    #region TLSCert
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.TLSCert"/></em></p>
+    ///   <p>Path to TLS certificate file (default ~/.docker/cert.pem).</p>
+    /// </summary>
+    [Pure]
+    public static T SetTLSCert<T>(this T toolSettings, string tlscert) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSCert = tlscert;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="CliSettings.TLSCert"/></em></p>
+    ///   <p>Path to TLS certificate file (default ~/.docker/cert.pem).</p>
+    /// </summary>
+    [Pure]
+    public static T ResetTLSCert<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSCert = null;
+        return toolSettings;
+    }
+    #endregion
+    #region TLSKey
+    /// <summary>
+    ///   <p><em>Sets <see cref="CliSettings.TLSKey"/></em></p>
+    ///   <p>Path to TLS key file (default ~/.docker/key.pem).</p>
+    /// </summary>
+    [Pure]
+    public static T SetTLSKey<T>(this T toolSettings, string tlskey) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSKey = tlskey;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="CliSettings.TLSKey"/></em></p>
+    ///   <p>Path to TLS key file (default ~/.docker/key.pem).</p>
+    /// </summary>
+    [Pure]
+    public static T ResetTLSKey<T>(this T toolSettings) where T : CliSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.TLSKey = null;
         return toolSettings;
     }
     #endregion

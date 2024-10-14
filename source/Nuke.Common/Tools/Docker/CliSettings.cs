@@ -14,6 +14,4 @@ public partial class CliSettings
     {
         return ConfigureProcessArguments(new Arguments());
     }
-
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? throw new NotSupportedException();
 }
