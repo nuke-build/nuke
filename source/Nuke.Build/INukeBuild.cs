@@ -35,7 +35,7 @@ public interface INukeBuild
     IReadOnlyCollection<ExecutableTarget> SucceededTargets { get; }
     IReadOnlyCollection<ExecutableTarget> FinishedTargets { get; }
 
-    bool IsSuccessful { get; }
+    bool IsSucceeding { get; }
     bool IsFailing { get; }
     bool IsFinished { get; }
     int? ExitCode { get; set; }

@@ -184,7 +184,7 @@ public abstract partial class NukeBuild : INukeBuild
     internal IEnumerable<string> TargetNames => ExecutableTargetFactory.GetTargetProperties(GetType()).Select(x => x.GetDisplayShortName());
     internal IEnumerable<string> HostNames => Host.AvailableTypes.Select(x => x.Name);
 
-    public bool IsSuccessful => ExecutionPlan.All(x => x.Status is
+    public bool IsSucceeding => ExecutionPlan.All(x => x.Status is
         ExecutionStatus.Succeeded or
         ExecutionStatus.Skipped or
         ExecutionStatus.Collective);
