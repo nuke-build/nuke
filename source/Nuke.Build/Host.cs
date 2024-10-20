@@ -163,7 +163,7 @@ public partial class Host
     protected internal virtual void WriteBuildOutcome(INukeBuild build)
     {
         Debug();
-        if (build.IsSuccessful)
+        if (build.IsSucceeding)
             Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. ＼（＾ᴗ＾）／");
         else
             Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. (╯°□°）╯︵ ┻━┻");

@@ -75,7 +75,7 @@ internal static class BuildManager
                 build,
                 ParameterService.GetParameter<string[]>(() => build.SkippedTargets));
 
-            return build.ExitCode ??= build.IsSuccessful ? 0 : ErrorExitCode;
+            return build.ExitCode ??= build.IsSucceeding ? 0 : ErrorExitCode;
         }
         catch (Exception exception)
         {
