@@ -44,7 +44,7 @@ public abstract class ConfigurationAttributeBase : Attribute, IConfigurationGene
     public void Generate(IReadOnlyCollection<ExecutableTarget> executableTargets)
     {
         var relevantTargets = RelevantTargetNames
-            .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
+            .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { ExecutableTargetFactory.GetExecutableTarget(x, executableTargets) }))
             .Distinct()
             .Where(x => !IrrelevantTargetNames.Contains(x.Name)).ToList();
         var configuration = GetConfiguration(relevantTargets);

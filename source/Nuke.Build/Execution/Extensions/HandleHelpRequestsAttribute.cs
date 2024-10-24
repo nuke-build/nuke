@@ -36,16 +36,29 @@ internal class HandleHelpRequestsAttribute : BuildExtensionAttributeBase, IOnBui
         builder.AppendLine();
         foreach (var target in Build.ExecutableTargets.Where(x => x.Listed))
         {
-            var dependencies = target.ExecutionDependencies.Count > 0
-                ? $" -> {target.ExecutionDependencies.Select(x => x.Name).JoinCommaSpace()}"
-                : string.Empty;
-            var targetEntry = target.Name + (target.IsDefault ? " (default)" : string.Empty);
-            builder.AppendLine($"  {targetEntry.PadRight(padRightTargets)}{dependencies}");
-            if (!string.IsNullOrWhiteSpace(target.Description))
-                builder.AppendLine($"    {target.Description}");
+            AppendTargetText(builder, target, 
+                "  ",
+                "    ",
+                padRightTargets);
         }
 
         return builder.ToString();
+    }
+
+    internal static void AppendTargetText(StringBuilder builder, ExecutableTarget target, 
+        string targetIndent,
+        string descriptionIndent,
+        int padRightTargets)
+    {
+        var dependencies = target.ExecutionDependencies.Count > 0
+            ? $" -> {target.ExecutionDependencies.Select(x => x.Name).JoinCommaSpace()}"
+            : string.Empty;
+        var targetEntry = target.Name + (target.IsDefault ? " (default)" : string.Empty);
+        builder.AppendLine($"{targetIndent}{targetEntry.PadRight(padRightTargets)}{dependencies}");
+        if (!string.IsNullOrWhiteSpace(target.Description))
+        {
+            builder.AppendLine($"{descriptionIndent}{target.Description}");
+        }
     }
 
     public string GetParametersText()

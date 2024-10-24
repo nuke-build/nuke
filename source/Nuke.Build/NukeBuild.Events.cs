@@ -7,10 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
+using JetBrains.Annotations;
 using Nuke.Common.Execution;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Serilog;
+using Spectre.Console;
 
 namespace Nuke.Common;
 
@@ -85,5 +88,50 @@ public abstract partial class NukeBuild
     /// </summary>
     protected internal virtual void OnTargetFailed(string target)
     {
+    }
+
+    /// <summary>
+    /// Method that is invoked when the user did not specify any targets and.
+    /// </summary>
+    /// <returns>The list of fallback targets which should be executed or <see langword="null" /> if no automatic target selection should happen</returns>> 
+    [CanBeNull]
+    public virtual IReadOnlyCollection<ExecutableTarget> OnNoTargetsSpecified()
+    {
+        if (Help || !Interactive || Host is not Terminal)
+        {
+            return null;
+        }
+        
+        // this output is aligned with the help output formatting.
+        
+        var longestTargetName = ExecutableTargets.Select(x => x.Name.Length).OrderByDescending(x => x).First();
+        var padRightTargets = Math.Max(longestTargetName, val2: 20);
+
+        var availableTargets = ExecutableTargets
+            .Where(t => t.Listed)
+            .OrderBy(x => x.IsDefault ? 0 : 1)
+            .ThenBy(x => x.Name)
+            .ToArray();
+        
+        var targets = AnsiConsole.Prompt(
+            new MultiSelectionPrompt<ExecutableTarget>()
+                .Title("No target specified. Choose the targets you want execute:")
+                .AddChoices(availableTargets)
+                .UseConverter(target =>
+                {
+                    var builder = new StringBuilder();
+                    // > [ ] Compile                                                        
+                    //       Compiles the project
+                    // ______ <- 6 characters indent
+                    HandleHelpRequestsAttribute.AppendTargetText(builder, target, "", "      ", padRightTargets);
+                    return builder.ToString().TrimEnd();
+                })
+                .InstructionsText(
+                    "[grey](Press [blue]<space>[/] to toggle a target, [green]<enter>[/] to accept)[/]")
+        );
+        
+        Host.Information($"Selected targets: {targets.Select(x => x.Name).JoinCommaSpace()}");
+
+        return targets.AsReadOnly();
     }
 }

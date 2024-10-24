@@ -24,6 +24,7 @@
     <PackageReference Include="Serilog.Formatting.Compact.Reader" />
     <PackageReference Include="Serilog.Sinks.Console" />
     <PackageReference Include="Serilog.Sinks.File" />
+    <PackageReference Include="matkoch.spectre.console" />
   </ItemGroup>
 
   <ItemGroup>

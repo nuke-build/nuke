@@ -84,13 +84,13 @@ internal class HandlePlanRequestsAttribute : BuildExtensionAttributeBase, IOnBui
 
         // When not hovering anything, highlight the default plan
         var defaultPlan = executableTargets.Where(x => x.IsDefault)
-            .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x.Name }))
+            .SelectMany(x => ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { x }))
             .Distinct().ToList();
         defaultPlan.ForEach(x => builder.AppendLine($@"  $(""#{x.Name}"").addClass('highlight');"));
 
         foreach (var executableTarget in executableTargets)
         {
-            var executionPlan = ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { executableTarget.Name });
+            var executionPlan = ExecutionPlanner.GetExecutionPlan(executableTargets, new[] { executableTarget });
             builder
                 .AppendLine($@"  $(""#{executableTarget.Name}"").hover(")
                 .AppendLine("    function() {");

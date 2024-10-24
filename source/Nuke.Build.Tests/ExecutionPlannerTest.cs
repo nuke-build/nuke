@@ -96,9 +96,7 @@ public class ExecutionPlannerTest
 
     private IEnumerable<ExecutableTarget> GetPlan(ExecutableTarget[] invokedTargets = null)
     {
-        static string[] SelectNames(ExecutableTarget[] targets) => targets?.Select(x => x.Name).ToArray();
-
-        return ExecutionPlanner.GetExecutionPlan(new[] { A, B, C }, SelectNames(invokedTargets));
+        return ExecutionPlanner.GetExecutionPlan(new[] { A, B, C }, invokedTargets);
     }
 
     private void AddTrigger(ExecutableTarget source, ExecutableTarget target)

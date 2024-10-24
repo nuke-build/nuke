@@ -62,10 +62,10 @@ internal static class BuildManager
             if (!build.NoLogo)
                 build.WriteLogo();
 
-            // TODO: move InvokedTargets to ExecutableTargetFactory
+            var invokedTargets = ExecutableTargetFactory.CollectInvokedTargets(build);
             build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                 build.ExecutableTargets,
-                ParameterService.GetParameter<string[]>(() => build.InvokedTargets));
+                invokedTargets);
 
             ToolRequirementService.EnsureToolRequirements(build, build.ExecutionPlan);
             build.ExecuteExtension<IOnBuildInitialized>(x => x.OnBuildInitialized(build.ExecutableTargets, build.ExecutionPlan));

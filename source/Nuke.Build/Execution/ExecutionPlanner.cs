@@ -19,9 +19,8 @@ internal static class ExecutionPlanner
 {
     public static IReadOnlyCollection<ExecutableTarget> GetExecutionPlan(
         IReadOnlyCollection<ExecutableTarget> executableTargets,
-        [CanBeNull] IReadOnlyCollection<string> invokedTargetNames)
+        [CanBeNull] IReadOnlyCollection<ExecutableTarget> invokedTargets)
     {
-        var invokedTargets = invokedTargetNames?.Select(x => GetExecutableTarget(x, executableTargets)).ToList();
         invokedTargets?.ForEach(x => x.Invoked = true);
 
         // Repeat to create the plan with triggers taken into account until plan doesn't change
@@ -42,7 +41,7 @@ internal static class ExecutionPlanner
 
     private static IReadOnlyCollection<ExecutableTarget> GetExecutionPlanInternal(
         IReadOnlyCollection<ExecutableTarget> executableTargets,
-        ICollection<ExecutableTarget> invokedTargets)
+        IReadOnlyCollection<ExecutableTarget> invokedTargets)
     {
         var vertexDictionary = GetVertexDictionary(executableTargets);
         var graphAsList = vertexDictionary.Values.ToList();
@@ -94,21 +93,5 @@ internal static class ExecutionPlanner
             vertex.Dependencies.AddRange(executable.AllDependencies.Select(x => vertexDictionary.GetValueOrDefault(x)).WhereNotNull());
 
         return vertexDictionary;
-    }
-
-    private static ExecutableTarget GetExecutableTarget(
-        string targetName,
-        IReadOnlyCollection<ExecutableTarget> executableTargets)
-    {
-        targetName = targetName.Replace("-", string.Empty);
-        var executableTarget = executableTargets.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
-        if (executableTarget == null)
-        {
-            Assert.Fail($"Target with name {targetName.SingleQuote()} does not exist. Available targets are:"
-                .Concat(executableTargets.Select(x => $"  - {x.Name}").OrderBy(x => x))
-                .JoinNewLine());
-        }
-
-        return executableTarget;
     }
 }

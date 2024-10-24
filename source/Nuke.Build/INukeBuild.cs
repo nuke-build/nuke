@@ -19,7 +19,7 @@ public interface INukeBuild
 {
     void ReportSummary(Configure<Dictionary<string, string>> configurator = null);
 
-    internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; }
+    IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; }
     internal IReadOnlyCollection<IBuildExtension> BuildExtensions { get; }
     internal bool IsInterceptorExecution { get; }
     internal string[] LoadedLocalProfiles { get; }
@@ -52,6 +52,7 @@ public interface INukeBuild
     bool Plan { get; }
     bool Help { get; }
     bool NoLogo { get; }
+    bool Interactive { get; }
     bool IsLocalBuild { get; }
     bool IsServerBuild { get; }
     bool Continue { get; }
@@ -62,4 +63,7 @@ public interface INukeBuild
 
     [CanBeNull]
     public T TryGetValue<T>(Expression<Func<object>> parameterExpression);
+
+    [CanBeNull]
+    IReadOnlyCollection<ExecutableTarget> OnNoTargetsSpecified();
 }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 
@@ -17,6 +18,37 @@ namespace Nuke.Common.Execution;
 /// </summary>
 internal static class ExecutableTargetFactory
 {
+    [CanBeNull]
+    public static IReadOnlyCollection<ExecutableTarget> CollectInvokedTargets<T>(T build)
+        where T : INukeBuild
+    {
+        var buildType = build.GetType();
+        var invokedTargetProperty = buildType.GetProperty(nameof(INukeBuild.InvokedTargets));
+        var invokedTargetNames = ParameterService.GetParameter<string[]>(invokedTargetProperty);
+        if (invokedTargetNames is { Length: > 0 })
+        {
+            return invokedTargetNames.Select(x => GetExecutableTarget(x, build.ExecutableTargets)).ToList();
+        }
+
+        return build.OnNoTargetsSpecified();
+    }
+
+    internal static ExecutableTarget GetExecutableTarget(
+        string targetName,
+        IReadOnlyCollection<ExecutableTarget> executableTargets)
+    {
+        targetName = targetName.Replace("-", string.Empty);
+        var executableTarget = executableTargets.SingleOrDefault(x => x.Name.EqualsOrdinalIgnoreCase(targetName));
+        if (executableTarget == null)
+        {
+            Assert.Fail($"Target with name {targetName.SingleQuote()} does not exist. Available targets are:"
+                .Concat(executableTargets.Select(x => $"  - {x.Name}").OrderBy(x => x))
+                .JoinNewLine());
+        }
+
+        return executableTarget;
+    }
+
     public static IReadOnlyCollection<ExecutableTarget> CreateAll<T>(
         T build,
         params Expression<Func<T, Target>>[] defaultTargetExpressions)
@@ -35,7 +67,7 @@ internal static class ExecutableTargetFactory
                 .Reverse().ToList();
             var definition = new TargetDefinition(property, build, new Stack<PropertyInfo>(baseMembers));
 
-            var factory = (Delegate) property.GetValue(build);
+            var factory = (Delegate)property.GetValue(build);
             factory.DynamicInvokeUnwrap(definition);
 
             return new ExecutableTarget
