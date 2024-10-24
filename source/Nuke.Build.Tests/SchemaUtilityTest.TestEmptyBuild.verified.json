@@ -37,6 +37,10 @@
           "description": "Host for execution. Default is 'automatic'",
           "$ref": "#/definitions/Host"
         },
+        "Interactive": {
+          "type": "boolean",
+          "description": "Activates the interactive mode when asking for user inputs"
+        },        
         "NoLogo": {
           "type": "boolean",
           "description": "Disables displaying the NUKE logo"
