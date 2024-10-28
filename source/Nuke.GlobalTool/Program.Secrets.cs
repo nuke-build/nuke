@@ -109,7 +109,7 @@ partial class Program
         var jobject = buildSchemaFile.ReadJson();
         return jobject
             .GetPropertyValue("definitions")
-            .GetPropertyValue("build")
+            .GetPropertyValue(nameof(NukeBuild))
             .GetPropertyValue("properties")
             .Children<JProperty>()
             .Where(x => x.Value.Value<JObject>().GetPropertyValueOrNull<string>("default") != null)
