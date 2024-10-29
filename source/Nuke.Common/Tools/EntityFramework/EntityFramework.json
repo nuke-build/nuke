@@ -72,7 +72,7 @@
     {
       "help": "The <c>dotnet-ef dbcontext scaffold</c> command is used to generate code for a <c>DbContext</c> and entity types for a database. In order for this command to generate an entity type, the database table must have a primary key.",
       "postfix": "DbContextScaffold",
-      "definiteArgument": "ef dbcontext scaffold",
+      "definiteArgument": "dbcontext scaffold",
       "settingsClass": {
         "baseClass": "EntityFrameworkSettings",
         "properties": [
