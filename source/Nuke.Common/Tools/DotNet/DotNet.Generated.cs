@@ -205,12 +205,15 @@ public partial class DotNetTasks
     ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
     ///   <ul>
     ///     <li><c>--</c> via <see cref="DotNetRunSettings.ApplicationArguments"/></li>
+    ///     <li><c>--arch</c> via <see cref="DotNetRunSettings.Architecture"/></li>
     ///     <li><c>--configuration</c> via <see cref="DotNetRunSettings.Configuration"/></li>
+    ///     <li><c>--disable-build-servers</c> via <see cref="DotNetRunSettings.DisableBuildServers"/></li>
     ///     <li><c>--disable-parallel</c> via <see cref="DotNetRunSettings.DisableParallel"/></li>
     ///     <li><c>--force</c> via <see cref="DotNetRunSettings.Force"/></li>
     ///     <li><c>--force-evaluate</c> via <see cref="DotNetRunSettings.ForceEvaluate"/></li>
     ///     <li><c>--framework</c> via <see cref="DotNetRunSettings.Framework"/></li>
     ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetRunSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetRunSettings.Interactive"/></li>
     ///     <li><c>--launch-profile</c> via <see cref="DotNetRunSettings.LaunchProfile"/></li>
     ///     <li><c>--lock-file-path</c> via <see cref="DotNetRunSettings.LockFilePath"/></li>
     ///     <li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li>
@@ -219,12 +222,16 @@ public partial class DotNetTasks
     ///     <li><c>--no-dependencies</c> via <see cref="DotNetRunSettings.NoDependencies"/></li>
     ///     <li><c>--no-launch-profile</c> via <see cref="DotNetRunSettings.NoLaunchProfile"/></li>
     ///     <li><c>--no-restore</c> via <see cref="DotNetRunSettings.NoRestore"/></li>
+    ///     <li><c>--no-self-contained</c> via <see cref="DotNetRunSettings.NoSelfContained"/></li>
+    ///     <li><c>--os</c> via <see cref="DotNetRunSettings.OperatingSystem"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetRunSettings.PackageDirectory"/></li>
     ///     <li><c>--project</c> via <see cref="DotNetRunSettings.ProjectFile"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetRunSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetRunSettings.Runtime"/></li>
+    ///     <li><c>--self-contained</c> via <see cref="DotNetRunSettings.SelfContained"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetRunSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetRunSettings.UseLockFile"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetRunSettings.Properties"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetRunSettings.Verbosity"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetRun(DotNetRunSettings toolSettings = null)
@@ -242,12 +249,15 @@ public partial class DotNetTasks
     ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
     ///   <ul>
     ///     <li><c>--</c> via <see cref="DotNetRunSettings.ApplicationArguments"/></li>
+    ///     <li><c>--arch</c> via <see cref="DotNetRunSettings.Architecture"/></li>
     ///     <li><c>--configuration</c> via <see cref="DotNetRunSettings.Configuration"/></li>
+    ///     <li><c>--disable-build-servers</c> via <see cref="DotNetRunSettings.DisableBuildServers"/></li>
     ///     <li><c>--disable-parallel</c> via <see cref="DotNetRunSettings.DisableParallel"/></li>
     ///     <li><c>--force</c> via <see cref="DotNetRunSettings.Force"/></li>
     ///     <li><c>--force-evaluate</c> via <see cref="DotNetRunSettings.ForceEvaluate"/></li>
     ///     <li><c>--framework</c> via <see cref="DotNetRunSettings.Framework"/></li>
     ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetRunSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetRunSettings.Interactive"/></li>
     ///     <li><c>--launch-profile</c> via <see cref="DotNetRunSettings.LaunchProfile"/></li>
     ///     <li><c>--lock-file-path</c> via <see cref="DotNetRunSettings.LockFilePath"/></li>
     ///     <li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li>
@@ -256,12 +266,16 @@ public partial class DotNetTasks
     ///     <li><c>--no-dependencies</c> via <see cref="DotNetRunSettings.NoDependencies"/></li>
     ///     <li><c>--no-launch-profile</c> via <see cref="DotNetRunSettings.NoLaunchProfile"/></li>
     ///     <li><c>--no-restore</c> via <see cref="DotNetRunSettings.NoRestore"/></li>
+    ///     <li><c>--no-self-contained</c> via <see cref="DotNetRunSettings.NoSelfContained"/></li>
+    ///     <li><c>--os</c> via <see cref="DotNetRunSettings.OperatingSystem"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetRunSettings.PackageDirectory"/></li>
     ///     <li><c>--project</c> via <see cref="DotNetRunSettings.ProjectFile"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetRunSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetRunSettings.Runtime"/></li>
+    ///     <li><c>--self-contained</c> via <see cref="DotNetRunSettings.SelfContained"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetRunSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetRunSettings.UseLockFile"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetRunSettings.Properties"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetRunSettings.Verbosity"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetRun(Configure<DotNetRunSettings> configurator)
@@ -276,12 +290,15 @@ public partial class DotNetTasks
     ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
     ///   <ul>
     ///     <li><c>--</c> via <see cref="DotNetRunSettings.ApplicationArguments"/></li>
+    ///     <li><c>--arch</c> via <see cref="DotNetRunSettings.Architecture"/></li>
     ///     <li><c>--configuration</c> via <see cref="DotNetRunSettings.Configuration"/></li>
+    ///     <li><c>--disable-build-servers</c> via <see cref="DotNetRunSettings.DisableBuildServers"/></li>
     ///     <li><c>--disable-parallel</c> via <see cref="DotNetRunSettings.DisableParallel"/></li>
     ///     <li><c>--force</c> via <see cref="DotNetRunSettings.Force"/></li>
     ///     <li><c>--force-evaluate</c> via <see cref="DotNetRunSettings.ForceEvaluate"/></li>
     ///     <li><c>--framework</c> via <see cref="DotNetRunSettings.Framework"/></li>
     ///     <li><c>--ignore-failed-sources</c> via <see cref="DotNetRunSettings.IgnoreFailedSources"/></li>
+    ///     <li><c>--interactive</c> via <see cref="DotNetRunSettings.Interactive"/></li>
     ///     <li><c>--launch-profile</c> via <see cref="DotNetRunSettings.LaunchProfile"/></li>
     ///     <li><c>--lock-file-path</c> via <see cref="DotNetRunSettings.LockFilePath"/></li>
     ///     <li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li>
@@ -290,12 +307,16 @@ public partial class DotNetTasks
     ///     <li><c>--no-dependencies</c> via <see cref="DotNetRunSettings.NoDependencies"/></li>
     ///     <li><c>--no-launch-profile</c> via <see cref="DotNetRunSettings.NoLaunchProfile"/></li>
     ///     <li><c>--no-restore</c> via <see cref="DotNetRunSettings.NoRestore"/></li>
+    ///     <li><c>--no-self-contained</c> via <see cref="DotNetRunSettings.NoSelfContained"/></li>
+    ///     <li><c>--os</c> via <see cref="DotNetRunSettings.OperatingSystem"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetRunSettings.PackageDirectory"/></li>
     ///     <li><c>--project</c> via <see cref="DotNetRunSettings.ProjectFile"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetRunSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetRunSettings.Runtime"/></li>
+    ///     <li><c>--self-contained</c> via <see cref="DotNetRunSettings.SelfContained"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetRunSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetRunSettings.UseLockFile"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetRunSettings.Properties"/></li>
+    ///     <li><c>--verbosity</c> via <see cref="DotNetRunSettings.Verbosity"/></li>
     ///   </ul>
     /// </remarks>
     public static IEnumerable<(DotNetRunSettings Settings, IReadOnlyCollection<Output> Output)> DotNetRun(CombinatorialConfigure<DotNetRunSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -320,11 +341,11 @@ public partial class DotNetTasks
     ///     <li><c>--no-cache</c> via <see cref="DotNetRestoreSettings.NoCache"/></li>
     ///     <li><c>--no-dependencies</c> via <see cref="DotNetRestoreSettings.NoDependencies"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetRestoreSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetRestoreSettings.Runtime"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetRestoreSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetRestoreSettings.UseLockFile"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetRestoreSettings.Verbosity"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetRestore(DotNetRestoreSettings toolSettings = null)
@@ -352,11 +373,11 @@ public partial class DotNetTasks
     ///     <li><c>--no-cache</c> via <see cref="DotNetRestoreSettings.NoCache"/></li>
     ///     <li><c>--no-dependencies</c> via <see cref="DotNetRestoreSettings.NoDependencies"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetRestoreSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetRestoreSettings.Runtime"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetRestoreSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetRestoreSettings.UseLockFile"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetRestoreSettings.Verbosity"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetRestore(Configure<DotNetRestoreSettings> configurator)
@@ -381,11 +402,11 @@ public partial class DotNetTasks
     ///     <li><c>--no-cache</c> via <see cref="DotNetRestoreSettings.NoCache"/></li>
     ///     <li><c>--no-dependencies</c> via <see cref="DotNetRestoreSettings.NoDependencies"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetRestoreSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetRestoreSettings.Runtime"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetRestoreSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetRestoreSettings.UseLockFile"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetRestoreSettings.Verbosity"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetRestoreSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IEnumerable<(DotNetRestoreSettings Settings, IReadOnlyCollection<Output> Output)> DotNetRestore(CombinatorialConfigure<DotNetRestoreSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -416,13 +437,13 @@ public partial class DotNetTasks
     ///     <li><c>--nologo</c> via <see cref="DotNetPackSettings.NoLogo"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetPackSettings.OutputDirectory"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetPackSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetPackSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetPackSettings.Runtime"/></li>
     ///     <li><c>--serviceable</c> via <see cref="DotNetPackSettings.Serviceable"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetPackSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbosity"/></li>
     ///     <li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetPack(DotNetPackSettings toolSettings = null)
@@ -456,13 +477,13 @@ public partial class DotNetTasks
     ///     <li><c>--nologo</c> via <see cref="DotNetPackSettings.NoLogo"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetPackSettings.OutputDirectory"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetPackSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetPackSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetPackSettings.Runtime"/></li>
     ///     <li><c>--serviceable</c> via <see cref="DotNetPackSettings.Serviceable"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetPackSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbosity"/></li>
     ///     <li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetPack(Configure<DotNetPackSettings> configurator)
@@ -493,13 +514,13 @@ public partial class DotNetTasks
     ///     <li><c>--nologo</c> via <see cref="DotNetPackSettings.NoLogo"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetPackSettings.OutputDirectory"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetPackSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetPackSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetPackSettings.Runtime"/></li>
     ///     <li><c>--serviceable</c> via <see cref="DotNetPackSettings.Serviceable"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetPackSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbosity"/></li>
     ///     <li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetPackSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IEnumerable<(DotNetPackSettings Settings, IReadOnlyCollection<Output> Output)> DotNetPack(CombinatorialConfigure<DotNetPackSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -529,6 +550,7 @@ public partial class DotNetTasks
     ///     <li><c>--nologo</c> via <see cref="DotNetBuildSettings.NoLogo"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li>
     ///     <li><c>--self-contained</c> via <see cref="DotNetBuildSettings.SelfContained"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetBuildSettings.Sources"/></li>
@@ -538,7 +560,6 @@ public partial class DotNetTasks
     ///     <li><c>-bl</c> via <see cref="DotNetBuildSettings.BinaryLog"/></li>
     ///     <li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li>
     ///     <li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetBuild(DotNetBuildSettings toolSettings = null)
@@ -571,6 +592,7 @@ public partial class DotNetTasks
     ///     <li><c>--nologo</c> via <see cref="DotNetBuildSettings.NoLogo"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li>
     ///     <li><c>--self-contained</c> via <see cref="DotNetBuildSettings.SelfContained"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetBuildSettings.Sources"/></li>
@@ -580,7 +602,6 @@ public partial class DotNetTasks
     ///     <li><c>-bl</c> via <see cref="DotNetBuildSettings.BinaryLog"/></li>
     ///     <li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li>
     ///     <li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetBuild(Configure<DotNetBuildSettings> configurator)
@@ -610,6 +631,7 @@ public partial class DotNetTasks
     ///     <li><c>--nologo</c> via <see cref="DotNetBuildSettings.NoLogo"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li>
     ///     <li><c>--self-contained</c> via <see cref="DotNetBuildSettings.SelfContained"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetBuildSettings.Sources"/></li>
@@ -619,7 +641,6 @@ public partial class DotNetTasks
     ///     <li><c>-bl</c> via <see cref="DotNetBuildSettings.BinaryLog"/></li>
     ///     <li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li>
     ///     <li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetBuildSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IEnumerable<(DotNetBuildSettings Settings, IReadOnlyCollection<Output> Output)> DotNetBuild(CombinatorialConfigure<DotNetBuildSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -722,9 +743,9 @@ public partial class DotNetTasks
     ///     <li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li>
     ///     <li><c>--nologo</c> via <see cref="DotNetCleanSettings.NoLogo"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetClean(DotNetCleanSettings toolSettings = null)
@@ -746,9 +767,9 @@ public partial class DotNetTasks
     ///     <li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li>
     ///     <li><c>--nologo</c> via <see cref="DotNetCleanSettings.NoLogo"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetClean(Configure<DotNetCleanSettings> configurator)
@@ -767,9 +788,9 @@ public partial class DotNetTasks
     ///     <li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li>
     ///     <li><c>--nologo</c> via <see cref="DotNetCleanSettings.NoLogo"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetCleanSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IEnumerable<(DotNetCleanSettings Settings, IReadOnlyCollection<Output> Output)> DotNetClean(CombinatorialConfigure<DotNetCleanSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -789,11 +810,11 @@ public partial class DotNetTasks
     ///     <li><c>--include</c> via <see cref="DotNetFormatSettings.Include"/></li>
     ///     <li><c>--include-generated</c> via <see cref="DotNetFormatSettings.IncludeGenerated"/></li>
     ///     <li><c>--no-restore</c> via <see cref="DotNetFormatSettings.NoRestore"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetFormatSettings.Properties"/></li>
     ///     <li><c>--report</c> via <see cref="DotNetFormatSettings.Report"/></li>
     ///     <li><c>--severity</c> via <see cref="DotNetFormatSettings.Severity"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetFormatSettings.Verbosity"/></li>
     ///     <li><c>--verify-no-changes</c> via <see cref="DotNetFormatSettings.VerifyNoChanges"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetFormatSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetFormat(DotNetFormatSettings toolSettings = null)
@@ -816,11 +837,11 @@ public partial class DotNetTasks
     ///     <li><c>--include</c> via <see cref="DotNetFormatSettings.Include"/></li>
     ///     <li><c>--include-generated</c> via <see cref="DotNetFormatSettings.IncludeGenerated"/></li>
     ///     <li><c>--no-restore</c> via <see cref="DotNetFormatSettings.NoRestore"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetFormatSettings.Properties"/></li>
     ///     <li><c>--report</c> via <see cref="DotNetFormatSettings.Report"/></li>
     ///     <li><c>--severity</c> via <see cref="DotNetFormatSettings.Severity"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetFormatSettings.Verbosity"/></li>
     ///     <li><c>--verify-no-changes</c> via <see cref="DotNetFormatSettings.VerifyNoChanges"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetFormatSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IReadOnlyCollection<Output> DotNetFormat(Configure<DotNetFormatSettings> configurator)
@@ -840,11 +861,11 @@ public partial class DotNetTasks
     ///     <li><c>--include</c> via <see cref="DotNetFormatSettings.Include"/></li>
     ///     <li><c>--include-generated</c> via <see cref="DotNetFormatSettings.IncludeGenerated"/></li>
     ///     <li><c>--no-restore</c> via <see cref="DotNetFormatSettings.NoRestore"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetFormatSettings.Properties"/></li>
     ///     <li><c>--report</c> via <see cref="DotNetFormatSettings.Report"/></li>
     ///     <li><c>--severity</c> via <see cref="DotNetFormatSettings.Severity"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetFormatSettings.Verbosity"/></li>
     ///     <li><c>--verify-no-changes</c> via <see cref="DotNetFormatSettings.VerifyNoChanges"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetFormatSettings.Properties"/></li>
     ///   </ul>
     /// </remarks>
     public static IEnumerable<(DotNetFormatSettings Settings, IReadOnlyCollection<Output> Output)> DotNetFormat(CombinatorialConfigure<DotNetFormatSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
@@ -877,13 +898,13 @@ public partial class DotNetTasks
     ///     <li><c>--os</c> via <see cref="DotNetPublishSettings.OperatingSystem"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li>
     ///     <li><c>--self-contained</c> via <see cref="DotNetPublishSettings.SelfContained"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetPublishSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetPublishSettings.UseLockFile"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li>
     ///     <li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
     ///     <li><c>/t</c> via <see cref="DotNetPublishSettings.Targets"/></li>
     ///   </ul>
     /// </remarks>
@@ -920,13 +941,13 @@ public partial class DotNetTasks
     ///     <li><c>--os</c> via <see cref="DotNetPublishSettings.OperatingSystem"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li>
     ///     <li><c>--self-contained</c> via <see cref="DotNetPublishSettings.SelfContained"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetPublishSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetPublishSettings.UseLockFile"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li>
     ///     <li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
     ///     <li><c>/t</c> via <see cref="DotNetPublishSettings.Targets"/></li>
     ///   </ul>
     /// </remarks>
@@ -960,13 +981,13 @@ public partial class DotNetTasks
     ///     <li><c>--os</c> via <see cref="DotNetPublishSettings.OperatingSystem"/></li>
     ///     <li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li>
     ///     <li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li>
+    ///     <li><c>--property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
     ///     <li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li>
     ///     <li><c>--self-contained</c> via <see cref="DotNetPublishSettings.SelfContained"/></li>
     ///     <li><c>--source</c> via <see cref="DotNetPublishSettings.Sources"/></li>
     ///     <li><c>--use-lock-file</c> via <see cref="DotNetPublishSettings.UseLockFile"/></li>
     ///     <li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li>
     ///     <li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li>
-    ///     <li><c>/property</c> via <see cref="DotNetPublishSettings.Properties"/></li>
     ///     <li><c>/t</c> via <see cref="DotNetPublishSettings.Targets"/></li>
     ///   </ul>
     /// </remarks>
@@ -2001,9 +2022,17 @@ public partial class DotNetRunSettings : ToolSettings
     public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotNetTasks.DotNetLogger;
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotNetTasks.DotNetExitHandler;
     /// <summary>
+    ///   Specifies the target architecture. This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7.
+    /// </summary>
+    public virtual string Architecture { get; internal set; }
+    /// <summary>
     ///   Configuration to use for building the project. The default value is Debug.
     /// </summary>
     public virtual string Configuration { get; internal set; }
+    /// <summary>
+    ///   Force the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK.
+    /// </summary>
+    public virtual bool? DisableBuildServers { get; internal set; }
     /// <summary>
     ///   Builds and runs the app using the specified framework. The framework must be specified in the project file.
     /// </summary>
@@ -2012,6 +2041,10 @@ public partial class DotNetRunSettings : ToolSettings
     ///   The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the <em>launchSettings.json</em> file and are typically called <c>Development</c>, <c>Staging</c> and <c>Production</c>. For more information, see <a href="https://docs.microsoft.com/en-us/aspnetcore/fundamentals/environments">Working with multiple environments</a>.
     /// </summary>
     public virtual string LaunchProfile { get; internal set; }
+    /// <summary>
+    ///   Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK.
+    /// </summary>
+    public virtual bool? Interactive { get; internal set; }
     /// <summary>
     ///   Doesn't build the project before running.
     /// </summary>
@@ -2025,9 +2058,29 @@ public partial class DotNetRunSettings : ToolSettings
     /// </summary>
     public virtual bool? NoRestore { get; internal set; }
     /// <summary>
+    ///   Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.
+    /// </summary>
+    public virtual bool? NoSelfContained { get; internal set; }
+    /// <summary>
+    ///   Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.
+    /// </summary>
+    public virtual string OperatingSystem { get; internal set; }
+    /// <summary>
     ///   Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified.
     /// </summary>
     public virtual string ProjectFile { get; internal set; }
+    /// <summary>
+    ///   Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.
+    /// </summary>
+    public virtual string Runtime { get; internal set; }
+    /// <summary>
+    ///   Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>false</c>. However, when targeting .NET 7 or lower, the default is <c>true</c> if a runtime identifier is specified.
+    /// </summary>
+    public virtual bool? SelfContained { get; internal set; }
+    /// <summary>
+    ///   Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.
+    /// </summary>
+    public virtual DotNetVerbosity Verbosity { get; internal set; }
     /// <summary>
     ///   Disables restoring multiple projects in parallel.
     /// </summary>
@@ -2074,11 +2127,7 @@ public partial class DotNetRunSettings : ToolSettings
     /// </summary>
     public virtual bool? ForceEvaluate { get; internal set; }
     /// <summary>
-    ///   Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.
-    /// </summary>
-    public virtual string Runtime { get; internal set; }
-    /// <summary>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
     internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -2090,13 +2139,21 @@ public partial class DotNetRunSettings : ToolSettings
     {
         arguments
           .Add("run")
+          .Add("--arch {value}", Architecture)
           .Add("--configuration {value}", Configuration)
+          .Add("--disable-build-servers", DisableBuildServers)
           .Add("--framework {value}", Framework)
           .Add("--launch-profile {value}", LaunchProfile)
+          .Add("--interactive", Interactive)
           .Add("--no-build", NoBuild)
           .Add("--no-launch-profile", NoLaunchProfile)
           .Add("--no-restore", NoRestore)
+          .Add("--no-self-contained", NoSelfContained)
+          .Add("--os {value}", OperatingSystem)
           .Add("--project {value}", ProjectFile)
+          .Add("--runtime {value}", Runtime)
+          .Add("--self-contained {value}", SelfContained)
+          .Add("--verbosity {value}", Verbosity)
           .Add("--disable-parallel", DisableParallel)
           .Add("--force", Force)
           .Add("--ignore-failed-sources", IgnoreFailedSources)
@@ -2108,8 +2165,7 @@ public partial class DotNetRunSettings : ToolSettings
           .Add("--locked-mode", LockedMode)
           .Add("--lock-file-path {value}", LockFilePath)
           .Add("--force-evaluate", ForceEvaluate)
-          .Add("--runtime {value}", Runtime)
-          .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';')
+          .Add("--property:{value}", Properties, "{key}={value}", disallowed: ';')
           .Add("-- {value}", GetApplicationArguments(), customValue: true);
         return base.ConfigureProcessArguments(arguments);
     }
@@ -2192,7 +2248,7 @@ public partial class DotNetRestoreSettings : ToolSettings
     /// </summary>
     public virtual string Runtime { get; internal set; }
     /// <summary>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
     internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -2215,7 +2271,7 @@ public partial class DotNetRestoreSettings : ToolSettings
           .Add("--lock-file-path {value}", LockFilePath)
           .Add("--force-evaluate", ForceEvaluate)
           .Add("--runtime {value}", Runtime)
-          .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
+          .Add("--property:{value}", Properties, "{key}={value}", disallowed: ';');
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -2329,7 +2385,7 @@ public partial class DotNetPackSettings : ToolSettings
     /// </summary>
     public virtual string Runtime { get; internal set; }
     /// <summary>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
     internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -2360,7 +2416,7 @@ public partial class DotNetPackSettings : ToolSettings
           .Add("--lock-file-path {value}", LockFilePath)
           .Add("--force-evaluate", ForceEvaluate)
           .Add("--runtime {value}", Runtime)
-          .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
+          .Add("--property:{value}", Properties, "{key}={value}", disallowed: ';');
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -2483,7 +2539,7 @@ public partial class DotNetBuildSettings : ToolSettings
     /// </summary>
     public virtual bool? ForceEvaluate { get; internal set; }
     /// <summary>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
     internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -2516,7 +2572,7 @@ public partial class DotNetBuildSettings : ToolSettings
           .Add("--locked-mode", LockedMode)
           .Add("--lock-file-path {value}", LockFilePath)
           .Add("--force-evaluate", ForceEvaluate)
-          .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
+          .Add("--property:{value}", Properties, "{key}={value}", disallowed: ';');
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -2587,7 +2643,7 @@ public partial class DotNetMSBuildSettings : ToolSettings
     /// </summary>
     public virtual bool? GraphBuild { get; internal set; }
     /// <summary>
-    ///   Generare MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.
+    ///   Generate MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.
     /// </summary>
     public virtual string BinaryLog { get; internal set; }
     /// <summary>
@@ -2661,7 +2717,7 @@ public partial class DotNetCleanSettings : ToolSettings
     /// </summary>
     public virtual bool? NoLogo { get; internal set; }
     /// <summary>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
     internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -2676,7 +2732,7 @@ public partial class DotNetCleanSettings : ToolSettings
           .Add("--runtime {value}", Runtime)
           .Add("--verbosity {value}", Verbosity)
           .Add("--nologo", NoLogo)
-          .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
+          .Add("--property:{value}", Properties, "{key}={value}", disallowed: ';');
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -2739,7 +2795,7 @@ public partial class DotNetFormatSettings : ToolSettings
     /// </summary>
     public virtual string Report { get; internal set; }
     /// <summary>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
     internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -2757,7 +2813,7 @@ public partial class DotNetFormatSettings : ToolSettings
           .Add("--verbosity {value}", Verbosity)
           .Add("--binarylog {value}", BinaryLog)
           .Add("--report {value}", Report)
-          .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
+          .Add("--property:{value}", Properties, "{key}={value}", disallowed: ';');
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -2884,7 +2940,7 @@ public partial class DotNetPublishSettings : ToolSettings
     /// </summary>
     public virtual bool? ForceEvaluate { get; internal set; }
     /// <summary>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
     internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -2918,7 +2974,7 @@ public partial class DotNetPublishSettings : ToolSettings
           .Add("--locked-mode", LockedMode)
           .Add("--lock-file-path {value}", LockFilePath)
           .Add("--force-evaluate", ForceEvaluate)
-          .Add("/property:{value}", Properties, "{key}={value}", disallowed: ';');
+          .Add("--property:{value}", Properties, "{key}={value}", disallowed: ';');
         return base.ConfigureProcessArguments(arguments);
     }
 }
@@ -5310,6 +5366,30 @@ public static partial class DotNetTestSettingsExtensions
 [ExcludeFromCodeCoverage]
 public static partial class DotNetRunSettingsExtensions
 {
+    #region Architecture
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetRunSettings.Architecture"/></em></p>
+    ///   <p>Specifies the target architecture. This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7.</p>
+    /// </summary>
+    [Pure]
+    public static T SetArchitecture<T>(this T toolSettings, string architecture) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Architecture = architecture;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetRunSettings.Architecture"/></em></p>
+    ///   <p>Specifies the target architecture. This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetArchitecture<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Architecture = null;
+        return toolSettings;
+    }
+    #endregion
     #region Configuration
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetRunSettings.Configuration"/></em></p>
@@ -5331,6 +5411,63 @@ public static partial class DotNetRunSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.Configuration = null;
+        return toolSettings;
+    }
+    #endregion
+    #region DisableBuildServers
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetRunSettings.DisableBuildServers"/></em></p>
+    ///   <p>Force the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK.</p>
+    /// </summary>
+    [Pure]
+    public static T SetDisableBuildServers<T>(this T toolSettings, bool? disableBuildServers) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableBuildServers = disableBuildServers;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetRunSettings.DisableBuildServers"/></em></p>
+    ///   <p>Force the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetDisableBuildServers<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableBuildServers = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetRunSettings.DisableBuildServers"/></em></p>
+    ///   <p>Force the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableDisableBuildServers<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableBuildServers = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetRunSettings.DisableBuildServers"/></em></p>
+    ///   <p>Force the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableDisableBuildServers<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableBuildServers = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetRunSettings.DisableBuildServers"/></em></p>
+    ///   <p>Force the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleDisableBuildServers<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.DisableBuildServers = !toolSettings.DisableBuildServers;
         return toolSettings;
     }
     #endregion
@@ -5379,6 +5516,63 @@ public static partial class DotNetRunSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.LaunchProfile = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Interactive
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetRunSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK.</p>
+    /// </summary>
+    [Pure]
+    public static T SetInteractive<T>(this T toolSettings, bool? interactive) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = interactive;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetRunSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetInteractive<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetRunSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableInteractive<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetRunSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableInteractive<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetRunSettings.Interactive"/></em></p>
+    ///   <p>Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleInteractive<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Interactive = !toolSettings.Interactive;
         return toolSettings;
     }
     #endregion
@@ -5553,6 +5747,87 @@ public static partial class DotNetRunSettingsExtensions
         return toolSettings;
     }
     #endregion
+    #region NoSelfContained
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetRunSettings.NoSelfContained"/></em></p>
+    ///   <p>Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.</p>
+    /// </summary>
+    [Pure]
+    public static T SetNoSelfContained<T>(this T toolSettings, bool? noSelfContained) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoSelfContained = noSelfContained;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetRunSettings.NoSelfContained"/></em></p>
+    ///   <p>Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetNoSelfContained<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoSelfContained = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetRunSettings.NoSelfContained"/></em></p>
+    ///   <p>Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableNoSelfContained<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoSelfContained = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetRunSettings.NoSelfContained"/></em></p>
+    ///   <p>Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableNoSelfContained<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoSelfContained = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetRunSettings.NoSelfContained"/></em></p>
+    ///   <p>Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleNoSelfContained<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.NoSelfContained = !toolSettings.NoSelfContained;
+        return toolSettings;
+    }
+    #endregion
+    #region OperatingSystem
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetRunSettings.OperatingSystem"/></em></p>
+    ///   <p>Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.</p>
+    /// </summary>
+    [Pure]
+    public static T SetOperatingSystem<T>(this T toolSettings, string operatingSystem) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.OperatingSystem = operatingSystem;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetRunSettings.OperatingSystem"/></em></p>
+    ///   <p>Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href="https://learn.microsoft.com/en-us/dotnet/core/rid-catalog">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetOperatingSystem<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.OperatingSystem = null;
+        return toolSettings;
+    }
+    #endregion
     #region ProjectFile
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetRunSettings.ProjectFile"/></em></p>
@@ -5574,6 +5849,111 @@ public static partial class DotNetRunSettingsExtensions
     {
         toolSettings = toolSettings.NewInstance();
         toolSettings.ProjectFile = null;
+        return toolSettings;
+    }
+    #endregion
+    #region Runtime
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetRunSettings.Runtime"/></em></p>
+    ///   <p>Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetRuntime<T>(this T toolSettings, string runtime) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Runtime = runtime;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetRunSettings.Runtime"/></em></p>
+    ///   <p>Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetRuntime<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Runtime = null;
+        return toolSettings;
+    }
+    #endregion
+    #region SelfContained
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetRunSettings.SelfContained"/></em></p>
+    ///   <p>Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>false</c>. However, when targeting .NET 7 or lower, the default is <c>true</c> if a runtime identifier is specified.</p>
+    /// </summary>
+    [Pure]
+    public static T SetSelfContained<T>(this T toolSettings, bool? selfContained) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SelfContained = selfContained;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetRunSettings.SelfContained"/></em></p>
+    ///   <p>Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>false</c>. However, when targeting .NET 7 or lower, the default is <c>true</c> if a runtime identifier is specified.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetSelfContained<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SelfContained = null;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Enables <see cref="DotNetRunSettings.SelfContained"/></em></p>
+    ///   <p>Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>false</c>. However, when targeting .NET 7 or lower, the default is <c>true</c> if a runtime identifier is specified.</p>
+    /// </summary>
+    [Pure]
+    public static T EnableSelfContained<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SelfContained = true;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Disables <see cref="DotNetRunSettings.SelfContained"/></em></p>
+    ///   <p>Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>false</c>. However, when targeting .NET 7 or lower, the default is <c>true</c> if a runtime identifier is specified.</p>
+    /// </summary>
+    [Pure]
+    public static T DisableSelfContained<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SelfContained = false;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Toggles <see cref="DotNetRunSettings.SelfContained"/></em></p>
+    ///   <p>Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>false</c>. However, when targeting .NET 7 or lower, the default is <c>true</c> if a runtime identifier is specified.</p>
+    /// </summary>
+    [Pure]
+    public static T ToggleSelfContained<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.SelfContained = !toolSettings.SelfContained;
+        return toolSettings;
+    }
+    #endregion
+    #region Verbosity
+    /// <summary>
+    ///   <p><em>Sets <see cref="DotNetRunSettings.Verbosity"/></em></p>
+    ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T SetVerbosity<T>(this T toolSettings, DotNetVerbosity verbosity) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbosity = verbosity;
+        return toolSettings;
+    }
+    /// <summary>
+    ///   <p><em>Resets <see cref="DotNetRunSettings.Verbosity"/></em></p>
+    ///   <p>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p>
+    /// </summary>
+    [Pure]
+    public static T ResetVerbosity<T>(this T toolSettings) where T : DotNetRunSettings
+    {
+        toolSettings = toolSettings.NewInstance();
+        toolSettings.Verbosity = null;
         return toolSettings;
     }
     #endregion
@@ -6162,34 +6542,10 @@ public static partial class DotNetRunSettingsExtensions
         return toolSettings;
     }
     #endregion
-    #region Runtime
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotNetRunSettings.Runtime"/></em></p>
-    ///   <p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRuntime<T>(this T toolSettings, string runtime) where T : DotNetRunSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Runtime = runtime;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotNetRunSettings.Runtime"/></em></p>
-    ///   <p>Specifies a runtime for the package restore. This is used to restore packages for runtimes not explicitly listed in the <c>&lt;RuntimeIdentifiers&gt;</c> tag in the <em>.csproj</em> file. For a list of Runtime Identifiers (RIDs), see the <a href="https://docs.microsoft.com/en-us/dotnet/core/rid-catalog">RID catalog</a>. Provide multiple RIDs by specifying this option multiple times.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRuntime<T>(this T toolSettings) where T : DotNetRunSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Runtime = null;
-        return toolSettings;
-    }
-    #endregion
     #region Properties
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetRunSettings.Properties"/> to a new dictionary</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetRunSettings
@@ -6200,7 +6556,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearProperties<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6211,7 +6567,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds a new key-value-pair <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetRunSettings
@@ -6222,7 +6578,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes a key-value-pair from <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetRunSettings
@@ -6233,7 +6589,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets a key-value-pair in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetRunSettings
@@ -6245,7 +6601,7 @@ public static partial class DotNetRunSettingsExtensions
     #region RunCodeAnalysis
     /// <summary>
     ///   <p><em>Sets <c>RunCodeAnalysis</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetRunSettings
@@ -6256,7 +6612,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RunCodeAnalysis</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6267,7 +6623,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>RunCodeAnalysis</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6278,7 +6634,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>RunCodeAnalysis</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6289,7 +6645,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6302,7 +6658,7 @@ public static partial class DotNetRunSettingsExtensions
     #region NoWarn
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetRunSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRunSettings
@@ -6313,7 +6669,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetRunSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRunSettings
@@ -6324,7 +6680,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRunSettings
@@ -6335,7 +6691,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in existing <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRunSettings
@@ -6346,7 +6702,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>NoWarn</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6357,7 +6713,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRunSettings
@@ -6368,7 +6724,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRunSettings
@@ -6381,7 +6737,7 @@ public static partial class DotNetRunSettingsExtensions
     #region WarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRunSettings
@@ -6392,7 +6748,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRunSettings
@@ -6403,7 +6759,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRunSettings
@@ -6414,7 +6770,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRunSettings
@@ -6425,7 +6781,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>WarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6436,7 +6792,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRunSettings
@@ -6447,7 +6803,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRunSettings
@@ -6460,7 +6816,7 @@ public static partial class DotNetRunSettingsExtensions
     #region WarningLevel
     /// <summary>
     ///   <p><em>Sets <c>WarningLevel</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetRunSettings
@@ -6471,7 +6827,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>WarningLevel</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6484,7 +6840,7 @@ public static partial class DotNetRunSettingsExtensions
     #region TreatWarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetRunSettings
@@ -6495,7 +6851,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6506,7 +6862,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6517,7 +6873,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6528,7 +6884,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6541,7 +6897,7 @@ public static partial class DotNetRunSettingsExtensions
     #region AssemblyVersion
     /// <summary>
     ///   <p><em>Sets <c>AssemblyVersion</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetRunSettings
@@ -6552,7 +6908,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>AssemblyVersion</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6565,7 +6921,7 @@ public static partial class DotNetRunSettingsExtensions
     #region FileVersion
     /// <summary>
     ///   <p><em>Sets <c>FileVersion</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetRunSettings
@@ -6576,7 +6932,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>FileVersion</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6589,7 +6945,7 @@ public static partial class DotNetRunSettingsExtensions
     #region InformationalVersion
     /// <summary>
     ///   <p><em>Sets <c>InformationalVersion</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetRunSettings
@@ -6600,7 +6956,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>InformationalVersion</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6613,7 +6969,7 @@ public static partial class DotNetRunSettingsExtensions
     #region PackageId
     /// <summary>
     ///   <p><em>Sets <c>PackageId</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetRunSettings
@@ -6624,7 +6980,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageId</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageId<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6637,7 +6993,7 @@ public static partial class DotNetRunSettingsExtensions
     #region Version
     /// <summary>
     ///   <p><em>Sets <c>Version</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetRunSettings
@@ -6648,7 +7004,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Version</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersion<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6661,7 +7017,7 @@ public static partial class DotNetRunSettingsExtensions
     #region VersionPrefix
     /// <summary>
     ///   <p><em>Sets <c>VersionPrefix</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetRunSettings
@@ -6672,7 +7028,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>VersionPrefix</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6685,7 +7041,7 @@ public static partial class DotNetRunSettingsExtensions
     #region Authors
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetRunSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRunSettings
@@ -6696,7 +7052,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetRunSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRunSettings
@@ -6707,7 +7063,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRunSettings
@@ -6718,7 +7074,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in existing <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRunSettings
@@ -6729,7 +7085,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>Authors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearAuthors<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6740,7 +7096,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRunSettings
@@ -6751,7 +7107,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRunSettings
@@ -6764,7 +7120,7 @@ public static partial class DotNetRunSettingsExtensions
     #region Title
     /// <summary>
     ///   <p><em>Sets <c>Title</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetRunSettings
@@ -6775,7 +7131,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Title</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTitle<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6788,7 +7144,7 @@ public static partial class DotNetRunSettingsExtensions
     #region Description
     /// <summary>
     ///   <p><em>Sets <c>Description</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetRunSettings
@@ -6799,7 +7155,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Description</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDescription<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6812,7 +7168,7 @@ public static partial class DotNetRunSettingsExtensions
     #region Copyright
     /// <summary>
     ///   <p><em>Sets <c>Copyright</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetRunSettings
@@ -6823,7 +7179,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Copyright</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetCopyright<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6836,7 +7192,7 @@ public static partial class DotNetRunSettingsExtensions
     #region PackageRequireLicenseAcceptance
     /// <summary>
     ///   <p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetRunSettings
@@ -6847,7 +7203,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6858,7 +7214,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6869,7 +7225,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6880,7 +7236,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6893,7 +7249,7 @@ public static partial class DotNetRunSettingsExtensions
     #region PackageLicenseUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageLicenseUrl</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetRunSettings
@@ -6904,7 +7260,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageLicenseUrl</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6917,7 +7273,7 @@ public static partial class DotNetRunSettingsExtensions
     #region PackageProjectUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageProjectUrl</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetRunSettings
@@ -6928,7 +7284,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageProjectUrl</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6941,7 +7297,7 @@ public static partial class DotNetRunSettingsExtensions
     #region PackageIconUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageIconUrl</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetRunSettings
@@ -6952,7 +7308,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageIconUrl</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetRunSettings
@@ -6965,7 +7321,7 @@ public static partial class DotNetRunSettingsExtensions
     #region PackageTags
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetRunSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRunSettings
@@ -6976,7 +7332,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetRunSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRunSettings
@@ -6987,7 +7343,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRunSettings
@@ -6998,7 +7354,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in existing <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRunSettings
@@ -7009,7 +7365,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>PackageTags</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7020,7 +7376,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRunSettings
@@ -7031,7 +7387,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRunSettings
@@ -7044,7 +7400,7 @@ public static partial class DotNetRunSettingsExtensions
     #region PackageReleaseNotes
     /// <summary>
     ///   <p><em>Sets <c>PackageReleaseNotes</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetRunSettings
@@ -7055,7 +7411,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageReleaseNotes</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7068,7 +7424,7 @@ public static partial class DotNetRunSettingsExtensions
     #region RepositoryUrl
     /// <summary>
     ///   <p><em>Sets <c>RepositoryUrl</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetRunSettings
@@ -7079,7 +7435,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryUrl</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7092,7 +7448,7 @@ public static partial class DotNetRunSettingsExtensions
     #region RepositoryType
     /// <summary>
     ///   <p><em>Sets <c>RepositoryType</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetRunSettings
@@ -7103,7 +7459,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryType</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7162,7 +7518,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7173,7 +7529,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7184,7 +7540,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7219,7 +7575,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7230,7 +7586,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7241,7 +7597,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7276,7 +7632,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7287,7 +7643,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7298,7 +7654,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7311,7 +7667,7 @@ public static partial class DotNetRunSettingsExtensions
     #region PublishProfile
     /// <summary>
     ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetRunSettings
@@ -7322,7 +7678,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7335,7 +7691,7 @@ public static partial class DotNetRunSettingsExtensions
     #region Platform
     /// <summary>
     ///   <p><em>Sets <c>Platform</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPlatform<T>(this T toolSettings, string platform) where T : DotNetRunSettings
@@ -7346,7 +7702,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Platform</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPlatform<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7359,7 +7715,7 @@ public static partial class DotNetRunSettingsExtensions
     #region ContinuousIntegrationBuild
     /// <summary>
     ///   <p><em>Sets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetContinuousIntegrationBuild<T>(this T toolSettings, bool? continuousIntegrationBuild) where T : DotNetRunSettings
@@ -7370,7 +7726,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7381,7 +7737,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7392,7 +7748,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7403,7 +7759,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>ContinuousIntegrationBuild</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7416,7 +7772,7 @@ public static partial class DotNetRunSettingsExtensions
     #region DeterministicSourcePaths
     /// <summary>
     ///   <p><em>Sets <c>DeterministicSourcePaths</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministicSourcePaths<T>(this T toolSettings, bool? deterministicSourcePaths) where T : DotNetRunSettings
@@ -7427,7 +7783,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>DeterministicSourcePaths</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7438,7 +7794,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>DeterministicSourcePaths</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7449,7 +7805,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>DeterministicSourcePaths</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7460,7 +7816,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>DeterministicSourcePaths</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7473,7 +7829,7 @@ public static partial class DotNetRunSettingsExtensions
     #region Deterministic
     /// <summary>
     ///   <p><em>Sets <c>Deterministic</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministic<T>(this T toolSettings, bool? deterministic) where T : DotNetRunSettings
@@ -7484,7 +7840,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Deterministic</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministic<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7495,7 +7851,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>Deterministic</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministic<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7506,7 +7862,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>Deterministic</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministic<T>(this T toolSettings) where T : DotNetRunSettings
@@ -7517,7 +7873,7 @@ public static partial class DotNetRunSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>Deterministic</c> in <see cref="DotNetRunSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministic<T>(this T toolSettings) where T : DotNetRunSettings
@@ -8246,7 +8602,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region Properties
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetRestoreSettings.Properties"/> to a new dictionary</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetRestoreSettings
@@ -8257,7 +8613,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearProperties<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8268,7 +8624,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds a new key-value-pair <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetRestoreSettings
@@ -8279,7 +8635,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes a key-value-pair from <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetRestoreSettings
@@ -8290,7 +8646,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets a key-value-pair in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetRestoreSettings
@@ -8302,7 +8658,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region RunCodeAnalysis
     /// <summary>
     ///   <p><em>Sets <c>RunCodeAnalysis</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetRestoreSettings
@@ -8313,7 +8669,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RunCodeAnalysis</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8324,7 +8680,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>RunCodeAnalysis</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8335,7 +8691,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>RunCodeAnalysis</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8346,7 +8702,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8359,7 +8715,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region NoWarn
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetRestoreSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRestoreSettings
@@ -8370,7 +8726,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetRestoreSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRestoreSettings
@@ -8381,7 +8737,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRestoreSettings
@@ -8392,7 +8748,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in existing <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRestoreSettings
@@ -8403,7 +8759,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>NoWarn</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8414,7 +8770,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetRestoreSettings
@@ -8425,7 +8781,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetRestoreSettings
@@ -8438,7 +8794,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region WarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRestoreSettings
@@ -8449,7 +8805,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRestoreSettings
@@ -8460,7 +8816,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRestoreSettings
@@ -8471,7 +8827,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRestoreSettings
@@ -8482,7 +8838,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>WarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8493,7 +8849,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetRestoreSettings
@@ -8504,7 +8860,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetRestoreSettings
@@ -8517,7 +8873,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region WarningLevel
     /// <summary>
     ///   <p><em>Sets <c>WarningLevel</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetRestoreSettings
@@ -8528,7 +8884,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>WarningLevel</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8541,7 +8897,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region TreatWarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetRestoreSettings
@@ -8552,7 +8908,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8563,7 +8919,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8574,7 +8930,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8585,7 +8941,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8598,7 +8954,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region AssemblyVersion
     /// <summary>
     ///   <p><em>Sets <c>AssemblyVersion</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetRestoreSettings
@@ -8609,7 +8965,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>AssemblyVersion</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8622,7 +8978,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region FileVersion
     /// <summary>
     ///   <p><em>Sets <c>FileVersion</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetRestoreSettings
@@ -8633,7 +8989,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>FileVersion</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8646,7 +9002,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region InformationalVersion
     /// <summary>
     ///   <p><em>Sets <c>InformationalVersion</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetRestoreSettings
@@ -8657,7 +9013,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>InformationalVersion</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8670,7 +9026,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region PackageId
     /// <summary>
     ///   <p><em>Sets <c>PackageId</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetRestoreSettings
@@ -8681,7 +9037,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageId</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageId<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8694,7 +9050,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region Version
     /// <summary>
     ///   <p><em>Sets <c>Version</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetRestoreSettings
@@ -8705,7 +9061,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Version</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersion<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8718,7 +9074,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region VersionPrefix
     /// <summary>
     ///   <p><em>Sets <c>VersionPrefix</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetRestoreSettings
@@ -8729,7 +9085,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>VersionPrefix</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8742,7 +9098,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region Authors
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetRestoreSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRestoreSettings
@@ -8753,7 +9109,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetRestoreSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRestoreSettings
@@ -8764,7 +9120,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRestoreSettings
@@ -8775,7 +9131,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in existing <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRestoreSettings
@@ -8786,7 +9142,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>Authors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearAuthors<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8797,7 +9153,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetRestoreSettings
@@ -8808,7 +9164,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetRestoreSettings
@@ -8821,7 +9177,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region Title
     /// <summary>
     ///   <p><em>Sets <c>Title</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetRestoreSettings
@@ -8832,7 +9188,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Title</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTitle<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8845,7 +9201,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region Description
     /// <summary>
     ///   <p><em>Sets <c>Description</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetRestoreSettings
@@ -8856,7 +9212,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Description</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDescription<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8869,7 +9225,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region Copyright
     /// <summary>
     ///   <p><em>Sets <c>Copyright</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetRestoreSettings
@@ -8880,7 +9236,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Copyright</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetCopyright<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8893,7 +9249,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region PackageRequireLicenseAcceptance
     /// <summary>
     ///   <p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetRestoreSettings
@@ -8904,7 +9260,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8915,7 +9271,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8926,7 +9282,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8937,7 +9293,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8950,7 +9306,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region PackageLicenseUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageLicenseUrl</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetRestoreSettings
@@ -8961,7 +9317,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageLicenseUrl</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8974,7 +9330,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region PackageProjectUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageProjectUrl</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetRestoreSettings
@@ -8985,7 +9341,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageProjectUrl</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -8998,7 +9354,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region PackageIconUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageIconUrl</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetRestoreSettings
@@ -9009,7 +9365,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageIconUrl</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9022,7 +9378,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region PackageTags
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetRestoreSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRestoreSettings
@@ -9033,7 +9389,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetRestoreSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRestoreSettings
@@ -9044,7 +9400,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRestoreSettings
@@ -9055,7 +9411,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in existing <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRestoreSettings
@@ -9066,7 +9422,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>PackageTags</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9077,7 +9433,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetRestoreSettings
@@ -9088,7 +9444,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetRestoreSettings
@@ -9101,7 +9457,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region PackageReleaseNotes
     /// <summary>
     ///   <p><em>Sets <c>PackageReleaseNotes</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetRestoreSettings
@@ -9112,7 +9468,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageReleaseNotes</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9125,7 +9481,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region RepositoryUrl
     /// <summary>
     ///   <p><em>Sets <c>RepositoryUrl</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetRestoreSettings
@@ -9136,7 +9492,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryUrl</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9149,7 +9505,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region RepositoryType
     /// <summary>
     ///   <p><em>Sets <c>RepositoryType</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetRestoreSettings
@@ -9160,7 +9516,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryType</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9219,7 +9575,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9230,7 +9586,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9241,7 +9597,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9276,7 +9632,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9287,7 +9643,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9298,7 +9654,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9333,7 +9689,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9344,7 +9700,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9355,7 +9711,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9368,7 +9724,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region PublishProfile
     /// <summary>
     ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetRestoreSettings
@@ -9379,7 +9735,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9392,7 +9748,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region Platform
     /// <summary>
     ///   <p><em>Sets <c>Platform</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPlatform<T>(this T toolSettings, string platform) where T : DotNetRestoreSettings
@@ -9403,7 +9759,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Platform</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPlatform<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9416,7 +9772,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region ContinuousIntegrationBuild
     /// <summary>
     ///   <p><em>Sets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetContinuousIntegrationBuild<T>(this T toolSettings, bool? continuousIntegrationBuild) where T : DotNetRestoreSettings
@@ -9427,7 +9783,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9438,7 +9794,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9449,7 +9805,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9460,7 +9816,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>ContinuousIntegrationBuild</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9473,7 +9829,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region DeterministicSourcePaths
     /// <summary>
     ///   <p><em>Sets <c>DeterministicSourcePaths</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministicSourcePaths<T>(this T toolSettings, bool? deterministicSourcePaths) where T : DotNetRestoreSettings
@@ -9484,7 +9840,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>DeterministicSourcePaths</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9495,7 +9851,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>DeterministicSourcePaths</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9506,7 +9862,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>DeterministicSourcePaths</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9517,7 +9873,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>DeterministicSourcePaths</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9530,7 +9886,7 @@ public static partial class DotNetRestoreSettingsExtensions
     #region Deterministic
     /// <summary>
     ///   <p><em>Sets <c>Deterministic</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministic<T>(this T toolSettings, bool? deterministic) where T : DotNetRestoreSettings
@@ -9541,7 +9897,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Deterministic</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministic<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9552,7 +9908,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>Deterministic</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministic<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9563,7 +9919,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>Deterministic</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministic<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -9574,7 +9930,7 @@ public static partial class DotNetRestoreSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>Deterministic</c> in <see cref="DotNetRestoreSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministic<T>(this T toolSettings) where T : DotNetRestoreSettings
@@ -10669,7 +11025,7 @@ public static partial class DotNetPackSettingsExtensions
     #region Properties
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetPackSettings.Properties"/> to a new dictionary</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetPackSettings
@@ -10680,7 +11036,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearProperties<T>(this T toolSettings) where T : DotNetPackSettings
@@ -10691,7 +11047,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds a new key-value-pair <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetPackSettings
@@ -10702,7 +11058,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes a key-value-pair from <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetPackSettings
@@ -10713,7 +11069,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets a key-value-pair in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetPackSettings
@@ -10725,7 +11081,7 @@ public static partial class DotNetPackSettingsExtensions
     #region RunCodeAnalysis
     /// <summary>
     ///   <p><em>Sets <c>RunCodeAnalysis</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetPackSettings
@@ -10736,7 +11092,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RunCodeAnalysis</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPackSettings
@@ -10747,7 +11103,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>RunCodeAnalysis</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPackSettings
@@ -10758,7 +11114,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>RunCodeAnalysis</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPackSettings
@@ -10769,7 +11125,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPackSettings
@@ -10782,7 +11138,7 @@ public static partial class DotNetPackSettingsExtensions
     #region NoWarn
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPackSettings
@@ -10793,7 +11149,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPackSettings
@@ -10804,7 +11160,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPackSettings
@@ -10815,7 +11171,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in existing <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPackSettings
@@ -10826,7 +11182,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>NoWarn</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetPackSettings
@@ -10837,7 +11193,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPackSettings
@@ -10848,7 +11204,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPackSettings
@@ -10861,7 +11217,7 @@ public static partial class DotNetPackSettingsExtensions
     #region WarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPackSettings
@@ -10872,7 +11228,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPackSettings
@@ -10883,7 +11239,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPackSettings
@@ -10894,7 +11250,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPackSettings
@@ -10905,7 +11261,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>WarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetPackSettings
@@ -10916,7 +11272,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPackSettings
@@ -10927,7 +11283,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPackSettings
@@ -10940,7 +11296,7 @@ public static partial class DotNetPackSettingsExtensions
     #region WarningLevel
     /// <summary>
     ///   <p><em>Sets <c>WarningLevel</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetPackSettings
@@ -10951,7 +11307,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>WarningLevel</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetPackSettings
@@ -10964,7 +11320,7 @@ public static partial class DotNetPackSettingsExtensions
     #region TreatWarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetPackSettings
@@ -10975,7 +11331,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPackSettings
@@ -10986,7 +11342,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPackSettings
@@ -10997,7 +11353,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11008,7 +11364,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11021,7 +11377,7 @@ public static partial class DotNetPackSettingsExtensions
     #region AssemblyVersion
     /// <summary>
     ///   <p><em>Sets <c>AssemblyVersion</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetPackSettings
@@ -11032,7 +11388,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>AssemblyVersion</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11045,7 +11401,7 @@ public static partial class DotNetPackSettingsExtensions
     #region FileVersion
     /// <summary>
     ///   <p><em>Sets <c>FileVersion</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetPackSettings
@@ -11056,7 +11412,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>FileVersion</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11069,7 +11425,7 @@ public static partial class DotNetPackSettingsExtensions
     #region InformationalVersion
     /// <summary>
     ///   <p><em>Sets <c>InformationalVersion</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetPackSettings
@@ -11080,7 +11436,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>InformationalVersion</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11093,7 +11449,7 @@ public static partial class DotNetPackSettingsExtensions
     #region PackageId
     /// <summary>
     ///   <p><em>Sets <c>PackageId</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetPackSettings
@@ -11104,7 +11460,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageId</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageId<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11117,7 +11473,7 @@ public static partial class DotNetPackSettingsExtensions
     #region Version
     /// <summary>
     ///   <p><em>Sets <c>Version</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetPackSettings
@@ -11128,7 +11484,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Version</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersion<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11141,7 +11497,7 @@ public static partial class DotNetPackSettingsExtensions
     #region VersionPrefix
     /// <summary>
     ///   <p><em>Sets <c>VersionPrefix</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetPackSettings
@@ -11152,7 +11508,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>VersionPrefix</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11165,7 +11521,7 @@ public static partial class DotNetPackSettingsExtensions
     #region Authors
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPackSettings
@@ -11176,7 +11532,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPackSettings
@@ -11187,7 +11543,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPackSettings
@@ -11198,7 +11554,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in existing <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPackSettings
@@ -11209,7 +11565,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearAuthors<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11220,7 +11576,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPackSettings
@@ -11231,7 +11587,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPackSettings
@@ -11244,7 +11600,7 @@ public static partial class DotNetPackSettingsExtensions
     #region Title
     /// <summary>
     ///   <p><em>Sets <c>Title</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetPackSettings
@@ -11255,7 +11611,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Title</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTitle<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11268,7 +11624,7 @@ public static partial class DotNetPackSettingsExtensions
     #region Description
     /// <summary>
     ///   <p><em>Sets <c>Description</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetPackSettings
@@ -11279,7 +11635,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Description</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDescription<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11292,7 +11648,7 @@ public static partial class DotNetPackSettingsExtensions
     #region Copyright
     /// <summary>
     ///   <p><em>Sets <c>Copyright</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetPackSettings
@@ -11303,7 +11659,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Copyright</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetCopyright<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11316,7 +11672,7 @@ public static partial class DotNetPackSettingsExtensions
     #region PackageRequireLicenseAcceptance
     /// <summary>
     ///   <p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetPackSettings
@@ -11327,7 +11683,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11338,7 +11694,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11349,7 +11705,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11360,7 +11716,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11373,7 +11729,7 @@ public static partial class DotNetPackSettingsExtensions
     #region PackageLicenseUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageLicenseUrl</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetPackSettings
@@ -11384,7 +11740,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageLicenseUrl</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11397,7 +11753,7 @@ public static partial class DotNetPackSettingsExtensions
     #region PackageProjectUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageProjectUrl</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetPackSettings
@@ -11408,7 +11764,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageProjectUrl</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11421,7 +11777,7 @@ public static partial class DotNetPackSettingsExtensions
     #region PackageIconUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageIconUrl</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetPackSettings
@@ -11432,7 +11788,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageIconUrl</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11445,7 +11801,7 @@ public static partial class DotNetPackSettingsExtensions
     #region PackageTags
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPackSettings
@@ -11456,7 +11812,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPackSettings
@@ -11467,7 +11823,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPackSettings
@@ -11478,7 +11834,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in existing <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPackSettings
@@ -11489,7 +11845,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11500,7 +11856,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPackSettings
@@ -11511,7 +11867,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPackSettings
@@ -11524,7 +11880,7 @@ public static partial class DotNetPackSettingsExtensions
     #region PackageReleaseNotes
     /// <summary>
     ///   <p><em>Sets <c>PackageReleaseNotes</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetPackSettings
@@ -11535,7 +11891,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageReleaseNotes</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11548,7 +11904,7 @@ public static partial class DotNetPackSettingsExtensions
     #region RepositoryUrl
     /// <summary>
     ///   <p><em>Sets <c>RepositoryUrl</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetPackSettings
@@ -11559,7 +11915,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryUrl</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11572,7 +11928,7 @@ public static partial class DotNetPackSettingsExtensions
     #region RepositoryType
     /// <summary>
     ///   <p><em>Sets <c>RepositoryType</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetPackSettings
@@ -11583,7 +11939,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryType</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11642,7 +11998,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11653,7 +12009,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11664,7 +12020,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11699,7 +12055,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11710,7 +12066,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11721,7 +12077,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11756,7 +12112,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11767,7 +12123,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11778,7 +12134,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11791,7 +12147,7 @@ public static partial class DotNetPackSettingsExtensions
     #region PublishProfile
     /// <summary>
     ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetPackSettings
@@ -11802,7 +12158,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11815,7 +12171,7 @@ public static partial class DotNetPackSettingsExtensions
     #region Platform
     /// <summary>
     ///   <p><em>Sets <c>Platform</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPlatform<T>(this T toolSettings, string platform) where T : DotNetPackSettings
@@ -11826,7 +12182,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Platform</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPlatform<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11839,7 +12195,7 @@ public static partial class DotNetPackSettingsExtensions
     #region ContinuousIntegrationBuild
     /// <summary>
     ///   <p><em>Sets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetContinuousIntegrationBuild<T>(this T toolSettings, bool? continuousIntegrationBuild) where T : DotNetPackSettings
@@ -11850,7 +12206,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11861,7 +12217,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11872,7 +12228,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11883,7 +12239,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>ContinuousIntegrationBuild</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11896,7 +12252,7 @@ public static partial class DotNetPackSettingsExtensions
     #region DeterministicSourcePaths
     /// <summary>
     ///   <p><em>Sets <c>DeterministicSourcePaths</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministicSourcePaths<T>(this T toolSettings, bool? deterministicSourcePaths) where T : DotNetPackSettings
@@ -11907,7 +12263,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>DeterministicSourcePaths</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11918,7 +12274,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>DeterministicSourcePaths</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11929,7 +12285,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>DeterministicSourcePaths</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11940,7 +12296,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>DeterministicSourcePaths</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11953,7 +12309,7 @@ public static partial class DotNetPackSettingsExtensions
     #region Deterministic
     /// <summary>
     ///   <p><em>Sets <c>Deterministic</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministic<T>(this T toolSettings, bool? deterministic) where T : DotNetPackSettings
@@ -11964,7 +12320,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Deterministic</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministic<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11975,7 +12331,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>Deterministic</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministic<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11986,7 +12342,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>Deterministic</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministic<T>(this T toolSettings) where T : DotNetPackSettings
@@ -11997,7 +12353,7 @@ public static partial class DotNetPackSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>Deterministic</c> in <see cref="DotNetPackSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministic<T>(this T toolSettings) where T : DotNetPackSettings
@@ -13164,7 +13520,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region Properties
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetBuildSettings.Properties"/> to a new dictionary</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetBuildSettings
@@ -13175,7 +13531,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearProperties<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13186,7 +13542,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds a new key-value-pair <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetBuildSettings
@@ -13197,7 +13553,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes a key-value-pair from <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetBuildSettings
@@ -13208,7 +13564,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets a key-value-pair in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetBuildSettings
@@ -13220,7 +13576,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region RunCodeAnalysis
     /// <summary>
     ///   <p><em>Sets <c>RunCodeAnalysis</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetBuildSettings
@@ -13231,7 +13587,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RunCodeAnalysis</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13242,7 +13598,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>RunCodeAnalysis</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13253,7 +13609,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>RunCodeAnalysis</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13264,7 +13620,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13277,7 +13633,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region NoWarn
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetBuildSettings
@@ -13288,7 +13644,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetBuildSettings
@@ -13299,7 +13655,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetBuildSettings
@@ -13310,7 +13666,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in existing <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetBuildSettings
@@ -13321,7 +13677,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13332,7 +13688,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetBuildSettings
@@ -13343,7 +13699,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetBuildSettings
@@ -13356,7 +13712,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region WarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetBuildSettings
@@ -13367,7 +13723,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetBuildSettings
@@ -13378,7 +13734,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetBuildSettings
@@ -13389,7 +13745,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetBuildSettings
@@ -13400,7 +13756,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13411,7 +13767,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetBuildSettings
@@ -13422,7 +13778,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetBuildSettings
@@ -13435,7 +13791,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region WarningLevel
     /// <summary>
     ///   <p><em>Sets <c>WarningLevel</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetBuildSettings
@@ -13446,7 +13802,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>WarningLevel</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13459,7 +13815,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region TreatWarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetBuildSettings
@@ -13470,7 +13826,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13481,7 +13837,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13492,7 +13848,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13503,7 +13859,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13516,7 +13872,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region AssemblyVersion
     /// <summary>
     ///   <p><em>Sets <c>AssemblyVersion</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetBuildSettings
@@ -13527,7 +13883,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>AssemblyVersion</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13540,7 +13896,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region FileVersion
     /// <summary>
     ///   <p><em>Sets <c>FileVersion</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetBuildSettings
@@ -13551,7 +13907,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>FileVersion</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13564,7 +13920,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region InformationalVersion
     /// <summary>
     ///   <p><em>Sets <c>InformationalVersion</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetBuildSettings
@@ -13575,7 +13931,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>InformationalVersion</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13588,7 +13944,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region PackageId
     /// <summary>
     ///   <p><em>Sets <c>PackageId</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetBuildSettings
@@ -13599,7 +13955,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageId</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageId<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13612,7 +13968,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region Version
     /// <summary>
     ///   <p><em>Sets <c>Version</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetBuildSettings
@@ -13623,7 +13979,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Version</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersion<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13636,7 +13992,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region VersionPrefix
     /// <summary>
     ///   <p><em>Sets <c>VersionPrefix</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetBuildSettings
@@ -13647,7 +14003,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>VersionPrefix</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13660,7 +14016,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region Authors
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetBuildSettings
@@ -13671,7 +14027,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetBuildSettings
@@ -13682,7 +14038,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetBuildSettings
@@ -13693,7 +14049,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in existing <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetBuildSettings
@@ -13704,7 +14060,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>Authors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearAuthors<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13715,7 +14071,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetBuildSettings
@@ -13726,7 +14082,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetBuildSettings
@@ -13739,7 +14095,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region Title
     /// <summary>
     ///   <p><em>Sets <c>Title</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetBuildSettings
@@ -13750,7 +14106,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Title</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTitle<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13763,7 +14119,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region Description
     /// <summary>
     ///   <p><em>Sets <c>Description</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetBuildSettings
@@ -13774,7 +14130,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Description</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDescription<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13787,7 +14143,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region Copyright
     /// <summary>
     ///   <p><em>Sets <c>Copyright</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetBuildSettings
@@ -13798,7 +14154,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Copyright</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetCopyright<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13811,7 +14167,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region PackageRequireLicenseAcceptance
     /// <summary>
     ///   <p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetBuildSettings
@@ -13822,7 +14178,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13833,7 +14189,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13844,7 +14200,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13855,7 +14211,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13868,7 +14224,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region PackageLicenseUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageLicenseUrl</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetBuildSettings
@@ -13879,7 +14235,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageLicenseUrl</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13892,7 +14248,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region PackageProjectUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageProjectUrl</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetBuildSettings
@@ -13903,7 +14259,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageProjectUrl</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13916,7 +14272,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region PackageIconUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageIconUrl</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetBuildSettings
@@ -13927,7 +14283,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageIconUrl</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13940,7 +14296,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region PackageTags
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetBuildSettings
@@ -13951,7 +14307,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetBuildSettings
@@ -13962,7 +14318,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetBuildSettings
@@ -13973,7 +14329,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in existing <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetBuildSettings
@@ -13984,7 +14340,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>PackageTags</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -13995,7 +14351,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetBuildSettings
@@ -14006,7 +14362,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetBuildSettings
@@ -14019,7 +14375,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region PackageReleaseNotes
     /// <summary>
     ///   <p><em>Sets <c>PackageReleaseNotes</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetBuildSettings
@@ -14030,7 +14386,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageReleaseNotes</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14043,7 +14399,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region RepositoryUrl
     /// <summary>
     ///   <p><em>Sets <c>RepositoryUrl</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetBuildSettings
@@ -14054,7 +14410,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryUrl</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14067,7 +14423,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region RepositoryType
     /// <summary>
     ///   <p><em>Sets <c>RepositoryType</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetBuildSettings
@@ -14078,7 +14434,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryType</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14137,7 +14493,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14148,7 +14504,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14159,7 +14515,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14194,7 +14550,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14205,7 +14561,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14216,7 +14572,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14251,7 +14607,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14262,7 +14618,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14273,7 +14629,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14286,7 +14642,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region PublishProfile
     /// <summary>
     ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetBuildSettings
@@ -14297,7 +14653,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14310,7 +14666,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region Platform
     /// <summary>
     ///   <p><em>Sets <c>Platform</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPlatform<T>(this T toolSettings, string platform) where T : DotNetBuildSettings
@@ -14321,7 +14677,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Platform</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPlatform<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14334,7 +14690,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region ContinuousIntegrationBuild
     /// <summary>
     ///   <p><em>Sets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetContinuousIntegrationBuild<T>(this T toolSettings, bool? continuousIntegrationBuild) where T : DotNetBuildSettings
@@ -14345,7 +14701,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14356,7 +14712,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14367,7 +14723,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14378,7 +14734,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>ContinuousIntegrationBuild</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14391,7 +14747,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region DeterministicSourcePaths
     /// <summary>
     ///   <p><em>Sets <c>DeterministicSourcePaths</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministicSourcePaths<T>(this T toolSettings, bool? deterministicSourcePaths) where T : DotNetBuildSettings
@@ -14402,7 +14758,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>DeterministicSourcePaths</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14413,7 +14769,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>DeterministicSourcePaths</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14424,7 +14780,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>DeterministicSourcePaths</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14435,7 +14791,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>DeterministicSourcePaths</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14448,7 +14804,7 @@ public static partial class DotNetBuildSettingsExtensions
     #region Deterministic
     /// <summary>
     ///   <p><em>Sets <c>Deterministic</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministic<T>(this T toolSettings, bool? deterministic) where T : DotNetBuildSettings
@@ -14459,7 +14815,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Deterministic</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministic<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14470,7 +14826,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>Deterministic</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministic<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14481,7 +14837,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>Deterministic</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministic<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -14492,7 +14848,7 @@ public static partial class DotNetBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>Deterministic</c> in <see cref="DotNetBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministic<T>(this T toolSettings) where T : DotNetBuildSettings
@@ -15116,7 +15472,7 @@ public static partial class DotNetMSBuildSettingsExtensions
     #region BinaryLog
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetMSBuildSettings.BinaryLog"/></em></p>
-    ///   <p>Generare MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.</p>
+    ///   <p>Generate MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.</p>
     /// </summary>
     [Pure]
     public static T SetBinaryLog<T>(this T toolSettings, string binaryLog) where T : DotNetMSBuildSettings
@@ -15127,7 +15483,7 @@ public static partial class DotNetMSBuildSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <see cref="DotNetMSBuildSettings.BinaryLog"/></em></p>
-    ///   <p>Generare MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.</p>
+    ///   <p>Generate MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.</p>
     /// </summary>
     [Pure]
     public static T ResetBinaryLog<T>(this T toolSettings) where T : DotNetMSBuildSettings
@@ -16693,7 +17049,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region Properties
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetCleanSettings.Properties"/> to a new dictionary</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetCleanSettings
@@ -16704,7 +17060,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearProperties<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -16715,7 +17071,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds a new key-value-pair <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetCleanSettings
@@ -16726,7 +17082,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes a key-value-pair from <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetCleanSettings
@@ -16737,7 +17093,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets a key-value-pair in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetCleanSettings
@@ -16749,7 +17105,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region RunCodeAnalysis
     /// <summary>
     ///   <p><em>Sets <c>RunCodeAnalysis</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetCleanSettings
@@ -16760,7 +17116,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RunCodeAnalysis</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -16771,7 +17127,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>RunCodeAnalysis</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -16782,7 +17138,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>RunCodeAnalysis</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -16793,7 +17149,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -16806,7 +17162,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region NoWarn
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetCleanSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetCleanSettings
@@ -16817,7 +17173,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetCleanSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetCleanSettings
@@ -16828,7 +17184,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetCleanSettings
@@ -16839,7 +17195,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in existing <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetCleanSettings
@@ -16850,7 +17206,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>NoWarn</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -16861,7 +17217,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetCleanSettings
@@ -16872,7 +17228,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetCleanSettings
@@ -16885,7 +17241,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region WarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetCleanSettings
@@ -16896,7 +17252,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetCleanSettings
@@ -16907,7 +17263,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetCleanSettings
@@ -16918,7 +17274,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetCleanSettings
@@ -16929,7 +17285,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>WarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -16940,7 +17296,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetCleanSettings
@@ -16951,7 +17307,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetCleanSettings
@@ -16964,7 +17320,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region WarningLevel
     /// <summary>
     ///   <p><em>Sets <c>WarningLevel</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetCleanSettings
@@ -16975,7 +17331,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>WarningLevel</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -16988,7 +17344,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region TreatWarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetCleanSettings
@@ -16999,7 +17355,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17010,7 +17366,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17021,7 +17377,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17032,7 +17388,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17045,7 +17401,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region AssemblyVersion
     /// <summary>
     ///   <p><em>Sets <c>AssemblyVersion</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetCleanSettings
@@ -17056,7 +17412,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>AssemblyVersion</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17069,7 +17425,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region FileVersion
     /// <summary>
     ///   <p><em>Sets <c>FileVersion</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetCleanSettings
@@ -17080,7 +17436,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>FileVersion</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17093,7 +17449,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region InformationalVersion
     /// <summary>
     ///   <p><em>Sets <c>InformationalVersion</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetCleanSettings
@@ -17104,7 +17460,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>InformationalVersion</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17117,7 +17473,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region PackageId
     /// <summary>
     ///   <p><em>Sets <c>PackageId</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetCleanSettings
@@ -17128,7 +17484,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageId</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageId<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17141,7 +17497,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region Version
     /// <summary>
     ///   <p><em>Sets <c>Version</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetCleanSettings
@@ -17152,7 +17508,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Version</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersion<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17165,7 +17521,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region VersionPrefix
     /// <summary>
     ///   <p><em>Sets <c>VersionPrefix</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetCleanSettings
@@ -17176,7 +17532,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>VersionPrefix</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17189,7 +17545,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region Authors
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetCleanSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetCleanSettings
@@ -17200,7 +17556,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetCleanSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetCleanSettings
@@ -17211,7 +17567,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetCleanSettings
@@ -17222,7 +17578,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in existing <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetCleanSettings
@@ -17233,7 +17589,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>Authors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearAuthors<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17244,7 +17600,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetCleanSettings
@@ -17255,7 +17611,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetCleanSettings
@@ -17268,7 +17624,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region Title
     /// <summary>
     ///   <p><em>Sets <c>Title</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetCleanSettings
@@ -17279,7 +17635,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Title</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTitle<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17292,7 +17648,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region Description
     /// <summary>
     ///   <p><em>Sets <c>Description</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetCleanSettings
@@ -17303,7 +17659,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Description</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDescription<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17316,7 +17672,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region Copyright
     /// <summary>
     ///   <p><em>Sets <c>Copyright</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetCleanSettings
@@ -17327,7 +17683,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Copyright</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetCopyright<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17340,7 +17696,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region PackageRequireLicenseAcceptance
     /// <summary>
     ///   <p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetCleanSettings
@@ -17351,7 +17707,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17362,7 +17718,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17373,7 +17729,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17384,7 +17740,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17397,7 +17753,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region PackageLicenseUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageLicenseUrl</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetCleanSettings
@@ -17408,7 +17764,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageLicenseUrl</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17421,7 +17777,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region PackageProjectUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageProjectUrl</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetCleanSettings
@@ -17432,7 +17788,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageProjectUrl</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17445,7 +17801,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region PackageIconUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageIconUrl</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetCleanSettings
@@ -17456,7 +17812,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageIconUrl</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17469,7 +17825,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region PackageTags
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetCleanSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetCleanSettings
@@ -17480,7 +17836,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetCleanSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetCleanSettings
@@ -17491,7 +17847,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetCleanSettings
@@ -17502,7 +17858,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in existing <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetCleanSettings
@@ -17513,7 +17869,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>PackageTags</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17524,7 +17880,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetCleanSettings
@@ -17535,7 +17891,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetCleanSettings
@@ -17548,7 +17904,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region PackageReleaseNotes
     /// <summary>
     ///   <p><em>Sets <c>PackageReleaseNotes</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetCleanSettings
@@ -17559,7 +17915,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageReleaseNotes</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17572,7 +17928,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region RepositoryUrl
     /// <summary>
     ///   <p><em>Sets <c>RepositoryUrl</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetCleanSettings
@@ -17583,7 +17939,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryUrl</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17596,7 +17952,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region RepositoryType
     /// <summary>
     ///   <p><em>Sets <c>RepositoryType</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetCleanSettings
@@ -17607,7 +17963,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryType</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17666,7 +18022,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17677,7 +18033,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17688,7 +18044,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17723,7 +18079,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17734,7 +18090,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17745,7 +18101,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17780,7 +18136,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17791,7 +18147,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17802,7 +18158,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17815,7 +18171,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region PublishProfile
     /// <summary>
     ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetCleanSettings
@@ -17826,7 +18182,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17839,7 +18195,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region Platform
     /// <summary>
     ///   <p><em>Sets <c>Platform</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPlatform<T>(this T toolSettings, string platform) where T : DotNetCleanSettings
@@ -17850,7 +18206,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Platform</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPlatform<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17863,7 +18219,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region ContinuousIntegrationBuild
     /// <summary>
     ///   <p><em>Sets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetContinuousIntegrationBuild<T>(this T toolSettings, bool? continuousIntegrationBuild) where T : DotNetCleanSettings
@@ -17874,7 +18230,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17885,7 +18241,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17896,7 +18252,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17907,7 +18263,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>ContinuousIntegrationBuild</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17920,7 +18276,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region DeterministicSourcePaths
     /// <summary>
     ///   <p><em>Sets <c>DeterministicSourcePaths</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministicSourcePaths<T>(this T toolSettings, bool? deterministicSourcePaths) where T : DotNetCleanSettings
@@ -17931,7 +18287,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>DeterministicSourcePaths</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17942,7 +18298,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>DeterministicSourcePaths</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17953,7 +18309,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>DeterministicSourcePaths</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17964,7 +18320,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>DeterministicSourcePaths</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17977,7 +18333,7 @@ public static partial class DotNetCleanSettingsExtensions
     #region Deterministic
     /// <summary>
     ///   <p><em>Sets <c>Deterministic</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministic<T>(this T toolSettings, bool? deterministic) where T : DotNetCleanSettings
@@ -17988,7 +18344,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Deterministic</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministic<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -17999,7 +18355,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>Deterministic</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministic<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -18010,7 +18366,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>Deterministic</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministic<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -18021,7 +18377,7 @@ public static partial class DotNetCleanSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>Deterministic</c> in <see cref="DotNetCleanSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministic<T>(this T toolSettings) where T : DotNetCleanSettings
@@ -18498,7 +18854,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region Properties
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetFormatSettings.Properties"/> to a new dictionary</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetFormatSettings
@@ -18509,7 +18865,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearProperties<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18520,7 +18876,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds a new key-value-pair <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetFormatSettings
@@ -18531,7 +18887,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes a key-value-pair from <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetFormatSettings
@@ -18542,7 +18898,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets a key-value-pair in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetFormatSettings
@@ -18554,7 +18910,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region RunCodeAnalysis
     /// <summary>
     ///   <p><em>Sets <c>RunCodeAnalysis</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetFormatSettings
@@ -18565,7 +18921,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RunCodeAnalysis</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18576,7 +18932,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>RunCodeAnalysis</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18587,7 +18943,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>RunCodeAnalysis</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18598,7 +18954,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18611,7 +18967,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region NoWarn
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetFormatSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetFormatSettings
@@ -18622,7 +18978,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetFormatSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetFormatSettings
@@ -18633,7 +18989,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetFormatSettings
@@ -18644,7 +19000,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in existing <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetFormatSettings
@@ -18655,7 +19011,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>NoWarn</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18666,7 +19022,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetFormatSettings
@@ -18677,7 +19033,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetFormatSettings
@@ -18690,7 +19046,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region WarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetFormatSettings
@@ -18701,7 +19057,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetFormatSettings
@@ -18712,7 +19068,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetFormatSettings
@@ -18723,7 +19079,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetFormatSettings
@@ -18734,7 +19090,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>WarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18745,7 +19101,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetFormatSettings
@@ -18756,7 +19112,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetFormatSettings
@@ -18769,7 +19125,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region WarningLevel
     /// <summary>
     ///   <p><em>Sets <c>WarningLevel</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetFormatSettings
@@ -18780,7 +19136,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>WarningLevel</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18793,7 +19149,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region TreatWarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetFormatSettings
@@ -18804,7 +19160,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18815,7 +19171,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18826,7 +19182,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18837,7 +19193,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18850,7 +19206,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region AssemblyVersion
     /// <summary>
     ///   <p><em>Sets <c>AssemblyVersion</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetFormatSettings
@@ -18861,7 +19217,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>AssemblyVersion</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18874,7 +19230,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region FileVersion
     /// <summary>
     ///   <p><em>Sets <c>FileVersion</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetFormatSettings
@@ -18885,7 +19241,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>FileVersion</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18898,7 +19254,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region InformationalVersion
     /// <summary>
     ///   <p><em>Sets <c>InformationalVersion</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetFormatSettings
@@ -18909,7 +19265,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>InformationalVersion</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18922,7 +19278,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region PackageId
     /// <summary>
     ///   <p><em>Sets <c>PackageId</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetFormatSettings
@@ -18933,7 +19289,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageId</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageId<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18946,7 +19302,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region Version
     /// <summary>
     ///   <p><em>Sets <c>Version</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetFormatSettings
@@ -18957,7 +19313,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Version</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersion<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18970,7 +19326,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region VersionPrefix
     /// <summary>
     ///   <p><em>Sets <c>VersionPrefix</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetFormatSettings
@@ -18981,7 +19337,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>VersionPrefix</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -18994,7 +19350,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region Authors
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetFormatSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetFormatSettings
@@ -19005,7 +19361,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetFormatSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetFormatSettings
@@ -19016,7 +19372,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetFormatSettings
@@ -19027,7 +19383,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in existing <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetFormatSettings
@@ -19038,7 +19394,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>Authors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearAuthors<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19049,7 +19405,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetFormatSettings
@@ -19060,7 +19416,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetFormatSettings
@@ -19073,7 +19429,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region Title
     /// <summary>
     ///   <p><em>Sets <c>Title</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetFormatSettings
@@ -19084,7 +19440,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Title</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTitle<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19097,7 +19453,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region Description
     /// <summary>
     ///   <p><em>Sets <c>Description</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetFormatSettings
@@ -19108,7 +19464,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Description</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDescription<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19121,7 +19477,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region Copyright
     /// <summary>
     ///   <p><em>Sets <c>Copyright</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetFormatSettings
@@ -19132,7 +19488,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Copyright</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetCopyright<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19145,7 +19501,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region PackageRequireLicenseAcceptance
     /// <summary>
     ///   <p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetFormatSettings
@@ -19156,7 +19512,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19167,7 +19523,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19178,7 +19534,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19189,7 +19545,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19202,7 +19558,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region PackageLicenseUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageLicenseUrl</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetFormatSettings
@@ -19213,7 +19569,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageLicenseUrl</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19226,7 +19582,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region PackageProjectUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageProjectUrl</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetFormatSettings
@@ -19237,7 +19593,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageProjectUrl</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19250,7 +19606,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region PackageIconUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageIconUrl</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetFormatSettings
@@ -19261,7 +19617,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageIconUrl</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19274,7 +19630,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region PackageTags
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetFormatSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetFormatSettings
@@ -19285,7 +19641,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetFormatSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetFormatSettings
@@ -19296,7 +19652,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetFormatSettings
@@ -19307,7 +19663,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in existing <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetFormatSettings
@@ -19318,7 +19674,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>PackageTags</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19329,7 +19685,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetFormatSettings
@@ -19340,7 +19696,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetFormatSettings
@@ -19353,7 +19709,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region PackageReleaseNotes
     /// <summary>
     ///   <p><em>Sets <c>PackageReleaseNotes</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetFormatSettings
@@ -19364,7 +19720,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageReleaseNotes</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19377,7 +19733,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region RepositoryUrl
     /// <summary>
     ///   <p><em>Sets <c>RepositoryUrl</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetFormatSettings
@@ -19388,7 +19744,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryUrl</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19401,7 +19757,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region RepositoryType
     /// <summary>
     ///   <p><em>Sets <c>RepositoryType</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetFormatSettings
@@ -19412,7 +19768,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryType</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19471,7 +19827,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19482,7 +19838,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19493,7 +19849,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19528,7 +19884,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19539,7 +19895,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19550,7 +19906,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19585,7 +19941,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19596,7 +19952,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19607,7 +19963,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19620,7 +19976,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region PublishProfile
     /// <summary>
     ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetFormatSettings
@@ -19631,7 +19987,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19644,7 +20000,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region Platform
     /// <summary>
     ///   <p><em>Sets <c>Platform</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPlatform<T>(this T toolSettings, string platform) where T : DotNetFormatSettings
@@ -19655,7 +20011,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Platform</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPlatform<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19668,7 +20024,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region ContinuousIntegrationBuild
     /// <summary>
     ///   <p><em>Sets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetContinuousIntegrationBuild<T>(this T toolSettings, bool? continuousIntegrationBuild) where T : DotNetFormatSettings
@@ -19679,7 +20035,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19690,7 +20046,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19701,7 +20057,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19712,7 +20068,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>ContinuousIntegrationBuild</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19725,7 +20081,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region DeterministicSourcePaths
     /// <summary>
     ///   <p><em>Sets <c>DeterministicSourcePaths</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministicSourcePaths<T>(this T toolSettings, bool? deterministicSourcePaths) where T : DotNetFormatSettings
@@ -19736,7 +20092,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>DeterministicSourcePaths</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19747,7 +20103,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>DeterministicSourcePaths</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19758,7 +20114,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>DeterministicSourcePaths</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19769,7 +20125,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>DeterministicSourcePaths</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19782,7 +20138,7 @@ public static partial class DotNetFormatSettingsExtensions
     #region Deterministic
     /// <summary>
     ///   <p><em>Sets <c>Deterministic</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministic<T>(this T toolSettings, bool? deterministic) where T : DotNetFormatSettings
@@ -19793,7 +20149,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Deterministic</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministic<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19804,7 +20160,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>Deterministic</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministic<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19815,7 +20171,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>Deterministic</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministic<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -19826,7 +20182,7 @@ public static partial class DotNetFormatSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>Deterministic</c> in <see cref="DotNetFormatSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministic<T>(this T toolSettings) where T : DotNetFormatSettings
@@ -20984,7 +21340,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region Properties
     /// <summary>
     ///   <p><em>Sets <see cref="DotNetPublishSettings.Properties"/> to a new dictionary</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : DotNetPublishSettings
@@ -20995,7 +21351,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearProperties<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21006,7 +21362,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds a new key-value-pair <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetPublishSettings
@@ -21017,7 +21373,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes a key-value-pair from <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : DotNetPublishSettings
@@ -21028,7 +21384,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets a key-value-pair in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : DotNetPublishSettings
@@ -21040,7 +21396,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region RunCodeAnalysis
     /// <summary>
     ///   <p><em>Sets <c>RunCodeAnalysis</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : DotNetPublishSettings
@@ -21051,7 +21407,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RunCodeAnalysis</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21062,7 +21418,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>RunCodeAnalysis</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21073,7 +21429,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>RunCodeAnalysis</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21084,7 +21440,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21097,7 +21453,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region NoWarn
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetPublishSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPublishSettings
@@ -21108,7 +21464,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>NoWarn</c> in <see cref="DotNetPublishSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPublishSettings
@@ -21119,7 +21475,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPublishSettings
@@ -21130,7 +21486,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>NoWarn</c> in existing <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPublishSettings
@@ -21141,7 +21497,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>NoWarn</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearNoWarns<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21152,7 +21508,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : DotNetPublishSettings
@@ -21163,7 +21519,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : DotNetPublishSettings
@@ -21176,7 +21532,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region WarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPublishSettings
@@ -21187,7 +21543,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPublishSettings
@@ -21198,7 +21554,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPublishSettings
@@ -21209,7 +21565,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPublishSettings
@@ -21220,7 +21576,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>WarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21231,7 +21587,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : DotNetPublishSettings
@@ -21242,7 +21598,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : DotNetPublishSettings
@@ -21255,7 +21611,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region WarningLevel
     /// <summary>
     ///   <p><em>Sets <c>WarningLevel</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : DotNetPublishSettings
@@ -21266,7 +21622,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>WarningLevel</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetWarningLevel<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21279,7 +21635,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region TreatWarningsAsErrors
     /// <summary>
     ///   <p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : DotNetPublishSettings
@@ -21290,7 +21646,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21301,7 +21657,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21312,7 +21668,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21323,7 +21679,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21336,7 +21692,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region AssemblyVersion
     /// <summary>
     ///   <p><em>Sets <c>AssemblyVersion</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : DotNetPublishSettings
@@ -21347,7 +21703,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>AssemblyVersion</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetAssemblyVersion<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21360,7 +21716,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region FileVersion
     /// <summary>
     ///   <p><em>Sets <c>FileVersion</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : DotNetPublishSettings
@@ -21371,7 +21727,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>FileVersion</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetFileVersion<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21384,7 +21740,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region InformationalVersion
     /// <summary>
     ///   <p><em>Sets <c>InformationalVersion</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : DotNetPublishSettings
@@ -21395,7 +21751,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>InformationalVersion</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetInformationalVersion<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21408,7 +21764,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region PackageId
     /// <summary>
     ///   <p><em>Sets <c>PackageId</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageId<T>(this T toolSettings, string packageId) where T : DotNetPublishSettings
@@ -21419,7 +21775,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageId</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageId<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21432,7 +21788,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region Version
     /// <summary>
     ///   <p><em>Sets <c>Version</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersion<T>(this T toolSettings, string version) where T : DotNetPublishSettings
@@ -21443,7 +21799,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Version</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersion<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21456,7 +21812,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region VersionPrefix
     /// <summary>
     ///   <p><em>Sets <c>VersionPrefix</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetVersionPrefix<T>(this T toolSettings, string versionPrefix) where T : DotNetPublishSettings
@@ -21467,7 +21823,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>VersionPrefix</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetVersionPrefix<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21480,7 +21836,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region Authors
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetPublishSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPublishSettings
@@ -21491,7 +21847,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>Authors</c> in <see cref="DotNetPublishSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPublishSettings
@@ -21502,7 +21858,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPublishSettings
@@ -21513,7 +21869,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>Authors</c> in existing <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPublishSettings
@@ -21524,7 +21880,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>Authors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearAuthors<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21535,7 +21891,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : DotNetPublishSettings
@@ -21546,7 +21902,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>Authors</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : DotNetPublishSettings
@@ -21559,7 +21915,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region Title
     /// <summary>
     ///   <p><em>Sets <c>Title</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetTitle<T>(this T toolSettings, string title) where T : DotNetPublishSettings
@@ -21570,7 +21926,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Title</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetTitle<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21583,7 +21939,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region Description
     /// <summary>
     ///   <p><em>Sets <c>Description</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDescription<T>(this T toolSettings, string description) where T : DotNetPublishSettings
@@ -21594,7 +21950,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Description</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDescription<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21607,7 +21963,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region Copyright
     /// <summary>
     ///   <p><em>Sets <c>Copyright</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetCopyright<T>(this T toolSettings, string copyright) where T : DotNetPublishSettings
@@ -21618,7 +21974,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Copyright</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetCopyright<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21631,7 +21987,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region PackageRequireLicenseAcceptance
     /// <summary>
     ///   <p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : DotNetPublishSettings
@@ -21642,7 +21998,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21653,7 +22009,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21664,7 +22020,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21675,7 +22031,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21688,7 +22044,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region PackageLicenseUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageLicenseUrl</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : DotNetPublishSettings
@@ -21699,7 +22055,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageLicenseUrl</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21712,7 +22068,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region PackageProjectUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageProjectUrl</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : DotNetPublishSettings
@@ -21723,7 +22079,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageProjectUrl</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21736,7 +22092,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region PackageIconUrl
     /// <summary>
     ///   <p><em>Sets <c>PackageIconUrl</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : DotNetPublishSettings
@@ -21747,7 +22103,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageIconUrl</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageIconUrl<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21760,7 +22116,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region PackageTags
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetPublishSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPublishSettings
@@ -21771,7 +22127,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Sets <c>PackageTags</c> in <see cref="DotNetPublishSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPublishSettings
@@ -21782,7 +22138,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPublishSettings
@@ -21793,7 +22149,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Adds values to <c>PackageTags</c> in existing <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPublishSettings
@@ -21804,7 +22160,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Clears <c>PackageTags</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ClearPackageTags<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21815,7 +22171,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : DotNetPublishSettings
@@ -21826,7 +22182,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : DotNetPublishSettings
@@ -21839,7 +22195,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region PackageReleaseNotes
     /// <summary>
     ///   <p><em>Sets <c>PackageReleaseNotes</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : DotNetPublishSettings
@@ -21850,7 +22206,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PackageReleaseNotes</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21863,7 +22219,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region RepositoryUrl
     /// <summary>
     ///   <p><em>Sets <c>RepositoryUrl</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : DotNetPublishSettings
@@ -21874,7 +22230,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryUrl</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryUrl<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21887,7 +22243,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region RepositoryType
     /// <summary>
     ///   <p><em>Sets <c>RepositoryType</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : DotNetPublishSettings
@@ -21898,7 +22254,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>RepositoryType</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetRepositoryType<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21957,7 +22313,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishReadyToRun</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishReadyToRun<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21968,7 +22324,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishReadyToRun</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishReadyToRun<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -21979,7 +22335,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishReadyToRun</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishReadyToRun<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22014,7 +22370,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishSingleFile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishSingleFile<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22025,7 +22381,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishSingleFile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishSingleFile<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22036,7 +22392,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishSingleFile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishSingleFile<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22071,7 +22427,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>PublishTrimmed</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnablePublishTrimmed<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22082,7 +22438,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>PublishTrimmed</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisablePublishTrimmed<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22093,7 +22449,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>PublishTrimmed</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T TogglePublishTrimmed<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22106,7 +22462,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region PublishProfile
     /// <summary>
     ///   <p><em>Sets <c>PublishProfile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPublishProfile<T>(this T toolSettings, string publishProfile) where T : DotNetPublishSettings
@@ -22117,7 +22473,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>PublishProfile</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPublishProfile<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22130,7 +22486,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region Platform
     /// <summary>
     ///   <p><em>Sets <c>Platform</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetPlatform<T>(this T toolSettings, string platform) where T : DotNetPublishSettings
@@ -22141,7 +22497,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Platform</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetPlatform<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22154,7 +22510,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region ContinuousIntegrationBuild
     /// <summary>
     ///   <p><em>Sets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetContinuousIntegrationBuild<T>(this T toolSettings, bool? continuousIntegrationBuild) where T : DotNetPublishSettings
@@ -22165,7 +22521,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>ContinuousIntegrationBuild</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22176,7 +22532,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22187,7 +22543,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>ContinuousIntegrationBuild</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22198,7 +22554,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>ContinuousIntegrationBuild</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleContinuousIntegrationBuild<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22211,7 +22567,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region DeterministicSourcePaths
     /// <summary>
     ///   <p><em>Sets <c>DeterministicSourcePaths</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministicSourcePaths<T>(this T toolSettings, bool? deterministicSourcePaths) where T : DotNetPublishSettings
@@ -22222,7 +22578,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>DeterministicSourcePaths</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22233,7 +22589,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>DeterministicSourcePaths</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22244,7 +22600,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>DeterministicSourcePaths</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22255,7 +22611,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>DeterministicSourcePaths</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministicSourcePaths<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22268,7 +22624,7 @@ public static partial class DotNetPublishSettingsExtensions
     #region Deterministic
     /// <summary>
     ///   <p><em>Sets <c>Deterministic</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T SetDeterministic<T>(this T toolSettings, bool? deterministic) where T : DotNetPublishSettings
@@ -22279,7 +22635,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Resets <c>Deterministic</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ResetDeterministic<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22290,7 +22646,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Enables <c>Deterministic</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T EnableDeterministic<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22301,7 +22657,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Disables <c>Deterministic</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T DisableDeterministic<T>(this T toolSettings) where T : DotNetPublishSettings
@@ -22312,7 +22668,7 @@ public static partial class DotNetPublishSettingsExtensions
     }
     /// <summary>
     ///   <p><em>Toggles <c>Deterministic</c> in <see cref="DotNetPublishSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
+    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p>
     /// </summary>
     [Pure]
     public static T ToggleDeterministic<T>(this T toolSettings) where T : DotNetPublishSettings
