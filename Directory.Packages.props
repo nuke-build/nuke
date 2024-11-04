@@ -5,15 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageVersion Include="Azure.Identity" Version="1.12.1" />
-    <PackageVersion Include="Azure.Security.KeyVault.Certificates" Version="4.6.0" />
-    <PackageVersion Include="Azure.Security.KeyVault.Keys" Version="4.6.0" />
-    <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.6.0" />
-    <PackageVersion Include="Basic.Reference.Assemblies.NetStandard20" Version="1.7.2" />
+    <PackageVersion Include="Azure.Identity" Version="1.13.1" />
+    <PackageVersion Include="Azure.Security.KeyVault.Certificates" Version="4.7.0" />
+    <PackageVersion Include="Azure.Security.KeyVault.Keys" Version="4.7.0" />
+    <PackageVersion Include="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
+    <PackageVersion Include="Basic.Reference.Assemblies.NetStandard20" Version="1.7.9" />
     <PackageVersion Include="Glob" Version="1.1.9" />
-    <PackageVersion Include="HtmlAgilityPack" Version="1.11.67" />
+    <PackageVersion Include="HtmlAgilityPack" Version="1.11.70" />
     <PackageVersion Include="Humanizer" Version="2.14.1" />
-    <PackageVersion Include="JetBrains.Annotations" Version="2024.2.0" />
+    <PackageVersion Include="JetBrains.Annotations" Version="2024.3.0" />
     <PackageVersion Include="Microsoft.ApplicationInsights" Version="2.22.0" />
     <PackageVersion Include="Microsoft.Extensions.DependencyModel" Version="8.0.2" />
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
@@ -22,7 +22,7 @@
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageVersion Include="NuGet.Packaging" Version="6.11.1" />
     <PackageVersion Include="Octokit" Version="13.0.1" />
-    <PackageVersion Include="Serilog" Version="4.0.2" />
+    <PackageVersion Include="Serilog" Version="4.1.0" />
     <PackageVersion Include="Serilog.Formatting.Compact" Version="3.0.0" />
     <PackageVersion Include="Serilog.Formatting.Compact.Reader" Version="4.0.0" />
     <PackageVersion Include="Serilog.Sinks.Console" Version="6.0.0" />
@@ -38,24 +38,24 @@
   <!-- Testing -->
   <ItemGroup>
     <PackageVersion Include="coverlet.msbuild" Version="6.0.2" />
-    <PackageVersion Include="FluentAssertions" Version="6.12.0" />
+    <PackageVersion Include="FluentAssertions" Version="6.12.1" />
     <PackageVersion Include="GitHubActionsTestLogger" Version="2.4.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
-    <PackageVersion Include="TeamCity.VSTest.TestAdapter" Version="1.0.40" />
+    <PackageVersion Include="TeamCity.VSTest.TestAdapter" Version="1.0.41" />
     <PackageVersion Include="Verify.Xunit" Version="25.0.2" />
     <PackageVersion Include="Verify.DiffPlex" Version="2.3.0" />
     <PackageVersion Include="Verify.SourceGenerators" Version="2.2.0" />
-    <PackageVersion Include="xunit" Version="2.8.1" />
-    <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.1" />
+    <PackageVersion Include="xunit" Version="2.9.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
 
   <!-- Roslyn (Nuke.SourceGenerator + Nuke.GlobalTool) -->
   <ItemGroup>
-    <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.10.0" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.10.0" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.10.0" />
-    <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.10.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.11.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.11.0" />
+    <PackageVersion Include="Microsoft.CodeAnalysis.Workspaces.MSBuild" Version="4.11.0" />
   </ItemGroup>
 
   <!-- MSBuild (Nuke.ProjectModel + Nuke.MSBuildTasks) -->
