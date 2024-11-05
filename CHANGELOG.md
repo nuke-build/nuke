@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed naming from `NukeBuild.IsSucessful` to `IsSucceeding`
+- Fixed `NukeBuild.IsSucceeding` to negate `IsFailing`
+- Fixed NJsonSchema reference version
+- Fixed `:secrets` command to find secret parameters
+- Fixed argument format in `DotNetTasks`
+- Fixed definite argument in `EntityFrameworkTasks`
+- Fixed deprecated argument in `MinVerTasks`
 
 ## [8.1.2] / 2024-10-13
 - Fixed exclusion of skipped target from lookup for skippable dependencies
