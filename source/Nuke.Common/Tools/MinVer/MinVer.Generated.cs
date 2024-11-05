@@ -55,7 +55,7 @@ public partial class MinVerTasks
     ///   <ul>
     ///     <li><c>--auto-increment</c> via <see cref="MinVerSettings.AutoIncrement"/></li>
     ///     <li><c>--build-metadata</c> via <see cref="MinVerSettings.BuildMetadata"/></li>
-    ///     <li><c>--default-pre-release-phase</c> via <see cref="MinVerSettings.DefaultPreReleasePhase"/></li>
+    ///     <li><c>--default-pre-release-identifiers</c> via <see cref="MinVerSettings.DefaultPreReleaseIdentifiers"/></li>
     ///     <li><c>--minimum-major-minor</c> via <see cref="MinVerSettings.MinimumMajorMinor"/></li>
     ///     <li><c>--tag-prefix</c> via <see cref="MinVerSettings.TagPrefix"/></li>
     ///     <li><c>--verbosity</c> via <see cref="MinVerSettings.Verbosity"/></li>
@@ -77,7 +77,7 @@ public partial class MinVerTasks
     ///   <ul>
     ///     <li><c>--auto-increment</c> via <see cref="MinVerSettings.AutoIncrement"/></li>
     ///     <li><c>--build-metadata</c> via <see cref="MinVerSettings.BuildMetadata"/></li>
-    ///     <li><c>--default-pre-release-phase</c> via <see cref="MinVerSettings.DefaultPreReleasePhase"/></li>
+    ///     <li><c>--default-pre-release-identifiers</c> via <see cref="MinVerSettings.DefaultPreReleaseIdentifiers"/></li>
     ///     <li><c>--minimum-major-minor</c> via <see cref="MinVerSettings.MinimumMajorMinor"/></li>
     ///     <li><c>--tag-prefix</c> via <see cref="MinVerSettings.TagPrefix"/></li>
     ///     <li><c>--verbosity</c> via <see cref="MinVerSettings.Verbosity"/></li>
@@ -96,7 +96,7 @@ public partial class MinVerTasks
     ///   <ul>
     ///     <li><c>--auto-increment</c> via <see cref="MinVerSettings.AutoIncrement"/></li>
     ///     <li><c>--build-metadata</c> via <see cref="MinVerSettings.BuildMetadata"/></li>
-    ///     <li><c>--default-pre-release-phase</c> via <see cref="MinVerSettings.DefaultPreReleasePhase"/></li>
+    ///     <li><c>--default-pre-release-identifiers</c> via <see cref="MinVerSettings.DefaultPreReleaseIdentifiers"/></li>
     ///     <li><c>--minimum-major-minor</c> via <see cref="MinVerSettings.MinimumMajorMinor"/></li>
     ///     <li><c>--tag-prefix</c> via <see cref="MinVerSettings.TagPrefix"/></li>
     ///     <li><c>--verbosity</c> via <see cref="MinVerSettings.Verbosity"/></li>
@@ -124,7 +124,7 @@ public partial class MinVerSettings : ToolSettings
     public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? MinVerTasks.MinVerExitHandler;
     public virtual MinVerVersionPart AutoIncrement { get; internal set; }
     public virtual string BuildMetadata { get; internal set; }
-    public virtual string DefaultPreReleasePhase { get; internal set; }
+    public virtual string DefaultPreReleaseIdentifiers { get; internal set; }
     public virtual string MinimumMajorMinor { get; internal set; }
     public virtual string TagPrefix { get; internal set; }
     public virtual MinVerVerbosity Verbosity { get; internal set; }
@@ -134,7 +134,7 @@ public partial class MinVerSettings : ToolSettings
         arguments
           .Add("--auto-increment {value}", AutoIncrement)
           .Add("--build-metadata {value}", BuildMetadata)
-          .Add("--default-pre-release-phase {value}", DefaultPreReleasePhase)
+          .Add("--default-pre-release-identifiers {value}", DefaultPreReleaseIdentifiers)
           .Add("--minimum-major-minor {value}", MinimumMajorMinor)
           .Add("--tag-prefix {value}", TagPrefix)
           .Add("--verbosity {value}", Verbosity);
@@ -215,25 +215,25 @@ public static partial class MinVerSettingsExtensions
         return toolSettings;
     }
     #endregion
-    #region DefaultPreReleasePhase
+    #region DefaultPreReleaseIdentifiers
     /// <summary>
-    ///   <p><em>Sets <see cref="MinVerSettings.DefaultPreReleasePhase"/></em></p>
+    ///   <p><em>Sets <see cref="MinVerSettings.DefaultPreReleaseIdentifiers"/></em></p>
     /// </summary>
     [Pure]
-    public static T SetDefaultPreReleasePhase<T>(this T toolSettings, string defaultPreReleasePhase) where T : MinVerSettings
+    public static T SetDefaultPreReleaseIdentifiers<T>(this T toolSettings, string defaultPreReleaseIdentifiers) where T : MinVerSettings
     {
         toolSettings = toolSettings.NewInstance();
-        toolSettings.DefaultPreReleasePhase = defaultPreReleasePhase;
+        toolSettings.DefaultPreReleaseIdentifiers = defaultPreReleaseIdentifiers;
         return toolSettings;
     }
     /// <summary>
-    ///   <p><em>Resets <see cref="MinVerSettings.DefaultPreReleasePhase"/></em></p>
+    ///   <p><em>Resets <see cref="MinVerSettings.DefaultPreReleaseIdentifiers"/></em></p>
     /// </summary>
     [Pure]
-    public static T ResetDefaultPreReleasePhase<T>(this T toolSettings) where T : MinVerSettings
+    public static T ResetDefaultPreReleaseIdentifiers<T>(this T toolSettings) where T : MinVerSettings
     {
         toolSettings = toolSettings.NewInstance();
-        toolSettings.DefaultPreReleasePhase = null;
+        toolSettings.DefaultPreReleaseIdentifiers = null;
         return toolSettings;
     }
     #endregion

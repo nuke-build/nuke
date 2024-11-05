@@ -24,9 +24,9 @@
             "format": "--build-metadata {value}"
           },
           {
-            "name": "DefaultPreReleasePhase",
+            "name": "DefaultPreReleaseIdentifiers",
             "type": "string",
-            "format": "--default-pre-release-phase {value}"
+            "format": "--default-pre-release-identifiers {value}"
           },
           {
             "name": "MinimumMajorMinor",

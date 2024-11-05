@@ -13,6 +13,7 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using NJsonSchema;
 using NJsonSchema.Generation;
+using NJsonSchema.NewtonsoftJson.Generation;
 using NuGet.Packaging;
 using Nuke.Common.Utilities;
 using Nuke.Common.ValueInjection;
@@ -38,7 +39,7 @@ public class SchemaUtility
         {
             return new SchemaGenerator(
                 build,
-                new JsonSchemaGeneratorSettings
+                new NewtonsoftJsonSchemaGeneratorSettings
                 {
                     FlattenInheritanceHierarchy = true,
                     SerializerSettings =
