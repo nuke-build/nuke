@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [8.1.3] / 2024-11-05
+- Fixed naming from `NukeBuild.IsSucessful` to `IsSucceeding`
+- Fixed `NukeBuild.IsSucceeding` to negate `IsFailing`
+- Fixed NJsonSchema reference version
+- Fixed `:secrets` command to find secret parameters
+- Fixed argument format in `DotNetTasks`
+- Fixed definite argument in `EntityFrameworkTasks`
+- Fixed deprecated argument in `MinVerTasks`
+
 ## [8.1.2] / 2024-10-13
 - Fixed exclusion of skipped target from lookup for skippable dependencies
 - Fixed resolution of empty environment variables to false
@@ -1162,7 +1171,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/8.1.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/8.1.3...HEAD
+[8.1.3]: https://github.com/nuke-build/nuke/compare/8.1.2...8.1.3
 [8.1.2]: https://github.com/nuke-build/nuke/compare/8.1.1...8.1.2
 [8.1.1]: https://github.com/nuke-build/nuke/compare/8.1.0...8.1.1
 [8.1.0]: https://github.com/nuke-build/nuke/compare/8.0.0...8.1.0

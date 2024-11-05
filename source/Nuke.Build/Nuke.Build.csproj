@@ -20,6 +20,7 @@
     <PackageReference Include="Microsoft.ApplicationInsights" />
     <PackageReference Include="Microsoft.Extensions.DependencyModel" />
     <PackageReference Include="NJsonSchema" />
+    <PackageReference Include="NJsonSchema.NewtonsoftJson" />
     <PackageReference Include="Serilog.Formatting.Compact" />
     <PackageReference Include="Serilog.Formatting.Compact.Reader" />
     <PackageReference Include="Serilog.Sinks.Console" />

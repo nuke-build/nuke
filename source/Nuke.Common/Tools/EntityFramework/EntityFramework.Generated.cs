@@ -1419,7 +1419,7 @@ public partial class EntityFrameworkDbContextScaffoldSettings : EntityFrameworkS
     protected override Arguments ConfigureProcessArguments(Arguments arguments)
     {
         arguments
-          .Add("ef dbcontext scaffold")
+          .Add("dbcontext scaffold")
           .Add("{value}", Connection)
           .Add("{value}", Provider)
           .Add("--data-annotations", DataAnnotations)
