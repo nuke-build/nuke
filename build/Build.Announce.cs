@@ -74,6 +74,7 @@ partial class Build
         new (string Text, string Url)[]
         {
             ("Octopus Deploy", "https://octopus.com/"),
+            ("Datadog", "https://datadoghq.com/"),
             ("Amazon Web Services", "https://aws.amazon.com/"),
         };
 
@@ -94,7 +95,7 @@ partial class Build
                         .SetColor($"#{AnnouncementColor:x8}")
                         .SetThumbUrl(AnnouncementThumbnailUrl)
                         .SetText(new StringBuilder()
-                            .Append($"<!channel>, this release includes *<{AnnouncementComparisonUrl}|{AnnouncementGitInfo.CommitsText}>*")
+                            .Append($"<!channel>, this new release includes *<{AnnouncementComparisonUrl}|{AnnouncementGitInfo.CommitsText}>*")
                             .AppendLine(AnnouncementGitInfo.NotableCommmitters.Count > 0
                                 ? $" with notable contributions from {AnnouncementGitInfo.NotableCommmitters.JoinCommaAnd()}. A round of applause for them! :clap:"
                                 : ". No contributions this time. :sweat_smile:")
@@ -123,7 +124,7 @@ partial class Build
                         .SetThumbnail(new DiscordEmbedThumbnail()
                             .SetUrl(AnnouncementThumbnailUrl))
                         .SetDescription(new StringBuilder()
-                            .Append($"This [release]({AnnouncementLink}) includes *[{AnnouncementGitInfo.CommitsText}]({AnnouncementComparisonUrl})*")
+                            .Append($"This new release includes *[{AnnouncementGitInfo.CommitsText}]({AnnouncementComparisonUrl})*")
                             .AppendLine(AnnouncementGitInfo.NotableCommmitters.Count > 0
                                 ? $" with notable contributions from {AnnouncementGitInfo.NotableCommmitters.JoinCommaAnd()}. A round of applause for them! 👏"
                                 : ". No contributions this time. 😅")
