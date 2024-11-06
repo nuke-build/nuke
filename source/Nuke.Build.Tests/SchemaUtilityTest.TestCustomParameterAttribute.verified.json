@@ -1,10 +1,5 @@
 ﻿{
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "properties": {
-    "ComplexTypeParamWithAttribute": {
-      "type": "string"
-    }
-  },
   "definitions": {
     "Host": {
       "type": "string",
@@ -86,5 +81,16 @@
       }
     }
   },
-  "$ref": "#/definitions/NukeBuild"
+  "allOf": [
+    {
+      "properties": {
+        "ComplexTypeParamWithAttribute": {
+          "type": "string"
+        }
+      }
+    },
+    {
+      "$ref": "#/definitions/NukeBuild"
+    }
+  ]
 }

@@ -41,7 +41,7 @@ public class SchemaUtilityTest
     }
 
     [Fact]
-    public Task TestCustomParameterAttributeAttribute()
+    public Task TestCustomParameterAttribute()
     {
         var jsonSchema = SchemaUtility.GetJsonString(new CustomParameterAttributeBuild());
         return Verifier.Verify(jsonSchema, "json");

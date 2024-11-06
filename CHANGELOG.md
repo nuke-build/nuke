@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [8.1.4] / 2024-11-06
+- Fixed `build.schema.json` generation to use `allOf` for user and base type properties
+
 ## [8.1.3] / 2024-11-05
 - Fixed naming from `NukeBuild.IsSucessful` to `IsSucceeding`
 - Fixed `NukeBuild.IsSucceeding` to negate `IsFailing`
@@ -1171,7 +1174,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/8.1.3...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/8.1.4...HEAD
+[8.1.4]: https://github.com/nuke-build/nuke/compare/8.1.3...8.1.4
 [8.1.3]: https://github.com/nuke-build/nuke/compare/8.1.2...8.1.3
 [8.1.2]: https://github.com/nuke-build/nuke/compare/8.1.1...8.1.2
 [8.1.1]: https://github.com/nuke-build/nuke/compare/8.1.0...8.1.1

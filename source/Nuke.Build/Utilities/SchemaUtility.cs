@@ -61,9 +61,10 @@ public class SchemaUtility
 
         private JsonSchema Generate()
         {
+            var topLevelSchema = new JsonSchema();
             var baseSchema = new JsonSchema();
             var userSchema = new JsonSchema();
-            var schemaResolver = new JsonSchemaResolver(userSchema, Settings);
+            var schemaResolver = new JsonSchemaResolver(topLevelSchema, Settings);
 
             var parameterMembers = ValueInjectionUtility.GetParameterMembers(_build.GetType(), includeUnlisted: true);
             foreach (var parameterMember in parameterMembers)
@@ -86,9 +87,6 @@ public class SchemaUtility
             //         baseSchema.Properties[x.Key] = x.Value;
             //     });
 
-            userSchema.Reference = baseSchema;
-            userSchema.Definitions[nameof(NukeBuild)] = baseSchema;
-
             // TODO: why can't this use value sets?
             var targetNames = ExecutableTargetFactory.GetTargetProperties(_build.GetType()).Select(x => x.GetDisplayShortName()).OrderBy(x => x);
             var executableTargetSchema = UpdatePropertySchema(nameof(ExecutableTarget), targetNames);
@@ -101,11 +99,14 @@ public class SchemaUtility
 
             RemoveXEnumValues();
 
-            return userSchema;
+            topLevelSchema.AllOf.Add(userSchema);
+            topLevelSchema.AllOf.Add(new JsonSchema { Reference = baseSchema });
+            topLevelSchema.Definitions[nameof(NukeBuild)] = baseSchema;
+            return topLevelSchema;
 
             JsonSchema UpdatePropertySchema(string name, IEnumerable<string> values)
             {
-                var schema = userSchema.Definitions[name];
+                var schema = topLevelSchema.Definitions[name];
                 schema.Type = JsonObjectType.String;
                 schema.AllowAdditionalProperties = true;
                 schema.Enumeration.AddRange(values);
@@ -114,7 +115,7 @@ public class SchemaUtility
 
             void RemoveXEnumValues()
             {
-                foreach (var definition in userSchema.Definitions.Values)
+                foreach (var definition in topLevelSchema.Definitions.Values)
                 {
                     definition.EnumerationNames.Clear();
                     definition.AllowAdditionalProperties = true;
