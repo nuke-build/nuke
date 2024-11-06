@@ -1,86 +1,5 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "properties": {
-    "AutoStash": {
-      "type": "boolean"
-    },
-    "CodecovToken": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "Configuration": {
-      "type": "string",
-      "enum": [
-        "Debug",
-        "Release"
-      ]
-    },
-    "DiscordWebhook": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "FeedzNuGetApiKey": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "GitHubReleaseGitHubToken": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "IgnoreFailedSources": {
-      "type": "boolean",
-      "description": "Ignore unreachable sources during Restore"
-    },
-    "Major": {
-      "type": "boolean"
-    },
-    "MastodonAccessToken": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "PublicNuGetApiKey": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "SignPathApiToken": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "SignPathSettings": {
-      "$ref": "#/definitions/SignPathSettings"
-    },
-    "SlackWebhook": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "Solution": {
-      "type": "string",
-      "description": "Path to a solution file that is automatically loaded"
-    },
-    "TestDegreeOfParallelism": {
-      "type": "integer",
-      "format": "int32"
-    },
-    "TwitterAccessToken": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "TwitterAccessTokenSecret": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "TwitterConsumerKey": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "TwitterConsumerSecret": {
-      "type": "string",
-      "default": "Secrets must be entered via 'nuke :secrets [profile]'"
-    },
-    "UseHttps": {
-      "type": "boolean"
-    }
-  },
   "definitions": {
     "Host": {
       "type": "string",
@@ -231,5 +150,92 @@
       }
     }
   },
-  "$ref": "#/definitions/NukeBuild"
+  "allOf": [
+    {
+      "properties": {
+        "AutoStash": {
+          "type": "boolean"
+        },
+        "CodecovToken": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "Configuration": {
+          "type": "string",
+          "enum": [
+            "Debug",
+            "Release"
+          ]
+        },
+        "DiscordWebhook": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "FeedzNuGetApiKey": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "GitHubReleaseGitHubToken": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "IgnoreFailedSources": {
+          "type": "boolean",
+          "description": "Ignore unreachable sources during Restore"
+        },
+        "Major": {
+          "type": "boolean"
+        },
+        "MastodonAccessToken": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "PublicNuGetApiKey": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "SignPathApiToken": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "SignPathSettings": {
+          "$ref": "#/definitions/SignPathSettings"
+        },
+        "SlackWebhook": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "Solution": {
+          "type": "string",
+          "description": "Path to a solution file that is automatically loaded"
+        },
+        "TestDegreeOfParallelism": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "TwitterAccessToken": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "TwitterAccessTokenSecret": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "TwitterConsumerKey": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "TwitterConsumerSecret": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "UseHttps": {
+          "type": "boolean"
+        }
+      }
+    },
+    {
+      "$ref": "#/definitions/NukeBuild"
+    }
+  ]
 }
