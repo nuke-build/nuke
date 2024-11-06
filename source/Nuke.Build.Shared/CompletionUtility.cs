@@ -29,11 +29,12 @@ public static class CompletionUtility
         Func<JsonProperty, bool> filter = null)
     {
         filter ??= _ => true;
-        var definitions = schema.RootElement.GetProperty("definitions").EnumerateObject().ToDictionary(x => x.Name, x => x);
+        var rootElement = schema.RootElement;
+        var definitions = rootElement.GetProperty("definitions").EnumerateObject().ToDictionary(x => x.Name, x => x);
 
-        var parameterProperties = schema.RootElement.GetProperty("definitions").TryGetProperty("NukeBuild", out var nukebuildProperty)
-            ? nukebuildProperty.GetProperty("properties").EnumerateObject()
-                .Concat(schema.RootElement.TryGetProperty("properties", out var properties) ? properties.EnumerateObject() : [])
+        var parameterProperties = rootElement.GetProperty("definitions").TryGetProperty("NukeBuild", out var baseSchema)
+            ? baseSchema.GetProperty("properties").EnumerateObject()
+                .Concat(rootElement.GetProperty("allOf")[0].TryGetProperty("properties", out var properties) ? properties.EnumerateObject() : [])
             : definitions["build"].Value.GetProperty("properties").EnumerateObject();
 
         return parameterProperties
