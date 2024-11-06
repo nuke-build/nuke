@@ -10032,6 +10032,8 @@
     },
     {
       "name": "CliSettings",
+      "extensionMethods": true,
+      "baseClass": "ISettingsEntity",
       "properties": [
         {
           "name": "LogLevel",
@@ -10046,10 +10048,22 @@
           "help": "Location of client config files (default ~/.docker)."
         },
         {
+          "name": "Context",
+          "type": "string",
+          "format": "--context {value}",
+          "help": "Name of the context to use to connect to the daemon."
+        },
+        {
           "name": "Debug",
           "type": "bool",
           "format": "--debug",
           "help": "Enable debug mode."
+        },
+        {
+          "name": "Hosts",
+          "type": "List<string>",
+          "format": "--host {value}",
+          "help": "Daemon socket to connect to."
         },
         {
           "name": "TLS",
