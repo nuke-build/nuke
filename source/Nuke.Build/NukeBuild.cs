@@ -147,6 +147,12 @@ public abstract partial class NukeBuild : INukeBuild
     public bool NoLogo { get; set; }
 
     /// <summary>
+    /// Gets a value whether NUKE should work in an user interactive mode.
+    /// </summary>
+    [Parameter("Activates the interactive mode when asking for user inputs.")]
+    public bool Interactive { get; set; }
+
+    /// <summary>
     /// Gets a value whether a previous failed build should be continued.
     /// </summary>
     [Parameter("Indicates to continue a previously failed build attempt.")]

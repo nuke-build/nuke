@@ -29,6 +29,7 @@ public abstract partial class NukeBuild
     bool INukeBuild.Plan => Plan;
     bool INukeBuild.Help => Help;
     bool INukeBuild.NoLogo => NoLogo;
+    bool INukeBuild.Interactive => Interactive;
     bool INukeBuild.IsLocalBuild => IsLocalBuild;
     bool INukeBuild.IsServerBuild => IsServerBuild;
     bool INukeBuild.Continue => Continue;

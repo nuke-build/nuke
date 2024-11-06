@@ -35,7 +35,7 @@ public abstract class ChainedConfigurationAttributeBase : ConfigurationAttribute
 
         Assert.True(invokedTargets.Except(new[] { executableTarget }).Count(x => x.PartitionSize != null) == 0,
             $"Non-entry targets for {executableTarget.Name} cannot define partitions");
-        return ExecutionPlanner.GetExecutionPlan(invokedTargets, new[] { executableTarget.Name });
+        return ExecutionPlanner.GetExecutionPlan(invokedTargets, new[] { executableTarget });
     }
 
     protected IEnumerable<ExecutableTarget> GetTargetDependencies(ExecutableTarget executableTarget)
