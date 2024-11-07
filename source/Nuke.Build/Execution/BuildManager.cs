@@ -9,6 +9,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Microsoft.Extensions.DependencyModel;
+using Nuke.Build.Execution;
 using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
@@ -37,7 +38,7 @@ internal static class BuildManager
             .ForEach(x => AppDomain.CurrentDomain.Load(x));
     }
 
-    public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions)
+    public static int Execute<T>(Expression<Func<T, Target>>[] defaultTargetExpressions, params LoggingDirection[] LogDirection)
         where T : NukeBuild, new()
     {
         Console.OutputEncoding = Encoding.UTF8;
@@ -49,7 +50,7 @@ internal static class BuildManager
 
         try
         {
-            Logging.Configure(build);
+            Logging.Configure(build, LogDirection);
 
             build.ExecutableTargets = ExecutableTargetFactory.CreateAll(build, defaultTargetExpressions);
             build.ExecuteExtension<IOnBuildCreated>(x => x.OnBuildCreated(build.ExecutableTargets));

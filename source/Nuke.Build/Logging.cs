@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
+using Nuke.Build.Execution;
 using Nuke.Common.CI;
 using Nuke.Common.Execution.Theming;
 using Nuke.Common.IO;
@@ -56,30 +57,74 @@ public static class Logging
         };
     }
 
-    public static void Configure(INukeBuild build = null)
+    public static void Configure(INukeBuild build = null, params LoggingDirection[] LogDirection)
     {
-        if (build != null)
+
+        if (
+            LogDirection == null
+            ||
+            LogDirection.Length <= 0
+            ||
+            LogDirection.Contains(LoggingDirection.Default)
+           )
         {
-            if (build.IsInterceptorExecution)
+            if (build != null)
             {
-                Log.Logger = new LoggerConfiguration()
-                    .WriteTo.Console(new CompactJsonFormatter())
-                    .CreateLogger();
-                return;
+                if (build.IsInterceptorExecution)
+                {
+                    Log.Logger = new LoggerConfiguration()
+                        .WriteTo.Console(new CompactJsonFormatter())
+                        .CreateLogger();
+                    return;
+                }
+
+                DeleteOldLogFiles(build);
             }
 
-            DeleteOldLogFiles(build);
+            Log.Logger = new LoggerConfiguration()
+                .ConfigureEnricher()
+                .ConfigureHost(build)
+                .ConfigureConsole(build)
+                .ConfigureInMemory(build)
+                .ConfigureFiles(build)
+                .ConfigureLevel()
+                .ConfigureFilter(build)
+                .CreateLogger();
+        }
+        else
+        {
+
+            var preLogger = new LoggerConfiguration();
+
+            if (LogDirection.Contains(LoggingDirection.Enricher))
+            {
+                preLogger.ConfigureEnricher();
+            }
+            if (LogDirection.Contains(LoggingDirection.Host))
+            {
+                preLogger.ConfigureHost(build);
+            }
+            if (LogDirection.Contains(LoggingDirection.Console))
+            {
+                preLogger.ConfigureConsole(build);
+            }
+            if (LogDirection.Contains(LoggingDirection.InMemory))
+            {
+                preLogger.ConfigureInMemory(build);
+            }
+            if (LogDirection.Contains(LoggingDirection.Files))
+            {
+                DeleteOldLogFiles(build);
+                preLogger.ConfigureFiles(build);
+            }
+
+            Log.Logger = preLogger
+                .ConfigureLevel()
+                .ConfigureFilter(build)
+                .CreateLogger();
+
         }
 
-        Log.Logger = new LoggerConfiguration()
-            .ConfigureEnricher()
-            .ConfigureHost(build)
-            .ConfigureConsole(build)
-            .ConfigureInMemory(build)
-            .ConfigureFiles(build)
-            .ConfigureLevel()
-            .ConfigureFilter(build)
-            .CreateLogger();
     }
 
     public static LoggerConfiguration ConfigureEnricher(this LoggerConfiguration configuration)
