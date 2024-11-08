@@ -3,12 +3,12 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
-using Nuke.Common;
+using Nuke.Common.Tooling;
 using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using Serilog;
 
 // ReSharper disable UnusedMethodReturnValue.Local
@@ -32,7 +32,11 @@ public static class DataClassGenerator
         }
 
         var writer = new DataClassWriter(dataClass, toolWriter);
-        var baseType = dataClass.BaseClass ?? (dataClass.Name.EndsWith("Settings") ? "ToolSettings" : "ISettingsEntity");
+        var baseTypes = new[]
+        {
+            dataClass.BaseClass ?? (dataClass.Name.EndsWith("Settings") ? nameof(ToolOptions) : nameof(Options)),
+            dataClass.Tool.NuGetFramework ? "IToolOptionsWithFramework" : null
+        }.WhereNotNull();
 
         writer
             .WriteLine($"#region {dataClass.Name}")
@@ -40,15 +44,27 @@ public static class DataClassGenerator
             .WriteLine("[PublicAPI]")
             .WriteObsoleteAttributeWhenObsolete(dataClass)
             .WriteLine("[ExcludeFromCodeCoverage]")
-            .WriteLine("[Serializable]")
-            .WriteLine($"public partial class {dataClass.Name} : {baseType}")
+            .WriteLine($"[TypeConverter(typeof(TypeConverter<{dataClass.Name}>))]")
+            .WriteLine(GetCommandAttribute())
+            .WriteLine($"public partial class {dataClass.Name} : {baseTypes.JoinCommaSpace()}")
             .WriteBlock(w => w
-                .WriteProcessToolPath()
-                .WriteProcessLogger()
-                .WriteProcessExitHandler()
-                .ForEach(dataClass.Properties, WritePropertyDeclaration)
-                .WriteConfigureArguments())
+                .ForEach(dataClass.Properties, WritePropertyDeclaration))
             .WriteLine("#endregion");
+
+        string GetCommandAttribute()
+        {
+            if (dataClass is not SettingsClass settingsClass)
+                return null;
+
+            var commandArguments = new (string Name, string Value)[]
+                {
+                    (nameof(CommandAttribute.Type), $"typeof({dataClass.Tool.GetClassName()})"),
+                    (nameof(CommandAttribute.Command), $"nameof({dataClass.Tool.GetClassName()}.{settingsClass.Task.GetTaskMethodName()})"),
+                    (nameof(CommandAttribute.Arguments), settingsClass.Task.DefiniteArgument?.DoubleQuote()),
+                }.Where(x => x.Item2 != null)
+                .Select(x => $"{x.Name} = {x.Value}").JoinCommaSpace();
+            return $"[Command({commandArguments})]";
+        }
     }
 
     private static void CheckMissingValue(Property property)
@@ -78,156 +94,63 @@ public static class DataClassGenerator
         Log.Warning("Property {ClassName}.{PropertyName} should have explicit secret definition", property.DataClass.Name, property.Name);
     }
 
-    private static DataClassWriter WriteProcessToolPath(this DataClassWriter writer)
-    {
-        if (writer.DataClass is not SettingsClass settingsClass)
-            return writer;
-
-        var tool = settingsClass.Tool.NotNull();
-        var resolver = !tool.CustomExecutable
-            ? $"{tool.GetClassName()}.{tool.Name}Path"
-            : "GetProcessToolPath()";
-
-        return writer
-            .WriteSummary($"Path to the {tool.Name} executable.")
-            .WriteLine($"public override string ProcessToolPath => base.ProcessToolPath ?? {resolver};");
-    }
-
-    private static DataClassWriter WriteProcessLogger(this DataClassWriter writer)
-    {
-        if (!writer.DataClass.IsToolSettingsClass)
-            return writer;
-
-        var tool = writer.DataClass.Tool;
-        var logger = $"{tool.GetClassName()}.{tool.Name}Logger";
-        return writer.WriteLine($"public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? {logger};");
-    }
-
-    private static DataClassWriter WriteProcessExitHandler(this DataClassWriter writer)
-    {
-        if (!writer.DataClass.IsToolSettingsClass)
-            return writer;
-
-        var tool = writer.DataClass.Tool;
-        var exitHandler = $"{tool.GetClassName()}.{tool.Name}ExitHandler";
-        return writer.WriteLine($"public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? {exitHandler};");
-    }
-
     private static void WritePropertyDeclaration(DataClassWriter writer, Property property)
     {
         if (property.CustomImpl)
             return;
 
-        var type = GetPublicPropertyType(property);
-        var implementation = GetPublicPropertyImplementation(property);
-        var hasInternalProperty = property.IsList() || property.IsDictionary() || property.IsLookupTable();
+        var type = GetPropertyType(property);
+        var attributes = new[] { GetArgumentAttribute(), GetJsonPropertyAttribute() }.WhereNotNull();
 
         writer
-            .WriteSummary(property)
-            .WriteObsoleteAttributeWhenObsolete(property)
-            .WriteLineIfTrue(!hasInternalProperty, GetJsonSerializationAttribute(property))
-            .WriteLineIfTrue(hasInternalProperty, GetJsonIgnoreAttribute(property))
-            .WriteLine($"public virtual {type} {property.Name} {implementation}")
-            .WriteLineIfTrue(hasInternalProperty, GetJsonSerializationAttribute(property))
-            .WriteLineIfTrue(hasInternalProperty, $"internal {property.Type} {property.Name}Internal {{ get; set; }}{GetPropertyInitialization(property)}");
+            .WriteLine($"/// <summary>{property.Help}</summary>")
+            .WriteLine($"{attributes.JoinSpace()} public {type.External} {property.Name} => Get<{type.Internal}>(() => {property.Name});");
+
+        string GetArgumentAttribute()
+        {
+            if (property.Format.IsNullOrWhiteSpace())
+                return null;
+
+            var arguments = new (string Name, string Value)[]
+                {
+                    (nameof(ArgumentAttribute.Format), property.Format?.DoubleQuote()),
+                    (nameof(ArgumentAttribute.Position), property.Position?.ToString().ToLowerInvariant()),
+                    (nameof(ArgumentAttribute.Secret), property.Secret?.ToString().ToLowerInvariant()),
+                    (nameof(ArgumentAttribute.Separator), property.Separator?.DoubleQuote()),
+                    (nameof(ArgumentAttribute.QuoteMultiple), property.QuoteMultiple ? bool.TrueString.ToLowerInvariant() : null),
+                    (nameof(ArgumentAttribute.FormatterMethod), property.Formatter?.Apply<string, string>(x => $"nameof({x})")),
+                }.Where(x => x.Item2 != null)
+                .Select(x => $"{x.Name} = {x.Value}").JoinCommaSpace();
+
+            return $"[Argument({arguments})]";
+        }
+
+        string GetJsonPropertyAttribute()
+        {
+            if (property.Json.IsNullOrWhiteSpace())
+                return null;
+
+            return $"[JsonProperty({property.Json.DoubleQuote()})]";
+        }
     }
 
-    private static string GetJsonSerializationAttribute(Property property)
-    {
-        return !string.IsNullOrWhiteSpace(property.Json) ? $"[JsonProperty({property.Json.DoubleQuote()})]" : null;
-    }
-
-    private static string GetJsonIgnoreAttribute(Property property)
-    {
-        return !string.IsNullOrWhiteSpace(property.Json) ? "[JsonIgnore]" : null;
-    }
-
-    private static string GetPropertyInitialization(Property property)
-    {
-        string initializationExpression;
-        if (property.IsList())
-            initializationExpression = $"new {property.Type}()";
-        else if (property.IsDictionary() || property.IsLookupTable())
-            initializationExpression = $"new {property.Type}({property.GetKeyComparer()})";
-        else
-            initializationExpression = property.Default;
-
-        return initializationExpression != null
-            ? $" = {initializationExpression};"
-            : string.Empty;
-    }
-
-    private static string GetPublicPropertyImplementation(Property property)
-    {
-        return property.IsList() || property.IsDictionary() || property.IsLookupTable()
-            ? $"=> {property.Name}Internal.AsReadOnly();"
-            : $"{{ get; internal set; }}{GetPropertyInitialization(property)}";
-    }
-
-    private static string GetPublicPropertyType(Property property)
+    private static (string External, string Internal) GetPropertyType(Property property)
     {
         if (property.IsList())
-            return $"IReadOnlyList<{property.GetListValueType()}>";
+            return ($"IReadOnlyList<{property.GetListValueType()}>", $"List<{property.GetListValueType()}>");
 
         if (property.IsDictionary())
         {
             var (keyType, valueType) = property.GetDictionaryKeyValueTypes();
-            return $"IReadOnlyDictionary<{keyType}, {valueType}>";
+            return ($"IReadOnlyDictionary<{keyType}, {valueType}>", $"Dictionary<{keyType}, {valueType}>");
         }
 
         if (property.IsLookupTable())
         {
             var (keyType, valueType) = property.GetLookupTableKeyValueTypes();
-            return $"ILookup<{keyType}, {valueType}>";
+            return ($"ILookup<{keyType}, {valueType}>", $"LookupTable<{keyType}, {valueType}>");
         }
 
-        return property.GetNullableType();
-    }
-
-    private static DataClassWriter WriteConfigureArguments(this DataClassWriter writer)
-    {
-        var formatProperties = writer.DataClass.Properties.Where(x => x.Format != null).ToList();
-        if ((writer.DataClass as SettingsClass)?.Task.DefiniteArgument == null && formatProperties.Count == 0)
-            return writer;
-
-        var argumentAdditions = formatProperties.Select(GetArgumentAddition).ToList();
-
-        var settingsClass = writer.DataClass as SettingsClass;
-        if (settingsClass?.Task.DefiniteArgument != null)
-            argumentAdditions.Insert(index: 0, $"  .Add({settingsClass.Task.DefiniteArgument.DoubleQuote()})");
-
-        var hasArguments = argumentAdditions.Count > 0;
-        if (hasArguments)
-            argumentAdditions[argumentAdditions.Count - 1] += ";";
-
-        return writer
-            .WriteLine("protected override Arguments ConfigureProcessArguments(Arguments arguments)")
-            .WriteBlock(w => w
-                .WriteLine("arguments")
-                .ForEachWriteLine(argumentAdditions)
-                .WriteLine("return base.ConfigureProcessArguments(arguments);"));
-    }
-
-    private static string GetArgumentAddition(Property property)
-    {
-        var arguments = new List<string>
-                        {
-                            property.Format.DoubleQuote(),
-                            property.CustomValue ? $"Get{property.Name}()" : property.Name
-                        };
-        if (property.IsDictionary() || property.IsLookupTable())
-            arguments.Add(property.ItemFormat.NotNull($"{property.Name}.ItemFormat != null").DoubleQuote());
-        if (property.Separator.HasValue)
-            arguments.Add($"separator: {property.Separator.SingleQuote()}");
-        if (property.DisallowedCharacter.HasValue)
-            arguments.Add($"disallowed: {property.DisallowedCharacter.SingleQuote()}");
-        if (property.QuoteMultiple)
-            arguments.Add("quoteMultiple: true");
-        if (property.CustomValue)
-            arguments.Add("customValue: true");
-        if (property.Secret ?? false)
-            arguments.Add("secret: true");
-
-        return $"  .Add({arguments.JoinCommaSpace()})";
+        return (property.GetNullableType(), property.GetNullableType());
     }
 }

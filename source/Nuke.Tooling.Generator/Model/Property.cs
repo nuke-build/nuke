@@ -54,7 +54,7 @@ public class Property : IDeprecatable
     public bool CustomImpl { get; set; }
 
     [Description("Separator used for items of collection types.")]
-    public char? Separator { get; set; }
+    public string Separator { get; set; }
 
     [Description("Character that must be double-quoted.")]
     public char? DisallowedCharacter { get; set; }
@@ -67,6 +67,9 @@ public class Property : IDeprecatable
 
     [Description("Specifies that the value is secret and should be hidden in output.")]
     public bool? Secret { get; set; }
+
+    public string Formatter { get; set; }
+    public int? Position { get; set; }
 
     [Description("Custom implementation of value presentation.")]
     public bool CustomValue { get; set; }
