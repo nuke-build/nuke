@@ -11,6 +11,11 @@
         Default,
 
         /// <summary>
+        /// No Logging at all
+        /// </summary>
+        None,
+
+        /// <summary>
         /// Use Enricher feature
         /// </summary>
         Enricher,

@@ -96,6 +96,10 @@ public static class Logging
 
             var preLogger = new LoggerConfiguration();
 
+            if (LogDirection.Contains(LoggingDirection.None))
+            {
+                //no logging configuration needed at all
+            }
             if (LogDirection.Contains(LoggingDirection.Enricher))
             {
                 preLogger.ConfigureEnricher();
