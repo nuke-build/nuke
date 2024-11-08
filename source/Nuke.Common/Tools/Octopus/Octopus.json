@@ -10,7 +10,8 @@
   "officialUrl": "https://octopus.com/",
   "help": "Octopus Deploy is an automated deployment server, which you install yourself, much like you would install SQL Server, Team Foundation Server or JetBrains TeamCity. Octopus makes it easy to automate deployment of ASP.NET web applications and Windows Services into development, test and production environments.<para/>Along with the Octopus Deploy server, you'll also install a lightweight agent service on each of the machines that you plan to deploy to, for example your web and application servers. We call this the Tentacle agent; the idea being that one Octopus server controls many Tentacles, potentially a lot more than 8! With Octopus and Tentacle, you can easily deploy to your own servers, or cloud services from providers like Amazon Web Services or Microsoft Azure.",
   "nugetPackageId": "Octopus.DotNet.Cli",
-  "customExecutable": true,
+  "nugetFramework": true,
+  "packageExecutable": "OctoVersion.Tool.dll",
   "tasks": [
     {
       "help": "The <c>Octo.exe pack</c> command provides a number of other useful parameters that can be used to customize the way your package gets created, such as output folder, files to include and release notes.",
@@ -171,8 +172,7 @@
           {
             "name": "PackageVersions",
             "type": "Dictionary<string, string>",
-            "format": "--package={value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--package={key}:{value}",
             "help": "Version number to use for a step or package in the release. Format: <c>--package=StepNameOrPackageId:Version</c>."
           },
           {
@@ -292,8 +292,7 @@
           {
             "name": "Variables",
             "type": "Dictionary<string, string>",
-            "format": "--variable={value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--variable={key}:{value}",
             "help": "Values for any prompted variables in the format Label:Value. For JSON values, embedded quotation marks should be escaped with a backslash."
           },
           {
@@ -404,8 +403,7 @@
           {
             "name": "Variables",
             "type": "Dictionary<string, string>",
-            "format": "--variable={value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--variable={key}:{value}",
             "help": "Values for any prompted variables. For JSON values, embedded quotation marks should be escaped with a backslash. "
           },
           {
@@ -580,11 +578,6 @@
       "type": "string",
       "format": "--logLevel={value}",
       "help": "The log level. Valid options are verbose, debug, information, warning, error and fatal. Defaults to 'debug'."
-    },
-    {
-      "name": "Framework",
-      "type": "string",
-      "noArgument": true
     }
   ],
   "enumerations": [

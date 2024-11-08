@@ -15,6 +15,7 @@
             "name": "ScriptFile",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The .iss script file to compile"
           },
           {
@@ -39,8 +40,7 @@
           {
             "name": "SignTools",
             "type": "Dictionary<string, string>",
-            "format": "/S{value}",
-            "itemFormat": "{key}={value}",
+            "format": "/S{key}={value}",
             "help": "Sets a SignTool with the specified name and command"
           },
           {
@@ -58,8 +58,7 @@
           {
             "name": "KeyValueDefinitions",
             "type": "Dictionary<string, string>",
-            "format": "/D{value}",
-            "itemFormat": "{key}={value}",
+            "format": "/D{key}={value}",
             "secret": false,
             "help": "Emulate <c>#define public {name} {value}</c>"
           },

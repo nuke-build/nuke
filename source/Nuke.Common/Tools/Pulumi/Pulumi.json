@@ -380,6 +380,7 @@
             "name": "Key",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The key to the key-value pair in the configuration."
           },
           {
@@ -420,6 +421,7 @@
             "name": "Key",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The key to the key-value pair in the configuration."
           },
           {
@@ -440,12 +442,14 @@
             "name": "Key",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The key to the key-value pair in the configuration."
           },
           {
             "name": "Value",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The new value for specified configuration key."
           },
           {
@@ -516,6 +520,7 @@
             "name": "NewSecretsProvider",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The name of the new secrets provider."
           }
         ]
@@ -556,6 +561,7 @@
             "name": "File",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "A file that will have a Graphviz DOT graph written to it."
           },
           {
@@ -634,6 +640,7 @@
             "name": "OrganizationAndName",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The stack name, optionally preceded by the organization name and a slash: <c>[&lt;org-name&gt;/]&lt;stack-name&gt;</c>"
           },
           {
@@ -698,6 +705,7 @@
             "name": "PropertyName",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The name of the property whose output value should be listed. This is optional."
           },
           {
@@ -724,6 +732,7 @@
             "name": "NewStackName",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The new name for the stack."
           }
         ]
@@ -738,6 +747,7 @@
             "name": "StackName",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The name for the stack to be removed."
           },
           {
@@ -770,6 +780,7 @@
             "name": "StackName",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The name of the stack that should be selected."
           },
           {
@@ -796,12 +807,14 @@
             "name": "Name",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The name of the tag to be set."
           },
           {
             "name": "Value",
             "type": "string",
             "format": "{value}",
+            "position": 2,
             "help": "The value of the tag to be set."
           }
         ]
@@ -816,6 +829,7 @@
             "name": "Name",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The name of the tag to be set."
           }
         ]
@@ -830,6 +844,7 @@
             "name": "Name",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The name of the tag to be set."
           }
         ]
@@ -858,6 +873,7 @@
             "name": "Template",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The template or URL to base the new stack off of."
           },
           {

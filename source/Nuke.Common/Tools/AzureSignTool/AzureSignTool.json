@@ -148,6 +148,7 @@
             "name": "Files",
             "type": "List<string>",
             "format": "{value}",
+            "position": -1,
             "help": "Files to sign."
           }
         ]

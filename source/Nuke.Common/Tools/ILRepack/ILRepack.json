@@ -169,6 +169,7 @@
             "name": "Assemblies",
             "type": "List<string>",
             "format": "{value}",
+            "position": -1,
             "help": "Primary and other assemblies to be merged."
           }
         ]

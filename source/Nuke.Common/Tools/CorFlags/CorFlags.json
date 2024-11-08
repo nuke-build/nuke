@@ -37,27 +37,28 @@
             "name": "Assembly",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The name of the assembly for which to configure the CorFlags."
           },
           {
             "name": "ILOnly",
             "type": "bool",
             "format": "-ILONLY{value}",
-            "customValue": true,
+            "formatter": "FormatBoolean",
             "help": "Sets/clears the ILONLY flag."
           },
           {
             "name": "Require32Bit",
             "type": "bool",
             "format": "-32BIT{value}",
-            "customValue": true,
+            "formatter": "FormatBoolean",
             "help": "Sets/clears the 32BITREQUIRED flag."
           },
           {
             "name": "Prefer32Bit",
             "type": "bool",
             "format": "-32BITPREF{value}",
-            "customValue": true,
+            "formatter": "FormatBoolean",
             "help": "Sets/clears the 32BITPREFERRED flag."
           }
         ]

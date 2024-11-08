@@ -17,6 +17,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": 1,
             "createOverload": true,
             "help": "Assemblies with tests to be executed."
           },

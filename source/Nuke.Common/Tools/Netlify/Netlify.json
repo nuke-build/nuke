@@ -140,6 +140,7 @@
             "name": "SiteId",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "Site ID to delete."
           },
           {

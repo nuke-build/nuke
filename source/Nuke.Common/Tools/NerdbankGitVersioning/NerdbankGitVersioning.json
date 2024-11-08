@@ -190,8 +190,7 @@
           {
             "name": "Variables",
             "type": "Dictionary<string,string>",
-            "format": "--define {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--define {key}={value}",
             "help": "Additional cloud build variables to define."
           }
         ]
