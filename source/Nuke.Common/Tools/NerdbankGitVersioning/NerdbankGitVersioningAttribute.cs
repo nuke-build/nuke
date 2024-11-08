@@ -25,7 +25,7 @@ public class NerdbankGitVersioningAttribute : ValueInjectionAttributeBase
     public override object GetValue(MemberInfo member, object instance)
     {
         var version = NerdbankGitVersioningTasks.NerdbankGitVersioningGetVersion(s => s
-                .DisableProcessLogOutput()
+                .DisableProcessOutputLogging()
                 .SetFormat(NerdbankGitVersioningFormat.json))
             .Result;
 

@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
-using Serilog;
+using Serilog.Events;
 
 namespace Nuke.Common.Tools.DotNet;
 
@@ -23,62 +23,12 @@ public class DotNetVerbosityMappingAttribute : VerbosityMappingAttribute
     }
 }
 
-partial class DotNetRunSettings
-{
-    private string GetApplicationArguments()
-    {
-        return ApplicationArguments;
-    }
-}
+[LogLevelPattern(LogEventLevel.Warning, @": warning \w{2,5}\d{1,5}:")]
+[LogLevelPattern(LogEventLevel.Error, @": error \w{2,5}\d{1,5}:")]
+partial class DotNetTasks;
 
 public partial class DotNetTasks
 {
-    // ReSharper disable once CognitiveComplexity
-    internal static void CustomLogger(OutputType type, string output)
-    {
-        if (type == OutputType.Err)
-        {
-            Log.Error(output);
-            return;
-        }
-
-        var spaces = 0;
-        for (var i = 0; i < output.Length && spaces < 3; i++)
-        {
-            if (output[i] == ' ')
-            {
-                spaces++;
-                continue;
-            }
-
-            if (i >= 4 &&
-                'e' == output[i - 4] &&
-                'r' == output[i - 3] &&
-                'r' == output[i - 2] &&
-                'o' == output[i - 1] &&
-                'r' == output[i])
-            {
-                Log.Error(output);
-                return;
-            }
-
-            if (i >= 6 &&
-                'w' == output[i - 6] &&
-                'a' == output[i - 5] &&
-                'r' == output[i - 4] &&
-                'n' == output[i - 3] &&
-                'i' == output[i - 2] &&
-                'n' == output[i - 1] &&
-                'g' == output[i])
-            {
-                Log.Warning(output);
-                return;
-            }
-        }
-
-        Log.Debug(output);
-    }
-
     public static string EscapeMSBuild(string str)
     {
         // https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-special-characters

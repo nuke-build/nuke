@@ -2,31 +2,12 @@
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
+using System;
 using Nuke.Common.Tooling;
-using Serilog;
+using Serilog.Events;
 
 namespace Nuke.Common.Tools.Npm;
 
-partial class NpmTasks
-{
-    public static void CustomLogger(OutputType type, string output)
-    {
-        switch (type)
-        {
-            case OutputType.Std:
-                Log.Debug(output);
-                break;
-            case OutputType.Err:
-            {
-                if (output.StartsWith("npmWARN") || output.StartsWith("npm WARN"))
-                    Log.Warning(output);
-                else if(output.StartsWith("npm notice"))
-                    Log.Debug(output);
-                else
-                    Log.Error(output);
-
-                break;
-            }
-        }
-    }
-}
+[LogLevelPattern(LogEventLevel.Warning, "^(npmWARN|npm WARN)")]
+[LogLevelPattern(LogEventLevel.Debug, "^(npm notice)")]
+partial class NpmTasks;

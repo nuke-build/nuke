@@ -4,15 +4,14 @@
 
 using System;
 using System.Linq;
-using JetBrains.Annotations;
 using Nuke.Common.IO;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.SignTool;
 
 partial class SignToolTasks
 {
-    [CanBeNull]
-    private static string GetToolPath()
+    protected override string GetToolPath(ToolOptions options = null)
     {
         var programDirectory = EnvironmentInfo.SpecialFolder(
             EnvironmentInfo.Is64Bit
@@ -22,14 +21,14 @@ partial class SignToolTasks
         var platformIdentifier = EnvironmentInfo.Is64Bit ? "x64" : "x86";
 
         return new[]
-               {
-                   programDirectory / "Windows Kits" / "10" / "bin" / "10.0.15063.0",
-                   programDirectory / "Windows Kits" / "10" / "App Certification Kit",
-                   programDirectory / "Windows Kits" / "10" / "bin" / platformIdentifier,
-                   programDirectory / "Windows Kits" / "8.1" / "bin" / platformIdentifier,
-                   programDirectory / "Windows Kits" / "8.0" / "bin" / platformIdentifier,
-                   programDirectory / "Microsoft SDKs" / "Windows" / "v7.1A" / "Bin"
-               }
+            {
+                programDirectory / "Windows Kits" / "10" / "bin" / "10.0.15063.0",
+                programDirectory / "Windows Kits" / "10" / "App Certification Kit",
+                programDirectory / "Windows Kits" / "10" / "bin" / platformIdentifier,
+                programDirectory / "Windows Kits" / "8.1" / "bin" / platformIdentifier,
+                programDirectory / "Windows Kits" / "8.0" / "bin" / platformIdentifier,
+                programDirectory / "Microsoft SDKs" / "Windows" / "v7.1A" / "Bin"
+            }
             .Select(x => x / "signtool.exe")
             .WhereFileExists()
             .FirstOrDefault();

@@ -9,16 +9,8 @@ namespace Nuke.Common.Tools.PowerShell;
 
 partial class PowerShellTasks
 {
-    internal static string GetToolPath()
+    protected override string GetToolPath(ToolOptions options = null)
     {
         return ToolPathResolver.GetPathExecutable(EnvironmentInfo.IsWin ? "powershell" : "pwsh");
-    }
-}
-
-partial class PowerShellSettings
-{
-    private string GetProcessToolPath()
-    {
-        return PowerShellTasks.GetToolPath();
     }
 }
