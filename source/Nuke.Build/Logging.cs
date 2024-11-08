@@ -59,7 +59,7 @@ public static class Logging
 
     public static void Configure(INukeBuild build = null, params LoggingDirection[] LogDirection)
     {
-
+        
         if (
             LogDirection == null
             ||
@@ -114,10 +114,14 @@ public static class Logging
             }
             if (LogDirection.Contains(LoggingDirection.Files))
             {
-                DeleteOldLogFiles(build);
+                if (build != null)
+                {
+                    DeleteOldLogFiles(build);
+                }
                 preLogger.ConfigureFiles(build);
             }
 
+            //finally complete logger initialization
             Log.Logger = preLogger
                 .ConfigureLevel()
                 .ConfigureFilter(build)
