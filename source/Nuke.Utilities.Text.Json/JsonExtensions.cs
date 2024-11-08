@@ -18,7 +18,6 @@ public static class JsonExtensions
     public static JsonSerializerSettings DefaultSerializerSettings =
         new()
         {
-            Formatting = Formatting.Indented,
             NullValueHandling = NullValueHandling.Ignore,
             DefaultValueHandling = DefaultValueHandling.Ignore,
             ContractResolver = new AllWritableContractResolver()
@@ -28,9 +27,12 @@ public static class JsonExtensions
     /// Serializes an object as JSON string.
     /// </summary>
     [Pure]
-    public static string ToJson<T>(this T obj, JsonSerializerSettings serializerSettings = null)
+    public static string ToJson<T>(
+        this T obj,
+        JsonSerializerSettings serializerSettings = null,
+        Formatting formatting = Formatting.Indented)
     {
-        return JsonConvert.SerializeObject(obj, serializerSettings ?? DefaultSerializerSettings);
+        return JsonConvert.SerializeObject(obj, formatting, serializerSettings ?? DefaultSerializerSettings);
     }
 
     /// <summary>
