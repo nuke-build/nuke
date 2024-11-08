@@ -18,95 +18,49 @@ using System.Text;
 namespace Nuke.Common.Tools.Teams;
 
 #region TeamsMessage
-/// <summary>
-///   Used within <see cref="TeamsTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="TeamsTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class TeamsMessage : ISettingsEntity
+[TypeConverter(typeof(TypeConverter<TeamsMessage>))]
+public partial class TeamsMessage : Options
 {
-    [JsonProperty("title")]
-    public virtual string Title { get; internal set; }
-    [JsonProperty("text")]
-    public virtual string Text { get; internal set; }
-    [JsonProperty("themeColor")]
-    public virtual string ThemeColor { get; internal set; }
+    /// <summary></summary>
+    [JsonProperty("title")] public string Title => Get<string>(() => Title);
+    /// <summary></summary>
+    [JsonProperty("text")] public string Text => Get<string>(() => Text);
+    /// <summary></summary>
+    [JsonProperty("themeColor")] public string ThemeColor => Get<string>(() => ThemeColor);
 }
 #endregion
 #region TeamsMessageExtensions
-/// <summary>
-///   Used within <see cref="TeamsTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="TeamsTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class TeamsMessageExtensions
 {
     #region Title
-    /// <summary>
-    ///   <p><em>Sets <see cref="TeamsMessage.Title"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T SetTitle<T>(this T toolSettings, string title) where T : TeamsMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Title = title;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="TeamsMessage.Title"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T ResetTitle<T>(this T toolSettings) where T : TeamsMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Title = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="TeamsMessage.Title"/>
+    [Pure] [Builder(Type = typeof(TeamsMessage), Property = nameof(TeamsMessage.Title))]
+    public static T SetTitle<T>(this T o, string v) where T : TeamsMessage => o.Modify(b => b.Set(() => o.Title, v));
+    /// <inheritdoc cref="TeamsMessage.Title"/>
+    [Pure] [Builder(Type = typeof(TeamsMessage), Property = nameof(TeamsMessage.Title))]
+    public static T ResetTitle<T>(this T o) where T : TeamsMessage => o.Modify(b => b.Remove(() => o.Title));
     #endregion
     #region Text
-    /// <summary>
-    ///   <p><em>Sets <see cref="TeamsMessage.Text"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T SetText<T>(this T toolSettings, string text) where T : TeamsMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Text = text;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="TeamsMessage.Text"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T ResetText<T>(this T toolSettings) where T : TeamsMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Text = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="TeamsMessage.Text"/>
+    [Pure] [Builder(Type = typeof(TeamsMessage), Property = nameof(TeamsMessage.Text))]
+    public static T SetText<T>(this T o, string v) where T : TeamsMessage => o.Modify(b => b.Set(() => o.Text, v));
+    /// <inheritdoc cref="TeamsMessage.Text"/>
+    [Pure] [Builder(Type = typeof(TeamsMessage), Property = nameof(TeamsMessage.Text))]
+    public static T ResetText<T>(this T o) where T : TeamsMessage => o.Modify(b => b.Remove(() => o.Text));
     #endregion
     #region ThemeColor
-    /// <summary>
-    ///   <p><em>Sets <see cref="TeamsMessage.ThemeColor"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T SetThemeColor<T>(this T toolSettings, string themeColor) where T : TeamsMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ThemeColor = themeColor;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="TeamsMessage.ThemeColor"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T ResetThemeColor<T>(this T toolSettings) where T : TeamsMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ThemeColor = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="TeamsMessage.ThemeColor"/>
+    [Pure] [Builder(Type = typeof(TeamsMessage), Property = nameof(TeamsMessage.ThemeColor))]
+    public static T SetThemeColor<T>(this T o, string v) where T : TeamsMessage => o.Modify(b => b.Set(() => o.ThemeColor, v));
+    /// <inheritdoc cref="TeamsMessage.ThemeColor"/>
+    [Pure] [Builder(Type = typeof(TeamsMessage), Property = nameof(TeamsMessage.ThemeColor))]
+    public static T ResetThemeColor<T>(this T o) where T : TeamsMessage => o.Modify(b => b.Remove(() => o.ThemeColor));
     #endregion
 }
 #endregion

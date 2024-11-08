@@ -17,786 +17,255 @@ using System.Text;
 
 namespace Nuke.Common.Tools.DotnetPackaging;
 
-/// <summary>
-///   <p>DotnetPackaging is able to package your application into various formats, including Deb and AppImage.</p>
-///   <p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p>
-/// </summary>
+/// <summary><p>DotnetPackaging is able to package your application into various formats, including Deb and AppImage.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(DotnetPackagingPackageId)]
-public partial class DotnetPackagingTasks
-    : IRequireNuGetPackage
+[NuGetPackageRequirement(PackageId)]
+[NuGetTool(Id = PackageId, Executable = PackageExecutable)]
+public partial class DotnetPackagingTasks : ToolTasks, IRequireNuGetPackage
 {
-    public const string DotnetPackagingPackageId = "DotnetPackaging.Console";
-    /// <summary>
-    ///   Path to the DotnetPackaging executable.
-    /// </summary>
-    public static string DotnetPackagingPath =>
-        ToolPathResolver.TryGetEnvironmentExecutable("DOTNETPACKAGING_EXE") ??
-        NuGetToolPathResolver.GetPackageExecutable("DotnetPackaging.Console", "DotnetPackaging.Console.dll");
-    public static Action<OutputType, string> DotnetPackagingLogger { get; set; } = ProcessTasks.DefaultLogger;
-    public static Action<ToolSettings, IProcess> DotnetPackagingExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
-    /// <summary>
-    ///   <p>DotnetPackaging is able to package your application into various formats, including Deb and AppImage.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p>
-    /// </summary>
-    public static IReadOnlyCollection<Output> DotnetPackaging(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(DotnetPackagingPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? DotnetPackagingLogger);
-        (exitHandler ?? (p => DotnetPackagingExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>Creates a Debian package from the specified directory.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>--directory</c> via <see cref="DotnetPackagingDebSettings.Directory"/></li>
-    ///     <li><c>--metadata</c> via <see cref="DotnetPackagingDebSettings.Metadata"/></li>
-    ///     <li><c>--output</c> via <see cref="DotnetPackagingDebSettings.Output"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotnetPackagingDeb(DotnetPackagingDebSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new DotnetPackagingDebSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>Creates a Debian package from the specified directory.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>--directory</c> via <see cref="DotnetPackagingDebSettings.Directory"/></li>
-    ///     <li><c>--metadata</c> via <see cref="DotnetPackagingDebSettings.Metadata"/></li>
-    ///     <li><c>--output</c> via <see cref="DotnetPackagingDebSettings.Output"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotnetPackagingDeb(Configure<DotnetPackagingDebSettings> configurator)
-    {
-        return DotnetPackagingDeb(configurator(new DotnetPackagingDebSettings()));
-    }
-    /// <summary>
-    ///   <p>Creates a Debian package from the specified directory.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>--directory</c> via <see cref="DotnetPackagingDebSettings.Directory"/></li>
-    ///     <li><c>--metadata</c> via <see cref="DotnetPackagingDebSettings.Metadata"/></li>
-    ///     <li><c>--output</c> via <see cref="DotnetPackagingDebSettings.Output"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(DotnetPackagingDebSettings Settings, IReadOnlyCollection<Output> Output)> DotnetPackagingDeb(CombinatorialConfigure<DotnetPackagingDebSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(DotnetPackagingDeb, DotnetPackagingLogger, degreeOfParallelism, completeOnFailure);
-    }
-    /// <summary>
-    ///   <p>Creates an AppImage package.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>--additional-categories</c> via <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></li>
-    ///     <li><c>--appId</c> via <see cref="DotnetPackagingAppImageSettings.AppId"/></li>
-    ///     <li><c>--application-name</c> via <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></li>
-    ///     <li><c>--directory</c> via <see cref="DotnetPackagingAppImageSettings.Directory"/></li>
-    ///     <li><c>--homepage</c> via <see cref="DotnetPackagingAppImageSettings.Homepage"/></li>
-    ///     <li><c>--icon</c> via <see cref="DotnetPackagingAppImageSettings.Icon"/></li>
-    ///     <li><c>--license</c> via <see cref="DotnetPackagingAppImageSettings.License"/></li>
-    ///     <li><c>--main-category</c> via <see cref="DotnetPackagingAppImageSettings.MainCategory"/></li>
-    ///     <li><c>--output</c> via <see cref="DotnetPackagingAppImageSettings.Output"/></li>
-    ///     <li><c>--screenshot-urls</c> via <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></li>
-    ///     <li><c>--summary</c> via <see cref="DotnetPackagingAppImageSettings.Summary"/></li>
-    ///     <li><c>--version</c> via <see cref="DotnetPackagingAppImageSettings.Version"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotnetPackagingAppImage(DotnetPackagingAppImageSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new DotnetPackagingAppImageSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>Creates an AppImage package.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>--additional-categories</c> via <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></li>
-    ///     <li><c>--appId</c> via <see cref="DotnetPackagingAppImageSettings.AppId"/></li>
-    ///     <li><c>--application-name</c> via <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></li>
-    ///     <li><c>--directory</c> via <see cref="DotnetPackagingAppImageSettings.Directory"/></li>
-    ///     <li><c>--homepage</c> via <see cref="DotnetPackagingAppImageSettings.Homepage"/></li>
-    ///     <li><c>--icon</c> via <see cref="DotnetPackagingAppImageSettings.Icon"/></li>
-    ///     <li><c>--license</c> via <see cref="DotnetPackagingAppImageSettings.License"/></li>
-    ///     <li><c>--main-category</c> via <see cref="DotnetPackagingAppImageSettings.MainCategory"/></li>
-    ///     <li><c>--output</c> via <see cref="DotnetPackagingAppImageSettings.Output"/></li>
-    ///     <li><c>--screenshot-urls</c> via <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></li>
-    ///     <li><c>--summary</c> via <see cref="DotnetPackagingAppImageSettings.Summary"/></li>
-    ///     <li><c>--version</c> via <see cref="DotnetPackagingAppImageSettings.Version"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotnetPackagingAppImage(Configure<DotnetPackagingAppImageSettings> configurator)
-    {
-        return DotnetPackagingAppImage(configurator(new DotnetPackagingAppImageSettings()));
-    }
-    /// <summary>
-    ///   <p>Creates an AppImage package.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>--additional-categories</c> via <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></li>
-    ///     <li><c>--appId</c> via <see cref="DotnetPackagingAppImageSettings.AppId"/></li>
-    ///     <li><c>--application-name</c> via <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></li>
-    ///     <li><c>--directory</c> via <see cref="DotnetPackagingAppImageSettings.Directory"/></li>
-    ///     <li><c>--homepage</c> via <see cref="DotnetPackagingAppImageSettings.Homepage"/></li>
-    ///     <li><c>--icon</c> via <see cref="DotnetPackagingAppImageSettings.Icon"/></li>
-    ///     <li><c>--license</c> via <see cref="DotnetPackagingAppImageSettings.License"/></li>
-    ///     <li><c>--main-category</c> via <see cref="DotnetPackagingAppImageSettings.MainCategory"/></li>
-    ///     <li><c>--output</c> via <see cref="DotnetPackagingAppImageSettings.Output"/></li>
-    ///     <li><c>--screenshot-urls</c> via <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></li>
-    ///     <li><c>--summary</c> via <see cref="DotnetPackagingAppImageSettings.Summary"/></li>
-    ///     <li><c>--version</c> via <see cref="DotnetPackagingAppImageSettings.Version"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(DotnetPackagingAppImageSettings Settings, IReadOnlyCollection<Output> Output)> DotnetPackagingAppImage(CombinatorialConfigure<DotnetPackagingAppImageSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(DotnetPackagingAppImage, DotnetPackagingLogger, degreeOfParallelism, completeOnFailure);
-    }
+    public static string DotnetPackagingPath => new DotnetPackagingTasks().GetToolPath();
+    public const string PackageId = "DotnetPackaging.Console";
+    public const string PackageExecutable = "DotnetPackaging.Console.dll";
+    /// <summary><p>DotnetPackaging is able to package your application into various formats, including Deb and AppImage.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
+    public static IReadOnlyCollection<Output> DotnetPackaging(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new DotnetPackagingTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
+    /// <summary><p>Creates a Debian package from the specified directory.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--directory</c> via <see cref="DotnetPackagingDebSettings.Directory"/></li><li><c>--metadata</c> via <see cref="DotnetPackagingDebSettings.Metadata"/></li><li><c>--output</c> via <see cref="DotnetPackagingDebSettings.Output"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotnetPackagingDeb(DotnetPackagingDebSettings options = null) => new DotnetPackagingTasks().Run(options);
+    /// <summary><p>Creates a Debian package from the specified directory.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--directory</c> via <see cref="DotnetPackagingDebSettings.Directory"/></li><li><c>--metadata</c> via <see cref="DotnetPackagingDebSettings.Metadata"/></li><li><c>--output</c> via <see cref="DotnetPackagingDebSettings.Output"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotnetPackagingDeb(Configure<DotnetPackagingDebSettings> configurator) => new DotnetPackagingTasks().Run(configurator.Invoke(new DotnetPackagingDebSettings()));
+    /// <summary><p>Creates a Debian package from the specified directory.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--directory</c> via <see cref="DotnetPackagingDebSettings.Directory"/></li><li><c>--metadata</c> via <see cref="DotnetPackagingDebSettings.Metadata"/></li><li><c>--output</c> via <see cref="DotnetPackagingDebSettings.Output"/></li></ul></remarks>
+    public static IEnumerable<(DotnetPackagingDebSettings Settings, IReadOnlyCollection<Output> Output)> DotnetPackagingDeb(CombinatorialConfigure<DotnetPackagingDebSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotnetPackagingDeb, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>Creates an AppImage package.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--additional-categories</c> via <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></li><li><c>--appId</c> via <see cref="DotnetPackagingAppImageSettings.AppId"/></li><li><c>--application-name</c> via <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></li><li><c>--directory</c> via <see cref="DotnetPackagingAppImageSettings.Directory"/></li><li><c>--homepage</c> via <see cref="DotnetPackagingAppImageSettings.Homepage"/></li><li><c>--icon</c> via <see cref="DotnetPackagingAppImageSettings.Icon"/></li><li><c>--license</c> via <see cref="DotnetPackagingAppImageSettings.License"/></li><li><c>--main-category</c> via <see cref="DotnetPackagingAppImageSettings.MainCategory"/></li><li><c>--output</c> via <see cref="DotnetPackagingAppImageSettings.Output"/></li><li><c>--screenshot-urls</c> via <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></li><li><c>--summary</c> via <see cref="DotnetPackagingAppImageSettings.Summary"/></li><li><c>--version</c> via <see cref="DotnetPackagingAppImageSettings.Version"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotnetPackagingAppImage(DotnetPackagingAppImageSettings options = null) => new DotnetPackagingTasks().Run(options);
+    /// <summary><p>Creates an AppImage package.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--additional-categories</c> via <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></li><li><c>--appId</c> via <see cref="DotnetPackagingAppImageSettings.AppId"/></li><li><c>--application-name</c> via <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></li><li><c>--directory</c> via <see cref="DotnetPackagingAppImageSettings.Directory"/></li><li><c>--homepage</c> via <see cref="DotnetPackagingAppImageSettings.Homepage"/></li><li><c>--icon</c> via <see cref="DotnetPackagingAppImageSettings.Icon"/></li><li><c>--license</c> via <see cref="DotnetPackagingAppImageSettings.License"/></li><li><c>--main-category</c> via <see cref="DotnetPackagingAppImageSettings.MainCategory"/></li><li><c>--output</c> via <see cref="DotnetPackagingAppImageSettings.Output"/></li><li><c>--screenshot-urls</c> via <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></li><li><c>--summary</c> via <see cref="DotnetPackagingAppImageSettings.Summary"/></li><li><c>--version</c> via <see cref="DotnetPackagingAppImageSettings.Version"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotnetPackagingAppImage(Configure<DotnetPackagingAppImageSettings> configurator) => new DotnetPackagingTasks().Run(configurator.Invoke(new DotnetPackagingAppImageSettings()));
+    /// <summary><p>Creates an AppImage package.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--additional-categories</c> via <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></li><li><c>--appId</c> via <see cref="DotnetPackagingAppImageSettings.AppId"/></li><li><c>--application-name</c> via <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></li><li><c>--directory</c> via <see cref="DotnetPackagingAppImageSettings.Directory"/></li><li><c>--homepage</c> via <see cref="DotnetPackagingAppImageSettings.Homepage"/></li><li><c>--icon</c> via <see cref="DotnetPackagingAppImageSettings.Icon"/></li><li><c>--license</c> via <see cref="DotnetPackagingAppImageSettings.License"/></li><li><c>--main-category</c> via <see cref="DotnetPackagingAppImageSettings.MainCategory"/></li><li><c>--output</c> via <see cref="DotnetPackagingAppImageSettings.Output"/></li><li><c>--screenshot-urls</c> via <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></li><li><c>--summary</c> via <see cref="DotnetPackagingAppImageSettings.Summary"/></li><li><c>--version</c> via <see cref="DotnetPackagingAppImageSettings.Version"/></li></ul></remarks>
+    public static IEnumerable<(DotnetPackagingAppImageSettings Settings, IReadOnlyCollection<Output> Output)> DotnetPackagingAppImage(CombinatorialConfigure<DotnetPackagingAppImageSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotnetPackagingAppImage, degreeOfParallelism, completeOnFailure);
 }
 #region DotnetPackagingDebSettings
-/// <summary>
-///   Used within <see cref="DotnetPackagingTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DotnetPackagingDebSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<DotnetPackagingDebSettings>))]
+[Command(Type = typeof(DotnetPackagingTasks), Command = nameof(DotnetPackagingTasks.DotnetPackagingDeb), Arguments = "deb")]
+public partial class DotnetPackagingDebSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the DotnetPackaging executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? DotnetPackagingTasks.DotnetPackagingPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotnetPackagingTasks.DotnetPackagingLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotnetPackagingTasks.DotnetPackagingExitHandler;
-    /// <summary>
-    ///   The input directory from which to create the package.
-    /// </summary>
-    public virtual string Directory { get; internal set; }
-    /// <summary>
-    ///   The metadata file to include in the package.
-    /// </summary>
-    public virtual string Metadata { get; internal set; }
-    /// <summary>
-    ///   The output DEB file to create.
-    /// </summary>
-    public virtual string Output { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("deb")
-          .Add("--directory={value}", Directory)
-          .Add("--metadata={value}", Metadata)
-          .Add("--output={value}", Output);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary>The input directory from which to create the package.</summary>
+    [Argument(Format = "--directory={value}")] public string Directory => Get<string>(() => Directory);
+    /// <summary>The metadata file to include in the package.</summary>
+    [Argument(Format = "--metadata={value}")] public string Metadata => Get<string>(() => Metadata);
+    /// <summary>The output DEB file to create.</summary>
+    [Argument(Format = "--output={value}")] public string Output => Get<string>(() => Output);
 }
 #endregion
 #region DotnetPackagingAppImageSettings
-/// <summary>
-///   Used within <see cref="DotnetPackagingTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DotnetPackagingAppImageSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<DotnetPackagingAppImageSettings>))]
+[Command(Type = typeof(DotnetPackagingTasks), Command = nameof(DotnetPackagingTasks.DotnetPackagingAppImage), Arguments = "appimage")]
+public partial class DotnetPackagingAppImageSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the DotnetPackaging executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? DotnetPackagingTasks.DotnetPackagingPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotnetPackagingTasks.DotnetPackagingLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotnetPackagingTasks.DotnetPackagingExitHandler;
-    /// <summary>
-    ///   The input directory from which to create the AppImage.
-    /// </summary>
-    public virtual string Directory { get; internal set; }
-    /// <summary>
-    ///   The output AppImage file to create.
-    /// </summary>
-    public virtual string Output { get; internal set; }
-    /// <summary>
-    ///   The name of the application for the AppImage.
-    /// </summary>
-    public virtual string ApplicationName { get; internal set; }
-    /// <summary>
-    ///   Main category of the application.
-    /// </summary>
-    public virtual DotnetPackagingMainCategory MainCategory { get; internal set; }
-    /// <summary>
-    ///   Additional categories for the application.
-    /// </summary>
-    public virtual IReadOnlyList<DotnetPackagingAdditionalCategory> AdditionalCategories => AdditionalCategoriesInternal.AsReadOnly();
-    internal List<DotnetPackagingAdditionalCategory> AdditionalCategoriesInternal { get; set; } = new List<DotnetPackagingAdditionalCategory>();
-    /// <summary>
-    ///   The icon path for the application. When not provided, the tool looks up for an image called <c>AppImage.png</c>.
-    /// </summary>
-    public virtual string Icon { get; internal set; }
-    /// <summary>
-    ///   Home page of the application.
-    /// </summary>
-    public virtual string Homepage { get; internal set; }
-    /// <summary>
-    ///   License of the application.
-    /// </summary>
-    public virtual string License { get; internal set; }
-    /// <summary>
-    ///   Version of the application.
-    /// </summary>
-    public virtual string Version { get; internal set; }
-    /// <summary>
-    ///   URLs of screenshots of the application.
-    /// </summary>
-    public virtual IReadOnlyList<string> ScreenshotUrls => ScreenshotUrlsInternal.AsReadOnly();
-    internal List<string> ScreenshotUrlsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Short description of the application.
-    /// </summary>
-    public virtual string Summary { get; internal set; }
-    /// <summary>
-    ///   Application ID, usually a reverse DNS name like <c>com.SomeCompany.SomeApplication</c>.
-    /// </summary>
-    public virtual string AppId { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("appimage")
-          .Add("--directory={value}", Directory)
-          .Add("--output={value}", Output)
-          .Add("--application-name={value}", ApplicationName)
-          .Add("--main-category {value}", MainCategory)
-          .Add("--additional-categories {value}", AdditionalCategories)
-          .Add("--icon {value}", Icon)
-          .Add("--homepage {value}", Homepage)
-          .Add("--license {value}", License)
-          .Add("--version {value}", Version)
-          .Add("--screenshot-urls {value}", ScreenshotUrls)
-          .Add("--summary {value}", Summary)
-          .Add("--appId {value}", AppId);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary>The input directory from which to create the AppImage.</summary>
+    [Argument(Format = "--directory={value}")] public string Directory => Get<string>(() => Directory);
+    /// <summary>The output AppImage file to create.</summary>
+    [Argument(Format = "--output={value}")] public string Output => Get<string>(() => Output);
+    /// <summary>The name of the application for the AppImage.</summary>
+    [Argument(Format = "--application-name={value}")] public string ApplicationName => Get<string>(() => ApplicationName);
+    /// <summary>Main category of the application.</summary>
+    [Argument(Format = "--main-category {value}")] public DotnetPackagingMainCategory MainCategory => Get<DotnetPackagingMainCategory>(() => MainCategory);
+    /// <summary>Additional categories for the application.</summary>
+    [Argument(Format = "--additional-categories {value}")] public IReadOnlyList<DotnetPackagingAdditionalCategory> AdditionalCategories => Get<List<DotnetPackagingAdditionalCategory>>(() => AdditionalCategories);
+    /// <summary>The icon path for the application. When not provided, the tool looks up for an image called <c>AppImage.png</c>.</summary>
+    [Argument(Format = "--icon {value}")] public string Icon => Get<string>(() => Icon);
+    /// <summary>Home page of the application.</summary>
+    [Argument(Format = "--homepage {value}")] public string Homepage => Get<string>(() => Homepage);
+    /// <summary>License of the application.</summary>
+    [Argument(Format = "--license {value}")] public string License => Get<string>(() => License);
+    /// <summary>Version of the application.</summary>
+    [Argument(Format = "--version {value}")] public string Version => Get<string>(() => Version);
+    /// <summary>URLs of screenshots of the application.</summary>
+    [Argument(Format = "--screenshot-urls {value}")] public IReadOnlyList<string> ScreenshotUrls => Get<List<string>>(() => ScreenshotUrls);
+    /// <summary>Short description of the application.</summary>
+    [Argument(Format = "--summary {value}")] public string Summary => Get<string>(() => Summary);
+    /// <summary>Application ID, usually a reverse DNS name like <c>com.SomeCompany.SomeApplication</c>.</summary>
+    [Argument(Format = "--appId {value}")] public string AppId => Get<string>(() => AppId);
 }
 #endregion
 #region DotnetPackagingDebSettingsExtensions
-/// <summary>
-///   Used within <see cref="DotnetPackagingTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotnetPackagingDebSettingsExtensions
 {
     #region Directory
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingDebSettings.Directory"/></em></p>
-    ///   <p>The input directory from which to create the package.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDirectory<T>(this T toolSettings, string directory) where T : DotnetPackagingDebSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Directory = directory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingDebSettings.Directory"/></em></p>
-    ///   <p>The input directory from which to create the package.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDirectory<T>(this T toolSettings) where T : DotnetPackagingDebSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Directory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingDebSettings.Directory"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingDebSettings), Property = nameof(DotnetPackagingDebSettings.Directory))]
+    public static T SetDirectory<T>(this T o, string v) where T : DotnetPackagingDebSettings => o.Modify(b => b.Set(() => o.Directory, v));
+    /// <inheritdoc cref="DotnetPackagingDebSettings.Directory"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingDebSettings), Property = nameof(DotnetPackagingDebSettings.Directory))]
+    public static T ResetDirectory<T>(this T o) where T : DotnetPackagingDebSettings => o.Modify(b => b.Remove(() => o.Directory));
     #endregion
     #region Metadata
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingDebSettings.Metadata"/></em></p>
-    ///   <p>The metadata file to include in the package.</p>
-    /// </summary>
-    [Pure]
-    public static T SetMetadata<T>(this T toolSettings, string metadata) where T : DotnetPackagingDebSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Metadata = metadata;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingDebSettings.Metadata"/></em></p>
-    ///   <p>The metadata file to include in the package.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMetadata<T>(this T toolSettings) where T : DotnetPackagingDebSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Metadata = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingDebSettings.Metadata"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingDebSettings), Property = nameof(DotnetPackagingDebSettings.Metadata))]
+    public static T SetMetadata<T>(this T o, string v) where T : DotnetPackagingDebSettings => o.Modify(b => b.Set(() => o.Metadata, v));
+    /// <inheritdoc cref="DotnetPackagingDebSettings.Metadata"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingDebSettings), Property = nameof(DotnetPackagingDebSettings.Metadata))]
+    public static T ResetMetadata<T>(this T o) where T : DotnetPackagingDebSettings => o.Modify(b => b.Remove(() => o.Metadata));
     #endregion
     #region Output
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingDebSettings.Output"/></em></p>
-    ///   <p>The output DEB file to create.</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutput<T>(this T toolSettings, string output) where T : DotnetPackagingDebSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Output = output;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingDebSettings.Output"/></em></p>
-    ///   <p>The output DEB file to create.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutput<T>(this T toolSettings) where T : DotnetPackagingDebSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Output = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingDebSettings.Output"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingDebSettings), Property = nameof(DotnetPackagingDebSettings.Output))]
+    public static T SetOutput<T>(this T o, string v) where T : DotnetPackagingDebSettings => o.Modify(b => b.Set(() => o.Output, v));
+    /// <inheritdoc cref="DotnetPackagingDebSettings.Output"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingDebSettings), Property = nameof(DotnetPackagingDebSettings.Output))]
+    public static T ResetOutput<T>(this T o) where T : DotnetPackagingDebSettings => o.Modify(b => b.Remove(() => o.Output));
     #endregion
 }
 #endregion
 #region DotnetPackagingAppImageSettingsExtensions
-/// <summary>
-///   Used within <see cref="DotnetPackagingTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotnetPackagingAppImageSettingsExtensions
 {
     #region Directory
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.Directory"/></em></p>
-    ///   <p>The input directory from which to create the AppImage.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDirectory<T>(this T toolSettings, string directory) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Directory = directory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingAppImageSettings.Directory"/></em></p>
-    ///   <p>The input directory from which to create the AppImage.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDirectory<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Directory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Directory"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Directory))]
+    public static T SetDirectory<T>(this T o, string v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.Directory, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Directory"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Directory))]
+    public static T ResetDirectory<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Remove(() => o.Directory));
     #endregion
     #region Output
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.Output"/></em></p>
-    ///   <p>The output AppImage file to create.</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutput<T>(this T toolSettings, string output) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Output = output;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingAppImageSettings.Output"/></em></p>
-    ///   <p>The output AppImage file to create.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutput<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Output = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Output"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Output))]
+    public static T SetOutput<T>(this T o, string v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.Output, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Output"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Output))]
+    public static T ResetOutput<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Remove(() => o.Output));
     #endregion
     #region ApplicationName
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></em></p>
-    ///   <p>The name of the application for the AppImage.</p>
-    /// </summary>
-    [Pure]
-    public static T SetApplicationName<T>(this T toolSettings, string applicationName) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ApplicationName = applicationName;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></em></p>
-    ///   <p>The name of the application for the AppImage.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetApplicationName<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ApplicationName = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.ApplicationName"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.ApplicationName))]
+    public static T SetApplicationName<T>(this T o, string v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.ApplicationName, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.ApplicationName"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.ApplicationName))]
+    public static T ResetApplicationName<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Remove(() => o.ApplicationName));
     #endregion
     #region MainCategory
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.MainCategory"/></em></p>
-    ///   <p>Main category of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T SetMainCategory<T>(this T toolSettings, DotnetPackagingMainCategory mainCategory) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MainCategory = mainCategory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingAppImageSettings.MainCategory"/></em></p>
-    ///   <p>Main category of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMainCategory<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MainCategory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.MainCategory"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.MainCategory))]
+    public static T SetMainCategory<T>(this T o, DotnetPackagingMainCategory v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.MainCategory, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.MainCategory"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.MainCategory))]
+    public static T ResetMainCategory<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Remove(() => o.MainCategory));
     #endregion
     #region AdditionalCategories
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/> to a new list</em></p>
-    ///   <p>Additional categories for the application.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAdditionalCategories<T>(this T toolSettings, params DotnetPackagingAdditionalCategory[] additionalCategories) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AdditionalCategoriesInternal = additionalCategories.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/> to a new list</em></p>
-    ///   <p>Additional categories for the application.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAdditionalCategories<T>(this T toolSettings, IEnumerable<DotnetPackagingAdditionalCategory> additionalCategories) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AdditionalCategoriesInternal = additionalCategories.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></em></p>
-    ///   <p>Additional categories for the application.</p>
-    /// </summary>
-    [Pure]
-    public static T AddAdditionalCategories<T>(this T toolSettings, params DotnetPackagingAdditionalCategory[] additionalCategories) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AdditionalCategoriesInternal.AddRange(additionalCategories);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></em></p>
-    ///   <p>Additional categories for the application.</p>
-    /// </summary>
-    [Pure]
-    public static T AddAdditionalCategories<T>(this T toolSettings, IEnumerable<DotnetPackagingAdditionalCategory> additionalCategories) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AdditionalCategoriesInternal.AddRange(additionalCategories);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></em></p>
-    ///   <p>Additional categories for the application.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearAdditionalCategories<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AdditionalCategoriesInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></em></p>
-    ///   <p>Additional categories for the application.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAdditionalCategories<T>(this T toolSettings, params DotnetPackagingAdditionalCategory[] additionalCategories) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<DotnetPackagingAdditionalCategory>(additionalCategories);
-        toolSettings.AdditionalCategoriesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></em></p>
-    ///   <p>Additional categories for the application.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAdditionalCategories<T>(this T toolSettings, IEnumerable<DotnetPackagingAdditionalCategory> additionalCategories) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<DotnetPackagingAdditionalCategory>(additionalCategories);
-        toolSettings.AdditionalCategoriesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.AdditionalCategories"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.AdditionalCategories))]
+    public static T SetAdditionalCategories<T>(this T o, params DotnetPackagingAdditionalCategory[] v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.AdditionalCategories, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.AdditionalCategories"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.AdditionalCategories))]
+    public static T SetAdditionalCategories<T>(this T o, IEnumerable<DotnetPackagingAdditionalCategory> v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.AdditionalCategories, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.AdditionalCategories"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.AdditionalCategories))]
+    public static T AddAdditionalCategories<T>(this T o, params DotnetPackagingAdditionalCategory[] v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.AddCollection(() => o.AdditionalCategories, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.AdditionalCategories"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.AdditionalCategories))]
+    public static T AddAdditionalCategories<T>(this T o, IEnumerable<DotnetPackagingAdditionalCategory> v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.AddCollection(() => o.AdditionalCategories, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.AdditionalCategories"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.AdditionalCategories))]
+    public static T RemoveAdditionalCategories<T>(this T o, params DotnetPackagingAdditionalCategory[] v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.RemoveCollection(() => o.AdditionalCategories, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.AdditionalCategories"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.AdditionalCategories))]
+    public static T RemoveAdditionalCategories<T>(this T o, IEnumerable<DotnetPackagingAdditionalCategory> v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.RemoveCollection(() => o.AdditionalCategories, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.AdditionalCategories"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.AdditionalCategories))]
+    public static T ClearAdditionalCategories<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.ClearCollection(() => o.AdditionalCategories));
     #endregion
     #region Icon
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.Icon"/></em></p>
-    ///   <p>The icon path for the application. When not provided, the tool looks up for an image called <c>AppImage.png</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetIcon<T>(this T toolSettings, string icon) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Icon = icon;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingAppImageSettings.Icon"/></em></p>
-    ///   <p>The icon path for the application. When not provided, the tool looks up for an image called <c>AppImage.png</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetIcon<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Icon = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Icon"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Icon))]
+    public static T SetIcon<T>(this T o, string v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.Icon, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Icon"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Icon))]
+    public static T ResetIcon<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Remove(() => o.Icon));
     #endregion
     #region Homepage
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.Homepage"/></em></p>
-    ///   <p>Home page of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T SetHomepage<T>(this T toolSettings, string homepage) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Homepage = homepage;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingAppImageSettings.Homepage"/></em></p>
-    ///   <p>Home page of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetHomepage<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Homepage = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Homepage"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Homepage))]
+    public static T SetHomepage<T>(this T o, string v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.Homepage, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Homepage"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Homepage))]
+    public static T ResetHomepage<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Remove(() => o.Homepage));
     #endregion
     #region License
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.License"/></em></p>
-    ///   <p>License of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLicense<T>(this T toolSettings, string license) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.License = license;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingAppImageSettings.License"/></em></p>
-    ///   <p>License of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLicense<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.License = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.License"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.License))]
+    public static T SetLicense<T>(this T o, string v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.License, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.License"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.License))]
+    public static T ResetLicense<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Remove(() => o.License));
     #endregion
     #region Version
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.Version"/></em></p>
-    ///   <p>Version of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T SetVersion<T>(this T toolSettings, string version) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Version = version;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingAppImageSettings.Version"/></em></p>
-    ///   <p>Version of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetVersion<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Version = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Version"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Version))]
+    public static T SetVersion<T>(this T o, string v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.Version, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Version"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Version))]
+    public static T ResetVersion<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Remove(() => o.Version));
     #endregion
     #region ScreenshotUrls
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/> to a new list</em></p>
-    ///   <p>URLs of screenshots of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T SetScreenshotUrls<T>(this T toolSettings, params string[] screenshotUrls) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScreenshotUrlsInternal = screenshotUrls.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/> to a new list</em></p>
-    ///   <p>URLs of screenshots of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T SetScreenshotUrls<T>(this T toolSettings, IEnumerable<string> screenshotUrls) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScreenshotUrlsInternal = screenshotUrls.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></em></p>
-    ///   <p>URLs of screenshots of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T AddScreenshotUrls<T>(this T toolSettings, params string[] screenshotUrls) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScreenshotUrlsInternal.AddRange(screenshotUrls);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></em></p>
-    ///   <p>URLs of screenshots of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T AddScreenshotUrls<T>(this T toolSettings, IEnumerable<string> screenshotUrls) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScreenshotUrlsInternal.AddRange(screenshotUrls);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></em></p>
-    ///   <p>URLs of screenshots of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearScreenshotUrls<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScreenshotUrlsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></em></p>
-    ///   <p>URLs of screenshots of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveScreenshotUrls<T>(this T toolSettings, params string[] screenshotUrls) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(screenshotUrls);
-        toolSettings.ScreenshotUrlsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></em></p>
-    ///   <p>URLs of screenshots of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveScreenshotUrls<T>(this T toolSettings, IEnumerable<string> screenshotUrls) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(screenshotUrls);
-        toolSettings.ScreenshotUrlsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.ScreenshotUrls))]
+    public static T SetScreenshotUrls<T>(this T o, params string[] v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.ScreenshotUrls, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.ScreenshotUrls))]
+    public static T SetScreenshotUrls<T>(this T o, IEnumerable<string> v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.ScreenshotUrls, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.ScreenshotUrls))]
+    public static T AddScreenshotUrls<T>(this T o, params string[] v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.AddCollection(() => o.ScreenshotUrls, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.ScreenshotUrls))]
+    public static T AddScreenshotUrls<T>(this T o, IEnumerable<string> v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.AddCollection(() => o.ScreenshotUrls, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.ScreenshotUrls))]
+    public static T RemoveScreenshotUrls<T>(this T o, params string[] v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.RemoveCollection(() => o.ScreenshotUrls, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.ScreenshotUrls))]
+    public static T RemoveScreenshotUrls<T>(this T o, IEnumerable<string> v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.RemoveCollection(() => o.ScreenshotUrls, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.ScreenshotUrls))]
+    public static T ClearScreenshotUrls<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.ClearCollection(() => o.ScreenshotUrls));
     #endregion
     #region Summary
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.Summary"/></em></p>
-    ///   <p>Short description of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSummary<T>(this T toolSettings, string summary) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Summary = summary;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingAppImageSettings.Summary"/></em></p>
-    ///   <p>Short description of the application.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetSummary<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Summary = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Summary"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Summary))]
+    public static T SetSummary<T>(this T o, string v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.Summary, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.Summary"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.Summary))]
+    public static T ResetSummary<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Remove(() => o.Summary));
     #endregion
     #region AppId
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotnetPackagingAppImageSettings.AppId"/></em></p>
-    ///   <p>Application ID, usually a reverse DNS name like <c>com.SomeCompany.SomeApplication</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAppId<T>(this T toolSettings, string appId) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AppId = appId;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotnetPackagingAppImageSettings.AppId"/></em></p>
-    ///   <p>Application ID, usually a reverse DNS name like <c>com.SomeCompany.SomeApplication</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAppId<T>(this T toolSettings) where T : DotnetPackagingAppImageSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AppId = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.AppId"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.AppId))]
+    public static T SetAppId<T>(this T o, string v) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Set(() => o.AppId, v));
+    /// <inheritdoc cref="DotnetPackagingAppImageSettings.AppId"/>
+    [Pure] [Builder(Type = typeof(DotnetPackagingAppImageSettings), Property = nameof(DotnetPackagingAppImageSettings.AppId))]
+    public static T ResetAppId<T>(this T o) where T : DotnetPackagingAppImageSettings => o.Modify(b => b.Remove(() => o.AppId));
     #endregion
 }
 #endregion
 #region DotnetPackagingMainCategory
-/// <summary>
-///   Used within <see cref="DotnetPackagingTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -821,9 +290,7 @@ public partial class DotnetPackagingMainCategory : Enumeration
 }
 #endregion
 #region DotnetPackagingAdditionalCategory
-/// <summary>
-///   Used within <see cref="DotnetPackagingTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]

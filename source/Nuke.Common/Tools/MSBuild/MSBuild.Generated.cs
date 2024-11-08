@@ -17,2371 +17,735 @@ using System.Text;
 
 namespace Nuke.Common.Tools.MSBuild;
 
-/// <summary>
-///   <p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p>
-///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p>
-/// </summary>
+/// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-public partial class MSBuildTasks
+public partial class MSBuildTasks : ToolTasks
 {
-    /// <summary>
-    ///   Path to the MSBuild executable.
-    /// </summary>
-    public static string MSBuildPath =>
-        ToolPathResolver.TryGetEnvironmentExecutable("MSBUILD_EXE") ??
-        GetToolPath();
-    public static Action<OutputType, string> MSBuildLogger { get; set; } = ProcessTasks.DefaultLogger;
-    public static Action<ToolSettings, IProcess> MSBuildExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
-    /// <summary>
-    ///   <p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p>
-    ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p>
-    /// </summary>
-    public static IReadOnlyCollection<Output> MSBuild(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(MSBuildPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? MSBuildLogger);
-        (exitHandler ?? (p => MSBuildExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p>
-    ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;targetPath&gt;</c> via <see cref="MSBuildSettings.TargetPath"/></li>
-    ///     <li><c>/detailedsummary</c> via <see cref="MSBuildSettings.DetailedSummary"/></li>
-    ///     <li><c>/logger</c> via <see cref="MSBuildSettings.Loggers"/></li>
-    ///     <li><c>/maxcpucount</c> via <see cref="MSBuildSettings.MaxCpuCount"/></li>
-    ///     <li><c>/noconsolelogger</c> via <see cref="MSBuildSettings.NoConsoleLogger"/></li>
-    ///     <li><c>/nodeReuse</c> via <see cref="MSBuildSettings.NodeReuse"/></li>
-    ///     <li><c>/nologo</c> via <see cref="MSBuildSettings.NoLogo"/></li>
-    ///     <li><c>/p</c> via <see cref="MSBuildSettings.Properties"/></li>
-    ///     <li><c>/p:Platform</c> via <see cref="MSBuildSettings.TargetPlatform"/></li>
-    ///     <li><c>/restore</c> via <see cref="MSBuildSettings.Restore"/></li>
-    ///     <li><c>/target</c> via <see cref="MSBuildSettings.Targets"/></li>
-    ///     <li><c>/toolsversion</c> via <see cref="MSBuildSettings.ToolsVersion"/></li>
-    ///     <li><c>/verbosity</c> via <see cref="MSBuildSettings.Verbosity"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> MSBuild(MSBuildSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new MSBuildSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p>
-    ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;targetPath&gt;</c> via <see cref="MSBuildSettings.TargetPath"/></li>
-    ///     <li><c>/detailedsummary</c> via <see cref="MSBuildSettings.DetailedSummary"/></li>
-    ///     <li><c>/logger</c> via <see cref="MSBuildSettings.Loggers"/></li>
-    ///     <li><c>/maxcpucount</c> via <see cref="MSBuildSettings.MaxCpuCount"/></li>
-    ///     <li><c>/noconsolelogger</c> via <see cref="MSBuildSettings.NoConsoleLogger"/></li>
-    ///     <li><c>/nodeReuse</c> via <see cref="MSBuildSettings.NodeReuse"/></li>
-    ///     <li><c>/nologo</c> via <see cref="MSBuildSettings.NoLogo"/></li>
-    ///     <li><c>/p</c> via <see cref="MSBuildSettings.Properties"/></li>
-    ///     <li><c>/p:Platform</c> via <see cref="MSBuildSettings.TargetPlatform"/></li>
-    ///     <li><c>/restore</c> via <see cref="MSBuildSettings.Restore"/></li>
-    ///     <li><c>/target</c> via <see cref="MSBuildSettings.Targets"/></li>
-    ///     <li><c>/toolsversion</c> via <see cref="MSBuildSettings.ToolsVersion"/></li>
-    ///     <li><c>/verbosity</c> via <see cref="MSBuildSettings.Verbosity"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> MSBuild(Configure<MSBuildSettings> configurator)
-    {
-        return MSBuild(configurator(new MSBuildSettings()));
-    }
-    /// <summary>
-    ///   <p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p>
-    ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;targetPath&gt;</c> via <see cref="MSBuildSettings.TargetPath"/></li>
-    ///     <li><c>/detailedsummary</c> via <see cref="MSBuildSettings.DetailedSummary"/></li>
-    ///     <li><c>/logger</c> via <see cref="MSBuildSettings.Loggers"/></li>
-    ///     <li><c>/maxcpucount</c> via <see cref="MSBuildSettings.MaxCpuCount"/></li>
-    ///     <li><c>/noconsolelogger</c> via <see cref="MSBuildSettings.NoConsoleLogger"/></li>
-    ///     <li><c>/nodeReuse</c> via <see cref="MSBuildSettings.NodeReuse"/></li>
-    ///     <li><c>/nologo</c> via <see cref="MSBuildSettings.NoLogo"/></li>
-    ///     <li><c>/p</c> via <see cref="MSBuildSettings.Properties"/></li>
-    ///     <li><c>/p:Platform</c> via <see cref="MSBuildSettings.TargetPlatform"/></li>
-    ///     <li><c>/restore</c> via <see cref="MSBuildSettings.Restore"/></li>
-    ///     <li><c>/target</c> via <see cref="MSBuildSettings.Targets"/></li>
-    ///     <li><c>/toolsversion</c> via <see cref="MSBuildSettings.ToolsVersion"/></li>
-    ///     <li><c>/verbosity</c> via <see cref="MSBuildSettings.Verbosity"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(MSBuildSettings Settings, IReadOnlyCollection<Output> Output)> MSBuild(CombinatorialConfigure<MSBuildSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(MSBuild, MSBuildLogger, degreeOfParallelism, completeOnFailure);
-    }
+    public static string MSBuildPath => new MSBuildTasks().GetToolPath();
+    /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>
+    public static IReadOnlyCollection<Output> MSBuild(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new MSBuildTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
+    /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;targetPath&gt;</c> via <see cref="MSBuildSettings.TargetPath"/></li><li><c>/detailedsummary</c> via <see cref="MSBuildSettings.DetailedSummary"/></li><li><c>/logger</c> via <see cref="MSBuildSettings.Loggers"/></li><li><c>/maxcpucount</c> via <see cref="MSBuildSettings.MaxCpuCount"/></li><li><c>/noconsolelogger</c> via <see cref="MSBuildSettings.NoConsoleLogger"/></li><li><c>/nodeReuse</c> via <see cref="MSBuildSettings.NodeReuse"/></li><li><c>/nologo</c> via <see cref="MSBuildSettings.NoLogo"/></li><li><c>/p</c> via <see cref="MSBuildSettings.Properties"/></li><li><c>/p:Platform</c> via <see cref="MSBuildSettings.TargetPlatform"/></li><li><c>/restore</c> via <see cref="MSBuildSettings.Restore"/></li><li><c>/target</c> via <see cref="MSBuildSettings.Targets"/></li><li><c>/toolsversion</c> via <see cref="MSBuildSettings.ToolsVersion"/></li><li><c>/verbosity</c> via <see cref="MSBuildSettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> MSBuild(MSBuildSettings options = null) => new MSBuildTasks().Run(options);
+    /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;targetPath&gt;</c> via <see cref="MSBuildSettings.TargetPath"/></li><li><c>/detailedsummary</c> via <see cref="MSBuildSettings.DetailedSummary"/></li><li><c>/logger</c> via <see cref="MSBuildSettings.Loggers"/></li><li><c>/maxcpucount</c> via <see cref="MSBuildSettings.MaxCpuCount"/></li><li><c>/noconsolelogger</c> via <see cref="MSBuildSettings.NoConsoleLogger"/></li><li><c>/nodeReuse</c> via <see cref="MSBuildSettings.NodeReuse"/></li><li><c>/nologo</c> via <see cref="MSBuildSettings.NoLogo"/></li><li><c>/p</c> via <see cref="MSBuildSettings.Properties"/></li><li><c>/p:Platform</c> via <see cref="MSBuildSettings.TargetPlatform"/></li><li><c>/restore</c> via <see cref="MSBuildSettings.Restore"/></li><li><c>/target</c> via <see cref="MSBuildSettings.Targets"/></li><li><c>/toolsversion</c> via <see cref="MSBuildSettings.ToolsVersion"/></li><li><c>/verbosity</c> via <see cref="MSBuildSettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> MSBuild(Configure<MSBuildSettings> configurator) => new MSBuildTasks().Run(configurator.Invoke(new MSBuildSettings()));
+    /// <summary><p>The Microsoft Build Engine is a platform for building applications. This engine, which is also known as MSBuild, provides an XML schema for a project file that controls how the build platform processes and builds software. Visual Studio uses MSBuild, but it doesn't depend on Visual Studio. By invoking msbuild.exe on your project or solution file, you can orchestrate and build products in environments where Visual Studio isn't installed. Visual Studio uses MSBuild to load and build managed projects. The project files in Visual Studio (.csproj,.vbproj, vcxproj, and others) contain MSBuild XML code that executes when you build a project by using the IDE. Visual Studio projects import all the necessary settings and build processes to do typical development work, but you can extend or modify them from within Visual Studio or by using an XML editor.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/ms164311.aspx">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;targetPath&gt;</c> via <see cref="MSBuildSettings.TargetPath"/></li><li><c>/detailedsummary</c> via <see cref="MSBuildSettings.DetailedSummary"/></li><li><c>/logger</c> via <see cref="MSBuildSettings.Loggers"/></li><li><c>/maxcpucount</c> via <see cref="MSBuildSettings.MaxCpuCount"/></li><li><c>/noconsolelogger</c> via <see cref="MSBuildSettings.NoConsoleLogger"/></li><li><c>/nodeReuse</c> via <see cref="MSBuildSettings.NodeReuse"/></li><li><c>/nologo</c> via <see cref="MSBuildSettings.NoLogo"/></li><li><c>/p</c> via <see cref="MSBuildSettings.Properties"/></li><li><c>/p:Platform</c> via <see cref="MSBuildSettings.TargetPlatform"/></li><li><c>/restore</c> via <see cref="MSBuildSettings.Restore"/></li><li><c>/target</c> via <see cref="MSBuildSettings.Targets"/></li><li><c>/toolsversion</c> via <see cref="MSBuildSettings.ToolsVersion"/></li><li><c>/verbosity</c> via <see cref="MSBuildSettings.Verbosity"/></li></ul></remarks>
+    public static IEnumerable<(MSBuildSettings Settings, IReadOnlyCollection<Output> Output)> MSBuild(CombinatorialConfigure<MSBuildSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(MSBuild, degreeOfParallelism, completeOnFailure);
 }
 #region MSBuildSettings
-/// <summary>
-///   Used within <see cref="MSBuildTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="MSBuildTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class MSBuildSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<MSBuildSettings>))]
+[Command(Type = typeof(MSBuildTasks), Command = nameof(MSBuildTasks.MSBuild))]
+public partial class MSBuildSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the MSBuild executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? MSBuildTasks.MSBuildLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? MSBuildTasks.MSBuildExitHandler;
-    /// <summary>
-    ///   The solution or project file on which MSBuild is executed.
-    /// </summary>
-    public virtual string TargetPath { get; internal set; }
-    /// <summary>
-    ///   Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.
-    /// </summary>
-    public virtual bool? DetailedSummary { get; internal set; }
-    /// <summary>
-    ///   <p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p>
-    /// </summary>
-    public virtual int? MaxCpuCount { get; internal set; }
-    /// <summary>
-    ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
-    /// </summary>
-    public virtual bool? NodeReuse { get; internal set; }
-    /// <summary>
-    ///   Don't display the startup banner or the copyright message.
-    /// </summary>
-    public virtual bool? NoLogo { get; internal set; }
-    /// <summary>
-    ///   The target platform for which the project is built to run on.
-    /// </summary>
-    public virtual MSBuildTargetPlatform TargetPlatform { get; internal set; }
-    /// <summary>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
-    internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
-    /// <summary>
-    ///   Runs the <c>Restore</c> target prior to building the actual targets.
-    /// </summary>
-    public virtual bool? Restore { get; internal set; }
-    /// <summary>
-    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
-    /// </summary>
-    public virtual IReadOnlyList<string> Targets => TargetsInternal.AsReadOnly();
-    internal List<string> TargetsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   <p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p>
-    /// </summary>
-    public virtual MSBuildToolsVersion ToolsVersion { get; internal set; }
-    /// <summary>
-    ///   Specifies the version of MSBuild for building.
-    /// </summary>
-    public virtual MSBuildVersion? MSBuildVersion { get; internal set; }
-    /// <summary>
-    ///   <p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p>
-    /// </summary>
-    public virtual MSBuildVerbosity Verbosity { get; internal set; }
-    /// <summary>
-    ///   Specifies the platform to use when building.
-    /// </summary>
-    public virtual MSBuildPlatform? MSBuildPlatform { get; internal set; }
-    /// <summary>
-    ///   Specifies the loggers to use to log events from MSBuild.
-    /// </summary>
-    public virtual IReadOnlyList<string> Loggers => LoggersInternal.AsReadOnly();
-    internal List<string> LoggersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Disable the default console logger, and don't log events to the console.
-    /// </summary>
-    public virtual bool? NoConsoleLogger { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("{value}", TargetPath)
-          .Add("/detailedsummary", DetailedSummary)
-          .Add("/maxcpucount:{value}", MaxCpuCount)
-          .Add("/nodeReuse:{value}", NodeReuse)
-          .Add("/nologo", NoLogo)
-          .Add("/p:Platform={value}", GetTargetPlatform(), customValue: true)
-          .Add("/p:{value}", Properties, "{key}={value}", disallowed: ';')
-          .Add("/restore", Restore)
-          .Add("/target:{value}", Targets, separator: ';')
-          .Add("/toolsversion:{value}", ToolsVersion)
-          .Add("/verbosity:{value}", Verbosity)
-          .Add("/logger:{value}", Loggers)
-          .Add("/noconsolelogger", NoConsoleLogger);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary>The solution or project file on which MSBuild is executed.</summary>
+    [Argument(Format = "{value}", Position = 1)] public string TargetPath => Get<string>(() => TargetPath);
+    /// <summary>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</summary>
+    [Argument(Format = "/detailedsummary")] public bool? DetailedSummary => Get<bool?>(() => DetailedSummary);
+    /// <summary><p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p></summary>
+    [Argument(Format = "/maxcpucount:{value}")] public int? MaxCpuCount => Get<int?>(() => MaxCpuCount);
+    /// <summary><p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p></summary>
+    [Argument(Format = "/nodeReuse:{value}")] public bool? NodeReuse => Get<bool?>(() => NodeReuse);
+    /// <summary>Don't display the startup banner or the copyright message.</summary>
+    [Argument(Format = "/nologo")] public bool? NoLogo => Get<bool?>(() => NoLogo);
+    /// <summary>The target platform for which the project is built to run on.</summary>
+    [Argument(Format = "/p:Platform={value}", FormatterMethod = nameof(FormatPlatform))] public MSBuildTargetPlatform TargetPlatform => Get<MSBuildTargetPlatform>(() => TargetPlatform);
+    /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
+    [Argument(Format = "/p:{key}={value}")] public IReadOnlyDictionary<string, object> Properties => Get<Dictionary<string, object>>(() => Properties);
+    /// <summary>Runs the <c>Restore</c> target prior to building the actual targets.</summary>
+    [Argument(Format = "/restore")] public bool? Restore => Get<bool?>(() => Restore);
+    /// <summary><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
+    [Argument(Format = "/target:{value}", Separator = ";")] public IReadOnlyList<string> Targets => Get<List<string>>(() => Targets);
+    /// <summary><p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p></summary>
+    [Argument(Format = "/toolsversion:{value}")] public MSBuildToolsVersion ToolsVersion => Get<MSBuildToolsVersion>(() => ToolsVersion);
+    /// <summary>Specifies the version of MSBuild for building.</summary>
+    public MSBuildVersion? MSBuildVersion => Get<MSBuildVersion?>(() => MSBuildVersion);
+    /// <summary><p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p></summary>
+    [Argument(Format = "/verbosity:{value}")] public MSBuildVerbosity Verbosity => Get<MSBuildVerbosity>(() => Verbosity);
+    /// <summary>Specifies the platform to use when building.</summary>
+    public MSBuildPlatform? MSBuildPlatform => Get<MSBuildPlatform?>(() => MSBuildPlatform);
+    /// <summary>Specifies the loggers to use to log events from MSBuild.</summary>
+    [Argument(Format = "/logger:{value}")] public IReadOnlyList<string> Loggers => Get<List<string>>(() => Loggers);
+    /// <summary>Disable the default console logger, and don't log events to the console.</summary>
+    [Argument(Format = "/noconsolelogger")] public bool? NoConsoleLogger => Get<bool?>(() => NoConsoleLogger);
 }
 #endregion
 #region MSBuildSettingsExtensions
-/// <summary>
-///   Used within <see cref="MSBuildTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="MSBuildTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class MSBuildSettingsExtensions
 {
     #region TargetPath
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.TargetPath"/></em></p>
-    ///   <p>The solution or project file on which MSBuild is executed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargetPath<T>(this T toolSettings, string targetPath) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetPath = targetPath;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.TargetPath"/></em></p>
-    ///   <p>The solution or project file on which MSBuild is executed.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTargetPath<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetPath = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.TargetPath))]
+    public static T SetTargetPath<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.TargetPath, v));
+    /// <inheritdoc cref="MSBuildSettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.TargetPath))]
+    public static T ResetTargetPath<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.TargetPath));
     #endregion
     #region DetailedSummary
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.DetailedSummary"/></em></p>
-    ///   <p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDetailedSummary<T>(this T toolSettings, bool? detailedSummary) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DetailedSummary = detailedSummary;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.DetailedSummary"/></em></p>
-    ///   <p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDetailedSummary<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DetailedSummary = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSBuildSettings.DetailedSummary"/></em></p>
-    ///   <p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDetailedSummary<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DetailedSummary = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSBuildSettings.DetailedSummary"/></em></p>
-    ///   <p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDetailedSummary<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DetailedSummary = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSBuildSettings.DetailedSummary"/></em></p>
-    ///   <p>Show detailed information at the end of the build log about the configurations that were built and how they were scheduled to nodes.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDetailedSummary<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DetailedSummary = !toolSettings.DetailedSummary;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.DetailedSummary"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.DetailedSummary))]
+    public static T SetDetailedSummary<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.DetailedSummary, v));
+    /// <inheritdoc cref="MSBuildSettings.DetailedSummary"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.DetailedSummary))]
+    public static T ResetDetailedSummary<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.DetailedSummary));
+    /// <inheritdoc cref="MSBuildSettings.DetailedSummary"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.DetailedSummary))]
+    public static T EnableDetailedSummary<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.DetailedSummary, true));
+    /// <inheritdoc cref="MSBuildSettings.DetailedSummary"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.DetailedSummary))]
+    public static T DisableDetailedSummary<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.DetailedSummary, false));
+    /// <inheritdoc cref="MSBuildSettings.DetailedSummary"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.DetailedSummary))]
+    public static T ToggleDetailedSummary<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.DetailedSummary, !o.DetailedSummary));
     #endregion
     #region MaxCpuCount
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.MaxCpuCount"/></em></p>
-    ///   <p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetMaxCpuCount<T>(this T toolSettings, int? maxCpuCount) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MaxCpuCount = maxCpuCount;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.MaxCpuCount"/></em></p>
-    ///   <p>Specifies the maximum number of concurrent processes to use when building. If you don't include this switch, the default value is 1. If you include this switch without specifying a value, MSBuild will use up to the number of processors in the computer. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb651793.aspx">Building Multiple Projects in Parallel</a>.</p><p>The following example instructs MSBuild to build using three MSBuild processes, which allows three projects to build at the same time:</p><p><c>msbuild myproject.proj /maxcpucount:3</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetMaxCpuCount<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MaxCpuCount = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.MaxCpuCount"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.MaxCpuCount))]
+    public static T SetMaxCpuCount<T>(this T o, int? v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.MaxCpuCount, v));
+    /// <inheritdoc cref="MSBuildSettings.MaxCpuCount"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.MaxCpuCount))]
+    public static T ResetMaxCpuCount<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.MaxCpuCount));
     #endregion
     #region NodeReuse
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.NodeReuse"/></em></p>
-    ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNodeReuse<T>(this T toolSettings, bool? nodeReuse) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NodeReuse = nodeReuse;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.NodeReuse"/></em></p>
-    ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNodeReuse<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NodeReuse = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSBuildSettings.NodeReuse"/></em></p>
-    ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNodeReuse<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NodeReuse = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSBuildSettings.NodeReuse"/></em></p>
-    ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNodeReuse<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NodeReuse = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSBuildSettings.NodeReuse"/></em></p>
-    ///   <p>Enable or disable the re-use of MSBuild nodes. You can specify the following values: <ul><li><c>true</c>: Nodes remain after the build finishes so that subsequent builds can use them (default).</li><li><c>false</c>. Nodes don't remain after the build completes.</li></ul></p><p>A node corresponds to a project that's executing. If you include the <c>/maxcpucount</c> switch, multiple nodes can execute concurrently.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNodeReuse<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NodeReuse = !toolSettings.NodeReuse;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.NodeReuse"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NodeReuse))]
+    public static T SetNodeReuse<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NodeReuse, v));
+    /// <inheritdoc cref="MSBuildSettings.NodeReuse"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NodeReuse))]
+    public static T ResetNodeReuse<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.NodeReuse));
+    /// <inheritdoc cref="MSBuildSettings.NodeReuse"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NodeReuse))]
+    public static T EnableNodeReuse<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NodeReuse, true));
+    /// <inheritdoc cref="MSBuildSettings.NodeReuse"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NodeReuse))]
+    public static T DisableNodeReuse<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NodeReuse, false));
+    /// <inheritdoc cref="MSBuildSettings.NodeReuse"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NodeReuse))]
+    public static T ToggleNodeReuse<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NodeReuse, !o.NodeReuse));
     #endregion
     #region NoLogo
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.NoLogo"/></em></p>
-    ///   <p>Don't display the startup banner or the copyright message.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNoLogo<T>(this T toolSettings, bool? noLogo) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = noLogo;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.NoLogo"/></em></p>
-    ///   <p>Don't display the startup banner or the copyright message.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNoLogo<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSBuildSettings.NoLogo"/></em></p>
-    ///   <p>Don't display the startup banner or the copyright message.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNoLogo<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSBuildSettings.NoLogo"/></em></p>
-    ///   <p>Don't display the startup banner or the copyright message.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNoLogo<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSBuildSettings.NoLogo"/></em></p>
-    ///   <p>Don't display the startup banner or the copyright message.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNoLogo<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = !toolSettings.NoLogo;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoLogo))]
+    public static T SetNoLogo<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NoLogo, v));
+    /// <inheritdoc cref="MSBuildSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoLogo))]
+    public static T ResetNoLogo<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.NoLogo));
+    /// <inheritdoc cref="MSBuildSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoLogo))]
+    public static T EnableNoLogo<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NoLogo, true));
+    /// <inheritdoc cref="MSBuildSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoLogo))]
+    public static T DisableNoLogo<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NoLogo, false));
+    /// <inheritdoc cref="MSBuildSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoLogo))]
+    public static T ToggleNoLogo<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NoLogo, !o.NoLogo));
     #endregion
     #region TargetPlatform
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.TargetPlatform"/></em></p>
-    ///   <p>The target platform for which the project is built to run on.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargetPlatform<T>(this T toolSettings, MSBuildTargetPlatform targetPlatform) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetPlatform = targetPlatform;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.TargetPlatform"/></em></p>
-    ///   <p>The target platform for which the project is built to run on.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTargetPlatform<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetPlatform = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.TargetPlatform"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.TargetPlatform))]
+    public static T SetTargetPlatform<T>(this T o, MSBuildTargetPlatform v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.TargetPlatform, v));
+    /// <inheritdoc cref="MSBuildSettings.TargetPlatform"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.TargetPlatform))]
+    public static T ResetTargetPlatform<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.TargetPlatform));
     #endregion
     #region Properties
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.Properties"/> to a new dictionary</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetProperties<T>(this T toolSettings, IDictionary<string, object> properties) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal = properties.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ClearProperties<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds a new key-value-pair <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Add(propertyKey, propertyValue);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes a key-value-pair from <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveProperty<T>(this T toolSettings, string propertyKey) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove(propertyKey);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets a key-value-pair in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetProperty<T>(this T toolSettings, string propertyKey, object propertyValue) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal[propertyKey] = propertyValue;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetProperties<T>(this T o, IDictionary<string, object> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, v.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase)));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetProperty<T>(this T o, string k, object v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, k, v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddProperty<T>(this T o, string k, object v) where T : MSBuildSettings => o.Modify(b => b.AddDictionary(() => o.Properties, k, v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveProperty<T>(this T o, string k) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, k));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ClearProperties<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.ClearDictionary(() => o.Properties));
     #region OutDir
-    /// <summary>
-    ///   <p><em>Sets <c>OutDir</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetOutDir<T>(this T toolSettings, string outDir) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["OutDir"] = outDir;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>OutDir</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutDir<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("OutDir");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetOutDir<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "OutDir", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetOutDir<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "OutDir"));
     #endregion
     #region RunCodeAnalysis
-    /// <summary>
-    ///   <p><em>Sets <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetRunCodeAnalysis<T>(this T toolSettings, bool? runCodeAnalysis) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RunCodeAnalysis"] = runCodeAnalysis;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetRunCodeAnalysis<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RunCodeAnalysis");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T EnableRunCodeAnalysis<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RunCodeAnalysis"] = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T DisableRunCodeAnalysis<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RunCodeAnalysis"] = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <c>RunCodeAnalysis</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ToggleRunCodeAnalysis<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RunCodeAnalysis");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRunCodeAnalysis<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RunCodeAnalysis", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRunCodeAnalysis<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RunCodeAnalysis"));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T EnableRunCodeAnalysis<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RunCodeAnalysis", true));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T DisableRunCodeAnalysis<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RunCodeAnalysis", false));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ToggleRunCodeAnalysis<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.Toggle(o.Properties, "RunCodeAnalysis")));
     #endregion
     #region NoWarn
-    /// <summary>
-    ///   <p><em>Sets <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetNoWarns<T>(this T toolSettings, params int[] noWarn) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddNoWarns<T>(this T toolSettings, params int[] noWarn) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>NoWarn</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ClearNoWarns<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("NoWarn");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveNoWarns<T>(this T toolSettings, params int[] noWarn) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>NoWarn</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveNoWarns<T>(this T toolSettings, IEnumerable<int> noWarn) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "NoWarn", noWarn, ';');
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetNoWarns<T>(this T o, params int[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "NoWarn", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetNoWarns<T>(this T o, IEnumerable<int> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "NoWarn", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddNoWarns<T>(this T o, params int[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "NoWarn", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddNoWarns<T>(this T o, IEnumerable<int> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "NoWarn", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveNoWarns<T>(this T o, params int[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "NoWarn", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveNoWarns<T>(this T o, IEnumerable<int> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "NoWarn", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetNoWarn<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "NoWarn"));
     #endregion
     #region WarningsAsErrors
-    /// <summary>
-    ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>WarningsAsErrors</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ClearWarningsAsErrors<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("WarningsAsErrors");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveWarningsAsErrors<T>(this T toolSettings, params int[] warningsAsErrors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>WarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveWarningsAsErrors<T>(this T toolSettings, IEnumerable<int> warningsAsErrors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "WarningsAsErrors", warningsAsErrors, ';');
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetWarningsAsErrors<T>(this T o, params int[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "WarningsAsErrors", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetWarningsAsErrors<T>(this T o, IEnumerable<int> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "WarningsAsErrors", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddWarningsAsErrors<T>(this T o, params int[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "WarningsAsErrors", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddWarningsAsErrors<T>(this T o, IEnumerable<int> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "WarningsAsErrors", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveWarningsAsErrors<T>(this T o, params int[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "WarningsAsErrors", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveWarningsAsErrors<T>(this T o, IEnumerable<int> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "WarningsAsErrors", v, ";")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetWarningsAsErrors<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "WarningsAsErrors"));
     #endregion
     #region WarningLevel
-    /// <summary>
-    ///   <p><em>Sets <c>WarningLevel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetWarningLevel<T>(this T toolSettings, int? warningLevel) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["WarningLevel"] = warningLevel;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>WarningLevel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetWarningLevel<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("WarningLevel");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetWarningLevel<T>(this T o, int? v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "WarningLevel", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetWarningLevel<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "WarningLevel"));
     #endregion
     #region Configuration
-    /// <summary>
-    ///   <p><em>Sets <c>Configuration</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["Configuration"] = configuration;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>Configuration</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetConfiguration<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("Configuration");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetConfiguration<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "Configuration", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetConfiguration<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "Configuration"));
     #endregion
     #region TreatWarningsAsErrors
-    /// <summary>
-    ///   <p><em>Sets <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetTreatWarningsAsErrors<T>(this T toolSettings, bool? treatWarningsAsErrors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = treatWarningsAsErrors;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetTreatWarningsAsErrors<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("TreatWarningsAsErrors");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T EnableTreatWarningsAsErrors<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T DisableTreatWarningsAsErrors<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["TreatWarningsAsErrors"] = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <c>TreatWarningsAsErrors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ToggleTreatWarningsAsErrors<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "TreatWarningsAsErrors");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetTreatWarningsAsErrors<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "TreatWarningsAsErrors", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetTreatWarningsAsErrors<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "TreatWarningsAsErrors"));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T EnableTreatWarningsAsErrors<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "TreatWarningsAsErrors", true));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T DisableTreatWarningsAsErrors<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "TreatWarningsAsErrors", false));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ToggleTreatWarningsAsErrors<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.Toggle(o.Properties, "TreatWarningsAsErrors")));
     #endregion
     #region AssemblyVersion
-    /// <summary>
-    ///   <p><em>Sets <c>AssemblyVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetAssemblyVersion<T>(this T toolSettings, string assemblyVersion) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["AssemblyVersion"] = assemblyVersion;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>AssemblyVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetAssemblyVersion<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("AssemblyVersion");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetAssemblyVersion<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "AssemblyVersion", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetAssemblyVersion<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "AssemblyVersion"));
     #endregion
     #region FileVersion
-    /// <summary>
-    ///   <p><em>Sets <c>FileVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetFileVersion<T>(this T toolSettings, string fileVersion) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["FileVersion"] = fileVersion;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>FileVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetFileVersion<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("FileVersion");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetFileVersion<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "FileVersion", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetFileVersion<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "FileVersion"));
     #endregion
     #region InformationalVersion
-    /// <summary>
-    ///   <p><em>Sets <c>InformationalVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetInformationalVersion<T>(this T toolSettings, string informationalVersion) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["InformationalVersion"] = informationalVersion;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>InformationalVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetInformationalVersion<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("InformationalVersion");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetInformationalVersion<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "InformationalVersion", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetInformationalVersion<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "InformationalVersion"));
     #endregion
     #region PackageOutputPath
-    /// <summary>
-    ///   <p><em>Sets <c>PackageOutputPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageOutputPath<T>(this T toolSettings, string packageOutputPath) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageOutputPath"] = packageOutputPath;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>PackageOutputPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackageOutputPath<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageOutputPath");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageOutputPath<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageOutputPath", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageOutputPath<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageOutputPath"));
     #endregion
     #region IncludeSymbols
-    /// <summary>
-    ///   <p><em>Sets <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetIncludeSymbols<T>(this T toolSettings, bool? includeSymbols) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["IncludeSymbols"] = includeSymbols;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetIncludeSymbols<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("IncludeSymbols");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T EnableIncludeSymbols<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["IncludeSymbols"] = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T DisableIncludeSymbols<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["IncludeSymbols"] = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <c>IncludeSymbols</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ToggleIncludeSymbols<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "IncludeSymbols");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetIncludeSymbols<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "IncludeSymbols", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetIncludeSymbols<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "IncludeSymbols"));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T EnableIncludeSymbols<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "IncludeSymbols", true));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T DisableIncludeSymbols<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "IncludeSymbols", false));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ToggleIncludeSymbols<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.Toggle(o.Properties, "IncludeSymbols")));
     #endregion
     #region PackageId
-    /// <summary>
-    ///   <p><em>Sets <c>PackageId</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageId<T>(this T toolSettings, string packageId) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageId"] = packageId;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>PackageId</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackageId<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageId");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageId<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageId", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageId<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageId"));
     #endregion
     #region PackageVersion
-    /// <summary>
-    ///   <p><em>Sets <c>PackageVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageVersion<T>(this T toolSettings, string packageVersion) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageVersion"] = packageVersion;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>PackageVersion</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackageVersion<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageVersion");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageVersion<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageVersion", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageVersion<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageVersion"));
     #endregion
     #region PackageVersionPrefix
-    /// <summary>
-    ///   <p><em>Sets <c>PackageVersionPrefix</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageVersionPrefix<T>(this T toolSettings, string packageVersionPrefix) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageVersionPrefix"] = packageVersionPrefix;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>PackageVersionPrefix</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackageVersionPrefix<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageVersionPrefix");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageVersionPrefix<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageVersionPrefix", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageVersionPrefix<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageVersionPrefix"));
     #endregion
     #region PackageVersionSuffix
-    /// <summary>
-    ///   <p><em>Sets <c>PackageVersionSuffix</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageVersionSuffix<T>(this T toolSettings, string packageVersionSuffix) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageVersionSuffix"] = packageVersionSuffix;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>PackageVersionSuffix</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackageVersionSuffix<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageVersionSuffix");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageVersionSuffix<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageVersionSuffix", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageVersionSuffix<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageVersionSuffix"));
     #endregion
     #region Authors
-    /// <summary>
-    ///   <p><em>Sets <c>Authors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetAuthors<T>(this T toolSettings, params string[] authors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <c>Authors</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "Authors", authors, ',');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>Authors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddAuthors<T>(this T toolSettings, params string[] authors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>Authors</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <c>Authors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ClearAuthors<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("Authors");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>Authors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAuthors<T>(this T toolSettings, params string[] authors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>Authors</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAuthors<T>(this T toolSettings, IEnumerable<string> authors) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "Authors", authors, ',');
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetAuthors<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "Authors", v, ",")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetAuthors<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "Authors", v, ",")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddAuthors<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "Authors", v, ",")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddAuthors<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "Authors", v, ",")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveAuthors<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "Authors", v, ",")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveAuthors<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "Authors", v, ",")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetAuthors<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "Authors"));
     #endregion
     #region Title
-    /// <summary>
-    ///   <p><em>Sets <c>Title</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetTitle<T>(this T toolSettings, string title) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["Title"] = title;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>Title</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetTitle<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("Title");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetTitle<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "Title", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetTitle<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "Title"));
     #endregion
     #region Description
-    /// <summary>
-    ///   <p><em>Sets <c>Description</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetDescription<T>(this T toolSettings, string description) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["Description"] = description;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>Description</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetDescription<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("Description");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetDescription<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "Description", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetDescription<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "Description"));
     #endregion
     #region Copyright
-    /// <summary>
-    ///   <p><em>Sets <c>Copyright</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetCopyright<T>(this T toolSettings, string copyright) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["Copyright"] = copyright;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>Copyright</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetCopyright<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("Copyright");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetCopyright<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "Copyright", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetCopyright<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "Copyright"));
     #endregion
     #region PackageRequireLicenseAcceptance
-    /// <summary>
-    ///   <p><em>Sets <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageRequireLicenseAcceptance<T>(this T toolSettings, bool? packageRequireLicenseAcceptance) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = packageRequireLicenseAcceptance;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackageRequireLicenseAcceptance<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageRequireLicenseAcceptance");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T EnablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T DisablePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageRequireLicenseAcceptance"] = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <c>PackageRequireLicenseAcceptance</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T TogglePackageRequireLicenseAcceptance<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "PackageRequireLicenseAcceptance");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageRequireLicenseAcceptance<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageRequireLicenseAcceptance", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageRequireLicenseAcceptance<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageRequireLicenseAcceptance"));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T EnablePackageRequireLicenseAcceptance<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageRequireLicenseAcceptance", true));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T DisablePackageRequireLicenseAcceptance<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageRequireLicenseAcceptance", false));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T TogglePackageRequireLicenseAcceptance<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.Toggle(o.Properties, "PackageRequireLicenseAcceptance")));
     #endregion
     #region PackageLicenseUrl
-    /// <summary>
-    ///   <p><em>Sets <c>PackageLicenseUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageLicenseUrl<T>(this T toolSettings, string packageLicenseUrl) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageLicenseUrl"] = packageLicenseUrl;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>PackageLicenseUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackageLicenseUrl<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageLicenseUrl");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageLicenseUrl<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageLicenseUrl", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageLicenseUrl<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageLicenseUrl"));
     #endregion
     #region PackageProjectUrl
-    /// <summary>
-    ///   <p><em>Sets <c>PackageProjectUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageProjectUrl<T>(this T toolSettings, string packageProjectUrl) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageProjectUrl"] = packageProjectUrl;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>PackageProjectUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackageProjectUrl<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageProjectUrl");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageProjectUrl<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageProjectUrl", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageProjectUrl<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageProjectUrl"));
     #endregion
     #region PackageIconUrl
-    /// <summary>
-    ///   <p><em>Sets <c>PackageIconUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageIconUrl<T>(this T toolSettings, string packageIconUrl) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageIconUrl"] = packageIconUrl;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>PackageIconUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackageIconUrl<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageIconUrl");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageIconUrl<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageIconUrl", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageIconUrl<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageIconUrl"));
     #endregion
     #region PackageTags
-    /// <summary>
-    ///   <p><em>Sets <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageTags<T>(this T toolSettings, params string[] packageTags) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddPackageTags<T>(this T toolSettings, params string[] packageTags) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>PackageTags</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddPackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ClearPackageTags<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageTags");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemovePackageTags<T>(this T toolSettings, params string[] packageTags) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>PackageTags</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemovePackageTags<T>(this T toolSettings, IEnumerable<string> packageTags) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "PackageTags", packageTags, ' ');
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageTags<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "PackageTags", v, " ")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageTags<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "PackageTags", v, " ")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddPackageTags<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "PackageTags", v, " ")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddPackageTags<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "PackageTags", v, " ")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemovePackageTags<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "PackageTags", v, " ")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemovePackageTags<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "PackageTags", v, " ")));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageTags<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageTags"));
     #endregion
     #region PackageReleaseNotes
-    /// <summary>
-    ///   <p><em>Sets <c>PackageReleaseNotes</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetPackageReleaseNotes<T>(this T toolSettings, string packageReleaseNotes) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["PackageReleaseNotes"] = packageReleaseNotes;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>PackageReleaseNotes</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackageReleaseNotes<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("PackageReleaseNotes");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetPackageReleaseNotes<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PackageReleaseNotes", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetPackageReleaseNotes<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PackageReleaseNotes"));
     #endregion
     #region RepositoryUrl
-    /// <summary>
-    ///   <p><em>Sets <c>RepositoryUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetRepositoryUrl<T>(this T toolSettings, string repositoryUrl) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RepositoryUrl"] = repositoryUrl;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>RepositoryUrl</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetRepositoryUrl<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RepositoryUrl");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRepositoryUrl<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RepositoryUrl", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRepositoryUrl<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RepositoryUrl"));
     #endregion
     #region RepositoryType
-    /// <summary>
-    ///   <p><em>Sets <c>RepositoryType</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetRepositoryType<T>(this T toolSettings, string repositoryType) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RepositoryType"] = repositoryType;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>RepositoryType</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetRepositoryType<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RepositoryType");
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRepositoryType<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RepositoryType", v));
+    /// <inheritdoc cref="MSBuildSettings.Properties"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRepositoryType<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RepositoryType"));
     #endregion
     #region RestoreSources
-    /// <summary>
-    ///   <p><em>Sets <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>List of package sources.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestoreSources<T>(this T toolSettings, params string[] restoreSources) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>List of package sources.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestoreSources<T>(this T toolSettings, IEnumerable<string> restoreSources) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>List of package sources.</p>
-    /// </summary>
-    [Pure]
-    public static T AddRestoreSources<T>(this T toolSettings, params string[] restoreSources) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>RestoreSources</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>List of package sources.</p>
-    /// </summary>
-    [Pure]
-    public static T AddRestoreSources<T>(this T toolSettings, IEnumerable<string> restoreSources) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>List of package sources.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearRestoreSources<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RestoreSources");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>List of package sources.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveRestoreSources<T>(this T toolSettings, params string[] restoreSources) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>RestoreSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>List of package sources.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveRestoreSources<T>(this T toolSettings, IEnumerable<string> restoreSources) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "RestoreSources", restoreSources, ';');
-        return toolSettings;
-    }
+    /// <summary>List of package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestoreSources<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "RestoreSources", v, ";")));
+    /// <summary>List of package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestoreSources<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "RestoreSources", v, ";")));
+    /// <summary>List of package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddRestoreSources<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "RestoreSources", v, ";")));
+    /// <summary>List of package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddRestoreSources<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "RestoreSources", v, ";")));
+    /// <summary>List of package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveRestoreSources<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "RestoreSources", v, ";")));
+    /// <summary>List of package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveRestoreSources<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "RestoreSources", v, ";")));
+    /// <summary>List of package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRestoreSources<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RestoreSources"));
     #endregion
     #region RestorePackagesPath
-    /// <summary>
-    ///   <p><em>Sets <c>RestorePackagesPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>User packages folder path.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestorePackagesPath<T>(this T toolSettings, string restorePackagesPath) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestorePackagesPath"] = restorePackagesPath;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>RestorePackagesPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>User packages folder path.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRestorePackagesPath<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RestorePackagesPath");
-        return toolSettings;
-    }
+    /// <summary>User packages folder path.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestorePackagesPath<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestorePackagesPath", v));
+    /// <summary>User packages folder path.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRestorePackagesPath<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RestorePackagesPath"));
     #endregion
     #region RestoreDisableParallel
-    /// <summary>
-    ///   <p><em>Sets <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Limit downloads to one at a time.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestoreDisableParallel<T>(this T toolSettings, bool? restoreDisableParallel) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreDisableParallel"] = restoreDisableParallel;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Limit downloads to one at a time.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRestoreDisableParallel<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RestoreDisableParallel");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T EnableRestoreDisableParallel<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreDisableParallel"] = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T DisableRestoreDisableParallel<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreDisableParallel"] = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <c>RestoreDisableParallel</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ToggleRestoreDisableParallel<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RestoreDisableParallel");
-        return toolSettings;
-    }
+    /// <summary>Limit downloads to one at a time.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestoreDisableParallel<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreDisableParallel", v));
+    /// <summary>Limit downloads to one at a time.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRestoreDisableParallel<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RestoreDisableParallel"));
+    /// <summary>Limit downloads to one at a time.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T EnableRestoreDisableParallel<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreDisableParallel", true));
+    /// <summary>Limit downloads to one at a time.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T DisableRestoreDisableParallel<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreDisableParallel", false));
+    /// <summary>Limit downloads to one at a time.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ToggleRestoreDisableParallel<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.Toggle(o.Properties, "RestoreDisableParallel")));
     #endregion
     #region RestoreConfigFile
-    /// <summary>
-    ///   <p><em>Sets <c>RestoreConfigFile</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Path to a Nuget.Config file to apply.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestoreConfigFile<T>(this T toolSettings, string restoreConfigFile) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreConfigFile"] = restoreConfigFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>RestoreConfigFile</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Path to a Nuget.Config file to apply.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRestoreConfigFile<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RestoreConfigFile");
-        return toolSettings;
-    }
+    /// <summary>Path to a Nuget.Config file to apply.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestoreConfigFile<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreConfigFile", v));
+    /// <summary>Path to a Nuget.Config file to apply.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRestoreConfigFile<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RestoreConfigFile"));
     #endregion
     #region RestoreNoCache
-    /// <summary>
-    ///   <p><em>Sets <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>If true, avoids using the web cache.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestoreNoCache<T>(this T toolSettings, bool? restoreNoCache) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreNoCache"] = restoreNoCache;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>If true, avoids using the web cache.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRestoreNoCache<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RestoreNoCache");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T EnableRestoreNoCache<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreNoCache"] = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T DisableRestoreNoCache<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreNoCache"] = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <c>RestoreNoCache</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ToggleRestoreNoCache<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RestoreNoCache");
-        return toolSettings;
-    }
+    /// <summary>If true, avoids using the web cache.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestoreNoCache<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreNoCache", v));
+    /// <summary>If true, avoids using the web cache.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRestoreNoCache<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RestoreNoCache"));
+    /// <summary>If true, avoids using the web cache.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T EnableRestoreNoCache<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreNoCache", true));
+    /// <summary>If true, avoids using the web cache.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T DisableRestoreNoCache<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreNoCache", false));
+    /// <summary>If true, avoids using the web cache.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ToggleRestoreNoCache<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.Toggle(o.Properties, "RestoreNoCache")));
     #endregion
     #region RestoreIgnoreFailedSources
-    /// <summary>
-    ///   <p><em>Sets <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>If true, ignores failing or missing package sources.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestoreIgnoreFailedSources<T>(this T toolSettings, bool? restoreIgnoreFailedSources) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreIgnoreFailedSources"] = restoreIgnoreFailedSources;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>If true, ignores failing or missing package sources.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRestoreIgnoreFailedSources<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RestoreIgnoreFailedSources");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T EnableRestoreIgnoreFailedSources<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreIgnoreFailedSources"] = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T DisableRestoreIgnoreFailedSources<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreIgnoreFailedSources"] = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <c>RestoreIgnoreFailedSources</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p>
-    /// </summary>
-    [Pure]
-    public static T ToggleRestoreIgnoreFailedSources<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.ToggleBoolean(toolSettings.PropertiesInternal, "RestoreIgnoreFailedSources");
-        return toolSettings;
-    }
+    /// <summary>If true, ignores failing or missing package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestoreIgnoreFailedSources<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreIgnoreFailedSources", v));
+    /// <summary>If true, ignores failing or missing package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRestoreIgnoreFailedSources<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RestoreIgnoreFailedSources"));
+    /// <summary>If true, ignores failing or missing package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T EnableRestoreIgnoreFailedSources<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreIgnoreFailedSources", true));
+    /// <summary>If true, ignores failing or missing package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T DisableRestoreIgnoreFailedSources<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreIgnoreFailedSources", false));
+    /// <summary>If true, ignores failing or missing package sources.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ToggleRestoreIgnoreFailedSources<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.Toggle(o.Properties, "RestoreIgnoreFailedSources")));
     #endregion
     #region RestoreTaskAssemblyFile
-    /// <summary>
-    ///   <p><em>Sets <c>RestoreTaskAssemblyFile</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Path to <c>NuGet.Build.Tasks.dll</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestoreTaskAssemblyFile<T>(this T toolSettings, string restoreTaskAssemblyFile) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreTaskAssemblyFile"] = restoreTaskAssemblyFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>RestoreTaskAssemblyFile</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Path to <c>NuGet.Build.Tasks.dll</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRestoreTaskAssemblyFile<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RestoreTaskAssemblyFile");
-        return toolSettings;
-    }
+    /// <summary>Path to <c>NuGet.Build.Tasks.dll</c>.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestoreTaskAssemblyFile<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreTaskAssemblyFile", v));
+    /// <summary>Path to <c>NuGet.Build.Tasks.dll</c>.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRestoreTaskAssemblyFile<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RestoreTaskAssemblyFile"));
     #endregion
     #region RestoreGraphProjectInput
-    /// <summary>
-    ///   <p><em>Sets <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestoreGraphProjectInputs<T>(this T toolSettings, params string[] restoreGraphProjectInput) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/> to a new collection</em></p>
-    ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestoreGraphProjectInputs<T>(this T toolSettings, IEnumerable<string> restoreGraphProjectInput) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.SetCollection(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
-    /// </summary>
-    [Pure]
-    public static T AddRestoreGraphProjectInputs<T>(this T toolSettings, params string[] restoreGraphProjectInput) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <c>RestoreGraphProjectInput</c> in existing <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
-    /// </summary>
-    [Pure]
-    public static T AddRestoreGraphProjectInputs<T>(this T toolSettings, IEnumerable<string> restoreGraphProjectInput) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.AddItems(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearRestoreGraphProjectInputs<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RestoreGraphProjectInput");
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveRestoreGraphProjectInputs<T>(this T toolSettings, params string[] restoreGraphProjectInput) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <c>RestoreGraphProjectInput</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Semicolon-delimited list of projects to restore, which should contain absolute paths.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveRestoreGraphProjectInputs<T>(this T toolSettings, IEnumerable<string> restoreGraphProjectInput) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        ExtensionHelper.RemoveItems(toolSettings.PropertiesInternal, "RestoreGraphProjectInput", restoreGraphProjectInput, ';');
-        return toolSettings;
-    }
+    /// <summary>Semicolon-delimited list of projects to restore, which should contain absolute paths.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestoreGraphProjectInputs<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "RestoreGraphProjectInput", v, ";")));
+    /// <summary>Semicolon-delimited list of projects to restore, which should contain absolute paths.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestoreGraphProjectInputs<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.SetCollection(o.Properties, "RestoreGraphProjectInput", v, ";")));
+    /// <summary>Semicolon-delimited list of projects to restore, which should contain absolute paths.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddRestoreGraphProjectInputs<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "RestoreGraphProjectInput", v, ";")));
+    /// <summary>Semicolon-delimited list of projects to restore, which should contain absolute paths.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T AddRestoreGraphProjectInputs<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.AddCollection(o.Properties, "RestoreGraphProjectInput", v, ";")));
+    /// <summary>Semicolon-delimited list of projects to restore, which should contain absolute paths.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveRestoreGraphProjectInputs<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "RestoreGraphProjectInput", v, ";")));
+    /// <summary>Semicolon-delimited list of projects to restore, which should contain absolute paths.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T RemoveRestoreGraphProjectInputs<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Properties, DelegateHelper.RemoveCollection(o.Properties, "RestoreGraphProjectInput", v, ";")));
+    /// <summary>Semicolon-delimited list of projects to restore, which should contain absolute paths.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRestoreGraphProjectInput<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RestoreGraphProjectInput"));
     #endregion
     #region RestoreOutputPath
-    /// <summary>
-    ///   <p><em>Sets <c>RestoreOutputPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Output folder, defaulting to the obj folder.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestoreOutputPath<T>(this T toolSettings, string restoreOutputPath) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["RestoreOutputPath"] = restoreOutputPath;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>RestoreOutputPath</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Output folder, defaulting to the obj folder.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRestoreOutputPath<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("RestoreOutputPath");
-        return toolSettings;
-    }
+    /// <summary>Output folder, defaulting to the obj folder.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetRestoreOutputPath<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RestoreOutputPath", v));
+    /// <summary>Output folder, defaulting to the obj folder.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetRestoreOutputPath<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RestoreOutputPath"));
     #endregion
     #region SymbolPackageFormat
-    /// <summary>
-    ///   <p><em>Sets <c>SymbolPackageFormat</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Format for packaging symbols.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSymbolPackageFormat<T>(this T toolSettings, MSBuildSymbolPackageFormat symbolPackageFormat) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal["SymbolPackageFormat"] = symbolPackageFormat;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <c>SymbolPackageFormat</c> in <see cref="MSBuildSettings.Properties"/></em></p>
-    ///   <p>Format for packaging symbols.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetSymbolPackageFormat<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PropertiesInternal.Remove("SymbolPackageFormat");
-        return toolSettings;
-    }
+    /// <summary>Format for packaging symbols.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T SetSymbolPackageFormat<T>(this T o, MSBuildSymbolPackageFormat v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "SymbolPackageFormat", v));
+    /// <summary>Format for packaging symbols.</summary>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+    public static T ResetSymbolPackageFormat<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "SymbolPackageFormat"));
     #endregion
     #endregion
     #region Restore
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.Restore"/></em></p>
-    ///   <p>Runs the <c>Restore</c> target prior to building the actual targets.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestore<T>(this T toolSettings, bool? restore) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Restore = restore;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.Restore"/></em></p>
-    ///   <p>Runs the <c>Restore</c> target prior to building the actual targets.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRestore<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Restore = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSBuildSettings.Restore"/></em></p>
-    ///   <p>Runs the <c>Restore</c> target prior to building the actual targets.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableRestore<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Restore = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSBuildSettings.Restore"/></em></p>
-    ///   <p>Runs the <c>Restore</c> target prior to building the actual targets.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableRestore<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Restore = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSBuildSettings.Restore"/></em></p>
-    ///   <p>Runs the <c>Restore</c> target prior to building the actual targets.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleRestore<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Restore = !toolSettings.Restore;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Restore"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Restore))]
+    public static T SetRestore<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Restore, v));
+    /// <inheritdoc cref="MSBuildSettings.Restore"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Restore))]
+    public static T ResetRestore<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.Restore));
+    /// <inheritdoc cref="MSBuildSettings.Restore"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Restore))]
+    public static T EnableRestore<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Restore, true));
+    /// <inheritdoc cref="MSBuildSettings.Restore"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Restore))]
+    public static T DisableRestore<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Restore, false));
+    /// <inheritdoc cref="MSBuildSettings.Restore"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Restore))]
+    public static T ToggleRestore<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Restore, !o.Restore));
     #endregion
     #region Targets
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.Targets"/> to a new list</em></p>
-    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargets<T>(this T toolSettings, params string[] targets) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetsInternal = targets.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.Targets"/> to a new list</em></p>
-    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargets<T>(this T toolSettings, IEnumerable<string> targets) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetsInternal = targets.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSBuildSettings.Targets"/></em></p>
-    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddTargets<T>(this T toolSettings, params string[] targets) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetsInternal.AddRange(targets);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSBuildSettings.Targets"/></em></p>
-    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddTargets<T>(this T toolSettings, IEnumerable<string> targets) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetsInternal.AddRange(targets);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="MSBuildSettings.Targets"/></em></p>
-    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearTargets<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSBuildSettings.Targets"/></em></p>
-    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveTargets<T>(this T toolSettings, params string[] targets) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(targets);
-        toolSettings.TargetsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSBuildSettings.Targets"/></em></p>
-    ///   <p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveTargets<T>(this T toolSettings, IEnumerable<string> targets) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(targets);
-        toolSettings.TargetsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Targets"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Targets))]
+    public static T SetTargets<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Targets, v));
+    /// <inheritdoc cref="MSBuildSettings.Targets"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Targets))]
+    public static T SetTargets<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Targets, v));
+    /// <inheritdoc cref="MSBuildSettings.Targets"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Targets))]
+    public static T AddTargets<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.AddCollection(() => o.Targets, v));
+    /// <inheritdoc cref="MSBuildSettings.Targets"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Targets))]
+    public static T AddTargets<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.AddCollection(() => o.Targets, v));
+    /// <inheritdoc cref="MSBuildSettings.Targets"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Targets))]
+    public static T RemoveTargets<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.RemoveCollection(() => o.Targets, v));
+    /// <inheritdoc cref="MSBuildSettings.Targets"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Targets))]
+    public static T RemoveTargets<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.RemoveCollection(() => o.Targets, v));
+    /// <inheritdoc cref="MSBuildSettings.Targets"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Targets))]
+    public static T ClearTargets<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.ClearCollection(() => o.Targets));
     #endregion
     #region ToolsVersion
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.ToolsVersion"/></em></p>
-    ///   <p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetToolsVersion<T>(this T toolSettings, MSBuildToolsVersion toolsVersion) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ToolsVersion = toolsVersion;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.ToolsVersion"/></em></p>
-    ///   <p>Specifies the version of the Toolset to use to build the project, as the following example shows: <c>/toolsversion:3.5</c></p><p>By using this switch, you can build a project and specify a version that differs from the version that's specified in the <a href="https://msdn.microsoft.com/en-us/library/bcxfsh87.aspx">Project Element (MSBuild)</a>. For more information, see <a href="https://msdn.microsoft.com/en-us/library/bb383985.aspx">Overriding ToolsVersion Settings</a>.</p><p>For MSBuild 4.5, you can specify the following values for version: 2.0, 3.5, and 4.0. If you specify 4.0, the VisualStudioVersion build property specifies which sub-toolset to use. For more information, see the Sub-toolsets section of <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>.</p><p>A Toolset consists of tasks, targets, and tools that are used to build an application. The tools include compilers such as csc.exe and vbc.exe. For more information about Toolsets, see <a href="https://msdn.microsoft.com/en-us/library/bb383796.aspx">Toolset (ToolsVersion)</a>, <a href="https://msdn.microsoft.com/en-us/library/bb397428.aspx">Standard and Custom Toolset Configurations</a>, and <a href="https://msdn.microsoft.com/en-us/library/hh264223.aspx">Multitargeting</a>. Note: The toolset version isn't the same as the target framework, which is the version of the .NET Framework on which a project is built to run. For more information, see <a href="https://msdn.microsoft.com/en-us/library/hh264221.aspx">Target Framework and Target Platform</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetToolsVersion<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ToolsVersion = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.ToolsVersion"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.ToolsVersion))]
+    public static T SetToolsVersion<T>(this T o, MSBuildToolsVersion v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.ToolsVersion, v));
+    /// <inheritdoc cref="MSBuildSettings.ToolsVersion"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.ToolsVersion))]
+    public static T ResetToolsVersion<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.ToolsVersion));
     #endregion
     #region MSBuildVersion
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.MSBuildVersion"/></em></p>
-    ///   <p>Specifies the version of MSBuild for building.</p>
-    /// </summary>
-    [Pure]
-    public static T SetMSBuildVersion<T>(this T toolSettings, MSBuildVersion? msbuildVersion) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MSBuildVersion = msbuildVersion;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.MSBuildVersion"/></em></p>
-    ///   <p>Specifies the version of MSBuild for building.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMSBuildVersion<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MSBuildVersion = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.MSBuildVersion"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.MSBuildVersion))]
+    public static T SetMSBuildVersion<T>(this T o, MSBuildVersion? v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.MSBuildVersion, v));
+    /// <inheritdoc cref="MSBuildSettings.MSBuildVersion"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.MSBuildVersion))]
+    public static T ResetMSBuildVersion<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.MSBuildVersion));
     #endregion
     #region Verbosity
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.Verbosity"/></em></p>
-    ///   <p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetVerbosity<T>(this T toolSettings, MSBuildVerbosity verbosity) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Verbosity = verbosity;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.Verbosity"/></em></p>
-    ///   <p>Specifies the amount of information to display in the build log. Each logger displays events based on the verbosity level that you set for that logger.</p><p>You can specify the following verbosity levels: <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</p><p>The following setting is an example: <c>/verbosity:quiet</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetVerbosity<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Verbosity = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Verbosity))]
+    public static T SetVerbosity<T>(this T o, MSBuildVerbosity v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Verbosity, v));
+    /// <inheritdoc cref="MSBuildSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Verbosity))]
+    public static T ResetVerbosity<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.Verbosity));
     #endregion
     #region MSBuildPlatform
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.MSBuildPlatform"/></em></p>
-    ///   <p>Specifies the platform to use when building.</p>
-    /// </summary>
-    [Pure]
-    public static T SetMSBuildPlatform<T>(this T toolSettings, MSBuildPlatform? msbuildPlatform) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MSBuildPlatform = msbuildPlatform;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.MSBuildPlatform"/></em></p>
-    ///   <p>Specifies the platform to use when building.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMSBuildPlatform<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MSBuildPlatform = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.MSBuildPlatform"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.MSBuildPlatform))]
+    public static T SetMSBuildPlatform<T>(this T o, MSBuildPlatform? v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.MSBuildPlatform, v));
+    /// <inheritdoc cref="MSBuildSettings.MSBuildPlatform"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.MSBuildPlatform))]
+    public static T ResetMSBuildPlatform<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.MSBuildPlatform));
     #endregion
     #region Loggers
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.Loggers"/> to a new list</em></p>
-    ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLoggers<T>(this T toolSettings, params string[] loggers) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LoggersInternal = loggers.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.Loggers"/> to a new list</em></p>
-    ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLoggers<T>(this T toolSettings, IEnumerable<string> loggers) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LoggersInternal = loggers.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSBuildSettings.Loggers"/></em></p>
-    ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
-    /// </summary>
-    [Pure]
-    public static T AddLoggers<T>(this T toolSettings, params string[] loggers) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LoggersInternal.AddRange(loggers);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSBuildSettings.Loggers"/></em></p>
-    ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
-    /// </summary>
-    [Pure]
-    public static T AddLoggers<T>(this T toolSettings, IEnumerable<string> loggers) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LoggersInternal.AddRange(loggers);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="MSBuildSettings.Loggers"/></em></p>
-    ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearLoggers<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LoggersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSBuildSettings.Loggers"/></em></p>
-    ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveLoggers<T>(this T toolSettings, params string[] loggers) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(loggers);
-        toolSettings.LoggersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSBuildSettings.Loggers"/></em></p>
-    ///   <p>Specifies the loggers to use to log events from MSBuild.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveLoggers<T>(this T toolSettings, IEnumerable<string> loggers) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(loggers);
-        toolSettings.LoggersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.Loggers"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Loggers))]
+    public static T SetLoggers<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Loggers, v));
+    /// <inheritdoc cref="MSBuildSettings.Loggers"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Loggers))]
+    public static T SetLoggers<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.Loggers, v));
+    /// <inheritdoc cref="MSBuildSettings.Loggers"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Loggers))]
+    public static T AddLoggers<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.AddCollection(() => o.Loggers, v));
+    /// <inheritdoc cref="MSBuildSettings.Loggers"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Loggers))]
+    public static T AddLoggers<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.AddCollection(() => o.Loggers, v));
+    /// <inheritdoc cref="MSBuildSettings.Loggers"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Loggers))]
+    public static T RemoveLoggers<T>(this T o, params string[] v) where T : MSBuildSettings => o.Modify(b => b.RemoveCollection(() => o.Loggers, v));
+    /// <inheritdoc cref="MSBuildSettings.Loggers"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Loggers))]
+    public static T RemoveLoggers<T>(this T o, IEnumerable<string> v) where T : MSBuildSettings => o.Modify(b => b.RemoveCollection(() => o.Loggers, v));
+    /// <inheritdoc cref="MSBuildSettings.Loggers"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Loggers))]
+    public static T ClearLoggers<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.ClearCollection(() => o.Loggers));
     #endregion
     #region NoConsoleLogger
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSBuildSettings.NoConsoleLogger"/></em></p>
-    ///   <p>Disable the default console logger, and don't log events to the console.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNoConsoleLogger<T>(this T toolSettings, bool? noConsoleLogger) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoConsoleLogger = noConsoleLogger;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSBuildSettings.NoConsoleLogger"/></em></p>
-    ///   <p>Disable the default console logger, and don't log events to the console.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNoConsoleLogger<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoConsoleLogger = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSBuildSettings.NoConsoleLogger"/></em></p>
-    ///   <p>Disable the default console logger, and don't log events to the console.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNoConsoleLogger<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoConsoleLogger = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSBuildSettings.NoConsoleLogger"/></em></p>
-    ///   <p>Disable the default console logger, and don't log events to the console.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNoConsoleLogger<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoConsoleLogger = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSBuildSettings.NoConsoleLogger"/></em></p>
-    ///   <p>Disable the default console logger, and don't log events to the console.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNoConsoleLogger<T>(this T toolSettings) where T : MSBuildSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoConsoleLogger = !toolSettings.NoConsoleLogger;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSBuildSettings.NoConsoleLogger"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoConsoleLogger))]
+    public static T SetNoConsoleLogger<T>(this T o, bool? v) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NoConsoleLogger, v));
+    /// <inheritdoc cref="MSBuildSettings.NoConsoleLogger"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoConsoleLogger))]
+    public static T ResetNoConsoleLogger<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Remove(() => o.NoConsoleLogger));
+    /// <inheritdoc cref="MSBuildSettings.NoConsoleLogger"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoConsoleLogger))]
+    public static T EnableNoConsoleLogger<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NoConsoleLogger, true));
+    /// <inheritdoc cref="MSBuildSettings.NoConsoleLogger"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoConsoleLogger))]
+    public static T DisableNoConsoleLogger<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NoConsoleLogger, false));
+    /// <inheritdoc cref="MSBuildSettings.NoConsoleLogger"/>
+    [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoConsoleLogger))]
+    public static T ToggleNoConsoleLogger<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NoConsoleLogger, !o.NoConsoleLogger));
     #endregion
 }
 #endregion
 #region MSBuildToolsVersion
-/// <summary>
-///   Used within <see cref="MSBuildTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="MSBuildTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -2401,9 +765,7 @@ public partial class MSBuildToolsVersion : Enumeration
 }
 #endregion
 #region MSBuildVerbosity
-/// <summary>
-///   Used within <see cref="MSBuildTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="MSBuildTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -2422,9 +784,7 @@ public partial class MSBuildVerbosity : Enumeration
 }
 #endregion
 #region MSBuildTargetPlatform
-/// <summary>
-///   Used within <see cref="MSBuildTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="MSBuildTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -2443,9 +803,7 @@ public partial class MSBuildTargetPlatform : Enumeration
 }
 #endregion
 #region MSBuildSymbolPackageFormat
-/// <summary>
-///   Used within <see cref="MSBuildTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="MSBuildTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]

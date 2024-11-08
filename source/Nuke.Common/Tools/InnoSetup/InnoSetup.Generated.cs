@@ -17,652 +17,202 @@ using System.Text;
 
 namespace Nuke.Common.Tools.InnoSetup;
 
-/// <summary>
-///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
-///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
-/// </summary>
+/// <summary><p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p><p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[PathToolRequirement(InnoSetupPathExecutable)]
-public partial class InnoSetupTasks
-    : IRequirePathTool
+[PathToolRequirement(PathExecutable)]
+[PathTool(Executable = PathExecutable)]
+public partial class InnoSetupTasks : ToolTasks, IRequirePathTool
 {
-    public const string InnoSetupPathExecutable = "iscc";
-    /// <summary>
-    ///   Path to the InnoSetup executable.
-    /// </summary>
-    public static string InnoSetupPath =>
-        ToolPathResolver.TryGetEnvironmentExecutable("INNOSETUP_EXE") ??
-        ToolPathResolver.GetPathExecutable("iscc");
-    public static Action<OutputType, string> InnoSetupLogger { get; set; } = ProcessTasks.DefaultLogger;
-    public static Action<ToolSettings, IProcess> InnoSetupExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
-    /// <summary>
-    ///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
-    ///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
-    /// </summary>
-    public static IReadOnlyCollection<Output> InnoSetup(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(InnoSetupPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? InnoSetupLogger);
-        (exitHandler ?? (p => InnoSetupExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
-    ///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;scriptFile&gt;</c> via <see cref="InnoSetupSettings.ScriptFile"/></li>
-    ///     <li><c>/D</c> via <see cref="InnoSetupSettings.KeyValueDefinitions"/></li>
-    ///     <li><c>/D</c> via <see cref="InnoSetupSettings.KeyDefinitions"/></li>
-    ///     <li><c>/F</c> via <see cref="InnoSetupSettings.OutputBaseFilename"/></li>
-    ///     <li><c>/O</c> via <see cref="InnoSetupSettings.Output"/></li>
-    ///     <li><c>/O</c> via <see cref="InnoSetupSettings.OutputDir"/></li>
-    ///     <li><c>/Q</c> via <see cref="InnoSetupSettings.Quiet"/></li>
-    ///     <li><c>/Qp</c> via <see cref="InnoSetupSettings.QuietWithProgress"/></li>
-    ///     <li><c>/S</c> via <see cref="InnoSetupSettings.SignTools"/></li>
-    ///     <li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> InnoSetup(InnoSetupSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new InnoSetupSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
-    ///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;scriptFile&gt;</c> via <see cref="InnoSetupSettings.ScriptFile"/></li>
-    ///     <li><c>/D</c> via <see cref="InnoSetupSettings.KeyValueDefinitions"/></li>
-    ///     <li><c>/D</c> via <see cref="InnoSetupSettings.KeyDefinitions"/></li>
-    ///     <li><c>/F</c> via <see cref="InnoSetupSettings.OutputBaseFilename"/></li>
-    ///     <li><c>/O</c> via <see cref="InnoSetupSettings.Output"/></li>
-    ///     <li><c>/O</c> via <see cref="InnoSetupSettings.OutputDir"/></li>
-    ///     <li><c>/Q</c> via <see cref="InnoSetupSettings.Quiet"/></li>
-    ///     <li><c>/Qp</c> via <see cref="InnoSetupSettings.QuietWithProgress"/></li>
-    ///     <li><c>/S</c> via <see cref="InnoSetupSettings.SignTools"/></li>
-    ///     <li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> InnoSetup(Configure<InnoSetupSettings> configurator)
-    {
-        return InnoSetup(configurator(new InnoSetupSettings()));
-    }
-    /// <summary>
-    ///   <p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p>
-    ///   <p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;scriptFile&gt;</c> via <see cref="InnoSetupSettings.ScriptFile"/></li>
-    ///     <li><c>/D</c> via <see cref="InnoSetupSettings.KeyValueDefinitions"/></li>
-    ///     <li><c>/D</c> via <see cref="InnoSetupSettings.KeyDefinitions"/></li>
-    ///     <li><c>/F</c> via <see cref="InnoSetupSettings.OutputBaseFilename"/></li>
-    ///     <li><c>/O</c> via <see cref="InnoSetupSettings.Output"/></li>
-    ///     <li><c>/O</c> via <see cref="InnoSetupSettings.OutputDir"/></li>
-    ///     <li><c>/Q</c> via <see cref="InnoSetupSettings.Quiet"/></li>
-    ///     <li><c>/Qp</c> via <see cref="InnoSetupSettings.QuietWithProgress"/></li>
-    ///     <li><c>/S</c> via <see cref="InnoSetupSettings.SignTools"/></li>
-    ///     <li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(InnoSetupSettings Settings, IReadOnlyCollection<Output> Output)> InnoSetup(CombinatorialConfigure<InnoSetupSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(InnoSetup, InnoSetupLogger, degreeOfParallelism, completeOnFailure);
-    }
+    public static string InnoSetupPath => new InnoSetupTasks().GetToolPath();
+    public const string PathExecutable = "iscc";
+    /// <summary><p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p><p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p></summary>
+    public static IReadOnlyCollection<Output> InnoSetup(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new InnoSetupTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
+    /// <summary><p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p><p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;scriptFile&gt;</c> via <see cref="InnoSetupSettings.ScriptFile"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyValueDefinitions"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyDefinitions"/></li><li><c>/F</c> via <see cref="InnoSetupSettings.OutputBaseFilename"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.Output"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.OutputDir"/></li><li><c>/Q</c> via <see cref="InnoSetupSettings.Quiet"/></li><li><c>/Qp</c> via <see cref="InnoSetupSettings.QuietWithProgress"/></li><li><c>/S</c> via <see cref="InnoSetupSettings.SignTools"/></li><li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> InnoSetup(InnoSetupSettings options = null) => new InnoSetupTasks().Run(options);
+    /// <summary><p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p><p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;scriptFile&gt;</c> via <see cref="InnoSetupSettings.ScriptFile"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyValueDefinitions"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyDefinitions"/></li><li><c>/F</c> via <see cref="InnoSetupSettings.OutputBaseFilename"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.Output"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.OutputDir"/></li><li><c>/Q</c> via <see cref="InnoSetupSettings.Quiet"/></li><li><c>/Qp</c> via <see cref="InnoSetupSettings.QuietWithProgress"/></li><li><c>/S</c> via <see cref="InnoSetupSettings.SignTools"/></li><li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> InnoSetup(Configure<InnoSetupSettings> configurator) => new InnoSetupTasks().Run(configurator.Invoke(new InnoSetupSettings()));
+    /// <summary><p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p><p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;scriptFile&gt;</c> via <see cref="InnoSetupSettings.ScriptFile"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyValueDefinitions"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyDefinitions"/></li><li><c>/F</c> via <see cref="InnoSetupSettings.OutputBaseFilename"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.Output"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.OutputDir"/></li><li><c>/Q</c> via <see cref="InnoSetupSettings.Quiet"/></li><li><c>/Qp</c> via <see cref="InnoSetupSettings.QuietWithProgress"/></li><li><c>/S</c> via <see cref="InnoSetupSettings.SignTools"/></li><li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li></ul></remarks>
+    public static IEnumerable<(InnoSetupSettings Settings, IReadOnlyCollection<Output> Output)> InnoSetup(CombinatorialConfigure<InnoSetupSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(InnoSetup, degreeOfParallelism, completeOnFailure);
 }
 #region InnoSetupSettings
-/// <summary>
-///   Used within <see cref="InnoSetupTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="InnoSetupTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class InnoSetupSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<InnoSetupSettings>))]
+[Command(Type = typeof(InnoSetupTasks), Command = nameof(InnoSetupTasks.InnoSetup))]
+public partial class InnoSetupSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the InnoSetup executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? InnoSetupTasks.InnoSetupPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? InnoSetupTasks.InnoSetupLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? InnoSetupTasks.InnoSetupExitHandler;
-    /// <summary>
-    ///   The .iss script file to compile
-    /// </summary>
-    public virtual string ScriptFile { get; internal set; }
-    /// <summary>
-    ///   Enable or disable output (overrides <c>Output</c>)
-    /// </summary>
-    public virtual bool? Output { get; internal set; }
-    /// <summary>
-    ///   Output files to specified path (overrides <c>OutputDir</c>)
-    /// </summary>
-    public virtual string OutputDir { get; internal set; }
-    /// <summary>
-    ///   Overrides OutputBaseFilename with the specified filename
-    /// </summary>
-    public virtual string OutputBaseFilename { get; internal set; }
-    /// <summary>
-    ///   Sets a SignTool with the specified name and command
-    /// </summary>
-    public virtual IReadOnlyDictionary<string, string> SignTools => SignToolsInternal.AsReadOnly();
-    internal Dictionary<string, string> SignToolsInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-    /// <summary>
-    ///   Quiet compile (print error messages only)
-    /// </summary>
-    public virtual bool? Quiet { get; internal set; }
-    /// <summary>
-    ///   Enable quiet compile while still displaying progress
-    /// </summary>
-    public virtual bool? QuietWithProgress { get; internal set; }
-    /// <summary>
-    ///   Emulate <c>#define public {name} {value}</c>
-    /// </summary>
-    public virtual IReadOnlyDictionary<string, string> KeyValueDefinitions => KeyValueDefinitionsInternal.AsReadOnly();
-    internal Dictionary<string, string> KeyValueDefinitionsInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-    /// <summary>
-    ///   Emulate <c>#define public {name}</c>
-    /// </summary>
-    public virtual IReadOnlyList<string> KeyDefinitions => KeyDefinitionsInternal.AsReadOnly();
-    internal List<string> KeyDefinitionsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Emulate <c>#pragma verboselevel {number}</c> (highest level is 9)
-    /// </summary>
-    public virtual int? Verbosity { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("{value}", ScriptFile)
-          .Add("/O{value}", GetOutput(), customValue: true)
-          .Add("/O{value}", OutputDir)
-          .Add("/F{value}", OutputBaseFilename)
-          .Add("/S{value}", SignTools, "{key}={value}")
-          .Add("/Q", Quiet)
-          .Add("/Qp", QuietWithProgress)
-          .Add("/D{value}", KeyValueDefinitions, "{key}={value}")
-          .Add("/D{value}", KeyDefinitions)
-          .Add("/V{value}", Verbosity);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary>The .iss script file to compile</summary>
+    [Argument(Format = "{value}", Position = 1)] public string ScriptFile => Get<string>(() => ScriptFile);
+    /// <summary>Enable or disable output (overrides <c>Output</c>)</summary>
+    [Argument(Format = "/O{value}")] public bool? Output => Get<bool?>(() => Output);
+    /// <summary>Output files to specified path (overrides <c>OutputDir</c>)</summary>
+    [Argument(Format = "/O{value}")] public string OutputDir => Get<string>(() => OutputDir);
+    /// <summary>Overrides OutputBaseFilename with the specified filename</summary>
+    [Argument(Format = "/F{value}")] public string OutputBaseFilename => Get<string>(() => OutputBaseFilename);
+    /// <summary>Sets a SignTool with the specified name and command</summary>
+    [Argument(Format = "/S{key}={value}")] public IReadOnlyDictionary<string, string> SignTools => Get<Dictionary<string, string>>(() => SignTools);
+    /// <summary>Quiet compile (print error messages only)</summary>
+    [Argument(Format = "/Q")] public bool? Quiet => Get<bool?>(() => Quiet);
+    /// <summary>Enable quiet compile while still displaying progress</summary>
+    [Argument(Format = "/Qp")] public bool? QuietWithProgress => Get<bool?>(() => QuietWithProgress);
+    /// <summary>Emulate <c>#define public {name} {value}</c></summary>
+    [Argument(Format = "/D{key}={value}", Secret = false)] public IReadOnlyDictionary<string, string> KeyValueDefinitions => Get<Dictionary<string, string>>(() => KeyValueDefinitions);
+    /// <summary>Emulate <c>#define public {name}</c></summary>
+    [Argument(Format = "/D{value}", Secret = false)] public IReadOnlyList<string> KeyDefinitions => Get<List<string>>(() => KeyDefinitions);
+    /// <summary>Emulate <c>#pragma verboselevel {number}</c> (highest level is 9)</summary>
+    [Argument(Format = "/V{value}")] public int? Verbosity => Get<int?>(() => Verbosity);
 }
 #endregion
 #region InnoSetupSettingsExtensions
-/// <summary>
-///   Used within <see cref="InnoSetupTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="InnoSetupTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class InnoSetupSettingsExtensions
 {
     #region ScriptFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.ScriptFile"/></em></p>
-    ///   <p>The .iss script file to compile</p>
-    /// </summary>
-    [Pure]
-    public static T SetScriptFile<T>(this T toolSettings, string scriptFile) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScriptFile = scriptFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="InnoSetupSettings.ScriptFile"/></em></p>
-    ///   <p>The .iss script file to compile</p>
-    /// </summary>
-    [Pure]
-    public static T ResetScriptFile<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScriptFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="InnoSetupSettings.ScriptFile"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.ScriptFile))]
+    public static T SetScriptFile<T>(this T o, string v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.ScriptFile, v));
+    /// <inheritdoc cref="InnoSetupSettings.ScriptFile"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.ScriptFile))]
+    public static T ResetScriptFile<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Remove(() => o.ScriptFile));
     #endregion
     #region Output
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.Output"/></em></p>
-    ///   <p>Enable or disable output (overrides <c>Output</c>)</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutput<T>(this T toolSettings, bool? output) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Output = output;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="InnoSetupSettings.Output"/></em></p>
-    ///   <p>Enable or disable output (overrides <c>Output</c>)</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutput<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Output = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="InnoSetupSettings.Output"/></em></p>
-    ///   <p>Enable or disable output (overrides <c>Output</c>)</p>
-    /// </summary>
-    [Pure]
-    public static T EnableOutput<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Output = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="InnoSetupSettings.Output"/></em></p>
-    ///   <p>Enable or disable output (overrides <c>Output</c>)</p>
-    /// </summary>
-    [Pure]
-    public static T DisableOutput<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Output = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="InnoSetupSettings.Output"/></em></p>
-    ///   <p>Enable or disable output (overrides <c>Output</c>)</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleOutput<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Output = !toolSettings.Output;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="InnoSetupSettings.Output"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Output))]
+    public static T SetOutput<T>(this T o, bool? v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.Output, v));
+    /// <inheritdoc cref="InnoSetupSettings.Output"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Output))]
+    public static T ResetOutput<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Remove(() => o.Output));
+    /// <inheritdoc cref="InnoSetupSettings.Output"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Output))]
+    public static T EnableOutput<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.Output, true));
+    /// <inheritdoc cref="InnoSetupSettings.Output"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Output))]
+    public static T DisableOutput<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.Output, false));
+    /// <inheritdoc cref="InnoSetupSettings.Output"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Output))]
+    public static T ToggleOutput<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.Output, !o.Output));
     #endregion
     #region OutputDir
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.OutputDir"/></em></p>
-    ///   <p>Output files to specified path (overrides <c>OutputDir</c>)</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutputDir<T>(this T toolSettings, string outputDir) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputDir = outputDir;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="InnoSetupSettings.OutputDir"/></em></p>
-    ///   <p>Output files to specified path (overrides <c>OutputDir</c>)</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutputDir<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputDir = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="InnoSetupSettings.OutputDir"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.OutputDir))]
+    public static T SetOutputDir<T>(this T o, string v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.OutputDir, v));
+    /// <inheritdoc cref="InnoSetupSettings.OutputDir"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.OutputDir))]
+    public static T ResetOutputDir<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Remove(() => o.OutputDir));
     #endregion
     #region OutputBaseFilename
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.OutputBaseFilename"/></em></p>
-    ///   <p>Overrides OutputBaseFilename with the specified filename</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutputBaseFilename<T>(this T toolSettings, string outputBaseFilename) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputBaseFilename = outputBaseFilename;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="InnoSetupSettings.OutputBaseFilename"/></em></p>
-    ///   <p>Overrides OutputBaseFilename with the specified filename</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutputBaseFilename<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputBaseFilename = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="InnoSetupSettings.OutputBaseFilename"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.OutputBaseFilename))]
+    public static T SetOutputBaseFilename<T>(this T o, string v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.OutputBaseFilename, v));
+    /// <inheritdoc cref="InnoSetupSettings.OutputBaseFilename"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.OutputBaseFilename))]
+    public static T ResetOutputBaseFilename<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Remove(() => o.OutputBaseFilename));
     #endregion
     #region SignTools
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.SignTools"/> to a new dictionary</em></p>
-    ///   <p>Sets a SignTool with the specified name and command</p>
-    /// </summary>
-    [Pure]
-    public static T SetSignTools<T>(this T toolSettings, IDictionary<string, string> signTools) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SignToolsInternal = signTools.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="InnoSetupSettings.SignTools"/></em></p>
-    ///   <p>Sets a SignTool with the specified name and command</p>
-    /// </summary>
-    [Pure]
-    public static T ClearSignTools<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SignToolsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds a new key-value-pair <see cref="InnoSetupSettings.SignTools"/></em></p>
-    ///   <p>Sets a SignTool with the specified name and command</p>
-    /// </summary>
-    [Pure]
-    public static T AddSignTool<T>(this T toolSettings, string signToolKey, string signToolValue) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SignToolsInternal.Add(signToolKey, signToolValue);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes a key-value-pair from <see cref="InnoSetupSettings.SignTools"/></em></p>
-    ///   <p>Sets a SignTool with the specified name and command</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSignTool<T>(this T toolSettings, string signToolKey) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SignToolsInternal.Remove(signToolKey);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets a key-value-pair in <see cref="InnoSetupSettings.SignTools"/></em></p>
-    ///   <p>Sets a SignTool with the specified name and command</p>
-    /// </summary>
-    [Pure]
-    public static T SetSignTool<T>(this T toolSettings, string signToolKey, string signToolValue) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SignToolsInternal[signToolKey] = signToolValue;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="InnoSetupSettings.SignTools"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.SignTools))]
+    public static T SetSignTools<T>(this T o, IDictionary<string, string> v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.SignTools, v.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase)));
+    /// <inheritdoc cref="InnoSetupSettings.SignTools"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.SignTools))]
+    public static T SetSignTool<T>(this T o, string k, string v) where T : InnoSetupSettings => o.Modify(b => b.SetDictionary(() => o.SignTools, k, v));
+    /// <inheritdoc cref="InnoSetupSettings.SignTools"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.SignTools))]
+    public static T AddSignTool<T>(this T o, string k, string v) where T : InnoSetupSettings => o.Modify(b => b.AddDictionary(() => o.SignTools, k, v));
+    /// <inheritdoc cref="InnoSetupSettings.SignTools"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.SignTools))]
+    public static T RemoveSignTool<T>(this T o, string k) where T : InnoSetupSettings => o.Modify(b => b.RemoveDictionary(() => o.SignTools, k));
+    /// <inheritdoc cref="InnoSetupSettings.SignTools"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.SignTools))]
+    public static T ClearSignTools<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.ClearDictionary(() => o.SignTools));
     #endregion
     #region Quiet
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.Quiet"/></em></p>
-    ///   <p>Quiet compile (print error messages only)</p>
-    /// </summary>
-    [Pure]
-    public static T SetQuiet<T>(this T toolSettings, bool? quiet) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Quiet = quiet;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="InnoSetupSettings.Quiet"/></em></p>
-    ///   <p>Quiet compile (print error messages only)</p>
-    /// </summary>
-    [Pure]
-    public static T ResetQuiet<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Quiet = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="InnoSetupSettings.Quiet"/></em></p>
-    ///   <p>Quiet compile (print error messages only)</p>
-    /// </summary>
-    [Pure]
-    public static T EnableQuiet<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Quiet = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="InnoSetupSettings.Quiet"/></em></p>
-    ///   <p>Quiet compile (print error messages only)</p>
-    /// </summary>
-    [Pure]
-    public static T DisableQuiet<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Quiet = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="InnoSetupSettings.Quiet"/></em></p>
-    ///   <p>Quiet compile (print error messages only)</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleQuiet<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Quiet = !toolSettings.Quiet;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="InnoSetupSettings.Quiet"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Quiet))]
+    public static T SetQuiet<T>(this T o, bool? v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.Quiet, v));
+    /// <inheritdoc cref="InnoSetupSettings.Quiet"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Quiet))]
+    public static T ResetQuiet<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Remove(() => o.Quiet));
+    /// <inheritdoc cref="InnoSetupSettings.Quiet"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Quiet))]
+    public static T EnableQuiet<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.Quiet, true));
+    /// <inheritdoc cref="InnoSetupSettings.Quiet"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Quiet))]
+    public static T DisableQuiet<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.Quiet, false));
+    /// <inheritdoc cref="InnoSetupSettings.Quiet"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Quiet))]
+    public static T ToggleQuiet<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.Quiet, !o.Quiet));
     #endregion
     #region QuietWithProgress
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.QuietWithProgress"/></em></p>
-    ///   <p>Enable quiet compile while still displaying progress</p>
-    /// </summary>
-    [Pure]
-    public static T SetQuietWithProgress<T>(this T toolSettings, bool? quietWithProgress) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.QuietWithProgress = quietWithProgress;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="InnoSetupSettings.QuietWithProgress"/></em></p>
-    ///   <p>Enable quiet compile while still displaying progress</p>
-    /// </summary>
-    [Pure]
-    public static T ResetQuietWithProgress<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.QuietWithProgress = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="InnoSetupSettings.QuietWithProgress"/></em></p>
-    ///   <p>Enable quiet compile while still displaying progress</p>
-    /// </summary>
-    [Pure]
-    public static T EnableQuietWithProgress<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.QuietWithProgress = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="InnoSetupSettings.QuietWithProgress"/></em></p>
-    ///   <p>Enable quiet compile while still displaying progress</p>
-    /// </summary>
-    [Pure]
-    public static T DisableQuietWithProgress<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.QuietWithProgress = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="InnoSetupSettings.QuietWithProgress"/></em></p>
-    ///   <p>Enable quiet compile while still displaying progress</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleQuietWithProgress<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.QuietWithProgress = !toolSettings.QuietWithProgress;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="InnoSetupSettings.QuietWithProgress"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.QuietWithProgress))]
+    public static T SetQuietWithProgress<T>(this T o, bool? v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.QuietWithProgress, v));
+    /// <inheritdoc cref="InnoSetupSettings.QuietWithProgress"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.QuietWithProgress))]
+    public static T ResetQuietWithProgress<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Remove(() => o.QuietWithProgress));
+    /// <inheritdoc cref="InnoSetupSettings.QuietWithProgress"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.QuietWithProgress))]
+    public static T EnableQuietWithProgress<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.QuietWithProgress, true));
+    /// <inheritdoc cref="InnoSetupSettings.QuietWithProgress"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.QuietWithProgress))]
+    public static T DisableQuietWithProgress<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.QuietWithProgress, false));
+    /// <inheritdoc cref="InnoSetupSettings.QuietWithProgress"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.QuietWithProgress))]
+    public static T ToggleQuietWithProgress<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.QuietWithProgress, !o.QuietWithProgress));
     #endregion
     #region KeyValueDefinitions
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.KeyValueDefinitions"/> to a new dictionary</em></p>
-    ///   <p>Emulate <c>#define public {name} {value}</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetKeyValueDefinitions<T>(this T toolSettings, IDictionary<string, string> keyValueDefinitions) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeyValueDefinitionsInternal = keyValueDefinitions.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="InnoSetupSettings.KeyValueDefinitions"/></em></p>
-    ///   <p>Emulate <c>#define public {name} {value}</c></p>
-    /// </summary>
-    [Pure]
-    public static T ClearKeyValueDefinitions<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeyValueDefinitionsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds a new key-value-pair <see cref="InnoSetupSettings.KeyValueDefinitions"/></em></p>
-    ///   <p>Emulate <c>#define public {name} {value}</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddKeyValueDefinition<T>(this T toolSettings, string keyValueDefinitionKey, string keyValueDefinitionValue) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeyValueDefinitionsInternal.Add(keyValueDefinitionKey, keyValueDefinitionValue);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes a key-value-pair from <see cref="InnoSetupSettings.KeyValueDefinitions"/></em></p>
-    ///   <p>Emulate <c>#define public {name} {value}</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveKeyValueDefinition<T>(this T toolSettings, string keyValueDefinitionKey) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeyValueDefinitionsInternal.Remove(keyValueDefinitionKey);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets a key-value-pair in <see cref="InnoSetupSettings.KeyValueDefinitions"/></em></p>
-    ///   <p>Emulate <c>#define public {name} {value}</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetKeyValueDefinition<T>(this T toolSettings, string keyValueDefinitionKey, string keyValueDefinitionValue) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeyValueDefinitionsInternal[keyValueDefinitionKey] = keyValueDefinitionValue;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="InnoSetupSettings.KeyValueDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyValueDefinitions))]
+    public static T SetKeyValueDefinitions<T>(this T o, IDictionary<string, string> v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.KeyValueDefinitions, v.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase)));
+    /// <inheritdoc cref="InnoSetupSettings.KeyValueDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyValueDefinitions))]
+    public static T SetKeyValueDefinition<T>(this T o, string k, string v) where T : InnoSetupSettings => o.Modify(b => b.SetDictionary(() => o.KeyValueDefinitions, k, v));
+    /// <inheritdoc cref="InnoSetupSettings.KeyValueDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyValueDefinitions))]
+    public static T AddKeyValueDefinition<T>(this T o, string k, string v) where T : InnoSetupSettings => o.Modify(b => b.AddDictionary(() => o.KeyValueDefinitions, k, v));
+    /// <inheritdoc cref="InnoSetupSettings.KeyValueDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyValueDefinitions))]
+    public static T RemoveKeyValueDefinition<T>(this T o, string k) where T : InnoSetupSettings => o.Modify(b => b.RemoveDictionary(() => o.KeyValueDefinitions, k));
+    /// <inheritdoc cref="InnoSetupSettings.KeyValueDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyValueDefinitions))]
+    public static T ClearKeyValueDefinitions<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.ClearDictionary(() => o.KeyValueDefinitions));
     #endregion
     #region KeyDefinitions
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.KeyDefinitions"/> to a new list</em></p>
-    ///   <p>Emulate <c>#define public {name}</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetKeyDefinitions<T>(this T toolSettings, params string[] keyDefinitions) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeyDefinitionsInternal = keyDefinitions.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.KeyDefinitions"/> to a new list</em></p>
-    ///   <p>Emulate <c>#define public {name}</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetKeyDefinitions<T>(this T toolSettings, IEnumerable<string> keyDefinitions) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeyDefinitionsInternal = keyDefinitions.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="InnoSetupSettings.KeyDefinitions"/></em></p>
-    ///   <p>Emulate <c>#define public {name}</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddKeyDefinitions<T>(this T toolSettings, params string[] keyDefinitions) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeyDefinitionsInternal.AddRange(keyDefinitions);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="InnoSetupSettings.KeyDefinitions"/></em></p>
-    ///   <p>Emulate <c>#define public {name}</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddKeyDefinitions<T>(this T toolSettings, IEnumerable<string> keyDefinitions) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeyDefinitionsInternal.AddRange(keyDefinitions);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="InnoSetupSettings.KeyDefinitions"/></em></p>
-    ///   <p>Emulate <c>#define public {name}</c></p>
-    /// </summary>
-    [Pure]
-    public static T ClearKeyDefinitions<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeyDefinitionsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="InnoSetupSettings.KeyDefinitions"/></em></p>
-    ///   <p>Emulate <c>#define public {name}</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveKeyDefinitions<T>(this T toolSettings, params string[] keyDefinitions) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(keyDefinitions);
-        toolSettings.KeyDefinitionsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="InnoSetupSettings.KeyDefinitions"/></em></p>
-    ///   <p>Emulate <c>#define public {name}</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveKeyDefinitions<T>(this T toolSettings, IEnumerable<string> keyDefinitions) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(keyDefinitions);
-        toolSettings.KeyDefinitionsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="InnoSetupSettings.KeyDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyDefinitions))]
+    public static T SetKeyDefinitions<T>(this T o, params string[] v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.KeyDefinitions, v));
+    /// <inheritdoc cref="InnoSetupSettings.KeyDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyDefinitions))]
+    public static T SetKeyDefinitions<T>(this T o, IEnumerable<string> v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.KeyDefinitions, v));
+    /// <inheritdoc cref="InnoSetupSettings.KeyDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyDefinitions))]
+    public static T AddKeyDefinitions<T>(this T o, params string[] v) where T : InnoSetupSettings => o.Modify(b => b.AddCollection(() => o.KeyDefinitions, v));
+    /// <inheritdoc cref="InnoSetupSettings.KeyDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyDefinitions))]
+    public static T AddKeyDefinitions<T>(this T o, IEnumerable<string> v) where T : InnoSetupSettings => o.Modify(b => b.AddCollection(() => o.KeyDefinitions, v));
+    /// <inheritdoc cref="InnoSetupSettings.KeyDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyDefinitions))]
+    public static T RemoveKeyDefinitions<T>(this T o, params string[] v) where T : InnoSetupSettings => o.Modify(b => b.RemoveCollection(() => o.KeyDefinitions, v));
+    /// <inheritdoc cref="InnoSetupSettings.KeyDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyDefinitions))]
+    public static T RemoveKeyDefinitions<T>(this T o, IEnumerable<string> v) where T : InnoSetupSettings => o.Modify(b => b.RemoveCollection(() => o.KeyDefinitions, v));
+    /// <inheritdoc cref="InnoSetupSettings.KeyDefinitions"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.KeyDefinitions))]
+    public static T ClearKeyDefinitions<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.ClearCollection(() => o.KeyDefinitions));
     #endregion
     #region Verbosity
-    /// <summary>
-    ///   <p><em>Sets <see cref="InnoSetupSettings.Verbosity"/></em></p>
-    ///   <p>Emulate <c>#pragma verboselevel {number}</c> (highest level is 9)</p>
-    /// </summary>
-    [Pure]
-    public static T SetVerbosity<T>(this T toolSettings, int? verbosity) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Verbosity = verbosity;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="InnoSetupSettings.Verbosity"/></em></p>
-    ///   <p>Emulate <c>#pragma verboselevel {number}</c> (highest level is 9)</p>
-    /// </summary>
-    [Pure]
-    public static T ResetVerbosity<T>(this T toolSettings) where T : InnoSetupSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Verbosity = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="InnoSetupSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Verbosity))]
+    public static T SetVerbosity<T>(this T o, int? v) where T : InnoSetupSettings => o.Modify(b => b.Set(() => o.Verbosity, v));
+    /// <inheritdoc cref="InnoSetupSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(InnoSetupSettings), Property = nameof(InnoSetupSettings.Verbosity))]
+    public static T ResetVerbosity<T>(this T o) where T : InnoSetupSettings => o.Modify(b => b.Remove(() => o.Verbosity));
     #endregion
 }
 #endregion

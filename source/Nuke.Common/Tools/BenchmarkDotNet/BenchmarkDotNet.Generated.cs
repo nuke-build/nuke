@@ -17,2575 +17,775 @@ using System.Text;
 
 namespace Nuke.Common.Tools.BenchmarkDotNet;
 
-/// <summary>
-///   <p>Powerful .NET library for benchmarking</p>
-///   <p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p>
-/// </summary>
+/// <summary><p>Powerful .NET library for benchmarking</p><p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(BenchmarkDotNetPackageId)]
-public partial class BenchmarkDotNetTasks
-    : IRequireNuGetPackage
+[NuGetPackageRequirement(PackageId)]
+[NuGetTool(Id = PackageId, Executable = PackageExecutable)]
+public partial class BenchmarkDotNetTasks : ToolTasks, IRequireNuGetPackage
 {
-    public const string BenchmarkDotNetPackageId = "benchmarkdotnet.tool";
-    /// <summary>
-    ///   Path to the BenchmarkDotNet executable.
-    /// </summary>
-    public static string BenchmarkDotNetPath =>
-        ToolPathResolver.TryGetEnvironmentExecutable("BENCHMARKDOTNET_EXE") ??
-        NuGetToolPathResolver.GetPackageExecutable("benchmarkdotnet.tool", "BenchmarkDotNet.Tool.dll");
-    public static Action<OutputType, string> BenchmarkDotNetLogger { get; set; } = ProcessTasks.DefaultLogger;
-    public static Action<ToolSettings, IProcess> BenchmarkDotNetExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
-    /// <summary>
-    ///   <p>Powerful .NET library for benchmarking</p>
-    ///   <p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p>
-    /// </summary>
-    public static IReadOnlyCollection<Output> BenchmarkDotNet(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(BenchmarkDotNetPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? BenchmarkDotNetLogger);
-        (exitHandler ?? (p => BenchmarkDotNetExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>Powerful .NET library for benchmarking</p>
-    ///   <p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;assemblyFile&gt;</c> via <see cref="BenchmarkDotNetSettings.AssemblyFile"/></li>
-    ///     <li><c>--affinity</c> via <see cref="BenchmarkDotNetSettings.Affinity"/></li>
-    ///     <li><c>--allCategories</c> via <see cref="BenchmarkDotNetSettings.AllCategories"/></li>
-    ///     <li><c>--allStats</c> via <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></li>
-    ///     <li><c>--anyCategories</c> via <see cref="BenchmarkDotNetSettings.AnyCategories"/></li>
-    ///     <li><c>--artifacts</c> via <see cref="BenchmarkDotNetSettings.ArtifactsDirecory"/></li>
-    ///     <li><c>--attribute</c> via <see cref="BenchmarkDotNetSettings.AttributeNames"/></li>
-    ///     <li><c>--buildTimeout</c> via <see cref="BenchmarkDotNetSettings.BuildTimeout"/></li>
-    ///     <li><c>--cli</c> via <see cref="BenchmarkDotNetSettings.CliPath"/></li>
-    ///     <li><c>--clrVersion</c> via <see cref="BenchmarkDotNetSettings.ClrVersion"/></li>
-    ///     <li><c>--coreRtVersion</c> via <see cref="BenchmarkDotNetSettings.CoreRtVersion"/></li>
-    ///     <li><c>--coreRun</c> via <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></li>
-    ///     <li><c>--counters</c> via <see cref="BenchmarkDotNetSettings.HardwareCounters"/></li>
-    ///     <li><c>--disableLogFile</c> via <see cref="BenchmarkDotNetSettings.DisableLogFile"/></li>
-    ///     <li><c>--disasm</c> via <see cref="BenchmarkDotNetSettings.Disassembly"/></li>
-    ///     <li><c>--disasmDepth</c> via <see cref="BenchmarkDotNetSettings.DisassemblyRecursiveDepth"/></li>
-    ///     <li><c>--disasmDiff</c> via <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></li>
-    ///     <li><c>--exporters</c> via <see cref="BenchmarkDotNetSettings.Exporters"/></li>
-    ///     <li><c>--filter</c> via <see cref="BenchmarkDotNetSettings.Filter"/></li>
-    ///     <li><c>--ilcPath</c> via <see cref="BenchmarkDotNetSettings.CoreRtPath"/></li>
-    ///     <li><c>--info</c> via <see cref="BenchmarkDotNetSettings.PrintInformation"/></li>
-    ///     <li><c>--inProcess</c> via <see cref="BenchmarkDotNetSettings.RunInProcess"/></li>
-    ///     <li><c>--invocationCount</c> via <see cref="BenchmarkDotNetSettings.InvocationCount"/></li>
-    ///     <li><c>--iterationCount</c> via <see cref="BenchmarkDotNetSettings.IterationCount"/></li>
-    ///     <li><c>--iterationTime</c> via <see cref="BenchmarkDotNetSettings.IterationTime"/></li>
-    ///     <li><c>--job</c> via <see cref="BenchmarkDotNetSettings.Job"/></li>
-    ///     <li><c>--join</c> via <see cref="BenchmarkDotNetSettings.Join"/></li>
-    ///     <li><c>--keepFiles</c> via <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></li>
-    ///     <li><c>--launchCount</c> via <see cref="BenchmarkDotNetSettings.LaunchCount"/></li>
-    ///     <li><c>--list</c> via <see cref="BenchmarkDotNetSettings.ListBenchmarkCaseMode"/></li>
-    ///     <li><c>--maxIterationCount</c> via <see cref="BenchmarkDotNetSettings.MaxIterationCount"/></li>
-    ///     <li><c>--maxWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MaxWarmupCount"/></li>
-    ///     <li><c>--maxWidth</c> via <see cref="BenchmarkDotNetSettings.MaxParameterColumnWidth"/></li>
-    ///     <li><c>--memory</c> via <see cref="BenchmarkDotNetSettings.MemoryStats"/></li>
-    ///     <li><c>--minIterationCount</c> via <see cref="BenchmarkDotNetSettings.MinIterationCount"/></li>
-    ///     <li><c>--minWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MinWarmupCount"/></li>
-    ///     <li><c>--monoPath</c> via <see cref="BenchmarkDotNetSettings.MonoPath"/></li>
-    ///     <li><c>--noOverwrite</c> via <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></li>
-    ///     <li><c>--outliers</c> via <see cref="BenchmarkDotNetSettings.OutlierMode"/></li>
-    ///     <li><c>--packages</c> via <see cref="BenchmarkDotNetSettings.RestorePath"/></li>
-    ///     <li><c>--profiler</c> via <see cref="BenchmarkDotNetSettings.Profiler"/></li>
-    ///     <li><c>--runOncePerIteration</c> via <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></li>
-    ///     <li><c>--runtimes</c> via <see cref="BenchmarkDotNetSettings.Runtimes"/></li>
-    ///     <li><c>--statisticalTest</c> via <see cref="BenchmarkDotNetSettings.StatisticalTestThreshold"/></li>
-    ///     <li><c>--stopOnFirstError</c> via <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></li>
-    ///     <li><c>--strategy</c> via <see cref="BenchmarkDotNetSettings.RunStrategy"/></li>
-    ///     <li><c>--threading</c> via <see cref="BenchmarkDotNetSettings.ThreadingStats"/></li>
-    ///     <li><c>--unrollFactor</c> via <see cref="BenchmarkDotNetSettings.UnrollFactor"/></li>
-    ///     <li><c>--warmupCount</c> via <see cref="BenchmarkDotNetSettings.WarmupCount"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> BenchmarkDotNet(BenchmarkDotNetSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new BenchmarkDotNetSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>Powerful .NET library for benchmarking</p>
-    ///   <p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;assemblyFile&gt;</c> via <see cref="BenchmarkDotNetSettings.AssemblyFile"/></li>
-    ///     <li><c>--affinity</c> via <see cref="BenchmarkDotNetSettings.Affinity"/></li>
-    ///     <li><c>--allCategories</c> via <see cref="BenchmarkDotNetSettings.AllCategories"/></li>
-    ///     <li><c>--allStats</c> via <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></li>
-    ///     <li><c>--anyCategories</c> via <see cref="BenchmarkDotNetSettings.AnyCategories"/></li>
-    ///     <li><c>--artifacts</c> via <see cref="BenchmarkDotNetSettings.ArtifactsDirecory"/></li>
-    ///     <li><c>--attribute</c> via <see cref="BenchmarkDotNetSettings.AttributeNames"/></li>
-    ///     <li><c>--buildTimeout</c> via <see cref="BenchmarkDotNetSettings.BuildTimeout"/></li>
-    ///     <li><c>--cli</c> via <see cref="BenchmarkDotNetSettings.CliPath"/></li>
-    ///     <li><c>--clrVersion</c> via <see cref="BenchmarkDotNetSettings.ClrVersion"/></li>
-    ///     <li><c>--coreRtVersion</c> via <see cref="BenchmarkDotNetSettings.CoreRtVersion"/></li>
-    ///     <li><c>--coreRun</c> via <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></li>
-    ///     <li><c>--counters</c> via <see cref="BenchmarkDotNetSettings.HardwareCounters"/></li>
-    ///     <li><c>--disableLogFile</c> via <see cref="BenchmarkDotNetSettings.DisableLogFile"/></li>
-    ///     <li><c>--disasm</c> via <see cref="BenchmarkDotNetSettings.Disassembly"/></li>
-    ///     <li><c>--disasmDepth</c> via <see cref="BenchmarkDotNetSettings.DisassemblyRecursiveDepth"/></li>
-    ///     <li><c>--disasmDiff</c> via <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></li>
-    ///     <li><c>--exporters</c> via <see cref="BenchmarkDotNetSettings.Exporters"/></li>
-    ///     <li><c>--filter</c> via <see cref="BenchmarkDotNetSettings.Filter"/></li>
-    ///     <li><c>--ilcPath</c> via <see cref="BenchmarkDotNetSettings.CoreRtPath"/></li>
-    ///     <li><c>--info</c> via <see cref="BenchmarkDotNetSettings.PrintInformation"/></li>
-    ///     <li><c>--inProcess</c> via <see cref="BenchmarkDotNetSettings.RunInProcess"/></li>
-    ///     <li><c>--invocationCount</c> via <see cref="BenchmarkDotNetSettings.InvocationCount"/></li>
-    ///     <li><c>--iterationCount</c> via <see cref="BenchmarkDotNetSettings.IterationCount"/></li>
-    ///     <li><c>--iterationTime</c> via <see cref="BenchmarkDotNetSettings.IterationTime"/></li>
-    ///     <li><c>--job</c> via <see cref="BenchmarkDotNetSettings.Job"/></li>
-    ///     <li><c>--join</c> via <see cref="BenchmarkDotNetSettings.Join"/></li>
-    ///     <li><c>--keepFiles</c> via <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></li>
-    ///     <li><c>--launchCount</c> via <see cref="BenchmarkDotNetSettings.LaunchCount"/></li>
-    ///     <li><c>--list</c> via <see cref="BenchmarkDotNetSettings.ListBenchmarkCaseMode"/></li>
-    ///     <li><c>--maxIterationCount</c> via <see cref="BenchmarkDotNetSettings.MaxIterationCount"/></li>
-    ///     <li><c>--maxWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MaxWarmupCount"/></li>
-    ///     <li><c>--maxWidth</c> via <see cref="BenchmarkDotNetSettings.MaxParameterColumnWidth"/></li>
-    ///     <li><c>--memory</c> via <see cref="BenchmarkDotNetSettings.MemoryStats"/></li>
-    ///     <li><c>--minIterationCount</c> via <see cref="BenchmarkDotNetSettings.MinIterationCount"/></li>
-    ///     <li><c>--minWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MinWarmupCount"/></li>
-    ///     <li><c>--monoPath</c> via <see cref="BenchmarkDotNetSettings.MonoPath"/></li>
-    ///     <li><c>--noOverwrite</c> via <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></li>
-    ///     <li><c>--outliers</c> via <see cref="BenchmarkDotNetSettings.OutlierMode"/></li>
-    ///     <li><c>--packages</c> via <see cref="BenchmarkDotNetSettings.RestorePath"/></li>
-    ///     <li><c>--profiler</c> via <see cref="BenchmarkDotNetSettings.Profiler"/></li>
-    ///     <li><c>--runOncePerIteration</c> via <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></li>
-    ///     <li><c>--runtimes</c> via <see cref="BenchmarkDotNetSettings.Runtimes"/></li>
-    ///     <li><c>--statisticalTest</c> via <see cref="BenchmarkDotNetSettings.StatisticalTestThreshold"/></li>
-    ///     <li><c>--stopOnFirstError</c> via <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></li>
-    ///     <li><c>--strategy</c> via <see cref="BenchmarkDotNetSettings.RunStrategy"/></li>
-    ///     <li><c>--threading</c> via <see cref="BenchmarkDotNetSettings.ThreadingStats"/></li>
-    ///     <li><c>--unrollFactor</c> via <see cref="BenchmarkDotNetSettings.UnrollFactor"/></li>
-    ///     <li><c>--warmupCount</c> via <see cref="BenchmarkDotNetSettings.WarmupCount"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> BenchmarkDotNet(Configure<BenchmarkDotNetSettings> configurator)
-    {
-        return BenchmarkDotNet(configurator(new BenchmarkDotNetSettings()));
-    }
-    /// <summary>
-    ///   <p>Powerful .NET library for benchmarking</p>
-    ///   <p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;assemblyFile&gt;</c> via <see cref="BenchmarkDotNetSettings.AssemblyFile"/></li>
-    ///     <li><c>--affinity</c> via <see cref="BenchmarkDotNetSettings.Affinity"/></li>
-    ///     <li><c>--allCategories</c> via <see cref="BenchmarkDotNetSettings.AllCategories"/></li>
-    ///     <li><c>--allStats</c> via <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></li>
-    ///     <li><c>--anyCategories</c> via <see cref="BenchmarkDotNetSettings.AnyCategories"/></li>
-    ///     <li><c>--artifacts</c> via <see cref="BenchmarkDotNetSettings.ArtifactsDirecory"/></li>
-    ///     <li><c>--attribute</c> via <see cref="BenchmarkDotNetSettings.AttributeNames"/></li>
-    ///     <li><c>--buildTimeout</c> via <see cref="BenchmarkDotNetSettings.BuildTimeout"/></li>
-    ///     <li><c>--cli</c> via <see cref="BenchmarkDotNetSettings.CliPath"/></li>
-    ///     <li><c>--clrVersion</c> via <see cref="BenchmarkDotNetSettings.ClrVersion"/></li>
-    ///     <li><c>--coreRtVersion</c> via <see cref="BenchmarkDotNetSettings.CoreRtVersion"/></li>
-    ///     <li><c>--coreRun</c> via <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></li>
-    ///     <li><c>--counters</c> via <see cref="BenchmarkDotNetSettings.HardwareCounters"/></li>
-    ///     <li><c>--disableLogFile</c> via <see cref="BenchmarkDotNetSettings.DisableLogFile"/></li>
-    ///     <li><c>--disasm</c> via <see cref="BenchmarkDotNetSettings.Disassembly"/></li>
-    ///     <li><c>--disasmDepth</c> via <see cref="BenchmarkDotNetSettings.DisassemblyRecursiveDepth"/></li>
-    ///     <li><c>--disasmDiff</c> via <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></li>
-    ///     <li><c>--exporters</c> via <see cref="BenchmarkDotNetSettings.Exporters"/></li>
-    ///     <li><c>--filter</c> via <see cref="BenchmarkDotNetSettings.Filter"/></li>
-    ///     <li><c>--ilcPath</c> via <see cref="BenchmarkDotNetSettings.CoreRtPath"/></li>
-    ///     <li><c>--info</c> via <see cref="BenchmarkDotNetSettings.PrintInformation"/></li>
-    ///     <li><c>--inProcess</c> via <see cref="BenchmarkDotNetSettings.RunInProcess"/></li>
-    ///     <li><c>--invocationCount</c> via <see cref="BenchmarkDotNetSettings.InvocationCount"/></li>
-    ///     <li><c>--iterationCount</c> via <see cref="BenchmarkDotNetSettings.IterationCount"/></li>
-    ///     <li><c>--iterationTime</c> via <see cref="BenchmarkDotNetSettings.IterationTime"/></li>
-    ///     <li><c>--job</c> via <see cref="BenchmarkDotNetSettings.Job"/></li>
-    ///     <li><c>--join</c> via <see cref="BenchmarkDotNetSettings.Join"/></li>
-    ///     <li><c>--keepFiles</c> via <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></li>
-    ///     <li><c>--launchCount</c> via <see cref="BenchmarkDotNetSettings.LaunchCount"/></li>
-    ///     <li><c>--list</c> via <see cref="BenchmarkDotNetSettings.ListBenchmarkCaseMode"/></li>
-    ///     <li><c>--maxIterationCount</c> via <see cref="BenchmarkDotNetSettings.MaxIterationCount"/></li>
-    ///     <li><c>--maxWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MaxWarmupCount"/></li>
-    ///     <li><c>--maxWidth</c> via <see cref="BenchmarkDotNetSettings.MaxParameterColumnWidth"/></li>
-    ///     <li><c>--memory</c> via <see cref="BenchmarkDotNetSettings.MemoryStats"/></li>
-    ///     <li><c>--minIterationCount</c> via <see cref="BenchmarkDotNetSettings.MinIterationCount"/></li>
-    ///     <li><c>--minWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MinWarmupCount"/></li>
-    ///     <li><c>--monoPath</c> via <see cref="BenchmarkDotNetSettings.MonoPath"/></li>
-    ///     <li><c>--noOverwrite</c> via <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></li>
-    ///     <li><c>--outliers</c> via <see cref="BenchmarkDotNetSettings.OutlierMode"/></li>
-    ///     <li><c>--packages</c> via <see cref="BenchmarkDotNetSettings.RestorePath"/></li>
-    ///     <li><c>--profiler</c> via <see cref="BenchmarkDotNetSettings.Profiler"/></li>
-    ///     <li><c>--runOncePerIteration</c> via <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></li>
-    ///     <li><c>--runtimes</c> via <see cref="BenchmarkDotNetSettings.Runtimes"/></li>
-    ///     <li><c>--statisticalTest</c> via <see cref="BenchmarkDotNetSettings.StatisticalTestThreshold"/></li>
-    ///     <li><c>--stopOnFirstError</c> via <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></li>
-    ///     <li><c>--strategy</c> via <see cref="BenchmarkDotNetSettings.RunStrategy"/></li>
-    ///     <li><c>--threading</c> via <see cref="BenchmarkDotNetSettings.ThreadingStats"/></li>
-    ///     <li><c>--unrollFactor</c> via <see cref="BenchmarkDotNetSettings.UnrollFactor"/></li>
-    ///     <li><c>--warmupCount</c> via <see cref="BenchmarkDotNetSettings.WarmupCount"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(BenchmarkDotNetSettings Settings, IReadOnlyCollection<Output> Output)> BenchmarkDotNet(CombinatorialConfigure<BenchmarkDotNetSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(BenchmarkDotNet, BenchmarkDotNetLogger, degreeOfParallelism, completeOnFailure);
-    }
+    public static string BenchmarkDotNetPath => new BenchmarkDotNetTasks().GetToolPath();
+    public const string PackageId = "benchmarkdotnet.tool";
+    public const string PackageExecutable = "BenchmarkDotNet.Tool.dll";
+    /// <summary><p>Powerful .NET library for benchmarking</p><p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p></summary>
+    public static IReadOnlyCollection<Output> BenchmarkDotNet(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new BenchmarkDotNetTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
+    /// <summary><p>Powerful .NET library for benchmarking</p><p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;assemblyFile&gt;</c> via <see cref="BenchmarkDotNetSettings.AssemblyFile"/></li><li><c>--affinity</c> via <see cref="BenchmarkDotNetSettings.Affinity"/></li><li><c>--allCategories</c> via <see cref="BenchmarkDotNetSettings.AllCategories"/></li><li><c>--allStats</c> via <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></li><li><c>--anyCategories</c> via <see cref="BenchmarkDotNetSettings.AnyCategories"/></li><li><c>--artifacts</c> via <see cref="BenchmarkDotNetSettings.ArtifactsDirecory"/></li><li><c>--attribute</c> via <see cref="BenchmarkDotNetSettings.AttributeNames"/></li><li><c>--buildTimeout</c> via <see cref="BenchmarkDotNetSettings.BuildTimeout"/></li><li><c>--cli</c> via <see cref="BenchmarkDotNetSettings.CliPath"/></li><li><c>--clrVersion</c> via <see cref="BenchmarkDotNetSettings.ClrVersion"/></li><li><c>--coreRtVersion</c> via <see cref="BenchmarkDotNetSettings.CoreRtVersion"/></li><li><c>--coreRun</c> via <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></li><li><c>--counters</c> via <see cref="BenchmarkDotNetSettings.HardwareCounters"/></li><li><c>--disableLogFile</c> via <see cref="BenchmarkDotNetSettings.DisableLogFile"/></li><li><c>--disasm</c> via <see cref="BenchmarkDotNetSettings.Disassembly"/></li><li><c>--disasmDepth</c> via <see cref="BenchmarkDotNetSettings.DisassemblyRecursiveDepth"/></li><li><c>--disasmDiff</c> via <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></li><li><c>--exporters</c> via <see cref="BenchmarkDotNetSettings.Exporters"/></li><li><c>--filter</c> via <see cref="BenchmarkDotNetSettings.Filter"/></li><li><c>--ilcPath</c> via <see cref="BenchmarkDotNetSettings.CoreRtPath"/></li><li><c>--info</c> via <see cref="BenchmarkDotNetSettings.PrintInformation"/></li><li><c>--inProcess</c> via <see cref="BenchmarkDotNetSettings.RunInProcess"/></li><li><c>--invocationCount</c> via <see cref="BenchmarkDotNetSettings.InvocationCount"/></li><li><c>--iterationCount</c> via <see cref="BenchmarkDotNetSettings.IterationCount"/></li><li><c>--iterationTime</c> via <see cref="BenchmarkDotNetSettings.IterationTime"/></li><li><c>--job</c> via <see cref="BenchmarkDotNetSettings.Job"/></li><li><c>--join</c> via <see cref="BenchmarkDotNetSettings.Join"/></li><li><c>--keepFiles</c> via <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></li><li><c>--launchCount</c> via <see cref="BenchmarkDotNetSettings.LaunchCount"/></li><li><c>--list</c> via <see cref="BenchmarkDotNetSettings.ListBenchmarkCaseMode"/></li><li><c>--maxIterationCount</c> via <see cref="BenchmarkDotNetSettings.MaxIterationCount"/></li><li><c>--maxWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MaxWarmupCount"/></li><li><c>--maxWidth</c> via <see cref="BenchmarkDotNetSettings.MaxParameterColumnWidth"/></li><li><c>--memory</c> via <see cref="BenchmarkDotNetSettings.MemoryStats"/></li><li><c>--minIterationCount</c> via <see cref="BenchmarkDotNetSettings.MinIterationCount"/></li><li><c>--minWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MinWarmupCount"/></li><li><c>--monoPath</c> via <see cref="BenchmarkDotNetSettings.MonoPath"/></li><li><c>--noOverwrite</c> via <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></li><li><c>--outliers</c> via <see cref="BenchmarkDotNetSettings.OutlierMode"/></li><li><c>--packages</c> via <see cref="BenchmarkDotNetSettings.RestorePath"/></li><li><c>--profiler</c> via <see cref="BenchmarkDotNetSettings.Profiler"/></li><li><c>--runOncePerIteration</c> via <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></li><li><c>--runtimes</c> via <see cref="BenchmarkDotNetSettings.Runtimes"/></li><li><c>--statisticalTest</c> via <see cref="BenchmarkDotNetSettings.StatisticalTestThreshold"/></li><li><c>--stopOnFirstError</c> via <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></li><li><c>--strategy</c> via <see cref="BenchmarkDotNetSettings.RunStrategy"/></li><li><c>--threading</c> via <see cref="BenchmarkDotNetSettings.ThreadingStats"/></li><li><c>--unrollFactor</c> via <see cref="BenchmarkDotNetSettings.UnrollFactor"/></li><li><c>--warmupCount</c> via <see cref="BenchmarkDotNetSettings.WarmupCount"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> BenchmarkDotNet(BenchmarkDotNetSettings options = null) => new BenchmarkDotNetTasks().Run(options);
+    /// <summary><p>Powerful .NET library for benchmarking</p><p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;assemblyFile&gt;</c> via <see cref="BenchmarkDotNetSettings.AssemblyFile"/></li><li><c>--affinity</c> via <see cref="BenchmarkDotNetSettings.Affinity"/></li><li><c>--allCategories</c> via <see cref="BenchmarkDotNetSettings.AllCategories"/></li><li><c>--allStats</c> via <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></li><li><c>--anyCategories</c> via <see cref="BenchmarkDotNetSettings.AnyCategories"/></li><li><c>--artifacts</c> via <see cref="BenchmarkDotNetSettings.ArtifactsDirecory"/></li><li><c>--attribute</c> via <see cref="BenchmarkDotNetSettings.AttributeNames"/></li><li><c>--buildTimeout</c> via <see cref="BenchmarkDotNetSettings.BuildTimeout"/></li><li><c>--cli</c> via <see cref="BenchmarkDotNetSettings.CliPath"/></li><li><c>--clrVersion</c> via <see cref="BenchmarkDotNetSettings.ClrVersion"/></li><li><c>--coreRtVersion</c> via <see cref="BenchmarkDotNetSettings.CoreRtVersion"/></li><li><c>--coreRun</c> via <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></li><li><c>--counters</c> via <see cref="BenchmarkDotNetSettings.HardwareCounters"/></li><li><c>--disableLogFile</c> via <see cref="BenchmarkDotNetSettings.DisableLogFile"/></li><li><c>--disasm</c> via <see cref="BenchmarkDotNetSettings.Disassembly"/></li><li><c>--disasmDepth</c> via <see cref="BenchmarkDotNetSettings.DisassemblyRecursiveDepth"/></li><li><c>--disasmDiff</c> via <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></li><li><c>--exporters</c> via <see cref="BenchmarkDotNetSettings.Exporters"/></li><li><c>--filter</c> via <see cref="BenchmarkDotNetSettings.Filter"/></li><li><c>--ilcPath</c> via <see cref="BenchmarkDotNetSettings.CoreRtPath"/></li><li><c>--info</c> via <see cref="BenchmarkDotNetSettings.PrintInformation"/></li><li><c>--inProcess</c> via <see cref="BenchmarkDotNetSettings.RunInProcess"/></li><li><c>--invocationCount</c> via <see cref="BenchmarkDotNetSettings.InvocationCount"/></li><li><c>--iterationCount</c> via <see cref="BenchmarkDotNetSettings.IterationCount"/></li><li><c>--iterationTime</c> via <see cref="BenchmarkDotNetSettings.IterationTime"/></li><li><c>--job</c> via <see cref="BenchmarkDotNetSettings.Job"/></li><li><c>--join</c> via <see cref="BenchmarkDotNetSettings.Join"/></li><li><c>--keepFiles</c> via <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></li><li><c>--launchCount</c> via <see cref="BenchmarkDotNetSettings.LaunchCount"/></li><li><c>--list</c> via <see cref="BenchmarkDotNetSettings.ListBenchmarkCaseMode"/></li><li><c>--maxIterationCount</c> via <see cref="BenchmarkDotNetSettings.MaxIterationCount"/></li><li><c>--maxWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MaxWarmupCount"/></li><li><c>--maxWidth</c> via <see cref="BenchmarkDotNetSettings.MaxParameterColumnWidth"/></li><li><c>--memory</c> via <see cref="BenchmarkDotNetSettings.MemoryStats"/></li><li><c>--minIterationCount</c> via <see cref="BenchmarkDotNetSettings.MinIterationCount"/></li><li><c>--minWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MinWarmupCount"/></li><li><c>--monoPath</c> via <see cref="BenchmarkDotNetSettings.MonoPath"/></li><li><c>--noOverwrite</c> via <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></li><li><c>--outliers</c> via <see cref="BenchmarkDotNetSettings.OutlierMode"/></li><li><c>--packages</c> via <see cref="BenchmarkDotNetSettings.RestorePath"/></li><li><c>--profiler</c> via <see cref="BenchmarkDotNetSettings.Profiler"/></li><li><c>--runOncePerIteration</c> via <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></li><li><c>--runtimes</c> via <see cref="BenchmarkDotNetSettings.Runtimes"/></li><li><c>--statisticalTest</c> via <see cref="BenchmarkDotNetSettings.StatisticalTestThreshold"/></li><li><c>--stopOnFirstError</c> via <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></li><li><c>--strategy</c> via <see cref="BenchmarkDotNetSettings.RunStrategy"/></li><li><c>--threading</c> via <see cref="BenchmarkDotNetSettings.ThreadingStats"/></li><li><c>--unrollFactor</c> via <see cref="BenchmarkDotNetSettings.UnrollFactor"/></li><li><c>--warmupCount</c> via <see cref="BenchmarkDotNetSettings.WarmupCount"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> BenchmarkDotNet(Configure<BenchmarkDotNetSettings> configurator) => new BenchmarkDotNetTasks().Run(configurator.Invoke(new BenchmarkDotNetSettings()));
+    /// <summary><p>Powerful .NET library for benchmarking</p><p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;assemblyFile&gt;</c> via <see cref="BenchmarkDotNetSettings.AssemblyFile"/></li><li><c>--affinity</c> via <see cref="BenchmarkDotNetSettings.Affinity"/></li><li><c>--allCategories</c> via <see cref="BenchmarkDotNetSettings.AllCategories"/></li><li><c>--allStats</c> via <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></li><li><c>--anyCategories</c> via <see cref="BenchmarkDotNetSettings.AnyCategories"/></li><li><c>--artifacts</c> via <see cref="BenchmarkDotNetSettings.ArtifactsDirecory"/></li><li><c>--attribute</c> via <see cref="BenchmarkDotNetSettings.AttributeNames"/></li><li><c>--buildTimeout</c> via <see cref="BenchmarkDotNetSettings.BuildTimeout"/></li><li><c>--cli</c> via <see cref="BenchmarkDotNetSettings.CliPath"/></li><li><c>--clrVersion</c> via <see cref="BenchmarkDotNetSettings.ClrVersion"/></li><li><c>--coreRtVersion</c> via <see cref="BenchmarkDotNetSettings.CoreRtVersion"/></li><li><c>--coreRun</c> via <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></li><li><c>--counters</c> via <see cref="BenchmarkDotNetSettings.HardwareCounters"/></li><li><c>--disableLogFile</c> via <see cref="BenchmarkDotNetSettings.DisableLogFile"/></li><li><c>--disasm</c> via <see cref="BenchmarkDotNetSettings.Disassembly"/></li><li><c>--disasmDepth</c> via <see cref="BenchmarkDotNetSettings.DisassemblyRecursiveDepth"/></li><li><c>--disasmDiff</c> via <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></li><li><c>--exporters</c> via <see cref="BenchmarkDotNetSettings.Exporters"/></li><li><c>--filter</c> via <see cref="BenchmarkDotNetSettings.Filter"/></li><li><c>--ilcPath</c> via <see cref="BenchmarkDotNetSettings.CoreRtPath"/></li><li><c>--info</c> via <see cref="BenchmarkDotNetSettings.PrintInformation"/></li><li><c>--inProcess</c> via <see cref="BenchmarkDotNetSettings.RunInProcess"/></li><li><c>--invocationCount</c> via <see cref="BenchmarkDotNetSettings.InvocationCount"/></li><li><c>--iterationCount</c> via <see cref="BenchmarkDotNetSettings.IterationCount"/></li><li><c>--iterationTime</c> via <see cref="BenchmarkDotNetSettings.IterationTime"/></li><li><c>--job</c> via <see cref="BenchmarkDotNetSettings.Job"/></li><li><c>--join</c> via <see cref="BenchmarkDotNetSettings.Join"/></li><li><c>--keepFiles</c> via <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></li><li><c>--launchCount</c> via <see cref="BenchmarkDotNetSettings.LaunchCount"/></li><li><c>--list</c> via <see cref="BenchmarkDotNetSettings.ListBenchmarkCaseMode"/></li><li><c>--maxIterationCount</c> via <see cref="BenchmarkDotNetSettings.MaxIterationCount"/></li><li><c>--maxWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MaxWarmupCount"/></li><li><c>--maxWidth</c> via <see cref="BenchmarkDotNetSettings.MaxParameterColumnWidth"/></li><li><c>--memory</c> via <see cref="BenchmarkDotNetSettings.MemoryStats"/></li><li><c>--minIterationCount</c> via <see cref="BenchmarkDotNetSettings.MinIterationCount"/></li><li><c>--minWarmupCount</c> via <see cref="BenchmarkDotNetSettings.MinWarmupCount"/></li><li><c>--monoPath</c> via <see cref="BenchmarkDotNetSettings.MonoPath"/></li><li><c>--noOverwrite</c> via <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></li><li><c>--outliers</c> via <see cref="BenchmarkDotNetSettings.OutlierMode"/></li><li><c>--packages</c> via <see cref="BenchmarkDotNetSettings.RestorePath"/></li><li><c>--profiler</c> via <see cref="BenchmarkDotNetSettings.Profiler"/></li><li><c>--runOncePerIteration</c> via <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></li><li><c>--runtimes</c> via <see cref="BenchmarkDotNetSettings.Runtimes"/></li><li><c>--statisticalTest</c> via <see cref="BenchmarkDotNetSettings.StatisticalTestThreshold"/></li><li><c>--stopOnFirstError</c> via <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></li><li><c>--strategy</c> via <see cref="BenchmarkDotNetSettings.RunStrategy"/></li><li><c>--threading</c> via <see cref="BenchmarkDotNetSettings.ThreadingStats"/></li><li><c>--unrollFactor</c> via <see cref="BenchmarkDotNetSettings.UnrollFactor"/></li><li><c>--warmupCount</c> via <see cref="BenchmarkDotNetSettings.WarmupCount"/></li></ul></remarks>
+    public static IEnumerable<(BenchmarkDotNetSettings Settings, IReadOnlyCollection<Output> Output)> BenchmarkDotNet(CombinatorialConfigure<BenchmarkDotNetSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(BenchmarkDotNet, degreeOfParallelism, completeOnFailure);
 }
 #region BenchmarkDotNetSettings
-/// <summary>
-///   Used within <see cref="BenchmarkDotNetTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="BenchmarkDotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class BenchmarkDotNetSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<BenchmarkDotNetSettings>))]
+[Command(Type = typeof(BenchmarkDotNetTasks), Command = nameof(BenchmarkDotNetTasks.BenchmarkDotNet))]
+public partial class BenchmarkDotNetSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the BenchmarkDotNet executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? BenchmarkDotNetTasks.BenchmarkDotNetPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? BenchmarkDotNetTasks.BenchmarkDotNetLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? BenchmarkDotNetTasks.BenchmarkDotNetExitHandler;
-    /// <summary>
-    ///   The assembly with the benchmarks (required).
-    /// </summary>
-    public virtual string AssemblyFile { get; internal set; }
-    /// <summary>
-    ///   Dry/Short/Medium/Long or Default
-    /// </summary>
-    public virtual BenchmarkDotNetJob Job { get; internal set; }
-    /// <summary>
-    ///   Full target framework moniker for .NET Core and .NET. For Mono just 'Mono', for CoreRT just 'CoreRT'. First one will be marked as baseline!
-    /// </summary>
-    public virtual IReadOnlyList<string> Runtimes => RuntimesInternal.AsReadOnly();
-    internal List<string> RuntimesInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML
-    /// </summary>
-    public virtual IReadOnlyList<BenchmarkDotNetExporter> Exporters => ExportersInternal.AsReadOnly();
-    internal List<BenchmarkDotNetExporter> ExportersInternal { get; set; } = new List<BenchmarkDotNetExporter>();
-    /// <summary>
-    ///   Prints memory statistics
-    /// </summary>
-    public virtual bool? MemoryStats { get; internal set; }
-    /// <summary>
-    ///   Prints threading statistics
-    /// </summary>
-    public virtual bool? ThreadingStats { get; internal set; }
-    /// <summary>
-    ///   Gets disassembly of benchmarked code
-    /// </summary>
-    public virtual bool? Disassembly { get; internal set; }
-    /// <summary>
-    ///   Profiles benchmarked code using selected profiler.
-    /// </summary>
-    public virtual BenchmarkDotNetProfiler Profiler { get; internal set; }
-    /// <summary>
-    ///   Glob patterns, e.g. <c>*</c>, <c>*.ClassA.*</c>, <c>*.ClassB.*</c>
-    /// </summary>
-    public virtual IReadOnlyList<string> Filter => FilterInternal.AsReadOnly();
-    internal List<string> FilterInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Run benchmarks in Process
-    /// </summary>
-    public virtual bool? RunInProcess { get; internal set; }
-    /// <summary>
-    ///   Valid path to accessible directory
-    /// </summary>
-    public virtual string ArtifactsDirecory { get; internal set; }
-    /// <summary>
-    ///   DontRemove/RemoveUpper/RemoveLower/RemoveAll
-    /// </summary>
-    public virtual BenchmarkDotNetOutlierMode OutlierMode { get; internal set; }
-    /// <summary>
-    ///   Affinity mask to set for the benchmark process
-    /// </summary>
-    public virtual int? Affinity { get; internal set; }
-    /// <summary>
-    ///   Displays all statistics (min, max &amp; more)
-    /// </summary>
-    public virtual bool? DisplayAllStatistics { get; internal set; }
-    /// <summary>
-    ///   Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed
-    /// </summary>
-    public virtual IReadOnlyList<string> AllCategories => AllCategoriesInternal.AsReadOnly();
-    internal List<string> AllCategoriesInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Any Categories to run
-    /// </summary>
-    public virtual IReadOnlyList<string> AnyCategories => AnyCategoriesInternal.AsReadOnly();
-    internal List<string> AnyCategoriesInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Run all methods with given attribute (applied to class or method)
-    /// </summary>
-    public virtual IReadOnlyList<string> AttributeNames => AttributeNamesInternal.AsReadOnly();
-    internal List<string> AttributeNamesInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Prints single table with results for all benchmarks
-    /// </summary>
-    public virtual bool? Join { get; internal set; }
-    /// <summary>
-    ///   Determines if all auto-generated files should be kept or removed after running the benchmarks.
-    /// </summary>
-    public virtual bool? KeepBenchmarkFiles { get; internal set; }
-    /// <summary>
-    ///   Determines if the exported result files should not be overwritten (by default they are overwritten).
-    /// </summary>
-    public virtual bool? DontOverwriteResults { get; internal set; }
-    /// <summary>
-    ///   Hardware Counters
-    /// </summary>
-    public virtual IReadOnlyList<string> HardwareCounters => HardwareCountersInternal.AsReadOnly();
-    internal List<string> HardwareCountersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Path to dotnet CLI (optional).
-    /// </summary>
-    public virtual string CliPath { get; internal set; }
-    /// <summary>
-    ///   The directory to restore packages to (optional).
-    /// </summary>
-    public virtual string RestorePath { get; internal set; }
-    /// <summary>
-    ///   Path(s) to CoreRun (optional).
-    /// </summary>
-    public virtual IReadOnlyList<string> CoreRunPaths => CoreRunPathsInternal.AsReadOnly();
-    internal List<string> CoreRunPathsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Optional path to Mono which should be used for running benchmarks.
-    /// </summary>
-    public virtual string MonoPath { get; internal set; }
-    /// <summary>
-    ///   Optional version of private CLR build used as the value of <c>COMPLUS_Version</c> env var.
-    /// </summary>
-    public virtual string ClrVersion { get; internal set; }
-    /// <summary>
-    ///   Optional version of <c>Microsoft.DotNet.ILCompiler</c> which should be used to run with CoreRT. Example: <c>1.0.0-alpha-26414-01</c>
-    /// </summary>
-    public virtual string CoreRtVersion { get; internal set; }
-    /// <summary>
-    ///   Optional IlcPath which should be used to run with private CoreRT build.
-    /// </summary>
-    public virtual string CoreRtPath { get; internal set; }
-    /// <summary>
-    ///   How many times we should launch process with target benchmark. The default is <c>1</c>.
-    /// </summary>
-    public virtual int? LaunchCount { get; internal set; }
-    /// <summary>
-    ///   How many warmup iterations should be performed. If you set it, the <c>minWarmupCount</c> and <c>maxWarmupCount</c> are ignored. By default calculated by the heuristic.
-    /// </summary>
-    public virtual int? WarmupCount { get; internal set; }
-    /// <summary>
-    ///   Minimum count of warmup iterations that should be performed. The default is <c>6</c>.
-    /// </summary>
-    public virtual int? MinWarmupCount { get; internal set; }
-    /// <summary>
-    ///   Maximum count of warmup iterations that should be performed. The default is <c>50</c>.
-    /// </summary>
-    public virtual int? MaxWarmupCount { get; internal set; }
-    /// <summary>
-    ///   Desired time of execution of an iteration in milliseconds. Used by Pilot stage to estimate the number of invocations per iteration. The default is <c>500</c> milliseconds.
-    /// </summary>
-    public virtual int? IterationTime { get; internal set; }
-    /// <summary>
-    ///   How many target iterations should be performed. By default calculated by the heuristic.
-    /// </summary>
-    public virtual int? IterationCount { get; internal set; }
-    /// <summary>
-    ///   Minimum number of iterations to run. The default is <c>15</c>.
-    /// </summary>
-    public virtual int? MinIterationCount { get; internal set; }
-    /// <summary>
-    ///   Maximum number of iterations to run. The default is <c>100</c>.
-    /// </summary>
-    public virtual int? MaxIterationCount { get; internal set; }
-    /// <summary>
-    ///   Invocation count in a single iteration. By default calculated by the heuristic.
-    /// </summary>
-    public virtual int? InvocationCount { get; internal set; }
-    /// <summary>
-    ///   How many times the benchmark method will be invoked per one iteration of a generated loop. The default is <c>16</c>.
-    /// </summary>
-    public virtual int? UnrollFactor { get; internal set; }
-    /// <summary>
-    ///   The run strategy that should be used. Throughput/ColdStart/Monitoring.
-    /// </summary>
-    public virtual BenchmarkDotNetRunStrategy RunStrategy { get; internal set; }
-    /// <summary>
-    ///   Run the benchmark exactly once per iteration.
-    /// </summary>
-    public virtual bool? RunOncePerIteration { get; internal set; }
-    /// <summary>
-    ///   Print environment information.
-    /// </summary>
-    public virtual bool? PrintInformation { get; internal set; }
-    /// <summary>
-    ///   Prints all of the available benchmark names. Flat/Tree
-    /// </summary>
-    public virtual BenchmarkDotNetCaseMode ListBenchmarkCaseMode { get; internal set; }
-    /// <summary>
-    ///   Sets the recursive depth for the disassembler.
-    /// </summary>
-    public virtual int? DisassemblyRecursiveDepth { get; internal set; }
-    /// <summary>
-    ///   Generates diff reports for the disassembler.
-    /// </summary>
-    public virtual bool? DisassemblyDiff { get; internal set; }
-    /// <summary>
-    ///   Build timeout in seconds.
-    /// </summary>
-    public virtual int? BuildTimeout { get; internal set; }
-    /// <summary>
-    ///   Stop on first error.
-    /// </summary>
-    public virtual bool? StopOnFirstError { get; internal set; }
-    /// <summary>
-    ///   Threshold for Mann–Whitney U Test. Examples: <c>5%</c>, <c>10ms</c>, <c>100ns</c>, <c>1s</c>
-    /// </summary>
-    public virtual string StatisticalTestThreshold { get; internal set; }
-    /// <summary>
-    ///   Disables the logfile.
-    /// </summary>
-    public virtual bool? DisableLogFile { get; internal set; }
-    /// <summary>
-    ///   Max paramter column width, the default is <c>20</c>.
-    /// </summary>
-    public virtual int? MaxParameterColumnWidth { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("{value}", AssemblyFile)
-          .Add("--job {value}", Job)
-          .Add("--runtimes {value}", Runtimes, separator: ' ')
-          .Add("--exporters {value}", Exporters, separator: ' ')
-          .Add("--memory", MemoryStats)
-          .Add("--threading", ThreadingStats)
-          .Add("--disasm", Disassembly)
-          .Add("--profiler {value}", Profiler)
-          .Add("--filter {value}", Filter)
-          .Add("--inProcess", RunInProcess)
-          .Add("--artifacts {value}", ArtifactsDirecory)
-          .Add("--outliers {value}", OutlierMode)
-          .Add("--affinity {value}", Affinity)
-          .Add("--allStats", DisplayAllStatistics)
-          .Add("--allCategories {value}", AllCategories, separator: ' ')
-          .Add("--anyCategories {value}", AnyCategories, separator: ' ')
-          .Add("--attribute {value}", AttributeNames, separator: ' ')
-          .Add("--join {value}", Join)
-          .Add("--keepFiles", KeepBenchmarkFiles)
-          .Add("--noOverwrite", DontOverwriteResults)
-          .Add("--counters {value}", HardwareCounters, separator: '+')
-          .Add("--cli {value}", CliPath)
-          .Add("--packages {value}", RestorePath)
-          .Add("--coreRun {value}", CoreRunPaths, separator: ' ', quoteMultiple: true)
-          .Add("--monoPath {value}", MonoPath)
-          .Add("--clrVersion {value}", ClrVersion)
-          .Add("--coreRtVersion {value}", CoreRtVersion)
-          .Add("--ilcPath {value}", CoreRtPath)
-          .Add("--launchCount {value}", LaunchCount)
-          .Add("--warmupCount {value}", WarmupCount)
-          .Add("--minWarmupCount {value}", MinWarmupCount)
-          .Add("--maxWarmupCount {value}", MaxWarmupCount)
-          .Add("--iterationTime {value}", IterationTime)
-          .Add("--iterationCount {value}", IterationCount)
-          .Add("--minIterationCount {value}", MinIterationCount)
-          .Add("--maxIterationCount {value}", MaxIterationCount)
-          .Add("--invocationCount {value}", InvocationCount)
-          .Add("--unrollFactor {value}", UnrollFactor)
-          .Add("--strategy {value}", RunStrategy)
-          .Add("--runOncePerIteration", RunOncePerIteration)
-          .Add("--info", PrintInformation)
-          .Add("--list {value}", ListBenchmarkCaseMode)
-          .Add("--disasmDepth {value}", DisassemblyRecursiveDepth)
-          .Add("--disasmDiff", DisassemblyDiff)
-          .Add("--buildTimeout {value}", BuildTimeout)
-          .Add("--stopOnFirstError", StopOnFirstError)
-          .Add("--statisticalTest {value}", StatisticalTestThreshold)
-          .Add("--disableLogFile", DisableLogFile)
-          .Add("--maxWidth {value}", MaxParameterColumnWidth);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary>The assembly with the benchmarks (required).</summary>
+    [Argument(Format = "{value}", Position = 1)] public string AssemblyFile => Get<string>(() => AssemblyFile);
+    /// <summary>Dry/Short/Medium/Long or Default</summary>
+    [Argument(Format = "--job {value}")] public BenchmarkDotNetJob Job => Get<BenchmarkDotNetJob>(() => Job);
+    /// <summary>Full target framework moniker for .NET Core and .NET. For Mono just 'Mono', for CoreRT just 'CoreRT'. First one will be marked as baseline!</summary>
+    [Argument(Format = "--runtimes {value}", Separator = " ")] public IReadOnlyList<string> Runtimes => Get<List<string>>(() => Runtimes);
+    /// <summary>GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML</summary>
+    [Argument(Format = "--exporters {value}", Separator = " ")] public IReadOnlyList<BenchmarkDotNetExporter> Exporters => Get<List<BenchmarkDotNetExporter>>(() => Exporters);
+    /// <summary>Prints memory statistics</summary>
+    [Argument(Format = "--memory")] public bool? MemoryStats => Get<bool?>(() => MemoryStats);
+    /// <summary>Prints threading statistics</summary>
+    [Argument(Format = "--threading")] public bool? ThreadingStats => Get<bool?>(() => ThreadingStats);
+    /// <summary>Gets disassembly of benchmarked code</summary>
+    [Argument(Format = "--disasm")] public bool? Disassembly => Get<bool?>(() => Disassembly);
+    /// <summary>Profiles benchmarked code using selected profiler.</summary>
+    [Argument(Format = "--profiler {value}")] public BenchmarkDotNetProfiler Profiler => Get<BenchmarkDotNetProfiler>(() => Profiler);
+    /// <summary>Glob patterns, e.g. <c>*</c>, <c>*.ClassA.*</c>, <c>*.ClassB.*</c></summary>
+    [Argument(Format = "--filter {value}")] public IReadOnlyList<string> Filter => Get<List<string>>(() => Filter);
+    /// <summary>Run benchmarks in Process</summary>
+    [Argument(Format = "--inProcess")] public bool? RunInProcess => Get<bool?>(() => RunInProcess);
+    /// <summary>Valid path to accessible directory</summary>
+    [Argument(Format = "--artifacts {value}")] public string ArtifactsDirecory => Get<string>(() => ArtifactsDirecory);
+    /// <summary>DontRemove/RemoveUpper/RemoveLower/RemoveAll</summary>
+    [Argument(Format = "--outliers {value}")] public BenchmarkDotNetOutlierMode OutlierMode => Get<BenchmarkDotNetOutlierMode>(() => OutlierMode);
+    /// <summary>Affinity mask to set for the benchmark process</summary>
+    [Argument(Format = "--affinity {value}")] public int? Affinity => Get<int?>(() => Affinity);
+    /// <summary>Displays all statistics (min, max &amp; more)</summary>
+    [Argument(Format = "--allStats")] public bool? DisplayAllStatistics => Get<bool?>(() => DisplayAllStatistics);
+    /// <summary>Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed</summary>
+    [Argument(Format = "--allCategories {value}", Separator = " ")] public IReadOnlyList<string> AllCategories => Get<List<string>>(() => AllCategories);
+    /// <summary>Any Categories to run</summary>
+    [Argument(Format = "--anyCategories {value}", Separator = " ")] public IReadOnlyList<string> AnyCategories => Get<List<string>>(() => AnyCategories);
+    /// <summary>Run all methods with given attribute (applied to class or method)</summary>
+    [Argument(Format = "--attribute {value}", Separator = " ")] public IReadOnlyList<string> AttributeNames => Get<List<string>>(() => AttributeNames);
+    /// <summary>Prints single table with results for all benchmarks</summary>
+    [Argument(Format = "--join {value}")] public bool? Join => Get<bool?>(() => Join);
+    /// <summary>Determines if all auto-generated files should be kept or removed after running the benchmarks.</summary>
+    [Argument(Format = "--keepFiles")] public bool? KeepBenchmarkFiles => Get<bool?>(() => KeepBenchmarkFiles);
+    /// <summary>Determines if the exported result files should not be overwritten (by default they are overwritten).</summary>
+    [Argument(Format = "--noOverwrite")] public bool? DontOverwriteResults => Get<bool?>(() => DontOverwriteResults);
+    /// <summary>Hardware Counters</summary>
+    [Argument(Format = "--counters {value}", Separator = "+")] public IReadOnlyList<string> HardwareCounters => Get<List<string>>(() => HardwareCounters);
+    /// <summary>Path to dotnet CLI (optional).</summary>
+    [Argument(Format = "--cli {value}")] public string CliPath => Get<string>(() => CliPath);
+    /// <summary>The directory to restore packages to (optional).</summary>
+    [Argument(Format = "--packages {value}")] public string RestorePath => Get<string>(() => RestorePath);
+    /// <summary>Path(s) to CoreRun (optional).</summary>
+    [Argument(Format = "--coreRun {value}", Separator = " ", QuoteMultiple = true)] public IReadOnlyList<string> CoreRunPaths => Get<List<string>>(() => CoreRunPaths);
+    /// <summary>Optional path to Mono which should be used for running benchmarks.</summary>
+    [Argument(Format = "--monoPath {value}")] public string MonoPath => Get<string>(() => MonoPath);
+    /// <summary>Optional version of private CLR build used as the value of <c>COMPLUS_Version</c> env var.</summary>
+    [Argument(Format = "--clrVersion {value}")] public string ClrVersion => Get<string>(() => ClrVersion);
+    /// <summary>Optional version of <c>Microsoft.DotNet.ILCompiler</c> which should be used to run with CoreRT. Example: <c>1.0.0-alpha-26414-01</c></summary>
+    [Argument(Format = "--coreRtVersion {value}")] public string CoreRtVersion => Get<string>(() => CoreRtVersion);
+    /// <summary>Optional IlcPath which should be used to run with private CoreRT build.</summary>
+    [Argument(Format = "--ilcPath {value}")] public string CoreRtPath => Get<string>(() => CoreRtPath);
+    /// <summary>How many times we should launch process with target benchmark. The default is <c>1</c>.</summary>
+    [Argument(Format = "--launchCount {value}")] public int? LaunchCount => Get<int?>(() => LaunchCount);
+    /// <summary>How many warmup iterations should be performed. If you set it, the <c>minWarmupCount</c> and <c>maxWarmupCount</c> are ignored. By default calculated by the heuristic.</summary>
+    [Argument(Format = "--warmupCount {value}")] public int? WarmupCount => Get<int?>(() => WarmupCount);
+    /// <summary>Minimum count of warmup iterations that should be performed. The default is <c>6</c>.</summary>
+    [Argument(Format = "--minWarmupCount {value}")] public int? MinWarmupCount => Get<int?>(() => MinWarmupCount);
+    /// <summary>Maximum count of warmup iterations that should be performed. The default is <c>50</c>.</summary>
+    [Argument(Format = "--maxWarmupCount {value}")] public int? MaxWarmupCount => Get<int?>(() => MaxWarmupCount);
+    /// <summary>Desired time of execution of an iteration in milliseconds. Used by Pilot stage to estimate the number of invocations per iteration. The default is <c>500</c> milliseconds.</summary>
+    [Argument(Format = "--iterationTime {value}")] public int? IterationTime => Get<int?>(() => IterationTime);
+    /// <summary>How many target iterations should be performed. By default calculated by the heuristic.</summary>
+    [Argument(Format = "--iterationCount {value}")] public int? IterationCount => Get<int?>(() => IterationCount);
+    /// <summary>Minimum number of iterations to run. The default is <c>15</c>.</summary>
+    [Argument(Format = "--minIterationCount {value}")] public int? MinIterationCount => Get<int?>(() => MinIterationCount);
+    /// <summary>Maximum number of iterations to run. The default is <c>100</c>.</summary>
+    [Argument(Format = "--maxIterationCount {value}")] public int? MaxIterationCount => Get<int?>(() => MaxIterationCount);
+    /// <summary>Invocation count in a single iteration. By default calculated by the heuristic.</summary>
+    [Argument(Format = "--invocationCount {value}")] public int? InvocationCount => Get<int?>(() => InvocationCount);
+    /// <summary>How many times the benchmark method will be invoked per one iteration of a generated loop. The default is <c>16</c>.</summary>
+    [Argument(Format = "--unrollFactor {value}")] public int? UnrollFactor => Get<int?>(() => UnrollFactor);
+    /// <summary>The run strategy that should be used. Throughput/ColdStart/Monitoring.</summary>
+    [Argument(Format = "--strategy {value}")] public BenchmarkDotNetRunStrategy RunStrategy => Get<BenchmarkDotNetRunStrategy>(() => RunStrategy);
+    /// <summary>Run the benchmark exactly once per iteration.</summary>
+    [Argument(Format = "--runOncePerIteration")] public bool? RunOncePerIteration => Get<bool?>(() => RunOncePerIteration);
+    /// <summary>Print environment information.</summary>
+    [Argument(Format = "--info")] public bool? PrintInformation => Get<bool?>(() => PrintInformation);
+    /// <summary>Prints all of the available benchmark names. Flat/Tree</summary>
+    [Argument(Format = "--list {value}")] public BenchmarkDotNetCaseMode ListBenchmarkCaseMode => Get<BenchmarkDotNetCaseMode>(() => ListBenchmarkCaseMode);
+    /// <summary>Sets the recursive depth for the disassembler.</summary>
+    [Argument(Format = "--disasmDepth {value}")] public int? DisassemblyRecursiveDepth => Get<int?>(() => DisassemblyRecursiveDepth);
+    /// <summary>Generates diff reports for the disassembler.</summary>
+    [Argument(Format = "--disasmDiff")] public bool? DisassemblyDiff => Get<bool?>(() => DisassemblyDiff);
+    /// <summary>Build timeout in seconds.</summary>
+    [Argument(Format = "--buildTimeout {value}")] public int? BuildTimeout => Get<int?>(() => BuildTimeout);
+    /// <summary>Stop on first error.</summary>
+    [Argument(Format = "--stopOnFirstError")] public bool? StopOnFirstError => Get<bool?>(() => StopOnFirstError);
+    /// <summary>Threshold for Mann–Whitney U Test. Examples: <c>5%</c>, <c>10ms</c>, <c>100ns</c>, <c>1s</c></summary>
+    [Argument(Format = "--statisticalTest {value}")] public string StatisticalTestThreshold => Get<string>(() => StatisticalTestThreshold);
+    /// <summary>Disables the logfile.</summary>
+    [Argument(Format = "--disableLogFile")] public bool? DisableLogFile => Get<bool?>(() => DisableLogFile);
+    /// <summary>Max paramter column width, the default is <c>20</c>.</summary>
+    [Argument(Format = "--maxWidth {value}")] public int? MaxParameterColumnWidth => Get<int?>(() => MaxParameterColumnWidth);
 }
 #endregion
 #region BenchmarkDotNetSettingsExtensions
-/// <summary>
-///   Used within <see cref="BenchmarkDotNetTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="BenchmarkDotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class BenchmarkDotNetSettingsExtensions
 {
     #region AssemblyFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.AssemblyFile"/></em></p>
-    ///   <p>The assembly with the benchmarks (required).</p>
-    /// </summary>
-    [Pure]
-    public static T SetAssemblyFile<T>(this T toolSettings, string assemblyFile) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AssemblyFile = assemblyFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.AssemblyFile"/></em></p>
-    ///   <p>The assembly with the benchmarks (required).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAssemblyFile<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AssemblyFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AssemblyFile"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AssemblyFile))]
+    public static T SetAssemblyFile<T>(this T o, string v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.AssemblyFile, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AssemblyFile"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AssemblyFile))]
+    public static T ResetAssemblyFile<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.AssemblyFile));
     #endregion
     #region Job
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Job"/></em></p>
-    ///   <p>Dry/Short/Medium/Long or Default</p>
-    /// </summary>
-    [Pure]
-    public static T SetJob<T>(this T toolSettings, BenchmarkDotNetJob job) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Job = job;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.Job"/></em></p>
-    ///   <p>Dry/Short/Medium/Long or Default</p>
-    /// </summary>
-    [Pure]
-    public static T ResetJob<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Job = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Job"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Job))]
+    public static T SetJob<T>(this T o, BenchmarkDotNetJob v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Job, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Job"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Job))]
+    public static T ResetJob<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.Job));
     #endregion
     #region Runtimes
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Runtimes"/> to a new list</em></p>
-    ///   <p>Full target framework moniker for .NET Core and .NET. For Mono just 'Mono', for CoreRT just 'CoreRT'. First one will be marked as baseline!</p>
-    /// </summary>
-    [Pure]
-    public static T SetRuntimes<T>(this T toolSettings, params string[] runtimes) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RuntimesInternal = runtimes.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Runtimes"/> to a new list</em></p>
-    ///   <p>Full target framework moniker for .NET Core and .NET. For Mono just 'Mono', for CoreRT just 'CoreRT'. First one will be marked as baseline!</p>
-    /// </summary>
-    [Pure]
-    public static T SetRuntimes<T>(this T toolSettings, IEnumerable<string> runtimes) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RuntimesInternal = runtimes.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.Runtimes"/></em></p>
-    ///   <p>Full target framework moniker for .NET Core and .NET. For Mono just 'Mono', for CoreRT just 'CoreRT'. First one will be marked as baseline!</p>
-    /// </summary>
-    [Pure]
-    public static T AddRuntimes<T>(this T toolSettings, params string[] runtimes) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RuntimesInternal.AddRange(runtimes);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.Runtimes"/></em></p>
-    ///   <p>Full target framework moniker for .NET Core and .NET. For Mono just 'Mono', for CoreRT just 'CoreRT'. First one will be marked as baseline!</p>
-    /// </summary>
-    [Pure]
-    public static T AddRuntimes<T>(this T toolSettings, IEnumerable<string> runtimes) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RuntimesInternal.AddRange(runtimes);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="BenchmarkDotNetSettings.Runtimes"/></em></p>
-    ///   <p>Full target framework moniker for .NET Core and .NET. For Mono just 'Mono', for CoreRT just 'CoreRT'. First one will be marked as baseline!</p>
-    /// </summary>
-    [Pure]
-    public static T ClearRuntimes<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RuntimesInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.Runtimes"/></em></p>
-    ///   <p>Full target framework moniker for .NET Core and .NET. For Mono just 'Mono', for CoreRT just 'CoreRT'. First one will be marked as baseline!</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveRuntimes<T>(this T toolSettings, params string[] runtimes) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(runtimes);
-        toolSettings.RuntimesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.Runtimes"/></em></p>
-    ///   <p>Full target framework moniker for .NET Core and .NET. For Mono just 'Mono', for CoreRT just 'CoreRT'. First one will be marked as baseline!</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveRuntimes<T>(this T toolSettings, IEnumerable<string> runtimes) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(runtimes);
-        toolSettings.RuntimesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Runtimes"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Runtimes))]
+    public static T SetRuntimes<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Runtimes, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Runtimes"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Runtimes))]
+    public static T SetRuntimes<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Runtimes, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Runtimes"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Runtimes))]
+    public static T AddRuntimes<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.Runtimes, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Runtimes"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Runtimes))]
+    public static T AddRuntimes<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.Runtimes, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Runtimes"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Runtimes))]
+    public static T RemoveRuntimes<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.Runtimes, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Runtimes"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Runtimes))]
+    public static T RemoveRuntimes<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.Runtimes, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Runtimes"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Runtimes))]
+    public static T ClearRuntimes<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.ClearCollection(() => o.Runtimes));
     #endregion
     #region Exporters
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Exporters"/> to a new list</em></p>
-    ///   <p>GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML</p>
-    /// </summary>
-    [Pure]
-    public static T SetExporters<T>(this T toolSettings, params BenchmarkDotNetExporter[] exporters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExportersInternal = exporters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Exporters"/> to a new list</em></p>
-    ///   <p>GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML</p>
-    /// </summary>
-    [Pure]
-    public static T SetExporters<T>(this T toolSettings, IEnumerable<BenchmarkDotNetExporter> exporters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExportersInternal = exporters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.Exporters"/></em></p>
-    ///   <p>GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML</p>
-    /// </summary>
-    [Pure]
-    public static T AddExporters<T>(this T toolSettings, params BenchmarkDotNetExporter[] exporters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExportersInternal.AddRange(exporters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.Exporters"/></em></p>
-    ///   <p>GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML</p>
-    /// </summary>
-    [Pure]
-    public static T AddExporters<T>(this T toolSettings, IEnumerable<BenchmarkDotNetExporter> exporters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExportersInternal.AddRange(exporters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="BenchmarkDotNetSettings.Exporters"/></em></p>
-    ///   <p>GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML</p>
-    /// </summary>
-    [Pure]
-    public static T ClearExporters<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExportersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.Exporters"/></em></p>
-    ///   <p>GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveExporters<T>(this T toolSettings, params BenchmarkDotNetExporter[] exporters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<BenchmarkDotNetExporter>(exporters);
-        toolSettings.ExportersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.Exporters"/></em></p>
-    ///   <p>GitHub/StackOverflow/RPlot/CSV/JSON/HTML/XML</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveExporters<T>(this T toolSettings, IEnumerable<BenchmarkDotNetExporter> exporters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<BenchmarkDotNetExporter>(exporters);
-        toolSettings.ExportersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Exporters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Exporters))]
+    public static T SetExporters<T>(this T o, params BenchmarkDotNetExporter[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Exporters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Exporters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Exporters))]
+    public static T SetExporters<T>(this T o, IEnumerable<BenchmarkDotNetExporter> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Exporters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Exporters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Exporters))]
+    public static T AddExporters<T>(this T o, params BenchmarkDotNetExporter[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.Exporters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Exporters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Exporters))]
+    public static T AddExporters<T>(this T o, IEnumerable<BenchmarkDotNetExporter> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.Exporters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Exporters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Exporters))]
+    public static T RemoveExporters<T>(this T o, params BenchmarkDotNetExporter[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.Exporters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Exporters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Exporters))]
+    public static T RemoveExporters<T>(this T o, IEnumerable<BenchmarkDotNetExporter> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.Exporters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Exporters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Exporters))]
+    public static T ClearExporters<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.ClearCollection(() => o.Exporters));
     #endregion
     #region MemoryStats
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.MemoryStats"/></em></p>
-    ///   <p>Prints memory statistics</p>
-    /// </summary>
-    [Pure]
-    public static T SetMemoryStats<T>(this T toolSettings, bool? memoryStats) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MemoryStats = memoryStats;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.MemoryStats"/></em></p>
-    ///   <p>Prints memory statistics</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMemoryStats<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MemoryStats = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.MemoryStats"/></em></p>
-    ///   <p>Prints memory statistics</p>
-    /// </summary>
-    [Pure]
-    public static T EnableMemoryStats<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MemoryStats = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.MemoryStats"/></em></p>
-    ///   <p>Prints memory statistics</p>
-    /// </summary>
-    [Pure]
-    public static T DisableMemoryStats<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MemoryStats = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.MemoryStats"/></em></p>
-    ///   <p>Prints memory statistics</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleMemoryStats<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MemoryStats = !toolSettings.MemoryStats;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MemoryStats"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MemoryStats))]
+    public static T SetMemoryStats<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.MemoryStats, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MemoryStats"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MemoryStats))]
+    public static T ResetMemoryStats<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.MemoryStats));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MemoryStats"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MemoryStats))]
+    public static T EnableMemoryStats<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.MemoryStats, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MemoryStats"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MemoryStats))]
+    public static T DisableMemoryStats<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.MemoryStats, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MemoryStats"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MemoryStats))]
+    public static T ToggleMemoryStats<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.MemoryStats, !o.MemoryStats));
     #endregion
     #region ThreadingStats
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.ThreadingStats"/></em></p>
-    ///   <p>Prints threading statistics</p>
-    /// </summary>
-    [Pure]
-    public static T SetThreadingStats<T>(this T toolSettings, bool? threadingStats) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ThreadingStats = threadingStats;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.ThreadingStats"/></em></p>
-    ///   <p>Prints threading statistics</p>
-    /// </summary>
-    [Pure]
-    public static T ResetThreadingStats<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ThreadingStats = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.ThreadingStats"/></em></p>
-    ///   <p>Prints threading statistics</p>
-    /// </summary>
-    [Pure]
-    public static T EnableThreadingStats<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ThreadingStats = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.ThreadingStats"/></em></p>
-    ///   <p>Prints threading statistics</p>
-    /// </summary>
-    [Pure]
-    public static T DisableThreadingStats<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ThreadingStats = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.ThreadingStats"/></em></p>
-    ///   <p>Prints threading statistics</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleThreadingStats<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ThreadingStats = !toolSettings.ThreadingStats;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ThreadingStats"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ThreadingStats))]
+    public static T SetThreadingStats<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.ThreadingStats, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ThreadingStats"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ThreadingStats))]
+    public static T ResetThreadingStats<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.ThreadingStats));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ThreadingStats"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ThreadingStats))]
+    public static T EnableThreadingStats<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.ThreadingStats, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ThreadingStats"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ThreadingStats))]
+    public static T DisableThreadingStats<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.ThreadingStats, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ThreadingStats"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ThreadingStats))]
+    public static T ToggleThreadingStats<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.ThreadingStats, !o.ThreadingStats));
     #endregion
     #region Disassembly
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Disassembly"/></em></p>
-    ///   <p>Gets disassembly of benchmarked code</p>
-    /// </summary>
-    [Pure]
-    public static T SetDisassembly<T>(this T toolSettings, bool? disassembly) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Disassembly = disassembly;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.Disassembly"/></em></p>
-    ///   <p>Gets disassembly of benchmarked code</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDisassembly<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Disassembly = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.Disassembly"/></em></p>
-    ///   <p>Gets disassembly of benchmarked code</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDisassembly<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Disassembly = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.Disassembly"/></em></p>
-    ///   <p>Gets disassembly of benchmarked code</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDisassembly<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Disassembly = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.Disassembly"/></em></p>
-    ///   <p>Gets disassembly of benchmarked code</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDisassembly<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Disassembly = !toolSettings.Disassembly;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Disassembly"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Disassembly))]
+    public static T SetDisassembly<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Disassembly, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Disassembly"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Disassembly))]
+    public static T ResetDisassembly<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.Disassembly));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Disassembly"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Disassembly))]
+    public static T EnableDisassembly<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Disassembly, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Disassembly"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Disassembly))]
+    public static T DisableDisassembly<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Disassembly, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Disassembly"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Disassembly))]
+    public static T ToggleDisassembly<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Disassembly, !o.Disassembly));
     #endregion
     #region Profiler
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Profiler"/></em></p>
-    ///   <p>Profiles benchmarked code using selected profiler.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProfiler<T>(this T toolSettings, BenchmarkDotNetProfiler profiler) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Profiler = profiler;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.Profiler"/></em></p>
-    ///   <p>Profiles benchmarked code using selected profiler.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetProfiler<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Profiler = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Profiler"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Profiler))]
+    public static T SetProfiler<T>(this T o, BenchmarkDotNetProfiler v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Profiler, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Profiler"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Profiler))]
+    public static T ResetProfiler<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.Profiler));
     #endregion
     #region Filter
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Filter"/> to a new list</em></p>
-    ///   <p>Glob patterns, e.g. <c>*</c>, <c>*.ClassA.*</c>, <c>*.ClassB.*</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetFilter<T>(this T toolSettings, params string[] filter) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FilterInternal = filter.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Filter"/> to a new list</em></p>
-    ///   <p>Glob patterns, e.g. <c>*</c>, <c>*.ClassA.*</c>, <c>*.ClassB.*</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetFilter<T>(this T toolSettings, IEnumerable<string> filter) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FilterInternal = filter.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.Filter"/></em></p>
-    ///   <p>Glob patterns, e.g. <c>*</c>, <c>*.ClassA.*</c>, <c>*.ClassB.*</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddFilter<T>(this T toolSettings, params string[] filter) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FilterInternal.AddRange(filter);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.Filter"/></em></p>
-    ///   <p>Glob patterns, e.g. <c>*</c>, <c>*.ClassA.*</c>, <c>*.ClassB.*</c></p>
-    /// </summary>
-    [Pure]
-    public static T AddFilter<T>(this T toolSettings, IEnumerable<string> filter) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FilterInternal.AddRange(filter);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="BenchmarkDotNetSettings.Filter"/></em></p>
-    ///   <p>Glob patterns, e.g. <c>*</c>, <c>*.ClassA.*</c>, <c>*.ClassB.*</c></p>
-    /// </summary>
-    [Pure]
-    public static T ClearFilter<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FilterInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.Filter"/></em></p>
-    ///   <p>Glob patterns, e.g. <c>*</c>, <c>*.ClassA.*</c>, <c>*.ClassB.*</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFilter<T>(this T toolSettings, params string[] filter) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(filter);
-        toolSettings.FilterInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.Filter"/></em></p>
-    ///   <p>Glob patterns, e.g. <c>*</c>, <c>*.ClassA.*</c>, <c>*.ClassB.*</c></p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFilter<T>(this T toolSettings, IEnumerable<string> filter) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(filter);
-        toolSettings.FilterInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Filter"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Filter))]
+    public static T SetFilter<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Filter, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Filter"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Filter))]
+    public static T SetFilter<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Filter, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Filter"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Filter))]
+    public static T AddFilter<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.Filter, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Filter"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Filter))]
+    public static T AddFilter<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.Filter, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Filter"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Filter))]
+    public static T RemoveFilter<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.Filter, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Filter"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Filter))]
+    public static T RemoveFilter<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.Filter, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Filter"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Filter))]
+    public static T ClearFilter<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.ClearCollection(() => o.Filter));
     #endregion
     #region RunInProcess
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.RunInProcess"/></em></p>
-    ///   <p>Run benchmarks in Process</p>
-    /// </summary>
-    [Pure]
-    public static T SetRunInProcess<T>(this T toolSettings, bool? runInProcess) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunInProcess = runInProcess;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.RunInProcess"/></em></p>
-    ///   <p>Run benchmarks in Process</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRunInProcess<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunInProcess = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.RunInProcess"/></em></p>
-    ///   <p>Run benchmarks in Process</p>
-    /// </summary>
-    [Pure]
-    public static T EnableRunInProcess<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunInProcess = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.RunInProcess"/></em></p>
-    ///   <p>Run benchmarks in Process</p>
-    /// </summary>
-    [Pure]
-    public static T DisableRunInProcess<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunInProcess = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.RunInProcess"/></em></p>
-    ///   <p>Run benchmarks in Process</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleRunInProcess<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunInProcess = !toolSettings.RunInProcess;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunInProcess"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunInProcess))]
+    public static T SetRunInProcess<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.RunInProcess, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunInProcess"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunInProcess))]
+    public static T ResetRunInProcess<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.RunInProcess));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunInProcess"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunInProcess))]
+    public static T EnableRunInProcess<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.RunInProcess, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunInProcess"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunInProcess))]
+    public static T DisableRunInProcess<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.RunInProcess, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunInProcess"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunInProcess))]
+    public static T ToggleRunInProcess<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.RunInProcess, !o.RunInProcess));
     #endregion
     #region ArtifactsDirecory
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.ArtifactsDirecory"/></em></p>
-    ///   <p>Valid path to accessible directory</p>
-    /// </summary>
-    [Pure]
-    public static T SetArtifactsDirecory<T>(this T toolSettings, string artifactsDirecory) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ArtifactsDirecory = artifactsDirecory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.ArtifactsDirecory"/></em></p>
-    ///   <p>Valid path to accessible directory</p>
-    /// </summary>
-    [Pure]
-    public static T ResetArtifactsDirecory<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ArtifactsDirecory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ArtifactsDirecory"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ArtifactsDirecory))]
+    public static T SetArtifactsDirecory<T>(this T o, string v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.ArtifactsDirecory, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ArtifactsDirecory"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ArtifactsDirecory))]
+    public static T ResetArtifactsDirecory<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.ArtifactsDirecory));
     #endregion
     #region OutlierMode
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.OutlierMode"/></em></p>
-    ///   <p>DontRemove/RemoveUpper/RemoveLower/RemoveAll</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutlierMode<T>(this T toolSettings, BenchmarkDotNetOutlierMode outlierMode) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutlierMode = outlierMode;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.OutlierMode"/></em></p>
-    ///   <p>DontRemove/RemoveUpper/RemoveLower/RemoveAll</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutlierMode<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutlierMode = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.OutlierMode"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.OutlierMode))]
+    public static T SetOutlierMode<T>(this T o, BenchmarkDotNetOutlierMode v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.OutlierMode, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.OutlierMode"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.OutlierMode))]
+    public static T ResetOutlierMode<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.OutlierMode));
     #endregion
     #region Affinity
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Affinity"/></em></p>
-    ///   <p>Affinity mask to set for the benchmark process</p>
-    /// </summary>
-    [Pure]
-    public static T SetAffinity<T>(this T toolSettings, int? affinity) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Affinity = affinity;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.Affinity"/></em></p>
-    ///   <p>Affinity mask to set for the benchmark process</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAffinity<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Affinity = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Affinity"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Affinity))]
+    public static T SetAffinity<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Affinity, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Affinity"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Affinity))]
+    public static T ResetAffinity<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.Affinity));
     #endregion
     #region DisplayAllStatistics
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></em></p>
-    ///   <p>Displays all statistics (min, max &amp; more)</p>
-    /// </summary>
-    [Pure]
-    public static T SetDisplayAllStatistics<T>(this T toolSettings, bool? displayAllStatistics) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisplayAllStatistics = displayAllStatistics;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></em></p>
-    ///   <p>Displays all statistics (min, max &amp; more)</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDisplayAllStatistics<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisplayAllStatistics = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></em></p>
-    ///   <p>Displays all statistics (min, max &amp; more)</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDisplayAllStatistics<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisplayAllStatistics = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></em></p>
-    ///   <p>Displays all statistics (min, max &amp; more)</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDisplayAllStatistics<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisplayAllStatistics = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.DisplayAllStatistics"/></em></p>
-    ///   <p>Displays all statistics (min, max &amp; more)</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDisplayAllStatistics<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisplayAllStatistics = !toolSettings.DisplayAllStatistics;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisplayAllStatistics"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisplayAllStatistics))]
+    public static T SetDisplayAllStatistics<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisplayAllStatistics, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisplayAllStatistics"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisplayAllStatistics))]
+    public static T ResetDisplayAllStatistics<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.DisplayAllStatistics));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisplayAllStatistics"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisplayAllStatistics))]
+    public static T EnableDisplayAllStatistics<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisplayAllStatistics, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisplayAllStatistics"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisplayAllStatistics))]
+    public static T DisableDisplayAllStatistics<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisplayAllStatistics, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisplayAllStatistics"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisplayAllStatistics))]
+    public static T ToggleDisplayAllStatistics<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisplayAllStatistics, !o.DisplayAllStatistics));
     #endregion
     #region AllCategories
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.AllCategories"/> to a new list</em></p>
-    ///   <p>Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed</p>
-    /// </summary>
-    [Pure]
-    public static T SetAllCategories<T>(this T toolSettings, params string[] allCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllCategoriesInternal = allCategories.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.AllCategories"/> to a new list</em></p>
-    ///   <p>Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed</p>
-    /// </summary>
-    [Pure]
-    public static T SetAllCategories<T>(this T toolSettings, IEnumerable<string> allCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllCategoriesInternal = allCategories.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.AllCategories"/></em></p>
-    ///   <p>Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed</p>
-    /// </summary>
-    [Pure]
-    public static T AddAllCategories<T>(this T toolSettings, params string[] allCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllCategoriesInternal.AddRange(allCategories);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.AllCategories"/></em></p>
-    ///   <p>Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed</p>
-    /// </summary>
-    [Pure]
-    public static T AddAllCategories<T>(this T toolSettings, IEnumerable<string> allCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllCategoriesInternal.AddRange(allCategories);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="BenchmarkDotNetSettings.AllCategories"/></em></p>
-    ///   <p>Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed</p>
-    /// </summary>
-    [Pure]
-    public static T ClearAllCategories<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllCategoriesInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.AllCategories"/></em></p>
-    ///   <p>Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAllCategories<T>(this T toolSettings, params string[] allCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(allCategories);
-        toolSettings.AllCategoriesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.AllCategories"/></em></p>
-    ///   <p>Categories to run. If few are provided, only the benchmarks which belong to all of them are going to be executed</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAllCategories<T>(this T toolSettings, IEnumerable<string> allCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(allCategories);
-        toolSettings.AllCategoriesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AllCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AllCategories))]
+    public static T SetAllCategories<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.AllCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AllCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AllCategories))]
+    public static T SetAllCategories<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.AllCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AllCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AllCategories))]
+    public static T AddAllCategories<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.AllCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AllCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AllCategories))]
+    public static T AddAllCategories<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.AllCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AllCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AllCategories))]
+    public static T RemoveAllCategories<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.AllCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AllCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AllCategories))]
+    public static T RemoveAllCategories<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.AllCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AllCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AllCategories))]
+    public static T ClearAllCategories<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.ClearCollection(() => o.AllCategories));
     #endregion
     #region AnyCategories
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.AnyCategories"/> to a new list</em></p>
-    ///   <p>Any Categories to run</p>
-    /// </summary>
-    [Pure]
-    public static T SetAnyCategories<T>(this T toolSettings, params string[] anyCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnyCategoriesInternal = anyCategories.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.AnyCategories"/> to a new list</em></p>
-    ///   <p>Any Categories to run</p>
-    /// </summary>
-    [Pure]
-    public static T SetAnyCategories<T>(this T toolSettings, IEnumerable<string> anyCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnyCategoriesInternal = anyCategories.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.AnyCategories"/></em></p>
-    ///   <p>Any Categories to run</p>
-    /// </summary>
-    [Pure]
-    public static T AddAnyCategories<T>(this T toolSettings, params string[] anyCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnyCategoriesInternal.AddRange(anyCategories);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.AnyCategories"/></em></p>
-    ///   <p>Any Categories to run</p>
-    /// </summary>
-    [Pure]
-    public static T AddAnyCategories<T>(this T toolSettings, IEnumerable<string> anyCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnyCategoriesInternal.AddRange(anyCategories);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="BenchmarkDotNetSettings.AnyCategories"/></em></p>
-    ///   <p>Any Categories to run</p>
-    /// </summary>
-    [Pure]
-    public static T ClearAnyCategories<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnyCategoriesInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.AnyCategories"/></em></p>
-    ///   <p>Any Categories to run</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAnyCategories<T>(this T toolSettings, params string[] anyCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(anyCategories);
-        toolSettings.AnyCategoriesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.AnyCategories"/></em></p>
-    ///   <p>Any Categories to run</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAnyCategories<T>(this T toolSettings, IEnumerable<string> anyCategories) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(anyCategories);
-        toolSettings.AnyCategoriesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AnyCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AnyCategories))]
+    public static T SetAnyCategories<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.AnyCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AnyCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AnyCategories))]
+    public static T SetAnyCategories<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.AnyCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AnyCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AnyCategories))]
+    public static T AddAnyCategories<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.AnyCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AnyCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AnyCategories))]
+    public static T AddAnyCategories<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.AnyCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AnyCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AnyCategories))]
+    public static T RemoveAnyCategories<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.AnyCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AnyCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AnyCategories))]
+    public static T RemoveAnyCategories<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.AnyCategories, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AnyCategories"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AnyCategories))]
+    public static T ClearAnyCategories<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.ClearCollection(() => o.AnyCategories));
     #endregion
     #region AttributeNames
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.AttributeNames"/> to a new list</em></p>
-    ///   <p>Run all methods with given attribute (applied to class or method)</p>
-    /// </summary>
-    [Pure]
-    public static T SetAttributeNames<T>(this T toolSettings, params string[] attributeNames) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeNamesInternal = attributeNames.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.AttributeNames"/> to a new list</em></p>
-    ///   <p>Run all methods with given attribute (applied to class or method)</p>
-    /// </summary>
-    [Pure]
-    public static T SetAttributeNames<T>(this T toolSettings, IEnumerable<string> attributeNames) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeNamesInternal = attributeNames.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.AttributeNames"/></em></p>
-    ///   <p>Run all methods with given attribute (applied to class or method)</p>
-    /// </summary>
-    [Pure]
-    public static T AddAttributeNames<T>(this T toolSettings, params string[] attributeNames) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeNamesInternal.AddRange(attributeNames);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.AttributeNames"/></em></p>
-    ///   <p>Run all methods with given attribute (applied to class or method)</p>
-    /// </summary>
-    [Pure]
-    public static T AddAttributeNames<T>(this T toolSettings, IEnumerable<string> attributeNames) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeNamesInternal.AddRange(attributeNames);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="BenchmarkDotNetSettings.AttributeNames"/></em></p>
-    ///   <p>Run all methods with given attribute (applied to class or method)</p>
-    /// </summary>
-    [Pure]
-    public static T ClearAttributeNames<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeNamesInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.AttributeNames"/></em></p>
-    ///   <p>Run all methods with given attribute (applied to class or method)</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAttributeNames<T>(this T toolSettings, params string[] attributeNames) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(attributeNames);
-        toolSettings.AttributeNamesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.AttributeNames"/></em></p>
-    ///   <p>Run all methods with given attribute (applied to class or method)</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAttributeNames<T>(this T toolSettings, IEnumerable<string> attributeNames) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(attributeNames);
-        toolSettings.AttributeNamesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AttributeNames"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AttributeNames))]
+    public static T SetAttributeNames<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.AttributeNames, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AttributeNames"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AttributeNames))]
+    public static T SetAttributeNames<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.AttributeNames, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AttributeNames"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AttributeNames))]
+    public static T AddAttributeNames<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.AttributeNames, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AttributeNames"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AttributeNames))]
+    public static T AddAttributeNames<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.AttributeNames, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AttributeNames"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AttributeNames))]
+    public static T RemoveAttributeNames<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.AttributeNames, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AttributeNames"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AttributeNames))]
+    public static T RemoveAttributeNames<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.AttributeNames, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.AttributeNames"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.AttributeNames))]
+    public static T ClearAttributeNames<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.ClearCollection(() => o.AttributeNames));
     #endregion
     #region Join
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.Join"/></em></p>
-    ///   <p>Prints single table with results for all benchmarks</p>
-    /// </summary>
-    [Pure]
-    public static T SetJoin<T>(this T toolSettings, bool? join) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Join = join;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.Join"/></em></p>
-    ///   <p>Prints single table with results for all benchmarks</p>
-    /// </summary>
-    [Pure]
-    public static T ResetJoin<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Join = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.Join"/></em></p>
-    ///   <p>Prints single table with results for all benchmarks</p>
-    /// </summary>
-    [Pure]
-    public static T EnableJoin<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Join = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.Join"/></em></p>
-    ///   <p>Prints single table with results for all benchmarks</p>
-    /// </summary>
-    [Pure]
-    public static T DisableJoin<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Join = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.Join"/></em></p>
-    ///   <p>Prints single table with results for all benchmarks</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleJoin<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Join = !toolSettings.Join;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Join"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Join))]
+    public static T SetJoin<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Join, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Join"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Join))]
+    public static T ResetJoin<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.Join));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Join"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Join))]
+    public static T EnableJoin<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Join, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Join"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Join))]
+    public static T DisableJoin<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Join, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.Join"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.Join))]
+    public static T ToggleJoin<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.Join, !o.Join));
     #endregion
     #region KeepBenchmarkFiles
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></em></p>
-    ///   <p>Determines if all auto-generated files should be kept or removed after running the benchmarks.</p>
-    /// </summary>
-    [Pure]
-    public static T SetKeepBenchmarkFiles<T>(this T toolSettings, bool? keepBenchmarkFiles) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeepBenchmarkFiles = keepBenchmarkFiles;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></em></p>
-    ///   <p>Determines if all auto-generated files should be kept or removed after running the benchmarks.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetKeepBenchmarkFiles<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeepBenchmarkFiles = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></em></p>
-    ///   <p>Determines if all auto-generated files should be kept or removed after running the benchmarks.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableKeepBenchmarkFiles<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeepBenchmarkFiles = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></em></p>
-    ///   <p>Determines if all auto-generated files should be kept or removed after running the benchmarks.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableKeepBenchmarkFiles<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeepBenchmarkFiles = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/></em></p>
-    ///   <p>Determines if all auto-generated files should be kept or removed after running the benchmarks.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleKeepBenchmarkFiles<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.KeepBenchmarkFiles = !toolSettings.KeepBenchmarkFiles;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.KeepBenchmarkFiles))]
+    public static T SetKeepBenchmarkFiles<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.KeepBenchmarkFiles, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.KeepBenchmarkFiles))]
+    public static T ResetKeepBenchmarkFiles<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.KeepBenchmarkFiles));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.KeepBenchmarkFiles))]
+    public static T EnableKeepBenchmarkFiles<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.KeepBenchmarkFiles, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.KeepBenchmarkFiles))]
+    public static T DisableKeepBenchmarkFiles<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.KeepBenchmarkFiles, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.KeepBenchmarkFiles"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.KeepBenchmarkFiles))]
+    public static T ToggleKeepBenchmarkFiles<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.KeepBenchmarkFiles, !o.KeepBenchmarkFiles));
     #endregion
     #region DontOverwriteResults
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></em></p>
-    ///   <p>Determines if the exported result files should not be overwritten (by default they are overwritten).</p>
-    /// </summary>
-    [Pure]
-    public static T SetDontOverwriteResults<T>(this T toolSettings, bool? dontOverwriteResults) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DontOverwriteResults = dontOverwriteResults;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></em></p>
-    ///   <p>Determines if the exported result files should not be overwritten (by default they are overwritten).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDontOverwriteResults<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DontOverwriteResults = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></em></p>
-    ///   <p>Determines if the exported result files should not be overwritten (by default they are overwritten).</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDontOverwriteResults<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DontOverwriteResults = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></em></p>
-    ///   <p>Determines if the exported result files should not be overwritten (by default they are overwritten).</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDontOverwriteResults<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DontOverwriteResults = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.DontOverwriteResults"/></em></p>
-    ///   <p>Determines if the exported result files should not be overwritten (by default they are overwritten).</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDontOverwriteResults<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DontOverwriteResults = !toolSettings.DontOverwriteResults;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DontOverwriteResults"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DontOverwriteResults))]
+    public static T SetDontOverwriteResults<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DontOverwriteResults, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DontOverwriteResults"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DontOverwriteResults))]
+    public static T ResetDontOverwriteResults<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.DontOverwriteResults));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DontOverwriteResults"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DontOverwriteResults))]
+    public static T EnableDontOverwriteResults<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DontOverwriteResults, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DontOverwriteResults"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DontOverwriteResults))]
+    public static T DisableDontOverwriteResults<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DontOverwriteResults, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DontOverwriteResults"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DontOverwriteResults))]
+    public static T ToggleDontOverwriteResults<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DontOverwriteResults, !o.DontOverwriteResults));
     #endregion
     #region HardwareCounters
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.HardwareCounters"/> to a new list</em></p>
-    ///   <p>Hardware Counters</p>
-    /// </summary>
-    [Pure]
-    public static T SetHardwareCounters<T>(this T toolSettings, params string[] hardwareCounters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HardwareCountersInternal = hardwareCounters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.HardwareCounters"/> to a new list</em></p>
-    ///   <p>Hardware Counters</p>
-    /// </summary>
-    [Pure]
-    public static T SetHardwareCounters<T>(this T toolSettings, IEnumerable<string> hardwareCounters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HardwareCountersInternal = hardwareCounters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.HardwareCounters"/></em></p>
-    ///   <p>Hardware Counters</p>
-    /// </summary>
-    [Pure]
-    public static T AddHardwareCounters<T>(this T toolSettings, params string[] hardwareCounters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HardwareCountersInternal.AddRange(hardwareCounters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.HardwareCounters"/></em></p>
-    ///   <p>Hardware Counters</p>
-    /// </summary>
-    [Pure]
-    public static T AddHardwareCounters<T>(this T toolSettings, IEnumerable<string> hardwareCounters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HardwareCountersInternal.AddRange(hardwareCounters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="BenchmarkDotNetSettings.HardwareCounters"/></em></p>
-    ///   <p>Hardware Counters</p>
-    /// </summary>
-    [Pure]
-    public static T ClearHardwareCounters<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HardwareCountersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.HardwareCounters"/></em></p>
-    ///   <p>Hardware Counters</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveHardwareCounters<T>(this T toolSettings, params string[] hardwareCounters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(hardwareCounters);
-        toolSettings.HardwareCountersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.HardwareCounters"/></em></p>
-    ///   <p>Hardware Counters</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveHardwareCounters<T>(this T toolSettings, IEnumerable<string> hardwareCounters) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(hardwareCounters);
-        toolSettings.HardwareCountersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.HardwareCounters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.HardwareCounters))]
+    public static T SetHardwareCounters<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.HardwareCounters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.HardwareCounters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.HardwareCounters))]
+    public static T SetHardwareCounters<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.HardwareCounters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.HardwareCounters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.HardwareCounters))]
+    public static T AddHardwareCounters<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.HardwareCounters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.HardwareCounters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.HardwareCounters))]
+    public static T AddHardwareCounters<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.HardwareCounters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.HardwareCounters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.HardwareCounters))]
+    public static T RemoveHardwareCounters<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.HardwareCounters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.HardwareCounters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.HardwareCounters))]
+    public static T RemoveHardwareCounters<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.HardwareCounters, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.HardwareCounters"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.HardwareCounters))]
+    public static T ClearHardwareCounters<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.ClearCollection(() => o.HardwareCounters));
     #endregion
     #region CliPath
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.CliPath"/></em></p>
-    ///   <p>Path to dotnet CLI (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T SetCliPath<T>(this T toolSettings, string cliPath) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CliPath = cliPath;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.CliPath"/></em></p>
-    ///   <p>Path to dotnet CLI (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetCliPath<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CliPath = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CliPath"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CliPath))]
+    public static T SetCliPath<T>(this T o, string v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.CliPath, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CliPath"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CliPath))]
+    public static T ResetCliPath<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.CliPath));
     #endregion
     #region RestorePath
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.RestorePath"/></em></p>
-    ///   <p>The directory to restore packages to (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T SetRestorePath<T>(this T toolSettings, string restorePath) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RestorePath = restorePath;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.RestorePath"/></em></p>
-    ///   <p>The directory to restore packages to (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRestorePath<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RestorePath = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RestorePath"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RestorePath))]
+    public static T SetRestorePath<T>(this T o, string v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.RestorePath, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RestorePath"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RestorePath))]
+    public static T ResetRestorePath<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.RestorePath));
     #endregion
     #region CoreRunPaths
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.CoreRunPaths"/> to a new list</em></p>
-    ///   <p>Path(s) to CoreRun (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T SetCoreRunPaths<T>(this T toolSettings, params string[] coreRunPaths) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CoreRunPathsInternal = coreRunPaths.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.CoreRunPaths"/> to a new list</em></p>
-    ///   <p>Path(s) to CoreRun (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T SetCoreRunPaths<T>(this T toolSettings, IEnumerable<string> coreRunPaths) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CoreRunPathsInternal = coreRunPaths.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></em></p>
-    ///   <p>Path(s) to CoreRun (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T AddCoreRunPaths<T>(this T toolSettings, params string[] coreRunPaths) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CoreRunPathsInternal.AddRange(coreRunPaths);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></em></p>
-    ///   <p>Path(s) to CoreRun (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T AddCoreRunPaths<T>(this T toolSettings, IEnumerable<string> coreRunPaths) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CoreRunPathsInternal.AddRange(coreRunPaths);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></em></p>
-    ///   <p>Path(s) to CoreRun (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T ClearCoreRunPaths<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CoreRunPathsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></em></p>
-    ///   <p>Path(s) to CoreRun (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveCoreRunPaths<T>(this T toolSettings, params string[] coreRunPaths) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(coreRunPaths);
-        toolSettings.CoreRunPathsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="BenchmarkDotNetSettings.CoreRunPaths"/></em></p>
-    ///   <p>Path(s) to CoreRun (optional).</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveCoreRunPaths<T>(this T toolSettings, IEnumerable<string> coreRunPaths) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(coreRunPaths);
-        toolSettings.CoreRunPathsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRunPaths"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRunPaths))]
+    public static T SetCoreRunPaths<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.CoreRunPaths, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRunPaths"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRunPaths))]
+    public static T SetCoreRunPaths<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.CoreRunPaths, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRunPaths"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRunPaths))]
+    public static T AddCoreRunPaths<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.CoreRunPaths, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRunPaths"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRunPaths))]
+    public static T AddCoreRunPaths<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.AddCollection(() => o.CoreRunPaths, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRunPaths"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRunPaths))]
+    public static T RemoveCoreRunPaths<T>(this T o, params string[] v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.CoreRunPaths, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRunPaths"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRunPaths))]
+    public static T RemoveCoreRunPaths<T>(this T o, IEnumerable<string> v) where T : BenchmarkDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.CoreRunPaths, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRunPaths"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRunPaths))]
+    public static T ClearCoreRunPaths<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.ClearCollection(() => o.CoreRunPaths));
     #endregion
     #region MonoPath
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.MonoPath"/></em></p>
-    ///   <p>Optional path to Mono which should be used for running benchmarks.</p>
-    /// </summary>
-    [Pure]
-    public static T SetMonoPath<T>(this T toolSettings, string monoPath) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MonoPath = monoPath;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.MonoPath"/></em></p>
-    ///   <p>Optional path to Mono which should be used for running benchmarks.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMonoPath<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MonoPath = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MonoPath"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MonoPath))]
+    public static T SetMonoPath<T>(this T o, string v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.MonoPath, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MonoPath"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MonoPath))]
+    public static T ResetMonoPath<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.MonoPath));
     #endregion
     #region ClrVersion
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.ClrVersion"/></em></p>
-    ///   <p>Optional version of private CLR build used as the value of <c>COMPLUS_Version</c> env var.</p>
-    /// </summary>
-    [Pure]
-    public static T SetClrVersion<T>(this T toolSettings, string clrVersion) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ClrVersion = clrVersion;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.ClrVersion"/></em></p>
-    ///   <p>Optional version of private CLR build used as the value of <c>COMPLUS_Version</c> env var.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetClrVersion<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ClrVersion = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ClrVersion"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ClrVersion))]
+    public static T SetClrVersion<T>(this T o, string v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.ClrVersion, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ClrVersion"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ClrVersion))]
+    public static T ResetClrVersion<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.ClrVersion));
     #endregion
     #region CoreRtVersion
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.CoreRtVersion"/></em></p>
-    ///   <p>Optional version of <c>Microsoft.DotNet.ILCompiler</c> which should be used to run with CoreRT. Example: <c>1.0.0-alpha-26414-01</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetCoreRtVersion<T>(this T toolSettings, string coreRtVersion) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CoreRtVersion = coreRtVersion;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.CoreRtVersion"/></em></p>
-    ///   <p>Optional version of <c>Microsoft.DotNet.ILCompiler</c> which should be used to run with CoreRT. Example: <c>1.0.0-alpha-26414-01</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetCoreRtVersion<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CoreRtVersion = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRtVersion"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRtVersion))]
+    public static T SetCoreRtVersion<T>(this T o, string v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.CoreRtVersion, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRtVersion"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRtVersion))]
+    public static T ResetCoreRtVersion<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.CoreRtVersion));
     #endregion
     #region CoreRtPath
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.CoreRtPath"/></em></p>
-    ///   <p>Optional IlcPath which should be used to run with private CoreRT build.</p>
-    /// </summary>
-    [Pure]
-    public static T SetCoreRtPath<T>(this T toolSettings, string coreRtPath) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CoreRtPath = coreRtPath;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.CoreRtPath"/></em></p>
-    ///   <p>Optional IlcPath which should be used to run with private CoreRT build.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetCoreRtPath<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CoreRtPath = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRtPath"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRtPath))]
+    public static T SetCoreRtPath<T>(this T o, string v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.CoreRtPath, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.CoreRtPath"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.CoreRtPath))]
+    public static T ResetCoreRtPath<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.CoreRtPath));
     #endregion
     #region LaunchCount
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.LaunchCount"/></em></p>
-    ///   <p>How many times we should launch process with target benchmark. The default is <c>1</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLaunchCount<T>(this T toolSettings, int? launchCount) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LaunchCount = launchCount;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.LaunchCount"/></em></p>
-    ///   <p>How many times we should launch process with target benchmark. The default is <c>1</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLaunchCount<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LaunchCount = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.LaunchCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.LaunchCount))]
+    public static T SetLaunchCount<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.LaunchCount, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.LaunchCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.LaunchCount))]
+    public static T ResetLaunchCount<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.LaunchCount));
     #endregion
     #region WarmupCount
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.WarmupCount"/></em></p>
-    ///   <p>How many warmup iterations should be performed. If you set it, the <c>minWarmupCount</c> and <c>maxWarmupCount</c> are ignored. By default calculated by the heuristic.</p>
-    /// </summary>
-    [Pure]
-    public static T SetWarmupCount<T>(this T toolSettings, int? warmupCount) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.WarmupCount = warmupCount;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.WarmupCount"/></em></p>
-    ///   <p>How many warmup iterations should be performed. If you set it, the <c>minWarmupCount</c> and <c>maxWarmupCount</c> are ignored. By default calculated by the heuristic.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetWarmupCount<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.WarmupCount = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.WarmupCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.WarmupCount))]
+    public static T SetWarmupCount<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.WarmupCount, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.WarmupCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.WarmupCount))]
+    public static T ResetWarmupCount<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.WarmupCount));
     #endregion
     #region MinWarmupCount
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.MinWarmupCount"/></em></p>
-    ///   <p>Minimum count of warmup iterations that should be performed. The default is <c>6</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetMinWarmupCount<T>(this T toolSettings, int? minWarmupCount) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MinWarmupCount = minWarmupCount;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.MinWarmupCount"/></em></p>
-    ///   <p>Minimum count of warmup iterations that should be performed. The default is <c>6</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMinWarmupCount<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MinWarmupCount = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MinWarmupCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MinWarmupCount))]
+    public static T SetMinWarmupCount<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.MinWarmupCount, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MinWarmupCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MinWarmupCount))]
+    public static T ResetMinWarmupCount<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.MinWarmupCount));
     #endregion
     #region MaxWarmupCount
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.MaxWarmupCount"/></em></p>
-    ///   <p>Maximum count of warmup iterations that should be performed. The default is <c>50</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetMaxWarmupCount<T>(this T toolSettings, int? maxWarmupCount) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MaxWarmupCount = maxWarmupCount;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.MaxWarmupCount"/></em></p>
-    ///   <p>Maximum count of warmup iterations that should be performed. The default is <c>50</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMaxWarmupCount<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MaxWarmupCount = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MaxWarmupCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MaxWarmupCount))]
+    public static T SetMaxWarmupCount<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.MaxWarmupCount, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MaxWarmupCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MaxWarmupCount))]
+    public static T ResetMaxWarmupCount<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.MaxWarmupCount));
     #endregion
     #region IterationTime
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.IterationTime"/></em></p>
-    ///   <p>Desired time of execution of an iteration in milliseconds. Used by Pilot stage to estimate the number of invocations per iteration. The default is <c>500</c> milliseconds.</p>
-    /// </summary>
-    [Pure]
-    public static T SetIterationTime<T>(this T toolSettings, int? iterationTime) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IterationTime = iterationTime;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.IterationTime"/></em></p>
-    ///   <p>Desired time of execution of an iteration in milliseconds. Used by Pilot stage to estimate the number of invocations per iteration. The default is <c>500</c> milliseconds.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetIterationTime<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IterationTime = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.IterationTime"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.IterationTime))]
+    public static T SetIterationTime<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.IterationTime, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.IterationTime"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.IterationTime))]
+    public static T ResetIterationTime<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.IterationTime));
     #endregion
     #region IterationCount
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.IterationCount"/></em></p>
-    ///   <p>How many target iterations should be performed. By default calculated by the heuristic.</p>
-    /// </summary>
-    [Pure]
-    public static T SetIterationCount<T>(this T toolSettings, int? iterationCount) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IterationCount = iterationCount;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.IterationCount"/></em></p>
-    ///   <p>How many target iterations should be performed. By default calculated by the heuristic.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetIterationCount<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IterationCount = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.IterationCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.IterationCount))]
+    public static T SetIterationCount<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.IterationCount, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.IterationCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.IterationCount))]
+    public static T ResetIterationCount<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.IterationCount));
     #endregion
     #region MinIterationCount
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.MinIterationCount"/></em></p>
-    ///   <p>Minimum number of iterations to run. The default is <c>15</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetMinIterationCount<T>(this T toolSettings, int? minIterationCount) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MinIterationCount = minIterationCount;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.MinIterationCount"/></em></p>
-    ///   <p>Minimum number of iterations to run. The default is <c>15</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMinIterationCount<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MinIterationCount = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MinIterationCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MinIterationCount))]
+    public static T SetMinIterationCount<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.MinIterationCount, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MinIterationCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MinIterationCount))]
+    public static T ResetMinIterationCount<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.MinIterationCount));
     #endregion
     #region MaxIterationCount
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.MaxIterationCount"/></em></p>
-    ///   <p>Maximum number of iterations to run. The default is <c>100</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetMaxIterationCount<T>(this T toolSettings, int? maxIterationCount) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MaxIterationCount = maxIterationCount;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.MaxIterationCount"/></em></p>
-    ///   <p>Maximum number of iterations to run. The default is <c>100</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMaxIterationCount<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MaxIterationCount = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MaxIterationCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MaxIterationCount))]
+    public static T SetMaxIterationCount<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.MaxIterationCount, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MaxIterationCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MaxIterationCount))]
+    public static T ResetMaxIterationCount<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.MaxIterationCount));
     #endregion
     #region InvocationCount
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.InvocationCount"/></em></p>
-    ///   <p>Invocation count in a single iteration. By default calculated by the heuristic.</p>
-    /// </summary>
-    [Pure]
-    public static T SetInvocationCount<T>(this T toolSettings, int? invocationCount) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InvocationCount = invocationCount;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.InvocationCount"/></em></p>
-    ///   <p>Invocation count in a single iteration. By default calculated by the heuristic.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetInvocationCount<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InvocationCount = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.InvocationCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.InvocationCount))]
+    public static T SetInvocationCount<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.InvocationCount, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.InvocationCount"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.InvocationCount))]
+    public static T ResetInvocationCount<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.InvocationCount));
     #endregion
     #region UnrollFactor
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.UnrollFactor"/></em></p>
-    ///   <p>How many times the benchmark method will be invoked per one iteration of a generated loop. The default is <c>16</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetUnrollFactor<T>(this T toolSettings, int? unrollFactor) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UnrollFactor = unrollFactor;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.UnrollFactor"/></em></p>
-    ///   <p>How many times the benchmark method will be invoked per one iteration of a generated loop. The default is <c>16</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUnrollFactor<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UnrollFactor = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.UnrollFactor"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.UnrollFactor))]
+    public static T SetUnrollFactor<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.UnrollFactor, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.UnrollFactor"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.UnrollFactor))]
+    public static T ResetUnrollFactor<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.UnrollFactor));
     #endregion
     #region RunStrategy
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.RunStrategy"/></em></p>
-    ///   <p>The run strategy that should be used. Throughput/ColdStart/Monitoring.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRunStrategy<T>(this T toolSettings, BenchmarkDotNetRunStrategy runStrategy) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunStrategy = runStrategy;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.RunStrategy"/></em></p>
-    ///   <p>The run strategy that should be used. Throughput/ColdStart/Monitoring.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRunStrategy<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunStrategy = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunStrategy"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunStrategy))]
+    public static T SetRunStrategy<T>(this T o, BenchmarkDotNetRunStrategy v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.RunStrategy, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunStrategy"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunStrategy))]
+    public static T ResetRunStrategy<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.RunStrategy));
     #endregion
     #region RunOncePerIteration
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></em></p>
-    ///   <p>Run the benchmark exactly once per iteration.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRunOncePerIteration<T>(this T toolSettings, bool? runOncePerIteration) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunOncePerIteration = runOncePerIteration;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></em></p>
-    ///   <p>Run the benchmark exactly once per iteration.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRunOncePerIteration<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunOncePerIteration = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></em></p>
-    ///   <p>Run the benchmark exactly once per iteration.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableRunOncePerIteration<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunOncePerIteration = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></em></p>
-    ///   <p>Run the benchmark exactly once per iteration.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableRunOncePerIteration<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunOncePerIteration = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.RunOncePerIteration"/></em></p>
-    ///   <p>Run the benchmark exactly once per iteration.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleRunOncePerIteration<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RunOncePerIteration = !toolSettings.RunOncePerIteration;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunOncePerIteration"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunOncePerIteration))]
+    public static T SetRunOncePerIteration<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.RunOncePerIteration, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunOncePerIteration"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunOncePerIteration))]
+    public static T ResetRunOncePerIteration<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.RunOncePerIteration));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunOncePerIteration"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunOncePerIteration))]
+    public static T EnableRunOncePerIteration<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.RunOncePerIteration, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunOncePerIteration"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunOncePerIteration))]
+    public static T DisableRunOncePerIteration<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.RunOncePerIteration, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.RunOncePerIteration"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.RunOncePerIteration))]
+    public static T ToggleRunOncePerIteration<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.RunOncePerIteration, !o.RunOncePerIteration));
     #endregion
     #region PrintInformation
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.PrintInformation"/></em></p>
-    ///   <p>Print environment information.</p>
-    /// </summary>
-    [Pure]
-    public static T SetPrintInformation<T>(this T toolSettings, bool? printInformation) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PrintInformation = printInformation;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.PrintInformation"/></em></p>
-    ///   <p>Print environment information.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetPrintInformation<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PrintInformation = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.PrintInformation"/></em></p>
-    ///   <p>Print environment information.</p>
-    /// </summary>
-    [Pure]
-    public static T EnablePrintInformation<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PrintInformation = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.PrintInformation"/></em></p>
-    ///   <p>Print environment information.</p>
-    /// </summary>
-    [Pure]
-    public static T DisablePrintInformation<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PrintInformation = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.PrintInformation"/></em></p>
-    ///   <p>Print environment information.</p>
-    /// </summary>
-    [Pure]
-    public static T TogglePrintInformation<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PrintInformation = !toolSettings.PrintInformation;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.PrintInformation"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.PrintInformation))]
+    public static T SetPrintInformation<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.PrintInformation, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.PrintInformation"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.PrintInformation))]
+    public static T ResetPrintInformation<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.PrintInformation));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.PrintInformation"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.PrintInformation))]
+    public static T EnablePrintInformation<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.PrintInformation, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.PrintInformation"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.PrintInformation))]
+    public static T DisablePrintInformation<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.PrintInformation, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.PrintInformation"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.PrintInformation))]
+    public static T TogglePrintInformation<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.PrintInformation, !o.PrintInformation));
     #endregion
     #region ListBenchmarkCaseMode
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.ListBenchmarkCaseMode"/></em></p>
-    ///   <p>Prints all of the available benchmark names. Flat/Tree</p>
-    /// </summary>
-    [Pure]
-    public static T SetListBenchmarkCaseMode<T>(this T toolSettings, BenchmarkDotNetCaseMode listBenchmarkCaseMode) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListBenchmarkCaseMode = listBenchmarkCaseMode;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.ListBenchmarkCaseMode"/></em></p>
-    ///   <p>Prints all of the available benchmark names. Flat/Tree</p>
-    /// </summary>
-    [Pure]
-    public static T ResetListBenchmarkCaseMode<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListBenchmarkCaseMode = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ListBenchmarkCaseMode"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ListBenchmarkCaseMode))]
+    public static T SetListBenchmarkCaseMode<T>(this T o, BenchmarkDotNetCaseMode v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.ListBenchmarkCaseMode, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.ListBenchmarkCaseMode"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.ListBenchmarkCaseMode))]
+    public static T ResetListBenchmarkCaseMode<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.ListBenchmarkCaseMode));
     #endregion
     #region DisassemblyRecursiveDepth
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.DisassemblyRecursiveDepth"/></em></p>
-    ///   <p>Sets the recursive depth for the disassembler.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDisassemblyRecursiveDepth<T>(this T toolSettings, int? disassemblyRecursiveDepth) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisassemblyRecursiveDepth = disassemblyRecursiveDepth;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.DisassemblyRecursiveDepth"/></em></p>
-    ///   <p>Sets the recursive depth for the disassembler.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDisassemblyRecursiveDepth<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisassemblyRecursiveDepth = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisassemblyRecursiveDepth"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisassemblyRecursiveDepth))]
+    public static T SetDisassemblyRecursiveDepth<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisassemblyRecursiveDepth, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisassemblyRecursiveDepth"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisassemblyRecursiveDepth))]
+    public static T ResetDisassemblyRecursiveDepth<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.DisassemblyRecursiveDepth));
     #endregion
     #region DisassemblyDiff
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></em></p>
-    ///   <p>Generates diff reports for the disassembler.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDisassemblyDiff<T>(this T toolSettings, bool? disassemblyDiff) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisassemblyDiff = disassemblyDiff;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></em></p>
-    ///   <p>Generates diff reports for the disassembler.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDisassemblyDiff<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisassemblyDiff = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></em></p>
-    ///   <p>Generates diff reports for the disassembler.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDisassemblyDiff<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisassemblyDiff = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></em></p>
-    ///   <p>Generates diff reports for the disassembler.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDisassemblyDiff<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisassemblyDiff = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.DisassemblyDiff"/></em></p>
-    ///   <p>Generates diff reports for the disassembler.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDisassemblyDiff<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisassemblyDiff = !toolSettings.DisassemblyDiff;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisassemblyDiff"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisassemblyDiff))]
+    public static T SetDisassemblyDiff<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisassemblyDiff, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisassemblyDiff"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisassemblyDiff))]
+    public static T ResetDisassemblyDiff<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.DisassemblyDiff));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisassemblyDiff"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisassemblyDiff))]
+    public static T EnableDisassemblyDiff<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisassemblyDiff, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisassemblyDiff"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisassemblyDiff))]
+    public static T DisableDisassemblyDiff<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisassemblyDiff, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisassemblyDiff"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisassemblyDiff))]
+    public static T ToggleDisassemblyDiff<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisassemblyDiff, !o.DisassemblyDiff));
     #endregion
     #region BuildTimeout
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.BuildTimeout"/></em></p>
-    ///   <p>Build timeout in seconds.</p>
-    /// </summary>
-    [Pure]
-    public static T SetBuildTimeout<T>(this T toolSettings, int? buildTimeout) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.BuildTimeout = buildTimeout;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.BuildTimeout"/></em></p>
-    ///   <p>Build timeout in seconds.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetBuildTimeout<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.BuildTimeout = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.BuildTimeout"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.BuildTimeout))]
+    public static T SetBuildTimeout<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.BuildTimeout, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.BuildTimeout"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.BuildTimeout))]
+    public static T ResetBuildTimeout<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.BuildTimeout));
     #endregion
     #region StopOnFirstError
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></em></p>
-    ///   <p>Stop on first error.</p>
-    /// </summary>
-    [Pure]
-    public static T SetStopOnFirstError<T>(this T toolSettings, bool? stopOnFirstError) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StopOnFirstError = stopOnFirstError;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></em></p>
-    ///   <p>Stop on first error.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetStopOnFirstError<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StopOnFirstError = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></em></p>
-    ///   <p>Stop on first error.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableStopOnFirstError<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StopOnFirstError = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></em></p>
-    ///   <p>Stop on first error.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableStopOnFirstError<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StopOnFirstError = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.StopOnFirstError"/></em></p>
-    ///   <p>Stop on first error.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleStopOnFirstError<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StopOnFirstError = !toolSettings.StopOnFirstError;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.StopOnFirstError"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.StopOnFirstError))]
+    public static T SetStopOnFirstError<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.StopOnFirstError, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.StopOnFirstError"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.StopOnFirstError))]
+    public static T ResetStopOnFirstError<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.StopOnFirstError));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.StopOnFirstError"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.StopOnFirstError))]
+    public static T EnableStopOnFirstError<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.StopOnFirstError, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.StopOnFirstError"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.StopOnFirstError))]
+    public static T DisableStopOnFirstError<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.StopOnFirstError, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.StopOnFirstError"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.StopOnFirstError))]
+    public static T ToggleStopOnFirstError<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.StopOnFirstError, !o.StopOnFirstError));
     #endregion
     #region StatisticalTestThreshold
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.StatisticalTestThreshold"/></em></p>
-    ///   <p>Threshold for Mann–Whitney U Test. Examples: <c>5%</c>, <c>10ms</c>, <c>100ns</c>, <c>1s</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetStatisticalTestThreshold<T>(this T toolSettings, string statisticalTestThreshold) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StatisticalTestThreshold = statisticalTestThreshold;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.StatisticalTestThreshold"/></em></p>
-    ///   <p>Threshold for Mann–Whitney U Test. Examples: <c>5%</c>, <c>10ms</c>, <c>100ns</c>, <c>1s</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetStatisticalTestThreshold<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StatisticalTestThreshold = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.StatisticalTestThreshold"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.StatisticalTestThreshold))]
+    public static T SetStatisticalTestThreshold<T>(this T o, string v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.StatisticalTestThreshold, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.StatisticalTestThreshold"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.StatisticalTestThreshold))]
+    public static T ResetStatisticalTestThreshold<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.StatisticalTestThreshold));
     #endregion
     #region DisableLogFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.DisableLogFile"/></em></p>
-    ///   <p>Disables the logfile.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDisableLogFile<T>(this T toolSettings, bool? disableLogFile) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableLogFile = disableLogFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.DisableLogFile"/></em></p>
-    ///   <p>Disables the logfile.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDisableLogFile<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableLogFile = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="BenchmarkDotNetSettings.DisableLogFile"/></em></p>
-    ///   <p>Disables the logfile.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDisableLogFile<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableLogFile = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="BenchmarkDotNetSettings.DisableLogFile"/></em></p>
-    ///   <p>Disables the logfile.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDisableLogFile<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableLogFile = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="BenchmarkDotNetSettings.DisableLogFile"/></em></p>
-    ///   <p>Disables the logfile.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDisableLogFile<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableLogFile = !toolSettings.DisableLogFile;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisableLogFile"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisableLogFile))]
+    public static T SetDisableLogFile<T>(this T o, bool? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisableLogFile, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisableLogFile"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisableLogFile))]
+    public static T ResetDisableLogFile<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.DisableLogFile));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisableLogFile"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisableLogFile))]
+    public static T EnableDisableLogFile<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisableLogFile, true));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisableLogFile"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisableLogFile))]
+    public static T DisableDisableLogFile<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisableLogFile, false));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.DisableLogFile"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.DisableLogFile))]
+    public static T ToggleDisableLogFile<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.DisableLogFile, !o.DisableLogFile));
     #endregion
     #region MaxParameterColumnWidth
-    /// <summary>
-    ///   <p><em>Sets <see cref="BenchmarkDotNetSettings.MaxParameterColumnWidth"/></em></p>
-    ///   <p>Max paramter column width, the default is <c>20</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetMaxParameterColumnWidth<T>(this T toolSettings, int? maxParameterColumnWidth) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MaxParameterColumnWidth = maxParameterColumnWidth;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="BenchmarkDotNetSettings.MaxParameterColumnWidth"/></em></p>
-    ///   <p>Max paramter column width, the default is <c>20</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetMaxParameterColumnWidth<T>(this T toolSettings) where T : BenchmarkDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.MaxParameterColumnWidth = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MaxParameterColumnWidth"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MaxParameterColumnWidth))]
+    public static T SetMaxParameterColumnWidth<T>(this T o, int? v) where T : BenchmarkDotNetSettings => o.Modify(b => b.Set(() => o.MaxParameterColumnWidth, v));
+    /// <inheritdoc cref="BenchmarkDotNetSettings.MaxParameterColumnWidth"/>
+    [Pure] [Builder(Type = typeof(BenchmarkDotNetSettings), Property = nameof(BenchmarkDotNetSettings.MaxParameterColumnWidth))]
+    public static T ResetMaxParameterColumnWidth<T>(this T o) where T : BenchmarkDotNetSettings => o.Modify(b => b.Remove(() => o.MaxParameterColumnWidth));
     #endregion
 }
 #endregion
 #region BenchmarkDotNetJob
-/// <summary>
-///   Used within <see cref="BenchmarkDotNetTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="BenchmarkDotNetTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -2604,9 +804,7 @@ public partial class BenchmarkDotNetJob : Enumeration
 }
 #endregion
 #region BenchmarkDotNetOutlierMode
-/// <summary>
-///   Used within <see cref="BenchmarkDotNetTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="BenchmarkDotNetTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -2624,9 +822,7 @@ public partial class BenchmarkDotNetOutlierMode : Enumeration
 }
 #endregion
 #region BenchmarkDotNetExporter
-/// <summary>
-///   Used within <see cref="BenchmarkDotNetTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="BenchmarkDotNetTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -2647,9 +843,7 @@ public partial class BenchmarkDotNetExporter : Enumeration
 }
 #endregion
 #region BenchmarkDotNetProfiler
-/// <summary>
-///   Used within <see cref="BenchmarkDotNetTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="BenchmarkDotNetTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -2667,9 +861,7 @@ public partial class BenchmarkDotNetProfiler : Enumeration
 }
 #endregion
 #region BenchmarkDotNetRunStrategy
-/// <summary>
-///   Used within <see cref="BenchmarkDotNetTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="BenchmarkDotNetTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -2686,9 +878,7 @@ public partial class BenchmarkDotNetRunStrategy : Enumeration
 }
 #endregion
 #region BenchmarkDotNetCaseMode
-/// <summary>
-///   Used within <see cref="BenchmarkDotNetTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="BenchmarkDotNetTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]

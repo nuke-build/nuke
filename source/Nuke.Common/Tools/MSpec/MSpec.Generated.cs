@@ -17,1051 +17,314 @@ using System.Text;
 
 namespace Nuke.Common.Tools.MSpec;
 
-/// <summary>
-///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
-///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
-/// </summary>
+/// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(MSpecPackageId)]
-public partial class MSpecTasks
-    : IRequireNuGetPackage
+[NuGetPackageRequirement(PackageId)]
+[NuGetTool(Id = PackageId)]
+public partial class MSpecTasks : ToolTasks, IRequireNuGetPackage
 {
-    public const string MSpecPackageId = "machine.specifications.runner.console";
-    /// <summary>
-    ///   Path to the MSpec executable.
-    /// </summary>
-    public static string MSpecPath =>
-        ToolPathResolver.TryGetEnvironmentExecutable("MSPEC_EXE") ??
-        GetToolPath();
-    public static Action<OutputType, string> MSpecLogger { get; set; } = ProcessTasks.DefaultLogger;
-    public static Action<ToolSettings, IProcess> MSpecExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
-    /// <summary>
-    ///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
-    /// </summary>
-    public static IReadOnlyCollection<Output> MSpec(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(MSpecPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? MSpecLogger);
-        (exitHandler ?? (p => MSpecExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li>
-    ///     <li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li>
-    ///     <li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li>
-    ///     <li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li>
-    ///     <li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li>
-    ///     <li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li>
-    ///     <li><c>--progress</c> via <see cref="MSpecSettings.DottedProgress"/></li>
-    ///     <li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li>
-    ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
-    ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
-    ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
-    ///     <li><c>-exclude</c> via <see cref="MSpecSettings.Excludes"/></li>
-    ///     <li><c>-filters</c> via <see cref="MSpecSettings.Filters"/></li>
-    ///     <li><c>-include</c> via <see cref="MSpecSettings.Includes"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> MSpec(MSpecSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new MSpecSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li>
-    ///     <li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li>
-    ///     <li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li>
-    ///     <li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li>
-    ///     <li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li>
-    ///     <li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li>
-    ///     <li><c>--progress</c> via <see cref="MSpecSettings.DottedProgress"/></li>
-    ///     <li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li>
-    ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
-    ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
-    ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
-    ///     <li><c>-exclude</c> via <see cref="MSpecSettings.Excludes"/></li>
-    ///     <li><c>-filters</c> via <see cref="MSpecSettings.Filters"/></li>
-    ///     <li><c>-include</c> via <see cref="MSpecSettings.Includes"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> MSpec(Configure<MSpecSettings> configurator)
-    {
-        return MSpec(configurator(new MSpecSettings()));
-    }
-    /// <summary>
-    ///   <p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li>
-    ///     <li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li>
-    ///     <li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li>
-    ///     <li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li>
-    ///     <li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li>
-    ///     <li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li>
-    ///     <li><c>--progress</c> via <see cref="MSpecSettings.DottedProgress"/></li>
-    ///     <li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li>
-    ///     <li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li>
-    ///     <li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li>
-    ///     <li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li>
-    ///     <li><c>-exclude</c> via <see cref="MSpecSettings.Excludes"/></li>
-    ///     <li><c>-filters</c> via <see cref="MSpecSettings.Filters"/></li>
-    ///     <li><c>-include</c> via <see cref="MSpecSettings.Includes"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(MSpecSettings Settings, IReadOnlyCollection<Output> Output)> MSpec(CombinatorialConfigure<MSpecSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(MSpec, MSpecLogger, degreeOfParallelism, completeOnFailure);
-    }
+    public static string MSpecPath => new MSpecTasks().GetToolPath();
+    public const string PackageId = "machine.specifications.runner.console";
+    /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
+    public static IReadOnlyCollection<Output> MSpec(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new MSpecTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
+    /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li><li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li><li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li><li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li><li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li><li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li><li><c>--progress</c> via <see cref="MSpecSettings.DottedProgress"/></li><li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li><li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li><li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li><li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li><li><c>-exclude</c> via <see cref="MSpecSettings.Excludes"/></li><li><c>-filters</c> via <see cref="MSpecSettings.Filters"/></li><li><c>-include</c> via <see cref="MSpecSettings.Includes"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> MSpec(MSpecSettings options = null) => new MSpecTasks().Run(options);
+    /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li><li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li><li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li><li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li><li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li><li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li><li><c>--progress</c> via <see cref="MSpecSettings.DottedProgress"/></li><li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li><li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li><li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li><li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li><li><c>-exclude</c> via <see cref="MSpecSettings.Excludes"/></li><li><c>-filters</c> via <see cref="MSpecSettings.Filters"/></li><li><c>-include</c> via <see cref="MSpecSettings.Includes"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> MSpec(Configure<MSpecSettings> configurator) => new MSpecTasks().Run(configurator.Invoke(new MSpecSettings()));
+    /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;assemblies&gt;</c> via <see cref="MSpecSettings.Assemblies"/></li><li><c>--appveyor</c> via <see cref="MSpecSettings.AppVeyor"/></li><li><c>--html</c> via <see cref="MSpecSettings.HtmlOutput"/></li><li><c>--no-appveyor-autodetect</c> via <see cref="MSpecSettings.NoAppVeyor"/></li><li><c>--no-color</c> via <see cref="MSpecSettings.NoColor"/></li><li><c>--no-teamcity-autodetect</c> via <see cref="MSpecSettings.NoTeamCity"/></li><li><c>--progress</c> via <see cref="MSpecSettings.DottedProgress"/></li><li><c>--silent</c> via <see cref="MSpecSettings.Silent"/></li><li><c>--teamcity</c> via <see cref="MSpecSettings.TeamCity"/></li><li><c>--timeinfo</c> via <see cref="MSpecSettings.TimeInfo"/></li><li><c>--xml</c> via <see cref="MSpecSettings.XmlOutput"/></li><li><c>-exclude</c> via <see cref="MSpecSettings.Excludes"/></li><li><c>-filters</c> via <see cref="MSpecSettings.Filters"/></li><li><c>-include</c> via <see cref="MSpecSettings.Includes"/></li></ul></remarks>
+    public static IEnumerable<(MSpecSettings Settings, IReadOnlyCollection<Output> Output)> MSpec(CombinatorialConfigure<MSpecSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(MSpec, degreeOfParallelism, completeOnFailure);
 }
 #region MSpecSettings
-/// <summary>
-///   Used within <see cref="MSpecTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="MSpecTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class MSpecSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<MSpecSettings>))]
+[Command(Type = typeof(MSpecTasks), Command = nameof(MSpecTasks.MSpec))]
+public partial class MSpecSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the MSpec executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? MSpecTasks.MSpecLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? MSpecTasks.MSpecExitHandler;
-    /// <summary>
-    ///   Assemblies with tests to be executed.
-    /// </summary>
-    public virtual IReadOnlyList<string> Assemblies => AssembliesInternal.AsReadOnly();
-    internal List<string> AssembliesInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.
-    /// </summary>
-    public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
-    internal List<string> FiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.
-    /// </summary>
-    public virtual IReadOnlyList<string> Includes => IncludesInternal.AsReadOnly();
-    internal List<string> IncludesInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.
-    /// </summary>
-    public virtual IReadOnlyList<string> Excludes => ExcludesInternal.AsReadOnly();
-    internal List<string> ExcludesInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c>
-    /// </summary>
-    public virtual string HtmlOutput { get; internal set; }
-    /// <summary>
-    ///   Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c>
-    /// </summary>
-    public virtual string XmlOutput { get; internal set; }
-    /// <summary>
-    ///   Reporting for TeamCity CI integration (also auto-detected).
-    /// </summary>
-    public virtual bool? TeamCity { get; internal set; }
-    /// <summary>
-    ///   Disables TeamCity autodetection.
-    /// </summary>
-    public virtual bool? NoTeamCity { get; internal set; }
-    /// <summary>
-    ///   Reporting for AppVeyor CI integration (also auto-detected).
-    /// </summary>
-    public virtual bool? AppVeyor { get; internal set; }
-    /// <summary>
-    ///   Disables AppVeyor autodetection.
-    /// </summary>
-    public virtual bool? NoAppVeyor { get; internal set; }
-    /// <summary>
-    ///   Shows time-related information in HTML output.
-    /// </summary>
-    public virtual bool? TimeInfo { get; internal set; }
-    /// <summary>
-    ///   Suppress progress output (print fatal errors, failures and summary).
-    /// </summary>
-    public virtual bool? Silent { get; internal set; }
-    /// <summary>
-    ///   Print dotted progress output.
-    /// </summary>
-    public virtual bool? DottedProgress { get; internal set; }
-    /// <summary>
-    ///   Suppress colored console output.
-    /// </summary>
-    public virtual bool? NoColor { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("{value}", Assemblies, separator: ' ')
-          .Add("-filters {value}", Filters, separator: ',')
-          .Add("-include {value}", Includes, separator: ',')
-          .Add("-exclude {value}", Excludes, separator: ',')
-          .Add("--html {value}", HtmlOutput)
-          .Add("--xml {value}", XmlOutput)
-          .Add("--teamcity", TeamCity)
-          .Add("--no-teamcity-autodetect", NoTeamCity)
-          .Add("--appveyor", AppVeyor)
-          .Add("--no-appveyor-autodetect", NoAppVeyor)
-          .Add("--timeinfo", TimeInfo)
-          .Add("--silent", Silent)
-          .Add("--progress", DottedProgress)
-          .Add("--no-color", NoColor);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary>Assemblies with tests to be executed.</summary>
+    [Argument(Format = "{value}", Position = 1, Separator = " ")] public IReadOnlyList<string> Assemblies => Get<List<string>>(() => Assemblies);
+    /// <summary>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</summary>
+    [Argument(Format = "-filters {value}", Separator = ",")] public IReadOnlyList<string> Filters => Get<List<string>>(() => Filters);
+    /// <summary>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</summary>
+    [Argument(Format = "-include {value}", Separator = ",")] public IReadOnlyList<string> Includes => Get<List<string>>(() => Includes);
+    /// <summary>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</summary>
+    [Argument(Format = "-exclude {value}", Separator = ",")] public IReadOnlyList<string> Excludes => Get<List<string>>(() => Excludes);
+    /// <summary>Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c></summary>
+    [Argument(Format = "--html {value}")] public string HtmlOutput => Get<string>(() => HtmlOutput);
+    /// <summary>Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c></summary>
+    [Argument(Format = "--xml {value}")] public string XmlOutput => Get<string>(() => XmlOutput);
+    /// <summary>Reporting for TeamCity CI integration (also auto-detected).</summary>
+    [Argument(Format = "--teamcity")] public bool? TeamCity => Get<bool?>(() => TeamCity);
+    /// <summary>Disables TeamCity autodetection.</summary>
+    [Argument(Format = "--no-teamcity-autodetect")] public bool? NoTeamCity => Get<bool?>(() => NoTeamCity);
+    /// <summary>Reporting for AppVeyor CI integration (also auto-detected).</summary>
+    [Argument(Format = "--appveyor")] public bool? AppVeyor => Get<bool?>(() => AppVeyor);
+    /// <summary>Disables AppVeyor autodetection.</summary>
+    [Argument(Format = "--no-appveyor-autodetect")] public bool? NoAppVeyor => Get<bool?>(() => NoAppVeyor);
+    /// <summary>Shows time-related information in HTML output.</summary>
+    [Argument(Format = "--timeinfo")] public bool? TimeInfo => Get<bool?>(() => TimeInfo);
+    /// <summary>Suppress progress output (print fatal errors, failures and summary).</summary>
+    [Argument(Format = "--silent")] public bool? Silent => Get<bool?>(() => Silent);
+    /// <summary>Print dotted progress output.</summary>
+    [Argument(Format = "--progress")] public bool? DottedProgress => Get<bool?>(() => DottedProgress);
+    /// <summary>Suppress colored console output.</summary>
+    [Argument(Format = "--no-color")] public bool? NoColor => Get<bool?>(() => NoColor);
 }
 #endregion
 #region MSpecSettingsExtensions
-/// <summary>
-///   Used within <see cref="MSpecTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="MSpecTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class MSpecSettingsExtensions
 {
     #region Assemblies
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.Assemblies"/> to a new list</em></p>
-    ///   <p>Assemblies with tests to be executed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAssemblies<T>(this T toolSettings, params string[] assemblies) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AssembliesInternal = assemblies.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.Assemblies"/> to a new list</em></p>
-    ///   <p>Assemblies with tests to be executed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAssemblies<T>(this T toolSettings, IEnumerable<string> assemblies) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AssembliesInternal = assemblies.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSpecSettings.Assemblies"/></em></p>
-    ///   <p>Assemblies with tests to be executed.</p>
-    /// </summary>
-    [Pure]
-    public static T AddAssemblies<T>(this T toolSettings, params string[] assemblies) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AssembliesInternal.AddRange(assemblies);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSpecSettings.Assemblies"/></em></p>
-    ///   <p>Assemblies with tests to be executed.</p>
-    /// </summary>
-    [Pure]
-    public static T AddAssemblies<T>(this T toolSettings, IEnumerable<string> assemblies) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AssembliesInternal.AddRange(assemblies);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="MSpecSettings.Assemblies"/></em></p>
-    ///   <p>Assemblies with tests to be executed.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearAssemblies<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AssembliesInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSpecSettings.Assemblies"/></em></p>
-    ///   <p>Assemblies with tests to be executed.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAssemblies<T>(this T toolSettings, params string[] assemblies) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(assemblies);
-        toolSettings.AssembliesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSpecSettings.Assemblies"/></em></p>
-    ///   <p>Assemblies with tests to be executed.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAssemblies<T>(this T toolSettings, IEnumerable<string> assemblies) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(assemblies);
-        toolSettings.AssembliesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.Assemblies"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Assemblies))]
+    public static T SetAssemblies<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Assemblies, v));
+    /// <inheritdoc cref="MSpecSettings.Assemblies"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Assemblies))]
+    public static T SetAssemblies<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Assemblies, v));
+    /// <inheritdoc cref="MSpecSettings.Assemblies"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Assemblies))]
+    public static T AddAssemblies<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.AddCollection(() => o.Assemblies, v));
+    /// <inheritdoc cref="MSpecSettings.Assemblies"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Assemblies))]
+    public static T AddAssemblies<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.AddCollection(() => o.Assemblies, v));
+    /// <inheritdoc cref="MSpecSettings.Assemblies"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Assemblies))]
+    public static T RemoveAssemblies<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.RemoveCollection(() => o.Assemblies, v));
+    /// <inheritdoc cref="MSpecSettings.Assemblies"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Assemblies))]
+    public static T RemoveAssemblies<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.RemoveCollection(() => o.Assemblies, v));
+    /// <inheritdoc cref="MSpecSettings.Assemblies"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Assemblies))]
+    public static T ClearAssemblies<T>(this T o) where T : MSpecSettings => o.Modify(b => b.ClearCollection(() => o.Assemblies));
     #endregion
     #region Filters
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.Filters"/> to a new list</em></p>
-    ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFilters<T>(this T toolSettings, params string[] filters) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal = filters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.Filters"/> to a new list</em></p>
-    ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal = filters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSpecSettings.Filters"/></em></p>
-    ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFilters<T>(this T toolSettings, params string[] filters) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.AddRange(filters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSpecSettings.Filters"/></em></p>
-    ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.AddRange(filters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="MSpecSettings.Filters"/></em></p>
-    ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearFilters<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSpecSettings.Filters"/></em></p>
-    ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFilters<T>(this T toolSettings, params string[] filters) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(filters);
-        toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSpecSettings.Filters"/></em></p>
-    ///   <p>Filter file specifying contexts to execute (full type name, one per line). Takes precedence over tags.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(filters);
-        toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Filters))]
+    public static T SetFilters<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Filters, v));
+    /// <inheritdoc cref="MSpecSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Filters))]
+    public static T SetFilters<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Filters, v));
+    /// <inheritdoc cref="MSpecSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Filters))]
+    public static T AddFilters<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.AddCollection(() => o.Filters, v));
+    /// <inheritdoc cref="MSpecSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Filters))]
+    public static T AddFilters<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.AddCollection(() => o.Filters, v));
+    /// <inheritdoc cref="MSpecSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Filters))]
+    public static T RemoveFilters<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.RemoveCollection(() => o.Filters, v));
+    /// <inheritdoc cref="MSpecSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Filters))]
+    public static T RemoveFilters<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.RemoveCollection(() => o.Filters, v));
+    /// <inheritdoc cref="MSpecSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Filters))]
+    public static T ClearFilters<T>(this T o) where T : MSpecSettings => o.Modify(b => b.ClearCollection(() => o.Filters));
     #endregion
     #region Includes
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.Includes"/> to a new list</em></p>
-    ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetIncludes<T>(this T toolSettings, params string[] includes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IncludesInternal = includes.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.Includes"/> to a new list</em></p>
-    ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetIncludes<T>(this T toolSettings, IEnumerable<string> includes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IncludesInternal = includes.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSpecSettings.Includes"/></em></p>
-    ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddIncludes<T>(this T toolSettings, params string[] includes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IncludesInternal.AddRange(includes);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSpecSettings.Includes"/></em></p>
-    ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddIncludes<T>(this T toolSettings, IEnumerable<string> includes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IncludesInternal.AddRange(includes);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="MSpecSettings.Includes"/></em></p>
-    ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearIncludes<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IncludesInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSpecSettings.Includes"/></em></p>
-    ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveIncludes<T>(this T toolSettings, params string[] includes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(includes);
-        toolSettings.IncludesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSpecSettings.Includes"/></em></p>
-    ///   <p>Executes all specifications in contexts with these comma delimited tags. Ex. <c>-i 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveIncludes<T>(this T toolSettings, IEnumerable<string> includes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(includes);
-        toolSettings.IncludesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.Includes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Includes))]
+    public static T SetIncludes<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Includes, v));
+    /// <inheritdoc cref="MSpecSettings.Includes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Includes))]
+    public static T SetIncludes<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Includes, v));
+    /// <inheritdoc cref="MSpecSettings.Includes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Includes))]
+    public static T AddIncludes<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.AddCollection(() => o.Includes, v));
+    /// <inheritdoc cref="MSpecSettings.Includes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Includes))]
+    public static T AddIncludes<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.AddCollection(() => o.Includes, v));
+    /// <inheritdoc cref="MSpecSettings.Includes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Includes))]
+    public static T RemoveIncludes<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.RemoveCollection(() => o.Includes, v));
+    /// <inheritdoc cref="MSpecSettings.Includes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Includes))]
+    public static T RemoveIncludes<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.RemoveCollection(() => o.Includes, v));
+    /// <inheritdoc cref="MSpecSettings.Includes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Includes))]
+    public static T ClearIncludes<T>(this T o) where T : MSpecSettings => o.Modify(b => b.ClearCollection(() => o.Includes));
     #endregion
     #region Excludes
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.Excludes"/> to a new list</em></p>
-    ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetExcludes<T>(this T toolSettings, params string[] excludes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExcludesInternal = excludes.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.Excludes"/> to a new list</em></p>
-    ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetExcludes<T>(this T toolSettings, IEnumerable<string> excludes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExcludesInternal = excludes.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSpecSettings.Excludes"/></em></p>
-    ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddExcludes<T>(this T toolSettings, params string[] excludes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExcludesInternal.AddRange(excludes);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="MSpecSettings.Excludes"/></em></p>
-    ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddExcludes<T>(this T toolSettings, IEnumerable<string> excludes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExcludesInternal.AddRange(excludes);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="MSpecSettings.Excludes"/></em></p>
-    ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearExcludes<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExcludesInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSpecSettings.Excludes"/></em></p>
-    ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveExcludes<T>(this T toolSettings, params string[] excludes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(excludes);
-        toolSettings.ExcludesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="MSpecSettings.Excludes"/></em></p>
-    ///   <p>Exclude specifications in contexts with these comma delimited tags. Ex. <c>-x 'foo, bar, foo_bar'</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveExcludes<T>(this T toolSettings, IEnumerable<string> excludes) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(excludes);
-        toolSettings.ExcludesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.Excludes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Excludes))]
+    public static T SetExcludes<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Excludes, v));
+    /// <inheritdoc cref="MSpecSettings.Excludes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Excludes))]
+    public static T SetExcludes<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Excludes, v));
+    /// <inheritdoc cref="MSpecSettings.Excludes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Excludes))]
+    public static T AddExcludes<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.AddCollection(() => o.Excludes, v));
+    /// <inheritdoc cref="MSpecSettings.Excludes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Excludes))]
+    public static T AddExcludes<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.AddCollection(() => o.Excludes, v));
+    /// <inheritdoc cref="MSpecSettings.Excludes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Excludes))]
+    public static T RemoveExcludes<T>(this T o, params string[] v) where T : MSpecSettings => o.Modify(b => b.RemoveCollection(() => o.Excludes, v));
+    /// <inheritdoc cref="MSpecSettings.Excludes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Excludes))]
+    public static T RemoveExcludes<T>(this T o, IEnumerable<string> v) where T : MSpecSettings => o.Modify(b => b.RemoveCollection(() => o.Excludes, v));
+    /// <inheritdoc cref="MSpecSettings.Excludes"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Excludes))]
+    public static T ClearExcludes<T>(this T o) where T : MSpecSettings => o.Modify(b => b.ClearCollection(() => o.Excludes));
     #endregion
     #region HtmlOutput
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.HtmlOutput"/></em></p>
-    ///   <p>Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetHtmlOutput<T>(this T toolSettings, string htmlOutput) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HtmlOutput = htmlOutput;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSpecSettings.HtmlOutput"/></em></p>
-    ///   <p>Outputs the HTML report to path, one-per-assembly w/ index.html (if directory, otherwise all are in one file). Ex. <c>--html=output/reports/</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetHtmlOutput<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HtmlOutput = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.HtmlOutput"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.HtmlOutput))]
+    public static T SetHtmlOutput<T>(this T o, string v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.HtmlOutput, v));
+    /// <inheritdoc cref="MSpecSettings.HtmlOutput"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.HtmlOutput))]
+    public static T ResetHtmlOutput<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Remove(() => o.HtmlOutput));
     #endregion
     #region XmlOutput
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.XmlOutput"/></em></p>
-    ///   <p>Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c></p>
-    /// </summary>
-    [Pure]
-    public static T SetXmlOutput<T>(this T toolSettings, string xmlOutput) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.XmlOutput = xmlOutput;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSpecSettings.XmlOutput"/></em></p>
-    ///   <p>Outputs the XML report to the file referenced by the path. Ex. <c>--xml=output/reports/MSpecResults.xml</c></p>
-    /// </summary>
-    [Pure]
-    public static T ResetXmlOutput<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.XmlOutput = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.XmlOutput"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.XmlOutput))]
+    public static T SetXmlOutput<T>(this T o, string v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.XmlOutput, v));
+    /// <inheritdoc cref="MSpecSettings.XmlOutput"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.XmlOutput))]
+    public static T ResetXmlOutput<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Remove(() => o.XmlOutput));
     #endregion
     #region TeamCity
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.TeamCity"/></em></p>
-    ///   <p>Reporting for TeamCity CI integration (also auto-detected).</p>
-    /// </summary>
-    [Pure]
-    public static T SetTeamCity<T>(this T toolSettings, bool? teamCity) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TeamCity = teamCity;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSpecSettings.TeamCity"/></em></p>
-    ///   <p>Reporting for TeamCity CI integration (also auto-detected).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTeamCity<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TeamCity = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSpecSettings.TeamCity"/></em></p>
-    ///   <p>Reporting for TeamCity CI integration (also auto-detected).</p>
-    /// </summary>
-    [Pure]
-    public static T EnableTeamCity<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TeamCity = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSpecSettings.TeamCity"/></em></p>
-    ///   <p>Reporting for TeamCity CI integration (also auto-detected).</p>
-    /// </summary>
-    [Pure]
-    public static T DisableTeamCity<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TeamCity = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSpecSettings.TeamCity"/></em></p>
-    ///   <p>Reporting for TeamCity CI integration (also auto-detected).</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleTeamCity<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TeamCity = !toolSettings.TeamCity;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.TeamCity"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.TeamCity))]
+    public static T SetTeamCity<T>(this T o, bool? v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.TeamCity, v));
+    /// <inheritdoc cref="MSpecSettings.TeamCity"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.TeamCity))]
+    public static T ResetTeamCity<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Remove(() => o.TeamCity));
+    /// <inheritdoc cref="MSpecSettings.TeamCity"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.TeamCity))]
+    public static T EnableTeamCity<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.TeamCity, true));
+    /// <inheritdoc cref="MSpecSettings.TeamCity"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.TeamCity))]
+    public static T DisableTeamCity<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.TeamCity, false));
+    /// <inheritdoc cref="MSpecSettings.TeamCity"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.TeamCity))]
+    public static T ToggleTeamCity<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.TeamCity, !o.TeamCity));
     #endregion
     #region NoTeamCity
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.NoTeamCity"/></em></p>
-    ///   <p>Disables TeamCity autodetection.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNoTeamCity<T>(this T toolSettings, bool? noTeamCity) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoTeamCity = noTeamCity;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSpecSettings.NoTeamCity"/></em></p>
-    ///   <p>Disables TeamCity autodetection.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNoTeamCity<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoTeamCity = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSpecSettings.NoTeamCity"/></em></p>
-    ///   <p>Disables TeamCity autodetection.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNoTeamCity<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoTeamCity = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSpecSettings.NoTeamCity"/></em></p>
-    ///   <p>Disables TeamCity autodetection.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNoTeamCity<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoTeamCity = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSpecSettings.NoTeamCity"/></em></p>
-    ///   <p>Disables TeamCity autodetection.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNoTeamCity<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoTeamCity = !toolSettings.NoTeamCity;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.NoTeamCity"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoTeamCity))]
+    public static T SetNoTeamCity<T>(this T o, bool? v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoTeamCity, v));
+    /// <inheritdoc cref="MSpecSettings.NoTeamCity"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoTeamCity))]
+    public static T ResetNoTeamCity<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Remove(() => o.NoTeamCity));
+    /// <inheritdoc cref="MSpecSettings.NoTeamCity"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoTeamCity))]
+    public static T EnableNoTeamCity<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoTeamCity, true));
+    /// <inheritdoc cref="MSpecSettings.NoTeamCity"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoTeamCity))]
+    public static T DisableNoTeamCity<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoTeamCity, false));
+    /// <inheritdoc cref="MSpecSettings.NoTeamCity"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoTeamCity))]
+    public static T ToggleNoTeamCity<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoTeamCity, !o.NoTeamCity));
     #endregion
     #region AppVeyor
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.AppVeyor"/></em></p>
-    ///   <p>Reporting for AppVeyor CI integration (also auto-detected).</p>
-    /// </summary>
-    [Pure]
-    public static T SetAppVeyor<T>(this T toolSettings, bool? appVeyor) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AppVeyor = appVeyor;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSpecSettings.AppVeyor"/></em></p>
-    ///   <p>Reporting for AppVeyor CI integration (also auto-detected).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAppVeyor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AppVeyor = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSpecSettings.AppVeyor"/></em></p>
-    ///   <p>Reporting for AppVeyor CI integration (also auto-detected).</p>
-    /// </summary>
-    [Pure]
-    public static T EnableAppVeyor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AppVeyor = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSpecSettings.AppVeyor"/></em></p>
-    ///   <p>Reporting for AppVeyor CI integration (also auto-detected).</p>
-    /// </summary>
-    [Pure]
-    public static T DisableAppVeyor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AppVeyor = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSpecSettings.AppVeyor"/></em></p>
-    ///   <p>Reporting for AppVeyor CI integration (also auto-detected).</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleAppVeyor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AppVeyor = !toolSettings.AppVeyor;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.AppVeyor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.AppVeyor))]
+    public static T SetAppVeyor<T>(this T o, bool? v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.AppVeyor, v));
+    /// <inheritdoc cref="MSpecSettings.AppVeyor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.AppVeyor))]
+    public static T ResetAppVeyor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Remove(() => o.AppVeyor));
+    /// <inheritdoc cref="MSpecSettings.AppVeyor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.AppVeyor))]
+    public static T EnableAppVeyor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.AppVeyor, true));
+    /// <inheritdoc cref="MSpecSettings.AppVeyor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.AppVeyor))]
+    public static T DisableAppVeyor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.AppVeyor, false));
+    /// <inheritdoc cref="MSpecSettings.AppVeyor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.AppVeyor))]
+    public static T ToggleAppVeyor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.AppVeyor, !o.AppVeyor));
     #endregion
     #region NoAppVeyor
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.NoAppVeyor"/></em></p>
-    ///   <p>Disables AppVeyor autodetection.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNoAppVeyor<T>(this T toolSettings, bool? noAppVeyor) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoAppVeyor = noAppVeyor;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSpecSettings.NoAppVeyor"/></em></p>
-    ///   <p>Disables AppVeyor autodetection.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNoAppVeyor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoAppVeyor = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSpecSettings.NoAppVeyor"/></em></p>
-    ///   <p>Disables AppVeyor autodetection.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNoAppVeyor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoAppVeyor = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSpecSettings.NoAppVeyor"/></em></p>
-    ///   <p>Disables AppVeyor autodetection.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNoAppVeyor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoAppVeyor = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSpecSettings.NoAppVeyor"/></em></p>
-    ///   <p>Disables AppVeyor autodetection.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNoAppVeyor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoAppVeyor = !toolSettings.NoAppVeyor;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.NoAppVeyor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoAppVeyor))]
+    public static T SetNoAppVeyor<T>(this T o, bool? v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoAppVeyor, v));
+    /// <inheritdoc cref="MSpecSettings.NoAppVeyor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoAppVeyor))]
+    public static T ResetNoAppVeyor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Remove(() => o.NoAppVeyor));
+    /// <inheritdoc cref="MSpecSettings.NoAppVeyor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoAppVeyor))]
+    public static T EnableNoAppVeyor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoAppVeyor, true));
+    /// <inheritdoc cref="MSpecSettings.NoAppVeyor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoAppVeyor))]
+    public static T DisableNoAppVeyor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoAppVeyor, false));
+    /// <inheritdoc cref="MSpecSettings.NoAppVeyor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoAppVeyor))]
+    public static T ToggleNoAppVeyor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoAppVeyor, !o.NoAppVeyor));
     #endregion
     #region TimeInfo
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.TimeInfo"/></em></p>
-    ///   <p>Shows time-related information in HTML output.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTimeInfo<T>(this T toolSettings, bool? timeInfo) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TimeInfo = timeInfo;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSpecSettings.TimeInfo"/></em></p>
-    ///   <p>Shows time-related information in HTML output.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTimeInfo<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TimeInfo = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSpecSettings.TimeInfo"/></em></p>
-    ///   <p>Shows time-related information in HTML output.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableTimeInfo<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TimeInfo = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSpecSettings.TimeInfo"/></em></p>
-    ///   <p>Shows time-related information in HTML output.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableTimeInfo<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TimeInfo = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSpecSettings.TimeInfo"/></em></p>
-    ///   <p>Shows time-related information in HTML output.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleTimeInfo<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TimeInfo = !toolSettings.TimeInfo;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.TimeInfo"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.TimeInfo))]
+    public static T SetTimeInfo<T>(this T o, bool? v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.TimeInfo, v));
+    /// <inheritdoc cref="MSpecSettings.TimeInfo"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.TimeInfo))]
+    public static T ResetTimeInfo<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Remove(() => o.TimeInfo));
+    /// <inheritdoc cref="MSpecSettings.TimeInfo"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.TimeInfo))]
+    public static T EnableTimeInfo<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.TimeInfo, true));
+    /// <inheritdoc cref="MSpecSettings.TimeInfo"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.TimeInfo))]
+    public static T DisableTimeInfo<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.TimeInfo, false));
+    /// <inheritdoc cref="MSpecSettings.TimeInfo"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.TimeInfo))]
+    public static T ToggleTimeInfo<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.TimeInfo, !o.TimeInfo));
     #endregion
     #region Silent
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.Silent"/></em></p>
-    ///   <p>Suppress progress output (print fatal errors, failures and summary).</p>
-    /// </summary>
-    [Pure]
-    public static T SetSilent<T>(this T toolSettings, bool? silent) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Silent = silent;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSpecSettings.Silent"/></em></p>
-    ///   <p>Suppress progress output (print fatal errors, failures and summary).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetSilent<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Silent = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSpecSettings.Silent"/></em></p>
-    ///   <p>Suppress progress output (print fatal errors, failures and summary).</p>
-    /// </summary>
-    [Pure]
-    public static T EnableSilent<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Silent = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSpecSettings.Silent"/></em></p>
-    ///   <p>Suppress progress output (print fatal errors, failures and summary).</p>
-    /// </summary>
-    [Pure]
-    public static T DisableSilent<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Silent = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSpecSettings.Silent"/></em></p>
-    ///   <p>Suppress progress output (print fatal errors, failures and summary).</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleSilent<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Silent = !toolSettings.Silent;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.Silent"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Silent))]
+    public static T SetSilent<T>(this T o, bool? v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Silent, v));
+    /// <inheritdoc cref="MSpecSettings.Silent"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Silent))]
+    public static T ResetSilent<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Remove(() => o.Silent));
+    /// <inheritdoc cref="MSpecSettings.Silent"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Silent))]
+    public static T EnableSilent<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Silent, true));
+    /// <inheritdoc cref="MSpecSettings.Silent"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Silent))]
+    public static T DisableSilent<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Silent, false));
+    /// <inheritdoc cref="MSpecSettings.Silent"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.Silent))]
+    public static T ToggleSilent<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.Silent, !o.Silent));
     #endregion
     #region DottedProgress
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.DottedProgress"/></em></p>
-    ///   <p>Print dotted progress output.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDottedProgress<T>(this T toolSettings, bool? dottedProgress) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DottedProgress = dottedProgress;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSpecSettings.DottedProgress"/></em></p>
-    ///   <p>Print dotted progress output.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDottedProgress<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DottedProgress = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSpecSettings.DottedProgress"/></em></p>
-    ///   <p>Print dotted progress output.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDottedProgress<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DottedProgress = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSpecSettings.DottedProgress"/></em></p>
-    ///   <p>Print dotted progress output.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDottedProgress<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DottedProgress = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSpecSettings.DottedProgress"/></em></p>
-    ///   <p>Print dotted progress output.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDottedProgress<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DottedProgress = !toolSettings.DottedProgress;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.DottedProgress"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.DottedProgress))]
+    public static T SetDottedProgress<T>(this T o, bool? v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.DottedProgress, v));
+    /// <inheritdoc cref="MSpecSettings.DottedProgress"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.DottedProgress))]
+    public static T ResetDottedProgress<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Remove(() => o.DottedProgress));
+    /// <inheritdoc cref="MSpecSettings.DottedProgress"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.DottedProgress))]
+    public static T EnableDottedProgress<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.DottedProgress, true));
+    /// <inheritdoc cref="MSpecSettings.DottedProgress"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.DottedProgress))]
+    public static T DisableDottedProgress<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.DottedProgress, false));
+    /// <inheritdoc cref="MSpecSettings.DottedProgress"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.DottedProgress))]
+    public static T ToggleDottedProgress<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.DottedProgress, !o.DottedProgress));
     #endregion
     #region NoColor
-    /// <summary>
-    ///   <p><em>Sets <see cref="MSpecSettings.NoColor"/></em></p>
-    ///   <p>Suppress colored console output.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNoColor<T>(this T toolSettings, bool? noColor) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoColor = noColor;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="MSpecSettings.NoColor"/></em></p>
-    ///   <p>Suppress colored console output.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNoColor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoColor = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="MSpecSettings.NoColor"/></em></p>
-    ///   <p>Suppress colored console output.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNoColor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoColor = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="MSpecSettings.NoColor"/></em></p>
-    ///   <p>Suppress colored console output.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNoColor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoColor = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="MSpecSettings.NoColor"/></em></p>
-    ///   <p>Suppress colored console output.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNoColor<T>(this T toolSettings) where T : MSpecSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoColor = !toolSettings.NoColor;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="MSpecSettings.NoColor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoColor))]
+    public static T SetNoColor<T>(this T o, bool? v) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoColor, v));
+    /// <inheritdoc cref="MSpecSettings.NoColor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoColor))]
+    public static T ResetNoColor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Remove(() => o.NoColor));
+    /// <inheritdoc cref="MSpecSettings.NoColor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoColor))]
+    public static T EnableNoColor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoColor, true));
+    /// <inheritdoc cref="MSpecSettings.NoColor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoColor))]
+    public static T DisableNoColor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoColor, false));
+    /// <inheritdoc cref="MSpecSettings.NoColor"/>
+    [Pure] [Builder(Type = typeof(MSpecSettings), Property = nameof(MSpecSettings.NoColor))]
+    public static T ToggleNoColor<T>(this T o) where T : MSpecSettings => o.Modify(b => b.Set(() => o.NoColor, !o.NoColor));
     #endregion
 }
 #endregion

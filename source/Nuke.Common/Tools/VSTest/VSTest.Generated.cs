@@ -17,1128 +17,345 @@ using System.Text;
 
 namespace Nuke.Common.Tools.VSTest;
 
-/// <summary>
-///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>
-///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p>
-/// </summary>
+/// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(VSTestPackageId)]
-public partial class VSTestTasks
-    : IRequireNuGetPackage
+[NuGetPackageRequirement(PackageId)]
+[NuGetTool(Id = PackageId, Executable = PackageExecutable)]
+public partial class VSTestTasks : ToolTasks, IRequireNuGetPackage
 {
-    public const string VSTestPackageId = "Microsoft.TestPlatform";
-    /// <summary>
-    ///   Path to the VSTest executable.
-    /// </summary>
-    public static string VSTestPath =>
-        ToolPathResolver.TryGetEnvironmentExecutable("VSTEST_EXE") ??
-        NuGetToolPathResolver.GetPackageExecutable("Microsoft.TestPlatform", "vstest.console.exe");
-    public static Action<OutputType, string> VSTestLogger { get; set; } = ProcessTasks.DefaultLogger;
-    public static Action<ToolSettings, IProcess> VSTestExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
-    /// <summary>
-    ///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>
-    ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p>
-    /// </summary>
-    public static IReadOnlyCollection<Output> VSTest(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(VSTestPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? VSTestLogger);
-        (exitHandler ?? (p => VSTestExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>
-    ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;testAssemblies&gt;</c> via <see cref="VSTestSettings.TestAssemblies"/></li>
-    ///     <li><c>/Diag</c> via <see cref="VSTestSettings.DiagnosticsFile"/></li>
-    ///     <li><c>/EnableCodeCoverage</c> via <see cref="VSTestSettings.EnableCodeCoverage"/></li>
-    ///     <li><c>/Framework</c> via <see cref="VSTestSettings.Framework"/></li>
-    ///     <li><c>/InIsolation</c> via <see cref="VSTestSettings.InIsolation"/></li>
-    ///     <li><c>/ListDiscoverers</c> via <see cref="VSTestSettings.ListDiscoverers"/></li>
-    ///     <li><c>/ListExecutors</c> via <see cref="VSTestSettings.ListExecutors"/></li>
-    ///     <li><c>/ListLoggers</c> via <see cref="VSTestSettings.ListLoggers"/></li>
-    ///     <li><c>/ListSettingsProviders</c> via <see cref="VSTestSettings.ListSettingsProviders"/></li>
-    ///     <li><c>/ListTests</c> via <see cref="VSTestSettings.ListTests"/></li>
-    ///     <li><c>/Logger</c> via <see cref="VSTestSettings.Logger"/></li>
-    ///     <li><c>/Parallel</c> via <see cref="VSTestSettings.Parallel"/></li>
-    ///     <li><c>/Platform</c> via <see cref="VSTestSettings.Platform"/></li>
-    ///     <li><c>/Settings</c> via <see cref="VSTestSettings.SettingsFile"/></li>
-    ///     <li><c>/TestAdapterPath</c> via <see cref="VSTestSettings.TestAdapterPath"/></li>
-    ///     <li><c>/TestCaseFilter</c> via <see cref="VSTestSettings.TestCaseFilters"/></li>
-    ///     <li><c>/Tests</c> via <see cref="VSTestSettings.Tests"/></li>
-    ///     <li><c>/UseVsixExtensions</c> via <see cref="VSTestSettings.UseVsixExtensions"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> VSTest(VSTestSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new VSTestSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>
-    ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;testAssemblies&gt;</c> via <see cref="VSTestSettings.TestAssemblies"/></li>
-    ///     <li><c>/Diag</c> via <see cref="VSTestSettings.DiagnosticsFile"/></li>
-    ///     <li><c>/EnableCodeCoverage</c> via <see cref="VSTestSettings.EnableCodeCoverage"/></li>
-    ///     <li><c>/Framework</c> via <see cref="VSTestSettings.Framework"/></li>
-    ///     <li><c>/InIsolation</c> via <see cref="VSTestSettings.InIsolation"/></li>
-    ///     <li><c>/ListDiscoverers</c> via <see cref="VSTestSettings.ListDiscoverers"/></li>
-    ///     <li><c>/ListExecutors</c> via <see cref="VSTestSettings.ListExecutors"/></li>
-    ///     <li><c>/ListLoggers</c> via <see cref="VSTestSettings.ListLoggers"/></li>
-    ///     <li><c>/ListSettingsProviders</c> via <see cref="VSTestSettings.ListSettingsProviders"/></li>
-    ///     <li><c>/ListTests</c> via <see cref="VSTestSettings.ListTests"/></li>
-    ///     <li><c>/Logger</c> via <see cref="VSTestSettings.Logger"/></li>
-    ///     <li><c>/Parallel</c> via <see cref="VSTestSettings.Parallel"/></li>
-    ///     <li><c>/Platform</c> via <see cref="VSTestSettings.Platform"/></li>
-    ///     <li><c>/Settings</c> via <see cref="VSTestSettings.SettingsFile"/></li>
-    ///     <li><c>/TestAdapterPath</c> via <see cref="VSTestSettings.TestAdapterPath"/></li>
-    ///     <li><c>/TestCaseFilter</c> via <see cref="VSTestSettings.TestCaseFilters"/></li>
-    ///     <li><c>/Tests</c> via <see cref="VSTestSettings.Tests"/></li>
-    ///     <li><c>/UseVsixExtensions</c> via <see cref="VSTestSettings.UseVsixExtensions"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> VSTest(Configure<VSTestSettings> configurator)
-    {
-        return VSTest(configurator(new VSTestSettings()));
-    }
-    /// <summary>
-    ///   <p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p>
-    ///   <p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;testAssemblies&gt;</c> via <see cref="VSTestSettings.TestAssemblies"/></li>
-    ///     <li><c>/Diag</c> via <see cref="VSTestSettings.DiagnosticsFile"/></li>
-    ///     <li><c>/EnableCodeCoverage</c> via <see cref="VSTestSettings.EnableCodeCoverage"/></li>
-    ///     <li><c>/Framework</c> via <see cref="VSTestSettings.Framework"/></li>
-    ///     <li><c>/InIsolation</c> via <see cref="VSTestSettings.InIsolation"/></li>
-    ///     <li><c>/ListDiscoverers</c> via <see cref="VSTestSettings.ListDiscoverers"/></li>
-    ///     <li><c>/ListExecutors</c> via <see cref="VSTestSettings.ListExecutors"/></li>
-    ///     <li><c>/ListLoggers</c> via <see cref="VSTestSettings.ListLoggers"/></li>
-    ///     <li><c>/ListSettingsProviders</c> via <see cref="VSTestSettings.ListSettingsProviders"/></li>
-    ///     <li><c>/ListTests</c> via <see cref="VSTestSettings.ListTests"/></li>
-    ///     <li><c>/Logger</c> via <see cref="VSTestSettings.Logger"/></li>
-    ///     <li><c>/Parallel</c> via <see cref="VSTestSettings.Parallel"/></li>
-    ///     <li><c>/Platform</c> via <see cref="VSTestSettings.Platform"/></li>
-    ///     <li><c>/Settings</c> via <see cref="VSTestSettings.SettingsFile"/></li>
-    ///     <li><c>/TestAdapterPath</c> via <see cref="VSTestSettings.TestAdapterPath"/></li>
-    ///     <li><c>/TestCaseFilter</c> via <see cref="VSTestSettings.TestCaseFilters"/></li>
-    ///     <li><c>/Tests</c> via <see cref="VSTestSettings.Tests"/></li>
-    ///     <li><c>/UseVsixExtensions</c> via <see cref="VSTestSettings.UseVsixExtensions"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(VSTestSettings Settings, IReadOnlyCollection<Output> Output)> VSTest(CombinatorialConfigure<VSTestSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(VSTest, VSTestLogger, degreeOfParallelism, completeOnFailure);
-    }
+    public static string VSTestPath => new VSTestTasks().GetToolPath();
+    public const string PackageId = "Microsoft.TestPlatform";
+    public const string PackageExecutable = "vstest.console.exe";
+    /// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p></summary>
+    public static IReadOnlyCollection<Output> VSTest(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new VSTestTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
+    /// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;testAssemblies&gt;</c> via <see cref="VSTestSettings.TestAssemblies"/></li><li><c>/Diag</c> via <see cref="VSTestSettings.DiagnosticsFile"/></li><li><c>/EnableCodeCoverage</c> via <see cref="VSTestSettings.EnableCodeCoverage"/></li><li><c>/Framework</c> via <see cref="VSTestSettings.Framework"/></li><li><c>/InIsolation</c> via <see cref="VSTestSettings.InIsolation"/></li><li><c>/ListDiscoverers</c> via <see cref="VSTestSettings.ListDiscoverers"/></li><li><c>/ListExecutors</c> via <see cref="VSTestSettings.ListExecutors"/></li><li><c>/ListLoggers</c> via <see cref="VSTestSettings.ListLoggers"/></li><li><c>/ListSettingsProviders</c> via <see cref="VSTestSettings.ListSettingsProviders"/></li><li><c>/ListTests</c> via <see cref="VSTestSettings.ListTests"/></li><li><c>/Logger</c> via <see cref="VSTestSettings.Logger"/></li><li><c>/Parallel</c> via <see cref="VSTestSettings.Parallel"/></li><li><c>/Platform</c> via <see cref="VSTestSettings.Platform"/></li><li><c>/Settings</c> via <see cref="VSTestSettings.SettingsFile"/></li><li><c>/TestAdapterPath</c> via <see cref="VSTestSettings.TestAdapterPath"/></li><li><c>/TestCaseFilter</c> via <see cref="VSTestSettings.TestCaseFilters"/></li><li><c>/Tests</c> via <see cref="VSTestSettings.Tests"/></li><li><c>/UseVsixExtensions</c> via <see cref="VSTestSettings.UseVsixExtensions"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> VSTest(VSTestSettings options = null) => new VSTestTasks().Run(options);
+    /// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;testAssemblies&gt;</c> via <see cref="VSTestSettings.TestAssemblies"/></li><li><c>/Diag</c> via <see cref="VSTestSettings.DiagnosticsFile"/></li><li><c>/EnableCodeCoverage</c> via <see cref="VSTestSettings.EnableCodeCoverage"/></li><li><c>/Framework</c> via <see cref="VSTestSettings.Framework"/></li><li><c>/InIsolation</c> via <see cref="VSTestSettings.InIsolation"/></li><li><c>/ListDiscoverers</c> via <see cref="VSTestSettings.ListDiscoverers"/></li><li><c>/ListExecutors</c> via <see cref="VSTestSettings.ListExecutors"/></li><li><c>/ListLoggers</c> via <see cref="VSTestSettings.ListLoggers"/></li><li><c>/ListSettingsProviders</c> via <see cref="VSTestSettings.ListSettingsProviders"/></li><li><c>/ListTests</c> via <see cref="VSTestSettings.ListTests"/></li><li><c>/Logger</c> via <see cref="VSTestSettings.Logger"/></li><li><c>/Parallel</c> via <see cref="VSTestSettings.Parallel"/></li><li><c>/Platform</c> via <see cref="VSTestSettings.Platform"/></li><li><c>/Settings</c> via <see cref="VSTestSettings.SettingsFile"/></li><li><c>/TestAdapterPath</c> via <see cref="VSTestSettings.TestAdapterPath"/></li><li><c>/TestCaseFilter</c> via <see cref="VSTestSettings.TestCaseFilters"/></li><li><c>/Tests</c> via <see cref="VSTestSettings.Tests"/></li><li><c>/UseVsixExtensions</c> via <see cref="VSTestSettings.UseVsixExtensions"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> VSTest(Configure<VSTestSettings> configurator) => new VSTestTasks().Run(configurator.Invoke(new VSTestSettings()));
+    /// <summary><p>VSTest.Console.exe is the command-line command that is used to run tests. You can specify several options in any order on the VSTest.Console.exe command line.</p><p>For more details, visit the <a href="https://msdn.microsoft.com/en-us/library/jj155796.aspx">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;testAssemblies&gt;</c> via <see cref="VSTestSettings.TestAssemblies"/></li><li><c>/Diag</c> via <see cref="VSTestSettings.DiagnosticsFile"/></li><li><c>/EnableCodeCoverage</c> via <see cref="VSTestSettings.EnableCodeCoverage"/></li><li><c>/Framework</c> via <see cref="VSTestSettings.Framework"/></li><li><c>/InIsolation</c> via <see cref="VSTestSettings.InIsolation"/></li><li><c>/ListDiscoverers</c> via <see cref="VSTestSettings.ListDiscoverers"/></li><li><c>/ListExecutors</c> via <see cref="VSTestSettings.ListExecutors"/></li><li><c>/ListLoggers</c> via <see cref="VSTestSettings.ListLoggers"/></li><li><c>/ListSettingsProviders</c> via <see cref="VSTestSettings.ListSettingsProviders"/></li><li><c>/ListTests</c> via <see cref="VSTestSettings.ListTests"/></li><li><c>/Logger</c> via <see cref="VSTestSettings.Logger"/></li><li><c>/Parallel</c> via <see cref="VSTestSettings.Parallel"/></li><li><c>/Platform</c> via <see cref="VSTestSettings.Platform"/></li><li><c>/Settings</c> via <see cref="VSTestSettings.SettingsFile"/></li><li><c>/TestAdapterPath</c> via <see cref="VSTestSettings.TestAdapterPath"/></li><li><c>/TestCaseFilter</c> via <see cref="VSTestSettings.TestCaseFilters"/></li><li><c>/Tests</c> via <see cref="VSTestSettings.Tests"/></li><li><c>/UseVsixExtensions</c> via <see cref="VSTestSettings.UseVsixExtensions"/></li></ul></remarks>
+    public static IEnumerable<(VSTestSettings Settings, IReadOnlyCollection<Output> Output)> VSTest(CombinatorialConfigure<VSTestSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(VSTest, degreeOfParallelism, completeOnFailure);
 }
 #region VSTestSettings
-/// <summary>
-///   Used within <see cref="VSTestTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="VSTestTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class VSTestSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<VSTestSettings>))]
+[Command(Type = typeof(VSTestTasks), Command = nameof(VSTestTasks.VSTest))]
+public partial class VSTestSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the VSTest executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? VSTestTasks.VSTestPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? VSTestTasks.VSTestLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? VSTestTasks.VSTestExitHandler;
-    /// <summary>
-    ///   Run tests from the specified files. Separate multiple test file names with spaces.
-    /// </summary>
-    public virtual IReadOnlyList<string> TestAssemblies => TestAssembliesInternal.AsReadOnly();
-    internal List<string> TestAssembliesInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Run tests with additional settings such as data collectors.
-    /// </summary>
-    public virtual string SettingsFile { get; internal set; }
-    /// <summary>
-    ///   Run tests with names that match the provided values. To provide multiple values, separate them by commas.
-    /// </summary>
-    public virtual IReadOnlyList<string> Tests => TestsInternal.AsReadOnly();
-    internal List<string> TestsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.
-    /// </summary>
-    public virtual bool? Parallel { get; internal set; }
-    /// <summary>
-    ///   Enables data diagnostic adapter CodeCoverage in the test run.
-    /// </summary>
-    public virtual bool? EnableCodeCoverage { get; internal set; }
-    /// <summary>
-    ///   Runs the tests in an isolated process.
-    /// </summary>
-    public virtual bool? InIsolation { get; internal set; }
-    /// <summary>
-    ///   This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.
-    /// </summary>
-    public virtual bool? UseVsixExtensions { get; internal set; }
-    /// <summary>
-    ///   Forces the vstest.console.exe process to use custom test adapters from a specified path (if any) in the test run.
-    /// </summary>
-    public virtual string TestAdapterPath { get; internal set; }
-    /// <summary>
-    ///   Target platform architecture to be used for test execution.
-    /// </summary>
-    public virtual VsTestPlatform Platform { get; internal set; }
-    /// <summary>
-    ///   Target .NET Framework version to be used for test execution.
-    /// </summary>
-    public virtual VsTestFramework Framework { get; internal set; }
-    /// <summary>
-    ///   Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.
-    /// </summary>
-    public virtual IReadOnlyList<string> TestCaseFilters => TestCaseFiltersInternal.AsReadOnly();
-    internal List<string> TestCaseFiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Specify a logger for test results. Example: To log results into a Visual Studio Test Results File (TRX) use <c>/Logger:trx</c>.
-    /// </summary>
-    public virtual string Logger { get; internal set; }
-    /// <summary>
-    ///   Lists discovered tests from the given test container.
-    /// </summary>
-    public virtual string ListTests { get; internal set; }
-    /// <summary>
-    ///   Lists installed test discoverers.
-    /// </summary>
-    public virtual bool? ListDiscoverers { get; internal set; }
-    /// <summary>
-    ///   Lists installed test executors.
-    /// </summary>
-    public virtual bool? ListExecutors { get; internal set; }
-    /// <summary>
-    ///   Lists installed test loggers.
-    /// </summary>
-    public virtual bool? ListLoggers { get; internal set; }
-    /// <summary>
-    ///   Lists installed test settings providers.
-    /// </summary>
-    public virtual bool? ListSettingsProviders { get; internal set; }
-    /// <summary>
-    ///   Writes diagnostic trace logs to the specified file.
-    /// </summary>
-    public virtual string DiagnosticsFile { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("{value}", TestAssemblies)
-          .Add("/Settings:{value}", SettingsFile)
-          .Add("/Tests:{value}", Tests, separator: ',')
-          .Add("/Parallel", Parallel)
-          .Add("/EnableCodeCoverage", EnableCodeCoverage)
-          .Add("/InIsolation", InIsolation)
-          .Add("/UseVsixExtensions:{value}", UseVsixExtensions)
-          .Add("/TestAdapterPath:{value}", TestAdapterPath)
-          .Add("/Platform:{value}", Platform)
-          .Add("/Framework:{value}", Framework)
-          .Add("/TestCaseFilter:{value}", TestCaseFilters, separator: '|')
-          .Add("/Logger:{value}", Logger)
-          .Add("/ListTests:{value}", ListTests)
-          .Add("/ListDiscoverers", ListDiscoverers)
-          .Add("/ListExecutors", ListExecutors)
-          .Add("/ListLoggers", ListLoggers)
-          .Add("/ListSettingsProviders", ListSettingsProviders)
-          .Add("/Diag:{value}", DiagnosticsFile);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary>Run tests from the specified files. Separate multiple test file names with spaces.</summary>
+    [Argument(Format = "{value}", Position = 1)] public IReadOnlyList<string> TestAssemblies => Get<List<string>>(() => TestAssemblies);
+    /// <summary>Run tests with additional settings such as data collectors.</summary>
+    [Argument(Format = "/Settings:{value}")] public string SettingsFile => Get<string>(() => SettingsFile);
+    /// <summary>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</summary>
+    [Argument(Format = "/Tests:{value}", Separator = ",")] public IReadOnlyList<string> Tests => Get<List<string>>(() => Tests);
+    /// <summary>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</summary>
+    [Argument(Format = "/Parallel")] public bool? Parallel => Get<bool?>(() => Parallel);
+    /// <summary>Enables data diagnostic adapter CodeCoverage in the test run.</summary>
+    [Argument(Format = "/EnableCodeCoverage")] public bool? EnableCodeCoverage => Get<bool?>(() => EnableCodeCoverage);
+    /// <summary>Runs the tests in an isolated process.</summary>
+    [Argument(Format = "/InIsolation")] public bool? InIsolation => Get<bool?>(() => InIsolation);
+    /// <summary>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</summary>
+    [Argument(Format = "/UseVsixExtensions:{value}")] public bool? UseVsixExtensions => Get<bool?>(() => UseVsixExtensions);
+    /// <summary>Forces the vstest.console.exe process to use custom test adapters from a specified path (if any) in the test run.</summary>
+    [Argument(Format = "/TestAdapterPath:{value}")] public string TestAdapterPath => Get<string>(() => TestAdapterPath);
+    /// <summary>Target platform architecture to be used for test execution.</summary>
+    [Argument(Format = "/Platform:{value}")] public VsTestPlatform Platform => Get<VsTestPlatform>(() => Platform);
+    /// <summary>Target .NET Framework version to be used for test execution.</summary>
+    [Argument(Format = "/Framework:{value}")] public VsTestFramework Framework => Get<VsTestFramework>(() => Framework);
+    /// <summary>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</summary>
+    [Argument(Format = "/TestCaseFilter:{value}", Separator = "|")] public IReadOnlyList<string> TestCaseFilters => Get<List<string>>(() => TestCaseFilters);
+    /// <summary>Specify a logger for test results. Example: To log results into a Visual Studio Test Results File (TRX) use <c>/Logger:trx</c>.</summary>
+    [Argument(Format = "/Logger:{value}")] public string Logger => Get<string>(() => Logger);
+    /// <summary>Lists discovered tests from the given test container.</summary>
+    [Argument(Format = "/ListTests:{value}")] public string ListTests => Get<string>(() => ListTests);
+    /// <summary>Lists installed test discoverers.</summary>
+    [Argument(Format = "/ListDiscoverers")] public bool? ListDiscoverers => Get<bool?>(() => ListDiscoverers);
+    /// <summary>Lists installed test executors.</summary>
+    [Argument(Format = "/ListExecutors")] public bool? ListExecutors => Get<bool?>(() => ListExecutors);
+    /// <summary>Lists installed test loggers.</summary>
+    [Argument(Format = "/ListLoggers")] public bool? ListLoggers => Get<bool?>(() => ListLoggers);
+    /// <summary>Lists installed test settings providers.</summary>
+    [Argument(Format = "/ListSettingsProviders")] public bool? ListSettingsProviders => Get<bool?>(() => ListSettingsProviders);
+    /// <summary>Writes diagnostic trace logs to the specified file.</summary>
+    [Argument(Format = "/Diag:{value}")] public string DiagnosticsFile => Get<string>(() => DiagnosticsFile);
 }
 #endregion
 #region VSTestSettingsExtensions
-/// <summary>
-///   Used within <see cref="VSTestTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="VSTestTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class VSTestSettingsExtensions
 {
     #region TestAssemblies
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.TestAssemblies"/> to a new list</em></p>
-    ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTestAssemblies<T>(this T toolSettings, params string[] testAssemblies) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestAssembliesInternal = testAssemblies.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.TestAssemblies"/> to a new list</em></p>
-    ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTestAssemblies<T>(this T toolSettings, IEnumerable<string> testAssemblies) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestAssembliesInternal = testAssemblies.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="VSTestSettings.TestAssemblies"/></em></p>
-    ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
-    /// </summary>
-    [Pure]
-    public static T AddTestAssemblies<T>(this T toolSettings, params string[] testAssemblies) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestAssembliesInternal.AddRange(testAssemblies);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="VSTestSettings.TestAssemblies"/></em></p>
-    ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
-    /// </summary>
-    [Pure]
-    public static T AddTestAssemblies<T>(this T toolSettings, IEnumerable<string> testAssemblies) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestAssembliesInternal.AddRange(testAssemblies);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="VSTestSettings.TestAssemblies"/></em></p>
-    ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearTestAssemblies<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestAssembliesInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="VSTestSettings.TestAssemblies"/></em></p>
-    ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveTestAssemblies<T>(this T toolSettings, params string[] testAssemblies) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(testAssemblies);
-        toolSettings.TestAssembliesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="VSTestSettings.TestAssemblies"/></em></p>
-    ///   <p>Run tests from the specified files. Separate multiple test file names with spaces.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveTestAssemblies<T>(this T toolSettings, IEnumerable<string> testAssemblies) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(testAssemblies);
-        toolSettings.TestAssembliesInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.TestAssemblies"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestAssemblies))]
+    public static T SetTestAssemblies<T>(this T o, params string[] v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.TestAssemblies, v));
+    /// <inheritdoc cref="VSTestSettings.TestAssemblies"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestAssemblies))]
+    public static T SetTestAssemblies<T>(this T o, IEnumerable<string> v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.TestAssemblies, v));
+    /// <inheritdoc cref="VSTestSettings.TestAssemblies"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestAssemblies))]
+    public static T AddTestAssemblies<T>(this T o, params string[] v) where T : VSTestSettings => o.Modify(b => b.AddCollection(() => o.TestAssemblies, v));
+    /// <inheritdoc cref="VSTestSettings.TestAssemblies"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestAssemblies))]
+    public static T AddTestAssemblies<T>(this T o, IEnumerable<string> v) where T : VSTestSettings => o.Modify(b => b.AddCollection(() => o.TestAssemblies, v));
+    /// <inheritdoc cref="VSTestSettings.TestAssemblies"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestAssemblies))]
+    public static T RemoveTestAssemblies<T>(this T o, params string[] v) where T : VSTestSettings => o.Modify(b => b.RemoveCollection(() => o.TestAssemblies, v));
+    /// <inheritdoc cref="VSTestSettings.TestAssemblies"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestAssemblies))]
+    public static T RemoveTestAssemblies<T>(this T o, IEnumerable<string> v) where T : VSTestSettings => o.Modify(b => b.RemoveCollection(() => o.TestAssemblies, v));
+    /// <inheritdoc cref="VSTestSettings.TestAssemblies"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestAssemblies))]
+    public static T ClearTestAssemblies<T>(this T o) where T : VSTestSettings => o.Modify(b => b.ClearCollection(() => o.TestAssemblies));
     #endregion
     #region SettingsFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.SettingsFile"/></em></p>
-    ///   <p>Run tests with additional settings such as data collectors.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSettingsFile<T>(this T toolSettings, string settingsFile) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SettingsFile = settingsFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.SettingsFile"/></em></p>
-    ///   <p>Run tests with additional settings such as data collectors.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetSettingsFile<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SettingsFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.SettingsFile"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.SettingsFile))]
+    public static T SetSettingsFile<T>(this T o, string v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.SettingsFile, v));
+    /// <inheritdoc cref="VSTestSettings.SettingsFile"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.SettingsFile))]
+    public static T ResetSettingsFile<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.SettingsFile));
     #endregion
     #region Tests
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.Tests"/> to a new list</em></p>
-    ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTests<T>(this T toolSettings, params string[] tests) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestsInternal = tests.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.Tests"/> to a new list</em></p>
-    ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTests<T>(this T toolSettings, IEnumerable<string> tests) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestsInternal = tests.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="VSTestSettings.Tests"/></em></p>
-    ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
-    /// </summary>
-    [Pure]
-    public static T AddTests<T>(this T toolSettings, params string[] tests) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestsInternal.AddRange(tests);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="VSTestSettings.Tests"/></em></p>
-    ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
-    /// </summary>
-    [Pure]
-    public static T AddTests<T>(this T toolSettings, IEnumerable<string> tests) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestsInternal.AddRange(tests);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="VSTestSettings.Tests"/></em></p>
-    ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearTests<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="VSTestSettings.Tests"/></em></p>
-    ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveTests<T>(this T toolSettings, params string[] tests) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(tests);
-        toolSettings.TestsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="VSTestSettings.Tests"/></em></p>
-    ///   <p>Run tests with names that match the provided values. To provide multiple values, separate them by commas.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveTests<T>(this T toolSettings, IEnumerable<string> tests) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(tests);
-        toolSettings.TestsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.Tests"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Tests))]
+    public static T SetTests<T>(this T o, params string[] v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.Tests, v));
+    /// <inheritdoc cref="VSTestSettings.Tests"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Tests))]
+    public static T SetTests<T>(this T o, IEnumerable<string> v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.Tests, v));
+    /// <inheritdoc cref="VSTestSettings.Tests"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Tests))]
+    public static T AddTests<T>(this T o, params string[] v) where T : VSTestSettings => o.Modify(b => b.AddCollection(() => o.Tests, v));
+    /// <inheritdoc cref="VSTestSettings.Tests"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Tests))]
+    public static T AddTests<T>(this T o, IEnumerable<string> v) where T : VSTestSettings => o.Modify(b => b.AddCollection(() => o.Tests, v));
+    /// <inheritdoc cref="VSTestSettings.Tests"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Tests))]
+    public static T RemoveTests<T>(this T o, params string[] v) where T : VSTestSettings => o.Modify(b => b.RemoveCollection(() => o.Tests, v));
+    /// <inheritdoc cref="VSTestSettings.Tests"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Tests))]
+    public static T RemoveTests<T>(this T o, IEnumerable<string> v) where T : VSTestSettings => o.Modify(b => b.RemoveCollection(() => o.Tests, v));
+    /// <inheritdoc cref="VSTestSettings.Tests"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Tests))]
+    public static T ClearTests<T>(this T o) where T : VSTestSettings => o.Modify(b => b.ClearCollection(() => o.Tests));
     #endregion
     #region Parallel
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.Parallel"/></em></p>
-    ///   <p>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</p>
-    /// </summary>
-    [Pure]
-    public static T SetParallel<T>(this T toolSettings, bool? parallel) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Parallel = parallel;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.Parallel"/></em></p>
-    ///   <p>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetParallel<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Parallel = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSTestSettings.Parallel"/></em></p>
-    ///   <p>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableParallel<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Parallel = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSTestSettings.Parallel"/></em></p>
-    ///   <p>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableParallel<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Parallel = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSTestSettings.Parallel"/></em></p>
-    ///   <p>Specifies that the tests be executed in parallel. By default up to all available cores on the machine may be used. The number of cores to use can be configured by using a settings file.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleParallel<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Parallel = !toolSettings.Parallel;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.Parallel"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Parallel))]
+    public static T SetParallel<T>(this T o, bool? v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.Parallel, v));
+    /// <inheritdoc cref="VSTestSettings.Parallel"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Parallel))]
+    public static T ResetParallel<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.Parallel));
+    /// <inheritdoc cref="VSTestSettings.Parallel"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Parallel))]
+    public static T EnableParallel<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.Parallel, true));
+    /// <inheritdoc cref="VSTestSettings.Parallel"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Parallel))]
+    public static T DisableParallel<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.Parallel, false));
+    /// <inheritdoc cref="VSTestSettings.Parallel"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Parallel))]
+    public static T ToggleParallel<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.Parallel, !o.Parallel));
     #endregion
     #region EnableCodeCoverage
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.EnableCodeCoverage"/></em></p>
-    ///   <p>Enables data diagnostic adapter CodeCoverage in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T SetEnableCodeCoverage<T>(this T toolSettings, bool? enableCodeCoverage) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EnableCodeCoverage = enableCodeCoverage;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.EnableCodeCoverage"/></em></p>
-    ///   <p>Enables data diagnostic adapter CodeCoverage in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetEnableCodeCoverage<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EnableCodeCoverage = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSTestSettings.EnableCodeCoverage"/></em></p>
-    ///   <p>Enables data diagnostic adapter CodeCoverage in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableEnableCodeCoverage<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EnableCodeCoverage = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSTestSettings.EnableCodeCoverage"/></em></p>
-    ///   <p>Enables data diagnostic adapter CodeCoverage in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableEnableCodeCoverage<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EnableCodeCoverage = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSTestSettings.EnableCodeCoverage"/></em></p>
-    ///   <p>Enables data diagnostic adapter CodeCoverage in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleEnableCodeCoverage<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EnableCodeCoverage = !toolSettings.EnableCodeCoverage;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.EnableCodeCoverage"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.EnableCodeCoverage))]
+    public static T SetEnableCodeCoverage<T>(this T o, bool? v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.EnableCodeCoverage, v));
+    /// <inheritdoc cref="VSTestSettings.EnableCodeCoverage"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.EnableCodeCoverage))]
+    public static T ResetEnableCodeCoverage<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.EnableCodeCoverage));
+    /// <inheritdoc cref="VSTestSettings.EnableCodeCoverage"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.EnableCodeCoverage))]
+    public static T EnableEnableCodeCoverage<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.EnableCodeCoverage, true));
+    /// <inheritdoc cref="VSTestSettings.EnableCodeCoverage"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.EnableCodeCoverage))]
+    public static T DisableEnableCodeCoverage<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.EnableCodeCoverage, false));
+    /// <inheritdoc cref="VSTestSettings.EnableCodeCoverage"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.EnableCodeCoverage))]
+    public static T ToggleEnableCodeCoverage<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.EnableCodeCoverage, !o.EnableCodeCoverage));
     #endregion
     #region InIsolation
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.InIsolation"/></em></p>
-    ///   <p>Runs the tests in an isolated process.</p>
-    /// </summary>
-    [Pure]
-    public static T SetInIsolation<T>(this T toolSettings, bool? inIsolation) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InIsolation = inIsolation;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.InIsolation"/></em></p>
-    ///   <p>Runs the tests in an isolated process.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetInIsolation<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InIsolation = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSTestSettings.InIsolation"/></em></p>
-    ///   <p>Runs the tests in an isolated process.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableInIsolation<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InIsolation = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSTestSettings.InIsolation"/></em></p>
-    ///   <p>Runs the tests in an isolated process.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableInIsolation<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InIsolation = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSTestSettings.InIsolation"/></em></p>
-    ///   <p>Runs the tests in an isolated process.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleInIsolation<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InIsolation = !toolSettings.InIsolation;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.InIsolation"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.InIsolation))]
+    public static T SetInIsolation<T>(this T o, bool? v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.InIsolation, v));
+    /// <inheritdoc cref="VSTestSettings.InIsolation"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.InIsolation))]
+    public static T ResetInIsolation<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.InIsolation));
+    /// <inheritdoc cref="VSTestSettings.InIsolation"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.InIsolation))]
+    public static T EnableInIsolation<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.InIsolation, true));
+    /// <inheritdoc cref="VSTestSettings.InIsolation"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.InIsolation))]
+    public static T DisableInIsolation<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.InIsolation, false));
+    /// <inheritdoc cref="VSTestSettings.InIsolation"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.InIsolation))]
+    public static T ToggleInIsolation<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.InIsolation, !o.InIsolation));
     #endregion
     #region UseVsixExtensions
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.UseVsixExtensions"/></em></p>
-    ///   <p>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T SetUseVsixExtensions<T>(this T toolSettings, bool? useVsixExtensions) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UseVsixExtensions = useVsixExtensions;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.UseVsixExtensions"/></em></p>
-    ///   <p>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUseVsixExtensions<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UseVsixExtensions = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSTestSettings.UseVsixExtensions"/></em></p>
-    ///   <p>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableUseVsixExtensions<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UseVsixExtensions = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSTestSettings.UseVsixExtensions"/></em></p>
-    ///   <p>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableUseVsixExtensions<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UseVsixExtensions = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSTestSettings.UseVsixExtensions"/></em></p>
-    ///   <p>This makes vstest.console.exe process use or skip the VSIX extensions installed (if any) in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleUseVsixExtensions<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UseVsixExtensions = !toolSettings.UseVsixExtensions;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.UseVsixExtensions"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.UseVsixExtensions))]
+    public static T SetUseVsixExtensions<T>(this T o, bool? v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.UseVsixExtensions, v));
+    /// <inheritdoc cref="VSTestSettings.UseVsixExtensions"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.UseVsixExtensions))]
+    public static T ResetUseVsixExtensions<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.UseVsixExtensions));
+    /// <inheritdoc cref="VSTestSettings.UseVsixExtensions"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.UseVsixExtensions))]
+    public static T EnableUseVsixExtensions<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.UseVsixExtensions, true));
+    /// <inheritdoc cref="VSTestSettings.UseVsixExtensions"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.UseVsixExtensions))]
+    public static T DisableUseVsixExtensions<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.UseVsixExtensions, false));
+    /// <inheritdoc cref="VSTestSettings.UseVsixExtensions"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.UseVsixExtensions))]
+    public static T ToggleUseVsixExtensions<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.UseVsixExtensions, !o.UseVsixExtensions));
     #endregion
     #region TestAdapterPath
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.TestAdapterPath"/></em></p>
-    ///   <p>Forces the vstest.console.exe process to use custom test adapters from a specified path (if any) in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTestAdapterPath<T>(this T toolSettings, string testAdapterPath) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestAdapterPath = testAdapterPath;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.TestAdapterPath"/></em></p>
-    ///   <p>Forces the vstest.console.exe process to use custom test adapters from a specified path (if any) in the test run.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTestAdapterPath<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestAdapterPath = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.TestAdapterPath"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestAdapterPath))]
+    public static T SetTestAdapterPath<T>(this T o, string v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.TestAdapterPath, v));
+    /// <inheritdoc cref="VSTestSettings.TestAdapterPath"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestAdapterPath))]
+    public static T ResetTestAdapterPath<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.TestAdapterPath));
     #endregion
     #region Platform
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.Platform"/></em></p>
-    ///   <p>Target platform architecture to be used for test execution.</p>
-    /// </summary>
-    [Pure]
-    public static T SetPlatform<T>(this T toolSettings, VsTestPlatform platform) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Platform = platform;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.Platform"/></em></p>
-    ///   <p>Target platform architecture to be used for test execution.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetPlatform<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Platform = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.Platform"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Platform))]
+    public static T SetPlatform<T>(this T o, VsTestPlatform v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.Platform, v));
+    /// <inheritdoc cref="VSTestSettings.Platform"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Platform))]
+    public static T ResetPlatform<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.Platform));
     #endregion
     #region Framework
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.Framework"/></em></p>
-    ///   <p>Target .NET Framework version to be used for test execution.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFramework<T>(this T toolSettings, VsTestFramework framework) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Framework = framework;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.Framework"/></em></p>
-    ///   <p>Target .NET Framework version to be used for test execution.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetFramework<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Framework = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.Framework"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Framework))]
+    public static T SetFramework<T>(this T o, VsTestFramework v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.Framework, v));
+    /// <inheritdoc cref="VSTestSettings.Framework"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Framework))]
+    public static T ResetFramework<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.Framework));
     #endregion
     #region TestCaseFilters
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.TestCaseFilters"/> to a new list</em></p>
-    ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTestCaseFilters<T>(this T toolSettings, params string[] testCaseFilters) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestCaseFiltersInternal = testCaseFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.TestCaseFilters"/> to a new list</em></p>
-    ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTestCaseFilters<T>(this T toolSettings, IEnumerable<string> testCaseFilters) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestCaseFiltersInternal = testCaseFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="VSTestSettings.TestCaseFilters"/></em></p>
-    ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddTestCaseFilters<T>(this T toolSettings, params string[] testCaseFilters) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestCaseFiltersInternal.AddRange(testCaseFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="VSTestSettings.TestCaseFilters"/></em></p>
-    ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddTestCaseFilters<T>(this T toolSettings, IEnumerable<string> testCaseFilters) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestCaseFiltersInternal.AddRange(testCaseFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="VSTestSettings.TestCaseFilters"/></em></p>
-    ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearTestCaseFilters<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TestCaseFiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="VSTestSettings.TestCaseFilters"/></em></p>
-    ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveTestCaseFilters<T>(this T toolSettings, params string[] testCaseFilters) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(testCaseFilters);
-        toolSettings.TestCaseFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="VSTestSettings.TestCaseFilters"/></em></p>
-    ///   <p>Run tests that match the given expression.<para/><c>&lt;Expression&gt;</c> is of the format <c>&lt;property&gt;=&lt;value&gt;[|&lt;Expression&gt;]</c>.<para/>The <c>/TestCaseFilter</c> command line option cannot be used with the <c>/Tests</c> command line option.<para/>For information about creating and using expressions, see <a href="https://github.com/Microsoft/vstest-docs/blob/master/docs/filter.md">TestCase filter</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveTestCaseFilters<T>(this T toolSettings, IEnumerable<string> testCaseFilters) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(testCaseFilters);
-        toolSettings.TestCaseFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.TestCaseFilters"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestCaseFilters))]
+    public static T SetTestCaseFilters<T>(this T o, params string[] v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.TestCaseFilters, v));
+    /// <inheritdoc cref="VSTestSettings.TestCaseFilters"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestCaseFilters))]
+    public static T SetTestCaseFilters<T>(this T o, IEnumerable<string> v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.TestCaseFilters, v));
+    /// <inheritdoc cref="VSTestSettings.TestCaseFilters"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestCaseFilters))]
+    public static T AddTestCaseFilters<T>(this T o, params string[] v) where T : VSTestSettings => o.Modify(b => b.AddCollection(() => o.TestCaseFilters, v));
+    /// <inheritdoc cref="VSTestSettings.TestCaseFilters"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestCaseFilters))]
+    public static T AddTestCaseFilters<T>(this T o, IEnumerable<string> v) where T : VSTestSettings => o.Modify(b => b.AddCollection(() => o.TestCaseFilters, v));
+    /// <inheritdoc cref="VSTestSettings.TestCaseFilters"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestCaseFilters))]
+    public static T RemoveTestCaseFilters<T>(this T o, params string[] v) where T : VSTestSettings => o.Modify(b => b.RemoveCollection(() => o.TestCaseFilters, v));
+    /// <inheritdoc cref="VSTestSettings.TestCaseFilters"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestCaseFilters))]
+    public static T RemoveTestCaseFilters<T>(this T o, IEnumerable<string> v) where T : VSTestSettings => o.Modify(b => b.RemoveCollection(() => o.TestCaseFilters, v));
+    /// <inheritdoc cref="VSTestSettings.TestCaseFilters"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.TestCaseFilters))]
+    public static T ClearTestCaseFilters<T>(this T o) where T : VSTestSettings => o.Modify(b => b.ClearCollection(() => o.TestCaseFilters));
     #endregion
     #region Logger
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.Logger"/></em></p>
-    ///   <p>Specify a logger for test results. Example: To log results into a Visual Studio Test Results File (TRX) use <c>/Logger:trx</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLogger<T>(this T toolSettings, string logger) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Logger = logger;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.Logger"/></em></p>
-    ///   <p>Specify a logger for test results. Example: To log results into a Visual Studio Test Results File (TRX) use <c>/Logger:trx</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLogger<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Logger = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.Logger"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Logger))]
+    public static T SetLogger<T>(this T o, string v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.Logger, v));
+    /// <inheritdoc cref="VSTestSettings.Logger"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.Logger))]
+    public static T ResetLogger<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.Logger));
     #endregion
     #region ListTests
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.ListTests"/></em></p>
-    ///   <p>Lists discovered tests from the given test container.</p>
-    /// </summary>
-    [Pure]
-    public static T SetListTests<T>(this T toolSettings, string listTests) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListTests = listTests;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.ListTests"/></em></p>
-    ///   <p>Lists discovered tests from the given test container.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetListTests<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListTests = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.ListTests"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListTests))]
+    public static T SetListTests<T>(this T o, string v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListTests, v));
+    /// <inheritdoc cref="VSTestSettings.ListTests"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListTests))]
+    public static T ResetListTests<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.ListTests));
     #endregion
     #region ListDiscoverers
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.ListDiscoverers"/></em></p>
-    ///   <p>Lists installed test discoverers.</p>
-    /// </summary>
-    [Pure]
-    public static T SetListDiscoverers<T>(this T toolSettings, bool? listDiscoverers) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListDiscoverers = listDiscoverers;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.ListDiscoverers"/></em></p>
-    ///   <p>Lists installed test discoverers.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetListDiscoverers<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListDiscoverers = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSTestSettings.ListDiscoverers"/></em></p>
-    ///   <p>Lists installed test discoverers.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableListDiscoverers<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListDiscoverers = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSTestSettings.ListDiscoverers"/></em></p>
-    ///   <p>Lists installed test discoverers.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableListDiscoverers<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListDiscoverers = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSTestSettings.ListDiscoverers"/></em></p>
-    ///   <p>Lists installed test discoverers.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleListDiscoverers<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListDiscoverers = !toolSettings.ListDiscoverers;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.ListDiscoverers"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListDiscoverers))]
+    public static T SetListDiscoverers<T>(this T o, bool? v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListDiscoverers, v));
+    /// <inheritdoc cref="VSTestSettings.ListDiscoverers"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListDiscoverers))]
+    public static T ResetListDiscoverers<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.ListDiscoverers));
+    /// <inheritdoc cref="VSTestSettings.ListDiscoverers"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListDiscoverers))]
+    public static T EnableListDiscoverers<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListDiscoverers, true));
+    /// <inheritdoc cref="VSTestSettings.ListDiscoverers"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListDiscoverers))]
+    public static T DisableListDiscoverers<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListDiscoverers, false));
+    /// <inheritdoc cref="VSTestSettings.ListDiscoverers"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListDiscoverers))]
+    public static T ToggleListDiscoverers<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListDiscoverers, !o.ListDiscoverers));
     #endregion
     #region ListExecutors
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.ListExecutors"/></em></p>
-    ///   <p>Lists installed test executors.</p>
-    /// </summary>
-    [Pure]
-    public static T SetListExecutors<T>(this T toolSettings, bool? listExecutors) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListExecutors = listExecutors;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.ListExecutors"/></em></p>
-    ///   <p>Lists installed test executors.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetListExecutors<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListExecutors = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSTestSettings.ListExecutors"/></em></p>
-    ///   <p>Lists installed test executors.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableListExecutors<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListExecutors = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSTestSettings.ListExecutors"/></em></p>
-    ///   <p>Lists installed test executors.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableListExecutors<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListExecutors = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSTestSettings.ListExecutors"/></em></p>
-    ///   <p>Lists installed test executors.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleListExecutors<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListExecutors = !toolSettings.ListExecutors;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.ListExecutors"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListExecutors))]
+    public static T SetListExecutors<T>(this T o, bool? v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListExecutors, v));
+    /// <inheritdoc cref="VSTestSettings.ListExecutors"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListExecutors))]
+    public static T ResetListExecutors<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.ListExecutors));
+    /// <inheritdoc cref="VSTestSettings.ListExecutors"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListExecutors))]
+    public static T EnableListExecutors<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListExecutors, true));
+    /// <inheritdoc cref="VSTestSettings.ListExecutors"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListExecutors))]
+    public static T DisableListExecutors<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListExecutors, false));
+    /// <inheritdoc cref="VSTestSettings.ListExecutors"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListExecutors))]
+    public static T ToggleListExecutors<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListExecutors, !o.ListExecutors));
     #endregion
     #region ListLoggers
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.ListLoggers"/></em></p>
-    ///   <p>Lists installed test loggers.</p>
-    /// </summary>
-    [Pure]
-    public static T SetListLoggers<T>(this T toolSettings, bool? listLoggers) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListLoggers = listLoggers;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.ListLoggers"/></em></p>
-    ///   <p>Lists installed test loggers.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetListLoggers<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListLoggers = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSTestSettings.ListLoggers"/></em></p>
-    ///   <p>Lists installed test loggers.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableListLoggers<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListLoggers = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSTestSettings.ListLoggers"/></em></p>
-    ///   <p>Lists installed test loggers.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableListLoggers<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListLoggers = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSTestSettings.ListLoggers"/></em></p>
-    ///   <p>Lists installed test loggers.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleListLoggers<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListLoggers = !toolSettings.ListLoggers;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.ListLoggers"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListLoggers))]
+    public static T SetListLoggers<T>(this T o, bool? v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListLoggers, v));
+    /// <inheritdoc cref="VSTestSettings.ListLoggers"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListLoggers))]
+    public static T ResetListLoggers<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.ListLoggers));
+    /// <inheritdoc cref="VSTestSettings.ListLoggers"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListLoggers))]
+    public static T EnableListLoggers<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListLoggers, true));
+    /// <inheritdoc cref="VSTestSettings.ListLoggers"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListLoggers))]
+    public static T DisableListLoggers<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListLoggers, false));
+    /// <inheritdoc cref="VSTestSettings.ListLoggers"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListLoggers))]
+    public static T ToggleListLoggers<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListLoggers, !o.ListLoggers));
     #endregion
     #region ListSettingsProviders
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.ListSettingsProviders"/></em></p>
-    ///   <p>Lists installed test settings providers.</p>
-    /// </summary>
-    [Pure]
-    public static T SetListSettingsProviders<T>(this T toolSettings, bool? listSettingsProviders) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListSettingsProviders = listSettingsProviders;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.ListSettingsProviders"/></em></p>
-    ///   <p>Lists installed test settings providers.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetListSettingsProviders<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListSettingsProviders = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSTestSettings.ListSettingsProviders"/></em></p>
-    ///   <p>Lists installed test settings providers.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableListSettingsProviders<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListSettingsProviders = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSTestSettings.ListSettingsProviders"/></em></p>
-    ///   <p>Lists installed test settings providers.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableListSettingsProviders<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListSettingsProviders = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSTestSettings.ListSettingsProviders"/></em></p>
-    ///   <p>Lists installed test settings providers.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleListSettingsProviders<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ListSettingsProviders = !toolSettings.ListSettingsProviders;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.ListSettingsProviders"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListSettingsProviders))]
+    public static T SetListSettingsProviders<T>(this T o, bool? v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListSettingsProviders, v));
+    /// <inheritdoc cref="VSTestSettings.ListSettingsProviders"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListSettingsProviders))]
+    public static T ResetListSettingsProviders<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.ListSettingsProviders));
+    /// <inheritdoc cref="VSTestSettings.ListSettingsProviders"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListSettingsProviders))]
+    public static T EnableListSettingsProviders<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListSettingsProviders, true));
+    /// <inheritdoc cref="VSTestSettings.ListSettingsProviders"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListSettingsProviders))]
+    public static T DisableListSettingsProviders<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListSettingsProviders, false));
+    /// <inheritdoc cref="VSTestSettings.ListSettingsProviders"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.ListSettingsProviders))]
+    public static T ToggleListSettingsProviders<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Set(() => o.ListSettingsProviders, !o.ListSettingsProviders));
     #endregion
     #region DiagnosticsFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSTestSettings.DiagnosticsFile"/></em></p>
-    ///   <p>Writes diagnostic trace logs to the specified file.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDiagnosticsFile<T>(this T toolSettings, string diagnosticsFile) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DiagnosticsFile = diagnosticsFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSTestSettings.DiagnosticsFile"/></em></p>
-    ///   <p>Writes diagnostic trace logs to the specified file.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDiagnosticsFile<T>(this T toolSettings) where T : VSTestSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DiagnosticsFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSTestSettings.DiagnosticsFile"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.DiagnosticsFile))]
+    public static T SetDiagnosticsFile<T>(this T o, string v) where T : VSTestSettings => o.Modify(b => b.Set(() => o.DiagnosticsFile, v));
+    /// <inheritdoc cref="VSTestSettings.DiagnosticsFile"/>
+    [Pure] [Builder(Type = typeof(VSTestSettings), Property = nameof(VSTestSettings.DiagnosticsFile))]
+    public static T ResetDiagnosticsFile<T>(this T o) where T : VSTestSettings => o.Modify(b => b.Remove(() => o.DiagnosticsFile));
     #endregion
 }
 #endregion
 #region VsTestPlatform
-/// <summary>
-///   Used within <see cref="VSTestTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="VSTestTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -1155,9 +372,7 @@ public partial class VsTestPlatform : Enumeration
 }
 #endregion
 #region VsTestFramework
-/// <summary>
-///   Used within <see cref="VSTestTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="VSTestTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]

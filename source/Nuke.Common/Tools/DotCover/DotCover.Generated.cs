@@ -17,4439 +17,1352 @@ using System.Text;
 
 namespace Nuke.Common.Tools.DotCover;
 
-/// <summary>
-///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-/// </summary>
+/// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(DotCoverPackageId)]
-public partial class DotCoverTasks
-    : IRequireNuGetPackage
+[NuGetPackageRequirement(PackageId)]
+[NuGetTool(Id = PackageId)]
+public partial class DotCoverTasks : ToolTasks, IRequireNuGetPackage
 {
-    public const string DotCoverPackageId = "JetBrains.dotCover.DotNetCliTool";
-    /// <summary>
-    ///   Path to the DotCover executable.
-    /// </summary>
-    public static string DotCoverPath =>
-        ToolPathResolver.TryGetEnvironmentExecutable("DOTCOVER_EXE") ??
-        GetToolPath();
-    public static Action<OutputType, string> DotCoverLogger { get; set; } = ProcessTasks.DefaultLogger;
-    public static Action<ToolSettings, IProcess> DotCoverExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    public static IReadOnlyCollection<Output> DotCover(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(DotCoverPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? DotCoverLogger);
-        (exitHandler ?? (p => DotCoverExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverAnalyseSettings.Configuration"/></li>
-    ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li>
-    ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li>
-    ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li>
-    ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li>
-    ///     <li><c>--Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li>
-    ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li>
-    ///     <li><c>--InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li>
-    ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li>
-    ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li>
-    ///     <li><c>--Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li>
-    ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li>
-    ///     <li><c>--TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li>
-    ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li>
-    ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverAnalyse(DotCoverAnalyseSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new DotCoverAnalyseSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverAnalyseSettings.Configuration"/></li>
-    ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li>
-    ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li>
-    ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li>
-    ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li>
-    ///     <li><c>--Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li>
-    ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li>
-    ///     <li><c>--InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li>
-    ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li>
-    ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li>
-    ///     <li><c>--Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li>
-    ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li>
-    ///     <li><c>--TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li>
-    ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li>
-    ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverAnalyse(Configure<DotCoverAnalyseSettings> configurator)
-    {
-        return DotCoverAnalyse(configurator(new DotCoverAnalyseSettings()));
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverAnalyseSettings.Configuration"/></li>
-    ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li>
-    ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li>
-    ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li>
-    ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li>
-    ///     <li><c>--Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li>
-    ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li>
-    ///     <li><c>--InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li>
-    ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li>
-    ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li>
-    ///     <li><c>--Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li>
-    ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li>
-    ///     <li><c>--TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li>
-    ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li>
-    ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(DotCoverAnalyseSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverAnalyse(CombinatorialConfigure<DotCoverAnalyseSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(DotCoverAnalyse, DotCoverLogger, degreeOfParallelism, completeOnFailure);
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverSettings.Configuration"/></li>
-    ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li>
-    ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li>
-    ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li>
-    ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li>
-    ///     <li><c>--Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li>
-    ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
-    ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
-    ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
-    ///     <li><c>--Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
-    ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
-    ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li>
-    ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li>
-    ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverCover(DotCoverCoverSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new DotCoverCoverSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverSettings.Configuration"/></li>
-    ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li>
-    ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li>
-    ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li>
-    ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li>
-    ///     <li><c>--Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li>
-    ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
-    ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
-    ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
-    ///     <li><c>--Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
-    ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
-    ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li>
-    ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li>
-    ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverCover(Configure<DotCoverCoverSettings> configurator)
-    {
-        return DotCoverCover(configurator(new DotCoverCoverSettings()));
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverSettings.Configuration"/></li>
-    ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li>
-    ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li>
-    ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li>
-    ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li>
-    ///     <li><c>--Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li>
-    ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li>
-    ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li>
-    ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li>
-    ///     <li><c>--Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li>
-    ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li>
-    ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li>
-    ///     <li><c>--TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li>
-    ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(DotCoverCoverSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverCover(CombinatorialConfigure<DotCoverCoverSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(DotCoverCover, DotCoverLogger, degreeOfParallelism, completeOnFailure);
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverDotNetSettings.Configuration"/></li>
-    ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></li>
-    ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></li>
-    ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></li>
-    ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></li>
-    ///     <li><c>--Filters</c> via <see cref="DotCoverCoverDotNetSettings.Filters"/></li>
-    ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverDotNetSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverCoverDotNetSettings.OutputFile"/></li>
-    ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverDotNetSettings.ReportType"/></li>
-    ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></li>
-    ///     <li><c>--Scope</c> via <see cref="DotCoverCoverDotNetSettings.Scope"/></li>
-    ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></li>
-    ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></li>
-    ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverCoverDotNet(DotCoverCoverDotNetSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new DotCoverCoverDotNetSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverDotNetSettings.Configuration"/></li>
-    ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></li>
-    ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></li>
-    ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></li>
-    ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></li>
-    ///     <li><c>--Filters</c> via <see cref="DotCoverCoverDotNetSettings.Filters"/></li>
-    ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverDotNetSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverCoverDotNetSettings.OutputFile"/></li>
-    ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverDotNetSettings.ReportType"/></li>
-    ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></li>
-    ///     <li><c>--Scope</c> via <see cref="DotCoverCoverDotNetSettings.Scope"/></li>
-    ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></li>
-    ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></li>
-    ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverCoverDotNet(Configure<DotCoverCoverDotNetSettings> configurator)
-    {
-        return DotCoverCoverDotNet(configurator(new DotCoverCoverDotNetSettings()));
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverDotNetSettings.Configuration"/></li>
-    ///     <li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></li>
-    ///     <li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></li>
-    ///     <li><c>--AttributeFilters</c> via <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></li>
-    ///     <li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></li>
-    ///     <li><c>--Filters</c> via <see cref="DotCoverCoverDotNetSettings.Filters"/></li>
-    ///     <li><c>--InheritConsole</c> via <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverCoverDotNetSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverCoverDotNetSettings.OutputFile"/></li>
-    ///     <li><c>--ProcessFilters</c> via <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverCoverDotNetSettings.ReportType"/></li>
-    ///     <li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></li>
-    ///     <li><c>--Scope</c> via <see cref="DotCoverCoverDotNetSettings.Scope"/></li>
-    ///     <li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></li>
-    ///     <li><c>--TargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></li>
-    ///     <li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(DotCoverCoverDotNetSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverCoverDotNet(CombinatorialConfigure<DotCoverCoverDotNetSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(DotCoverCoverDotNet, DotCoverLogger, degreeOfParallelism, completeOnFailure);
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverDelete(DotCoverDeleteSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new DotCoverDeleteSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverDelete(Configure<DotCoverDeleteSettings> configurator)
-    {
-        return DotCoverDelete(configurator(new DotCoverDeleteSettings()));
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(DotCoverDeleteSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverDelete(CombinatorialConfigure<DotCoverDeleteSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(DotCoverDelete, DotCoverLogger, degreeOfParallelism, completeOnFailure);
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverMergeSettings.Configuration"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverMergeSettings.Source"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverMerge(DotCoverMergeSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new DotCoverMergeSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverMergeSettings.Configuration"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverMergeSettings.Source"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverMerge(Configure<DotCoverMergeSettings> configurator)
-    {
-        return DotCoverMerge(configurator(new DotCoverMergeSettings()));
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverMergeSettings.Configuration"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverMergeSettings.Source"/></li>
-    ///     <li><c>--TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(DotCoverMergeSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverMerge(CombinatorialConfigure<DotCoverMergeSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(DotCoverMerge, DotCoverLogger, degreeOfParallelism, completeOnFailure);
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverReportSettings.Configuration"/></li>
-    ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverReport(DotCoverReportSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new DotCoverReportSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverReportSettings.Configuration"/></li>
-    ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverReport(Configure<DotCoverReportSettings> configurator)
-    {
-        return DotCoverReport(configurator(new DotCoverReportSettings()));
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverReportSettings.Configuration"/></li>
-    ///     <li><c>--HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li>
-    ///     <li><c>--ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverReportSettings.Source"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(DotCoverReportSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverReport(CombinatorialConfigure<DotCoverReportSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(DotCoverReport, DotCoverLogger, degreeOfParallelism, completeOnFailure);
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverZipSettings.Configuration"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverZip(DotCoverZipSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new DotCoverZipSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverZipSettings.Configuration"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> DotCoverZip(Configure<DotCoverZipSettings> configurator)
-    {
-        return DotCoverZip(configurator(new DotCoverZipSettings()));
-    }
-    /// <summary>
-    ///   <p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p>
-    ///   <p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;configuration&gt;</c> via <see cref="DotCoverZipSettings.Configuration"/></li>
-    ///     <li><c>--LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li>
-    ///     <li><c>--Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li>
-    ///     <li><c>--Source</c> via <see cref="DotCoverZipSettings.Source"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(DotCoverZipSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverZip(CombinatorialConfigure<DotCoverZipSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(DotCoverZip, DotCoverLogger, degreeOfParallelism, completeOnFailure);
-    }
+    public static string DotCoverPath => new DotCoverTasks().GetToolPath();
+    public const string PackageId = "JetBrains.dotCover.DotNetCliTool|JetBrains.dotCover.CommandLineTools";
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    public static IReadOnlyCollection<Output> DotCover(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new DotCoverTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverAnalyseSettings.Configuration"/></li><li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li><li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li><li><c>--AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li><li><c>--DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li><li><c>--Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li><li><c>--HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li><li><c>--InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li><li><c>--LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li><li><c>--ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li><li><c>--ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li><li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li><li><c>--Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li><li><c>--SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li><li><c>--TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li><li><c>--TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li><li><c>--TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li><li><c>--TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverAnalyse(DotCoverAnalyseSettings options = null) => new DotCoverTasks().Run(options);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverAnalyseSettings.Configuration"/></li><li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li><li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li><li><c>--AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li><li><c>--DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li><li><c>--Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li><li><c>--HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li><li><c>--InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li><li><c>--LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li><li><c>--ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li><li><c>--ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li><li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li><li><c>--Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li><li><c>--SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li><li><c>--TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li><li><c>--TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li><li><c>--TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li><li><c>--TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverAnalyse(Configure<DotCoverAnalyseSettings> configurator) => new DotCoverTasks().Run(configurator.Invoke(new DotCoverAnalyseSettings()));
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverAnalyseSettings.Configuration"/></li><li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></li><li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></li><li><c>--AttributeFilters</c> via <see cref="DotCoverAnalyseSettings.AttributeFilters"/></li><li><c>--DisableDefaultFilters</c> via <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></li><li><c>--Filters</c> via <see cref="DotCoverAnalyseSettings.Filters"/></li><li><c>--HideAutoProperties</c> via <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></li><li><c>--InheritConsole</c> via <see cref="DotCoverAnalyseSettings.InheritConsole"/></li><li><c>--LogFile</c> via <see cref="DotCoverAnalyseSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverAnalyseSettings.OutputFile"/></li><li><c>--ProcessFilters</c> via <see cref="DotCoverAnalyseSettings.ProcessFilters"/></li><li><c>--ReportType</c> via <see cref="DotCoverAnalyseSettings.ReportType"/></li><li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></li><li><c>--Scope</c> via <see cref="DotCoverAnalyseSettings.Scope"/></li><li><c>--SymbolSearchPaths</c> via <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></li><li><c>--TargetArguments</c> via <see cref="DotCoverAnalyseSettings.TargetArguments"/></li><li><c>--TargetExecutable</c> via <see cref="DotCoverAnalyseSettings.TargetExecutable"/></li><li><c>--TargetWorkingDir</c> via <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></li><li><c>--TempDir</c> via <see cref="DotCoverAnalyseSettings.TempDirectory"/></li></ul></remarks>
+    public static IEnumerable<(DotCoverAnalyseSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverAnalyse(CombinatorialConfigure<DotCoverAnalyseSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotCoverAnalyse, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverSettings.Configuration"/></li><li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li><li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li><li><c>--AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li><li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li><li><c>--Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li><li><c>--InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li><li><c>--LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li><li><c>--ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li><li><c>--ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li><li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li><li><c>--Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li><li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li><li><c>--TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li><li><c>--TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li><li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li><li><c>--TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverCover(DotCoverCoverSettings options = null) => new DotCoverTasks().Run(options);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverSettings.Configuration"/></li><li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li><li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li><li><c>--AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li><li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li><li><c>--Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li><li><c>--InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li><li><c>--LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li><li><c>--ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li><li><c>--ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li><li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li><li><c>--Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li><li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li><li><c>--TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li><li><c>--TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li><li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li><li><c>--TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverCover(Configure<DotCoverCoverSettings> configurator) => new DotCoverTasks().Run(configurator.Invoke(new DotCoverCoverSettings()));
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverSettings.Configuration"/></li><li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></li><li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></li><li><c>--AttributeFilters</c> via <see cref="DotCoverCoverSettings.AttributeFilters"/></li><li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></li><li><c>--Filters</c> via <see cref="DotCoverCoverSettings.Filters"/></li><li><c>--InheritConsole</c> via <see cref="DotCoverCoverSettings.InheritConsole"/></li><li><c>--LogFile</c> via <see cref="DotCoverCoverSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverCoverSettings.OutputFile"/></li><li><c>--ProcessFilters</c> via <see cref="DotCoverCoverSettings.ProcessFilters"/></li><li><c>--ReportType</c> via <see cref="DotCoverCoverSettings.ReportType"/></li><li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></li><li><c>--Scope</c> via <see cref="DotCoverCoverSettings.Scope"/></li><li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></li><li><c>--TargetArguments</c> via <see cref="DotCoverCoverSettings.TargetArguments"/></li><li><c>--TargetExecutable</c> via <see cref="DotCoverCoverSettings.TargetExecutable"/></li><li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></li><li><c>--TempDir</c> via <see cref="DotCoverCoverSettings.TempDirectory"/></li></ul></remarks>
+    public static IEnumerable<(DotCoverCoverSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverCover(CombinatorialConfigure<DotCoverCoverSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotCoverCover, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverDotNetSettings.Configuration"/></li><li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></li><li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></li><li><c>--AttributeFilters</c> via <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></li><li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></li><li><c>--Filters</c> via <see cref="DotCoverCoverDotNetSettings.Filters"/></li><li><c>--InheritConsole</c> via <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></li><li><c>--LogFile</c> via <see cref="DotCoverCoverDotNetSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverCoverDotNetSettings.OutputFile"/></li><li><c>--ProcessFilters</c> via <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></li><li><c>--ReportType</c> via <see cref="DotCoverCoverDotNetSettings.ReportType"/></li><li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></li><li><c>--Scope</c> via <see cref="DotCoverCoverDotNetSettings.Scope"/></li><li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></li><li><c>--TargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></li><li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></li><li><c>--TempDir</c> via <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverCoverDotNet(DotCoverCoverDotNetSettings options = null) => new DotCoverTasks().Run(options);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverDotNetSettings.Configuration"/></li><li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></li><li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></li><li><c>--AttributeFilters</c> via <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></li><li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></li><li><c>--Filters</c> via <see cref="DotCoverCoverDotNetSettings.Filters"/></li><li><c>--InheritConsole</c> via <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></li><li><c>--LogFile</c> via <see cref="DotCoverCoverDotNetSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverCoverDotNetSettings.OutputFile"/></li><li><c>--ProcessFilters</c> via <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></li><li><c>--ReportType</c> via <see cref="DotCoverCoverDotNetSettings.ReportType"/></li><li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></li><li><c>--Scope</c> via <see cref="DotCoverCoverDotNetSettings.Scope"/></li><li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></li><li><c>--TargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></li><li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></li><li><c>--TempDir</c> via <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverCoverDotNet(Configure<DotCoverCoverDotNetSettings> configurator) => new DotCoverTasks().Run(configurator.Invoke(new DotCoverCoverDotNetSettings()));
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverCoverDotNetSettings.Configuration"/></li><li><c>--AllowSymbolServerAccess</c> via <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></li><li><c>--AnalyseTargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></li><li><c>--AttributeFilters</c> via <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></li><li><c>--DisableDefaultFilters</c> via <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></li><li><c>--Filters</c> via <see cref="DotCoverCoverDotNetSettings.Filters"/></li><li><c>--InheritConsole</c> via <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></li><li><c>--LogFile</c> via <see cref="DotCoverCoverDotNetSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverCoverDotNetSettings.OutputFile"/></li><li><c>--ProcessFilters</c> via <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></li><li><c>--ReportType</c> via <see cref="DotCoverCoverDotNetSettings.ReportType"/></li><li><c>--ReturnTargetExitCode</c> via <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></li><li><c>--Scope</c> via <see cref="DotCoverCoverDotNetSettings.Scope"/></li><li><c>--SymbolSearchPaths</c> via <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></li><li><c>--TargetArguments</c> via <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></li><li><c>--TargetWorkingDir</c> via <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></li><li><c>--TempDir</c> via <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></li></ul></remarks>
+    public static IEnumerable<(DotCoverCoverDotNetSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverCoverDotNet(CombinatorialConfigure<DotCoverCoverDotNetSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotCoverCoverDotNet, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li><li><c>--LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li><li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverDelete(DotCoverDeleteSettings options = null) => new DotCoverTasks().Run(options);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li><li><c>--LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li><li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverDelete(Configure<DotCoverDeleteSettings> configurator) => new DotCoverTasks().Run(configurator.Invoke(new DotCoverDeleteSettings()));
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverDeleteSettings.Configuration"/></li><li><c>--LogFile</c> via <see cref="DotCoverDeleteSettings.LogFile"/></li><li><c>--Source</c> via <see cref="DotCoverDeleteSettings.Source"/></li></ul></remarks>
+    public static IEnumerable<(DotCoverDeleteSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverDelete(CombinatorialConfigure<DotCoverDeleteSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotCoverDelete, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverMergeSettings.Configuration"/></li><li><c>--LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li><li><c>--Source</c> via <see cref="DotCoverMergeSettings.Source"/></li><li><c>--TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverMerge(DotCoverMergeSettings options = null) => new DotCoverTasks().Run(options);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverMergeSettings.Configuration"/></li><li><c>--LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li><li><c>--Source</c> via <see cref="DotCoverMergeSettings.Source"/></li><li><c>--TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverMerge(Configure<DotCoverMergeSettings> configurator) => new DotCoverTasks().Run(configurator.Invoke(new DotCoverMergeSettings()));
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverMergeSettings.Configuration"/></li><li><c>--LogFile</c> via <see cref="DotCoverMergeSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverMergeSettings.OutputFile"/></li><li><c>--Source</c> via <see cref="DotCoverMergeSettings.Source"/></li><li><c>--TempDir</c> via <see cref="DotCoverMergeSettings.TempDirectory"/></li></ul></remarks>
+    public static IEnumerable<(DotCoverMergeSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverMerge(CombinatorialConfigure<DotCoverMergeSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotCoverMerge, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverReportSettings.Configuration"/></li><li><c>--HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li><li><c>--LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li><li><c>--ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li><li><c>--Source</c> via <see cref="DotCoverReportSettings.Source"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverReport(DotCoverReportSettings options = null) => new DotCoverTasks().Run(options);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverReportSettings.Configuration"/></li><li><c>--HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li><li><c>--LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li><li><c>--ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li><li><c>--Source</c> via <see cref="DotCoverReportSettings.Source"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverReport(Configure<DotCoverReportSettings> configurator) => new DotCoverTasks().Run(configurator.Invoke(new DotCoverReportSettings()));
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverReportSettings.Configuration"/></li><li><c>--HideAutoProperties</c> via <see cref="DotCoverReportSettings.HideAutoProperties"/></li><li><c>--LogFile</c> via <see cref="DotCoverReportSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverReportSettings.OutputFile"/></li><li><c>--ReportType</c> via <see cref="DotCoverReportSettings.ReportType"/></li><li><c>--Source</c> via <see cref="DotCoverReportSettings.Source"/></li></ul></remarks>
+    public static IEnumerable<(DotCoverReportSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverReport(CombinatorialConfigure<DotCoverReportSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotCoverReport, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverZipSettings.Configuration"/></li><li><c>--LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li><li><c>--Source</c> via <see cref="DotCoverZipSettings.Source"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverZip(DotCoverZipSettings options = null) => new DotCoverTasks().Run(options);
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverZipSettings.Configuration"/></li><li><c>--LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li><li><c>--Source</c> via <see cref="DotCoverZipSettings.Source"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotCoverZip(Configure<DotCoverZipSettings> configurator) => new DotCoverTasks().Run(configurator.Invoke(new DotCoverZipSettings()));
+    /// <summary><p>dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.</p><p>For more details, visit the <a href="https://www.jetbrains.com/dotcover">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;configuration&gt;</c> via <see cref="DotCoverZipSettings.Configuration"/></li><li><c>--LogFile</c> via <see cref="DotCoverZipSettings.LogFile"/></li><li><c>--Output</c> via <see cref="DotCoverZipSettings.OutputFile"/></li><li><c>--Source</c> via <see cref="DotCoverZipSettings.Source"/></li></ul></remarks>
+    public static IEnumerable<(DotCoverZipSettings Settings, IReadOnlyCollection<Output> Output)> DotCoverZip(CombinatorialConfigure<DotCoverZipSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotCoverZip, degreeOfParallelism, completeOnFailure);
 }
 #region DotCoverAnalyseSettings
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DotCoverAnalyseSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<DotCoverAnalyseSettings>))]
+[Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverAnalyse), Arguments = "analyse")]
+public partial class DotCoverAnalyseSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the DotCover executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
-    public virtual string Configuration { get; internal set; }
-    /// <summary>
-    ///   File name of the program to analyse.
-    /// </summary>
-    public virtual string TargetExecutable { get; internal set; }
-    /// <summary>
-    ///   A type of the report. The default value is <c>XML</c>.
-    /// </summary>
-    public virtual DotCoverReportType ReportType { get; internal set; }
-    /// <summary>
-    ///   Resulting report file name.
-    /// </summary>
-    public virtual string OutputFile { get; internal set; }
-    /// <summary>
-    ///   Remove auto-implemented properties from report.
-    /// </summary>
-    public virtual bool? HideAutoProperties { get; internal set; }
-    /// <summary>
-    ///   Program arguments.
-    /// </summary>
-    public virtual string TargetArguments { get; internal set; }
-    /// <summary>
-    ///   Program working directory.
-    /// </summary>
-    public virtual string TargetWorkingDirectory { get; internal set; }
-    /// <summary>
-    ///   Directory for auxiliary files. Set to the system temp by default.
-    /// </summary>
-    public virtual string TempDirectory { get; internal set; }
-    /// <summary>
-    ///   Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.
-    /// </summary>
-    public virtual bool? InheritConsole { get; internal set; }
-    /// <summary>
-    ///   Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.
-    /// </summary>
-    public virtual bool? AnalyseTargetArguments { get; internal set; }
-    /// <summary>
-    ///   Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).
-    /// </summary>
-    public virtual IReadOnlyList<string> Scope => ScopeInternal.AsReadOnly();
-    internal List<string> ScopeInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.
-    /// </summary>
-    public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
-    internal List<string> FiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.
-    /// </summary>
-    public virtual IReadOnlyList<string> AttributeFilters => AttributeFiltersInternal.AsReadOnly();
-    internal List<string> AttributeFiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Disables default (automatically added) filters.
-    /// </summary>
-    public virtual bool? DisableDefaultFilters { get; internal set; }
-    /// <summary>
-    ///   Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.
-    /// </summary>
-    public virtual IReadOnlyList<string> SymbolSearchPaths => SymbolSearchPathsInternal.AsReadOnly();
-    internal List<string> SymbolSearchPathsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Allows dotCover to search for PDB files on a symbol server.
-    /// </summary>
-    public virtual bool? AllowSymbolServerAccess { get; internal set; }
-    /// <summary>
-    ///   Returns the exit code of the target executable in case coverage analysis succeeded.
-    /// </summary>
-    public virtual bool? ReturnTargetExitCode { get; internal set; }
-    /// <summary>
-    ///   Specifies process filters. Syntax: <c>+:process1;-:process2</c>.
-    /// </summary>
-    public virtual IReadOnlyList<string> ProcessFilters => ProcessFiltersInternal.AsReadOnly();
-    internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Enables logging and specifies log file name.
-    /// </summary>
-    public virtual string LogFile { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("analyse")
-          .Add("{value}", Configuration)
-          .Add("--TargetExecutable={value}", TargetExecutable)
-          .Add("--ReportType={value}", ReportType)
-          .Add("--Output={value}", OutputFile)
-          .Add("--HideAutoProperties", HideAutoProperties)
-          .Add("--TargetArguments={value}", TargetArguments)
-          .Add("--TargetWorkingDir={value}", TargetWorkingDirectory)
-          .Add("--TempDir={value}", TempDirectory)
-          .Add("--InheritConsole={value}", InheritConsole)
-          .Add("--AnalyseTargetArguments={value}", AnalyseTargetArguments)
-          .Add("--Scope={value}", Scope, separator: ';')
-          .Add("--Filters={value}", Filters, separator: ';')
-          .Add("--AttributeFilters={value}", AttributeFilters, separator: ';')
-          .Add("--DisableDefaultFilters", DisableDefaultFilters)
-          .Add("--SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
-          .Add("--AllowSymbolServerAccess", AllowSymbolServerAccess)
-          .Add("--ReturnTargetExitCode", ReturnTargetExitCode)
-          .Add("--ProcessFilters={value}", ProcessFilters, separator: ';')
-          .Add("--LogFile={value}", LogFile);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary></summary>
+    [Argument(Format = "{value}", Position = 1)] public string Configuration => Get<string>(() => Configuration);
+    /// <summary>File name of the program to analyse.</summary>
+    [Argument(Format = "--TargetExecutable={value}")] public string TargetExecutable => Get<string>(() => TargetExecutable);
+    /// <summary>A type of the report. The default value is <c>XML</c>.</summary>
+    [Argument(Format = "--ReportType={value}")] public DotCoverReportType ReportType => Get<DotCoverReportType>(() => ReportType);
+    /// <summary>Resulting report file name.</summary>
+    [Argument(Format = "--Output={value}")] public string OutputFile => Get<string>(() => OutputFile);
+    /// <summary>Remove auto-implemented properties from report.</summary>
+    [Argument(Format = "--HideAutoProperties")] public bool? HideAutoProperties => Get<bool?>(() => HideAutoProperties);
+    /// <summary>Program arguments.</summary>
+    [Argument(Format = "--TargetArguments={value}")] public string TargetArguments => Get<string>(() => TargetArguments);
+    /// <summary>Program working directory.</summary>
+    [Argument(Format = "--TargetWorkingDir={value}")] public string TargetWorkingDirectory => Get<string>(() => TargetWorkingDirectory);
+    /// <summary>Directory for auxiliary files. Set to the system temp by default.</summary>
+    [Argument(Format = "--TempDir={value}")] public string TempDirectory => Get<string>(() => TempDirectory);
+    /// <summary>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</summary>
+    [Argument(Format = "--InheritConsole={value}")] public bool? InheritConsole => Get<bool?>(() => InheritConsole);
+    /// <summary>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</summary>
+    [Argument(Format = "--AnalyseTargetArguments={value}")] public bool? AnalyseTargetArguments => Get<bool?>(() => AnalyseTargetArguments);
+    /// <summary>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</summary>
+    [Argument(Format = "--Scope={value}", Separator = ";")] public IReadOnlyList<string> Scope => Get<List<string>>(() => Scope);
+    /// <summary>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</summary>
+    [Argument(Format = "--Filters={value}", Separator = ";")] public IReadOnlyList<string> Filters => Get<List<string>>(() => Filters);
+    /// <summary>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</summary>
+    [Argument(Format = "--AttributeFilters={value}", Separator = ";")] public IReadOnlyList<string> AttributeFilters => Get<List<string>>(() => AttributeFilters);
+    /// <summary>Disables default (automatically added) filters.</summary>
+    [Argument(Format = "--DisableDefaultFilters")] public bool? DisableDefaultFilters => Get<bool?>(() => DisableDefaultFilters);
+    /// <summary>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</summary>
+    [Argument(Format = "--SymbolSearchPaths={value}", Separator = ";")] public IReadOnlyList<string> SymbolSearchPaths => Get<List<string>>(() => SymbolSearchPaths);
+    /// <summary>Allows dotCover to search for PDB files on a symbol server.</summary>
+    [Argument(Format = "--AllowSymbolServerAccess")] public bool? AllowSymbolServerAccess => Get<bool?>(() => AllowSymbolServerAccess);
+    /// <summary>Returns the exit code of the target executable in case coverage analysis succeeded.</summary>
+    [Argument(Format = "--ReturnTargetExitCode")] public bool? ReturnTargetExitCode => Get<bool?>(() => ReturnTargetExitCode);
+    /// <summary>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</summary>
+    [Argument(Format = "--ProcessFilters={value}", Separator = ";")] public IReadOnlyList<string> ProcessFilters => Get<List<string>>(() => ProcessFilters);
+    /// <summary>Enables logging and specifies log file name.</summary>
+    [Argument(Format = "--LogFile={value}")] public string LogFile => Get<string>(() => LogFile);
 }
 #endregion
 #region DotCoverCoverSettings
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DotCoverCoverSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<DotCoverCoverSettings>))]
+[Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverCover), Arguments = "cover")]
+public partial class DotCoverCoverSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the DotCover executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
-    public virtual string Configuration { get; internal set; }
-    /// <summary>
-    ///   File name of the program to analyse.
-    /// </summary>
-    public virtual string TargetExecutable { get; internal set; }
-    /// <summary>
-    ///   Path to the resulting coverage snapshot.
-    /// </summary>
-    public virtual string OutputFile { get; internal set; }
-    /// <summary>
-    ///   A type of the report. The default value is <c>XML</c>.
-    /// </summary>
-    public virtual DotCoverReportType ReportType { get; internal set; }
-    /// <summary>
-    ///   Program arguments.
-    /// </summary>
-    public virtual string TargetArguments { get; internal set; }
-    /// <summary>
-    ///   Program working directory.
-    /// </summary>
-    public virtual string TargetWorkingDirectory { get; internal set; }
-    /// <summary>
-    ///   Directory for auxiliary files. Set to the system temp by default.
-    /// </summary>
-    public virtual string TempDirectory { get; internal set; }
-    /// <summary>
-    ///   Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.
-    /// </summary>
-    public virtual bool? InheritConsole { get; internal set; }
-    /// <summary>
-    ///   Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.
-    /// </summary>
-    public virtual bool? AnalyseTargetArguments { get; internal set; }
-    /// <summary>
-    ///   Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).
-    /// </summary>
-    public virtual IReadOnlyList<string> Scope => ScopeInternal.AsReadOnly();
-    internal List<string> ScopeInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.
-    /// </summary>
-    public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
-    internal List<string> FiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.
-    /// </summary>
-    public virtual IReadOnlyList<string> AttributeFilters => AttributeFiltersInternal.AsReadOnly();
-    internal List<string> AttributeFiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Disables default (automatically added) filters.
-    /// </summary>
-    public virtual bool? DisableDefaultFilters { get; internal set; }
-    /// <summary>
-    ///   Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.
-    /// </summary>
-    public virtual IReadOnlyList<string> SymbolSearchPaths => SymbolSearchPathsInternal.AsReadOnly();
-    internal List<string> SymbolSearchPathsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Allows dotCover to search for PDB files on a symbol server.
-    /// </summary>
-    public virtual bool? AllowSymbolServerAccess { get; internal set; }
-    /// <summary>
-    ///   Returns the exit code of the target executable in case coverage analysis succeeded.
-    /// </summary>
-    public virtual bool? ReturnTargetExitCode { get; internal set; }
-    /// <summary>
-    ///   Specifies process filters. Syntax: <c>+:process1;-:process2</c>.
-    /// </summary>
-    public virtual IReadOnlyList<string> ProcessFilters => ProcessFiltersInternal.AsReadOnly();
-    internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Enables logging and specifies log file name.
-    /// </summary>
-    public virtual string LogFile { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("cover")
-          .Add("{value}", Configuration)
-          .Add("--TargetExecutable={value}", TargetExecutable)
-          .Add("--Output={value}", OutputFile)
-          .Add("--ReportType={value}", ReportType)
-          .Add("--TargetArguments={value}", TargetArguments)
-          .Add("--TargetWorkingDir={value}", TargetWorkingDirectory)
-          .Add("--TempDir={value}", TempDirectory)
-          .Add("--InheritConsole={value}", InheritConsole)
-          .Add("--AnalyseTargetArguments={value}", AnalyseTargetArguments)
-          .Add("--Scope={value}", Scope, separator: ';')
-          .Add("--Filters={value}", Filters, separator: ';')
-          .Add("--AttributeFilters={value}", AttributeFilters, separator: ';')
-          .Add("--DisableDefaultFilters", DisableDefaultFilters)
-          .Add("--SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
-          .Add("--AllowSymbolServerAccess", AllowSymbolServerAccess)
-          .Add("--ReturnTargetExitCode", ReturnTargetExitCode)
-          .Add("--ProcessFilters={value}", ProcessFilters, separator: ';')
-          .Add("--LogFile={value}", LogFile);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary></summary>
+    [Argument(Format = "{value}", Position = 1)] public string Configuration => Get<string>(() => Configuration);
+    /// <summary>File name of the program to analyse.</summary>
+    [Argument(Format = "--TargetExecutable={value}")] public string TargetExecutable => Get<string>(() => TargetExecutable);
+    /// <summary>Path to the resulting coverage snapshot.</summary>
+    [Argument(Format = "--Output={value}")] public string OutputFile => Get<string>(() => OutputFile);
+    /// <summary>A type of the report. The default value is <c>XML</c>.</summary>
+    [Argument(Format = "--ReportType={value}")] public DotCoverReportType ReportType => Get<DotCoverReportType>(() => ReportType);
+    /// <summary>Program arguments.</summary>
+    [Argument(Format = "--TargetArguments={value}")] public string TargetArguments => Get<string>(() => TargetArguments);
+    /// <summary>Program working directory.</summary>
+    [Argument(Format = "--TargetWorkingDir={value}")] public string TargetWorkingDirectory => Get<string>(() => TargetWorkingDirectory);
+    /// <summary>Directory for auxiliary files. Set to the system temp by default.</summary>
+    [Argument(Format = "--TempDir={value}")] public string TempDirectory => Get<string>(() => TempDirectory);
+    /// <summary>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</summary>
+    [Argument(Format = "--InheritConsole={value}")] public bool? InheritConsole => Get<bool?>(() => InheritConsole);
+    /// <summary>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</summary>
+    [Argument(Format = "--AnalyseTargetArguments={value}")] public bool? AnalyseTargetArguments => Get<bool?>(() => AnalyseTargetArguments);
+    /// <summary>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</summary>
+    [Argument(Format = "--Scope={value}", Separator = ";")] public IReadOnlyList<string> Scope => Get<List<string>>(() => Scope);
+    /// <summary>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</summary>
+    [Argument(Format = "--Filters={value}", Separator = ";")] public IReadOnlyList<string> Filters => Get<List<string>>(() => Filters);
+    /// <summary>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</summary>
+    [Argument(Format = "--AttributeFilters={value}", Separator = ";")] public IReadOnlyList<string> AttributeFilters => Get<List<string>>(() => AttributeFilters);
+    /// <summary>Disables default (automatically added) filters.</summary>
+    [Argument(Format = "--DisableDefaultFilters")] public bool? DisableDefaultFilters => Get<bool?>(() => DisableDefaultFilters);
+    /// <summary>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</summary>
+    [Argument(Format = "--SymbolSearchPaths={value}", Separator = ";")] public IReadOnlyList<string> SymbolSearchPaths => Get<List<string>>(() => SymbolSearchPaths);
+    /// <summary>Allows dotCover to search for PDB files on a symbol server.</summary>
+    [Argument(Format = "--AllowSymbolServerAccess")] public bool? AllowSymbolServerAccess => Get<bool?>(() => AllowSymbolServerAccess);
+    /// <summary>Returns the exit code of the target executable in case coverage analysis succeeded.</summary>
+    [Argument(Format = "--ReturnTargetExitCode")] public bool? ReturnTargetExitCode => Get<bool?>(() => ReturnTargetExitCode);
+    /// <summary>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</summary>
+    [Argument(Format = "--ProcessFilters={value}", Separator = ";")] public IReadOnlyList<string> ProcessFilters => Get<List<string>>(() => ProcessFilters);
+    /// <summary>Enables logging and specifies log file name.</summary>
+    [Argument(Format = "--LogFile={value}")] public string LogFile => Get<string>(() => LogFile);
 }
 #endregion
 #region DotCoverCoverDotNetSettings
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DotCoverCoverDotNetSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<DotCoverCoverDotNetSettings>))]
+[Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverCoverDotNet), Arguments = "dotnet")]
+public partial class DotCoverCoverDotNetSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the DotCover executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
-    public virtual string Configuration { get; internal set; }
-    /// <summary>
-    ///   Path to the resulting coverage snapshot.
-    /// </summary>
-    public virtual string OutputFile { get; internal set; }
-    /// <summary>
-    ///   A type of the report. The default value is <c>XML</c>.
-    /// </summary>
-    public virtual DotCoverReportType ReportType { get; internal set; }
-    /// <summary>
-    ///   Program arguments.
-    /// </summary>
-    public virtual string TargetArguments { get; internal set; }
-    /// <summary>
-    ///   Program working directory.
-    /// </summary>
-    public virtual string TargetWorkingDirectory { get; internal set; }
-    /// <summary>
-    ///   Directory for auxiliary files. Set to the system temp by default.
-    /// </summary>
-    public virtual string TempDirectory { get; internal set; }
-    /// <summary>
-    ///   Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.
-    /// </summary>
-    public virtual bool? InheritConsole { get; internal set; }
-    /// <summary>
-    ///   Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.
-    /// </summary>
-    public virtual bool? AnalyseTargetArguments { get; internal set; }
-    /// <summary>
-    ///   Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).
-    /// </summary>
-    public virtual IReadOnlyList<string> Scope => ScopeInternal.AsReadOnly();
-    internal List<string> ScopeInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.
-    /// </summary>
-    public virtual IReadOnlyList<string> Filters => FiltersInternal.AsReadOnly();
-    internal List<string> FiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.
-    /// </summary>
-    public virtual IReadOnlyList<string> AttributeFilters => AttributeFiltersInternal.AsReadOnly();
-    internal List<string> AttributeFiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Disables default (automatically added) filters.
-    /// </summary>
-    public virtual bool? DisableDefaultFilters { get; internal set; }
-    /// <summary>
-    ///   Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.
-    /// </summary>
-    public virtual IReadOnlyList<string> SymbolSearchPaths => SymbolSearchPathsInternal.AsReadOnly();
-    internal List<string> SymbolSearchPathsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Allows dotCover to search for PDB files on a symbol server.
-    /// </summary>
-    public virtual bool? AllowSymbolServerAccess { get; internal set; }
-    /// <summary>
-    ///   Returns the exit code of the target executable in case coverage analysis succeeded.
-    /// </summary>
-    public virtual bool? ReturnTargetExitCode { get; internal set; }
-    /// <summary>
-    ///   Specifies process filters. Syntax: <c>+:process1;-:process2</c>.
-    /// </summary>
-    public virtual IReadOnlyList<string> ProcessFilters => ProcessFiltersInternal.AsReadOnly();
-    internal List<string> ProcessFiltersInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Enables logging and specifies log file name.
-    /// </summary>
-    public virtual string LogFile { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("dotnet")
-          .Add("{value}", Configuration)
-          .Add("--Output={value}", OutputFile)
-          .Add("--ReportType={value}", ReportType)
-          .Add("--TargetArguments={value}", TargetArguments)
-          .Add("--TargetWorkingDir={value}", TargetWorkingDirectory)
-          .Add("--TempDir={value}", TempDirectory)
-          .Add("--InheritConsole={value}", InheritConsole)
-          .Add("--AnalyseTargetArguments={value}", AnalyseTargetArguments)
-          .Add("--Scope={value}", Scope, separator: ';')
-          .Add("--Filters={value}", Filters, separator: ';')
-          .Add("--AttributeFilters={value}", AttributeFilters, separator: ';')
-          .Add("--DisableDefaultFilters", DisableDefaultFilters)
-          .Add("--SymbolSearchPaths={value}", SymbolSearchPaths, separator: ';')
-          .Add("--AllowSymbolServerAccess", AllowSymbolServerAccess)
-          .Add("--ReturnTargetExitCode", ReturnTargetExitCode)
-          .Add("--ProcessFilters={value}", ProcessFilters, separator: ';')
-          .Add("--LogFile={value}", LogFile);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary></summary>
+    [Argument(Format = "{value}", Position = 1)] public string Configuration => Get<string>(() => Configuration);
+    /// <summary>Path to the resulting coverage snapshot.</summary>
+    [Argument(Format = "--Output={value}")] public string OutputFile => Get<string>(() => OutputFile);
+    /// <summary>A type of the report. The default value is <c>XML</c>.</summary>
+    [Argument(Format = "--ReportType={value}")] public DotCoverReportType ReportType => Get<DotCoverReportType>(() => ReportType);
+    /// <summary>Program arguments.</summary>
+    [Argument(Format = "--TargetArguments={value}")] public string TargetArguments => Get<string>(() => TargetArguments);
+    /// <summary>Program working directory.</summary>
+    [Argument(Format = "--TargetWorkingDir={value}")] public string TargetWorkingDirectory => Get<string>(() => TargetWorkingDirectory);
+    /// <summary>Directory for auxiliary files. Set to the system temp by default.</summary>
+    [Argument(Format = "--TempDir={value}")] public string TempDirectory => Get<string>(() => TempDirectory);
+    /// <summary>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</summary>
+    [Argument(Format = "--InheritConsole={value}")] public bool? InheritConsole => Get<bool?>(() => InheritConsole);
+    /// <summary>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</summary>
+    [Argument(Format = "--AnalyseTargetArguments={value}")] public bool? AnalyseTargetArguments => Get<bool?>(() => AnalyseTargetArguments);
+    /// <summary>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</summary>
+    [Argument(Format = "--Scope={value}", Separator = ";")] public IReadOnlyList<string> Scope => Get<List<string>>(() => Scope);
+    /// <summary>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</summary>
+    [Argument(Format = "--Filters={value}", Separator = ";")] public IReadOnlyList<string> Filters => Get<List<string>>(() => Filters);
+    /// <summary>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</summary>
+    [Argument(Format = "--AttributeFilters={value}", Separator = ";")] public IReadOnlyList<string> AttributeFilters => Get<List<string>>(() => AttributeFilters);
+    /// <summary>Disables default (automatically added) filters.</summary>
+    [Argument(Format = "--DisableDefaultFilters")] public bool? DisableDefaultFilters => Get<bool?>(() => DisableDefaultFilters);
+    /// <summary>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</summary>
+    [Argument(Format = "--SymbolSearchPaths={value}", Separator = ";")] public IReadOnlyList<string> SymbolSearchPaths => Get<List<string>>(() => SymbolSearchPaths);
+    /// <summary>Allows dotCover to search for PDB files on a symbol server.</summary>
+    [Argument(Format = "--AllowSymbolServerAccess")] public bool? AllowSymbolServerAccess => Get<bool?>(() => AllowSymbolServerAccess);
+    /// <summary>Returns the exit code of the target executable in case coverage analysis succeeded.</summary>
+    [Argument(Format = "--ReturnTargetExitCode")] public bool? ReturnTargetExitCode => Get<bool?>(() => ReturnTargetExitCode);
+    /// <summary>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</summary>
+    [Argument(Format = "--ProcessFilters={value}", Separator = ";")] public IReadOnlyList<string> ProcessFilters => Get<List<string>>(() => ProcessFilters);
+    /// <summary>Enables logging and specifies log file name.</summary>
+    [Argument(Format = "--LogFile={value}")] public string LogFile => Get<string>(() => LogFile);
 }
 #endregion
 #region DotCoverDeleteSettings
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DotCoverDeleteSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<DotCoverDeleteSettings>))]
+[Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverDelete), Arguments = "delete")]
+public partial class DotCoverDeleteSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the DotCover executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
-    public virtual string Configuration { get; internal set; }
-    /// <summary>
-    ///   List of snapshot files.
-    /// </summary>
-    public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
-    internal List<string> SourceInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Enables logging and specifies log file name.
-    /// </summary>
-    public virtual string LogFile { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("delete")
-          .Add("{value}", Configuration)
-          .Add("--Source={value}", Source, separator: ';')
-          .Add("--LogFile={value}", LogFile);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary></summary>
+    [Argument(Format = "{value}", Position = 1)] public string Configuration => Get<string>(() => Configuration);
+    /// <summary>List of snapshot files.</summary>
+    [Argument(Format = "--Source={value}", Separator = ";")] public IReadOnlyList<string> Source => Get<List<string>>(() => Source);
+    /// <summary>Enables logging and specifies log file name.</summary>
+    [Argument(Format = "--LogFile={value}")] public string LogFile => Get<string>(() => LogFile);
 }
 #endregion
 #region DotCoverMergeSettings
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DotCoverMergeSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<DotCoverMergeSettings>))]
+[Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverMerge), Arguments = "merge")]
+public partial class DotCoverMergeSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the DotCover executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
-    public virtual string Configuration { get; internal set; }
-    /// <summary>
-    ///   List of snapshot files.
-    /// </summary>
-    public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
-    internal List<string> SourceInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   File name for the merged snapshot.
-    /// </summary>
-    public virtual string OutputFile { get; internal set; }
-    /// <summary>
-    ///   Directory for auxiliary files. Set to the system temp by default.
-    /// </summary>
-    public virtual string TempDirectory { get; internal set; }
-    /// <summary>
-    ///   Enables logging and specifies log file name.
-    /// </summary>
-    public virtual string LogFile { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("merge")
-          .Add("{value}", Configuration)
-          .Add("--Source={value}", Source, separator: ';')
-          .Add("--Output={value}", OutputFile)
-          .Add("--TempDir={value}", TempDirectory)
-          .Add("--LogFile={value}", LogFile);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary></summary>
+    [Argument(Format = "{value}", Position = 1)] public string Configuration => Get<string>(() => Configuration);
+    /// <summary>List of snapshot files.</summary>
+    [Argument(Format = "--Source={value}", Separator = ";")] public IReadOnlyList<string> Source => Get<List<string>>(() => Source);
+    /// <summary>File name for the merged snapshot.</summary>
+    [Argument(Format = "--Output={value}")] public string OutputFile => Get<string>(() => OutputFile);
+    /// <summary>Directory for auxiliary files. Set to the system temp by default.</summary>
+    [Argument(Format = "--TempDir={value}")] public string TempDirectory => Get<string>(() => TempDirectory);
+    /// <summary>Enables logging and specifies log file name.</summary>
+    [Argument(Format = "--LogFile={value}")] public string LogFile => Get<string>(() => LogFile);
 }
 #endregion
 #region DotCoverReportSettings
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DotCoverReportSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<DotCoverReportSettings>))]
+[Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverReport), Arguments = "report")]
+public partial class DotCoverReportSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the DotCover executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
-    public virtual string Configuration { get; internal set; }
-    /// <summary>
-    ///   List of snapshot files.
-    /// </summary>
-    public virtual IReadOnlyList<string> Source => SourceInternal.AsReadOnly();
-    internal List<string> SourceInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Resulting report file name.
-    /// </summary>
-    public virtual string OutputFile { get; internal set; }
-    /// <summary>
-    ///   A type of the report. The default value is <c>XML</c>.
-    /// </summary>
-    public virtual DotCoverReportType ReportType { get; internal set; }
-    /// <summary>
-    ///   Remove auto-implemented properties from report.
-    /// </summary>
-    public virtual bool? HideAutoProperties { get; internal set; }
-    /// <summary>
-    ///   Enables logging and specifies log file name.
-    /// </summary>
-    public virtual string LogFile { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("report")
-          .Add("{value}", Configuration)
-          .Add("--Source={value}", Source, separator: ';')
-          .Add("--Output={value}", OutputFile)
-          .Add("--ReportType={value}", ReportType)
-          .Add("--HideAutoProperties", HideAutoProperties)
-          .Add("--LogFile={value}", LogFile);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary></summary>
+    [Argument(Format = "{value}", Position = 1)] public string Configuration => Get<string>(() => Configuration);
+    /// <summary>List of snapshot files.</summary>
+    [Argument(Format = "--Source={value}", Separator = ";")] public IReadOnlyList<string> Source => Get<List<string>>(() => Source);
+    /// <summary>Resulting report file name.</summary>
+    [Argument(Format = "--Output={value}")] public string OutputFile => Get<string>(() => OutputFile);
+    /// <summary>A type of the report. The default value is <c>XML</c>.</summary>
+    [Argument(Format = "--ReportType={value}")] public DotCoverReportType ReportType => Get<DotCoverReportType>(() => ReportType);
+    /// <summary>Remove auto-implemented properties from report.</summary>
+    [Argument(Format = "--HideAutoProperties")] public bool? HideAutoProperties => Get<bool?>(() => HideAutoProperties);
+    /// <summary>Enables logging and specifies log file name.</summary>
+    [Argument(Format = "--LogFile={value}")] public string LogFile => Get<string>(() => LogFile);
 }
 #endregion
 #region DotCoverZipSettings
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DotCoverZipSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<DotCoverZipSettings>))]
+[Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverZip), Arguments = "zip")]
+public partial class DotCoverZipSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the DotCover executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? DotCoverTasks.DotCoverPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? DotCoverTasks.DotCoverLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? DotCoverTasks.DotCoverExitHandler;
-    public virtual string Configuration { get; internal set; }
-    /// <summary>
-    ///   Coverage snapshot file name.
-    /// </summary>
-    public virtual string Source { get; internal set; }
-    /// <summary>
-    ///   Zipped snapshot file name.
-    /// </summary>
-    public virtual string OutputFile { get; internal set; }
-    /// <summary>
-    ///   Enables logging and specifies log file name.
-    /// </summary>
-    public virtual string LogFile { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("zip")
-          .Add("{value}", Configuration)
-          .Add("--Source={value}", Source)
-          .Add("--Output={value}", OutputFile)
-          .Add("--LogFile={value}", LogFile);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary></summary>
+    [Argument(Format = "{value}", Position = 1)] public string Configuration => Get<string>(() => Configuration);
+    /// <summary>Coverage snapshot file name.</summary>
+    [Argument(Format = "--Source={value}")] public string Source => Get<string>(() => Source);
+    /// <summary>Zipped snapshot file name.</summary>
+    [Argument(Format = "--Output={value}")] public string OutputFile => Get<string>(() => OutputFile);
+    /// <summary>Enables logging and specifies log file name.</summary>
+    [Argument(Format = "--LogFile={value}")] public string LogFile => Get<string>(() => LogFile);
 }
 #endregion
 #region DotCoverAnalyseSettingsExtensions
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotCoverAnalyseSettingsExtensions
 {
     #region Configuration
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = configuration;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Configuration))]
+    public static T SetConfiguration<T>(this T o, string v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.Configuration, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Configuration))]
+    public static T ResetConfiguration<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.Configuration));
     #endregion
     #region TargetExecutable
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.TargetExecutable"/></em></p>
-    ///   <p>File name of the program to analyse.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargetExecutable<T>(this T toolSettings, string targetExecutable) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetExecutable = targetExecutable;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.TargetExecutable"/></em></p>
-    ///   <p>File name of the program to analyse.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTargetExecutable<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetExecutable = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.TargetExecutable"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.TargetExecutable))]
+    public static T SetTargetExecutable<T>(this T o, string v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.TargetExecutable, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.TargetExecutable"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.TargetExecutable))]
+    public static T ResetTargetExecutable<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.TargetExecutable));
     #endregion
     #region ReportType
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.ReportType"/></em></p>
-    ///   <p>A type of the report. The default value is <c>XML</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetReportType<T>(this T toolSettings, DotCoverReportType reportType) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReportType = reportType;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.ReportType"/></em></p>
-    ///   <p>A type of the report. The default value is <c>XML</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetReportType<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReportType = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ReportType"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ReportType))]
+    public static T SetReportType<T>(this T o, DotCoverReportType v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.ReportType, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ReportType"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ReportType))]
+    public static T ResetReportType<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.ReportType));
     #endregion
     #region OutputFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.OutputFile"/></em></p>
-    ///   <p>Resulting report file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = outputFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.OutputFile"/></em></p>
-    ///   <p>Resulting report file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.OutputFile))]
+    public static T SetOutputFile<T>(this T o, string v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.OutputFile, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.OutputFile))]
+    public static T ResetOutputFile<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.OutputFile));
     #endregion
     #region HideAutoProperties
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></em></p>
-    ///   <p>Remove auto-implemented properties from report.</p>
-    /// </summary>
-    [Pure]
-    public static T SetHideAutoProperties<T>(this T toolSettings, bool? hideAutoProperties) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HideAutoProperties = hideAutoProperties;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></em></p>
-    ///   <p>Remove auto-implemented properties from report.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetHideAutoProperties<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HideAutoProperties = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></em></p>
-    ///   <p>Remove auto-implemented properties from report.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableHideAutoProperties<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HideAutoProperties = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></em></p>
-    ///   <p>Remove auto-implemented properties from report.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableHideAutoProperties<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HideAutoProperties = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverAnalyseSettings.HideAutoProperties"/></em></p>
-    ///   <p>Remove auto-implemented properties from report.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleHideAutoProperties<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HideAutoProperties = !toolSettings.HideAutoProperties;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.HideAutoProperties"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.HideAutoProperties))]
+    public static T SetHideAutoProperties<T>(this T o, bool? v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.HideAutoProperties, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.HideAutoProperties"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.HideAutoProperties))]
+    public static T ResetHideAutoProperties<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.HideAutoProperties));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.HideAutoProperties"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.HideAutoProperties))]
+    public static T EnableHideAutoProperties<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.HideAutoProperties, true));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.HideAutoProperties"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.HideAutoProperties))]
+    public static T DisableHideAutoProperties<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.HideAutoProperties, false));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.HideAutoProperties"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.HideAutoProperties))]
+    public static T ToggleHideAutoProperties<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.HideAutoProperties, !o.HideAutoProperties));
     #endregion
     #region TargetArguments
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.TargetArguments"/></em></p>
-    ///   <p>Program arguments.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargetArguments<T>(this T toolSettings, string targetArguments) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetArguments = targetArguments;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.TargetArguments"/></em></p>
-    ///   <p>Program arguments.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTargetArguments<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetArguments = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.TargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.TargetArguments))]
+    public static T SetTargetArguments<T>(this T o, string v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.TargetArguments, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.TargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.TargetArguments))]
+    public static T ResetTargetArguments<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.TargetArguments));
     #endregion
     #region TargetWorkingDirectory
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></em></p>
-    ///   <p>Program working directory.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargetWorkingDirectory<T>(this T toolSettings, string targetWorkingDirectory) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetWorkingDirectory = targetWorkingDirectory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/></em></p>
-    ///   <p>Program working directory.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTargetWorkingDirectory<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetWorkingDirectory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.TargetWorkingDirectory))]
+    public static T SetTargetWorkingDirectory<T>(this T o, string v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.TargetWorkingDirectory, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.TargetWorkingDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.TargetWorkingDirectory))]
+    public static T ResetTargetWorkingDirectory<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.TargetWorkingDirectory));
     #endregion
     #region TempDirectory
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.TempDirectory"/></em></p>
-    ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTempDirectory<T>(this T toolSettings, string tempDirectory) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TempDirectory = tempDirectory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.TempDirectory"/></em></p>
-    ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTempDirectory<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TempDirectory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.TempDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.TempDirectory))]
+    public static T SetTempDirectory<T>(this T o, string v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.TempDirectory, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.TempDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.TempDirectory))]
+    public static T ResetTempDirectory<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.TempDirectory));
     #endregion
     #region InheritConsole
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T SetInheritConsole<T>(this T toolSettings, bool? inheritConsole) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = inheritConsole;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetInheritConsole<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverAnalyseSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableInheritConsole<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverAnalyseSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableInheritConsole<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverAnalyseSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleInheritConsole<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = !toolSettings.InheritConsole;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.InheritConsole))]
+    public static T SetInheritConsole<T>(this T o, bool? v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.InheritConsole, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.InheritConsole))]
+    public static T ResetInheritConsole<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.InheritConsole));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.InheritConsole))]
+    public static T EnableInheritConsole<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.InheritConsole, true));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.InheritConsole))]
+    public static T DisableInheritConsole<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.InheritConsole, false));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.InheritConsole))]
+    public static T ToggleInheritConsole<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.InheritConsole, !o.InheritConsole));
     #endregion
     #region AnalyseTargetArguments
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAnalyseTargetArguments<T>(this T toolSettings, bool? analyseTargetArguments) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = analyseTargetArguments;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = !toolSettings.AnalyseTargetArguments;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AnalyseTargetArguments))]
+    public static T SetAnalyseTargetArguments<T>(this T o, bool? v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AnalyseTargetArguments))]
+    public static T ResetAnalyseTargetArguments<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.AnalyseTargetArguments));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AnalyseTargetArguments))]
+    public static T EnableAnalyseTargetArguments<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, true));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AnalyseTargetArguments))]
+    public static T DisableAnalyseTargetArguments<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, false));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AnalyseTargetArguments))]
+    public static T ToggleAnalyseTargetArguments<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, !o.AnalyseTargetArguments));
     #endregion
     #region Scope
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.Scope"/> to a new list</em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T SetScope<T>(this T toolSettings, params string[] scope) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal = scope.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.Scope"/> to a new list</em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T SetScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal = scope.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverAnalyseSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T AddScope<T>(this T toolSettings, params string[] scope) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal.AddRange(scope);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverAnalyseSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T AddScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal.AddRange(scope);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverAnalyseSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T ClearScope<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverAnalyseSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveScope<T>(this T toolSettings, params string[] scope) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(scope);
-        toolSettings.ScopeInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverAnalyseSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(scope);
-        toolSettings.ScopeInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Scope))]
+    public static T SetScope<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Scope))]
+    public static T SetScope<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Scope))]
+    public static T AddScope<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.AddCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Scope))]
+    public static T AddScope<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.AddCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Scope))]
+    public static T RemoveScope<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.RemoveCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Scope))]
+    public static T RemoveScope<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.RemoveCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Scope))]
+    public static T ClearScope<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.ClearCollection(() => o.Scope));
     #endregion
     #region Filters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.Filters"/> to a new list</em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal = filters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.Filters"/> to a new list</em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal = filters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverAnalyseSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.AddRange(filters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverAnalyseSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.AddRange(filters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverAnalyseSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverAnalyseSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(filters);
-        toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverAnalyseSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(filters);
-        toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Filters))]
+    public static T SetFilters<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Filters))]
+    public static T SetFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Filters))]
+    public static T AddFilters<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.AddCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Filters))]
+    public static T AddFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.AddCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Filters))]
+    public static T RemoveFilters<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.RemoveCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Filters))]
+    public static T RemoveFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.RemoveCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.Filters))]
+    public static T ClearFilters<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.ClearCollection(() => o.Filters));
     #endregion
     #region AttributeFilters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.AttributeFilters"/> to a new list</em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.AttributeFilters"/> to a new list</em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverAnalyseSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverAnalyseSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverAnalyseSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearAttributeFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverAnalyseSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(attributeFilters);
-        toolSettings.AttributeFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverAnalyseSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(attributeFilters);
-        toolSettings.AttributeFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AttributeFilters))]
+    public static T SetAttributeFilters<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AttributeFilters))]
+    public static T SetAttributeFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AttributeFilters))]
+    public static T AddAttributeFilters<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.AddCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AttributeFilters))]
+    public static T AddAttributeFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.AddCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AttributeFilters))]
+    public static T RemoveAttributeFilters<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.RemoveCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AttributeFilters))]
+    public static T RemoveAttributeFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.RemoveCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AttributeFilters))]
+    public static T ClearAttributeFilters<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.ClearCollection(() => o.AttributeFilters));
     #endregion
     #region DisableDefaultFilters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDisableDefaultFilters<T>(this T toolSettings, bool? disableDefaultFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = disableDefaultFilters;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverAnalyseSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = !toolSettings.DisableDefaultFilters;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.DisableDefaultFilters))]
+    public static T SetDisableDefaultFilters<T>(this T o, bool? v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.DisableDefaultFilters))]
+    public static T ResetDisableDefaultFilters<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.DisableDefaultFilters));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.DisableDefaultFilters))]
+    public static T EnableDisableDefaultFilters<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, true));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.DisableDefaultFilters))]
+    public static T DisableDisableDefaultFilters<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, false));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.DisableDefaultFilters))]
+    public static T ToggleDisableDefaultFilters<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, !o.DisableDefaultFilters));
     #endregion
     #region SymbolSearchPaths
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/> to a new list</em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/> to a new list</em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearSymbolSearchPaths<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(symbolSearchPaths);
-        toolSettings.SymbolSearchPathsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverAnalyseSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(symbolSearchPaths);
-        toolSettings.SymbolSearchPathsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.SymbolSearchPaths))]
+    public static T SetSymbolSearchPaths<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.SymbolSearchPaths))]
+    public static T SetSymbolSearchPaths<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.SymbolSearchPaths))]
+    public static T AddSymbolSearchPaths<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.AddCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.SymbolSearchPaths))]
+    public static T AddSymbolSearchPaths<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.AddCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.SymbolSearchPaths))]
+    public static T RemoveSymbolSearchPaths<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.RemoveCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.SymbolSearchPaths))]
+    public static T RemoveSymbolSearchPaths<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.RemoveCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.SymbolSearchPaths))]
+    public static T ClearSymbolSearchPaths<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.ClearCollection(() => o.SymbolSearchPaths));
     #endregion
     #region AllowSymbolServerAccess
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAllowSymbolServerAccess<T>(this T toolSettings, bool? allowSymbolServerAccess) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = allowSymbolServerAccess;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = !toolSettings.AllowSymbolServerAccess;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AllowSymbolServerAccess))]
+    public static T SetAllowSymbolServerAccess<T>(this T o, bool? v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AllowSymbolServerAccess))]
+    public static T ResetAllowSymbolServerAccess<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.AllowSymbolServerAccess));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AllowSymbolServerAccess))]
+    public static T EnableAllowSymbolServerAccess<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, true));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AllowSymbolServerAccess))]
+    public static T DisableAllowSymbolServerAccess<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, false));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.AllowSymbolServerAccess))]
+    public static T ToggleAllowSymbolServerAccess<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, !o.AllowSymbolServerAccess));
     #endregion
     #region ReturnTargetExitCode
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T SetReturnTargetExitCode<T>(this T toolSettings, bool? returnTargetExitCode) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = returnTargetExitCode;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = !toolSettings.ReturnTargetExitCode;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ReturnTargetExitCode))]
+    public static T SetReturnTargetExitCode<T>(this T o, bool? v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ReturnTargetExitCode))]
+    public static T ResetReturnTargetExitCode<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.ReturnTargetExitCode));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ReturnTargetExitCode))]
+    public static T EnableReturnTargetExitCode<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, true));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ReturnTargetExitCode))]
+    public static T DisableReturnTargetExitCode<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, false));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ReturnTargetExitCode))]
+    public static T ToggleReturnTargetExitCode<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, !o.ReturnTargetExitCode));
     #endregion
     #region ProcessFilters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.ProcessFilters"/> to a new list</em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal = processFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.ProcessFilters"/> to a new list</em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal = processFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverAnalyseSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal.AddRange(processFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverAnalyseSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal.AddRange(processFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverAnalyseSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearProcessFilters<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverAnalyseSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(processFilters);
-        toolSettings.ProcessFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverAnalyseSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(processFilters);
-        toolSettings.ProcessFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ProcessFilters))]
+    public static T SetProcessFilters<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ProcessFilters))]
+    public static T SetProcessFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ProcessFilters))]
+    public static T AddProcessFilters<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.AddCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ProcessFilters))]
+    public static T AddProcessFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.AddCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ProcessFilters))]
+    public static T RemoveProcessFilters<T>(this T o, params string[] v) where T : DotCoverAnalyseSettings => o.Modify(b => b.RemoveCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ProcessFilters))]
+    public static T RemoveProcessFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverAnalyseSettings => o.Modify(b => b.RemoveCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.ProcessFilters))]
+    public static T ClearProcessFilters<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.ClearCollection(() => o.ProcessFilters));
     #endregion
     #region LogFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverAnalyseSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = logFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverAnalyseSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverAnalyseSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverAnalyseSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.LogFile))]
+    public static T SetLogFile<T>(this T o, string v) where T : DotCoverAnalyseSettings => o.Modify(b => b.Set(() => o.LogFile, v));
+    /// <inheritdoc cref="DotCoverAnalyseSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverAnalyseSettings), Property = nameof(DotCoverAnalyseSettings.LogFile))]
+    public static T ResetLogFile<T>(this T o) where T : DotCoverAnalyseSettings => o.Modify(b => b.Remove(() => o.LogFile));
     #endregion
 }
 #endregion
 #region DotCoverCoverSettingsExtensions
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotCoverCoverSettingsExtensions
 {
     #region Configuration
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = configuration;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Configuration))]
+    public static T SetConfiguration<T>(this T o, string v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.Configuration, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Configuration))]
+    public static T ResetConfiguration<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.Configuration));
     #endregion
     #region TargetExecutable
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.TargetExecutable"/></em></p>
-    ///   <p>File name of the program to analyse.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargetExecutable<T>(this T toolSettings, string targetExecutable) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetExecutable = targetExecutable;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.TargetExecutable"/></em></p>
-    ///   <p>File name of the program to analyse.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTargetExecutable<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetExecutable = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.TargetExecutable"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.TargetExecutable))]
+    public static T SetTargetExecutable<T>(this T o, string v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.TargetExecutable, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.TargetExecutable"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.TargetExecutable))]
+    public static T ResetTargetExecutable<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.TargetExecutable));
     #endregion
     #region OutputFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.OutputFile"/></em></p>
-    ///   <p>Path to the resulting coverage snapshot.</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = outputFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.OutputFile"/></em></p>
-    ///   <p>Path to the resulting coverage snapshot.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.OutputFile))]
+    public static T SetOutputFile<T>(this T o, string v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.OutputFile, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.OutputFile))]
+    public static T ResetOutputFile<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.OutputFile));
     #endregion
     #region ReportType
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.ReportType"/></em></p>
-    ///   <p>A type of the report. The default value is <c>XML</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetReportType<T>(this T toolSettings, DotCoverReportType reportType) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReportType = reportType;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.ReportType"/></em></p>
-    ///   <p>A type of the report. The default value is <c>XML</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetReportType<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReportType = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.ReportType"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ReportType))]
+    public static T SetReportType<T>(this T o, DotCoverReportType v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.ReportType, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.ReportType"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ReportType))]
+    public static T ResetReportType<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.ReportType));
     #endregion
     #region TargetArguments
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.TargetArguments"/></em></p>
-    ///   <p>Program arguments.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargetArguments<T>(this T toolSettings, string targetArguments) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetArguments = targetArguments;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.TargetArguments"/></em></p>
-    ///   <p>Program arguments.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTargetArguments<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetArguments = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.TargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.TargetArguments))]
+    public static T SetTargetArguments<T>(this T o, string v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.TargetArguments, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.TargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.TargetArguments))]
+    public static T ResetTargetArguments<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.TargetArguments));
     #endregion
     #region TargetWorkingDirectory
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></em></p>
-    ///   <p>Program working directory.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargetWorkingDirectory<T>(this T toolSettings, string targetWorkingDirectory) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetWorkingDirectory = targetWorkingDirectory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.TargetWorkingDirectory"/></em></p>
-    ///   <p>Program working directory.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTargetWorkingDirectory<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetWorkingDirectory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.TargetWorkingDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.TargetWorkingDirectory))]
+    public static T SetTargetWorkingDirectory<T>(this T o, string v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.TargetWorkingDirectory, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.TargetWorkingDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.TargetWorkingDirectory))]
+    public static T ResetTargetWorkingDirectory<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.TargetWorkingDirectory));
     #endregion
     #region TempDirectory
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.TempDirectory"/></em></p>
-    ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTempDirectory<T>(this T toolSettings, string tempDirectory) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TempDirectory = tempDirectory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.TempDirectory"/></em></p>
-    ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTempDirectory<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TempDirectory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.TempDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.TempDirectory))]
+    public static T SetTempDirectory<T>(this T o, string v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.TempDirectory, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.TempDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.TempDirectory))]
+    public static T ResetTempDirectory<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.TempDirectory));
     #endregion
     #region InheritConsole
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T SetInheritConsole<T>(this T toolSettings, bool? inheritConsole) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = inheritConsole;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetInheritConsole<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverCoverSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableInheritConsole<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverCoverSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableInheritConsole<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverCoverSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleInheritConsole<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = !toolSettings.InheritConsole;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.InheritConsole))]
+    public static T SetInheritConsole<T>(this T o, bool? v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.InheritConsole, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.InheritConsole))]
+    public static T ResetInheritConsole<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.InheritConsole));
+    /// <inheritdoc cref="DotCoverCoverSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.InheritConsole))]
+    public static T EnableInheritConsole<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.InheritConsole, true));
+    /// <inheritdoc cref="DotCoverCoverSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.InheritConsole))]
+    public static T DisableInheritConsole<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.InheritConsole, false));
+    /// <inheritdoc cref="DotCoverCoverSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.InheritConsole))]
+    public static T ToggleInheritConsole<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.InheritConsole, !o.InheritConsole));
     #endregion
     #region AnalyseTargetArguments
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAnalyseTargetArguments<T>(this T toolSettings, bool? analyseTargetArguments) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = analyseTargetArguments;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverCoverSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = !toolSettings.AnalyseTargetArguments;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AnalyseTargetArguments))]
+    public static T SetAnalyseTargetArguments<T>(this T o, bool? v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AnalyseTargetArguments))]
+    public static T ResetAnalyseTargetArguments<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.AnalyseTargetArguments));
+    /// <inheritdoc cref="DotCoverCoverSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AnalyseTargetArguments))]
+    public static T EnableAnalyseTargetArguments<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, true));
+    /// <inheritdoc cref="DotCoverCoverSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AnalyseTargetArguments))]
+    public static T DisableAnalyseTargetArguments<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, false));
+    /// <inheritdoc cref="DotCoverCoverSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AnalyseTargetArguments))]
+    public static T ToggleAnalyseTargetArguments<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, !o.AnalyseTargetArguments));
     #endregion
     #region Scope
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.Scope"/> to a new list</em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T SetScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal = scope.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.Scope"/> to a new list</em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T SetScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal = scope.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T AddScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal.AddRange(scope);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T AddScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal.AddRange(scope);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverCoverSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T ClearScope<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(scope);
-        toolSettings.ScopeInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(scope);
-        toolSettings.ScopeInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Scope))]
+    public static T SetScope<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Scope))]
+    public static T SetScope<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Scope))]
+    public static T AddScope<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.AddCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Scope))]
+    public static T AddScope<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.AddCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Scope))]
+    public static T RemoveScope<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.RemoveCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Scope))]
+    public static T RemoveScope<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.RemoveCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Scope))]
+    public static T ClearScope<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.ClearCollection(() => o.Scope));
     #endregion
     #region Filters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.Filters"/> to a new list</em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal = filters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.Filters"/> to a new list</em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal = filters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.AddRange(filters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.AddRange(filters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverCoverSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(filters);
-        toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(filters);
-        toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Filters))]
+    public static T SetFilters<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Filters))]
+    public static T SetFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Filters))]
+    public static T AddFilters<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.AddCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Filters))]
+    public static T AddFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.AddCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Filters))]
+    public static T RemoveFilters<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.RemoveCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Filters))]
+    public static T RemoveFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.RemoveCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.Filters))]
+    public static T ClearFilters<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.ClearCollection(() => o.Filters));
     #endregion
     #region AttributeFilters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.AttributeFilters"/> to a new list</em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.AttributeFilters"/> to a new list</em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverCoverSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearAttributeFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(attributeFilters);
-        toolSettings.AttributeFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(attributeFilters);
-        toolSettings.AttributeFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AttributeFilters))]
+    public static T SetAttributeFilters<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AttributeFilters))]
+    public static T SetAttributeFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AttributeFilters))]
+    public static T AddAttributeFilters<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.AddCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AttributeFilters))]
+    public static T AddAttributeFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.AddCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AttributeFilters))]
+    public static T RemoveAttributeFilters<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.RemoveCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AttributeFilters))]
+    public static T RemoveAttributeFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.RemoveCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AttributeFilters))]
+    public static T ClearAttributeFilters<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.ClearCollection(() => o.AttributeFilters));
     #endregion
     #region DisableDefaultFilters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDisableDefaultFilters<T>(this T toolSettings, bool? disableDefaultFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = disableDefaultFilters;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverCoverSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = !toolSettings.DisableDefaultFilters;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.DisableDefaultFilters))]
+    public static T SetDisableDefaultFilters<T>(this T o, bool? v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.DisableDefaultFilters))]
+    public static T ResetDisableDefaultFilters<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.DisableDefaultFilters));
+    /// <inheritdoc cref="DotCoverCoverSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.DisableDefaultFilters))]
+    public static T EnableDisableDefaultFilters<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, true));
+    /// <inheritdoc cref="DotCoverCoverSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.DisableDefaultFilters))]
+    public static T DisableDisableDefaultFilters<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, false));
+    /// <inheritdoc cref="DotCoverCoverSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.DisableDefaultFilters))]
+    public static T ToggleDisableDefaultFilters<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, !o.DisableDefaultFilters));
     #endregion
     #region SymbolSearchPaths
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.SymbolSearchPaths"/> to a new list</em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.SymbolSearchPaths"/> to a new list</em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearSymbolSearchPaths<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(symbolSearchPaths);
-        toolSettings.SymbolSearchPathsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(symbolSearchPaths);
-        toolSettings.SymbolSearchPathsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.SymbolSearchPaths))]
+    public static T SetSymbolSearchPaths<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.SymbolSearchPaths))]
+    public static T SetSymbolSearchPaths<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.SymbolSearchPaths))]
+    public static T AddSymbolSearchPaths<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.AddCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.SymbolSearchPaths))]
+    public static T AddSymbolSearchPaths<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.AddCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.SymbolSearchPaths))]
+    public static T RemoveSymbolSearchPaths<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.RemoveCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.SymbolSearchPaths))]
+    public static T RemoveSymbolSearchPaths<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.RemoveCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.SymbolSearchPaths))]
+    public static T ClearSymbolSearchPaths<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.ClearCollection(() => o.SymbolSearchPaths));
     #endregion
     #region AllowSymbolServerAccess
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAllowSymbolServerAccess<T>(this T toolSettings, bool? allowSymbolServerAccess) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = allowSymbolServerAccess;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverCoverSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = !toolSettings.AllowSymbolServerAccess;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AllowSymbolServerAccess))]
+    public static T SetAllowSymbolServerAccess<T>(this T o, bool? v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AllowSymbolServerAccess))]
+    public static T ResetAllowSymbolServerAccess<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.AllowSymbolServerAccess));
+    /// <inheritdoc cref="DotCoverCoverSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AllowSymbolServerAccess))]
+    public static T EnableAllowSymbolServerAccess<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, true));
+    /// <inheritdoc cref="DotCoverCoverSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AllowSymbolServerAccess))]
+    public static T DisableAllowSymbolServerAccess<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, false));
+    /// <inheritdoc cref="DotCoverCoverSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.AllowSymbolServerAccess))]
+    public static T ToggleAllowSymbolServerAccess<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, !o.AllowSymbolServerAccess));
     #endregion
     #region ReturnTargetExitCode
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T SetReturnTargetExitCode<T>(this T toolSettings, bool? returnTargetExitCode) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = returnTargetExitCode;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverCoverSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = !toolSettings.ReturnTargetExitCode;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ReturnTargetExitCode))]
+    public static T SetReturnTargetExitCode<T>(this T o, bool? v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ReturnTargetExitCode))]
+    public static T ResetReturnTargetExitCode<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.ReturnTargetExitCode));
+    /// <inheritdoc cref="DotCoverCoverSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ReturnTargetExitCode))]
+    public static T EnableReturnTargetExitCode<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, true));
+    /// <inheritdoc cref="DotCoverCoverSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ReturnTargetExitCode))]
+    public static T DisableReturnTargetExitCode<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, false));
+    /// <inheritdoc cref="DotCoverCoverSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ReturnTargetExitCode))]
+    public static T ToggleReturnTargetExitCode<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, !o.ReturnTargetExitCode));
     #endregion
     #region ProcessFilters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.ProcessFilters"/> to a new list</em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal = processFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.ProcessFilters"/> to a new list</em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal = processFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal.AddRange(processFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal.AddRange(processFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverCoverSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearProcessFilters<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(processFilters);
-        toolSettings.ProcessFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(processFilters);
-        toolSettings.ProcessFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ProcessFilters))]
+    public static T SetProcessFilters<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ProcessFilters))]
+    public static T SetProcessFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ProcessFilters))]
+    public static T AddProcessFilters<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.AddCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ProcessFilters))]
+    public static T AddProcessFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.AddCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ProcessFilters))]
+    public static T RemoveProcessFilters<T>(this T o, params string[] v) where T : DotCoverCoverSettings => o.Modify(b => b.RemoveCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ProcessFilters))]
+    public static T RemoveProcessFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverSettings => o.Modify(b => b.RemoveCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.ProcessFilters))]
+    public static T ClearProcessFilters<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.ClearCollection(() => o.ProcessFilters));
     #endregion
     #region LogFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = logFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverCoverSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.LogFile))]
+    public static T SetLogFile<T>(this T o, string v) where T : DotCoverCoverSettings => o.Modify(b => b.Set(() => o.LogFile, v));
+    /// <inheritdoc cref="DotCoverCoverSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverSettings), Property = nameof(DotCoverCoverSettings.LogFile))]
+    public static T ResetLogFile<T>(this T o) where T : DotCoverCoverSettings => o.Modify(b => b.Remove(() => o.LogFile));
     #endregion
 }
 #endregion
 #region DotCoverCoverDotNetSettingsExtensions
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotCoverCoverDotNetSettingsExtensions
 {
     #region Configuration
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = configuration;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Configuration))]
+    public static T SetConfiguration<T>(this T o, string v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.Configuration, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Configuration))]
+    public static T ResetConfiguration<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.Configuration));
     #endregion
     #region OutputFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.OutputFile"/></em></p>
-    ///   <p>Path to the resulting coverage snapshot.</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = outputFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.OutputFile"/></em></p>
-    ///   <p>Path to the resulting coverage snapshot.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.OutputFile))]
+    public static T SetOutputFile<T>(this T o, string v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.OutputFile, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.OutputFile))]
+    public static T ResetOutputFile<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.OutputFile));
     #endregion
     #region ReportType
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.ReportType"/></em></p>
-    ///   <p>A type of the report. The default value is <c>XML</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetReportType<T>(this T toolSettings, DotCoverReportType reportType) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReportType = reportType;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.ReportType"/></em></p>
-    ///   <p>A type of the report. The default value is <c>XML</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetReportType<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReportType = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ReportType"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ReportType))]
+    public static T SetReportType<T>(this T o, DotCoverReportType v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.ReportType, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ReportType"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ReportType))]
+    public static T ResetReportType<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.ReportType));
     #endregion
     #region TargetArguments
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></em></p>
-    ///   <p>Program arguments.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargetArguments<T>(this T toolSettings, string targetArguments) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetArguments = targetArguments;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.TargetArguments"/></em></p>
-    ///   <p>Program arguments.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTargetArguments<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetArguments = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.TargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.TargetArguments))]
+    public static T SetTargetArguments<T>(this T o, string v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.TargetArguments, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.TargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.TargetArguments))]
+    public static T ResetTargetArguments<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.TargetArguments));
     #endregion
     #region TargetWorkingDirectory
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></em></p>
-    ///   <p>Program working directory.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTargetWorkingDirectory<T>(this T toolSettings, string targetWorkingDirectory) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetWorkingDirectory = targetWorkingDirectory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/></em></p>
-    ///   <p>Program working directory.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTargetWorkingDirectory<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TargetWorkingDirectory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.TargetWorkingDirectory))]
+    public static T SetTargetWorkingDirectory<T>(this T o, string v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.TargetWorkingDirectory, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.TargetWorkingDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.TargetWorkingDirectory))]
+    public static T ResetTargetWorkingDirectory<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.TargetWorkingDirectory));
     #endregion
     #region TempDirectory
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></em></p>
-    ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTempDirectory<T>(this T toolSettings, string tempDirectory) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TempDirectory = tempDirectory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.TempDirectory"/></em></p>
-    ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTempDirectory<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TempDirectory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.TempDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.TempDirectory))]
+    public static T SetTempDirectory<T>(this T o, string v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.TempDirectory, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.TempDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.TempDirectory))]
+    public static T ResetTempDirectory<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.TempDirectory));
     #endregion
     #region InheritConsole
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T SetInheritConsole<T>(this T toolSettings, bool? inheritConsole) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = inheritConsole;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetInheritConsole<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableInheritConsole<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableInheritConsole<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverCoverDotNetSettings.InheritConsole"/></em></p>
-    ///   <p>Lets the analysed application inherit dotCover console. The default is <c>true</c>. Please note that windows of the analysed GUI application will not be hidden if the console is inherited.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleInheritConsole<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InheritConsole = !toolSettings.InheritConsole;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.InheritConsole))]
+    public static T SetInheritConsole<T>(this T o, bool? v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.InheritConsole, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.InheritConsole))]
+    public static T ResetInheritConsole<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.InheritConsole));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.InheritConsole))]
+    public static T EnableInheritConsole<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.InheritConsole, true));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.InheritConsole))]
+    public static T DisableInheritConsole<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.InheritConsole, false));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.InheritConsole"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.InheritConsole))]
+    public static T ToggleInheritConsole<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.InheritConsole, !o.InheritConsole));
     #endregion
     #region AnalyseTargetArguments
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAnalyseTargetArguments<T>(this T toolSettings, bool? analyseTargetArguments) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = analyseTargetArguments;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/></em></p>
-    ///   <p>Specifies whether dotCover should analyse the 'target arguments' string and convert relative paths to absolute ones. The default is <c>true</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleAnalyseTargetArguments<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AnalyseTargetArguments = !toolSettings.AnalyseTargetArguments;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AnalyseTargetArguments))]
+    public static T SetAnalyseTargetArguments<T>(this T o, bool? v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AnalyseTargetArguments))]
+    public static T ResetAnalyseTargetArguments<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.AnalyseTargetArguments));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AnalyseTargetArguments))]
+    public static T EnableAnalyseTargetArguments<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, true));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AnalyseTargetArguments))]
+    public static T DisableAnalyseTargetArguments<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, false));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AnalyseTargetArguments"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AnalyseTargetArguments))]
+    public static T ToggleAnalyseTargetArguments<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.AnalyseTargetArguments, !o.AnalyseTargetArguments));
     #endregion
     #region Scope
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.Scope"/> to a new list</em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T SetScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal = scope.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.Scope"/> to a new list</em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T SetScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal = scope.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T AddScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal.AddRange(scope);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T AddScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal.AddRange(scope);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverCoverDotNetSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T ClearScope<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ScopeInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveScope<T>(this T toolSettings, params string[] scope) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(scope);
-        toolSettings.ScopeInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.Scope"/></em></p>
-    ///   <p>Allows including assemblies that were not loaded in the specified scope into coverage results. Ant-style patterns are supported here (e.g. <c>ProjectFolder/**/*.dll</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveScope<T>(this T toolSettings, IEnumerable<string> scope) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(scope);
-        toolSettings.ScopeInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Scope))]
+    public static T SetScope<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Scope))]
+    public static T SetScope<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Scope))]
+    public static T AddScope<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.AddCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Scope))]
+    public static T AddScope<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.AddCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Scope))]
+    public static T RemoveScope<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Scope))]
+    public static T RemoveScope<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.Scope, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Scope"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Scope))]
+    public static T ClearScope<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.ClearCollection(() => o.Scope));
     #endregion
     #region Filters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.Filters"/> to a new list</em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal = filters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.Filters"/> to a new list</em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal = filters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.AddRange(filters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.AddRange(filters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverCoverDotNetSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFilters<T>(this T toolSettings, params string[] filters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(filters);
-        toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.Filters"/></em></p>
-    ///   <p>Specifies coverage filters using the following syntax: <c>+:module=*;class=*;function=*;</c>. Use <c>-:myassembly</c> to exclude an assembly from code coverage. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFilters<T>(this T toolSettings, IEnumerable<string> filters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(filters);
-        toolSettings.FiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Filters))]
+    public static T SetFilters<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Filters))]
+    public static T SetFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Filters))]
+    public static T AddFilters<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.AddCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Filters))]
+    public static T AddFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.AddCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Filters))]
+    public static T RemoveFilters<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Filters))]
+    public static T RemoveFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.Filters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.Filters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.Filters))]
+    public static T ClearFilters<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.ClearCollection(() => o.Filters));
     #endregion
     #region AttributeFilters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/> to a new list</em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/> to a new list</em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal = attributeFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal.AddRange(attributeFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearAttributeFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AttributeFiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAttributeFilters<T>(this T toolSettings, params string[] attributeFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(attributeFilters);
-        toolSettings.AttributeFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.AttributeFilters"/></em></p>
-    ///   <p>Specifies attribute filters using the following syntax: <c>filter1;filter2;...</c>. Asterisk wildcard (*) is supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveAttributeFilters<T>(this T toolSettings, IEnumerable<string> attributeFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(attributeFilters);
-        toolSettings.AttributeFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AttributeFilters))]
+    public static T SetAttributeFilters<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AttributeFilters))]
+    public static T SetAttributeFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AttributeFilters))]
+    public static T AddAttributeFilters<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.AddCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AttributeFilters))]
+    public static T AddAttributeFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.AddCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AttributeFilters))]
+    public static T RemoveAttributeFilters<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AttributeFilters))]
+    public static T RemoveAttributeFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.AttributeFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AttributeFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AttributeFilters))]
+    public static T ClearAttributeFilters<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.ClearCollection(() => o.AttributeFilters));
     #endregion
     #region DisableDefaultFilters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDisableDefaultFilters<T>(this T toolSettings, bool? disableDefaultFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = disableDefaultFilters;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/></em></p>
-    ///   <p>Disables default (automatically added) filters.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDisableDefaultFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.DisableDefaultFilters = !toolSettings.DisableDefaultFilters;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.DisableDefaultFilters))]
+    public static T SetDisableDefaultFilters<T>(this T o, bool? v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.DisableDefaultFilters))]
+    public static T ResetDisableDefaultFilters<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.DisableDefaultFilters));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.DisableDefaultFilters))]
+    public static T EnableDisableDefaultFilters<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, true));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.DisableDefaultFilters))]
+    public static T DisableDisableDefaultFilters<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, false));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.DisableDefaultFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.DisableDefaultFilters))]
+    public static T ToggleDisableDefaultFilters<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.DisableDefaultFilters, !o.DisableDefaultFilters));
     #endregion
     #region SymbolSearchPaths
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/> to a new list</em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/> to a new list</em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal = symbolSearchPaths.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal.AddRange(symbolSearchPaths);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearSymbolSearchPaths<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SymbolSearchPathsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSymbolSearchPaths<T>(this T toolSettings, params string[] symbolSearchPaths) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(symbolSearchPaths);
-        toolSettings.SymbolSearchPathsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/></em></p>
-    ///   <p>Specifies additional symbol search paths. Paths to symbol servers (starting with <em>srv*</em> prefix) are supported here.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSymbolSearchPaths<T>(this T toolSettings, IEnumerable<string> symbolSearchPaths) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(symbolSearchPaths);
-        toolSettings.SymbolSearchPathsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.SymbolSearchPaths))]
+    public static T SetSymbolSearchPaths<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.SymbolSearchPaths))]
+    public static T SetSymbolSearchPaths<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.SymbolSearchPaths))]
+    public static T AddSymbolSearchPaths<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.AddCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.SymbolSearchPaths))]
+    public static T AddSymbolSearchPaths<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.AddCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.SymbolSearchPaths))]
+    public static T RemoveSymbolSearchPaths<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.SymbolSearchPaths))]
+    public static T RemoveSymbolSearchPaths<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.SymbolSearchPaths, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.SymbolSearchPaths"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.SymbolSearchPaths))]
+    public static T ClearSymbolSearchPaths<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.ClearCollection(() => o.SymbolSearchPaths));
     #endregion
     #region AllowSymbolServerAccess
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAllowSymbolServerAccess<T>(this T toolSettings, bool? allowSymbolServerAccess) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = allowSymbolServerAccess;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/></em></p>
-    ///   <p>Allows dotCover to search for PDB files on a symbol server.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleAllowSymbolServerAccess<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.AllowSymbolServerAccess = !toolSettings.AllowSymbolServerAccess;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AllowSymbolServerAccess))]
+    public static T SetAllowSymbolServerAccess<T>(this T o, bool? v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AllowSymbolServerAccess))]
+    public static T ResetAllowSymbolServerAccess<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.AllowSymbolServerAccess));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AllowSymbolServerAccess))]
+    public static T EnableAllowSymbolServerAccess<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, true));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AllowSymbolServerAccess))]
+    public static T DisableAllowSymbolServerAccess<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, false));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.AllowSymbolServerAccess"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.AllowSymbolServerAccess))]
+    public static T ToggleAllowSymbolServerAccess<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.AllowSymbolServerAccess, !o.AllowSymbolServerAccess));
     #endregion
     #region ReturnTargetExitCode
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T SetReturnTargetExitCode<T>(this T toolSettings, bool? returnTargetExitCode) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = returnTargetExitCode;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/></em></p>
-    ///   <p>Returns the exit code of the target executable in case coverage analysis succeeded.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleReturnTargetExitCode<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReturnTargetExitCode = !toolSettings.ReturnTargetExitCode;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ReturnTargetExitCode))]
+    public static T SetReturnTargetExitCode<T>(this T o, bool? v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ReturnTargetExitCode))]
+    public static T ResetReturnTargetExitCode<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.ReturnTargetExitCode));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ReturnTargetExitCode))]
+    public static T EnableReturnTargetExitCode<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, true));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ReturnTargetExitCode))]
+    public static T DisableReturnTargetExitCode<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, false));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ReturnTargetExitCode"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ReturnTargetExitCode))]
+    public static T ToggleReturnTargetExitCode<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.ReturnTargetExitCode, !o.ReturnTargetExitCode));
     #endregion
     #region ProcessFilters
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/> to a new list</em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal = processFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/> to a new list</em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal = processFilters.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal.AddRange(processFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal.AddRange(processFilters);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearProcessFilters<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessFiltersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveProcessFilters<T>(this T toolSettings, params string[] processFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(processFilters);
-        toolSettings.ProcessFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverCoverDotNetSettings.ProcessFilters"/></em></p>
-    ///   <p>Specifies process filters. Syntax: <c>+:process1;-:process2</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveProcessFilters<T>(this T toolSettings, IEnumerable<string> processFilters) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(processFilters);
-        toolSettings.ProcessFiltersInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ProcessFilters))]
+    public static T SetProcessFilters<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ProcessFilters))]
+    public static T SetProcessFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ProcessFilters))]
+    public static T AddProcessFilters<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.AddCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ProcessFilters))]
+    public static T AddProcessFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.AddCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ProcessFilters))]
+    public static T RemoveProcessFilters<T>(this T o, params string[] v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ProcessFilters))]
+    public static T RemoveProcessFilters<T>(this T o, IEnumerable<string> v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.RemoveCollection(() => o.ProcessFilters, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.ProcessFilters"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.ProcessFilters))]
+    public static T ClearProcessFilters<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.ClearCollection(() => o.ProcessFilters));
     #endregion
     #region LogFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverCoverDotNetSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = logFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverCoverDotNetSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverCoverDotNetSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.LogFile))]
+    public static T SetLogFile<T>(this T o, string v) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Set(() => o.LogFile, v));
+    /// <inheritdoc cref="DotCoverCoverDotNetSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverCoverDotNetSettings), Property = nameof(DotCoverCoverDotNetSettings.LogFile))]
+    public static T ResetLogFile<T>(this T o) where T : DotCoverCoverDotNetSettings => o.Modify(b => b.Remove(() => o.LogFile));
     #endregion
 }
 #endregion
 #region DotCoverDeleteSettingsExtensions
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotCoverDeleteSettingsExtensions
 {
     #region Configuration
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverDeleteSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = configuration;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverDeleteSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverDeleteSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.Configuration))]
+    public static T SetConfiguration<T>(this T o, string v) where T : DotCoverDeleteSettings => o.Modify(b => b.Set(() => o.Configuration, v));
+    /// <inheritdoc cref="DotCoverDeleteSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.Configuration))]
+    public static T ResetConfiguration<T>(this T o) where T : DotCoverDeleteSettings => o.Modify(b => b.Remove(() => o.Configuration));
     #endregion
     #region Source
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverDeleteSettings.Source"/> to a new list</em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSource<T>(this T toolSettings, params string[] source) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal = source.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverDeleteSettings.Source"/> to a new list</em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal = source.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverDeleteSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSource<T>(this T toolSettings, params string[] source) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal.AddRange(source);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverDeleteSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal.AddRange(source);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverDeleteSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearSource<T>(this T toolSettings) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverDeleteSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSource<T>(this T toolSettings, params string[] source) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(source);
-        toolSettings.SourceInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverDeleteSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(source);
-        toolSettings.SourceInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.Source))]
+    public static T SetSource<T>(this T o, params string[] v) where T : DotCoverDeleteSettings => o.Modify(b => b.Set(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.Source))]
+    public static T SetSource<T>(this T o, IEnumerable<string> v) where T : DotCoverDeleteSettings => o.Modify(b => b.Set(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.Source))]
+    public static T AddSource<T>(this T o, params string[] v) where T : DotCoverDeleteSettings => o.Modify(b => b.AddCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.Source))]
+    public static T AddSource<T>(this T o, IEnumerable<string> v) where T : DotCoverDeleteSettings => o.Modify(b => b.AddCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.Source))]
+    public static T RemoveSource<T>(this T o, params string[] v) where T : DotCoverDeleteSettings => o.Modify(b => b.RemoveCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.Source))]
+    public static T RemoveSource<T>(this T o, IEnumerable<string> v) where T : DotCoverDeleteSettings => o.Modify(b => b.RemoveCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.Source))]
+    public static T ClearSource<T>(this T o) where T : DotCoverDeleteSettings => o.Modify(b => b.ClearCollection(() => o.Source));
     #endregion
     #region LogFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverDeleteSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = logFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverDeleteSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverDeleteSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverDeleteSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.LogFile))]
+    public static T SetLogFile<T>(this T o, string v) where T : DotCoverDeleteSettings => o.Modify(b => b.Set(() => o.LogFile, v));
+    /// <inheritdoc cref="DotCoverDeleteSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverDeleteSettings), Property = nameof(DotCoverDeleteSettings.LogFile))]
+    public static T ResetLogFile<T>(this T o) where T : DotCoverDeleteSettings => o.Modify(b => b.Remove(() => o.LogFile));
     #endregion
 }
 #endregion
 #region DotCoverMergeSettingsExtensions
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotCoverMergeSettingsExtensions
 {
     #region Configuration
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverMergeSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = configuration;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverMergeSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverMergeSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.Configuration))]
+    public static T SetConfiguration<T>(this T o, string v) where T : DotCoverMergeSettings => o.Modify(b => b.Set(() => o.Configuration, v));
+    /// <inheritdoc cref="DotCoverMergeSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.Configuration))]
+    public static T ResetConfiguration<T>(this T o) where T : DotCoverMergeSettings => o.Modify(b => b.Remove(() => o.Configuration));
     #endregion
     #region Source
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverMergeSettings.Source"/> to a new list</em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSource<T>(this T toolSettings, params string[] source) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal = source.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverMergeSettings.Source"/> to a new list</em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal = source.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverMergeSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSource<T>(this T toolSettings, params string[] source) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal.AddRange(source);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverMergeSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal.AddRange(source);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverMergeSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearSource<T>(this T toolSettings) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverMergeSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSource<T>(this T toolSettings, params string[] source) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(source);
-        toolSettings.SourceInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverMergeSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(source);
-        toolSettings.SourceInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverMergeSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.Source))]
+    public static T SetSource<T>(this T o, params string[] v) where T : DotCoverMergeSettings => o.Modify(b => b.Set(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverMergeSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.Source))]
+    public static T SetSource<T>(this T o, IEnumerable<string> v) where T : DotCoverMergeSettings => o.Modify(b => b.Set(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverMergeSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.Source))]
+    public static T AddSource<T>(this T o, params string[] v) where T : DotCoverMergeSettings => o.Modify(b => b.AddCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverMergeSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.Source))]
+    public static T AddSource<T>(this T o, IEnumerable<string> v) where T : DotCoverMergeSettings => o.Modify(b => b.AddCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverMergeSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.Source))]
+    public static T RemoveSource<T>(this T o, params string[] v) where T : DotCoverMergeSettings => o.Modify(b => b.RemoveCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverMergeSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.Source))]
+    public static T RemoveSource<T>(this T o, IEnumerable<string> v) where T : DotCoverMergeSettings => o.Modify(b => b.RemoveCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverMergeSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.Source))]
+    public static T ClearSource<T>(this T o) where T : DotCoverMergeSettings => o.Modify(b => b.ClearCollection(() => o.Source));
     #endregion
     #region OutputFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverMergeSettings.OutputFile"/></em></p>
-    ///   <p>File name for the merged snapshot.</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = outputFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverMergeSettings.OutputFile"/></em></p>
-    ///   <p>File name for the merged snapshot.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverMergeSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.OutputFile))]
+    public static T SetOutputFile<T>(this T o, string v) where T : DotCoverMergeSettings => o.Modify(b => b.Set(() => o.OutputFile, v));
+    /// <inheritdoc cref="DotCoverMergeSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.OutputFile))]
+    public static T ResetOutputFile<T>(this T o) where T : DotCoverMergeSettings => o.Modify(b => b.Remove(() => o.OutputFile));
     #endregion
     #region TempDirectory
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverMergeSettings.TempDirectory"/></em></p>
-    ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTempDirectory<T>(this T toolSettings, string tempDirectory) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TempDirectory = tempDirectory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverMergeSettings.TempDirectory"/></em></p>
-    ///   <p>Directory for auxiliary files. Set to the system temp by default.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTempDirectory<T>(this T toolSettings) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TempDirectory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverMergeSettings.TempDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.TempDirectory))]
+    public static T SetTempDirectory<T>(this T o, string v) where T : DotCoverMergeSettings => o.Modify(b => b.Set(() => o.TempDirectory, v));
+    /// <inheritdoc cref="DotCoverMergeSettings.TempDirectory"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.TempDirectory))]
+    public static T ResetTempDirectory<T>(this T o) where T : DotCoverMergeSettings => o.Modify(b => b.Remove(() => o.TempDirectory));
     #endregion
     #region LogFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverMergeSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = logFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverMergeSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverMergeSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverMergeSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.LogFile))]
+    public static T SetLogFile<T>(this T o, string v) where T : DotCoverMergeSettings => o.Modify(b => b.Set(() => o.LogFile, v));
+    /// <inheritdoc cref="DotCoverMergeSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverMergeSettings), Property = nameof(DotCoverMergeSettings.LogFile))]
+    public static T ResetLogFile<T>(this T o) where T : DotCoverMergeSettings => o.Modify(b => b.Remove(() => o.LogFile));
     #endregion
 }
 #endregion
 #region DotCoverReportSettingsExtensions
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotCoverReportSettingsExtensions
 {
     #region Configuration
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverReportSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = configuration;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverReportSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverReportSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.Configuration))]
+    public static T SetConfiguration<T>(this T o, string v) where T : DotCoverReportSettings => o.Modify(b => b.Set(() => o.Configuration, v));
+    /// <inheritdoc cref="DotCoverReportSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.Configuration))]
+    public static T ResetConfiguration<T>(this T o) where T : DotCoverReportSettings => o.Modify(b => b.Remove(() => o.Configuration));
     #endregion
     #region Source
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverReportSettings.Source"/> to a new list</em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSource<T>(this T toolSettings, params string[] source) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal = source.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverReportSettings.Source"/> to a new list</em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal = source.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverReportSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSource<T>(this T toolSettings, params string[] source) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal.AddRange(source);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DotCoverReportSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T AddSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal.AddRange(source);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DotCoverReportSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearSource<T>(this T toolSettings) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SourceInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverReportSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSource<T>(this T toolSettings, params string[] source) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(source);
-        toolSettings.SourceInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DotCoverReportSettings.Source"/></em></p>
-    ///   <p>List of snapshot files.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveSource<T>(this T toolSettings, IEnumerable<string> source) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(source);
-        toolSettings.SourceInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverReportSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.Source))]
+    public static T SetSource<T>(this T o, params string[] v) where T : DotCoverReportSettings => o.Modify(b => b.Set(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverReportSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.Source))]
+    public static T SetSource<T>(this T o, IEnumerable<string> v) where T : DotCoverReportSettings => o.Modify(b => b.Set(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverReportSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.Source))]
+    public static T AddSource<T>(this T o, params string[] v) where T : DotCoverReportSettings => o.Modify(b => b.AddCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverReportSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.Source))]
+    public static T AddSource<T>(this T o, IEnumerable<string> v) where T : DotCoverReportSettings => o.Modify(b => b.AddCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverReportSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.Source))]
+    public static T RemoveSource<T>(this T o, params string[] v) where T : DotCoverReportSettings => o.Modify(b => b.RemoveCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverReportSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.Source))]
+    public static T RemoveSource<T>(this T o, IEnumerable<string> v) where T : DotCoverReportSettings => o.Modify(b => b.RemoveCollection(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverReportSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.Source))]
+    public static T ClearSource<T>(this T o) where T : DotCoverReportSettings => o.Modify(b => b.ClearCollection(() => o.Source));
     #endregion
     #region OutputFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverReportSettings.OutputFile"/></em></p>
-    ///   <p>Resulting report file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = outputFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverReportSettings.OutputFile"/></em></p>
-    ///   <p>Resulting report file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverReportSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.OutputFile))]
+    public static T SetOutputFile<T>(this T o, string v) where T : DotCoverReportSettings => o.Modify(b => b.Set(() => o.OutputFile, v));
+    /// <inheritdoc cref="DotCoverReportSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.OutputFile))]
+    public static T ResetOutputFile<T>(this T o) where T : DotCoverReportSettings => o.Modify(b => b.Remove(() => o.OutputFile));
     #endregion
     #region ReportType
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverReportSettings.ReportType"/></em></p>
-    ///   <p>A type of the report. The default value is <c>XML</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetReportType<T>(this T toolSettings, DotCoverReportType reportType) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReportType = reportType;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverReportSettings.ReportType"/></em></p>
-    ///   <p>A type of the report. The default value is <c>XML</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetReportType<T>(this T toolSettings) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReportType = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverReportSettings.ReportType"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.ReportType))]
+    public static T SetReportType<T>(this T o, DotCoverReportType v) where T : DotCoverReportSettings => o.Modify(b => b.Set(() => o.ReportType, v));
+    /// <inheritdoc cref="DotCoverReportSettings.ReportType"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.ReportType))]
+    public static T ResetReportType<T>(this T o) where T : DotCoverReportSettings => o.Modify(b => b.Remove(() => o.ReportType));
     #endregion
     #region HideAutoProperties
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverReportSettings.HideAutoProperties"/></em></p>
-    ///   <p>Remove auto-implemented properties from report.</p>
-    /// </summary>
-    [Pure]
-    public static T SetHideAutoProperties<T>(this T toolSettings, bool? hideAutoProperties) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HideAutoProperties = hideAutoProperties;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverReportSettings.HideAutoProperties"/></em></p>
-    ///   <p>Remove auto-implemented properties from report.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetHideAutoProperties<T>(this T toolSettings) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HideAutoProperties = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DotCoverReportSettings.HideAutoProperties"/></em></p>
-    ///   <p>Remove auto-implemented properties from report.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableHideAutoProperties<T>(this T toolSettings) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HideAutoProperties = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DotCoverReportSettings.HideAutoProperties"/></em></p>
-    ///   <p>Remove auto-implemented properties from report.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableHideAutoProperties<T>(this T toolSettings) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HideAutoProperties = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DotCoverReportSettings.HideAutoProperties"/></em></p>
-    ///   <p>Remove auto-implemented properties from report.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleHideAutoProperties<T>(this T toolSettings) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.HideAutoProperties = !toolSettings.HideAutoProperties;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverReportSettings.HideAutoProperties"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.HideAutoProperties))]
+    public static T SetHideAutoProperties<T>(this T o, bool? v) where T : DotCoverReportSettings => o.Modify(b => b.Set(() => o.HideAutoProperties, v));
+    /// <inheritdoc cref="DotCoverReportSettings.HideAutoProperties"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.HideAutoProperties))]
+    public static T ResetHideAutoProperties<T>(this T o) where T : DotCoverReportSettings => o.Modify(b => b.Remove(() => o.HideAutoProperties));
+    /// <inheritdoc cref="DotCoverReportSettings.HideAutoProperties"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.HideAutoProperties))]
+    public static T EnableHideAutoProperties<T>(this T o) where T : DotCoverReportSettings => o.Modify(b => b.Set(() => o.HideAutoProperties, true));
+    /// <inheritdoc cref="DotCoverReportSettings.HideAutoProperties"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.HideAutoProperties))]
+    public static T DisableHideAutoProperties<T>(this T o) where T : DotCoverReportSettings => o.Modify(b => b.Set(() => o.HideAutoProperties, false));
+    /// <inheritdoc cref="DotCoverReportSettings.HideAutoProperties"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.HideAutoProperties))]
+    public static T ToggleHideAutoProperties<T>(this T o) where T : DotCoverReportSettings => o.Modify(b => b.Set(() => o.HideAutoProperties, !o.HideAutoProperties));
     #endregion
     #region LogFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverReportSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = logFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverReportSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverReportSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverReportSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.LogFile))]
+    public static T SetLogFile<T>(this T o, string v) where T : DotCoverReportSettings => o.Modify(b => b.Set(() => o.LogFile, v));
+    /// <inheritdoc cref="DotCoverReportSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverReportSettings), Property = nameof(DotCoverReportSettings.LogFile))]
+    public static T ResetLogFile<T>(this T o) where T : DotCoverReportSettings => o.Modify(b => b.Remove(() => o.LogFile));
     #endregion
 }
 #endregion
 #region DotCoverZipSettingsExtensions
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotCoverZipSettingsExtensions
 {
     #region Configuration
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverZipSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T SetConfiguration<T>(this T toolSettings, string configuration) where T : DotCoverZipSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = configuration;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverZipSettings.Configuration"/></em></p>
-    /// </summary>
-    [Pure]
-    public static T ResetConfiguration<T>(this T toolSettings) where T : DotCoverZipSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Configuration = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverZipSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverZipSettings), Property = nameof(DotCoverZipSettings.Configuration))]
+    public static T SetConfiguration<T>(this T o, string v) where T : DotCoverZipSettings => o.Modify(b => b.Set(() => o.Configuration, v));
+    /// <inheritdoc cref="DotCoverZipSettings.Configuration"/>
+    [Pure] [Builder(Type = typeof(DotCoverZipSettings), Property = nameof(DotCoverZipSettings.Configuration))]
+    public static T ResetConfiguration<T>(this T o) where T : DotCoverZipSettings => o.Modify(b => b.Remove(() => o.Configuration));
     #endregion
     #region Source
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverZipSettings.Source"/></em></p>
-    ///   <p>Coverage snapshot file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSource<T>(this T toolSettings, string source) where T : DotCoverZipSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Source = source;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverZipSettings.Source"/></em></p>
-    ///   <p>Coverage snapshot file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetSource<T>(this T toolSettings) where T : DotCoverZipSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Source = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverZipSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverZipSettings), Property = nameof(DotCoverZipSettings.Source))]
+    public static T SetSource<T>(this T o, string v) where T : DotCoverZipSettings => o.Modify(b => b.Set(() => o.Source, v));
+    /// <inheritdoc cref="DotCoverZipSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotCoverZipSettings), Property = nameof(DotCoverZipSettings.Source))]
+    public static T ResetSource<T>(this T o) where T : DotCoverZipSettings => o.Modify(b => b.Remove(() => o.Source));
     #endregion
     #region OutputFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverZipSettings.OutputFile"/></em></p>
-    ///   <p>Zipped snapshot file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutputFile<T>(this T toolSettings, string outputFile) where T : DotCoverZipSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = outputFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverZipSettings.OutputFile"/></em></p>
-    ///   <p>Zipped snapshot file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutputFile<T>(this T toolSettings) where T : DotCoverZipSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverZipSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverZipSettings), Property = nameof(DotCoverZipSettings.OutputFile))]
+    public static T SetOutputFile<T>(this T o, string v) where T : DotCoverZipSettings => o.Modify(b => b.Set(() => o.OutputFile, v));
+    /// <inheritdoc cref="DotCoverZipSettings.OutputFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverZipSettings), Property = nameof(DotCoverZipSettings.OutputFile))]
+    public static T ResetOutputFile<T>(this T o) where T : DotCoverZipSettings => o.Modify(b => b.Remove(() => o.OutputFile));
     #endregion
     #region LogFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="DotCoverZipSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLogFile<T>(this T toolSettings, string logFile) where T : DotCoverZipSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = logFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DotCoverZipSettings.LogFile"/></em></p>
-    ///   <p>Enables logging and specifies log file name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLogFile<T>(this T toolSettings) where T : DotCoverZipSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LogFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DotCoverZipSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverZipSettings), Property = nameof(DotCoverZipSettings.LogFile))]
+    public static T SetLogFile<T>(this T o, string v) where T : DotCoverZipSettings => o.Modify(b => b.Set(() => o.LogFile, v));
+    /// <inheritdoc cref="DotCoverZipSettings.LogFile"/>
+    [Pure] [Builder(Type = typeof(DotCoverZipSettings), Property = nameof(DotCoverZipSettings.LogFile))]
+    public static T ResetLogFile<T>(this T o) where T : DotCoverZipSettings => o.Modify(b => b.Remove(() => o.LogFile));
     #endregion
 }
 #endregion
 #region DotCoverReportType
-/// <summary>
-///   Used within <see cref="DotCoverTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]

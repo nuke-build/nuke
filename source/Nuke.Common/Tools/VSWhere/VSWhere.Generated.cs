@@ -17,903 +17,349 @@ using System.Text;
 
 namespace Nuke.Common.Tools.VSWhere;
 
-/// <summary>
-///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
-///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
-/// </summary>
+/// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(VSWherePackageId)]
-public partial class VSWhereTasks
-    : IRequireNuGetPackage
+[NuGetPackageRequirement(PackageId)]
+[NuGetTool(Id = PackageId, Executable = PackageExecutable)]
+public partial class VSWhereTasks : ToolTasks, IRequireNuGetPackage
 {
-    public const string VSWherePackageId = "vswhere";
-    /// <summary>
-    ///   Path to the VSWhere executable.
-    /// </summary>
-    public static string VSWherePath =>
-        ToolPathResolver.TryGetEnvironmentExecutable("VSWHERE_EXE") ??
-        NuGetToolPathResolver.GetPackageExecutable("vswhere", "vswhere.exe");
-    public static Action<OutputType, string> VSWhereLogger { get; set; } = ProcessTasks.DefaultLogger;
-    public static Action<ToolSettings, IProcess> VSWhereExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
-    /// <summary>
-    ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
-    /// </summary>
-    public static IReadOnlyCollection<Output> VSWhere(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(VSWherePath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? VSWhereLogger);
-        (exitHandler ?? (p => VSWhereExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>-all</c> via <see cref="VSWhereSettings.All"/></li>
-    ///     <li><c>-format</c> via <see cref="VSWhereSettings.Format"/></li>
-    ///     <li><c>-latest</c> via <see cref="VSWhereSettings.Latest"/></li>
-    ///     <li><c>-legacy</c> via <see cref="VSWhereSettings.Legacy"/></li>
-    ///     <li><c>-nologo</c> via <see cref="VSWhereSettings.NoLogo"/></li>
-    ///     <li><c>-prerelease</c> via <see cref="VSWhereSettings.Prerelease"/></li>
-    ///     <li><c>-products</c> via <see cref="VSWhereSettings.Products"/></li>
-    ///     <li><c>-property</c> via <see cref="VSWhereSettings.Property"/></li>
-    ///     <li><c>-requires</c> via <see cref="VSWhereSettings.Requires"/></li>
-    ///     <li><c>-requiresAny</c> via <see cref="VSWhereSettings.RequiresAny"/></li>
-    ///     <li><c>-utf8</c> via <see cref="VSWhereSettings.UTF8"/></li>
-    ///     <li><c>-version</c> via <see cref="VSWhereSettings.Version"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(VSWhereSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new VSWhereSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return (GetResult(process, toolSettings), process.Output);
-    }
-    /// <summary>
-    ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>-all</c> via <see cref="VSWhereSettings.All"/></li>
-    ///     <li><c>-format</c> via <see cref="VSWhereSettings.Format"/></li>
-    ///     <li><c>-latest</c> via <see cref="VSWhereSettings.Latest"/></li>
-    ///     <li><c>-legacy</c> via <see cref="VSWhereSettings.Legacy"/></li>
-    ///     <li><c>-nologo</c> via <see cref="VSWhereSettings.NoLogo"/></li>
-    ///     <li><c>-prerelease</c> via <see cref="VSWhereSettings.Prerelease"/></li>
-    ///     <li><c>-products</c> via <see cref="VSWhereSettings.Products"/></li>
-    ///     <li><c>-property</c> via <see cref="VSWhereSettings.Property"/></li>
-    ///     <li><c>-requires</c> via <see cref="VSWhereSettings.Requires"/></li>
-    ///     <li><c>-requiresAny</c> via <see cref="VSWhereSettings.RequiresAny"/></li>
-    ///     <li><c>-utf8</c> via <see cref="VSWhereSettings.UTF8"/></li>
-    ///     <li><c>-version</c> via <see cref="VSWhereSettings.Version"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(Configure<VSWhereSettings> configurator)
-    {
-        return VSWhere(configurator(new VSWhereSettings()));
-    }
-    /// <summary>
-    ///   <p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p>
-    ///   <p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>-all</c> via <see cref="VSWhereSettings.All"/></li>
-    ///     <li><c>-format</c> via <see cref="VSWhereSettings.Format"/></li>
-    ///     <li><c>-latest</c> via <see cref="VSWhereSettings.Latest"/></li>
-    ///     <li><c>-legacy</c> via <see cref="VSWhereSettings.Legacy"/></li>
-    ///     <li><c>-nologo</c> via <see cref="VSWhereSettings.NoLogo"/></li>
-    ///     <li><c>-prerelease</c> via <see cref="VSWhereSettings.Prerelease"/></li>
-    ///     <li><c>-products</c> via <see cref="VSWhereSettings.Products"/></li>
-    ///     <li><c>-property</c> via <see cref="VSWhereSettings.Property"/></li>
-    ///     <li><c>-requires</c> via <see cref="VSWhereSettings.Requires"/></li>
-    ///     <li><c>-requiresAny</c> via <see cref="VSWhereSettings.RequiresAny"/></li>
-    ///     <li><c>-utf8</c> via <see cref="VSWhereSettings.UTF8"/></li>
-    ///     <li><c>-version</c> via <see cref="VSWhereSettings.Version"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(VSWhereSettings Settings, List<VSWhereResult> Result, IReadOnlyCollection<Output> Output)> VSWhere(CombinatorialConfigure<VSWhereSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(VSWhere, VSWhereLogger, degreeOfParallelism, completeOnFailure);
-    }
+    public static string VSWherePath => new VSWhereTasks().GetToolPath();
+    public const string PackageId = "vswhere";
+    public const string PackageExecutable = "vswhere.exe";
+    /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
+    public static IReadOnlyCollection<Output> VSWhere(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new VSWhereTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
+    /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>-all</c> via <see cref="VSWhereSettings.All"/></li><li><c>-format</c> via <see cref="VSWhereSettings.Format"/></li><li><c>-latest</c> via <see cref="VSWhereSettings.Latest"/></li><li><c>-legacy</c> via <see cref="VSWhereSettings.Legacy"/></li><li><c>-nologo</c> via <see cref="VSWhereSettings.NoLogo"/></li><li><c>-prerelease</c> via <see cref="VSWhereSettings.Prerelease"/></li><li><c>-products</c> via <see cref="VSWhereSettings.Products"/></li><li><c>-property</c> via <see cref="VSWhereSettings.Property"/></li><li><c>-requires</c> via <see cref="VSWhereSettings.Requires"/></li><li><c>-requiresAny</c> via <see cref="VSWhereSettings.RequiresAny"/></li><li><c>-utf8</c> via <see cref="VSWhereSettings.UTF8"/></li><li><c>-version</c> via <see cref="VSWhereSettings.Version"/></li></ul></remarks>
+    public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(VSWhereSettings options = null) => new VSWhereTasks().Run<List<VSWhereResult>>(options);
+    /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>-all</c> via <see cref="VSWhereSettings.All"/></li><li><c>-format</c> via <see cref="VSWhereSettings.Format"/></li><li><c>-latest</c> via <see cref="VSWhereSettings.Latest"/></li><li><c>-legacy</c> via <see cref="VSWhereSettings.Legacy"/></li><li><c>-nologo</c> via <see cref="VSWhereSettings.NoLogo"/></li><li><c>-prerelease</c> via <see cref="VSWhereSettings.Prerelease"/></li><li><c>-products</c> via <see cref="VSWhereSettings.Products"/></li><li><c>-property</c> via <see cref="VSWhereSettings.Property"/></li><li><c>-requires</c> via <see cref="VSWhereSettings.Requires"/></li><li><c>-requiresAny</c> via <see cref="VSWhereSettings.RequiresAny"/></li><li><c>-utf8</c> via <see cref="VSWhereSettings.UTF8"/></li><li><c>-version</c> via <see cref="VSWhereSettings.Version"/></li></ul></remarks>
+    public static (List<VSWhereResult> Result, IReadOnlyCollection<Output> Output) VSWhere(Configure<VSWhereSettings> configurator) => new VSWhereTasks().Run<List<VSWhereResult>>(configurator.Invoke(new VSWhereSettings()));
+    /// <summary><p>VSWhere is designed to be a redistributable, single-file executable that can be used in build or deployment scripts to find where Visual Studio - or other products in the Visual Studio family - is located.</p><p>For more details, visit the <a href="https://github.com/Microsoft/vswhere">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>-all</c> via <see cref="VSWhereSettings.All"/></li><li><c>-format</c> via <see cref="VSWhereSettings.Format"/></li><li><c>-latest</c> via <see cref="VSWhereSettings.Latest"/></li><li><c>-legacy</c> via <see cref="VSWhereSettings.Legacy"/></li><li><c>-nologo</c> via <see cref="VSWhereSettings.NoLogo"/></li><li><c>-prerelease</c> via <see cref="VSWhereSettings.Prerelease"/></li><li><c>-products</c> via <see cref="VSWhereSettings.Products"/></li><li><c>-property</c> via <see cref="VSWhereSettings.Property"/></li><li><c>-requires</c> via <see cref="VSWhereSettings.Requires"/></li><li><c>-requiresAny</c> via <see cref="VSWhereSettings.RequiresAny"/></li><li><c>-utf8</c> via <see cref="VSWhereSettings.UTF8"/></li><li><c>-version</c> via <see cref="VSWhereSettings.Version"/></li></ul></remarks>
+    public static IEnumerable<(VSWhereSettings Settings, List<VSWhereResult> Result, IReadOnlyCollection<Output> Output)> VSWhere(CombinatorialConfigure<VSWhereSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(VSWhere, degreeOfParallelism, completeOnFailure);
 }
 #region VSWhereSettings
-/// <summary>
-///   Used within <see cref="VSWhereTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="VSWhereTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class VSWhereSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<VSWhereSettings>))]
+[Command(Type = typeof(VSWhereTasks), Command = nameof(VSWhereTasks.VSWhere))]
+public partial class VSWhereSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the VSWhere executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? VSWhereTasks.VSWherePath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? VSWhereTasks.VSWhereLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? VSWhereTasks.VSWhereExitHandler;
-    /// <summary>
-    ///    Return only the newest version and last installed.
-    /// </summary>
-    public virtual bool? Latest { get; internal set; }
-    /// <summary>
-    ///   Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul>
-    /// </summary>
-    public virtual VSWhereFormat Format { get; internal set; }
-    /// <summary>
-    ///   Do not show logo information.
-    /// </summary>
-    public virtual bool? NoLogo { get; internal set; }
-    /// <summary>
-    ///   Use UTF-8 encoding (recommended for JSON).
-    /// </summary>
-    public virtual bool? UTF8 { get; internal set; }
-    /// <summary>
-    ///   Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.
-    /// </summary>
-    public virtual bool? Legacy { get; internal set; }
-    /// <summary>
-    ///   Finds all instances even if they are incomplete and may not launch.
-    /// </summary>
-    public virtual bool? All { get; internal set; }
-    /// <summary>
-    ///   Also searches prereleases. By default, only releases are searched.
-    /// </summary>
-    public virtual bool? Prerelease { get; internal set; }
-    /// <summary>
-    ///   One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.
-    /// </summary>
-    public virtual IReadOnlyList<string> Products => ProductsInternal.AsReadOnly();
-    internal List<string> ProductsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.
-    /// </summary>
-    public virtual IReadOnlyList<string> Requires => RequiresInternal.AsReadOnly();
-    internal List<string> RequiresInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Find instances with any one or more workload or components IDs passed to <c>-requires</c>.
-    /// </summary>
-    public virtual bool? RequiresAny { get; internal set; }
-    /// <summary>
-    ///   A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.
-    /// </summary>
-    public virtual string Version { get; internal set; }
-    /// <summary>
-    ///   The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.
-    /// </summary>
-    public virtual string Property { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("-latest", Latest)
-          .Add("-format {value}", Format)
-          .Add("-nologo", NoLogo)
-          .Add("-utf8", UTF8)
-          .Add("-legacy", Legacy)
-          .Add("-all", All)
-          .Add("-prerelease", Prerelease)
-          .Add("-products {value}", Products, separator: ' ')
-          .Add("-requires {value}", Requires, separator: ' ')
-          .Add("-requiresAny", RequiresAny)
-          .Add("-version {value}", Version)
-          .Add("-property {value}", Property);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary> Return only the newest version and last installed.</summary>
+    [Argument(Format = "-latest")] public bool? Latest => Get<bool?>(() => Latest);
+    /// <summary>Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul></summary>
+    [Argument(Format = "-format {value}")] public VSWhereFormat Format => Get<VSWhereFormat>(() => Format);
+    /// <summary>Do not show logo information.</summary>
+    [Argument(Format = "-nologo")] public bool? NoLogo => Get<bool?>(() => NoLogo);
+    /// <summary>Use UTF-8 encoding (recommended for JSON).</summary>
+    [Argument(Format = "-utf8")] public bool? UTF8 => Get<bool?>(() => UTF8);
+    /// <summary>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</summary>
+    [Argument(Format = "-legacy")] public bool? Legacy => Get<bool?>(() => Legacy);
+    /// <summary>Finds all instances even if they are incomplete and may not launch.</summary>
+    [Argument(Format = "-all")] public bool? All => Get<bool?>(() => All);
+    /// <summary>Also searches prereleases. By default, only releases are searched.</summary>
+    [Argument(Format = "-prerelease")] public bool? Prerelease => Get<bool?>(() => Prerelease);
+    /// <summary>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</summary>
+    [Argument(Format = "-products {value}", Separator = " ")] public IReadOnlyList<string> Products => Get<List<string>>(() => Products);
+    /// <summary>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</summary>
+    [Argument(Format = "-requires {value}", Separator = " ")] public IReadOnlyList<string> Requires => Get<List<string>>(() => Requires);
+    /// <summary>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</summary>
+    [Argument(Format = "-requiresAny")] public bool? RequiresAny => Get<bool?>(() => RequiresAny);
+    /// <summary>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</summary>
+    [Argument(Format = "-version {value}")] public string Version => Get<string>(() => Version);
+    /// <summary>The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.</summary>
+    [Argument(Format = "-property {value}")] public string Property => Get<string>(() => Property);
 }
 #endregion
 #region VSWhereCatalog
-/// <summary>
-///   Used within <see cref="VSWhereTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="VSWhereTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class VSWhereCatalog : ISettingsEntity
+[TypeConverter(typeof(TypeConverter<VSWhereCatalog>))]
+public partial class VSWhereCatalog : Options
 {
-    public virtual string BuildBranch { get; internal set; }
-    public virtual string BuildVersion { get; internal set; }
-    public virtual string Id { get; internal set; }
-    public virtual string LocalBuild { get; internal set; }
-    public virtual string ManifestName { get; internal set; }
-    public virtual string ManifestType { get; internal set; }
-    public virtual string ProductDisplayVersion { get; internal set; }
-    public virtual string ProductLine { get; internal set; }
-    public virtual string ProductLineVersion { get; internal set; }
-    public virtual string ProductMilestone { get; internal set; }
-    public virtual string ProductMilestoneIsPreRelease { get; internal set; }
-    public virtual string ProductName { get; internal set; }
-    public virtual string ProductPatchVersion { get; internal set; }
-    public virtual string ProductPreReleaseMilestoneSuffix { get; internal set; }
-    public virtual string ProductRelease { get; internal set; }
-    public virtual string ProductSemanticVersion { get; internal set; }
-    public virtual string RequiredEngineVersion { get; internal set; }
+    /// <summary></summary>
+    public string BuildBranch => Get<string>(() => BuildBranch);
+    /// <summary></summary>
+    public string BuildVersion => Get<string>(() => BuildVersion);
+    /// <summary></summary>
+    public string Id => Get<string>(() => Id);
+    /// <summary></summary>
+    public string LocalBuild => Get<string>(() => LocalBuild);
+    /// <summary></summary>
+    public string ManifestName => Get<string>(() => ManifestName);
+    /// <summary></summary>
+    public string ManifestType => Get<string>(() => ManifestType);
+    /// <summary></summary>
+    public string ProductDisplayVersion => Get<string>(() => ProductDisplayVersion);
+    /// <summary></summary>
+    public string ProductLine => Get<string>(() => ProductLine);
+    /// <summary></summary>
+    public string ProductLineVersion => Get<string>(() => ProductLineVersion);
+    /// <summary></summary>
+    public string ProductMilestone => Get<string>(() => ProductMilestone);
+    /// <summary></summary>
+    public string ProductMilestoneIsPreRelease => Get<string>(() => ProductMilestoneIsPreRelease);
+    /// <summary></summary>
+    public string ProductName => Get<string>(() => ProductName);
+    /// <summary></summary>
+    public string ProductPatchVersion => Get<string>(() => ProductPatchVersion);
+    /// <summary></summary>
+    public string ProductPreReleaseMilestoneSuffix => Get<string>(() => ProductPreReleaseMilestoneSuffix);
+    /// <summary></summary>
+    public string ProductRelease => Get<string>(() => ProductRelease);
+    /// <summary></summary>
+    public string ProductSemanticVersion => Get<string>(() => ProductSemanticVersion);
+    /// <summary></summary>
+    public string RequiredEngineVersion => Get<string>(() => RequiredEngineVersion);
 }
 #endregion
 #region VSWhereResult
-/// <summary>
-///   Used within <see cref="VSWhereTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="VSWhereTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class VSWhereResult : ISettingsEntity
+[TypeConverter(typeof(TypeConverter<VSWhereResult>))]
+public partial class VSWhereResult : Options
 {
-    public virtual string InstanceId { get; internal set; }
-    public virtual DateTime InstallDate { get; internal set; }
-    public virtual string InstallationName { get; internal set; }
-    public virtual string InstallationPath { get; internal set; }
-    public virtual string InstallationVersion { get; internal set; }
-    public virtual string ProductId { get; internal set; }
-    public virtual string ProductPath { get; internal set; }
-    public virtual bool? IsPreRelease { get; internal set; }
-    public virtual string DisplayName { get; internal set; }
-    public virtual string Description { get; internal set; }
-    public virtual string ChannelId { get; internal set; }
-    public virtual string ChannelUri { get; internal set; }
-    public virtual string EnginePath { get; internal set; }
-    public virtual string ReleaseNotes { get; internal set; }
-    public virtual string ThirdPartyNotices { get; internal set; }
-    public virtual DateTime UpdateDate { get; internal set; }
-    public virtual VSWhereCatalog Catalog { get; internal set; }
-    public virtual IReadOnlyDictionary<string, object> Properties => PropertiesInternal.AsReadOnly();
-    internal Dictionary<string, object> PropertiesInternal { get; set; } = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+    /// <summary></summary>
+    public string InstanceId => Get<string>(() => InstanceId);
+    /// <summary></summary>
+    public DateTime InstallDate => Get<DateTime>(() => InstallDate);
+    /// <summary></summary>
+    public string InstallationName => Get<string>(() => InstallationName);
+    /// <summary></summary>
+    public string InstallationPath => Get<string>(() => InstallationPath);
+    /// <summary></summary>
+    public string InstallationVersion => Get<string>(() => InstallationVersion);
+    /// <summary></summary>
+    public string ProductId => Get<string>(() => ProductId);
+    /// <summary></summary>
+    public string ProductPath => Get<string>(() => ProductPath);
+    /// <summary></summary>
+    public bool? IsPreRelease => Get<bool?>(() => IsPreRelease);
+    /// <summary></summary>
+    public string DisplayName => Get<string>(() => DisplayName);
+    /// <summary></summary>
+    public string Description => Get<string>(() => Description);
+    /// <summary></summary>
+    public string ChannelId => Get<string>(() => ChannelId);
+    /// <summary></summary>
+    public string ChannelUri => Get<string>(() => ChannelUri);
+    /// <summary></summary>
+    public string EnginePath => Get<string>(() => EnginePath);
+    /// <summary></summary>
+    public string ReleaseNotes => Get<string>(() => ReleaseNotes);
+    /// <summary></summary>
+    public string ThirdPartyNotices => Get<string>(() => ThirdPartyNotices);
+    /// <summary></summary>
+    public DateTime UpdateDate => Get<DateTime>(() => UpdateDate);
+    /// <summary></summary>
+    public VSWhereCatalog Catalog => Get<VSWhereCatalog>(() => Catalog);
+    /// <summary></summary>
+    public IReadOnlyDictionary<string, object> Properties => Get<Dictionary<string, object>>(() => Properties);
 }
 #endregion
 #region VSWhereSettingsExtensions
-/// <summary>
-///   Used within <see cref="VSWhereTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="VSWhereTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class VSWhereSettingsExtensions
 {
     #region Latest
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.Latest"/></em></p>
-    ///   <p> Return only the newest version and last installed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLatest<T>(this T toolSettings, bool? latest) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Latest = latest;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSWhereSettings.Latest"/></em></p>
-    ///   <p> Return only the newest version and last installed.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLatest<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Latest = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSWhereSettings.Latest"/></em></p>
-    ///   <p> Return only the newest version and last installed.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableLatest<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Latest = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSWhereSettings.Latest"/></em></p>
-    ///   <p> Return only the newest version and last installed.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableLatest<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Latest = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSWhereSettings.Latest"/></em></p>
-    ///   <p> Return only the newest version and last installed.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleLatest<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Latest = !toolSettings.Latest;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.Latest"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Latest))]
+    public static T SetLatest<T>(this T o, bool? v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Latest, v));
+    /// <inheritdoc cref="VSWhereSettings.Latest"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Latest))]
+    public static T ResetLatest<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Remove(() => o.Latest));
+    /// <inheritdoc cref="VSWhereSettings.Latest"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Latest))]
+    public static T EnableLatest<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Latest, true));
+    /// <inheritdoc cref="VSWhereSettings.Latest"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Latest))]
+    public static T DisableLatest<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Latest, false));
+    /// <inheritdoc cref="VSWhereSettings.Latest"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Latest))]
+    public static T ToggleLatest<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Latest, !o.Latest));
     #endregion
     #region Format
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.Format"/></em></p>
-    ///   <p>Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul></p>
-    /// </summary>
-    [Pure]
-    public static T SetFormat<T>(this T toolSettings, VSWhereFormat format) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Format = format;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSWhereSettings.Format"/></em></p>
-    ///   <p>Return information about instances found in a format described below:<ul><li><c>text</c>: Colon-delimited properties in separate blocks for each instance (default).</li><li><c>json</c>: An array of JSON objects for each instance (no logo).</li><li><c>value</c>: A single property specified by the -property parameter (no logo).</li><li><c>xml</c>: An XML data set containing instances (no logo).</li></ul></p>
-    /// </summary>
-    [Pure]
-    public static T ResetFormat<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Format = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.Format"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Format))]
+    public static T SetFormat<T>(this T o, VSWhereFormat v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Format, v));
+    /// <inheritdoc cref="VSWhereSettings.Format"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Format))]
+    public static T ResetFormat<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Remove(() => o.Format));
     #endregion
     #region NoLogo
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.NoLogo"/></em></p>
-    ///   <p>Do not show logo information.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNoLogo<T>(this T toolSettings, bool? noLogo) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = noLogo;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSWhereSettings.NoLogo"/></em></p>
-    ///   <p>Do not show logo information.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNoLogo<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSWhereSettings.NoLogo"/></em></p>
-    ///   <p>Do not show logo information.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNoLogo<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSWhereSettings.NoLogo"/></em></p>
-    ///   <p>Do not show logo information.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNoLogo<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSWhereSettings.NoLogo"/></em></p>
-    ///   <p>Do not show logo information.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNoLogo<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = !toolSettings.NoLogo;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.NoLogo))]
+    public static T SetNoLogo<T>(this T o, bool? v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.NoLogo, v));
+    /// <inheritdoc cref="VSWhereSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.NoLogo))]
+    public static T ResetNoLogo<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Remove(() => o.NoLogo));
+    /// <inheritdoc cref="VSWhereSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.NoLogo))]
+    public static T EnableNoLogo<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.NoLogo, true));
+    /// <inheritdoc cref="VSWhereSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.NoLogo))]
+    public static T DisableNoLogo<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.NoLogo, false));
+    /// <inheritdoc cref="VSWhereSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.NoLogo))]
+    public static T ToggleNoLogo<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.NoLogo, !o.NoLogo));
     #endregion
     #region UTF8
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.UTF8"/></em></p>
-    ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
-    /// </summary>
-    [Pure]
-    public static T SetUTF8<T>(this T toolSettings, bool? utf8) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UTF8 = utf8;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSWhereSettings.UTF8"/></em></p>
-    ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUTF8<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UTF8 = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSWhereSettings.UTF8"/></em></p>
-    ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
-    /// </summary>
-    [Pure]
-    public static T EnableUTF8<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UTF8 = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSWhereSettings.UTF8"/></em></p>
-    ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
-    /// </summary>
-    [Pure]
-    public static T DisableUTF8<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UTF8 = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSWhereSettings.UTF8"/></em></p>
-    ///   <p>Use UTF-8 encoding (recommended for JSON).</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleUTF8<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UTF8 = !toolSettings.UTF8;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.UTF8"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.UTF8))]
+    public static T SetUTF8<T>(this T o, bool? v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.UTF8, v));
+    /// <inheritdoc cref="VSWhereSettings.UTF8"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.UTF8))]
+    public static T ResetUTF8<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Remove(() => o.UTF8));
+    /// <inheritdoc cref="VSWhereSettings.UTF8"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.UTF8))]
+    public static T EnableUTF8<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.UTF8, true));
+    /// <inheritdoc cref="VSWhereSettings.UTF8"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.UTF8))]
+    public static T DisableUTF8<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.UTF8, false));
+    /// <inheritdoc cref="VSWhereSettings.UTF8"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.UTF8))]
+    public static T ToggleUTF8<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.UTF8, !o.UTF8));
     #endregion
     #region Legacy
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.Legacy"/></em></p>
-    ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLegacy<T>(this T toolSettings, bool? legacy) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Legacy = legacy;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSWhereSettings.Legacy"/></em></p>
-    ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLegacy<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Legacy = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSWhereSettings.Legacy"/></em></p>
-    ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableLegacy<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Legacy = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSWhereSettings.Legacy"/></em></p>
-    ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableLegacy<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Legacy = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSWhereSettings.Legacy"/></em></p>
-    ///   <p>Also searches Visual Studio 2015 and older products. Information is limited. This option cannot be used with either <c>-products</c> or <c>-requires</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleLegacy<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Legacy = !toolSettings.Legacy;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.Legacy"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Legacy))]
+    public static T SetLegacy<T>(this T o, bool? v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Legacy, v));
+    /// <inheritdoc cref="VSWhereSettings.Legacy"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Legacy))]
+    public static T ResetLegacy<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Remove(() => o.Legacy));
+    /// <inheritdoc cref="VSWhereSettings.Legacy"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Legacy))]
+    public static T EnableLegacy<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Legacy, true));
+    /// <inheritdoc cref="VSWhereSettings.Legacy"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Legacy))]
+    public static T DisableLegacy<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Legacy, false));
+    /// <inheritdoc cref="VSWhereSettings.Legacy"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Legacy))]
+    public static T ToggleLegacy<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Legacy, !o.Legacy));
     #endregion
     #region All
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.All"/></em></p>
-    ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAll<T>(this T toolSettings, bool? all) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.All = all;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSWhereSettings.All"/></em></p>
-    ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAll<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.All = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSWhereSettings.All"/></em></p>
-    ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableAll<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.All = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSWhereSettings.All"/></em></p>
-    ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableAll<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.All = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSWhereSettings.All"/></em></p>
-    ///   <p>Finds all instances even if they are incomplete and may not launch.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleAll<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.All = !toolSettings.All;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.All"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.All))]
+    public static T SetAll<T>(this T o, bool? v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.All, v));
+    /// <inheritdoc cref="VSWhereSettings.All"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.All))]
+    public static T ResetAll<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Remove(() => o.All));
+    /// <inheritdoc cref="VSWhereSettings.All"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.All))]
+    public static T EnableAll<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.All, true));
+    /// <inheritdoc cref="VSWhereSettings.All"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.All))]
+    public static T DisableAll<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.All, false));
+    /// <inheritdoc cref="VSWhereSettings.All"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.All))]
+    public static T ToggleAll<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.All, !o.All));
     #endregion
     #region Prerelease
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.Prerelease"/></em></p>
-    ///   <p>Also searches prereleases. By default, only releases are searched.</p>
-    /// </summary>
-    [Pure]
-    public static T SetPrerelease<T>(this T toolSettings, bool? prerelease) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Prerelease = prerelease;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSWhereSettings.Prerelease"/></em></p>
-    ///   <p>Also searches prereleases. By default, only releases are searched.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetPrerelease<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Prerelease = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSWhereSettings.Prerelease"/></em></p>
-    ///   <p>Also searches prereleases. By default, only releases are searched.</p>
-    /// </summary>
-    [Pure]
-    public static T EnablePrerelease<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Prerelease = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSWhereSettings.Prerelease"/></em></p>
-    ///   <p>Also searches prereleases. By default, only releases are searched.</p>
-    /// </summary>
-    [Pure]
-    public static T DisablePrerelease<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Prerelease = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSWhereSettings.Prerelease"/></em></p>
-    ///   <p>Also searches prereleases. By default, only releases are searched.</p>
-    /// </summary>
-    [Pure]
-    public static T TogglePrerelease<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Prerelease = !toolSettings.Prerelease;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.Prerelease"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Prerelease))]
+    public static T SetPrerelease<T>(this T o, bool? v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Prerelease, v));
+    /// <inheritdoc cref="VSWhereSettings.Prerelease"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Prerelease))]
+    public static T ResetPrerelease<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Remove(() => o.Prerelease));
+    /// <inheritdoc cref="VSWhereSettings.Prerelease"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Prerelease))]
+    public static T EnablePrerelease<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Prerelease, true));
+    /// <inheritdoc cref="VSWhereSettings.Prerelease"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Prerelease))]
+    public static T DisablePrerelease<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Prerelease, false));
+    /// <inheritdoc cref="VSWhereSettings.Prerelease"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Prerelease))]
+    public static T TogglePrerelease<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Prerelease, !o.Prerelease));
     #endregion
     #region Products
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.Products"/> to a new list</em></p>
-    ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProducts<T>(this T toolSettings, params string[] products) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProductsInternal = products.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.Products"/> to a new list</em></p>
-    ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProducts<T>(this T toolSettings, IEnumerable<string> products) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProductsInternal = products.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="VSWhereSettings.Products"/></em></p>
-    ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
-    /// </summary>
-    [Pure]
-    public static T AddProducts<T>(this T toolSettings, params string[] products) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProductsInternal.AddRange(products);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="VSWhereSettings.Products"/></em></p>
-    ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
-    /// </summary>
-    [Pure]
-    public static T AddProducts<T>(this T toolSettings, IEnumerable<string> products) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProductsInternal.AddRange(products);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="VSWhereSettings.Products"/></em></p>
-    ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearProducts<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProductsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="VSWhereSettings.Products"/></em></p>
-    ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveProducts<T>(this T toolSettings, params string[] products) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(products);
-        toolSettings.ProductsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="VSWhereSettings.Products"/></em></p>
-    ///   <p>One or more product IDs to find. Defaults to Community, Professional, and Enterprise. Specify <em>*</em> by itself to search all product instances installed.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveProducts<T>(this T toolSettings, IEnumerable<string> products) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(products);
-        toolSettings.ProductsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.Products"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Products))]
+    public static T SetProducts<T>(this T o, params string[] v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Products, v));
+    /// <inheritdoc cref="VSWhereSettings.Products"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Products))]
+    public static T SetProducts<T>(this T o, IEnumerable<string> v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Products, v));
+    /// <inheritdoc cref="VSWhereSettings.Products"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Products))]
+    public static T AddProducts<T>(this T o, params string[] v) where T : VSWhereSettings => o.Modify(b => b.AddCollection(() => o.Products, v));
+    /// <inheritdoc cref="VSWhereSettings.Products"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Products))]
+    public static T AddProducts<T>(this T o, IEnumerable<string> v) where T : VSWhereSettings => o.Modify(b => b.AddCollection(() => o.Products, v));
+    /// <inheritdoc cref="VSWhereSettings.Products"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Products))]
+    public static T RemoveProducts<T>(this T o, params string[] v) where T : VSWhereSettings => o.Modify(b => b.RemoveCollection(() => o.Products, v));
+    /// <inheritdoc cref="VSWhereSettings.Products"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Products))]
+    public static T RemoveProducts<T>(this T o, IEnumerable<string> v) where T : VSWhereSettings => o.Modify(b => b.RemoveCollection(() => o.Products, v));
+    /// <inheritdoc cref="VSWhereSettings.Products"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Products))]
+    public static T ClearProducts<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.ClearCollection(() => o.Products));
     #endregion
     #region Requires
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.Requires"/> to a new list</em></p>
-    ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRequires<T>(this T toolSettings, params string[] requires) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RequiresInternal = requires.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.Requires"/> to a new list</em></p>
-    ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRequires<T>(this T toolSettings, IEnumerable<string> requires) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RequiresInternal = requires.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="VSWhereSettings.Requires"/></em></p>
-    ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
-    /// </summary>
-    [Pure]
-    public static T AddRequires<T>(this T toolSettings, params string[] requires) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RequiresInternal.AddRange(requires);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="VSWhereSettings.Requires"/></em></p>
-    ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
-    /// </summary>
-    [Pure]
-    public static T AddRequires<T>(this T toolSettings, IEnumerable<string> requires) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RequiresInternal.AddRange(requires);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="VSWhereSettings.Requires"/></em></p>
-    ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearRequires<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RequiresInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="VSWhereSettings.Requires"/></em></p>
-    ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveRequires<T>(this T toolSettings, params string[] requires) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(requires);
-        toolSettings.RequiresInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="VSWhereSettings.Requires"/></em></p>
-    ///   <p>One or more workload or component IDs required when finding instances. All specified IDs must be installed unless -requiresAny is specified. See <a href="https://aka.ms/vs/workloads"/> for a list of workload and component IDs.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveRequires<T>(this T toolSettings, IEnumerable<string> requires) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(requires);
-        toolSettings.RequiresInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.Requires"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Requires))]
+    public static T SetRequires<T>(this T o, params string[] v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Requires, v));
+    /// <inheritdoc cref="VSWhereSettings.Requires"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Requires))]
+    public static T SetRequires<T>(this T o, IEnumerable<string> v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Requires, v));
+    /// <inheritdoc cref="VSWhereSettings.Requires"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Requires))]
+    public static T AddRequires<T>(this T o, params string[] v) where T : VSWhereSettings => o.Modify(b => b.AddCollection(() => o.Requires, v));
+    /// <inheritdoc cref="VSWhereSettings.Requires"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Requires))]
+    public static T AddRequires<T>(this T o, IEnumerable<string> v) where T : VSWhereSettings => o.Modify(b => b.AddCollection(() => o.Requires, v));
+    /// <inheritdoc cref="VSWhereSettings.Requires"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Requires))]
+    public static T RemoveRequires<T>(this T o, params string[] v) where T : VSWhereSettings => o.Modify(b => b.RemoveCollection(() => o.Requires, v));
+    /// <inheritdoc cref="VSWhereSettings.Requires"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Requires))]
+    public static T RemoveRequires<T>(this T o, IEnumerable<string> v) where T : VSWhereSettings => o.Modify(b => b.RemoveCollection(() => o.Requires, v));
+    /// <inheritdoc cref="VSWhereSettings.Requires"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Requires))]
+    public static T ClearRequires<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.ClearCollection(() => o.Requires));
     #endregion
     #region RequiresAny
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.RequiresAny"/></em></p>
-    ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRequiresAny<T>(this T toolSettings, bool? requiresAny) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RequiresAny = requiresAny;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSWhereSettings.RequiresAny"/></em></p>
-    ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRequiresAny<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RequiresAny = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="VSWhereSettings.RequiresAny"/></em></p>
-    ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableRequiresAny<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RequiresAny = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="VSWhereSettings.RequiresAny"/></em></p>
-    ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableRequiresAny<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RequiresAny = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="VSWhereSettings.RequiresAny"/></em></p>
-    ///   <p>Find instances with any one or more workload or components IDs passed to <c>-requires</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleRequiresAny<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RequiresAny = !toolSettings.RequiresAny;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.RequiresAny"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.RequiresAny))]
+    public static T SetRequiresAny<T>(this T o, bool? v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.RequiresAny, v));
+    /// <inheritdoc cref="VSWhereSettings.RequiresAny"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.RequiresAny))]
+    public static T ResetRequiresAny<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Remove(() => o.RequiresAny));
+    /// <inheritdoc cref="VSWhereSettings.RequiresAny"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.RequiresAny))]
+    public static T EnableRequiresAny<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.RequiresAny, true));
+    /// <inheritdoc cref="VSWhereSettings.RequiresAny"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.RequiresAny))]
+    public static T DisableRequiresAny<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.RequiresAny, false));
+    /// <inheritdoc cref="VSWhereSettings.RequiresAny"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.RequiresAny))]
+    public static T ToggleRequiresAny<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.RequiresAny, !o.RequiresAny));
     #endregion
     #region Version
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.Version"/></em></p>
-    ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetVersion<T>(this T toolSettings, string version) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Version = version;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSWhereSettings.Version"/></em></p>
-    ///   <p>A version range for instances to find. Example: <c>[15.0,16.0)</c> will find versions <em>15.*</em>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetVersion<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Version = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.Version"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Version))]
+    public static T SetVersion<T>(this T o, string v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Version, v));
+    /// <inheritdoc cref="VSWhereSettings.Version"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Version))]
+    public static T ResetVersion<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Remove(() => o.Version));
     #endregion
     #region Property
-    /// <summary>
-    ///   <p><em>Sets <see cref="VSWhereSettings.Property"/></em></p>
-    ///   <p>The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProperty<T>(this T toolSettings, string property) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Property = property;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="VSWhereSettings.Property"/></em></p>
-    ///   <p>The name of a property to return. Use delimiters <c>'.'</c>, <c>'/'</c>, or <c>'_'</c> to separate object and property names. Example: <c>properties.nickname</c> will return the <em>nickname</em> property under <em>properties</em>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetProperty<T>(this T toolSettings) where T : VSWhereSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Property = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="VSWhereSettings.Property"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Property))]
+    public static T SetProperty<T>(this T o, string v) where T : VSWhereSettings => o.Modify(b => b.Set(() => o.Property, v));
+    /// <inheritdoc cref="VSWhereSettings.Property"/>
+    [Pure] [Builder(Type = typeof(VSWhereSettings), Property = nameof(VSWhereSettings.Property))]
+    public static T ResetProperty<T>(this T o) where T : VSWhereSettings => o.Modify(b => b.Remove(() => o.Property));
     #endregion
 }
 #endregion
 #region VSWhereFormat
-/// <summary>
-///   Used within <see cref="VSWhereTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="VSWhereTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
