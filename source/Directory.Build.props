@@ -43,7 +43,7 @@
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="GitHubActionsTestLogger" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="TeamCity.VSTest.TestAdapter" />
+<!--    <PackageReference Include="TeamCity.VSTest.TestAdapter" />-->
     <PackageReference Include="Verify.Xunit"  />
     <PackageReference Include="Verify.DiffPlex"  />
     <PackageReference Include="xunit" />
