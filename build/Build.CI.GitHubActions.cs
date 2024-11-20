@@ -34,7 +34,7 @@ using Nuke.Components;
     GitHubActionsImage.UbuntuLatest,
     FetchDepth = 0,
     OnPushBranches = new[] { DevelopBranch },
-    InvokedTargets = new[] { nameof(ITest.Test), nameof(IPack.Pack), nameof(IPublish.Publish) },
+    InvokedTargets = new[] { nameof(IPublish.Publish) },
     EnableGitHubToken = true,
     PublishArtifacts = false,
     ImportSecrets = new[] { nameof(FeedzNuGetApiKey) })]

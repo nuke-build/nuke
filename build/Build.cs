@@ -105,6 +105,7 @@ partial class Build
 
     Target ITest.Test => _ => _
         .Inherit<ITest>()
+        .OnlyWhenStatic(() => Host is not GitHubActions { Workflow: AlphaDeployment })
         .Partition(2);
 
     bool IReportCoverage.CreateCoverageHtmlReport => true;
