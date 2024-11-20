@@ -65,8 +65,8 @@ partial class Build
             image.Mutate(x => x
                 .BackgroundColor(color: Color.FromRgb(r: 25, g: 25, b: 25))
                 .DrawImage(
-                    image: logo,
-                    location: new Point(image.Width / 2 - logo.Width / 2, image.Height / 2 - logo.Height / 2),
+                    foreground: logo,
+                    backgroundLocation: new Point(image.Width / 2 - logo.Width / 2, image.Height / 2 - logo.Height / 2),
                     opacity: 0.05f)
                 .DrawText(
                     text: "New Release".ToUpperInvariant(),
