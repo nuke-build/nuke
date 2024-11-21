@@ -438,7 +438,6 @@ public partial class KubernetesTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesApiResourcesSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesApiResources), Arguments = "api-resources")]
 public partial class KubernetesApiResourcesSettings : KubernetesOptionsBase
 {
@@ -460,7 +459,6 @@ public partial class KubernetesApiResourcesSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesDrainSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesDrain), Arguments = "drain")]
 public partial class KubernetesDrainSettings : KubernetesOptionsBase
 {
@@ -486,7 +484,6 @@ public partial class KubernetesDrainSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesRunSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesRun), Arguments = "run")]
 public partial class KubernetesRunSettings : KubernetesOptionsBase
 {
@@ -574,7 +571,6 @@ public partial class KubernetesRunSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesGetSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesGet), Arguments = "get")]
 public partial class KubernetesGetSettings : KubernetesOptionsBase
 {
@@ -632,7 +628,6 @@ public partial class KubernetesGetSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesVersionSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesVersion), Arguments = "version")]
 public partial class KubernetesVersionSettings : KubernetesOptionsBase
 {
@@ -648,7 +643,6 @@ public partial class KubernetesVersionSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesTopSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesTop), Arguments = "top")]
 public partial class KubernetesTopSettings : KubernetesOptionsBase
 {
@@ -658,7 +652,6 @@ public partial class KubernetesTopSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesConfigSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesConfig), Arguments = "config")]
 public partial class KubernetesConfigSettings : KubernetesOptionsBase
 {
@@ -668,7 +661,6 @@ public partial class KubernetesConfigSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesExecSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesExec), Arguments = "exec")]
 public partial class KubernetesExecSettings : KubernetesOptionsBase
 {
@@ -692,7 +684,6 @@ public partial class KubernetesExecSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesRollingUpdateSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesRollingUpdate), Arguments = "rolling-update")]
 public partial class KubernetesRollingUpdateSettings : KubernetesOptionsBase
 {
@@ -730,7 +721,6 @@ public partial class KubernetesRollingUpdateSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesLabelSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesLabel), Arguments = "label")]
 public partial class KubernetesLabelSettings : KubernetesOptionsBase
 {
@@ -774,7 +764,6 @@ public partial class KubernetesLabelSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesAnnotateSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesAnnotate), Arguments = "annotate")]
 public partial class KubernetesAnnotateSettings : KubernetesOptionsBase
 {
@@ -816,7 +805,6 @@ public partial class KubernetesAnnotateSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesDeleteSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesDelete), Arguments = "delete")]
 public partial class KubernetesDeleteSettings : KubernetesOptionsBase
 {
@@ -856,7 +844,6 @@ public partial class KubernetesDeleteSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesExposeSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesExpose), Arguments = "expose")]
 public partial class KubernetesExposeSettings : KubernetesOptionsBase
 {
@@ -910,7 +897,6 @@ public partial class KubernetesExposeSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesOptionsSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesOptions), Arguments = "options")]
 public partial class KubernetesOptionsSettings : KubernetesOptionsBase
 {
@@ -920,7 +906,6 @@ public partial class KubernetesOptionsSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesAttachSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesAttach), Arguments = "attach")]
 public partial class KubernetesAttachSettings : KubernetesOptionsBase
 {
@@ -940,7 +925,6 @@ public partial class KubernetesAttachSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesProxySettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesProxy), Arguments = "proxy")]
 public partial class KubernetesProxySettings : KubernetesOptionsBase
 {
@@ -972,7 +956,6 @@ public partial class KubernetesProxySettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesAlphaSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesAlpha), Arguments = "alpha")]
 public partial class KubernetesAlphaSettings : KubernetesOptionsBase
 {
@@ -982,7 +965,6 @@ public partial class KubernetesAlphaSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.Kubernetes), Arguments = "kubectl")]
 public partial class KubernetesSettings : KubernetesOptionsBase
 {
@@ -992,7 +974,6 @@ public partial class KubernetesSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesCompletionSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesCompletion), Arguments = "completion")]
 public partial class KubernetesCompletionSettings : KubernetesOptionsBase
 {
@@ -1002,7 +983,6 @@ public partial class KubernetesCompletionSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesPatchSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesPatch), Arguments = "patch")]
 public partial class KubernetesPatchSettings : KubernetesOptionsBase
 {
@@ -1034,7 +1014,6 @@ public partial class KubernetesPatchSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesReplaceSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesReplace), Arguments = "replace")]
 public partial class KubernetesReplaceSettings : KubernetesOptionsBase
 {
@@ -1068,7 +1047,6 @@ public partial class KubernetesReplaceSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesTaintSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesTaint), Arguments = "taint")]
 public partial class KubernetesTaintSettings : KubernetesOptionsBase
 {
@@ -1096,7 +1074,6 @@ public partial class KubernetesTaintSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesDescribeSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesDescribe), Arguments = "describe")]
 public partial class KubernetesDescribeSettings : KubernetesOptionsBase
 {
@@ -1120,7 +1097,6 @@ public partial class KubernetesDescribeSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesSetSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesSet), Arguments = "set")]
 public partial class KubernetesSetSettings : KubernetesOptionsBase
 {
@@ -1132,7 +1108,6 @@ public partial class KubernetesSetSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesAuthSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesAuth), Arguments = "auth")]
 public partial class KubernetesAuthSettings : KubernetesOptionsBase
 {
@@ -1144,7 +1119,6 @@ public partial class KubernetesAuthSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesCertificateSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesCertificate), Arguments = "certificate")]
 public partial class KubernetesCertificateSettings : KubernetesOptionsBase
 {
@@ -1156,7 +1130,6 @@ public partial class KubernetesCertificateSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesRolloutSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesRollout), Arguments = "rollout")]
 public partial class KubernetesRolloutSettings : KubernetesOptionsBase
 {
@@ -1168,7 +1141,6 @@ public partial class KubernetesRolloutSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesApplySettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesApply), Arguments = "apply")]
 public partial class KubernetesApplySettings : KubernetesOptionsBase
 {
@@ -1218,7 +1190,6 @@ public partial class KubernetesApplySettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesApplyKustomizeSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesApplyKustomize), Arguments = "apply -k")]
 public partial class KubernetesApplyKustomizeSettings : KubernetesOptionsBase
 {
@@ -1270,7 +1241,6 @@ public partial class KubernetesApplyKustomizeSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesCordonSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesCordon), Arguments = "cordon")]
 public partial class KubernetesCordonSettings : KubernetesOptionsBase
 {
@@ -1286,7 +1256,6 @@ public partial class KubernetesCordonSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesCpSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesCp), Arguments = "cp")]
 public partial class KubernetesCpSettings : KubernetesOptionsBase
 {
@@ -1302,7 +1271,6 @@ public partial class KubernetesCpSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesApiVersionsSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesApiVersions), Arguments = "api-versions")]
 public partial class KubernetesApiVersionsSettings : KubernetesOptionsBase
 {
@@ -1312,7 +1280,6 @@ public partial class KubernetesApiVersionsSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesUncordonSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesUncordon), Arguments = "uncordon")]
 public partial class KubernetesUncordonSettings : KubernetesOptionsBase
 {
@@ -1328,7 +1295,6 @@ public partial class KubernetesUncordonSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesAutoscaleSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesAutoscale), Arguments = "autoscale")]
 public partial class KubernetesAutoscaleSettings : KubernetesOptionsBase
 {
@@ -1364,7 +1330,6 @@ public partial class KubernetesAutoscaleSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesPluginSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesPlugin), Arguments = "plugin")]
 public partial class KubernetesPluginSettings : KubernetesOptionsBase
 {
@@ -1376,7 +1341,6 @@ public partial class KubernetesPluginSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesClusterInfoSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesClusterInfo), Arguments = "cluster-info")]
 public partial class KubernetesClusterInfoSettings : KubernetesOptionsBase
 {
@@ -1386,7 +1350,6 @@ public partial class KubernetesClusterInfoSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesWaitSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesWait), Arguments = "wait")]
 public partial class KubernetesWaitSettings : KubernetesOptionsBase
 {
@@ -1414,7 +1377,6 @@ public partial class KubernetesWaitSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesConvertSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesConvert), Arguments = "convert")]
 public partial class KubernetesConvertSettings : KubernetesOptionsBase
 {
@@ -1440,7 +1402,6 @@ public partial class KubernetesConvertSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesCreateSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesCreate), Arguments = "create")]
 public partial class KubernetesCreateSettings : KubernetesOptionsBase
 {
@@ -1478,7 +1439,6 @@ public partial class KubernetesCreateSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesPortForwardSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesPortForward), Arguments = "port-forward")]
 public partial class KubernetesPortForwardSettings : KubernetesOptionsBase
 {
@@ -1494,7 +1454,6 @@ public partial class KubernetesPortForwardSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesRunContainerSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesRunContainer), Arguments = "run-container")]
 public partial class KubernetesRunContainerSettings : KubernetesOptionsBase
 {
@@ -1580,7 +1539,6 @@ public partial class KubernetesRunContainerSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesEditSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesEdit), Arguments = "edit")]
 public partial class KubernetesEditSettings : KubernetesOptionsBase
 {
@@ -1614,7 +1572,6 @@ public partial class KubernetesEditSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesScaleSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesScale), Arguments = "scale")]
 public partial class KubernetesScaleSettings : KubernetesOptionsBase
 {
@@ -1648,7 +1605,6 @@ public partial class KubernetesScaleSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesExplainSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesExplain), Arguments = "explain")]
 public partial class KubernetesExplainSettings : KubernetesOptionsBase
 {
@@ -1664,7 +1620,6 @@ public partial class KubernetesExplainSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesLogsSettings>))]
 [Command(Type = typeof(KubernetesTasks), Command = nameof(KubernetesTasks.KubernetesLogs), Arguments = "logs")]
 public partial class KubernetesLogsSettings : KubernetesOptionsBase
 {
@@ -1700,7 +1655,6 @@ public partial class KubernetesLogsSettings : KubernetesOptionsBase
 /// <summary>Used within <see cref="KubernetesTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<KubernetesOptionsBase>))]
 public partial class KubernetesOptionsBase : ToolOptions
 {
     /// <summary>log to standard error as well as files.</summary>

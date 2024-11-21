@@ -42,7 +42,6 @@ public partial class PwshTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="PwshTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PwshSettings>))]
 [Command(Type = typeof(PwshTasks), Command = nameof(PwshTasks.Pwsh))]
 public partial class PwshSettings : ToolOptions
 {

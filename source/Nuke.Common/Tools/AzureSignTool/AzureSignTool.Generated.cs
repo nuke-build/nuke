@@ -43,7 +43,6 @@ public partial class AzureSignToolTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="AzureSignToolTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<AzureSignToolSettings>))]
 [Command(Type = typeof(AzureSignToolTasks), Command = nameof(AzureSignToolTasks.AzureSignTool), Arguments = "sign")]
 public partial class AzureSignToolSettings : ToolOptions
 {

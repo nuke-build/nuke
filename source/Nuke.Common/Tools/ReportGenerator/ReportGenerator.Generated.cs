@@ -43,7 +43,6 @@ public partial class ReportGeneratorTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="ReportGeneratorTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ReportGeneratorSettings>))]
 [Command(Type = typeof(ReportGeneratorTasks), Command = nameof(ReportGeneratorTasks.ReportGenerator))]
 public partial class ReportGeneratorSettings : ToolOptions, IToolOptionsWithFramework
 {

@@ -43,7 +43,6 @@ public partial class SquirrelTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="SquirrelTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SquirrelSettings>))]
 [Command(Type = typeof(SquirrelTasks), Command = nameof(SquirrelTasks.Squirrel))]
 public partial class SquirrelSettings : ToolOptions
 {

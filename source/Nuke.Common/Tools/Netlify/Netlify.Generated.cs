@@ -60,7 +60,6 @@ public partial class NetlifyTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="NetlifyTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NetlifyDeploySettings>))]
 [Command(Type = typeof(NetlifyTasks), Command = nameof(NetlifyTasks.NetlifyDeploy), Arguments = "netlify deploy")]
 public partial class NetlifyDeploySettings : ToolOptions
 {
@@ -104,7 +103,6 @@ public partial class NetlifyDeploySettings : ToolOptions
 /// <summary>Used within <see cref="NetlifyTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NetlifySitesCreateSettings>))]
 [Command(Type = typeof(NetlifyTasks), Command = nameof(NetlifyTasks.NetlifySitesCreate), Arguments = "netlify sites:create")]
 public partial class NetlifySitesCreateSettings : ToolOptions
 {
@@ -128,7 +126,6 @@ public partial class NetlifySitesCreateSettings : ToolOptions
 /// <summary>Used within <see cref="NetlifyTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NetlifySitesDeleteSettings>))]
 [Command(Type = typeof(NetlifyTasks), Command = nameof(NetlifyTasks.NetlifySitesDelete), Arguments = "netlify sites:delete")]
 public partial class NetlifySitesDeleteSettings : ToolOptions
 {

@@ -43,7 +43,6 @@ public partial class VSWhereTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="VSWhereTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<VSWhereSettings>))]
 [Command(Type = typeof(VSWhereTasks), Command = nameof(VSWhereTasks.VSWhere))]
 public partial class VSWhereSettings : ToolOptions
 {
@@ -77,7 +76,6 @@ public partial class VSWhereSettings : ToolOptions
 /// <summary>Used within <see cref="VSWhereTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<VSWhereCatalog>))]
 public partial class VSWhereCatalog : Options
 {
     /// <summary></summary>
@@ -120,7 +118,6 @@ public partial class VSWhereCatalog : Options
 /// <summary>Used within <see cref="VSWhereTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<VSWhereResult>))]
 public partial class VSWhereResult : Options
 {
     /// <summary></summary>

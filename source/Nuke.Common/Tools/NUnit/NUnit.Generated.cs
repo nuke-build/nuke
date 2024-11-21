@@ -43,7 +43,6 @@ public partial class NUnitTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="NUnitTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NUnit3Settings>))]
 [Command(Type = typeof(NUnitTasks), Command = nameof(NUnitTasks.NUnit3))]
 public partial class NUnit3Settings : ToolOptions
 {

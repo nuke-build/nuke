@@ -43,7 +43,6 @@ public partial class TestCloudTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="TestCloudTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<TestCloudSettings>))]
 [Command(Type = typeof(TestCloudTasks), Command = nameof(TestCloudTasks.TestCloud), Arguments = "submit")]
 public partial class TestCloudSettings : ToolOptions
 {

@@ -267,7 +267,6 @@ public partial class PulumiTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiUpSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiUp), Arguments = "up")]
 public partial class PulumiUpSettings : ToolOptions
 {
@@ -347,7 +346,6 @@ public partial class PulumiUpSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiPreviewSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiPreview), Arguments = "preview")]
 public partial class PulumiPreviewSettings : ToolOptions
 {
@@ -423,7 +421,6 @@ public partial class PulumiPreviewSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiConfigSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiConfig), Arguments = "config")]
 public partial class PulumiConfigSettings : ToolOptions
 {
@@ -461,7 +458,6 @@ public partial class PulumiConfigSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiConfigCopySettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiConfigCopy), Arguments = "config cp")]
 public partial class PulumiConfigCopySettings : ToolOptions
 {
@@ -495,7 +491,6 @@ public partial class PulumiConfigCopySettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiConfigGetSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiConfigGet), Arguments = "config get")]
 public partial class PulumiConfigGetSettings : ToolOptions
 {
@@ -531,7 +526,6 @@ public partial class PulumiConfigGetSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiConfigRefreshSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiConfigRefresh), Arguments = "config refresh")]
 public partial class PulumiConfigRefreshSettings : ToolOptions
 {
@@ -563,7 +557,6 @@ public partial class PulumiConfigRefreshSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiConfigRemoveSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiConfigRemove), Arguments = "config rm")]
 public partial class PulumiConfigRemoveSettings : ToolOptions
 {
@@ -597,7 +590,6 @@ public partial class PulumiConfigRemoveSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiConfigSetSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiConfigSet), Arguments = "config set")]
 public partial class PulumiConfigSetSettings : ToolOptions
 {
@@ -637,7 +629,6 @@ public partial class PulumiConfigSetSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStack), Arguments = "stack")]
 public partial class PulumiStackSettings : ToolOptions
 {
@@ -677,7 +668,6 @@ public partial class PulumiStackSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackChangeSecretsProviderSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackChangeSecretsProvider), Arguments = "stack change-secrets-provider")]
 public partial class PulumiStackChangeSecretsProviderSettings : ToolOptions
 {
@@ -709,7 +699,6 @@ public partial class PulumiStackChangeSecretsProviderSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackExportSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackExport), Arguments = "stack export")]
 public partial class PulumiStackExportSettings : ToolOptions
 {
@@ -745,7 +734,6 @@ public partial class PulumiStackExportSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackGraphSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackGraph), Arguments = "stack graph")]
 public partial class PulumiStackGraphSettings : ToolOptions
 {
@@ -785,7 +773,6 @@ public partial class PulumiStackGraphSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackHistorySettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackHistory), Arguments = "stack history")]
 public partial class PulumiStackHistorySettings : ToolOptions
 {
@@ -819,7 +806,6 @@ public partial class PulumiStackHistorySettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackImportSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackImport), Arguments = "stack import")]
 public partial class PulumiStackImportSettings : ToolOptions
 {
@@ -853,7 +839,6 @@ public partial class PulumiStackImportSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackInitSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackInit), Arguments = "stack init")]
 public partial class PulumiStackInitSettings : ToolOptions
 {
@@ -889,7 +874,6 @@ public partial class PulumiStackInitSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackListSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackList), Arguments = "stack ls")]
 public partial class PulumiStackListSettings : ToolOptions
 {
@@ -929,7 +913,6 @@ public partial class PulumiStackListSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackOutputSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackOutput), Arguments = "stack output")]
 public partial class PulumiStackOutputSettings : ToolOptions
 {
@@ -965,7 +948,6 @@ public partial class PulumiStackOutputSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackRenameSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackRename), Arguments = "stack rename")]
 public partial class PulumiStackRenameSettings : ToolOptions
 {
@@ -997,7 +979,6 @@ public partial class PulumiStackRenameSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackRemoveSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackRemove), Arguments = "stack rm")]
 public partial class PulumiStackRemoveSettings : ToolOptions
 {
@@ -1035,7 +1016,6 @@ public partial class PulumiStackRemoveSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackSelectSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackSelect), Arguments = "stack select")]
 public partial class PulumiStackSelectSettings : ToolOptions
 {
@@ -1071,7 +1051,6 @@ public partial class PulumiStackSelectSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackTagSetSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackTagSet), Arguments = "stack tag set")]
 public partial class PulumiStackTagSetSettings : ToolOptions
 {
@@ -1105,7 +1084,6 @@ public partial class PulumiStackTagSetSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackTagGetSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackTagGet), Arguments = "stack tag get")]
 public partial class PulumiStackTagGetSettings : ToolOptions
 {
@@ -1137,7 +1115,6 @@ public partial class PulumiStackTagGetSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackTagRemoveSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackTagRemove), Arguments = "stack tag rm")]
 public partial class PulumiStackTagRemoveSettings : ToolOptions
 {
@@ -1169,7 +1146,6 @@ public partial class PulumiStackTagRemoveSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiStackTagListSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiStackTagList), Arguments = "stack tag ls")]
 public partial class PulumiStackTagListSettings : ToolOptions
 {
@@ -1201,7 +1177,6 @@ public partial class PulumiStackTagListSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiNewSettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiNew), Arguments = "new")]
 public partial class PulumiNewSettings : ToolOptions
 {
@@ -1255,7 +1230,6 @@ public partial class PulumiNewSettings : ToolOptions
 /// <summary>Used within <see cref="PulumiTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PulumiDestroySettings>))]
 [Command(Type = typeof(PulumiTasks), Command = nameof(PulumiTasks.PulumiDestroy), Arguments = "destroy")]
 public partial class PulumiDestroySettings : ToolOptions
 {

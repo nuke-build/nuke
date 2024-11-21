@@ -411,7 +411,6 @@ public partial class HelmTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmCompletionSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmCompletion), Arguments = "completion")]
 public partial class HelmCompletionSettings : HelmOptionsBase
 {
@@ -423,7 +422,6 @@ public partial class HelmCompletionSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmCreateSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmCreate), Arguments = "create")]
 public partial class HelmCreateSettings : HelmOptionsBase
 {
@@ -437,7 +435,6 @@ public partial class HelmCreateSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmDeleteSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmDelete), Arguments = "delete")]
 public partial class HelmDeleteSettings : HelmOptionsBase
 {
@@ -471,7 +468,6 @@ public partial class HelmDeleteSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmDependencyBuildSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmDependencyBuild), Arguments = "dependency build")]
 public partial class HelmDependencyBuildSettings : HelmOptionsBase
 {
@@ -487,7 +483,6 @@ public partial class HelmDependencyBuildSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmDependencyListSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmDependencyList), Arguments = "dependency list")]
 public partial class HelmDependencyListSettings : HelmOptionsBase
 {
@@ -499,7 +494,6 @@ public partial class HelmDependencyListSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmDependencyUpdateSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmDependencyUpdate), Arguments = "dependency update")]
 public partial class HelmDependencyUpdateSettings : HelmOptionsBase
 {
@@ -517,7 +511,6 @@ public partial class HelmDependencyUpdateSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmFetchSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmFetch), Arguments = "fetch")]
 public partial class HelmFetchSettings : HelmOptionsBase
 {
@@ -557,7 +550,6 @@ public partial class HelmFetchSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmGetSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmGet), Arguments = "get")]
 public partial class HelmGetSettings : HelmOptionsBase
 {
@@ -583,7 +575,6 @@ public partial class HelmGetSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmGetHooksSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmGetHooks), Arguments = "get hooks")]
 public partial class HelmGetHooksSettings : HelmOptionsBase
 {
@@ -609,7 +600,6 @@ public partial class HelmGetHooksSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmGetManifestSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmGetManifest), Arguments = "get manifest")]
 public partial class HelmGetManifestSettings : HelmOptionsBase
 {
@@ -635,7 +625,6 @@ public partial class HelmGetManifestSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmGetNotesSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmGetNotes), Arguments = "get notes")]
 public partial class HelmGetNotesSettings : HelmOptionsBase
 {
@@ -661,7 +650,6 @@ public partial class HelmGetNotesSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmGetValuesSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmGetValues), Arguments = "get values")]
 public partial class HelmGetValuesSettings : HelmOptionsBase
 {
@@ -691,7 +679,6 @@ public partial class HelmGetValuesSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmHistorySettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmHistory), Arguments = "history")]
 public partial class HelmHistorySettings : HelmOptionsBase
 {
@@ -721,7 +708,6 @@ public partial class HelmHistorySettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmHomeSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmHome), Arguments = "home")]
 public partial class HelmHomeSettings : HelmOptionsBase
 {
@@ -731,7 +717,6 @@ public partial class HelmHomeSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmInitSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmInit), Arguments = "init")]
 public partial class HelmInitSettings : HelmOptionsBase
 {
@@ -789,7 +774,6 @@ public partial class HelmInitSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmInspectSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmInspect), Arguments = "inspect")]
 public partial class HelmInspectSettings : HelmOptionsBase
 {
@@ -821,7 +805,6 @@ public partial class HelmInspectSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmInspectChartSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmInspectChart), Arguments = "inspect chart")]
 public partial class HelmInspectChartSettings : HelmOptionsBase
 {
@@ -853,7 +836,6 @@ public partial class HelmInspectChartSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmInspectReadmeSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmInspectReadme), Arguments = "inspect readme")]
 public partial class HelmInspectReadmeSettings : HelmOptionsBase
 {
@@ -881,7 +863,6 @@ public partial class HelmInspectReadmeSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmInspectValuesSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmInspectValues), Arguments = "inspect values")]
 public partial class HelmInspectValuesSettings : HelmOptionsBase
 {
@@ -913,7 +894,6 @@ public partial class HelmInspectValuesSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmInstallSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmInstall), Arguments = "install")]
 public partial class HelmInstallSettings : HelmOptionsBase
 {
@@ -991,7 +971,6 @@ public partial class HelmInstallSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmLintSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmLint), Arguments = "lint")]
 public partial class HelmLintSettings : HelmOptionsBase
 {
@@ -1015,7 +994,6 @@ public partial class HelmLintSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmListSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmList), Arguments = "list")]
 public partial class HelmListSettings : HelmOptionsBase
 {
@@ -1069,7 +1047,6 @@ public partial class HelmListSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmPackageSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmPackage), Arguments = "package")]
 public partial class HelmPackageSettings : HelmOptionsBase
 {
@@ -1097,7 +1074,6 @@ public partial class HelmPackageSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmPluginInstallSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmPluginInstall), Arguments = "plugin install")]
 public partial class HelmPluginInstallSettings : HelmOptionsBase
 {
@@ -1113,7 +1089,6 @@ public partial class HelmPluginInstallSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmPluginListSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmPluginList), Arguments = "plugin list")]
 public partial class HelmPluginListSettings : HelmOptionsBase
 {
@@ -1123,7 +1098,6 @@ public partial class HelmPluginListSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmPluginRemoveSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmPluginRemove), Arguments = "plugin remove")]
 public partial class HelmPluginRemoveSettings : HelmOptionsBase
 {
@@ -1135,7 +1109,6 @@ public partial class HelmPluginRemoveSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmPluginUpdateSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmPluginUpdate), Arguments = "plugin update")]
 public partial class HelmPluginUpdateSettings : HelmOptionsBase
 {
@@ -1147,7 +1120,6 @@ public partial class HelmPluginUpdateSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmRepoAddSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmRepoAdd), Arguments = "repo add")]
 public partial class HelmRepoAddSettings : HelmOptionsBase
 {
@@ -1173,7 +1145,6 @@ public partial class HelmRepoAddSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmRepoIndexSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmRepoIndex), Arguments = "repo index")]
 public partial class HelmRepoIndexSettings : HelmOptionsBase
 {
@@ -1189,7 +1160,6 @@ public partial class HelmRepoIndexSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmRepoListSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmRepoList), Arguments = "repo list")]
 public partial class HelmRepoListSettings : HelmOptionsBase
 {
@@ -1199,7 +1169,6 @@ public partial class HelmRepoListSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmRepoRemoveSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmRepoRemove), Arguments = "repo remove")]
 public partial class HelmRepoRemoveSettings : HelmOptionsBase
 {
@@ -1211,7 +1180,6 @@ public partial class HelmRepoRemoveSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmRepoUpdateSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmRepoUpdate), Arguments = "repo update")]
 public partial class HelmRepoUpdateSettings : HelmOptionsBase
 {
@@ -1223,7 +1191,6 @@ public partial class HelmRepoUpdateSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmResetSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmReset), Arguments = "reset")]
 public partial class HelmResetSettings : HelmOptionsBase
 {
@@ -1249,7 +1216,6 @@ public partial class HelmResetSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmRollbackSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmRollback), Arguments = "rollback")]
 public partial class HelmRollbackSettings : HelmOptionsBase
 {
@@ -1289,7 +1255,6 @@ public partial class HelmRollbackSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmSearchSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmSearch), Arguments = "search")]
 public partial class HelmSearchSettings : HelmOptionsBase
 {
@@ -1309,7 +1274,6 @@ public partial class HelmSearchSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmServeSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmServe), Arguments = "serve")]
 public partial class HelmServeSettings : HelmOptionsBase
 {
@@ -1325,7 +1289,6 @@ public partial class HelmServeSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmStatusSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmStatus), Arguments = "status")]
 public partial class HelmStatusSettings : HelmOptionsBase
 {
@@ -1353,7 +1316,6 @@ public partial class HelmStatusSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmTemplateSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmTemplate), Arguments = "template")]
 public partial class HelmTemplateSettings : HelmOptionsBase
 {
@@ -1389,7 +1351,6 @@ public partial class HelmTemplateSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmTestSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmTest), Arguments = "test")]
 public partial class HelmTestSettings : HelmOptionsBase
 {
@@ -1419,7 +1380,6 @@ public partial class HelmTestSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmUpgradeSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmUpgrade), Arguments = "upgrade")]
 public partial class HelmUpgradeSettings : HelmOptionsBase
 {
@@ -1501,7 +1461,6 @@ public partial class HelmUpgradeSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmVerifySettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmVerify), Arguments = "verify")]
 public partial class HelmVerifySettings : HelmOptionsBase
 {
@@ -1515,7 +1474,6 @@ public partial class HelmVerifySettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmVersionSettings>))]
 [Command(Type = typeof(HelmTasks), Command = nameof(HelmTasks.HelmVersion), Arguments = "version")]
 public partial class HelmVersionSettings : HelmOptionsBase
 {
@@ -1545,7 +1503,6 @@ public partial class HelmVersionSettings : HelmOptionsBase
 /// <summary>Used within <see cref="HelmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<HelmOptionsBase>))]
 public partial class HelmOptionsBase : ToolOptions
 {
     /// <summary>Enable verbose output.</summary>

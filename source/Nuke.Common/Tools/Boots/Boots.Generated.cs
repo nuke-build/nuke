@@ -43,7 +43,6 @@ public partial class BootsTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="BootsTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<BootsSettings>))]
 [Command(Type = typeof(BootsTasks), Command = nameof(BootsTasks.Boots))]
 public partial class BootsSettings : ToolOptions
 {

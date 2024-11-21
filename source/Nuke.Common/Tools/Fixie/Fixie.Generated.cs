@@ -43,7 +43,6 @@ public partial class FixieTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="FixieTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<FixieSettings>))]
 [Command(Type = typeof(FixieTasks), Command = nameof(FixieTasks.Fixie))]
 public partial class FixieSettings : ToolOptions
 {

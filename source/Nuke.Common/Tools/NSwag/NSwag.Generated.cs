@@ -205,7 +205,6 @@ public partial class NSwagTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagVersionSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagVersion), Arguments = "version")]
 public partial class NSwagVersionSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -215,7 +214,6 @@ public partial class NSwagVersionSettings : ToolOptions, IToolOptionsWithFramewo
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagListTypesSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagListTypes), Arguments = "list-types")]
 public partial class NSwagListTypesSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -237,7 +235,6 @@ public partial class NSwagListTypesSettings : ToolOptions, IToolOptionsWithFrame
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagListWebApiControllersSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagListWebApiControllers), Arguments = "list-controllers")]
 public partial class NSwagListWebApiControllersSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -259,7 +256,6 @@ public partial class NSwagListWebApiControllersSettings : ToolOptions, IToolOpti
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagTypesToOpenApiSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagTypesToOpenApi), Arguments = "types2openapi")]
 public partial class NSwagTypesToOpenApiSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -281,7 +277,6 @@ public partial class NSwagTypesToOpenApiSettings : ToolOptions, IToolOptionsWith
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagTypesToSwaggerSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagTypesToSwagger), Arguments = "types2swagger")]
 public partial class NSwagTypesToSwaggerSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -323,7 +318,6 @@ public partial class NSwagTypesToSwaggerSettings : ToolOptions, IToolOptionsWith
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagWebApiToOpenApiSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagWebApiToOpenApi), Arguments = "webapi2openapi")]
 public partial class NSwagWebApiToOpenApiSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -411,7 +405,6 @@ public partial class NSwagWebApiToOpenApiSettings : ToolOptions, IToolOptionsWit
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagWebApiToSwaggerSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagWebApiToSwagger), Arguments = "webapi2swagger")]
 public partial class NSwagWebApiToSwaggerSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -513,7 +506,6 @@ public partial class NSwagWebApiToSwaggerSettings : ToolOptions, IToolOptionsWit
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagAspNetCoreToOpenApiSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagAspNetCoreToOpenApi), Arguments = "aspnetcore2openapi")]
 public partial class NSwagAspNetCoreToOpenApiSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -601,7 +593,6 @@ public partial class NSwagAspNetCoreToOpenApiSettings : ToolOptions, IToolOption
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagAspNetCoreToSwaggerSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagAspNetCoreToSwagger), Arguments = "aspnetcore2swagger")]
 public partial class NSwagAspNetCoreToSwaggerSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -709,7 +700,6 @@ public partial class NSwagAspNetCoreToSwaggerSettings : ToolOptions, IToolOption
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagCreateDocumentSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagCreateDocument), Arguments = "new")]
 public partial class NSwagCreateDocumentSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -719,7 +709,6 @@ public partial class NSwagCreateDocumentSettings : ToolOptions, IToolOptionsWith
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagExecuteDocumentSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagExecuteDocument), Arguments = "run")]
 public partial class NSwagExecuteDocumentSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -733,7 +722,6 @@ public partial class NSwagExecuteDocumentSettings : ToolOptions, IToolOptionsWit
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagJsonSchemaToCSharpSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagJsonSchemaToCSharp), Arguments = "jsonschema2csclient")]
 public partial class NSwagJsonSchemaToCSharpSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -771,7 +759,6 @@ public partial class NSwagJsonSchemaToCSharpSettings : ToolOptions, IToolOptions
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagJsonSchemaToTypeScriptSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagJsonSchemaToTypeScript), Arguments = "jsonschema2tsclient")]
 public partial class NSwagJsonSchemaToTypeScriptSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -791,7 +778,6 @@ public partial class NSwagJsonSchemaToTypeScriptSettings : ToolOptions, IToolOpt
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagOpenApiToCSharpClientSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagOpenApiToCSharpClient), Arguments = "openapi2csclient")]
 public partial class NSwagOpenApiToCSharpClientSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -905,7 +891,6 @@ public partial class NSwagOpenApiToCSharpClientSettings : ToolOptions, IToolOpti
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagSwaggerToCSharpClientSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagSwaggerToCSharpClient), Arguments = "swagger2csclient")]
 public partial class NSwagSwaggerToCSharpClientSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -1073,7 +1058,6 @@ public partial class NSwagSwaggerToCSharpClientSettings : ToolOptions, IToolOpti
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagOpenApiToCSharpControllerSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagOpenApiToCSharpController), Arguments = "openapi2cscontroller")]
 public partial class NSwagOpenApiToCSharpControllerSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -1187,7 +1171,6 @@ public partial class NSwagOpenApiToCSharpControllerSettings : ToolOptions, ITool
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagSwaggerToCSharpControllerSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagSwaggerToCSharpController), Arguments = "swagger2cscontroller")]
 public partial class NSwagSwaggerToCSharpControllerSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -1317,7 +1300,6 @@ public partial class NSwagSwaggerToCSharpControllerSettings : ToolOptions, ITool
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagOpenApiToTypeScriptClientSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagOpenApiToTypeScriptClient), Arguments = "openapi2tsclient")]
 public partial class NSwagOpenApiToTypeScriptClientSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -1343,7 +1325,6 @@ public partial class NSwagOpenApiToTypeScriptClientSettings : ToolOptions, ITool
 /// <summary>Used within <see cref="NSwagTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NSwagSwaggerToTypeScriptClientSettings>))]
 [Command(Type = typeof(NSwagTasks), Command = nameof(NSwagTasks.NSwagSwaggerToTypeScriptClient), Arguments = "swagger2tsclient")]
 public partial class NSwagSwaggerToTypeScriptClientSettings : ToolOptions, IToolOptionsWithFramework
 {

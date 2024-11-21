@@ -43,7 +43,6 @@ public partial class GitVersionTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="GitVersionTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<GitVersionSettings>))]
 [Command(Type = typeof(GitVersionTasks), Command = nameof(GitVersionTasks.GitVersion))]
 public partial class GitVersionSettings : ToolOptions, IToolOptionsWithFramework
 {

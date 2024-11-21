@@ -59,7 +59,7 @@ partial class ToolOptions
 
         var escapeMethod = CreateEscape();
         var arguments = InternalOptions.Properties()
-            .Select(x => (Token: x.Value, Property: GetType().GetProperty(x.Name).NotNull()))
+            .Select(x => (Token: x.Value, Property: _allProperties[x.Name]))
             .Select(x => (x.Token, x.Property, Attribute: x.Property.GetCustomAttribute<ArgumentAttribute>()))
             .Where(x => x.Attribute != null)
             .OrderByDescending(x => x.Attribute.Position.CompareTo(0))

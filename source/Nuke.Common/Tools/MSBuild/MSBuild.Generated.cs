@@ -39,7 +39,6 @@ public partial class MSBuildTasks : ToolTasks
 /// <summary>Used within <see cref="MSBuildTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<MSBuildSettings>))]
 [Command(Type = typeof(MSBuildTasks), Command = nameof(MSBuildTasks.MSBuild))]
 public partial class MSBuildSettings : ToolOptions
 {

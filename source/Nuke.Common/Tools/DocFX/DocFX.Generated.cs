@@ -124,7 +124,6 @@ public partial class DocFXTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="DocFXTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DocFXBuildSettings>))]
 [Command(Type = typeof(DocFXTasks), Command = nameof(DocFXTasks.DocFXBuild), Arguments = "build")]
 public partial class DocFXBuildSettings : ToolOptions
 {
@@ -222,7 +221,6 @@ public partial class DocFXBuildSettings : ToolOptions
 /// <summary>Used within <see cref="DocFXTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DocFXDependencySettings>))]
 [Command(Type = typeof(DocFXTasks), Command = nameof(DocFXTasks.DocFXDependency), Arguments = "dependency")]
 public partial class DocFXDependencySettings : ToolOptions
 {
@@ -240,7 +238,6 @@ public partial class DocFXDependencySettings : ToolOptions
 /// <summary>Used within <see cref="DocFXTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DocFXDownloadSettings>))]
 [Command(Type = typeof(DocFXTasks), Command = nameof(DocFXTasks.DocFXDownload), Arguments = "download")]
 public partial class DocFXDownloadSettings : ToolOptions
 {
@@ -256,7 +253,6 @@ public partial class DocFXDownloadSettings : ToolOptions
 /// <summary>Used within <see cref="DocFXTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DocFXHelpSettings>))]
 [Command(Type = typeof(DocFXTasks), Command = nameof(DocFXTasks.DocFXHelp), Arguments = "help")]
 public partial class DocFXHelpSettings : ToolOptions
 {
@@ -268,7 +264,6 @@ public partial class DocFXHelpSettings : ToolOptions
 /// <summary>Used within <see cref="DocFXTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DocFXInitSettings>))]
 [Command(Type = typeof(DocFXTasks), Command = nameof(DocFXTasks.DocFXInit), Arguments = "init")]
 public partial class DocFXInitSettings : ToolOptions
 {
@@ -292,7 +287,6 @@ public partial class DocFXInitSettings : ToolOptions
 /// <summary>Used within <see cref="DocFXTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DocFXMergeSettings>))]
 [Command(Type = typeof(DocFXTasks), Command = nameof(DocFXTasks.DocFXMerge), Arguments = "merge")]
 public partial class DocFXMergeSettings : ToolOptions
 {
@@ -326,7 +320,6 @@ public partial class DocFXMergeSettings : ToolOptions
 /// <summary>Used within <see cref="DocFXTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DocFXMetadataSettings>))]
 [Command(Type = typeof(DocFXTasks), Command = nameof(DocFXTasks.DocFXMetadata), Arguments = "metadata")]
 public partial class DocFXMetadataSettings : ToolOptions
 {
@@ -368,7 +361,6 @@ public partial class DocFXMetadataSettings : ToolOptions
 /// <summary>Used within <see cref="DocFXTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DocFXPdfSettings>))]
 [Command(Type = typeof(DocFXTasks), Command = nameof(DocFXTasks.DocFXPdf), Arguments = "pdf")]
 public partial class DocFXPdfSettings : ToolOptions
 {
@@ -490,7 +482,6 @@ public partial class DocFXPdfSettings : ToolOptions
 /// <summary>Used within <see cref="DocFXTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DocFXServeSettings>))]
 [Command(Type = typeof(DocFXTasks), Command = nameof(DocFXTasks.DocFXServe), Arguments = "serve")]
 public partial class DocFXServeSettings : ToolOptions
 {
@@ -508,7 +499,6 @@ public partial class DocFXServeSettings : ToolOptions
 /// <summary>Used within <see cref="DocFXTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DocFXTemplateSettings>))]
 [Command(Type = typeof(DocFXTasks), Command = nameof(DocFXTasks.DocFXTemplate), Arguments = "template")]
 public partial class DocFXTemplateSettings : ToolOptions
 {

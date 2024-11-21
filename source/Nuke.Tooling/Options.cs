@@ -5,8 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -46,29 +44,27 @@ public interface IOptions
     void ClearCollection<T>(Expression<Func<IReadOnlyCollection<T>>> provider);
 }
 
-[TypeConverter(typeof(TypeConverter<Options>))]
+[JsonConverter(typeof(TypeConverter))]
 public class Options : IOptions
 {
-    public class TypeConverter<T> : TypeConverter
+    public class TypeConverter : JsonConverter
     {
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            return destinationType == typeof(string);
+            if (value is Options options)
+                JToken.FromObject(options.InternalOptions, serializer).WriteTo(writer);
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            return JsonConvert.SerializeObject(value, JsonSerializerSettings);
+            var options = (Options)objectType.CreateInstance();
+            options.InternalOptions = JObject.Load(reader);
+            return options;
         }
 
-        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        public override bool CanConvert(Type objectType)
         {
-            return sourceType == typeof(string);
-        }
-
-        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
-        {
-            return JsonConvert.DeserializeObject<T>((string)value, JsonSerializerSettings);
+            return objectType.IsSubclassOf(typeof(Options));
         }
     }
 

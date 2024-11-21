@@ -42,7 +42,6 @@ public partial class CorFlagsTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="CorFlagsTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<CorFlagsSettings>))]
 [Command(Type = typeof(CorFlagsTasks), Command = nameof(CorFlagsTasks.CorFlags))]
 public partial class CorFlagsSettings : ToolOptions
 {
