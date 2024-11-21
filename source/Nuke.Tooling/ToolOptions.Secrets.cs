@@ -16,7 +16,7 @@ partial class ToolOptions
     {
         return (ProcessRedactedSecrets ?? [])
             .Concat(InternalOptions.Properties()
-                .Select(x => (Token: x.Value, Property: GetType().GetProperty(x.Name).NotNull()))
+                .Select(x => (Token: x.Value, Property: _allProperties[x.Name]))
                 .Select(x => (x.Token, x.Property, Attribute: x.Property.GetCustomAttribute<ArgumentAttribute>()))
                 .Where(x => x.Attribute?.Secret ?? false)
                 .Select(x =>
