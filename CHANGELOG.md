@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Removed usages of `BinaryFormatter`
+- Changed minimum framework from `net6.0` to `net8.0`
 
 ## [8.1.4] / 2024-11-06
 - Fixed `build.schema.json` generation to use `allOf` for user and base type properties
