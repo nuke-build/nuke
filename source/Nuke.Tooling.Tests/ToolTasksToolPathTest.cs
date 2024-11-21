@@ -59,11 +59,9 @@ public class ToolTasksToolPathTest
 file class SimpleTool : ToolTasks;
 
 [Command(Type = typeof(SimpleTool))]
-[TypeConverter(typeof(TypeConverter<SimpleToolOptions>))]
 file class SimpleToolOptions : ToolOptions;
 
 [Command(Type = typeof(SimpleTool))]
-[TypeConverter(typeof(TypeConverter<FrameworkToolOptions>))]
 file class FrameworkToolOptions : ToolOptions, IToolOptionsWithFramework;
 
 [NuGetTool(Id = "xunit.runner.console", Executable = "xunit.console.dll")]
