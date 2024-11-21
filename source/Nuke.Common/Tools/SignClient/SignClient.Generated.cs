@@ -43,7 +43,6 @@ public partial class SignClientTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="SignClientTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SignClientSignSettings>))]
 [Command(Type = typeof(SignClientTasks), Command = nameof(SignClientTasks.SignClientSign), Arguments = "sign")]
 public partial class SignClientSignSettings : ToolOptions
 {

@@ -52,7 +52,6 @@ public partial class GitLinkTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="GitLinkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<GitLink2Settings>))]
 [Command(Type = typeof(GitLinkTasks), Command = nameof(GitLinkTasks.GitLink2))]
 public partial class GitLink2Settings : ToolOptions
 {
@@ -88,7 +87,6 @@ public partial class GitLink2Settings : ToolOptions
 /// <summary>Used within <see cref="GitLinkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<GitLink3Settings>))]
 [Command(Type = typeof(GitLinkTasks), Command = nameof(GitLinkTasks.GitLink3))]
 public partial class GitLink3Settings : ToolOptions
 {

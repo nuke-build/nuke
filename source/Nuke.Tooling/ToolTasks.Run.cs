@@ -28,7 +28,8 @@ partial class ToolTasks
             GetLogger(options),
             Filter);
 
-        GetExitHandlerInternal().Invoke(process);
+        process.AssertWaitForExit();
+        GetExitHandlerInternal(options).Invoke(options, process);
         PostProcess(options);
 
         return process.Output;
@@ -69,7 +70,8 @@ partial class ToolTasks
             logInvocation,
             logger ?? GetLogger());
 
-        (exitHandler ?? GetExitHandlerInternal()).Invoke(process);
+        process.AssertWaitForExit();
+        GetExitHandlerInternal(exitHandler: exitHandler).Invoke(null, process);
         return process.Output;
     }
 

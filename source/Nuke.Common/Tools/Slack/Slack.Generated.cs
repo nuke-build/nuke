@@ -21,7 +21,6 @@ namespace Nuke.Common.Tools.Slack;
 /// <summary>Used within <see cref="SlackTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SlackMessage>))]
 public partial class SlackMessage : Options
 {
     /// <summary></summary>
@@ -48,7 +47,6 @@ public partial class SlackMessage : Options
 /// <summary>Used within <see cref="SlackTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SlackMessageAttachment>))]
 public partial class SlackMessageAttachment : Options
 {
     /// <summary>The title is displayed as larger, bold text near the top of a message attachment.</summary>
@@ -93,7 +91,6 @@ public partial class SlackMessageAttachment : Options
 /// <summary>Used within <see cref="SlackTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SlackMessageField>))]
 public partial class SlackMessageField : Options
 {
     /// <summary>Shown as a bold heading above the <c>value</c> text. It cannot contain markup and will be escaped for you.</summary>
@@ -108,7 +105,6 @@ public partial class SlackMessageField : Options
 /// <summary>Used within <see cref="SlackTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SlackMessageAction>))]
 public partial class SlackMessageAction : Options
 {
     /// <summary>Name this specific action. The name will be returned to your Action URL along with the message's <c>callback_id</c> when this action is invoked. Use it to identify this particular response path.</summary>
@@ -127,7 +123,6 @@ public partial class SlackMessageAction : Options
 /// <summary>Used within <see cref="SlackTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SlackMessageConfirmation>))]
 public partial class SlackMessageConfirmation : Options
 {
     /// <summary>Title of the confirmation dialog.</summary>

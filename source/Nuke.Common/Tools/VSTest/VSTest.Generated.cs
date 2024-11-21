@@ -43,7 +43,6 @@ public partial class VSTestTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="VSTestTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<VSTestSettings>))]
 [Command(Type = typeof(VSTestTasks), Command = nameof(VSTestTasks.VSTest))]
 public partial class VSTestSettings : ToolOptions
 {

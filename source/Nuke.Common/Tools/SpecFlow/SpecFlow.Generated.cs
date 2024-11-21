@@ -106,7 +106,6 @@ public partial class SpecFlowTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="SpecFlowTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SpecFlowNUnitExecutionReportSettings>))]
 [Command(Type = typeof(SpecFlowTasks), Command = nameof(SpecFlowTasks.SpecFlowNUnitExecutionReport), Arguments = "nunitexecutionreport")]
 public partial class SpecFlowNUnitExecutionReportSettings : ToolOptions
 {
@@ -130,7 +129,6 @@ public partial class SpecFlowNUnitExecutionReportSettings : ToolOptions
 /// <summary>Used within <see cref="SpecFlowTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SpecFlowMSTestExecutionReportSettings>))]
 [Command(Type = typeof(SpecFlowTasks), Command = nameof(SpecFlowTasks.SpecFlowMSTestExecutionReport), Arguments = "mstestexecutionreport")]
 public partial class SpecFlowMSTestExecutionReportSettings : ToolOptions
 {
@@ -148,7 +146,6 @@ public partial class SpecFlowMSTestExecutionReportSettings : ToolOptions
 /// <summary>Used within <see cref="SpecFlowTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SpecFlowStepDefinitionReportSettings>))]
 [Command(Type = typeof(SpecFlowTasks), Command = nameof(SpecFlowTasks.SpecFlowStepDefinitionReport), Arguments = "stepdefinitionreport")]
 public partial class SpecFlowStepDefinitionReportSettings : ToolOptions
 {
@@ -166,7 +163,6 @@ public partial class SpecFlowStepDefinitionReportSettings : ToolOptions
 /// <summary>Used within <see cref="SpecFlowTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SpecFlowRunSettings>))]
 [Command(Type = typeof(SpecFlowTasks), Command = nameof(SpecFlowTasks.SpecFlowRun), Arguments = "run")]
 public partial class SpecFlowRunSettings : ToolOptions
 {
@@ -190,7 +186,6 @@ public partial class SpecFlowRunSettings : ToolOptions
 /// <summary>Used within <see cref="SpecFlowTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SpecFlowBuildServerRunSettings>))]
 [Command(Type = typeof(SpecFlowTasks), Command = nameof(SpecFlowTasks.SpecFlowBuildServerRun), Arguments = "buildserverrun")]
 public partial class SpecFlowBuildServerRunSettings : ToolOptions
 {
@@ -214,7 +209,6 @@ public partial class SpecFlowBuildServerRunSettings : ToolOptions
 /// <summary>Used within <see cref="SpecFlowTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SpecFlowRegisterSettings>))]
 [Command(Type = typeof(SpecFlowTasks), Command = nameof(SpecFlowTasks.SpecFlowRegister), Arguments = "register")]
 public partial class SpecFlowRegisterSettings : ToolOptions
 {
@@ -228,7 +222,6 @@ public partial class SpecFlowRegisterSettings : ToolOptions
 /// <summary>Used within <see cref="SpecFlowTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SpecFlowUnregisterSettings>))]
 [Command(Type = typeof(SpecFlowTasks), Command = nameof(SpecFlowTasks.SpecFlowUnregister), Arguments = "register")]
 public partial class SpecFlowUnregisterSettings : ToolOptions
 {
@@ -238,7 +231,6 @@ public partial class SpecFlowUnregisterSettings : ToolOptions
 /// <summary>Used within <see cref="SpecFlowTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SpecFlowAboutSettings>))]
 [Command(Type = typeof(SpecFlowTasks), Command = nameof(SpecFlowTasks.SpecFlowAbout), Arguments = "register")]
 public partial class SpecFlowAboutSettings : ToolOptions
 {

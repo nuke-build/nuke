@@ -52,7 +52,6 @@ public partial class DotnetPackagingTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotnetPackagingDebSettings>))]
 [Command(Type = typeof(DotnetPackagingTasks), Command = nameof(DotnetPackagingTasks.DotnetPackagingDeb), Arguments = "deb")]
 public partial class DotnetPackagingDebSettings : ToolOptions
 {
@@ -68,7 +67,6 @@ public partial class DotnetPackagingDebSettings : ToolOptions
 /// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotnetPackagingAppImageSettings>))]
 [Command(Type = typeof(DotnetPackagingTasks), Command = nameof(DotnetPackagingTasks.DotnetPackagingAppImage), Arguments = "appimage")]
 public partial class DotnetPackagingAppImageSettings : ToolOptions
 {

@@ -44,7 +44,6 @@ public static class DataClassGenerator
             .WriteLine("[PublicAPI]")
             .WriteObsoleteAttributeWhenObsolete(dataClass)
             .WriteLine("[ExcludeFromCodeCoverage]")
-            .WriteLine($"[TypeConverter(typeof(TypeConverter<{dataClass.Name}>))]")
             .WriteLine(GetCommandAttribute())
             .WriteLine($"public partial class {dataClass.Name} : {baseTypes.JoinCommaSpace()}")
             .WriteBlock(w => w

@@ -52,7 +52,6 @@ public partial class MauiCheckTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="MauiCheckTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<MauiCheckSettings>))]
 [Command(Type = typeof(MauiCheckTasks), Command = nameof(MauiCheckTasks.MauiCheck))]
 public partial class MauiCheckSettings : ToolOptions
 {
@@ -74,7 +73,6 @@ public partial class MauiCheckSettings : ToolOptions
 /// <summary>Used within <see cref="MauiCheckTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<MauiCheckConfigSettings>))]
 [Command(Type = typeof(MauiCheckTasks), Command = nameof(MauiCheckTasks.MauiCheckConfig), Arguments = "config")]
 public partial class MauiCheckConfigSettings : ToolOptions
 {

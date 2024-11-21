@@ -70,7 +70,6 @@ public partial class PaketTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="PaketTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PaketUpdateSettings>))]
 [Command(Type = typeof(PaketTasks), Command = nameof(PaketTasks.PaketUpdate), Arguments = "update")]
 public partial class PaketUpdateSettings : ToolOptions
 {
@@ -114,7 +113,6 @@ public partial class PaketUpdateSettings : ToolOptions
 /// <summary>Used within <see cref="PaketTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PaketRestoreSettings>))]
 [Command(Type = typeof(PaketTasks), Command = nameof(PaketTasks.PaketRestore), Arguments = "restore")]
 public partial class PaketRestoreSettings : ToolOptions
 {
@@ -150,7 +148,6 @@ public partial class PaketRestoreSettings : ToolOptions
 /// <summary>Used within <see cref="PaketTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PaketPushSettings>))]
 [Command(Type = typeof(PaketTasks), Command = nameof(PaketTasks.PaketPush), Arguments = "push")]
 public partial class PaketPushSettings : ToolOptions
 {
@@ -176,7 +173,6 @@ public partial class PaketPushSettings : ToolOptions
 /// <summary>Used within <see cref="PaketTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PaketPackSettings>))]
 [Command(Type = typeof(PaketTasks), Command = nameof(PaketTasks.PaketPack), Arguments = "pack")]
 public partial class PaketPackSettings : ToolOptions
 {

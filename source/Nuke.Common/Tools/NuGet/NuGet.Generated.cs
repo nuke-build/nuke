@@ -124,7 +124,6 @@ public partial class NuGetTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="NuGetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NuGetPushSettings>))]
 [Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetPush), Arguments = "push")]
 public partial class NuGetPushSettings : ToolOptions
 {
@@ -158,7 +157,6 @@ public partial class NuGetPushSettings : ToolOptions
 /// <summary>Used within <see cref="NuGetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NuGetPackSettings>))]
 [Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetPack), Arguments = "pack")]
 public partial class NuGetPackSettings : ToolOptions
 {
@@ -208,7 +206,6 @@ public partial class NuGetPackSettings : ToolOptions
 /// <summary>Used within <see cref="NuGetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NuGetRestoreSettings>))]
 [Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetRestore), Arguments = "restore")]
 public partial class NuGetRestoreSettings : ToolOptions
 {
@@ -256,7 +253,6 @@ public partial class NuGetRestoreSettings : ToolOptions
 /// <summary>Used within <see cref="NuGetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NuGetInstallSettings>))]
 [Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetInstall), Arguments = "install")]
 public partial class NuGetInstallSettings : ToolOptions
 {
@@ -302,7 +298,6 @@ public partial class NuGetInstallSettings : ToolOptions
 /// <summary>Used within <see cref="NuGetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NuGetSourcesAddSettings>))]
 [Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetSourcesAdd), Arguments = "sources add")]
 public partial class NuGetSourcesAddSettings : ToolOptions
 {
@@ -330,7 +325,6 @@ public partial class NuGetSourcesAddSettings : ToolOptions
 /// <summary>Used within <see cref="NuGetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NuGetSourcesUpdateSettings>))]
 [Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetSourcesUpdate), Arguments = "sources update")]
 public partial class NuGetSourcesUpdateSettings : ToolOptions
 {
@@ -358,7 +352,6 @@ public partial class NuGetSourcesUpdateSettings : ToolOptions
 /// <summary>Used within <see cref="NuGetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NuGetSourcesRemoveSettings>))]
 [Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetSourcesRemove), Arguments = "sources remove")]
 public partial class NuGetSourcesRemoveSettings : ToolOptions
 {
@@ -378,7 +371,6 @@ public partial class NuGetSourcesRemoveSettings : ToolOptions
 /// <summary>Used within <see cref="NuGetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NuGetSourcesEnableSettings>))]
 [Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetSourcesEnable), Arguments = "sources enable")]
 public partial class NuGetSourcesEnableSettings : ToolOptions
 {
@@ -398,7 +390,6 @@ public partial class NuGetSourcesEnableSettings : ToolOptions
 /// <summary>Used within <see cref="NuGetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NuGetSourcesDisableSettings>))]
 [Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetSourcesDisable), Arguments = "sources disable")]
 public partial class NuGetSourcesDisableSettings : ToolOptions
 {
@@ -418,7 +409,6 @@ public partial class NuGetSourcesDisableSettings : ToolOptions
 /// <summary>Used within <see cref="NuGetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NuGetSourcesListSettings>))]
 [Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetSourcesList), Arguments = "sources list")]
 public partial class NuGetSourcesListSettings : ToolOptions
 {

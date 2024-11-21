@@ -42,7 +42,6 @@ public partial class CodecovTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="CodecovTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<CodecovSettings>))]
 [Command(Type = typeof(CodecovTasks), Command = nameof(CodecovTasks.Codecov))]
 public partial class CodecovSettings : ToolOptions
 {

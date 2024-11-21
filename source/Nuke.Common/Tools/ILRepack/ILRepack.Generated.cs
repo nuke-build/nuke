@@ -43,7 +43,6 @@ public partial class ILRepackTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="ILRepackTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ILRepackSettings>))]
 [Command(Type = typeof(ILRepackTasks), Command = nameof(ILRepackTasks.ILRepack))]
 public partial class ILRepackSettings : ToolOptions
 {

@@ -51,7 +51,6 @@ public partial class StaticWebAppsTasks : ToolTasks, IRequireNpmPackage
 /// <summary>Used within <see cref="StaticWebAppsTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<StaticWebAppsStartSettings>))]
 [Command(Type = typeof(StaticWebAppsTasks), Command = nameof(StaticWebAppsTasks.StaticWebAppsStart), Arguments = "start")]
 public partial class StaticWebAppsStartSettings : ToolOptions
 {
@@ -85,7 +84,6 @@ public partial class StaticWebAppsStartSettings : ToolOptions
 /// <summary>Used within <see cref="StaticWebAppsTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<StaticWebAppsDeploySettings>))]
 [Command(Type = typeof(StaticWebAppsTasks), Command = nameof(StaticWebAppsTasks.StaticWebAppsDeploy), Arguments = "deploy")]
 public partial class StaticWebAppsDeploySettings : ToolOptions
 {

@@ -133,7 +133,6 @@ public partial class EntityFrameworkTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkDatabaseDropSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkDatabaseDrop), Arguments = "database drop")]
 public partial class EntityFrameworkDatabaseDropSettings : ToolOptions
 {
@@ -169,7 +168,6 @@ public partial class EntityFrameworkDatabaseDropSettings : ToolOptions
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkDatabaseUpdateSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkDatabaseUpdate), Arguments = "database update")]
 public partial class EntityFrameworkDatabaseUpdateSettings : ToolOptions
 {
@@ -205,7 +203,6 @@ public partial class EntityFrameworkDatabaseUpdateSettings : ToolOptions
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkDbContextInfoSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkDbContextInfo), Arguments = "dbcontext info")]
 public partial class EntityFrameworkDbContextInfoSettings : ToolOptions
 {
@@ -237,7 +234,6 @@ public partial class EntityFrameworkDbContextInfoSettings : ToolOptions
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkDbContextListSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkDbContextList), Arguments = "dbcontext list")]
 public partial class EntityFrameworkDbContextListSettings : ToolOptions
 {
@@ -269,7 +265,6 @@ public partial class EntityFrameworkDbContextListSettings : ToolOptions
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkDbContextScaffoldSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkDbContextScaffold), Arguments = "dbcontext scaffold")]
 public partial class EntityFrameworkDbContextScaffoldSettings : ToolOptions
 {
@@ -327,7 +322,6 @@ public partial class EntityFrameworkDbContextScaffoldSettings : ToolOptions
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkDbContextScriptSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkDbContextScript), Arguments = "dbcontext script")]
 public partial class EntityFrameworkDbContextScriptSettings : ToolOptions
 {
@@ -361,7 +355,6 @@ public partial class EntityFrameworkDbContextScriptSettings : ToolOptions
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkMigrationsAddSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkMigrationsAdd), Arguments = "migrations add")]
 public partial class EntityFrameworkMigrationsAddSettings : ToolOptions
 {
@@ -399,7 +392,6 @@ public partial class EntityFrameworkMigrationsAddSettings : ToolOptions
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkMigrationsListSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkMigrationsList), Arguments = "migrations list")]
 public partial class EntityFrameworkMigrationsListSettings : ToolOptions
 {
@@ -435,7 +427,6 @@ public partial class EntityFrameworkMigrationsListSettings : ToolOptions
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkMigrationsRemoveSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkMigrationsRemove), Arguments = "migrations remove")]
 public partial class EntityFrameworkMigrationsRemoveSettings : ToolOptions
 {
@@ -469,7 +460,6 @@ public partial class EntityFrameworkMigrationsRemoveSettings : ToolOptions
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkMigrationsBundleSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkMigrationsBundle), Arguments = "migrations bundle")]
 public partial class EntityFrameworkMigrationsBundleSettings : ToolOptions
 {
@@ -509,7 +499,6 @@ public partial class EntityFrameworkMigrationsBundleSettings : ToolOptions
 /// <summary>Used within <see cref="EntityFrameworkTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<EntityFrameworkMigrationsScriptSettings>))]
 [Command(Type = typeof(EntityFrameworkTasks), Command = nameof(EntityFrameworkTasks.EntityFrameworkMigrationsScript), Arguments = "migrations script")]
 public partial class EntityFrameworkMigrationsScriptSettings : ToolOptions
 {

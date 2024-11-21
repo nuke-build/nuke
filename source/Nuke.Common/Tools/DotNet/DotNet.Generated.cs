@@ -222,7 +222,6 @@ public partial class DotNetTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetTestSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetTest), Arguments = "test")]
 public partial class DotNetTestSettings : ToolOptions
 {
@@ -306,7 +305,6 @@ public partial class DotNetTestSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetRunSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetRun), Arguments = "run")]
 public partial class DotNetRunSettings : ToolOptions
 {
@@ -372,7 +370,6 @@ public partial class DotNetRunSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetRestoreSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetRestore), Arguments = "restore")]
 public partial class DotNetRestoreSettings : ToolOptions
 {
@@ -414,7 +411,6 @@ public partial class DotNetRestoreSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetPackSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetPack), Arguments = "pack")]
 public partial class DotNetPackSettings : ToolOptions
 {
@@ -472,7 +468,6 @@ public partial class DotNetPackSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetBuildSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetBuild), Arguments = "build")]
 public partial class DotNetBuildSettings : ToolOptions
 {
@@ -534,7 +529,6 @@ public partial class DotNetBuildSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetMSBuildSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetMSBuild), Arguments = "msbuild")]
 public partial class DotNetMSBuildSettings : ToolOptions
 {
@@ -572,7 +566,6 @@ public partial class DotNetMSBuildSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetCleanSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetClean), Arguments = "clean")]
 public partial class DotNetCleanSettings : ToolOptions
 {
@@ -598,7 +591,6 @@ public partial class DotNetCleanSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetFormatSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetFormat), Arguments = "format")]
 public partial class DotNetFormatSettings : ToolOptions
 {
@@ -630,7 +622,6 @@ public partial class DotNetFormatSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetPublishSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetPublish), Arguments = "publish")]
 public partial class DotNetPublishSettings : ToolOptions
 {
@@ -694,7 +685,6 @@ public partial class DotNetPublishSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetNuGetPushSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetNuGetPush), Arguments = "nuget push")]
 public partial class DotNetNuGetPushSettings : ToolOptions
 {
@@ -726,7 +716,6 @@ public partial class DotNetNuGetPushSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetNuGetAddSourceSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetNuGetAddSource), Arguments = "nuget add source")]
 public partial class DotNetNuGetAddSourceSettings : ToolOptions
 {
@@ -750,7 +739,6 @@ public partial class DotNetNuGetAddSourceSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetNuGetUpdateSourceSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetNuGetUpdateSource), Arguments = "nuget update source")]
 public partial class DotNetNuGetUpdateSourceSettings : ToolOptions
 {
@@ -774,7 +762,6 @@ public partial class DotNetNuGetUpdateSourceSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetToolInstallSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetToolInstall), Arguments = "tool install")]
 public partial class DotNetToolInstallSettings : ToolOptions
 {
@@ -800,7 +787,6 @@ public partial class DotNetToolInstallSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetToolRestoreSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetToolRestore), Arguments = "tool restore")]
 public partial class DotNetToolRestoreSettings : ToolOptions
 {
@@ -824,7 +810,6 @@ public partial class DotNetToolRestoreSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetToolUninstallSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetToolUninstall), Arguments = "tool uninstall")]
 public partial class DotNetToolUninstallSettings : ToolOptions
 {
@@ -842,7 +827,6 @@ public partial class DotNetToolUninstallSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetToolUpdateSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetToolUpdate), Arguments = "tool update")]
 public partial class DotNetToolUpdateSettings : ToolOptions
 {
@@ -868,7 +852,6 @@ public partial class DotNetToolUpdateSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetWorkloadInstallSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetWorkloadInstall), Arguments = "workload install")]
 public partial class DotNetWorkloadInstallSettings : ToolOptions
 {
@@ -902,7 +885,6 @@ public partial class DotNetWorkloadInstallSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetWorkloadUninstallSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetWorkloadUninstall), Arguments = "workload uninstall")]
 public partial class DotNetWorkloadUninstallSettings : ToolOptions
 {
@@ -914,7 +896,6 @@ public partial class DotNetWorkloadUninstallSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetWorkloadRestoreSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetWorkloadRestore), Arguments = "workload restore")]
 public partial class DotNetWorkloadRestoreSettings : ToolOptions
 {
@@ -948,7 +929,6 @@ public partial class DotNetWorkloadRestoreSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetWorkloadUpdateSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetWorkloadUpdate), Arguments = "workload update")]
 public partial class DotNetWorkloadUpdateSettings : ToolOptions
 {
@@ -982,7 +962,6 @@ public partial class DotNetWorkloadUpdateSettings : ToolOptions
 /// <summary>Used within <see cref="DotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotNetWorkloadRepairSettings>))]
 [Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetWorkloadRepair), Arguments = "workload repair")]
 public partial class DotNetWorkloadRepairSettings : ToolOptions
 {

@@ -60,7 +60,6 @@ public partial class NpmTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="NpmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NpmCiSettings>))]
 [Command(Type = typeof(NpmTasks), Command = nameof(NpmTasks.NpmCi), Arguments = "ci")]
 public partial class NpmCiSettings : ToolOptions
 {
@@ -70,7 +69,6 @@ public partial class NpmCiSettings : ToolOptions
 /// <summary>Used within <see cref="NpmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NpmInstallSettings>))]
 [Command(Type = typeof(NpmTasks), Command = nameof(NpmTasks.NpmInstall), Arguments = "install")]
 public partial class NpmInstallSettings : ToolOptions
 {
@@ -106,7 +104,6 @@ public partial class NpmInstallSettings : ToolOptions
 /// <summary>Used within <see cref="NpmTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NpmRunSettings>))]
 [Command(Type = typeof(NpmTasks), Command = nameof(NpmTasks.NpmRun), Arguments = "run")]
 public partial class NpmRunSettings : ToolOptions
 {

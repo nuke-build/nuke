@@ -42,7 +42,6 @@ public partial class MakeNSISTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="MakeNSISTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<MakeNSISSettings>))]
 [Command(Type = typeof(MakeNSISTasks), Command = nameof(MakeNSISTasks.MakeNSIS))]
 public partial class MakeNSISSettings : ToolOptions
 {

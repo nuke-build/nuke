@@ -21,7 +21,6 @@ namespace Nuke.Common.Tools.Mastodon;
 /// <summary>Used within <see cref="MastodonTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<MastodonStatus>))]
 public partial class MastodonStatus : Options
 {
     /// <summary>Text of the status.</summary>

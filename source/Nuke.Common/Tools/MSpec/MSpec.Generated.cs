@@ -42,7 +42,6 @@ public partial class MSpecTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="MSpecTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<MSpecSettings>))]
 [Command(Type = typeof(MSpecTasks), Command = nameof(MSpecTasks.MSpec))]
 public partial class MSpecSettings : ToolOptions
 {

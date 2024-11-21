@@ -44,7 +44,6 @@ public partial class CoverletTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="CoverletTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<CoverletSettings>))]
 [Command(Type = typeof(CoverletTasks), Command = nameof(CoverletTasks.Coverlet))]
 public partial class CoverletSettings : ToolOptions
 {

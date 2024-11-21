@@ -52,7 +52,6 @@ public partial class OctoVersionTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="OctoVersionTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<OctoVersionGetVersionSettings>))]
 [Command(Type = typeof(OctoVersionTasks), Command = nameof(OctoVersionTasks.OctoVersionGetVersion), Arguments = "octoversion")]
 public partial class OctoVersionGetVersionSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -86,7 +85,6 @@ public partial class OctoVersionGetVersionSettings : ToolOptions, IToolOptionsWi
 /// <summary>Used within <see cref="OctoVersionTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<OctoVersionExecuteSettings>))]
 [Command(Type = typeof(OctoVersionTasks), Command = nameof(OctoVersionTasks.OctoVersionExecute), Arguments = "octoversion")]
 public partial class OctoVersionExecuteSettings : ToolOptions, IToolOptionsWithFramework
 {

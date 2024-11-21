@@ -21,7 +21,6 @@ namespace Nuke.Common.Tools.Discord;
 /// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DiscordMessage>))]
 public partial class DiscordMessage : Options
 {
     /// <summary>Id of the channel.</summary>
@@ -40,7 +39,6 @@ public partial class DiscordMessage : Options
 /// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DiscordEmbed>))]
 public partial class DiscordEmbed : Options
 {
     /// <summary>Title of embed.</summary>
@@ -71,7 +69,6 @@ public partial class DiscordEmbed : Options
 /// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DiscordEmbedFooter>))]
 public partial class DiscordEmbedFooter : Options
 {
     /// <summary>Footer text.</summary>
@@ -84,7 +81,6 @@ public partial class DiscordEmbedFooter : Options
 /// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DiscordEmbedImage>))]
 public partial class DiscordEmbedImage : Options
 {
     /// <summary>Source url of image (only supports http(s) and attachments).</summary>
@@ -99,7 +95,6 @@ public partial class DiscordEmbedImage : Options
 /// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DiscordEmbedThumbnail>))]
 public partial class DiscordEmbedThumbnail : Options
 {
     /// <summary>Source url of thumbnail (only supports http(s) and attachments).</summary>
@@ -114,7 +109,6 @@ public partial class DiscordEmbedThumbnail : Options
 /// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DiscordEmbedAuthor>))]
 public partial class DiscordEmbedAuthor : Options
 {
     /// <summary>Name of author.</summary>
@@ -129,7 +123,6 @@ public partial class DiscordEmbedAuthor : Options
 /// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DiscordEmbedField>))]
 public partial class DiscordEmbedField : Options
 {
     /// <summary>Name of the field.</summary>

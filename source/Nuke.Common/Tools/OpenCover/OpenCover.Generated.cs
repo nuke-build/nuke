@@ -43,7 +43,6 @@ public partial class OpenCoverTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="OpenCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<OpenCoverSettings>))]
 [Command(Type = typeof(OpenCoverTasks), Command = nameof(OpenCoverTasks.OpenCover))]
 public partial class OpenCoverSettings : ToolOptions
 {

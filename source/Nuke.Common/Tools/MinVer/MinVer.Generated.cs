@@ -43,7 +43,6 @@ public partial class MinVerTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="MinVerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<MinVerSettings>))]
 [Command(Type = typeof(MinVerTasks), Command = nameof(MinVerTasks.MinVer))]
 public partial class MinVerSettings : ToolOptions, IToolOptionsWithFramework
 {

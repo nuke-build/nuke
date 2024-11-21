@@ -18,9 +18,9 @@ partial class XunitTasks
             framework: (options as IToolOptionsWithFramework)?.Framework);
     }
 
-    protected override Func<IProcess, object> GetExitHandler(ToolOptions options = null)
+    protected override Func<ToolOptions, IProcess, object> GetExitHandler(ToolOptions options)
     {
-        return x => x.ExitCode switch
+        return (_, p) => p.ExitCode switch
         {
             0 => default,
             1 => throw new Exception("One or more of the tests failed"),

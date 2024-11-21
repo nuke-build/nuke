@@ -97,7 +97,6 @@ public partial class NerdbankGitVersioningTasks : ToolTasks, IRequireNuGetPackag
 /// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NerdbankGitVersioningInstallSettings>))]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningInstall), Arguments = "install")]
 public partial class NerdbankGitVersioningInstallSettings : ToolOptions
 {
@@ -113,7 +112,6 @@ public partial class NerdbankGitVersioningInstallSettings : ToolOptions
 /// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NerdbankGitVersioningGetVersionSettings>))]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningGetVersion), Arguments = "get-version")]
 public partial class NerdbankGitVersioningGetVersionSettings : ToolOptions
 {
@@ -133,7 +131,6 @@ public partial class NerdbankGitVersioningGetVersionSettings : ToolOptions
 /// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NerdbankGitVersioningSetVersionSettings>))]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningSetVersion), Arguments = "set-version")]
 public partial class NerdbankGitVersioningSetVersionSettings : ToolOptions
 {
@@ -147,7 +144,6 @@ public partial class NerdbankGitVersioningSetVersionSettings : ToolOptions
 /// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NerdbankGitVersioningTagSettings>))]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningTag), Arguments = "tag")]
 public partial class NerdbankGitVersioningTagSettings : ToolOptions
 {
@@ -161,7 +157,6 @@ public partial class NerdbankGitVersioningTagSettings : ToolOptions
 /// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NerdbankGitVersioningGetCommitsSettings>))]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningGetCommits), Arguments = "get-commits")]
 public partial class NerdbankGitVersioningGetCommitsSettings : ToolOptions
 {
@@ -177,7 +172,6 @@ public partial class NerdbankGitVersioningGetCommitsSettings : ToolOptions
 /// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NerdbankGitVersioningCloudSettings>))]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningCloud), Arguments = "cloud")]
 public partial class NerdbankGitVersioningCloudSettings : ToolOptions
 {
@@ -201,7 +195,6 @@ public partial class NerdbankGitVersioningCloudSettings : ToolOptions
 /// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<NerdbankGitVersioningPrepareReleaseSettings>))]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningPrepareRelease), Arguments = "prepare-release")]
 public partial class NerdbankGitVersioningPrepareReleaseSettings : ToolOptions
 {

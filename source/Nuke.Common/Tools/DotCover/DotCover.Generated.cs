@@ -96,7 +96,6 @@ public partial class DotCoverTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotCoverAnalyseSettings>))]
 [Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverAnalyse), Arguments = "analyse")]
 public partial class DotCoverAnalyseSettings : ToolOptions
 {
@@ -144,7 +143,6 @@ public partial class DotCoverAnalyseSettings : ToolOptions
 /// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotCoverCoverSettings>))]
 [Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverCover), Arguments = "cover")]
 public partial class DotCoverCoverSettings : ToolOptions
 {
@@ -190,7 +188,6 @@ public partial class DotCoverCoverSettings : ToolOptions
 /// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotCoverCoverDotNetSettings>))]
 [Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverCoverDotNet), Arguments = "dotnet")]
 public partial class DotCoverCoverDotNetSettings : ToolOptions
 {
@@ -234,7 +231,6 @@ public partial class DotCoverCoverDotNetSettings : ToolOptions
 /// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotCoverDeleteSettings>))]
 [Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverDelete), Arguments = "delete")]
 public partial class DotCoverDeleteSettings : ToolOptions
 {
@@ -250,7 +246,6 @@ public partial class DotCoverDeleteSettings : ToolOptions
 /// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotCoverMergeSettings>))]
 [Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverMerge), Arguments = "merge")]
 public partial class DotCoverMergeSettings : ToolOptions
 {
@@ -270,7 +265,6 @@ public partial class DotCoverMergeSettings : ToolOptions
 /// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotCoverReportSettings>))]
 [Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverReport), Arguments = "report")]
 public partial class DotCoverReportSettings : ToolOptions
 {
@@ -292,7 +286,6 @@ public partial class DotCoverReportSettings : ToolOptions
 /// <summary>Used within <see cref="DotCoverTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DotCoverZipSettings>))]
 [Command(Type = typeof(DotCoverTasks), Command = nameof(DotCoverTasks.DotCoverZip), Arguments = "zip")]
 public partial class DotCoverZipSettings : ToolOptions
 {

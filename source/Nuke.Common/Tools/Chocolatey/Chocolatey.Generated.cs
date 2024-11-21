@@ -96,7 +96,6 @@ public partial class ChocolateyTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="ChocolateyTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ChocolateySearchSettings>))]
 [Command(Type = typeof(ChocolateyTasks), Command = nameof(ChocolateyTasks.ChocolateySearch), Arguments = "search")]
 public partial class ChocolateySearchSettings : ToolOptions
 {
@@ -196,7 +195,6 @@ public partial class ChocolateySearchSettings : ToolOptions
 /// <summary>Used within <see cref="ChocolateyTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ChocolateyListSettings>))]
 [Command(Type = typeof(ChocolateyTasks), Command = nameof(ChocolateyTasks.ChocolateyList), Arguments = "list")]
 public partial class ChocolateyListSettings : ToolOptions
 {
@@ -296,7 +294,6 @@ public partial class ChocolateyListSettings : ToolOptions
 /// <summary>Used within <see cref="ChocolateyTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ChocolateyFindSettings>))]
 [Command(Type = typeof(ChocolateyTasks), Command = nameof(ChocolateyTasks.ChocolateyFind), Arguments = "find")]
 public partial class ChocolateyFindSettings : ToolOptions
 {
@@ -396,7 +393,6 @@ public partial class ChocolateyFindSettings : ToolOptions
 /// <summary>Used within <see cref="ChocolateyTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ChocolateyOutdatedSettings>))]
 [Command(Type = typeof(ChocolateyTasks), Command = nameof(ChocolateyTasks.ChocolateyOutdated), Arguments = "outdated")]
 public partial class ChocolateyOutdatedSettings : ToolOptions
 {
@@ -464,7 +460,6 @@ public partial class ChocolateyOutdatedSettings : ToolOptions
 /// <summary>Used within <see cref="ChocolateyTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ChocolateyPackSettings>))]
 [Command(Type = typeof(ChocolateyTasks), Command = nameof(ChocolateyTasks.ChocolateyPack), Arguments = "pack")]
 public partial class ChocolateyPackSettings : ToolOptions
 {
@@ -522,7 +517,6 @@ public partial class ChocolateyPackSettings : ToolOptions
 /// <summary>Used within <see cref="ChocolateyTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ChocolateyPushSettings>))]
 [Command(Type = typeof(ChocolateyTasks), Command = nameof(ChocolateyTasks.ChocolateyPush), Arguments = "push")]
 public partial class ChocolateyPushSettings : ToolOptions
 {
@@ -580,7 +574,6 @@ public partial class ChocolateyPushSettings : ToolOptions
 /// <summary>Used within <see cref="ChocolateyTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ChocolateyNewSettings>))]
 [Command(Type = typeof(ChocolateyTasks), Command = nameof(ChocolateyTasks.ChocolateyNew), Arguments = "new")]
 public partial class ChocolateyNewSettings : ToolOptions
 {
