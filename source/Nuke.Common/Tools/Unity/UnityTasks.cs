@@ -87,21 +87,21 @@ partial class UnityTasks
         }
     }
 
-    protected override Func<IProcess, object> GetExitHandler(ToolOptions options = null)
+    protected override Func<ToolOptions, IProcess, object> GetExitHandler(ToolOptions options)
     {
         var unityOptions = options as UnityOptionsBase;
-        return process =>
+        return (_, p) =>
         {
             AssertWatcherStopped();
-            if (process.ExitCode == 0)
+            if (p.ExitCode == 0)
                 return null;
 
             var message = new StringBuilder()
-                .AppendLine($"Process '{Path.GetFileName(process.FileName)}' exited with code {process.ExitCode}. Verify the invocation.")
-                .AppendLine($"> {process.FileName.DoubleQuoteIfNeeded()} {process.Arguments}")
+                .AppendLine($"Process '{Path.GetFileName(p.FileName)}' exited with code {p.ExitCode}. Verify the invocation.")
+                .AppendLine($"> {p.FileName.DoubleQuoteIfNeeded()} {p.Arguments}")
                 .ToString();
 
-            if (unityOptions?.StableExitCodes.Any(x => x == process.ExitCode) ?? false)
+            if (unityOptions?.StableExitCodes.Any(x => x == p.ExitCode) ?? false)
                 Log.Warning(message);
             else
                 Assert.Fail(message);
