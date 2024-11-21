@@ -42,7 +42,6 @@ public partial class XunitTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="XunitTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<Xunit2Settings>))]
 [Command(Type = typeof(XunitTasks), Command = nameof(XunitTasks.Xunit2))]
 public partial class Xunit2Settings : ToolOptions, IToolOptionsWithFramework
 {

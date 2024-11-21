@@ -43,7 +43,6 @@ public partial class CoverallsNetTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="CoverallsNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<CoverallsNetSettings>))]
 [Command(Type = typeof(CoverallsNetTasks), Command = nameof(CoverallsNetTasks.CoverallsNet))]
 public partial class CoverallsNetSettings : ToolOptions
 {

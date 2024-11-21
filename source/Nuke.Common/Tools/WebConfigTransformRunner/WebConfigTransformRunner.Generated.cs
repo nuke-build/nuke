@@ -43,7 +43,6 @@ public partial class WebConfigTransformRunnerTasks : ToolTasks, IRequireNuGetPac
 /// <summary>Used within <see cref="WebConfigTransformRunnerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<WebConfigTransformRunnerSettings>))]
 [Command(Type = typeof(WebConfigTransformRunnerTasks), Command = nameof(WebConfigTransformRunnerTasks.WebConfigTransformRunner))]
 public partial class WebConfigTransformRunnerSettings : ToolOptions
 {

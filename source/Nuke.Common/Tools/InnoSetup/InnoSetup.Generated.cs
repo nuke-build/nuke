@@ -42,7 +42,6 @@ public partial class InnoSetupTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="InnoSetupTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<InnoSetupSettings>))]
 [Command(Type = typeof(InnoSetupTasks), Command = nameof(InnoSetupTasks.InnoSetup))]
 public partial class InnoSetupSettings : ToolOptions
 {

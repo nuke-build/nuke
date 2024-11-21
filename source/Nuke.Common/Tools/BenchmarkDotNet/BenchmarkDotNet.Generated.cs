@@ -43,7 +43,6 @@ public partial class BenchmarkDotNetTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="BenchmarkDotNetTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<BenchmarkDotNetSettings>))]
 [Command(Type = typeof(BenchmarkDotNetTasks), Command = nameof(BenchmarkDotNetTasks.BenchmarkDotNet))]
 public partial class BenchmarkDotNetSettings : ToolOptions
 {

@@ -39,7 +39,6 @@ public partial class PowerShellTasks : ToolTasks
 /// <summary>Used within <see cref="PowerShellTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<PowerShellSettings>))]
 [Command(Type = typeof(PowerShellTasks), Command = nameof(PowerShellTasks.PowerShell))]
 public partial class PowerShellSettings : ToolOptions
 {

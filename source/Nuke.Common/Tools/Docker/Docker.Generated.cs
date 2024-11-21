@@ -1725,7 +1725,6 @@ public partial class DockerTasks : ToolTasks, IRequirePathTool
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerConfigRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerConfigRm), Arguments = "config rm")]
 public partial class DockerConfigRmSettings : DockerOptionsBase
 {
@@ -1737,7 +1736,6 @@ public partial class DockerConfigRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerLoadSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerLoad), Arguments = "load")]
 public partial class DockerLoadSettings : DockerOptionsBase
 {
@@ -1751,7 +1749,6 @@ public partial class DockerLoadSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerPruneSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerPrune), Arguments = "container prune")]
 public partial class DockerContainerPruneSettings : DockerOptionsBase
 {
@@ -1765,7 +1762,6 @@ public partial class DockerContainerPruneSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTrustSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTrust), Arguments = "trust")]
 public partial class DockerTrustSettings : DockerOptionsBase
 {
@@ -1775,7 +1771,6 @@ public partial class DockerTrustSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerStackSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerStack), Arguments = "stack")]
 public partial class DockerStackSettings : DockerOptionsBase
 {
@@ -1789,7 +1784,6 @@ public partial class DockerStackSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTopSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTop), Arguments = "top [ps")]
 public partial class DockerTopSettings : DockerOptionsBase
 {
@@ -1803,7 +1797,6 @@ public partial class DockerTopSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPullSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPull), Arguments = "pull")]
 public partial class DockerPullSettings : DockerOptionsBase
 {
@@ -1823,7 +1816,6 @@ public partial class DockerPullSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTrustSignSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTrustSign), Arguments = "trust sign IMAGE:TAG")]
 public partial class DockerTrustSignSettings : DockerOptionsBase
 {
@@ -1833,7 +1825,6 @@ public partial class DockerTrustSignSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerCheckpointSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerCheckpoint), Arguments = "checkpoint")]
 public partial class DockerCheckpointSettings : DockerOptionsBase
 {
@@ -1843,7 +1834,6 @@ public partial class DockerCheckpointSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTrustSignerSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTrustSigner), Arguments = "trust signer")]
 public partial class DockerTrustSignerSettings : DockerOptionsBase
 {
@@ -1853,7 +1843,6 @@ public partial class DockerTrustSignerSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerConfigInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerConfigInspect), Arguments = "config inspect")]
 public partial class DockerConfigInspectSettings : DockerOptionsBase
 {
@@ -1869,7 +1858,6 @@ public partial class DockerConfigInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerServiceSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerService), Arguments = "service")]
 public partial class DockerServiceSettings : DockerOptionsBase
 {
@@ -1879,7 +1867,6 @@ public partial class DockerServiceSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTrustKeyGenerateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTrustKeyGenerate), Arguments = "trust key generate")]
 public partial class DockerTrustKeyGenerateSettings : DockerOptionsBase
 {
@@ -1891,7 +1878,6 @@ public partial class DockerTrustKeyGenerateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSystemSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSystem), Arguments = "system")]
 public partial class DockerSystemSettings : DockerOptionsBase
 {
@@ -1901,7 +1887,6 @@ public partial class DockerSystemSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerConfigLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerConfigLs), Arguments = "config ls")]
 public partial class DockerConfigLsSettings : DockerOptionsBase
 {
@@ -1917,7 +1902,6 @@ public partial class DockerConfigLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContextUpdateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContextUpdate), Arguments = "context update")]
 public partial class DockerContextUpdateSettings : DockerOptionsBase
 {
@@ -1937,7 +1921,6 @@ public partial class DockerContextUpdateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerStackServicesSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerStackServices), Arguments = "stack services")]
 public partial class DockerStackServicesSettings : DockerStackSettings
 {
@@ -1957,7 +1940,6 @@ public partial class DockerStackServicesSettings : DockerStackSettings
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerPortSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerPort), Arguments = "container port")]
 public partial class DockerContainerPortSettings : DockerOptionsBase
 {
@@ -1971,7 +1953,6 @@ public partial class DockerContainerPortSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerRenameSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerRename), Arguments = "rename")]
 public partial class DockerRenameSettings : DockerOptionsBase
 {
@@ -1985,7 +1966,6 @@ public partial class DockerRenameSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTagSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTag), Arguments = "tag")]
 public partial class DockerTagSettings : DockerOptionsBase
 {
@@ -1999,7 +1979,6 @@ public partial class DockerTagSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSecretInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSecretInspect), Arguments = "secret inspect")]
 public partial class DockerSecretInspectSettings : DockerOptionsBase
 {
@@ -2015,7 +1994,6 @@ public partial class DockerSecretInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSecretSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSecret), Arguments = "secret")]
 public partial class DockerSecretSettings : DockerOptionsBase
 {
@@ -2025,7 +2003,6 @@ public partial class DockerSecretSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerExportSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerExport), Arguments = "container export")]
 public partial class DockerContainerExportSettings : DockerOptionsBase
 {
@@ -2039,7 +2016,6 @@ public partial class DockerContainerExportSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerHistorySettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerHistory), Arguments = "history")]
 public partial class DockerHistorySettings : DockerOptionsBase
 {
@@ -2059,7 +2035,6 @@ public partial class DockerHistorySettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerServiceCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerServiceCreate), Arguments = "service create")]
 public partial class DockerServiceCreateSettings : DockerOptionsBase
 {
@@ -2207,7 +2182,6 @@ public partial class DockerServiceCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerServicePsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerServicePs), Arguments = "service ps")]
 public partial class DockerServicePsSettings : DockerOptionsBase
 {
@@ -2229,7 +2203,6 @@ public partial class DockerServicePsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerStopSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerStop), Arguments = "stop")]
 public partial class DockerStopSettings : DockerOptionsBase
 {
@@ -2243,7 +2216,6 @@ public partial class DockerStopSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNodeSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNode), Arguments = "node")]
 public partial class DockerNodeSettings : DockerOptionsBase
 {
@@ -2253,7 +2225,6 @@ public partial class DockerNodeSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerUpdateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerUpdate), Arguments = "update")]
 public partial class DockerUpdateSettings : DockerOptionsBase
 {
@@ -2295,7 +2266,6 @@ public partial class DockerUpdateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPluginCreate), Arguments = "plugin create")]
 public partial class DockerPluginCreateSettings : DockerOptionsBase
 {
@@ -2311,7 +2281,6 @@ public partial class DockerPluginCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSystemInfoSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSystemInfo), Arguments = "system info")]
 public partial class DockerSystemInfoSettings : DockerOptionsBase
 {
@@ -2323,7 +2292,6 @@ public partial class DockerSystemInfoSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerVolumePruneSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerVolumePrune), Arguments = "volume prune")]
 public partial class DockerVolumePruneSettings : DockerOptionsBase
 {
@@ -2337,7 +2305,6 @@ public partial class DockerVolumePruneSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginUpgradeSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPluginUpgrade), Arguments = "plugin upgrade")]
 public partial class DockerPluginUpgradeSettings : DockerOptionsBase
 {
@@ -2357,7 +2324,6 @@ public partial class DockerPluginUpgradeSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerBuilderPruneSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerBuilderPrune), Arguments = "builder prune")]
 public partial class DockerBuilderPruneSettings : DockerOptionsBase
 {
@@ -2367,7 +2333,6 @@ public partial class DockerBuilderPruneSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSwarmJoinTokenSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSwarmJoinToken), Arguments = "swarm join-token")]
 public partial class DockerSwarmJoinTokenSettings : DockerOptionsBase
 {
@@ -2383,7 +2348,6 @@ public partial class DockerSwarmJoinTokenSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNodeUpdateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNodeUpdate), Arguments = "node update")]
 public partial class DockerNodeUpdateSettings : DockerOptionsBase
 {
@@ -2403,7 +2367,6 @@ public partial class DockerNodeUpdateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTrustSignerAddSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTrustSignerAdd), Arguments = "trust signer add")]
 public partial class DockerTrustSignerAddSettings : DockerOptionsBase
 {
@@ -2419,7 +2382,6 @@ public partial class DockerTrustSignerAddSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSwarmUpdateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSwarmUpdate), Arguments = "swarm update")]
 public partial class DockerSwarmUpdateSettings : DockerOptionsBase
 {
@@ -2443,7 +2405,6 @@ public partial class DockerSwarmUpdateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerServiceLogsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerServiceLogs), Arguments = "service logs")]
 public partial class DockerServiceLogsSettings : DockerOptionsBase
 {
@@ -2473,7 +2434,6 @@ public partial class DockerServiceLogsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerServiceLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerServiceLs), Arguments = "service ls")]
 public partial class DockerServiceLsSettings : DockerOptionsBase
 {
@@ -2489,7 +2449,6 @@ public partial class DockerServiceLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSwarmUnlockSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSwarmUnlock), Arguments = "swarm unlock")]
 public partial class DockerSwarmUnlockSettings : DockerOptionsBase
 {
@@ -2499,7 +2458,6 @@ public partial class DockerSwarmUnlockSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNetworkLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNetworkLs), Arguments = "network ls")]
 public partial class DockerNetworkLsSettings : DockerOptionsBase
 {
@@ -2517,7 +2475,6 @@ public partial class DockerNetworkLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPluginLs), Arguments = "plugin ls")]
 public partial class DockerPluginLsSettings : DockerOptionsBase
 {
@@ -2535,7 +2492,6 @@ public partial class DockerPluginLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPluginRm), Arguments = "plugin rm")]
 public partial class DockerPluginRmSettings : DockerOptionsBase
 {
@@ -2549,7 +2505,6 @@ public partial class DockerPluginRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImageBuildSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImageBuild), Arguments = "image build")]
 public partial class DockerImageBuildSettings : DockerOptionsBase
 {
@@ -2631,7 +2586,6 @@ public partial class DockerImageBuildSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTrustRevokeSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTrustRevoke), Arguments = "trust revoke")]
 public partial class DockerTrustRevokeSettings : DockerOptionsBase
 {
@@ -2645,7 +2599,6 @@ public partial class DockerTrustRevokeSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerRmiSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerRmi), Arguments = "rmi")]
 public partial class DockerRmiSettings : DockerOptionsBase
 {
@@ -2661,7 +2614,6 @@ public partial class DockerRmiSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNetworkRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNetworkRm), Arguments = "network rm")]
 public partial class DockerNetworkRmSettings : DockerOptionsBase
 {
@@ -2673,7 +2625,6 @@ public partial class DockerNetworkRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerVersionSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerVersion), Arguments = "version")]
 public partial class DockerVersionSettings : DockerOptionsBase
 {
@@ -2687,7 +2638,6 @@ public partial class DockerVersionSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSecretCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSecretCreate), Arguments = "secret create")]
 public partial class DockerSecretCreateSettings : DockerOptionsBase
 {
@@ -2707,7 +2657,6 @@ public partial class DockerSecretCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerServiceRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerServiceRm), Arguments = "service rm")]
 public partial class DockerServiceRmSettings : DockerOptionsBase
 {
@@ -2719,7 +2668,6 @@ public partial class DockerServiceRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTrustKeyLoadSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTrustKeyLoad), Arguments = "trust key load")]
 public partial class DockerTrustKeyLoadSettings : DockerOptionsBase
 {
@@ -2733,7 +2681,6 @@ public partial class DockerTrustKeyLoadSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSecretRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSecretRm), Arguments = "secret rm")]
 public partial class DockerSecretRmSettings : DockerOptionsBase
 {
@@ -2745,7 +2692,6 @@ public partial class DockerSecretRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImageInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImageInspect), Arguments = "image inspect")]
 public partial class DockerImageInspectSettings : DockerOptionsBase
 {
@@ -2759,7 +2705,6 @@ public partial class DockerImageInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImageSaveSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImageSave), Arguments = "image save")]
 public partial class DockerImageSaveSettings : DockerOptionsBase
 {
@@ -2773,7 +2718,6 @@ public partial class DockerImageSaveSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTrustKeySettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTrustKey), Arguments = "trust key")]
 public partial class DockerTrustKeySettings : DockerOptionsBase
 {
@@ -2783,7 +2727,6 @@ public partial class DockerTrustKeySettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerAttachSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerAttach), Arguments = "container attach")]
 public partial class DockerContainerAttachSettings : DockerOptionsBase
 {
@@ -2801,7 +2744,6 @@ public partial class DockerContainerAttachSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContextCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContextCreate), Arguments = "context create")]
 public partial class DockerContextCreateSettings : DockerOptionsBase
 {
@@ -2823,7 +2765,6 @@ public partial class DockerContextCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerConfigCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerConfigCreate), Arguments = "config create")]
 public partial class DockerConfigCreateSettings : DockerOptionsBase
 {
@@ -2841,7 +2782,6 @@ public partial class DockerConfigCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerVolumeInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerVolumeInspect), Arguments = "volume inspect")]
 public partial class DockerVolumeInspectSettings : DockerOptionsBase
 {
@@ -2855,7 +2795,6 @@ public partial class DockerVolumeInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerStopSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerStop), Arguments = "container stop")]
 public partial class DockerContainerStopSettings : DockerOptionsBase
 {
@@ -2869,7 +2808,6 @@ public partial class DockerContainerStopSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNetworkPruneSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNetworkPrune), Arguments = "network prune")]
 public partial class DockerNetworkPruneSettings : DockerOptionsBase
 {
@@ -2883,7 +2821,6 @@ public partial class DockerNetworkPruneSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerManifestInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerManifestInspect), Arguments = "manifest inspect")]
 public partial class DockerManifestInspectSettings : DockerOptionsBase
 {
@@ -2901,7 +2838,6 @@ public partial class DockerManifestInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerInfoSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerInfo), Arguments = "info")]
 public partial class DockerInfoSettings : DockerOptionsBase
 {
@@ -2913,7 +2849,6 @@ public partial class DockerInfoSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerCommitSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerCommit), Arguments = "commit")]
 public partial class DockerCommitSettings : DockerOptionsBase
 {
@@ -2935,7 +2870,6 @@ public partial class DockerCommitSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerStackDeploySettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerStackDeploy), Arguments = "stack deploy")]
 public partial class DockerStackDeploySettings : DockerOptionsBase
 {
@@ -2959,7 +2893,6 @@ public partial class DockerStackDeploySettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerServiceScaleSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerServiceScale), Arguments = "service scale")]
 public partial class DockerServiceScaleSettings : DockerOptionsBase
 {
@@ -2971,7 +2904,6 @@ public partial class DockerServiceScaleSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerRunSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerRun), Arguments = "run")]
 public partial class DockerRunSettings : DockerOptionsBase
 {
@@ -3189,7 +3121,6 @@ public partial class DockerRunSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerCreate), Arguments = "create")]
 public partial class DockerCreateSettings : DockerOptionsBase
 {
@@ -3401,7 +3332,6 @@ public partial class DockerCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerServiceUpdateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerServiceUpdate), Arguments = "service update")]
 public partial class DockerServiceUpdateSettings : DockerOptionsBase
 {
@@ -3581,7 +3511,6 @@ public partial class DockerServiceUpdateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPortSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPort), Arguments = "port")]
 public partial class DockerPortSettings : DockerOptionsBase
 {
@@ -3595,7 +3524,6 @@ public partial class DockerPortSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainer), Arguments = "container")]
 public partial class DockerContainerSettings : DockerOptionsBase
 {
@@ -3605,7 +3533,6 @@ public partial class DockerContainerSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImagePushSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImagePush), Arguments = "image push")]
 public partial class DockerImagePushSettings : DockerOptionsBase
 {
@@ -3621,7 +3548,6 @@ public partial class DockerImagePushSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerServiceInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerServiceInspect), Arguments = "service inspect")]
 public partial class DockerServiceInspectSettings : DockerOptionsBase
 {
@@ -3637,7 +3563,6 @@ public partial class DockerServiceInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNetworkConnectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNetworkConnect), Arguments = "network connect")]
 public partial class DockerNetworkConnectSettings : DockerOptionsBase
 {
@@ -3663,7 +3588,6 @@ public partial class DockerNetworkConnectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSecretLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSecretLs), Arguments = "secret ls")]
 public partial class DockerSecretLsSettings : DockerOptionsBase
 {
@@ -3679,7 +3603,6 @@ public partial class DockerSecretLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSwarmLeaveSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSwarmLeave), Arguments = "swarm leave")]
 public partial class DockerSwarmLeaveSettings : DockerOptionsBase
 {
@@ -3691,7 +3614,6 @@ public partial class DockerSwarmLeaveSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImagesSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImages), Arguments = "images")]
 public partial class DockerImagesSettings : DockerOptionsBase
 {
@@ -3715,7 +3637,6 @@ public partial class DockerImagesSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerEngineUpdateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerEngineUpdate), Arguments = "engine update")]
 public partial class DockerEngineUpdateSettings : DockerOptionsBase
 {
@@ -3733,7 +3654,6 @@ public partial class DockerEngineUpdateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSystemEventsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSystemEvents), Arguments = "system events")]
 public partial class DockerSystemEventsSettings : DockerOptionsBase
 {
@@ -3751,7 +3671,6 @@ public partial class DockerSystemEventsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerInspect), Arguments = "inspect")]
 public partial class DockerInspectSettings : DockerOptionsBase
 {
@@ -3769,7 +3688,6 @@ public partial class DockerInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerEngineCheckSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerEngineCheck), Arguments = "engine check")]
 public partial class DockerEngineCheckSettings : DockerOptionsBase
 {
@@ -3795,7 +3713,6 @@ public partial class DockerEngineCheckSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerAttachSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerAttach), Arguments = "attach")]
 public partial class DockerAttachSettings : DockerOptionsBase
 {
@@ -3813,7 +3730,6 @@ public partial class DockerAttachSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerWaitSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerWait), Arguments = "container wait")]
 public partial class DockerContainerWaitSettings : DockerOptionsBase
 {
@@ -3825,7 +3741,6 @@ public partial class DockerContainerWaitSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSwarmCaSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSwarmCa), Arguments = "swarm ca")]
 public partial class DockerSwarmCaSettings : DockerOptionsBase
 {
@@ -3849,7 +3764,6 @@ public partial class DockerSwarmCaSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerEngineSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerEngine), Arguments = "engine")]
 public partial class DockerEngineSettings : DockerOptionsBase
 {
@@ -3861,7 +3775,6 @@ public partial class DockerEngineSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSystemPruneSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSystemPrune), Arguments = "system prune")]
 public partial class DockerSystemPruneSettings : DockerOptionsBase
 {
@@ -3879,7 +3792,6 @@ public partial class DockerSystemPruneSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerBuilderSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerBuilder), Arguments = "builder")]
 public partial class DockerBuilderSettings : DockerOptionsBase
 {
@@ -3889,7 +3801,6 @@ public partial class DockerBuilderSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerPauseSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerPause), Arguments = "container pause")]
 public partial class DockerContainerPauseSettings : DockerOptionsBase
 {
@@ -3901,7 +3812,6 @@ public partial class DockerContainerPauseSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerCommitSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerCommit), Arguments = "container commit")]
 public partial class DockerContainerCommitSettings : DockerOptionsBase
 {
@@ -3923,7 +3833,6 @@ public partial class DockerContainerCommitSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContextLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContextLs), Arguments = "context ls")]
 public partial class DockerContextLsSettings : DockerOptionsBase
 {
@@ -3937,7 +3846,6 @@ public partial class DockerContextLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContextRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContextRm), Arguments = "context rm")]
 public partial class DockerContextRmSettings : DockerOptionsBase
 {
@@ -3949,7 +3857,6 @@ public partial class DockerContextRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerStackPsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerStackPs), Arguments = "stack ps")]
 public partial class DockerStackPsSettings : DockerStackSettings
 {
@@ -3973,7 +3880,6 @@ public partial class DockerStackPsSettings : DockerStackSettings
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerCreate), Arguments = "container create")]
 public partial class DockerContainerCreateSettings : DockerOptionsBase
 {
@@ -4185,7 +4091,6 @@ public partial class DockerContainerCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerVolumeCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerVolumeCreate), Arguments = "volume create")]
 public partial class DockerVolumeCreateSettings : DockerOptionsBase
 {
@@ -4205,7 +4110,6 @@ public partial class DockerVolumeCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPlugin), Arguments = "plugin")]
 public partial class DockerPluginSettings : DockerOptionsBase
 {
@@ -4215,7 +4119,6 @@ public partial class DockerPluginSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerLoginSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerLogin), Arguments = "login")]
 public partial class DockerLoginSettings : DockerOptionsBase
 {
@@ -4231,7 +4134,6 @@ public partial class DockerLoginSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSwarmUnlockKeySettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSwarmUnlockKey), Arguments = "swarm unlock-key")]
 public partial class DockerSwarmUnlockKeySettings : DockerOptionsBase
 {
@@ -4245,7 +4147,6 @@ public partial class DockerSwarmUnlockKeySettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerStartSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerStart), Arguments = "start")]
 public partial class DockerStartSettings : DockerOptionsBase
 {
@@ -4267,7 +4168,6 @@ public partial class DockerStartSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSwarmInitSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSwarmInit), Arguments = "swarm init")]
 public partial class DockerSwarmInitSettings : DockerOptionsBase
 {
@@ -4307,7 +4207,6 @@ public partial class DockerSwarmInitSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerDiffSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerDiff), Arguments = "container diff")]
 public partial class DockerContainerDiffSettings : DockerOptionsBase
 {
@@ -4319,7 +4218,6 @@ public partial class DockerContainerDiffSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerRestartSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerRestart), Arguments = "container restart")]
 public partial class DockerContainerRestartSettings : DockerOptionsBase
 {
@@ -4333,7 +4231,6 @@ public partial class DockerContainerRestartSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerConfigSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerConfig), Arguments = "config")]
 public partial class DockerConfigSettings : DockerOptionsBase
 {
@@ -4343,7 +4240,6 @@ public partial class DockerConfigSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginDisableSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPluginDisable), Arguments = "plugin disable")]
 public partial class DockerPluginDisableSettings : DockerOptionsBase
 {
@@ -4357,7 +4253,6 @@ public partial class DockerPluginDisableSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerUnpauseSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerUnpause), Arguments = "container unpause")]
 public partial class DockerContainerUnpauseSettings : DockerOptionsBase
 {
@@ -4369,7 +4264,6 @@ public partial class DockerContainerUnpauseSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContextImportSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContextImport), Arguments = "context import")]
 public partial class DockerContextImportSettings : DockerOptionsBase
 {
@@ -4383,7 +4277,6 @@ public partial class DockerContextImportSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerRm), Arguments = "rm")]
 public partial class DockerRmSettings : DockerOptionsBase
 {
@@ -4401,7 +4294,6 @@ public partial class DockerRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerDeploySettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerDeploy), Arguments = "deploy")]
 public partial class DockerDeploySettings : DockerOptionsBase
 {
@@ -4425,7 +4317,6 @@ public partial class DockerDeploySettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNodeRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNodeRm), Arguments = "node rm")]
 public partial class DockerNodeRmSettings : DockerOptionsBase
 {
@@ -4439,7 +4330,6 @@ public partial class DockerNodeRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerCheckpointRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerCheckpointRm), Arguments = "checkpoint rm")]
 public partial class DockerCheckpointRmSettings : DockerOptionsBase
 {
@@ -4455,7 +4345,6 @@ public partial class DockerCheckpointRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPushSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPush), Arguments = "push")]
 public partial class DockerPushSettings : DockerOptionsBase
 {
@@ -4471,7 +4360,6 @@ public partial class DockerPushSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNetworkCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNetworkCreate), Arguments = "network create")]
 public partial class DockerNetworkCreateSettings : DockerOptionsBase
 {
@@ -4515,7 +4403,6 @@ public partial class DockerNetworkCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerVolumeLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerVolumeLs), Arguments = "volume ls")]
 public partial class DockerVolumeLsSettings : DockerOptionsBase
 {
@@ -4531,7 +4418,6 @@ public partial class DockerVolumeLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTrustInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTrustInspect), Arguments = "trust inspect")]
 public partial class DockerTrustInspectSettings : DockerOptionsBase
 {
@@ -4543,7 +4429,6 @@ public partial class DockerTrustInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNetworkInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNetworkInspect), Arguments = "network inspect")]
 public partial class DockerNetworkInspectSettings : DockerOptionsBase
 {
@@ -4559,7 +4444,6 @@ public partial class DockerNetworkInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerEngineActivateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerEngineActivate), Arguments = "engine activate")]
 public partial class DockerEngineActivateSettings : DockerOptionsBase
 {
@@ -4585,7 +4469,6 @@ public partial class DockerEngineActivateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContextUseSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContextUse), Arguments = "context use")]
 public partial class DockerContextUseSettings : DockerOptionsBase
 {
@@ -4597,7 +4480,6 @@ public partial class DockerContextUseSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerVolumeRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerVolumeRm), Arguments = "volume rm")]
 public partial class DockerVolumeRmSettings : DockerOptionsBase
 {
@@ -4611,7 +4493,6 @@ public partial class DockerVolumeRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerManifestCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerManifestCreate), Arguments = "manifest create")]
 public partial class DockerManifestCreateSettings : DockerOptionsBase
 {
@@ -4625,7 +4506,6 @@ public partial class DockerManifestCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerManifestPushSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerManifestPush), Arguments = "manifest push")]
 public partial class DockerManifestPushSettings : DockerOptionsBase
 {
@@ -4641,7 +4521,6 @@ public partial class DockerManifestPushSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginEnableSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPluginEnable), Arguments = "plugin enable")]
 public partial class DockerPluginEnableSettings : DockerOptionsBase
 {
@@ -4655,7 +4534,6 @@ public partial class DockerPluginEnableSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImportSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImport), Arguments = "import")]
 public partial class DockerImportSettings : DockerOptionsBase
 {
@@ -4675,7 +4553,6 @@ public partial class DockerImportSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerRunSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerRun), Arguments = "container run")]
 public partial class DockerContainerRunSettings : DockerOptionsBase
 {
@@ -4893,7 +4770,6 @@ public partial class DockerContainerRunSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNodeInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNodeInspect), Arguments = "node inspect")]
 public partial class DockerNodeInspectSettings : DockerOptionsBase
 {
@@ -4909,7 +4785,6 @@ public partial class DockerNodeInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSaveSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSave), Arguments = "save")]
 public partial class DockerSaveSettings : DockerOptionsBase
 {
@@ -4923,7 +4798,6 @@ public partial class DockerSaveSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerStatsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerStats), Arguments = "container stats")]
 public partial class DockerContainerStatsSettings : DockerOptionsBase
 {
@@ -4943,7 +4817,6 @@ public partial class DockerContainerStatsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerExecSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerExec), Arguments = "container exec")]
 public partial class DockerContainerExecSettings : DockerOptionsBase
 {
@@ -4975,7 +4848,6 @@ public partial class DockerContainerExecSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNodeLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNodeLs), Arguments = "node ls")]
 public partial class DockerNodeLsSettings : DockerOptionsBase
 {
@@ -4991,7 +4863,6 @@ public partial class DockerNodeLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSwarmJoinSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSwarmJoin), Arguments = "swarm join HOST:PORT")]
 public partial class DockerSwarmJoinSettings : DockerOptionsBase
 {
@@ -5011,7 +4882,6 @@ public partial class DockerSwarmJoinSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerLogsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerLogs), Arguments = "container logs")]
 public partial class DockerContainerLogsSettings : DockerOptionsBase
 {
@@ -5035,7 +4905,6 @@ public partial class DockerContainerLogsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerCheckpointLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerCheckpointLs), Arguments = "checkpoint ls")]
 public partial class DockerCheckpointLsSettings : DockerOptionsBase
 {
@@ -5049,7 +4918,6 @@ public partial class DockerCheckpointLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerKillSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerKill), Arguments = "container kill")]
 public partial class DockerContainerKillSettings : DockerOptionsBase
 {
@@ -5063,7 +4931,6 @@ public partial class DockerContainerKillSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginInstallSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPluginInstall), Arguments = "plugin install")]
 public partial class DockerPluginInstallSettings : DockerOptionsBase
 {
@@ -5085,7 +4952,6 @@ public partial class DockerPluginInstallSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImagePruneSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImagePrune), Arguments = "image prune")]
 public partial class DockerImagePruneSettings : DockerOptionsBase
 {
@@ -5101,7 +4967,6 @@ public partial class DockerImagePruneSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImageImportSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImageImport), Arguments = "image import")]
 public partial class DockerImageImportSettings : DockerOptionsBase
 {
@@ -5121,7 +4986,6 @@ public partial class DockerImageImportSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerDiffSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerDiff), Arguments = "diff")]
 public partial class DockerDiffSettings : DockerOptionsBase
 {
@@ -5133,7 +4997,6 @@ public partial class DockerDiffSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerUnpauseSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerUnpause), Arguments = "unpause")]
 public partial class DockerUnpauseSettings : DockerOptionsBase
 {
@@ -5145,7 +5008,6 @@ public partial class DockerUnpauseSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerLs), Arguments = "container ls")]
 public partial class DockerContainerLsSettings : DockerOptionsBase
 {
@@ -5171,7 +5033,6 @@ public partial class DockerContainerLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNodePsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNodePs), Arguments = "node ps")]
 public partial class DockerNodePsSettings : DockerOptionsBase
 {
@@ -5193,7 +5054,6 @@ public partial class DockerNodePsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerTopSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerTop), Arguments = "container top [ps")]
 public partial class DockerContainerTopSettings : DockerOptionsBase
 {
@@ -5207,7 +5067,6 @@ public partial class DockerContainerTopSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerRenameSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerRename), Arguments = "container rename")]
 public partial class DockerContainerRenameSettings : DockerOptionsBase
 {
@@ -5221,7 +5080,6 @@ public partial class DockerContainerRenameSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImageHistorySettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImageHistory), Arguments = "image history")]
 public partial class DockerImageHistorySettings : DockerOptionsBase
 {
@@ -5241,7 +5099,6 @@ public partial class DockerImageHistorySettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPs), Arguments = "ps")]
 public partial class DockerPsSettings : DockerOptionsBase
 {
@@ -5267,7 +5124,6 @@ public partial class DockerPsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImageTagSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImageTag), Arguments = "image tag")]
 public partial class DockerImageTagSettings : DockerOptionsBase
 {
@@ -5281,7 +5137,6 @@ public partial class DockerImageTagSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerExportSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerExport), Arguments = "export")]
 public partial class DockerExportSettings : DockerOptionsBase
 {
@@ -5295,7 +5150,6 @@ public partial class DockerExportSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNetworkDisconnectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNetworkDisconnect), Arguments = "network disconnect")]
 public partial class DockerNetworkDisconnectSettings : DockerOptionsBase
 {
@@ -5311,7 +5165,6 @@ public partial class DockerNetworkDisconnectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerBuilderBuildSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerBuilderBuild), Arguments = "builder build")]
 public partial class DockerBuilderBuildSettings : DockerOptionsBase
 {
@@ -5393,7 +5246,6 @@ public partial class DockerBuilderBuildSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerBuildxBuildSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerBuildxBuild), Arguments = "buildx build")]
 public partial class DockerBuildxBuildSettings : DockerOptionsBase
 {
@@ -5477,7 +5329,6 @@ public partial class DockerBuildxBuildSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerBuildxCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerBuildxCreate), Arguments = "buildx create")]
 public partial class DockerBuildxCreateSettings : DockerOptionsBase
 {
@@ -5511,7 +5362,6 @@ public partial class DockerBuildxCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerStatsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerStats), Arguments = "stats")]
 public partial class DockerStatsSettings : DockerOptionsBase
 {
@@ -5531,7 +5381,6 @@ public partial class DockerStatsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSearchSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSearch), Arguments = "search")]
 public partial class DockerSearchSettings : DockerOptionsBase
 {
@@ -5555,7 +5404,6 @@ public partial class DockerSearchSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerManifestSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerManifest), Arguments = "manifest")]
 public partial class DockerManifestSettings : DockerOptionsBase
 {
@@ -5567,7 +5415,6 @@ public partial class DockerManifestSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginPushSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPluginPush), Arguments = "plugin push")]
 public partial class DockerPluginPushSettings : DockerOptionsBase
 {
@@ -5581,7 +5428,6 @@ public partial class DockerPluginPushSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImageLoadSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImageLoad), Arguments = "image load")]
 public partial class DockerImageLoadSettings : DockerOptionsBase
 {
@@ -5595,7 +5441,6 @@ public partial class DockerImageLoadSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSwarmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSwarm), Arguments = "swarm")]
 public partial class DockerSwarmSettings : DockerOptionsBase
 {
@@ -5605,7 +5450,6 @@ public partial class DockerSwarmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerRm), Arguments = "container rm")]
 public partial class DockerContainerRmSettings : DockerOptionsBase
 {
@@ -5623,7 +5467,6 @@ public partial class DockerContainerRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerUpdateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerUpdate), Arguments = "container update")]
 public partial class DockerContainerUpdateSettings : DockerOptionsBase
 {
@@ -5665,7 +5508,6 @@ public partial class DockerContainerUpdateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginSetSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPluginSet), Arguments = "plugin set")]
 public partial class DockerPluginSetSettings : DockerOptionsBase
 {
@@ -5679,7 +5521,6 @@ public partial class DockerPluginSetSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerWaitSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerWait), Arguments = "wait")]
 public partial class DockerWaitSettings : DockerOptionsBase
 {
@@ -5691,7 +5532,6 @@ public partial class DockerWaitSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContextExportSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContextExport), Arguments = "context export")]
 public partial class DockerContextExportSettings : DockerOptionsBase
 {
@@ -5707,7 +5547,6 @@ public partial class DockerContextExportSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerManifestAnnotateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerManifestAnnotate), Arguments = "manifest annotate")]
 public partial class DockerManifestAnnotateSettings : DockerOptionsBase
 {
@@ -5729,7 +5568,6 @@ public partial class DockerManifestAnnotateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImagePullSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImagePull), Arguments = "image pull")]
 public partial class DockerImagePullSettings : DockerOptionsBase
 {
@@ -5749,7 +5587,6 @@ public partial class DockerImagePullSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerEventsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerEvents), Arguments = "events")]
 public partial class DockerEventsSettings : DockerOptionsBase
 {
@@ -5767,7 +5604,6 @@ public partial class DockerEventsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerStackLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerStackLs), Arguments = "stack ls")]
 public partial class DockerStackLsSettings : DockerStackSettings
 {
@@ -5783,7 +5619,6 @@ public partial class DockerStackLsSettings : DockerStackSettings
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerInspect), Arguments = "container inspect")]
 public partial class DockerContainerInspectSettings : DockerOptionsBase
 {
@@ -5799,7 +5634,6 @@ public partial class DockerContainerInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerKillSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerKill), Arguments = "kill")]
 public partial class DockerKillSettings : DockerOptionsBase
 {
@@ -5813,7 +5647,6 @@ public partial class DockerKillSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerCheckpointCreateSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerCheckpointCreate), Arguments = "checkpoint create")]
 public partial class DockerCheckpointCreateSettings : DockerOptionsBase
 {
@@ -5831,7 +5664,6 @@ public partial class DockerCheckpointCreateSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPauseSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPause), Arguments = "pause")]
 public partial class DockerPauseSettings : DockerOptionsBase
 {
@@ -5843,7 +5675,6 @@ public partial class DockerPauseSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerLogsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerLogs), Arguments = "logs")]
 public partial class DockerLogsSettings : DockerOptionsBase
 {
@@ -5867,7 +5698,6 @@ public partial class DockerLogsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContextInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContextInspect), Arguments = "context inspect")]
 public partial class DockerContextInspectSettings : DockerOptionsBase
 {
@@ -5883,7 +5713,6 @@ public partial class DockerContextInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNodePromoteSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNodePromote), Arguments = "node promote")]
 public partial class DockerNodePromoteSettings : DockerOptionsBase
 {
@@ -5895,7 +5724,6 @@ public partial class DockerNodePromoteSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNodeDemoteSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNodeDemote), Arguments = "node demote")]
 public partial class DockerNodeDemoteSettings : DockerOptionsBase
 {
@@ -5907,7 +5735,6 @@ public partial class DockerNodeDemoteSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerExecSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerExec), Arguments = "exec")]
 public partial class DockerExecSettings : DockerOptionsBase
 {
@@ -5939,7 +5766,6 @@ public partial class DockerExecSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImageRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImageRm), Arguments = "image rm")]
 public partial class DockerImageRmSettings : DockerOptionsBase
 {
@@ -5955,7 +5781,6 @@ public partial class DockerImageRmSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImageSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImage), Arguments = "image")]
 public partial class DockerImageSettings : DockerOptionsBase
 {
@@ -5965,7 +5790,6 @@ public partial class DockerImageSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContextSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContext), Arguments = "context")]
 public partial class DockerContextSettings : DockerOptionsBase
 {
@@ -5975,7 +5799,6 @@ public partial class DockerContextSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerVolumeSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerVolume), Arguments = "volume")]
 public partial class DockerVolumeSettings : DockerOptionsBase
 {
@@ -5987,7 +5810,6 @@ public partial class DockerVolumeSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerContainerStartSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerContainerStart), Arguments = "container start")]
 public partial class DockerContainerStartSettings : DockerOptionsBase
 {
@@ -6009,7 +5831,6 @@ public partial class DockerContainerStartSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerPluginInspectSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerPluginInspect), Arguments = "plugin inspect")]
 public partial class DockerPluginInspectSettings : DockerOptionsBase
 {
@@ -6023,7 +5844,6 @@ public partial class DockerPluginInspectSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerLogoutSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerLogout), Arguments = "logout")]
 public partial class DockerLogoutSettings : DockerOptionsBase
 {
@@ -6035,7 +5855,6 @@ public partial class DockerLogoutSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerNetworkSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerNetwork), Arguments = "network")]
 public partial class DockerNetworkSettings : DockerOptionsBase
 {
@@ -6045,7 +5864,6 @@ public partial class DockerNetworkSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerImageLsSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerImageLs), Arguments = "image ls")]
 public partial class DockerImageLsSettings : DockerOptionsBase
 {
@@ -6069,7 +5887,6 @@ public partial class DockerImageLsSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerSystemDfSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerSystemDf), Arguments = "system df")]
 public partial class DockerSystemDfSettings : DockerOptionsBase
 {
@@ -6083,7 +5900,6 @@ public partial class DockerSystemDfSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerServiceRollbackSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerServiceRollback), Arguments = "service rollback")]
 public partial class DockerServiceRollbackSettings : DockerOptionsBase
 {
@@ -6099,7 +5915,6 @@ public partial class DockerServiceRollbackSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerRestartSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerRestart), Arguments = "restart")]
 public partial class DockerRestartSettings : DockerOptionsBase
 {
@@ -6113,7 +5928,6 @@ public partial class DockerRestartSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerTrustSignerRemoveSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTrustSignerRemove), Arguments = "trust signer remove")]
 public partial class DockerTrustSignerRemoveSettings : DockerOptionsBase
 {
@@ -6129,7 +5943,6 @@ public partial class DockerTrustSignerRemoveSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerStackRmSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerStackRm), Arguments = "stack rm")]
 public partial class DockerStackRmSettings : DockerStackSettings
 {
@@ -6143,7 +5956,6 @@ public partial class DockerStackRmSettings : DockerStackSettings
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerBuildSettings>))]
 [Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerBuild), Arguments = "build")]
 public partial class DockerBuildSettings : DockerOptionsBase
 {
@@ -6225,7 +6037,6 @@ public partial class DockerBuildSettings : DockerOptionsBase
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerOptionsBase>))]
 public partial class DockerOptionsBase : ToolOptions
 {
     /// <summary>Set the logging level.</summary>
@@ -6250,7 +6061,6 @@ public partial class DockerOptionsBase : ToolOptions
 /// <summary>Used within <see cref="DockerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<DockerRunTargetSettings>))]
 public partial class DockerRunTargetSettings : DockerRunSettings
 {
     /// <summary>Whether to execute a <c>docker pull</c> before running the container.</summary>

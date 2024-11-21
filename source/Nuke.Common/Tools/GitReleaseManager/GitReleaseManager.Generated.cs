@@ -79,7 +79,6 @@ public partial class GitReleaseManagerTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="GitReleaseManagerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<GitReleaseManagerAddAssetsSettings>))]
 [Command(Type = typeof(GitReleaseManagerTasks), Command = nameof(GitReleaseManagerTasks.GitReleaseManagerAddAssets), Arguments = "addasset")]
 public partial class GitReleaseManagerAddAssetsSettings : ToolOptions
 {
@@ -107,7 +106,6 @@ public partial class GitReleaseManagerAddAssetsSettings : ToolOptions
 /// <summary>Used within <see cref="GitReleaseManagerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<GitReleaseManagerCloseSettings>))]
 [Command(Type = typeof(GitReleaseManagerTasks), Command = nameof(GitReleaseManagerTasks.GitReleaseManagerClose), Arguments = "close")]
 public partial class GitReleaseManagerCloseSettings : ToolOptions
 {
@@ -133,7 +131,6 @@ public partial class GitReleaseManagerCloseSettings : ToolOptions
 /// <summary>Used within <see cref="GitReleaseManagerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<GitReleaseManagerCreateSettings>))]
 [Command(Type = typeof(GitReleaseManagerTasks), Command = nameof(GitReleaseManagerTasks.GitReleaseManagerCreate), Arguments = "create")]
 public partial class GitReleaseManagerCreateSettings : ToolOptions
 {
@@ -169,7 +166,6 @@ public partial class GitReleaseManagerCreateSettings : ToolOptions
 /// <summary>Used within <see cref="GitReleaseManagerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<GitReleaseManagerExportSettings>))]
 [Command(Type = typeof(GitReleaseManagerTasks), Command = nameof(GitReleaseManagerTasks.GitReleaseManagerExport), Arguments = "export")]
 public partial class GitReleaseManagerExportSettings : ToolOptions
 {
@@ -197,7 +193,6 @@ public partial class GitReleaseManagerExportSettings : ToolOptions
 /// <summary>Used within <see cref="GitReleaseManagerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<GitReleaseManagerPublishSettings>))]
 [Command(Type = typeof(GitReleaseManagerTasks), Command = nameof(GitReleaseManagerTasks.GitReleaseManagerPublish), Arguments = "publish")]
 public partial class GitReleaseManagerPublishSettings : ToolOptions
 {

@@ -43,7 +43,6 @@ public partial class CodeMetricsTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="CodeMetricsTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<CodeMetricsSettings>))]
 [Command(Type = typeof(CodeMetricsTasks), Command = nameof(CodeMetricsTasks.CodeMetrics))]
 public partial class CodeMetricsSettings : ToolOptions
 {

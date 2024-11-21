@@ -75,7 +75,6 @@ public partial class UnityTasks : ToolTasks
 /// <summary>Used within <see cref="UnityTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<UnityCreateManualActivationFileSettings>))]
 [Command(Type = typeof(UnityTasks), Command = nameof(UnityTasks.UnityCreateManualActivationFile), Arguments = "-createManualActivationFile")]
 public partial class UnityCreateManualActivationFileSettings : UnityOptionsBase
 {
@@ -99,7 +98,6 @@ public partial class UnityCreateManualActivationFileSettings : UnityOptionsBase
 /// <summary>Used within <see cref="UnityTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<UnityManualLicenseFileSettings>))]
 [Command(Type = typeof(UnityTasks), Command = nameof(UnityTasks.UnityManualLicenseFile))]
 public partial class UnityManualLicenseFileSettings : UnityOptionsBase
 {
@@ -125,7 +123,6 @@ public partial class UnityManualLicenseFileSettings : UnityOptionsBase
 /// <summary>Used within <see cref="UnityTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<UnitySettings>))]
 [Command(Type = typeof(UnityTasks), Command = nameof(UnityTasks.Unity))]
 public partial class UnitySettings : UnityProjectOptions
 {
@@ -181,7 +178,6 @@ public partial class UnitySettings : UnityProjectOptions
 /// <summary>Used within <see cref="UnityTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<UnityReturnLicenseSettings>))]
 [Command(Type = typeof(UnityTasks), Command = nameof(UnityTasks.UnityReturnLicense), Arguments = "-returnlicense")]
 public partial class UnityReturnLicenseSettings : UnityOptionsBase
 {
@@ -205,7 +201,6 @@ public partial class UnityReturnLicenseSettings : UnityOptionsBase
 /// <summary>Used within <see cref="UnityTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<UnityRunTestsSettings>))]
 [Command(Type = typeof(UnityTasks), Command = nameof(UnityTasks.UnityRunTests), Arguments = "-runTests")]
 public partial class UnityRunTestsSettings : UnityProjectOptions
 {
@@ -237,7 +232,6 @@ public partial class UnityRunTestsSettings : UnityProjectOptions
 /// <summary>Used within <see cref="UnityTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<UnityOptionsBase>))]
 public partial class UnityOptionsBase : ToolOptions
 {
     /// <summary>Specify where the Editor or Windows/Linux/OSX standalone log file are written.</summary>
@@ -254,7 +248,6 @@ public partial class UnityOptionsBase : ToolOptions
 /// <summary>Used within <see cref="UnityTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<UnityProjectOptions>))]
 public partial class UnityProjectOptions : UnityOptionsBase
 {
     /// <summary>Force an update of the project in the <a href="https://docs.unity3d.com/Manual/AssetServer.html">Asset Server</a> given by <c>IP:port</c>. The port is optional, and if not given it is assumed to be the standard one (10733). It is advisable to use this command in conjunction with the <c>-projectPath</c> argument to ensure you are working with the correct project. If no project name is given, then the last project opened by Unity is used. If no project exists at the path given by <c>-projectPath</c>, then one is created automatically.</summary>

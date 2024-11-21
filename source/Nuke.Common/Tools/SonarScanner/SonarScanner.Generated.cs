@@ -52,7 +52,6 @@ public partial class SonarScannerTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="SonarScannerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SonarScannerBeginSettings>))]
 [Command(Type = typeof(SonarScannerTasks), Command = nameof(SonarScannerTasks.SonarScannerBegin), Arguments = "begin")]
 public partial class SonarScannerBeginSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -150,7 +149,6 @@ public partial class SonarScannerBeginSettings : ToolOptions, IToolOptionsWithFr
 /// <summary>Used within <see cref="SonarScannerTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SonarScannerEndSettings>))]
 [Command(Type = typeof(SonarScannerTasks), Command = nameof(SonarScannerTasks.SonarScannerEnd), Arguments = "end")]
 public partial class SonarScannerEndSettings : ToolOptions, IToolOptionsWithFramework
 {

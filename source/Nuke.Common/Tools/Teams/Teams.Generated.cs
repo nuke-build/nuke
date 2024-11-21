@@ -21,7 +21,6 @@ namespace Nuke.Common.Tools.Teams;
 /// <summary>Used within <see cref="TeamsTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<TeamsMessage>))]
 public partial class TeamsMessage : Options
 {
     /// <summary></summary>

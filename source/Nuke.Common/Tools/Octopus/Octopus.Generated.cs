@@ -79,7 +79,6 @@ public partial class OctopusTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="OctopusTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<OctopusPackSettings>))]
 [Command(Type = typeof(OctopusTasks), Command = nameof(OctopusTasks.OctopusPack), Arguments = "pack")]
 public partial class OctopusPackSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -117,7 +116,6 @@ public partial class OctopusPackSettings : ToolOptions, IToolOptionsWithFramewor
 /// <summary>Used within <see cref="OctopusTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<OctopusPushSettings>))]
 [Command(Type = typeof(OctopusTasks), Command = nameof(OctopusTasks.OctopusPush), Arguments = "push")]
 public partial class OctopusPushSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -159,7 +157,6 @@ public partial class OctopusPushSettings : ToolOptions, IToolOptionsWithFramewor
 /// <summary>Used within <see cref="OctopusTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<OctopusCreateReleaseSettings>))]
 [Command(Type = typeof(OctopusTasks), Command = nameof(OctopusTasks.OctopusCreateRelease), Arguments = "create-release")]
 public partial class OctopusCreateReleaseSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -259,7 +256,6 @@ public partial class OctopusCreateReleaseSettings : ToolOptions, IToolOptionsWit
 /// <summary>Used within <see cref="OctopusTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<OctopusDeployReleaseSettings>))]
 [Command(Type = typeof(OctopusTasks), Command = nameof(OctopusTasks.OctopusDeployRelease), Arguments = "deploy-release")]
 public partial class OctopusDeployReleaseSettings : ToolOptions, IToolOptionsWithFramework
 {
@@ -339,7 +335,6 @@ public partial class OctopusDeployReleaseSettings : ToolOptions, IToolOptionsWit
 /// <summary>Used within <see cref="OctopusTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<OctopusBuildInformationSettings>))]
 [Command(Type = typeof(OctopusTasks), Command = nameof(OctopusTasks.OctopusBuildInformation), Arguments = "build-information")]
 public partial class OctopusBuildInformationSettings : ToolOptions, IToolOptionsWithFramework
 {

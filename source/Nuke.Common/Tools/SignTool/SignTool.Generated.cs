@@ -39,7 +39,6 @@ public partial class SignToolTasks : ToolTasks
 /// <summary>Used within <see cref="SignToolTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<SignToolSettings>))]
 [Command(Type = typeof(SignToolTasks), Command = nameof(SignToolTasks.SignTool), Arguments = "sign")]
 public partial class SignToolSettings : ToolOptions
 {

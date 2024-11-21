@@ -61,7 +61,6 @@ public partial class ReSharperTasks : ToolTasks, IRequireNuGetPackage
 /// <summary>Used within <see cref="ReSharperTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ReSharperInspectCodeSettings>))]
 [Command(Type = typeof(ReSharperTasks), Command = nameof(ReSharperTasks.ReSharperInspectCode), Arguments = "inspectcode")]
 public partial class ReSharperInspectCodeSettings : ReSharperSettingsBase
 {
@@ -125,7 +124,6 @@ public partial class ReSharperInspectCodeSettings : ReSharperSettingsBase
 /// <summary>Used within <see cref="ReSharperTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ReSharperCleanupCodeSettings>))]
 [Command(Type = typeof(ReSharperTasks), Command = nameof(ReSharperTasks.ReSharperCleanupCode), Arguments = "cleanupcode")]
 public partial class ReSharperCleanupCodeSettings : ReSharperSettingsBase
 {
@@ -175,7 +173,6 @@ public partial class ReSharperCleanupCodeSettings : ReSharperSettingsBase
 /// <summary>Used within <see cref="ReSharperTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ReSharperDupFinderSettings>))]
 [Command(Type = typeof(ReSharperTasks), Command = nameof(ReSharperTasks.ReSharperDupFinder), Arguments = "dupfinder")]
 public partial class ReSharperDupFinderSettings : ToolOptions
 {
@@ -221,7 +218,6 @@ public partial class ReSharperDupFinderSettings : ToolOptions
 /// <summary>Used within <see cref="ReSharperTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[TypeConverter(typeof(TypeConverter<ReSharperSettingsBase>))]
 public partial class ReSharperSettingsBase : ToolOptions
 {
     /// <summary>Allows adding ReSharper plugins that will get included during execution. To add a plugin, specify its ID and version. Available plugins are listed in the <a href="https://resharper-plugins.jetbrains.com/">Plugin Repository</a>. The ID can be grabbed from the download URL. Using <c>ReSharperPluginLatest</c> or <c>null</c> will download the latest version.</summary>
