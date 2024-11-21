@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [9.0.1] / 2024-11-21
 - Fixed `Options` serialization to JSON
 - Fixed `Options` for default members in interfaces
 - Fixed missing `ProcessExitHandler` setters
@@ -1181,7 +1183,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/9.0.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/9.0.1...HEAD
+[9.0.1]: https://github.com/nuke-build/nuke/compare/9.0.0...9.0.1
 [9.0.0]: https://github.com/nuke-build/nuke/compare/8.1.4...9.0.0
 [8.1.4]: https://github.com/nuke-build/nuke/compare/8.1.3...8.1.4
 [8.1.3]: https://github.com/nuke-build/nuke/compare/8.1.2...8.1.3
