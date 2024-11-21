@@ -35,7 +35,7 @@
     <None Include="$(MSBuildProjectName).targets" PackagePath="build" Pack="true" />
     <None Include="..\Nuke.MSBuildTasks\Nuke.MSBuildTasks.targets" PackagePath="build\netcore" Pack="true" />
     <None Include="..\Nuke.MSBuildTasks\Nuke.MSBuildTasks.targets" PackagePath="build\netfx" Pack="true" />
-    <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\net9.0\publish\**\*.*" PackagePath="build\netcore" Pack="true" />
+    <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\net8.0\publish\**\*.*" PackagePath="build\netcore" Pack="true" />
     <None Include="..\Nuke.MSBuildTasks\bin\$(Configuration)\net472\publish\**\*.*" PackagePath="build\netfx" Pack="true" />
     <None Include="..\Nuke.SourceGenerators\bin\$(Configuration)\netstandard2.0\*.dll" PackagePath="analyzers\dotnet\cs" Pack="true" />
   </ItemGroup>
