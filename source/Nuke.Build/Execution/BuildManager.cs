@@ -43,7 +43,7 @@ internal static class BuildManager
         Console.OutputEncoding = Encoding.UTF8;
         Console.InputEncoding = Encoding.UTF8;
         Console.CancelKeyPress += (_, _) => s_cancellationHandlers.ForEach(x => x());
-        ToolSettings.Created += (settings, _) => VerbosityMapping.Apply(settings);
+        ToolOptions.Created += (options, _) => VerbosityMapping.Apply((ToolOptions)options);
 
         var build = new T();
 

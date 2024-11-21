@@ -18,6 +18,7 @@
             "name": "SolutionDirectory",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The directory containing the solution with the pdb files."
           },
           {
@@ -104,6 +105,7 @@
             "name": "PdbFile",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The PDB to add source indexing to."
           },
           {

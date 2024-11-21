@@ -11,12 +11,12 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.Tooling;
 
-public delegate T Configure<T>(T settings);
+public delegate T Configure<T>(T options);
 
-public delegate TSettings Configure<TSettings, in TValue>(TSettings settings, TValue value)
-    where TSettings : new();
+public delegate TOptions Configure<TOptions, in TValue>(TOptions options, TValue value)
+    where TOptions : new();
 
-public delegate IEnumerable<T> CombinatorialConfigure<T>(T settings)
+public delegate IEnumerable<T> CombinatorialConfigure<T>(T options)
     where T : new();
 
 public static class ConfigureExtensions
@@ -26,68 +26,61 @@ public static class ConfigureExtensions
         return (configurator ?? (x => x)).Invoke(obj);
     }
 
-    public static IReadOnlyCollection<(TSettings Settings, IReadOnlyCollection<Output> Output)> Invoke<TSettings>(
-        this CombinatorialConfigure<TSettings> configurator,
-        Func<TSettings, IReadOnlyCollection<Output>> executor,
-        Action<OutputType, string> defaultLogger,
+    public static IReadOnlyCollection<(TOptions Options, IReadOnlyCollection<Output> Output)> Invoke<TOptions>(
+        this CombinatorialConfigure<TOptions> configurator,
+        Func<TOptions, IReadOnlyCollection<Output>> executor,
         int degreeOfParallelism,
         bool completeOnFailure)
-        where TSettings : ToolSettings, new()
+        where TOptions : ToolOptions, new()
     {
         return Invoke(
             configurator,
-            x => (Settings: x, Output: executor(x)),
+            x => (Options: x, Output: executor(x)),
             x => x.Output,
-            defaultLogger,
             degreeOfParallelism,
             completeOnFailure);
     }
 
-    public static IReadOnlyCollection<(TSettings Settings, TResult Result, IReadOnlyCollection<Output> Output)> Invoke<TSettings, TResult>(
-        this CombinatorialConfigure<TSettings> configurator,
-        Func<TSettings, (TResult Result, IReadOnlyCollection<Output> Output)> executor,
-        Action<OutputType, string> defaultLogger,
+    public static IReadOnlyCollection<(TOptions Options, TResult Result, IReadOnlyCollection<Output> Output)> Invoke<TOptions, TResult>(
+        this CombinatorialConfigure<TOptions> configurator,
+        Func<TOptions, (TResult Result, IReadOnlyCollection<Output> Output)> executor,
         int degreeOfParallelism,
         bool completeOnFailure)
-        where TSettings : ToolSettings, new()
+        where TOptions : ToolOptions, new()
     {
         return Invoke(
                 configurator,
-                executor: x => (Settings: x, ReturnValue: executor(x)),
-                outputSelector: x => x.ReturnValue.Output,
-                defaultLogger,
+                x => (Options: x, ReturnValue: executor(x)),
+                x => x.ReturnValue.Output,
                 degreeOfParallelism,
                 completeOnFailure)
-            .Select(x => (x.Settings, x.ReturnValue.Result, x.ReturnValue.Output)).ToList();
+            .Select(x => (x.Options, x.ReturnValue.Result, x.ReturnValue.Output)).ToList();
     }
 
-    private static IReadOnlyCollection<TResult> Invoke<TSettings, TResult>(
-        CombinatorialConfigure<TSettings> configurator,
-        Func<TSettings, TResult> executor,
+    private static IReadOnlyCollection<TResult> Invoke<TOptions, TResult>(
+        CombinatorialConfigure<TOptions> configurator,
+        Func<TOptions, TResult> executor,
         Func<TResult, IReadOnlyCollection<Output>> outputSelector,
-        Action<OutputType, string> defaultLogger,
         int degreeOfParallelism,
         bool completeOnFailure)
-        where TSettings : ToolSettings, new()
+        where TOptions : ToolOptions, new()
     {
-        var invocations = new ConcurrentBag<(TSettings Settings, Action<OutputType, string> logger, TResult Result, Exception Exception)>();
-
+        var invocations = new ConcurrentBag<(TOptions Options, Action<OutputType, string> Logger, TResult Result, Exception Exception)>();
         try
         {
-            configurator(new TSettings())
+            configurator(new TOptions())
                 .AsParallel()
                 .WithDegreeOfParallelism(degreeOfParallelism)
                 .ForAll(x =>
                 {
-                    var logger = x.ProcessLogger ?? defaultLogger;
                     try
                     {
-                        var result = executor(x.DisableProcessLogOutput());
-                        invocations.Add((x, logger, result, default));
+                        var result = executor(x.DisableProcessOutputLogging());
+                        invocations.Add((x, x.GetLogger(), result, default));
                     }
                     catch (Exception exception)
                     {
-                        invocations.Add((x, logger, default, exception));
+                        invocations.Add((x, x.GetLogger(), default, exception));
 
                         if (!completeOnFailure)
                             throw;
@@ -102,7 +95,7 @@ public static class ConfigureExtensions
         finally
         {
             invocations
-                .Where(x => x.Settings.ProcessLogOutput ?? ProcessTasks.DefaultLogOutput)
+                .Where(x => x.Options.ProcessOutputLogging ?? ProcessTasks.DefaultLogOutput)
                 .SelectMany(x =>
                 {
                     var (_, logger, result, exception) = x;

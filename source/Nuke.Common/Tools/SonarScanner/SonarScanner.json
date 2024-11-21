@@ -8,7 +8,8 @@
   "officialUrl": "https://www.sonarqube.org/",
   "help": "The SonarScanner for MSBuild is the recommended way to launch a SonarQube or SonarCloud analysis for projects/solutions using MSBuild or dotnet command as build tool.",
   "nugetPackageId": "dotnet-sonarscanner",
-  "customExecutable": true,
+  "nugetFramework": true,
+  "packageExecutable": "SonarScanner.MSBuild.dll|SonarScanner.MSBuild.exe",
   "tasks": [
     {
       "postfix": "Begin",
@@ -276,15 +277,13 @@
           {
             "name": "AdditionalAnalysisParameters",
             "type": "Dictionary<string, string>",
-            "format": "/d:sonar.analysis.{value}",
-            "itemFormat": "{key}={value}",
+            "format": "/d:sonar.analysis.{key}={value}",
             "help": "This property stub allows you to insert custom key/value pairs into the analysis context, which will also be passed forward to webhooks."
           },
           {
             "name": "AdditionalParameters",
             "type": "Dictionary<string, string>",
-            "format": "/d:{value}",
-            "itemFormat": "{key}={value}",
+            "format": "/d:{key}={value}",
             "help": "Specifies an additional SonarQube analysis parameter, you can add this argument multiple times."
           },
           {
@@ -336,13 +335,6 @@
           }
         ]
       }
-    }
-  ],
-  "commonTaskProperties": [
-    {
-      "name": "Framework",
-      "type": "string",
-      "noArgument": true
     }
   ]
 }

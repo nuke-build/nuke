@@ -26,6 +26,11 @@ public static partial class ReflectionUtility
         return type.IsNullableType() ? null : Activator.CreateInstance(type);
     }
 
+    public static bool IsAssignableTo(this Type type, Type otherType)
+    {
+        return otherType.IsAssignableFrom(type);
+    }
+
     public static bool IsNullableType(this Type type)
     {
         return Nullable.GetUnderlyingType(type) != null ||

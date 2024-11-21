@@ -69,7 +69,7 @@ partial class Build
                     if (!(member.IsPublic() || member.IsFamily() && !member.DeclaringType.NotNull().IsSealed))
                         return false;
 
-                    if (member is FieldInfo field && field.IsSpecialName)
+                    if (member is FieldInfo { IsSpecialName: true })
                         return false;
 
                     return true;

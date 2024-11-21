@@ -17,977 +17,302 @@ using System.Text;
 
 namespace Nuke.Common.Tools.PowerShell;
 
-/// <summary>
-///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
-///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p>
-/// </summary>
+/// <summary><p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-public partial class PowerShellTasks
+public partial class PowerShellTasks : ToolTasks
 {
-    /// <summary>
-    ///   Path to the PowerShell executable.
-    /// </summary>
-    public static string PowerShellPath =>
-        ToolPathResolver.TryGetEnvironmentExecutable("POWERSHELL_EXE") ??
-        GetToolPath();
-    public static Action<OutputType, string> PowerShellLogger { get; set; } = ProcessTasks.DefaultLogger;
-    public static Action<ToolSettings, IProcess> PowerShellExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
-    /// <summary>
-    ///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
-    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p>
-    /// </summary>
-    public static IReadOnlyCollection<Output> PowerShell(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(PowerShellPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? PowerShellLogger);
-        (exitHandler ?? (p => PowerShellExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
-    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
-    ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueParameters"/></li>
-    ///     <li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li>
-    ///     <li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li>
-    ///     <li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li>
-    ///     <li><c>-ExecutionPolicy</c> via <see cref="PowerShellSettings.ExecutionPolicy"/></li>
-    ///     <li><c>-File</c> via <see cref="PowerShellSettings.File"/></li>
-    ///     <li><c>-InputFormat</c> via <see cref="PowerShellSettings.InputFormat"/></li>
-    ///     <li><c>-Mta</c> via <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></li>
-    ///     <li><c>-NoExit</c> via <see cref="PowerShellSettings.NoExit"/></li>
-    ///     <li><c>-NoLogo</c> via <see cref="PowerShellSettings.NoLogo"/></li>
-    ///     <li><c>-NonInteractive</c> via <see cref="PowerShellSettings.NonInteractive"/></li>
-    ///     <li><c>-NoProfile</c> via <see cref="PowerShellSettings.NoProfile"/></li>
-    ///     <li><c>-OutputFormat</c> via <see cref="PowerShellSettings.OutputFormat"/></li>
-    ///     <li><c>-PSConsoleFile</c> via <see cref="PowerShellSettings.ConsoleFile"/></li>
-    ///     <li><c>-Sta</c> via <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></li>
-    ///     <li><c>-Version</c> via <see cref="PowerShellSettings.Version"/></li>
-    ///     <li><c>-WindowStyle</c> via <see cref="PowerShellSettings.WindowStyle"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> PowerShell(PowerShellSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new PowerShellSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
-    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
-    ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueParameters"/></li>
-    ///     <li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li>
-    ///     <li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li>
-    ///     <li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li>
-    ///     <li><c>-ExecutionPolicy</c> via <see cref="PowerShellSettings.ExecutionPolicy"/></li>
-    ///     <li><c>-File</c> via <see cref="PowerShellSettings.File"/></li>
-    ///     <li><c>-InputFormat</c> via <see cref="PowerShellSettings.InputFormat"/></li>
-    ///     <li><c>-Mta</c> via <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></li>
-    ///     <li><c>-NoExit</c> via <see cref="PowerShellSettings.NoExit"/></li>
-    ///     <li><c>-NoLogo</c> via <see cref="PowerShellSettings.NoLogo"/></li>
-    ///     <li><c>-NonInteractive</c> via <see cref="PowerShellSettings.NonInteractive"/></li>
-    ///     <li><c>-NoProfile</c> via <see cref="PowerShellSettings.NoProfile"/></li>
-    ///     <li><c>-OutputFormat</c> via <see cref="PowerShellSettings.OutputFormat"/></li>
-    ///     <li><c>-PSConsoleFile</c> via <see cref="PowerShellSettings.ConsoleFile"/></li>
-    ///     <li><c>-Sta</c> via <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></li>
-    ///     <li><c>-Version</c> via <see cref="PowerShellSettings.Version"/></li>
-    ///     <li><c>-WindowStyle</c> via <see cref="PowerShellSettings.WindowStyle"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> PowerShell(Configure<PowerShellSettings> configurator)
-    {
-        return PowerShell(configurator(new PowerShellSettings()));
-    }
-    /// <summary>
-    ///   <p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p>
-    ///   <p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li>
-    ///     <li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueParameters"/></li>
-    ///     <li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li>
-    ///     <li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li>
-    ///     <li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li>
-    ///     <li><c>-ExecutionPolicy</c> via <see cref="PowerShellSettings.ExecutionPolicy"/></li>
-    ///     <li><c>-File</c> via <see cref="PowerShellSettings.File"/></li>
-    ///     <li><c>-InputFormat</c> via <see cref="PowerShellSettings.InputFormat"/></li>
-    ///     <li><c>-Mta</c> via <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></li>
-    ///     <li><c>-NoExit</c> via <see cref="PowerShellSettings.NoExit"/></li>
-    ///     <li><c>-NoLogo</c> via <see cref="PowerShellSettings.NoLogo"/></li>
-    ///     <li><c>-NonInteractive</c> via <see cref="PowerShellSettings.NonInteractive"/></li>
-    ///     <li><c>-NoProfile</c> via <see cref="PowerShellSettings.NoProfile"/></li>
-    ///     <li><c>-OutputFormat</c> via <see cref="PowerShellSettings.OutputFormat"/></li>
-    ///     <li><c>-PSConsoleFile</c> via <see cref="PowerShellSettings.ConsoleFile"/></li>
-    ///     <li><c>-Sta</c> via <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></li>
-    ///     <li><c>-Version</c> via <see cref="PowerShellSettings.Version"/></li>
-    ///     <li><c>-WindowStyle</c> via <see cref="PowerShellSettings.WindowStyle"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(PowerShellSettings Settings, IReadOnlyCollection<Output> Output)> PowerShell(CombinatorialConfigure<PowerShellSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(PowerShell, PowerShellLogger, degreeOfParallelism, completeOnFailure);
-    }
+    public static string PowerShellPath => new PowerShellTasks().GetToolPath();
+    /// <summary><p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p></summary>
+    public static IReadOnlyCollection<Output> PowerShell(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new PowerShellTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
+    /// <summary><p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li><li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueParameters"/></li><li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li><li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li><li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li><li><c>-ExecutionPolicy</c> via <see cref="PowerShellSettings.ExecutionPolicy"/></li><li><c>-File</c> via <see cref="PowerShellSettings.File"/></li><li><c>-InputFormat</c> via <see cref="PowerShellSettings.InputFormat"/></li><li><c>-Mta</c> via <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></li><li><c>-NoExit</c> via <see cref="PowerShellSettings.NoExit"/></li><li><c>-NoLogo</c> via <see cref="PowerShellSettings.NoLogo"/></li><li><c>-NonInteractive</c> via <see cref="PowerShellSettings.NonInteractive"/></li><li><c>-NoProfile</c> via <see cref="PowerShellSettings.NoProfile"/></li><li><c>-OutputFormat</c> via <see cref="PowerShellSettings.OutputFormat"/></li><li><c>-PSConsoleFile</c> via <see cref="PowerShellSettings.ConsoleFile"/></li><li><c>-Sta</c> via <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></li><li><c>-Version</c> via <see cref="PowerShellSettings.Version"/></li><li><c>-WindowStyle</c> via <see cref="PowerShellSettings.WindowStyle"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> PowerShell(PowerShellSettings options = null) => new PowerShellTasks().Run(options);
+    /// <summary><p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li><li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueParameters"/></li><li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li><li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li><li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li><li><c>-ExecutionPolicy</c> via <see cref="PowerShellSettings.ExecutionPolicy"/></li><li><c>-File</c> via <see cref="PowerShellSettings.File"/></li><li><c>-InputFormat</c> via <see cref="PowerShellSettings.InputFormat"/></li><li><c>-Mta</c> via <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></li><li><c>-NoExit</c> via <see cref="PowerShellSettings.NoExit"/></li><li><c>-NoLogo</c> via <see cref="PowerShellSettings.NoLogo"/></li><li><c>-NonInteractive</c> via <see cref="PowerShellSettings.NonInteractive"/></li><li><c>-NoProfile</c> via <see cref="PowerShellSettings.NoProfile"/></li><li><c>-OutputFormat</c> via <see cref="PowerShellSettings.OutputFormat"/></li><li><c>-PSConsoleFile</c> via <see cref="PowerShellSettings.ConsoleFile"/></li><li><c>-Sta</c> via <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></li><li><c>-Version</c> via <see cref="PowerShellSettings.Version"/></li><li><c>-WindowStyle</c> via <see cref="PowerShellSettings.WindowStyle"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> PowerShell(Configure<PowerShellSettings> configurator) => new PowerShellTasks().Run(configurator.Invoke(new PowerShellSettings()));
+    /// <summary><p>PowerShell is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/powershell/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;fileArguments&gt;</c> via <see cref="PowerShellSettings.FileArguments"/></li><li><c>-</c> via <see cref="PowerShellSettings.FileKeyValueParameters"/></li><li><c>-Command</c> via <see cref="PowerShellSettings.Command"/></li><li><c>-ConfigurationName</c> via <see cref="PowerShellSettings.ConfigurationName"/></li><li><c>-EncodedCommand</c> via <see cref="PowerShellSettings.EncodedCommand"/></li><li><c>-ExecutionPolicy</c> via <see cref="PowerShellSettings.ExecutionPolicy"/></li><li><c>-File</c> via <see cref="PowerShellSettings.File"/></li><li><c>-InputFormat</c> via <see cref="PowerShellSettings.InputFormat"/></li><li><c>-Mta</c> via <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></li><li><c>-NoExit</c> via <see cref="PowerShellSettings.NoExit"/></li><li><c>-NoLogo</c> via <see cref="PowerShellSettings.NoLogo"/></li><li><c>-NonInteractive</c> via <see cref="PowerShellSettings.NonInteractive"/></li><li><c>-NoProfile</c> via <see cref="PowerShellSettings.NoProfile"/></li><li><c>-OutputFormat</c> via <see cref="PowerShellSettings.OutputFormat"/></li><li><c>-PSConsoleFile</c> via <see cref="PowerShellSettings.ConsoleFile"/></li><li><c>-Sta</c> via <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></li><li><c>-Version</c> via <see cref="PowerShellSettings.Version"/></li><li><c>-WindowStyle</c> via <see cref="PowerShellSettings.WindowStyle"/></li></ul></remarks>
+    public static IEnumerable<(PowerShellSettings Settings, IReadOnlyCollection<Output> Output)> PowerShell(CombinatorialConfigure<PowerShellSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(PowerShell, degreeOfParallelism, completeOnFailure);
 }
 #region PowerShellSettings
-/// <summary>
-///   Used within <see cref="PowerShellTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="PowerShellTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class PowerShellSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<PowerShellSettings>))]
+[Command(Type = typeof(PowerShellTasks), Command = nameof(PowerShellTasks.PowerShell))]
+public partial class PowerShellSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the PowerShell executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? GetProcessToolPath();
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? PowerShellTasks.PowerShellLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? PowerShellTasks.PowerShellExitHandler;
-    /// <summary>
-    ///   Loads the specified PowerShell console file. Enter the path and name of the console file. To create a console file, use the Export-Console cmdlet in PowerShell.
-    /// </summary>
-    public virtual string ConsoleFile { get; internal set; }
-    /// <summary>
-    ///   Starts the specified version of PowerShell. Valid values are 2.0 and 3.0. The version that you specify must be installed on the system. If Windows PowerShell 3.0 is installed on the computer, <c>3.0</c> is the default version. Otherwise, <c>2.0</c> is the default version. For more information, see <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-windows-powershell">Installing PowerShell</a>.
-    /// </summary>
-    public virtual string Version { get; internal set; }
-    /// <summary>
-    ///   Hides the copyright banner at startup.
-    /// </summary>
-    public virtual bool? NoLogo { get; internal set; }
-    /// <summary>
-    ///   Does not exit after running startup commands.
-    /// </summary>
-    public virtual bool? NoExit { get; internal set; }
-    /// <summary>
-    ///   Starts PowerShell using a single-threaded apartment. In Windows PowerShell 2.0, multi-threaded apartment (MTA) is the default. In Windows PowerShell 3.0, single-threaded apartment (STA) is the default.
-    /// </summary>
-    public virtual bool? StartUsingASingleThreadedApartment { get; internal set; }
-    /// <summary>
-    ///   Starts PowerShell using a multi-threaded apartment. This parameter is introduced in PowerShell 3.0. In PowerShell 2.0, multi-threaded apartment (MTA) is the default. In PowerShell 3.0, single-threaded apartment (STA) is the default.
-    /// </summary>
-    public virtual bool? StartUsingAMultiThreadedApartment { get; internal set; }
-    /// <summary>
-    ///   Does not load the PowerShell profile.
-    /// </summary>
-    public virtual bool? NoProfile { get; internal set; }
-    /// <summary>
-    ///   Does not present an interactive prompt to the user.
-    /// </summary>
-    public virtual bool? NonInteractive { get; internal set; }
-    /// <summary>
-    ///   Describes the format of data sent to PowerShell. Valid values are <c>Text</c> (text strings) or <c>XML</c> (serialized CLIXML format).
-    /// </summary>
-    public virtual PowerShellFormat InputFormat { get; internal set; }
-    /// <summary>
-    ///   Determines how output from PowerShell is formatted. Valid values are <c>Text</c>  (text strings) or <c>XML</c>  (serialized CLIXML format).
-    /// </summary>
-    public virtual PowerShellFormat OutputFormat { get; internal set; }
-    /// <summary>
-    ///   Sets the window style for the session. Valid values are <c>Normal</c>, <c>Minimized</c>, <c>Maximized</c> and <c>Hidden</c>.
-    /// </summary>
-    public virtual PowerShellWindowStyle WindowStyle { get; internal set; }
-    /// <summary>
-    ///   Accepts a base-64-encoded string version of a command. Use this parameter to submit commands to PowerShell that require complex quotation marks or curly braces. The string must be formatted using UTF-16LE character encoding.
-    /// </summary>
-    public virtual string EncodedCommand { get; internal set; }
-    /// <summary>
-    ///   Specifies a configuration endpoint in which PowerShell is run. This can be any endpoint registered on the local machine including the default PowerShell remoting endpoints or a custom endpoint having specific user role capabilities.
-    /// </summary>
-    public virtual string ConfigurationName { get; internal set; }
-    /// <summary>
-    ///   Sets the default execution policy for the current session and saves it in the <c>$env:PSExecutionPolicyPreference</c> environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies">about_Execution_Policies</a>.
-    /// </summary>
-    public virtual string ExecutionPolicy { get; internal set; }
-    /// <summary>
-    ///   If the value of File is <c>-</c>, the command text is read from standard input. Running <c>powershell -File -</c> without redirected standard input starts a regular session. This is the same as not specifying the <c>File</c> parameter at all.<para/>If the value of File is a file path, the script runs in the local scope (<c>dot-sourced</c>), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. <c>File</c> must be the last parameter in the command. All values typed after the <c>File</c> parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: <c>powershell.exe -File .\test.ps1 -TestParam %windir%</c>.<para/>In contrast, running <c>powershell.exe -File .\test.ps1 -TestParam $env:windir</c> in cmd.exe results in the script receiving the literal string <c>$env:windir</c> because it has no special meaning to the current cmd.exe shell. The <c>$env:windir</c> style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code.<para/>Similarly, if you want to execute the same command from a Batch script, you would use <c>%~dp0</c> instead of <c>.\</c> or <c>$PSScriptRoot</c> to represent the current execution directory: <c>powershell.exe -File %~dp0test.ps1 -TestParam %windir%</c>. If you instead used <c>.\test.ps1</c>, PowerShell would throw an error because it cannot find the literal path <c>.\test.ps1</c>.<para/>When the value of <c>File</c> is a file path, <c>File</c> must be the last parameter in the command because any characters typed after the <c>File</c> parameter name are interpreted as the script file path followed by the script parameters.<para/>You can include the script parameters and values in the value of the <c>File</c> parameter. For example: <c>-File .\Get-Script.ps1 -Domain Central</c>.<para/>Typically, the switch parameters of a script are either included or omitted. For example, the following command uses the <c>All</c> parameter of the <c>Get-Script.ps1</c> script file: <c>-File .\Get-Script.ps1 -All</c>.<para/>In rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (<c>pwsh.exe</c>).
-    /// </summary>
-    public virtual string File { get; internal set; }
-    /// <summary>
-    ///   Arguments passed in when using the <c>-File</c> option.
-    /// </summary>
-    public virtual IReadOnlyList<string> FileArguments => FileArgumentsInternal.AsReadOnly();
-    internal List<string> FileArgumentsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Key-value pairs passed in when using the <c>-File</c> option.
-    /// </summary>
-    public virtual IReadOnlyDictionary<string, string> FileKeyValueParameters => FileKeyValueParametersInternal.AsReadOnly();
-    internal Dictionary<string, string> FileKeyValueParametersInternal { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-    /// <summary>
-    ///   Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the <c>NoExit</c> parameter is specified.<para/>The value of Command can be <c>-</c>, a script block, or a string. If the value of <c>Command</c> is <c>-</c>, the command text is read from standard input.<para/>The <c>Command</c> parameter only accepts a script block for execution when it can recognize the value passed to <c>Command</c> as a <c>ScriptBlock</c> type. This is only possible when running <c>powershell.exe</c> from another PowerShell host. The <c>ScriptBlock</c> type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces (<c>{}</c>), before being passed to <c>powershell.exe</c>.
-    /// </summary>
-    public virtual string Command { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("-PSConsoleFile {value}", ConsoleFile)
-          .Add("-Version {value}", Version)
-          .Add("-NoLogo", NoLogo)
-          .Add("-NoExit", NoExit)
-          .Add("-Sta", StartUsingASingleThreadedApartment)
-          .Add("-Mta", StartUsingAMultiThreadedApartment)
-          .Add("-NoProfile", NoProfile)
-          .Add("-NonInteractive", NonInteractive)
-          .Add("-InputFormat {value}", InputFormat)
-          .Add("-OutputFormat {value}", OutputFormat)
-          .Add("-WindowStyle {value}", WindowStyle)
-          .Add("-EncodedCommand {value}", EncodedCommand)
-          .Add("-ConfigurationName {value}", ConfigurationName)
-          .Add("-ExecutionPolicy {value}", ExecutionPolicy)
-          .Add("-File  {value}", File)
-          .Add("{value}", FileArguments)
-          .Add("-{value}", FileKeyValueParameters, "{key} {value}")
-          .Add("-Command {value}", Command);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary>Loads the specified PowerShell console file. Enter the path and name of the console file. To create a console file, use the Export-Console cmdlet in PowerShell.</summary>
+    [Argument(Format = "-PSConsoleFile {value}")] public string ConsoleFile => Get<string>(() => ConsoleFile);
+    /// <summary>Starts the specified version of PowerShell. Valid values are 2.0 and 3.0. The version that you specify must be installed on the system. If Windows PowerShell 3.0 is installed on the computer, <c>3.0</c> is the default version. Otherwise, <c>2.0</c> is the default version. For more information, see <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-windows-powershell">Installing PowerShell</a>.</summary>
+    [Argument(Format = "-Version {value}")] public string Version => Get<string>(() => Version);
+    /// <summary>Hides the copyright banner at startup.</summary>
+    [Argument(Format = "-NoLogo")] public bool? NoLogo => Get<bool?>(() => NoLogo);
+    /// <summary>Does not exit after running startup commands.</summary>
+    [Argument(Format = "-NoExit")] public bool? NoExit => Get<bool?>(() => NoExit);
+    /// <summary>Starts PowerShell using a single-threaded apartment. In Windows PowerShell 2.0, multi-threaded apartment (MTA) is the default. In Windows PowerShell 3.0, single-threaded apartment (STA) is the default.</summary>
+    [Argument(Format = "-Sta")] public bool? StartUsingASingleThreadedApartment => Get<bool?>(() => StartUsingASingleThreadedApartment);
+    /// <summary>Starts PowerShell using a multi-threaded apartment. This parameter is introduced in PowerShell 3.0. In PowerShell 2.0, multi-threaded apartment (MTA) is the default. In PowerShell 3.0, single-threaded apartment (STA) is the default.</summary>
+    [Argument(Format = "-Mta")] public bool? StartUsingAMultiThreadedApartment => Get<bool?>(() => StartUsingAMultiThreadedApartment);
+    /// <summary>Does not load the PowerShell profile.</summary>
+    [Argument(Format = "-NoProfile")] public bool? NoProfile => Get<bool?>(() => NoProfile);
+    /// <summary>Does not present an interactive prompt to the user.</summary>
+    [Argument(Format = "-NonInteractive")] public bool? NonInteractive => Get<bool?>(() => NonInteractive);
+    /// <summary>Describes the format of data sent to PowerShell. Valid values are <c>Text</c> (text strings) or <c>XML</c> (serialized CLIXML format).</summary>
+    [Argument(Format = "-InputFormat {value}")] public PowerShellFormat InputFormat => Get<PowerShellFormat>(() => InputFormat);
+    /// <summary>Determines how output from PowerShell is formatted. Valid values are <c>Text</c>  (text strings) or <c>XML</c>  (serialized CLIXML format).</summary>
+    [Argument(Format = "-OutputFormat {value}")] public PowerShellFormat OutputFormat => Get<PowerShellFormat>(() => OutputFormat);
+    /// <summary>Sets the window style for the session. Valid values are <c>Normal</c>, <c>Minimized</c>, <c>Maximized</c> and <c>Hidden</c>.</summary>
+    [Argument(Format = "-WindowStyle {value}")] public PowerShellWindowStyle WindowStyle => Get<PowerShellWindowStyle>(() => WindowStyle);
+    /// <summary>Accepts a base-64-encoded string version of a command. Use this parameter to submit commands to PowerShell that require complex quotation marks or curly braces. The string must be formatted using UTF-16LE character encoding.</summary>
+    [Argument(Format = "-EncodedCommand {value}")] public string EncodedCommand => Get<string>(() => EncodedCommand);
+    /// <summary>Specifies a configuration endpoint in which PowerShell is run. This can be any endpoint registered on the local machine including the default PowerShell remoting endpoints or a custom endpoint having specific user role capabilities.</summary>
+    [Argument(Format = "-ConfigurationName {value}")] public string ConfigurationName => Get<string>(() => ConfigurationName);
+    /// <summary>Sets the default execution policy for the current session and saves it in the <c>$env:PSExecutionPolicyPreference</c> environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies">about_Execution_Policies</a>.</summary>
+    [Argument(Format = "-ExecutionPolicy {value}")] public string ExecutionPolicy => Get<string>(() => ExecutionPolicy);
+    /// <summary>If the value of File is <c>-</c>, the command text is read from standard input. Running <c>powershell -File -</c> without redirected standard input starts a regular session. This is the same as not specifying the <c>File</c> parameter at all.<para/>If the value of File is a file path, the script runs in the local scope (<c>dot-sourced</c>), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. <c>File</c> must be the last parameter in the command. All values typed after the <c>File</c> parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: <c>powershell.exe -File .\test.ps1 -TestParam %windir%</c>.<para/>In contrast, running <c>powershell.exe -File .\test.ps1 -TestParam $env:windir</c> in cmd.exe results in the script receiving the literal string <c>$env:windir</c> because it has no special meaning to the current cmd.exe shell. The <c>$env:windir</c> style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code.<para/>Similarly, if you want to execute the same command from a Batch script, you would use <c>%~dp0</c> instead of <c>.\</c> or <c>$PSScriptRoot</c> to represent the current execution directory: <c>powershell.exe -File %~dp0test.ps1 -TestParam %windir%</c>. If you instead used <c>.\test.ps1</c>, PowerShell would throw an error because it cannot find the literal path <c>.\test.ps1</c>.<para/>When the value of <c>File</c> is a file path, <c>File</c> must be the last parameter in the command because any characters typed after the <c>File</c> parameter name are interpreted as the script file path followed by the script parameters.<para/>You can include the script parameters and values in the value of the <c>File</c> parameter. For example: <c>-File .\Get-Script.ps1 -Domain Central</c>.<para/>Typically, the switch parameters of a script are either included or omitted. For example, the following command uses the <c>All</c> parameter of the <c>Get-Script.ps1</c> script file: <c>-File .\Get-Script.ps1 -All</c>.<para/>In rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (<c>pwsh.exe</c>).</summary>
+    [Argument(Format = "-File  {value}", Position = 1)] public string File => Get<string>(() => File);
+    /// <summary>Arguments passed in when using the <c>-File</c> option.</summary>
+    [Argument(Format = "{value}", Position = 2)] public IReadOnlyList<string> FileArguments => Get<List<string>>(() => FileArguments);
+    /// <summary>Key-value pairs passed in when using the <c>-File</c> option.</summary>
+    [Argument(Format = "-{key} {value}", Secret = false)] public IReadOnlyDictionary<string, string> FileKeyValueParameters => Get<Dictionary<string, string>>(() => FileKeyValueParameters);
+    /// <summary>Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the <c>NoExit</c> parameter is specified.<para/>The value of Command can be <c>-</c>, a script block, or a string. If the value of <c>Command</c> is <c>-</c>, the command text is read from standard input.<para/>The <c>Command</c> parameter only accepts a script block for execution when it can recognize the value passed to <c>Command</c> as a <c>ScriptBlock</c> type. This is only possible when running <c>powershell.exe</c> from another PowerShell host. The <c>ScriptBlock</c> type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces (<c>{}</c>), before being passed to <c>powershell.exe</c>.</summary>
+    [Argument(Format = "-Command {value}")] public string Command => Get<string>(() => Command);
 }
 #endregion
 #region PowerShellSettingsExtensions
-/// <summary>
-///   Used within <see cref="PowerShellTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="PowerShellTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class PowerShellSettingsExtensions
 {
     #region ConsoleFile
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.ConsoleFile"/></em></p>
-    ///   <p>Loads the specified PowerShell console file. Enter the path and name of the console file. To create a console file, use the Export-Console cmdlet in PowerShell.</p>
-    /// </summary>
-    [Pure]
-    public static T SetConsoleFile<T>(this T toolSettings, string consoleFile) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ConsoleFile = consoleFile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.ConsoleFile"/></em></p>
-    ///   <p>Loads the specified PowerShell console file. Enter the path and name of the console file. To create a console file, use the Export-Console cmdlet in PowerShell.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetConsoleFile<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ConsoleFile = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.ConsoleFile"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.ConsoleFile))]
+    public static T SetConsoleFile<T>(this T o, string v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.ConsoleFile, v));
+    /// <inheritdoc cref="PowerShellSettings.ConsoleFile"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.ConsoleFile))]
+    public static T ResetConsoleFile<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.ConsoleFile));
     #endregion
     #region Version
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.Version"/></em></p>
-    ///   <p>Starts the specified version of PowerShell. Valid values are 2.0 and 3.0. The version that you specify must be installed on the system. If Windows PowerShell 3.0 is installed on the computer, <c>3.0</c> is the default version. Otherwise, <c>2.0</c> is the default version. For more information, see <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-windows-powershell">Installing PowerShell</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetVersion<T>(this T toolSettings, string version) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Version = version;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.Version"/></em></p>
-    ///   <p>Starts the specified version of PowerShell. Valid values are 2.0 and 3.0. The version that you specify must be installed on the system. If Windows PowerShell 3.0 is installed on the computer, <c>3.0</c> is the default version. Otherwise, <c>2.0</c> is the default version. For more information, see <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-windows-powershell">Installing PowerShell</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetVersion<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Version = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.Version"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.Version))]
+    public static T SetVersion<T>(this T o, string v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.Version, v));
+    /// <inheritdoc cref="PowerShellSettings.Version"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.Version))]
+    public static T ResetVersion<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.Version));
     #endregion
     #region NoLogo
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.NoLogo"/></em></p>
-    ///   <p>Hides the copyright banner at startup.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNoLogo<T>(this T toolSettings, bool? noLogo) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = noLogo;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.NoLogo"/></em></p>
-    ///   <p>Hides the copyright banner at startup.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNoLogo<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="PowerShellSettings.NoLogo"/></em></p>
-    ///   <p>Hides the copyright banner at startup.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNoLogo<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="PowerShellSettings.NoLogo"/></em></p>
-    ///   <p>Hides the copyright banner at startup.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNoLogo<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="PowerShellSettings.NoLogo"/></em></p>
-    ///   <p>Hides the copyright banner at startup.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNoLogo<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoLogo = !toolSettings.NoLogo;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoLogo))]
+    public static T SetNoLogo<T>(this T o, bool? v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoLogo, v));
+    /// <inheritdoc cref="PowerShellSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoLogo))]
+    public static T ResetNoLogo<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.NoLogo));
+    /// <inheritdoc cref="PowerShellSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoLogo))]
+    public static T EnableNoLogo<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoLogo, true));
+    /// <inheritdoc cref="PowerShellSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoLogo))]
+    public static T DisableNoLogo<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoLogo, false));
+    /// <inheritdoc cref="PowerShellSettings.NoLogo"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoLogo))]
+    public static T ToggleNoLogo<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoLogo, !o.NoLogo));
     #endregion
     #region NoExit
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.NoExit"/></em></p>
-    ///   <p>Does not exit after running startup commands.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNoExit<T>(this T toolSettings, bool? noExit) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoExit = noExit;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.NoExit"/></em></p>
-    ///   <p>Does not exit after running startup commands.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNoExit<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoExit = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="PowerShellSettings.NoExit"/></em></p>
-    ///   <p>Does not exit after running startup commands.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNoExit<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoExit = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="PowerShellSettings.NoExit"/></em></p>
-    ///   <p>Does not exit after running startup commands.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNoExit<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoExit = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="PowerShellSettings.NoExit"/></em></p>
-    ///   <p>Does not exit after running startup commands.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNoExit<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoExit = !toolSettings.NoExit;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.NoExit"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoExit))]
+    public static T SetNoExit<T>(this T o, bool? v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoExit, v));
+    /// <inheritdoc cref="PowerShellSettings.NoExit"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoExit))]
+    public static T ResetNoExit<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.NoExit));
+    /// <inheritdoc cref="PowerShellSettings.NoExit"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoExit))]
+    public static T EnableNoExit<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoExit, true));
+    /// <inheritdoc cref="PowerShellSettings.NoExit"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoExit))]
+    public static T DisableNoExit<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoExit, false));
+    /// <inheritdoc cref="PowerShellSettings.NoExit"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoExit))]
+    public static T ToggleNoExit<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoExit, !o.NoExit));
     #endregion
     #region StartUsingASingleThreadedApartment
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></em></p>
-    ///   <p>Starts PowerShell using a single-threaded apartment. In Windows PowerShell 2.0, multi-threaded apartment (MTA) is the default. In Windows PowerShell 3.0, single-threaded apartment (STA) is the default.</p>
-    /// </summary>
-    [Pure]
-    public static T SetStartUsingASingleThreadedApartment<T>(this T toolSettings, bool? startUsingASingleThreadedApartment) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StartUsingASingleThreadedApartment = startUsingASingleThreadedApartment;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></em></p>
-    ///   <p>Starts PowerShell using a single-threaded apartment. In Windows PowerShell 2.0, multi-threaded apartment (MTA) is the default. In Windows PowerShell 3.0, single-threaded apartment (STA) is the default.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetStartUsingASingleThreadedApartment<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StartUsingASingleThreadedApartment = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></em></p>
-    ///   <p>Starts PowerShell using a single-threaded apartment. In Windows PowerShell 2.0, multi-threaded apartment (MTA) is the default. In Windows PowerShell 3.0, single-threaded apartment (STA) is the default.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableStartUsingASingleThreadedApartment<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StartUsingASingleThreadedApartment = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></em></p>
-    ///   <p>Starts PowerShell using a single-threaded apartment. In Windows PowerShell 2.0, multi-threaded apartment (MTA) is the default. In Windows PowerShell 3.0, single-threaded apartment (STA) is the default.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableStartUsingASingleThreadedApartment<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StartUsingASingleThreadedApartment = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="PowerShellSettings.StartUsingASingleThreadedApartment"/></em></p>
-    ///   <p>Starts PowerShell using a single-threaded apartment. In Windows PowerShell 2.0, multi-threaded apartment (MTA) is the default. In Windows PowerShell 3.0, single-threaded apartment (STA) is the default.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleStartUsingASingleThreadedApartment<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StartUsingASingleThreadedApartment = !toolSettings.StartUsingASingleThreadedApartment;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.StartUsingASingleThreadedApartment"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.StartUsingASingleThreadedApartment))]
+    public static T SetStartUsingASingleThreadedApartment<T>(this T o, bool? v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.StartUsingASingleThreadedApartment, v));
+    /// <inheritdoc cref="PowerShellSettings.StartUsingASingleThreadedApartment"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.StartUsingASingleThreadedApartment))]
+    public static T ResetStartUsingASingleThreadedApartment<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.StartUsingASingleThreadedApartment));
+    /// <inheritdoc cref="PowerShellSettings.StartUsingASingleThreadedApartment"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.StartUsingASingleThreadedApartment))]
+    public static T EnableStartUsingASingleThreadedApartment<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.StartUsingASingleThreadedApartment, true));
+    /// <inheritdoc cref="PowerShellSettings.StartUsingASingleThreadedApartment"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.StartUsingASingleThreadedApartment))]
+    public static T DisableStartUsingASingleThreadedApartment<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.StartUsingASingleThreadedApartment, false));
+    /// <inheritdoc cref="PowerShellSettings.StartUsingASingleThreadedApartment"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.StartUsingASingleThreadedApartment))]
+    public static T ToggleStartUsingASingleThreadedApartment<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.StartUsingASingleThreadedApartment, !o.StartUsingASingleThreadedApartment));
     #endregion
     #region StartUsingAMultiThreadedApartment
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></em></p>
-    ///   <p>Starts PowerShell using a multi-threaded apartment. This parameter is introduced in PowerShell 3.0. In PowerShell 2.0, multi-threaded apartment (MTA) is the default. In PowerShell 3.0, single-threaded apartment (STA) is the default.</p>
-    /// </summary>
-    [Pure]
-    public static T SetStartUsingAMultiThreadedApartment<T>(this T toolSettings, bool? startUsingAMultiThreadedApartment) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StartUsingAMultiThreadedApartment = startUsingAMultiThreadedApartment;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></em></p>
-    ///   <p>Starts PowerShell using a multi-threaded apartment. This parameter is introduced in PowerShell 3.0. In PowerShell 2.0, multi-threaded apartment (MTA) is the default. In PowerShell 3.0, single-threaded apartment (STA) is the default.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetStartUsingAMultiThreadedApartment<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StartUsingAMultiThreadedApartment = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></em></p>
-    ///   <p>Starts PowerShell using a multi-threaded apartment. This parameter is introduced in PowerShell 3.0. In PowerShell 2.0, multi-threaded apartment (MTA) is the default. In PowerShell 3.0, single-threaded apartment (STA) is the default.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableStartUsingAMultiThreadedApartment<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StartUsingAMultiThreadedApartment = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></em></p>
-    ///   <p>Starts PowerShell using a multi-threaded apartment. This parameter is introduced in PowerShell 3.0. In PowerShell 2.0, multi-threaded apartment (MTA) is the default. In PowerShell 3.0, single-threaded apartment (STA) is the default.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableStartUsingAMultiThreadedApartment<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StartUsingAMultiThreadedApartment = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/></em></p>
-    ///   <p>Starts PowerShell using a multi-threaded apartment. This parameter is introduced in PowerShell 3.0. In PowerShell 2.0, multi-threaded apartment (MTA) is the default. In PowerShell 3.0, single-threaded apartment (STA) is the default.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleStartUsingAMultiThreadedApartment<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.StartUsingAMultiThreadedApartment = !toolSettings.StartUsingAMultiThreadedApartment;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.StartUsingAMultiThreadedApartment))]
+    public static T SetStartUsingAMultiThreadedApartment<T>(this T o, bool? v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.StartUsingAMultiThreadedApartment, v));
+    /// <inheritdoc cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.StartUsingAMultiThreadedApartment))]
+    public static T ResetStartUsingAMultiThreadedApartment<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.StartUsingAMultiThreadedApartment));
+    /// <inheritdoc cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.StartUsingAMultiThreadedApartment))]
+    public static T EnableStartUsingAMultiThreadedApartment<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.StartUsingAMultiThreadedApartment, true));
+    /// <inheritdoc cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.StartUsingAMultiThreadedApartment))]
+    public static T DisableStartUsingAMultiThreadedApartment<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.StartUsingAMultiThreadedApartment, false));
+    /// <inheritdoc cref="PowerShellSettings.StartUsingAMultiThreadedApartment"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.StartUsingAMultiThreadedApartment))]
+    public static T ToggleStartUsingAMultiThreadedApartment<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.StartUsingAMultiThreadedApartment, !o.StartUsingAMultiThreadedApartment));
     #endregion
     #region NoProfile
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.NoProfile"/></em></p>
-    ///   <p>Does not load the PowerShell profile.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNoProfile<T>(this T toolSettings, bool? noProfile) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoProfile = noProfile;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.NoProfile"/></em></p>
-    ///   <p>Does not load the PowerShell profile.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNoProfile<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoProfile = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="PowerShellSettings.NoProfile"/></em></p>
-    ///   <p>Does not load the PowerShell profile.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNoProfile<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoProfile = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="PowerShellSettings.NoProfile"/></em></p>
-    ///   <p>Does not load the PowerShell profile.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNoProfile<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoProfile = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="PowerShellSettings.NoProfile"/></em></p>
-    ///   <p>Does not load the PowerShell profile.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNoProfile<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NoProfile = !toolSettings.NoProfile;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.NoProfile"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoProfile))]
+    public static T SetNoProfile<T>(this T o, bool? v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoProfile, v));
+    /// <inheritdoc cref="PowerShellSettings.NoProfile"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoProfile))]
+    public static T ResetNoProfile<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.NoProfile));
+    /// <inheritdoc cref="PowerShellSettings.NoProfile"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoProfile))]
+    public static T EnableNoProfile<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoProfile, true));
+    /// <inheritdoc cref="PowerShellSettings.NoProfile"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoProfile))]
+    public static T DisableNoProfile<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoProfile, false));
+    /// <inheritdoc cref="PowerShellSettings.NoProfile"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NoProfile))]
+    public static T ToggleNoProfile<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NoProfile, !o.NoProfile));
     #endregion
     #region NonInteractive
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.NonInteractive"/></em></p>
-    ///   <p>Does not present an interactive prompt to the user.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNonInteractive<T>(this T toolSettings, bool? nonInteractive) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NonInteractive = nonInteractive;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.NonInteractive"/></em></p>
-    ///   <p>Does not present an interactive prompt to the user.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNonInteractive<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NonInteractive = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="PowerShellSettings.NonInteractive"/></em></p>
-    ///   <p>Does not present an interactive prompt to the user.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableNonInteractive<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NonInteractive = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="PowerShellSettings.NonInteractive"/></em></p>
-    ///   <p>Does not present an interactive prompt to the user.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableNonInteractive<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NonInteractive = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="PowerShellSettings.NonInteractive"/></em></p>
-    ///   <p>Does not present an interactive prompt to the user.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleNonInteractive<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.NonInteractive = !toolSettings.NonInteractive;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NonInteractive))]
+    public static T SetNonInteractive<T>(this T o, bool? v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NonInteractive, v));
+    /// <inheritdoc cref="PowerShellSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NonInteractive))]
+    public static T ResetNonInteractive<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.NonInteractive));
+    /// <inheritdoc cref="PowerShellSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NonInteractive))]
+    public static T EnableNonInteractive<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NonInteractive, true));
+    /// <inheritdoc cref="PowerShellSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NonInteractive))]
+    public static T DisableNonInteractive<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NonInteractive, false));
+    /// <inheritdoc cref="PowerShellSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.NonInteractive))]
+    public static T ToggleNonInteractive<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.NonInteractive, !o.NonInteractive));
     #endregion
     #region InputFormat
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.InputFormat"/></em></p>
-    ///   <p>Describes the format of data sent to PowerShell. Valid values are <c>Text</c> (text strings) or <c>XML</c> (serialized CLIXML format).</p>
-    /// </summary>
-    [Pure]
-    public static T SetInputFormat<T>(this T toolSettings, PowerShellFormat inputFormat) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InputFormat = inputFormat;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.InputFormat"/></em></p>
-    ///   <p>Describes the format of data sent to PowerShell. Valid values are <c>Text</c> (text strings) or <c>XML</c> (serialized CLIXML format).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetInputFormat<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.InputFormat = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.InputFormat"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.InputFormat))]
+    public static T SetInputFormat<T>(this T o, PowerShellFormat v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.InputFormat, v));
+    /// <inheritdoc cref="PowerShellSettings.InputFormat"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.InputFormat))]
+    public static T ResetInputFormat<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.InputFormat));
     #endregion
     #region OutputFormat
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.OutputFormat"/></em></p>
-    ///   <p>Determines how output from PowerShell is formatted. Valid values are <c>Text</c>  (text strings) or <c>XML</c>  (serialized CLIXML format).</p>
-    /// </summary>
-    [Pure]
-    public static T SetOutputFormat<T>(this T toolSettings, PowerShellFormat outputFormat) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFormat = outputFormat;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.OutputFormat"/></em></p>
-    ///   <p>Determines how output from PowerShell is formatted. Valid values are <c>Text</c>  (text strings) or <c>XML</c>  (serialized CLIXML format).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetOutputFormat<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.OutputFormat = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.OutputFormat"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.OutputFormat))]
+    public static T SetOutputFormat<T>(this T o, PowerShellFormat v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.OutputFormat, v));
+    /// <inheritdoc cref="PowerShellSettings.OutputFormat"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.OutputFormat))]
+    public static T ResetOutputFormat<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.OutputFormat));
     #endregion
     #region WindowStyle
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.WindowStyle"/></em></p>
-    ///   <p>Sets the window style for the session. Valid values are <c>Normal</c>, <c>Minimized</c>, <c>Maximized</c> and <c>Hidden</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetWindowStyle<T>(this T toolSettings, PowerShellWindowStyle windowStyle) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.WindowStyle = windowStyle;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.WindowStyle"/></em></p>
-    ///   <p>Sets the window style for the session. Valid values are <c>Normal</c>, <c>Minimized</c>, <c>Maximized</c> and <c>Hidden</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetWindowStyle<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.WindowStyle = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.WindowStyle"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.WindowStyle))]
+    public static T SetWindowStyle<T>(this T o, PowerShellWindowStyle v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.WindowStyle, v));
+    /// <inheritdoc cref="PowerShellSettings.WindowStyle"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.WindowStyle))]
+    public static T ResetWindowStyle<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.WindowStyle));
     #endregion
     #region EncodedCommand
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.EncodedCommand"/></em></p>
-    ///   <p>Accepts a base-64-encoded string version of a command. Use this parameter to submit commands to PowerShell that require complex quotation marks or curly braces. The string must be formatted using UTF-16LE character encoding.</p>
-    /// </summary>
-    [Pure]
-    public static T SetEncodedCommand<T>(this T toolSettings, string encodedCommand) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EncodedCommand = encodedCommand;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.EncodedCommand"/></em></p>
-    ///   <p>Accepts a base-64-encoded string version of a command. Use this parameter to submit commands to PowerShell that require complex quotation marks or curly braces. The string must be formatted using UTF-16LE character encoding.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetEncodedCommand<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EncodedCommand = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.EncodedCommand"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.EncodedCommand))]
+    public static T SetEncodedCommand<T>(this T o, string v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.EncodedCommand, v));
+    /// <inheritdoc cref="PowerShellSettings.EncodedCommand"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.EncodedCommand))]
+    public static T ResetEncodedCommand<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.EncodedCommand));
     #endregion
     #region ConfigurationName
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.ConfigurationName"/></em></p>
-    ///   <p>Specifies a configuration endpoint in which PowerShell is run. This can be any endpoint registered on the local machine including the default PowerShell remoting endpoints or a custom endpoint having specific user role capabilities.</p>
-    /// </summary>
-    [Pure]
-    public static T SetConfigurationName<T>(this T toolSettings, string configurationName) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ConfigurationName = configurationName;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.ConfigurationName"/></em></p>
-    ///   <p>Specifies a configuration endpoint in which PowerShell is run. This can be any endpoint registered on the local machine including the default PowerShell remoting endpoints or a custom endpoint having specific user role capabilities.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetConfigurationName<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ConfigurationName = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.ConfigurationName"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.ConfigurationName))]
+    public static T SetConfigurationName<T>(this T o, string v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.ConfigurationName, v));
+    /// <inheritdoc cref="PowerShellSettings.ConfigurationName"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.ConfigurationName))]
+    public static T ResetConfigurationName<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.ConfigurationName));
     #endregion
     #region ExecutionPolicy
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.ExecutionPolicy"/></em></p>
-    ///   <p>Sets the default execution policy for the current session and saves it in the <c>$env:PSExecutionPolicyPreference</c> environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies">about_Execution_Policies</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetExecutionPolicy<T>(this T toolSettings, string executionPolicy) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExecutionPolicy = executionPolicy;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.ExecutionPolicy"/></em></p>
-    ///   <p>Sets the default execution policy for the current session and saves it in the <c>$env:PSExecutionPolicyPreference</c> environment variable. This parameter does not change the PowerShell execution policy that is set in the registry. For information about PowerShell execution policies, including a list of valid values, see <a href="https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_execution_policies">about_Execution_Policies</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetExecutionPolicy<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ExecutionPolicy = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.ExecutionPolicy"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.ExecutionPolicy))]
+    public static T SetExecutionPolicy<T>(this T o, string v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.ExecutionPolicy, v));
+    /// <inheritdoc cref="PowerShellSettings.ExecutionPolicy"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.ExecutionPolicy))]
+    public static T ResetExecutionPolicy<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.ExecutionPolicy));
     #endregion
     #region File
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.File"/></em></p>
-    ///   <p>If the value of File is <c>-</c>, the command text is read from standard input. Running <c>powershell -File -</c> without redirected standard input starts a regular session. This is the same as not specifying the <c>File</c> parameter at all.<para/>If the value of File is a file path, the script runs in the local scope (<c>dot-sourced</c>), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. <c>File</c> must be the last parameter in the command. All values typed after the <c>File</c> parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: <c>powershell.exe -File .\test.ps1 -TestParam %windir%</c>.<para/>In contrast, running <c>powershell.exe -File .\test.ps1 -TestParam $env:windir</c> in cmd.exe results in the script receiving the literal string <c>$env:windir</c> because it has no special meaning to the current cmd.exe shell. The <c>$env:windir</c> style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code.<para/>Similarly, if you want to execute the same command from a Batch script, you would use <c>%~dp0</c> instead of <c>.\</c> or <c>$PSScriptRoot</c> to represent the current execution directory: <c>powershell.exe -File %~dp0test.ps1 -TestParam %windir%</c>. If you instead used <c>.\test.ps1</c>, PowerShell would throw an error because it cannot find the literal path <c>.\test.ps1</c>.<para/>When the value of <c>File</c> is a file path, <c>File</c> must be the last parameter in the command because any characters typed after the <c>File</c> parameter name are interpreted as the script file path followed by the script parameters.<para/>You can include the script parameters and values in the value of the <c>File</c> parameter. For example: <c>-File .\Get-Script.ps1 -Domain Central</c>.<para/>Typically, the switch parameters of a script are either included or omitted. For example, the following command uses the <c>All</c> parameter of the <c>Get-Script.ps1</c> script file: <c>-File .\Get-Script.ps1 -All</c>.<para/>In rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (<c>pwsh.exe</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T SetFile<T>(this T toolSettings, string file) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.File = file;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.File"/></em></p>
-    ///   <p>If the value of File is <c>-</c>, the command text is read from standard input. Running <c>powershell -File -</c> without redirected standard input starts a regular session. This is the same as not specifying the <c>File</c> parameter at all.<para/>If the value of File is a file path, the script runs in the local scope (<c>dot-sourced</c>), so that the functions and variables that the script creates are available in the current session. Enter the script file path and any parameters. <c>File</c> must be the last parameter in the command. All values typed after the <c>File</c> parameter are interpreted as the script file path and parameters passed to that script. Parameters passed to the script are passed as literal strings, after interpretation by the current shell. For example, if you are in cmd.exe and want to pass an environment variable value, you would use the cmd.exe syntax: <c>powershell.exe -File .\test.ps1 -TestParam %windir%</c>.<para/>In contrast, running <c>powershell.exe -File .\test.ps1 -TestParam $env:windir</c> in cmd.exe results in the script receiving the literal string <c>$env:windir</c> because it has no special meaning to the current cmd.exe shell. The <c>$env:windir</c> style of environment variable reference can be used inside a Command parameter, since there it will be interpreted as PowerShell code.<para/>Similarly, if you want to execute the same command from a Batch script, you would use <c>%~dp0</c> instead of <c>.\</c> or <c>$PSScriptRoot</c> to represent the current execution directory: <c>powershell.exe -File %~dp0test.ps1 -TestParam %windir%</c>. If you instead used <c>.\test.ps1</c>, PowerShell would throw an error because it cannot find the literal path <c>.\test.ps1</c>.<para/>When the value of <c>File</c> is a file path, <c>File</c> must be the last parameter in the command because any characters typed after the <c>File</c> parameter name are interpreted as the script file path followed by the script parameters.<para/>You can include the script parameters and values in the value of the <c>File</c> parameter. For example: <c>-File .\Get-Script.ps1 -Domain Central</c>.<para/>Typically, the switch parameters of a script are either included or omitted. For example, the following command uses the <c>All</c> parameter of the <c>Get-Script.ps1</c> script file: <c>-File .\Get-Script.ps1 -All</c>.<para/>In rare cases, you might need to provide a Boolean value for a parameter. It is not possible to pass an explicit boolean value for a switch parameter when running a script in this way. This limitation was removed in PowerShell 6 (<c>pwsh.exe</c>).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetFile<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.File = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.File"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.File))]
+    public static T SetFile<T>(this T o, string v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.File, v));
+    /// <inheritdoc cref="PowerShellSettings.File"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.File))]
+    public static T ResetFile<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.File));
     #endregion
     #region FileArguments
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.FileArguments"/> to a new list</em></p>
-    ///   <p>Arguments passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FileArgumentsInternal = fileArguments.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.FileArguments"/> to a new list</em></p>
-    ///   <p>Arguments passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FileArgumentsInternal = fileArguments.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="PowerShellSettings.FileArguments"/></em></p>
-    ///   <p>Arguments passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FileArgumentsInternal.AddRange(fileArguments);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="PowerShellSettings.FileArguments"/></em></p>
-    ///   <p>Arguments passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FileArgumentsInternal.AddRange(fileArguments);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="PowerShellSettings.FileArguments"/></em></p>
-    ///   <p>Arguments passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearFileArguments<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FileArgumentsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="PowerShellSettings.FileArguments"/></em></p>
-    ///   <p>Arguments passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFileArguments<T>(this T toolSettings, params string[] fileArguments) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(fileArguments);
-        toolSettings.FileArgumentsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="PowerShellSettings.FileArguments"/></em></p>
-    ///   <p>Arguments passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFileArguments<T>(this T toolSettings, IEnumerable<string> fileArguments) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(fileArguments);
-        toolSettings.FileArgumentsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.FileArguments"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileArguments))]
+    public static T SetFileArguments<T>(this T o, params string[] v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.FileArguments, v));
+    /// <inheritdoc cref="PowerShellSettings.FileArguments"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileArguments))]
+    public static T SetFileArguments<T>(this T o, IEnumerable<string> v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.FileArguments, v));
+    /// <inheritdoc cref="PowerShellSettings.FileArguments"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileArguments))]
+    public static T AddFileArguments<T>(this T o, params string[] v) where T : PowerShellSettings => o.Modify(b => b.AddCollection(() => o.FileArguments, v));
+    /// <inheritdoc cref="PowerShellSettings.FileArguments"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileArguments))]
+    public static T AddFileArguments<T>(this T o, IEnumerable<string> v) where T : PowerShellSettings => o.Modify(b => b.AddCollection(() => o.FileArguments, v));
+    /// <inheritdoc cref="PowerShellSettings.FileArguments"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileArguments))]
+    public static T RemoveFileArguments<T>(this T o, params string[] v) where T : PowerShellSettings => o.Modify(b => b.RemoveCollection(() => o.FileArguments, v));
+    /// <inheritdoc cref="PowerShellSettings.FileArguments"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileArguments))]
+    public static T RemoveFileArguments<T>(this T o, IEnumerable<string> v) where T : PowerShellSettings => o.Modify(b => b.RemoveCollection(() => o.FileArguments, v));
+    /// <inheritdoc cref="PowerShellSettings.FileArguments"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileArguments))]
+    public static T ClearFileArguments<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.ClearCollection(() => o.FileArguments));
     #endregion
     #region FileKeyValueParameters
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.FileKeyValueParameters"/> to a new dictionary</em></p>
-    ///   <p>Key-value pairs passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFileKeyValueParameters<T>(this T toolSettings, IDictionary<string, string> fileKeyValueParameters) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FileKeyValueParametersInternal = fileKeyValueParameters.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="PowerShellSettings.FileKeyValueParameters"/></em></p>
-    ///   <p>Key-value pairs passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearFileKeyValueParameters<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FileKeyValueParametersInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds a new key-value-pair <see cref="PowerShellSettings.FileKeyValueParameters"/></em></p>
-    ///   <p>Key-value pairs passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFileKeyValueParameter<T>(this T toolSettings, string fileKeyValueParameterKey, string fileKeyValueParameterValue) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FileKeyValueParametersInternal.Add(fileKeyValueParameterKey, fileKeyValueParameterValue);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes a key-value-pair from <see cref="PowerShellSettings.FileKeyValueParameters"/></em></p>
-    ///   <p>Key-value pairs passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFileKeyValueParameter<T>(this T toolSettings, string fileKeyValueParameterKey) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FileKeyValueParametersInternal.Remove(fileKeyValueParameterKey);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets a key-value-pair in <see cref="PowerShellSettings.FileKeyValueParameters"/></em></p>
-    ///   <p>Key-value pairs passed in when using the <c>-File</c> option.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFileKeyValueParameter<T>(this T toolSettings, string fileKeyValueParameterKey, string fileKeyValueParameterValue) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FileKeyValueParametersInternal[fileKeyValueParameterKey] = fileKeyValueParameterValue;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.FileKeyValueParameters"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileKeyValueParameters))]
+    public static T SetFileKeyValueParameters<T>(this T o, IDictionary<string, string> v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.FileKeyValueParameters, v.ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase)));
+    /// <inheritdoc cref="PowerShellSettings.FileKeyValueParameters"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileKeyValueParameters))]
+    public static T SetFileKeyValueParameter<T>(this T o, string k, string v) where T : PowerShellSettings => o.Modify(b => b.SetDictionary(() => o.FileKeyValueParameters, k, v));
+    /// <inheritdoc cref="PowerShellSettings.FileKeyValueParameters"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileKeyValueParameters))]
+    public static T AddFileKeyValueParameter<T>(this T o, string k, string v) where T : PowerShellSettings => o.Modify(b => b.AddDictionary(() => o.FileKeyValueParameters, k, v));
+    /// <inheritdoc cref="PowerShellSettings.FileKeyValueParameters"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileKeyValueParameters))]
+    public static T RemoveFileKeyValueParameter<T>(this T o, string k) where T : PowerShellSettings => o.Modify(b => b.RemoveDictionary(() => o.FileKeyValueParameters, k));
+    /// <inheritdoc cref="PowerShellSettings.FileKeyValueParameters"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.FileKeyValueParameters))]
+    public static T ClearFileKeyValueParameters<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.ClearDictionary(() => o.FileKeyValueParameters));
     #endregion
     #region Command
-    /// <summary>
-    ///   <p><em>Sets <see cref="PowerShellSettings.Command"/></em></p>
-    ///   <p>Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the <c>NoExit</c> parameter is specified.<para/>The value of Command can be <c>-</c>, a script block, or a string. If the value of <c>Command</c> is <c>-</c>, the command text is read from standard input.<para/>The <c>Command</c> parameter only accepts a script block for execution when it can recognize the value passed to <c>Command</c> as a <c>ScriptBlock</c> type. This is only possible when running <c>powershell.exe</c> from another PowerShell host. The <c>ScriptBlock</c> type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces (<c>{}</c>), before being passed to <c>powershell.exe</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetCommand<T>(this T toolSettings, string command) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Command = command;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="PowerShellSettings.Command"/></em></p>
-    ///   <p>Executes the specified commands (and any parameters) as though they were typed at the PowerShell command prompt, and then exits, unless the <c>NoExit</c> parameter is specified.<para/>The value of Command can be <c>-</c>, a script block, or a string. If the value of <c>Command</c> is <c>-</c>, the command text is read from standard input.<para/>The <c>Command</c> parameter only accepts a script block for execution when it can recognize the value passed to <c>Command</c> as a <c>ScriptBlock</c> type. This is only possible when running <c>powershell.exe</c> from another PowerShell host. The <c>ScriptBlock</c> type may be contained in an existing variable, returned from an expression, or parsed by the PowerShell host as a literal script block enclosed in curly braces (<c>{}</c>), before being passed to <c>powershell.exe</c>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetCommand<T>(this T toolSettings) where T : PowerShellSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Command = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="PowerShellSettings.Command"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.Command))]
+    public static T SetCommand<T>(this T o, string v) where T : PowerShellSettings => o.Modify(b => b.Set(() => o.Command, v));
+    /// <inheritdoc cref="PowerShellSettings.Command"/>
+    [Pure] [Builder(Type = typeof(PowerShellSettings), Property = nameof(PowerShellSettings.Command))]
+    public static T ResetCommand<T>(this T o) where T : PowerShellSettings => o.Modify(b => b.Remove(() => o.Command));
     #endregion
 }
 #endregion
 #region PowerShellFormat
-/// <summary>
-///   Used within <see cref="PowerShellTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="PowerShellTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]
@@ -1003,9 +328,7 @@ public partial class PowerShellFormat : Enumeration
 }
 #endregion
 #region PowerShellWindowStyle
-/// <summary>
-///   Used within <see cref="PowerShellTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="PowerShellTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]

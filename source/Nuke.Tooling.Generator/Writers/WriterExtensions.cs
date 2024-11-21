@@ -49,7 +49,7 @@ public static class WriterExtensions
         where T : IWriterWrapper
     {
         if (text != null)
-            writerWrapper.Writer.WriteLine(text);
+            writerWrapper.Writer.WriteLine(text.Trim());
         return writerWrapper;
     }
 

@@ -18,1232 +18,492 @@ using System.Text;
 namespace Nuke.Common.Tools.Discord;
 
 #region DiscordMessage
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DiscordMessage : ISettingsEntity
+[TypeConverter(typeof(TypeConverter<DiscordMessage>))]
+public partial class DiscordMessage : Options
 {
-    /// <summary>
-    ///   Id of the channel.
-    /// </summary>
-    [JsonProperty("channel_id")]
-    public virtual string ChannelId { get; internal set; }
-    /// <summary>
-    ///   Message contents (up to 2000 characters).
-    /// </summary>
-    [JsonProperty("content")]
-    public virtual string Content { get; internal set; }
-    /// <summary>
-    ///   Can be used to verify a message was sent (up to 25 characters). Value will appear in the <a href="https://discord.com/developers/docs/topics/gateway-events#message-create">Message Create event</a>.
-    /// </summary>
-    [JsonProperty("nonce")]
-    public virtual string Nonce { get; internal set; }
-    /// <summary>
-    ///   Whether this is a TTS message.
-    /// </summary>
-    [JsonProperty("tts")]
-    public virtual bool? TTS { get; internal set; }
-    /// <summary>
-    ///   Embedded rich content (up to 6000 characters). See <a href="https://autocode.com/tools/discord/embed-builder/">Discord Embed Builder</a>.
-    /// </summary>
-    [JsonIgnore]
-    public virtual IReadOnlyList<DiscordEmbed> Embeds => EmbedsInternal.AsReadOnly();
-    [JsonProperty("embeds")]
-    internal List<DiscordEmbed> EmbedsInternal { get; set; } = new List<DiscordEmbed>();
+    /// <summary>Id of the channel.</summary>
+    [JsonProperty("channel_id")] public string ChannelId => Get<string>(() => ChannelId);
+    /// <summary>Message contents (up to 2000 characters).</summary>
+    [JsonProperty("content")] public string Content => Get<string>(() => Content);
+    /// <summary>Can be used to verify a message was sent (up to 25 characters). Value will appear in the <a href="https://discord.com/developers/docs/topics/gateway-events#message-create">Message Create event</a>.</summary>
+    [JsonProperty("nonce")] public string Nonce => Get<string>(() => Nonce);
+    /// <summary>Whether this is a TTS message.</summary>
+    [JsonProperty("tts")] public bool? TTS => Get<bool?>(() => TTS);
+    /// <summary>Embedded rich content (up to 6000 characters). See <a href="https://autocode.com/tools/discord/embed-builder/">Discord Embed Builder</a>.</summary>
+    [JsonProperty("embeds")] public IReadOnlyList<DiscordEmbed> Embeds => Get<List<DiscordEmbed>>(() => Embeds);
 }
 #endregion
 #region DiscordEmbed
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DiscordEmbed : ISettingsEntity
+[TypeConverter(typeof(TypeConverter<DiscordEmbed>))]
+public partial class DiscordEmbed : Options
 {
-    /// <summary>
-    ///   Title of embed.
-    /// </summary>
-    [JsonProperty("title")]
-    public virtual string Title { get; internal set; }
-    /// <summary>
-    ///   <a href="https://discord.com/developers/docs/resources/channel#embed-object-embed-types">Type of embed</a> (always <c>rich</c> for webhook embeds).
-    /// </summary>
-    [JsonProperty("type")]
-    public virtual DiscordEmbedType Type { get; internal set; }
-    /// <summary>
-    ///   Description of embed.
-    /// </summary>
-    [JsonProperty("description")]
-    public virtual string Description { get; internal set; }
-    /// <summary>
-    ///   Url of embed.
-    /// </summary>
-    [JsonProperty("url")]
-    public virtual string Url { get; internal set; }
-    /// <summary>
-    ///   ISO8601 timestamp of embed.
-    /// </summary>
-    [JsonProperty("timestamp")]
-    public virtual string Timestamp { get; internal set; }
-    /// <summary>
-    ///   Color code of the embed.
-    /// </summary>
-    [JsonProperty("color")]
-    public virtual int? Color { get; internal set; }
-    /// <summary>
-    ///   Footer information.
-    /// </summary>
-    [JsonProperty("footer")]
-    public virtual DiscordEmbedFooter Footer { get; internal set; }
-    /// <summary>
-    ///   Image information.
-    /// </summary>
-    [JsonProperty("image")]
-    public virtual DiscordEmbedImage Image { get; internal set; }
-    /// <summary>
-    ///   Thumbnail information.
-    /// </summary>
-    [JsonProperty("thumbnail")]
-    public virtual DiscordEmbedThumbnail Thumbnail { get; internal set; }
-    /// <summary>
-    ///   Author information.
-    /// </summary>
-    [JsonProperty("author")]
-    public virtual DiscordEmbedAuthor Author { get; internal set; }
-    /// <summary>
-    ///   Fields information.
-    /// </summary>
-    [JsonIgnore]
-    public virtual IReadOnlyList<DiscordEmbedField> Fields => FieldsInternal.AsReadOnly();
-    [JsonProperty("fields")]
-    internal List<DiscordEmbedField> FieldsInternal { get; set; } = new List<DiscordEmbedField>();
+    /// <summary>Title of embed.</summary>
+    [JsonProperty("title")] public string Title => Get<string>(() => Title);
+    /// <summary><a href="https://discord.com/developers/docs/resources/channel#embed-object-embed-types">Type of embed</a> (always <c>rich</c> for webhook embeds).</summary>
+    [JsonProperty("type")] public DiscordEmbedType Type => Get<DiscordEmbedType>(() => Type);
+    /// <summary>Description of embed.</summary>
+    [JsonProperty("description")] public string Description => Get<string>(() => Description);
+    /// <summary>Url of embed.</summary>
+    [JsonProperty("url")] public string Url => Get<string>(() => Url);
+    /// <summary>ISO8601 timestamp of embed.</summary>
+    [JsonProperty("timestamp")] public string Timestamp => Get<string>(() => Timestamp);
+    /// <summary>Color code of the embed.</summary>
+    [JsonProperty("color")] public int? Color => Get<int?>(() => Color);
+    /// <summary>Footer information.</summary>
+    [JsonProperty("footer")] public DiscordEmbedFooter Footer => Get<DiscordEmbedFooter>(() => Footer);
+    /// <summary>Image information.</summary>
+    [JsonProperty("image")] public DiscordEmbedImage Image => Get<DiscordEmbedImage>(() => Image);
+    /// <summary>Thumbnail information.</summary>
+    [JsonProperty("thumbnail")] public DiscordEmbedThumbnail Thumbnail => Get<DiscordEmbedThumbnail>(() => Thumbnail);
+    /// <summary>Author information.</summary>
+    [JsonProperty("author")] public DiscordEmbedAuthor Author => Get<DiscordEmbedAuthor>(() => Author);
+    /// <summary>Fields information.</summary>
+    [JsonProperty("fields")] public IReadOnlyList<DiscordEmbedField> Fields => Get<List<DiscordEmbedField>>(() => Fields);
 }
 #endregion
 #region DiscordEmbedFooter
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DiscordEmbedFooter : ISettingsEntity
+[TypeConverter(typeof(TypeConverter<DiscordEmbedFooter>))]
+public partial class DiscordEmbedFooter : Options
 {
-    /// <summary>
-    ///   Footer text.
-    /// </summary>
-    [JsonProperty("text")]
-    public virtual string Text { get; internal set; }
-    /// <summary>
-    ///   Url of footer icon (only supports http(s) and attachments).
-    /// </summary>
-    [JsonProperty("icon_url")]
-    public virtual string IconUrl { get; internal set; }
+    /// <summary>Footer text.</summary>
+    [JsonProperty("text")] public string Text => Get<string>(() => Text);
+    /// <summary>Url of footer icon (only supports http(s) and attachments).</summary>
+    [JsonProperty("icon_url")] public string IconUrl => Get<string>(() => IconUrl);
 }
 #endregion
 #region DiscordEmbedImage
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DiscordEmbedImage : ISettingsEntity
+[TypeConverter(typeof(TypeConverter<DiscordEmbedImage>))]
+public partial class DiscordEmbedImage : Options
 {
-    /// <summary>
-    ///   Source url of image (only supports http(s) and attachments).
-    /// </summary>
-    [JsonProperty("url")]
-    public virtual string Url { get; internal set; }
-    /// <summary>
-    ///   Height of image.
-    /// </summary>
-    [JsonProperty("height")]
-    public virtual int? Height { get; internal set; }
-    /// <summary>
-    ///   Width of image.
-    /// </summary>
-    [JsonProperty("width")]
-    public virtual int? Width { get; internal set; }
+    /// <summary>Source url of image (only supports http(s) and attachments).</summary>
+    [JsonProperty("url")] public string Url => Get<string>(() => Url);
+    /// <summary>Height of image.</summary>
+    [JsonProperty("height")] public int? Height => Get<int?>(() => Height);
+    /// <summary>Width of image.</summary>
+    [JsonProperty("width")] public int? Width => Get<int?>(() => Width);
 }
 #endregion
 #region DiscordEmbedThumbnail
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DiscordEmbedThumbnail : ISettingsEntity
+[TypeConverter(typeof(TypeConverter<DiscordEmbedThumbnail>))]
+public partial class DiscordEmbedThumbnail : Options
 {
-    /// <summary>
-    ///   Source url of thumbnail (only supports http(s) and attachments).
-    /// </summary>
-    [JsonProperty("url")]
-    public virtual string Url { get; internal set; }
-    /// <summary>
-    ///   Height of thumbnail.
-    /// </summary>
-    [JsonProperty("height")]
-    public virtual int? Height { get; internal set; }
-    /// <summary>
-    ///   Width of thumbnail.
-    /// </summary>
-    [JsonProperty("width")]
-    public virtual int? Width { get; internal set; }
+    /// <summary>Source url of thumbnail (only supports http(s) and attachments).</summary>
+    [JsonProperty("url")] public string Url => Get<string>(() => Url);
+    /// <summary>Height of thumbnail.</summary>
+    [JsonProperty("height")] public int? Height => Get<int?>(() => Height);
+    /// <summary>Width of thumbnail.</summary>
+    [JsonProperty("width")] public int? Width => Get<int?>(() => Width);
 }
 #endregion
 #region DiscordEmbedAuthor
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DiscordEmbedAuthor : ISettingsEntity
+[TypeConverter(typeof(TypeConverter<DiscordEmbedAuthor>))]
+public partial class DiscordEmbedAuthor : Options
 {
-    /// <summary>
-    ///   Name of author.
-    /// </summary>
-    [JsonProperty("name")]
-    public virtual string Name { get; internal set; }
-    /// <summary>
-    ///   Url of author.
-    /// </summary>
-    [JsonProperty("url")]
-    public virtual string Url { get; internal set; }
-    /// <summary>
-    ///   Url of author icon (only supports http(s) and attachments).
-    /// </summary>
-    [JsonProperty("icon_url")]
-    public virtual string IconUrl { get; internal set; }
+    /// <summary>Name of author.</summary>
+    [JsonProperty("name")] public string Name => Get<string>(() => Name);
+    /// <summary>Url of author.</summary>
+    [JsonProperty("url")] public string Url => Get<string>(() => Url);
+    /// <summary>Url of author icon (only supports http(s) and attachments).</summary>
+    [JsonProperty("icon_url")] public string IconUrl => Get<string>(() => IconUrl);
 }
 #endregion
 #region DiscordEmbedField
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class DiscordEmbedField : ISettingsEntity
+[TypeConverter(typeof(TypeConverter<DiscordEmbedField>))]
+public partial class DiscordEmbedField : Options
 {
-    /// <summary>
-    ///   Name of the field.
-    /// </summary>
-    [JsonProperty("name")]
-    public virtual string Name { get; internal set; }
-    /// <summary>
-    ///   Value of the field.
-    /// </summary>
-    [JsonProperty("value")]
-    public virtual string Value { get; internal set; }
-    /// <summary>
-    ///   Whether or not this field should siplay inline.
-    /// </summary>
-    [JsonProperty("inline")]
-    public virtual bool? Inline { get; internal set; }
+    /// <summary>Name of the field.</summary>
+    [JsonProperty("name")] public string Name => Get<string>(() => Name);
+    /// <summary>Value of the field.</summary>
+    [JsonProperty("value")] public string Value => Get<string>(() => Value);
+    /// <summary>Whether or not this field should siplay inline.</summary>
+    [JsonProperty("inline")] public bool? Inline => Get<bool?>(() => Inline);
 }
 #endregion
 #region DiscordMessageExtensions
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DiscordMessageExtensions
 {
     #region ChannelId
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordMessage.ChannelId"/></em></p>
-    ///   <p>Id of the channel.</p>
-    /// </summary>
-    [Pure]
-    public static T SetChannelId<T>(this T toolSettings, string channelId) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ChannelId = channelId;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordMessage.ChannelId"/></em></p>
-    ///   <p>Id of the channel.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetChannelId<T>(this T toolSettings) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ChannelId = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordMessage.ChannelId"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.ChannelId))]
+    public static T SetChannelId<T>(this T o, string v) where T : DiscordMessage => o.Modify(b => b.Set(() => o.ChannelId, v));
+    /// <inheritdoc cref="DiscordMessage.ChannelId"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.ChannelId))]
+    public static T ResetChannelId<T>(this T o) where T : DiscordMessage => o.Modify(b => b.Remove(() => o.ChannelId));
     #endregion
     #region Content
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordMessage.Content"/></em></p>
-    ///   <p>Message contents (up to 2000 characters).</p>
-    /// </summary>
-    [Pure]
-    public static T SetContent<T>(this T toolSettings, string content) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Content = content;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordMessage.Content"/></em></p>
-    ///   <p>Message contents (up to 2000 characters).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetContent<T>(this T toolSettings) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Content = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordMessage.Content"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Content))]
+    public static T SetContent<T>(this T o, string v) where T : DiscordMessage => o.Modify(b => b.Set(() => o.Content, v));
+    /// <inheritdoc cref="DiscordMessage.Content"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Content))]
+    public static T ResetContent<T>(this T o) where T : DiscordMessage => o.Modify(b => b.Remove(() => o.Content));
     #endregion
     #region Nonce
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordMessage.Nonce"/></em></p>
-    ///   <p>Can be used to verify a message was sent (up to 25 characters). Value will appear in the <a href="https://discord.com/developers/docs/topics/gateway-events#message-create">Message Create event</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetNonce<T>(this T toolSettings, string nonce) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Nonce = nonce;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordMessage.Nonce"/></em></p>
-    ///   <p>Can be used to verify a message was sent (up to 25 characters). Value will appear in the <a href="https://discord.com/developers/docs/topics/gateway-events#message-create">Message Create event</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetNonce<T>(this T toolSettings) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Nonce = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordMessage.Nonce"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Nonce))]
+    public static T SetNonce<T>(this T o, string v) where T : DiscordMessage => o.Modify(b => b.Set(() => o.Nonce, v));
+    /// <inheritdoc cref="DiscordMessage.Nonce"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Nonce))]
+    public static T ResetNonce<T>(this T o) where T : DiscordMessage => o.Modify(b => b.Remove(() => o.Nonce));
     #endregion
     #region TTS
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordMessage.TTS"/></em></p>
-    ///   <p>Whether this is a TTS message.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTTS<T>(this T toolSettings, bool? tts) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TTS = tts;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordMessage.TTS"/></em></p>
-    ///   <p>Whether this is a TTS message.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTTS<T>(this T toolSettings) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TTS = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DiscordMessage.TTS"/></em></p>
-    ///   <p>Whether this is a TTS message.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableTTS<T>(this T toolSettings) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TTS = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DiscordMessage.TTS"/></em></p>
-    ///   <p>Whether this is a TTS message.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableTTS<T>(this T toolSettings) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TTS = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DiscordMessage.TTS"/></em></p>
-    ///   <p>Whether this is a TTS message.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleTTS<T>(this T toolSettings) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.TTS = !toolSettings.TTS;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordMessage.TTS"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.TTS))]
+    public static T SetTTS<T>(this T o, bool? v) where T : DiscordMessage => o.Modify(b => b.Set(() => o.TTS, v));
+    /// <inheritdoc cref="DiscordMessage.TTS"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.TTS))]
+    public static T ResetTTS<T>(this T o) where T : DiscordMessage => o.Modify(b => b.Remove(() => o.TTS));
+    /// <inheritdoc cref="DiscordMessage.TTS"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.TTS))]
+    public static T EnableTTS<T>(this T o) where T : DiscordMessage => o.Modify(b => b.Set(() => o.TTS, true));
+    /// <inheritdoc cref="DiscordMessage.TTS"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.TTS))]
+    public static T DisableTTS<T>(this T o) where T : DiscordMessage => o.Modify(b => b.Set(() => o.TTS, false));
+    /// <inheritdoc cref="DiscordMessage.TTS"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.TTS))]
+    public static T ToggleTTS<T>(this T o) where T : DiscordMessage => o.Modify(b => b.Set(() => o.TTS, !o.TTS));
     #endregion
     #region Embeds
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordMessage.Embeds"/> to a new list</em></p>
-    ///   <p>Embedded rich content (up to 6000 characters). See <a href="https://autocode.com/tools/discord/embed-builder/">Discord Embed Builder</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetEmbeds<T>(this T toolSettings, params DiscordEmbed[] embeds) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EmbedsInternal = embeds.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordMessage.Embeds"/> to a new list</em></p>
-    ///   <p>Embedded rich content (up to 6000 characters). See <a href="https://autocode.com/tools/discord/embed-builder/">Discord Embed Builder</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T SetEmbeds<T>(this T toolSettings, IEnumerable<DiscordEmbed> embeds) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EmbedsInternal = embeds.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DiscordMessage.Embeds"/></em></p>
-    ///   <p>Embedded rich content (up to 6000 characters). See <a href="https://autocode.com/tools/discord/embed-builder/">Discord Embed Builder</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddEmbeds<T>(this T toolSettings, params DiscordEmbed[] embeds) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EmbedsInternal.AddRange(embeds);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds a value to <see cref="DiscordMessage.Embeds"/></em></p>
-    ///   <p>Embedded rich content (up to 6000 characters). See <a href="https://autocode.com/tools/discord/embed-builder/">Discord Embed Builder</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddEmbed<T>(this T toolSettings, Configure<DiscordEmbed> configurator) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EmbedsInternal.Add(configurator.InvokeSafe(new DiscordEmbed()));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DiscordMessage.Embeds"/></em></p>
-    ///   <p>Embedded rich content (up to 6000 characters). See <a href="https://autocode.com/tools/discord/embed-builder/">Discord Embed Builder</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T AddEmbeds<T>(this T toolSettings, IEnumerable<DiscordEmbed> embeds) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EmbedsInternal.AddRange(embeds);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DiscordMessage.Embeds"/></em></p>
-    ///   <p>Embedded rich content (up to 6000 characters). See <a href="https://autocode.com/tools/discord/embed-builder/">Discord Embed Builder</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearEmbeds<T>(this T toolSettings) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.EmbedsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DiscordMessage.Embeds"/></em></p>
-    ///   <p>Embedded rich content (up to 6000 characters). See <a href="https://autocode.com/tools/discord/embed-builder/">Discord Embed Builder</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveEmbeds<T>(this T toolSettings, params DiscordEmbed[] embeds) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<DiscordEmbed>(embeds);
-        toolSettings.EmbedsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DiscordMessage.Embeds"/></em></p>
-    ///   <p>Embedded rich content (up to 6000 characters). See <a href="https://autocode.com/tools/discord/embed-builder/">Discord Embed Builder</a>.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveEmbeds<T>(this T toolSettings, IEnumerable<DiscordEmbed> embeds) where T : DiscordMessage
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<DiscordEmbed>(embeds);
-        toolSettings.EmbedsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordMessage.Embeds"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Embeds))]
+    public static T SetEmbeds<T>(this T o, params DiscordEmbed[] v) where T : DiscordMessage => o.Modify(b => b.Set(() => o.Embeds, v));
+    /// <inheritdoc cref="DiscordMessage.Embeds"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Embeds))]
+    public static T SetEmbeds<T>(this T o, IEnumerable<DiscordEmbed> v) where T : DiscordMessage => o.Modify(b => b.Set(() => o.Embeds, v));
+    /// <inheritdoc cref="DiscordMessage.Embeds"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Embeds))]
+    public static T AddEmbeds<T>(this T o, params DiscordEmbed[] v) where T : DiscordMessage => o.Modify(b => b.AddCollection(() => o.Embeds, v));
+    /// <inheritdoc cref="DiscordMessage.Embeds"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Embeds))]
+    public static T AddEmbeds<T>(this T o, IEnumerable<DiscordEmbed> v) where T : DiscordMessage => o.Modify(b => b.AddCollection(() => o.Embeds, v));
+    /// <inheritdoc cref="DiscordMessage.Embeds"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Embeds))]
+    public static T AddEmbeds<T>(this T o, Configure<DiscordEmbed> v) where T : DiscordMessage => o.Modify(b => b.AddCollection(() => o.Embeds, v.InvokeSafe(new())));
+    /// <inheritdoc cref="DiscordMessage.Embeds"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Embeds))]
+    public static T RemoveEmbeds<T>(this T o, params DiscordEmbed[] v) where T : DiscordMessage => o.Modify(b => b.RemoveCollection(() => o.Embeds, v));
+    /// <inheritdoc cref="DiscordMessage.Embeds"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Embeds))]
+    public static T RemoveEmbeds<T>(this T o, IEnumerable<DiscordEmbed> v) where T : DiscordMessage => o.Modify(b => b.RemoveCollection(() => o.Embeds, v));
+    /// <inheritdoc cref="DiscordMessage.Embeds"/>
+    [Pure] [Builder(Type = typeof(DiscordMessage), Property = nameof(DiscordMessage.Embeds))]
+    public static T ClearEmbeds<T>(this T o) where T : DiscordMessage => o.Modify(b => b.ClearCollection(() => o.Embeds));
     #endregion
 }
 #endregion
 #region DiscordEmbedExtensions
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DiscordEmbedExtensions
 {
     #region Title
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Title"/></em></p>
-    ///   <p>Title of embed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTitle<T>(this T toolSettings, string title) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Title = title;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbed.Title"/></em></p>
-    ///   <p>Title of embed.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTitle<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Title = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Title"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Title))]
+    public static T SetTitle<T>(this T o, string v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Title, v));
+    /// <inheritdoc cref="DiscordEmbed.Title"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Title))]
+    public static T ResetTitle<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.Remove(() => o.Title));
     #endregion
     #region Type
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Type"/></em></p>
-    ///   <p><a href="https://discord.com/developers/docs/resources/channel#embed-object-embed-types">Type of embed</a> (always <c>rich</c> for webhook embeds).</p>
-    /// </summary>
-    [Pure]
-    public static T SetType<T>(this T toolSettings, DiscordEmbedType type) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Type = type;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbed.Type"/></em></p>
-    ///   <p><a href="https://discord.com/developers/docs/resources/channel#embed-object-embed-types">Type of embed</a> (always <c>rich</c> for webhook embeds).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetType<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Type = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Type"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Type))]
+    public static T SetType<T>(this T o, DiscordEmbedType v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Type, v));
+    /// <inheritdoc cref="DiscordEmbed.Type"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Type))]
+    public static T ResetType<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.Remove(() => o.Type));
     #endregion
     #region Description
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Description"/></em></p>
-    ///   <p>Description of embed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDescription<T>(this T toolSettings, string description) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Description = description;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbed.Description"/></em></p>
-    ///   <p>Description of embed.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDescription<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Description = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Description"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Description))]
+    public static T SetDescription<T>(this T o, string v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Description, v));
+    /// <inheritdoc cref="DiscordEmbed.Description"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Description))]
+    public static T ResetDescription<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.Remove(() => o.Description));
     #endregion
     #region Url
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Url"/></em></p>
-    ///   <p>Url of embed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetUrl<T>(this T toolSettings, string url) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Url = url;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbed.Url"/></em></p>
-    ///   <p>Url of embed.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUrl<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Url = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Url"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Url))]
+    public static T SetUrl<T>(this T o, string v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Url, v));
+    /// <inheritdoc cref="DiscordEmbed.Url"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Url))]
+    public static T ResetUrl<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.Remove(() => o.Url));
     #endregion
     #region Timestamp
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Timestamp"/></em></p>
-    ///   <p>ISO8601 timestamp of embed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetTimestamp<T>(this T toolSettings, string timestamp) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Timestamp = timestamp;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbed.Timestamp"/></em></p>
-    ///   <p>ISO8601 timestamp of embed.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetTimestamp<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Timestamp = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Timestamp"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Timestamp))]
+    public static T SetTimestamp<T>(this T o, string v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Timestamp, v));
+    /// <inheritdoc cref="DiscordEmbed.Timestamp"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Timestamp))]
+    public static T ResetTimestamp<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.Remove(() => o.Timestamp));
     #endregion
     #region Color
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Color"/></em></p>
-    ///   <p>Color code of the embed.</p>
-    /// </summary>
-    [Pure]
-    public static T SetColor<T>(this T toolSettings, int? color) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Color = color;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbed.Color"/></em></p>
-    ///   <p>Color code of the embed.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetColor<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Color = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Color"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Color))]
+    public static T SetColor<T>(this T o, int? v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Color, v));
+    /// <inheritdoc cref="DiscordEmbed.Color"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Color))]
+    public static T ResetColor<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.Remove(() => o.Color));
     #endregion
     #region Footer
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Footer"/></em></p>
-    ///   <p>Footer information.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFooter<T>(this T toolSettings, DiscordEmbedFooter footer) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Footer = footer;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbed.Footer"/></em></p>
-    ///   <p>Footer information.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetFooter<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Footer = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Footer"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Footer))]
+    public static T SetFooter<T>(this T o, DiscordEmbedFooter v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Footer, v));
+    /// <inheritdoc cref="DiscordEmbed.Footer"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Footer))]
+    public static T SetFooter<T>(this T o, Configure<DiscordEmbedFooter> v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Footer,  v.InvokeSafe(new())));
+    /// <inheritdoc cref="DiscordEmbed.Footer"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Footer))]
+    public static T ResetFooter<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.Remove(() => o.Footer));
     #endregion
     #region Image
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Image"/></em></p>
-    ///   <p>Image information.</p>
-    /// </summary>
-    [Pure]
-    public static T SetImage<T>(this T toolSettings, DiscordEmbedImage image) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Image = image;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbed.Image"/></em></p>
-    ///   <p>Image information.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetImage<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Image = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Image"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Image))]
+    public static T SetImage<T>(this T o, DiscordEmbedImage v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Image, v));
+    /// <inheritdoc cref="DiscordEmbed.Image"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Image))]
+    public static T SetImage<T>(this T o, Configure<DiscordEmbedImage> v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Image,  v.InvokeSafe(new())));
+    /// <inheritdoc cref="DiscordEmbed.Image"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Image))]
+    public static T ResetImage<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.Remove(() => o.Image));
     #endregion
     #region Thumbnail
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Thumbnail"/></em></p>
-    ///   <p>Thumbnail information.</p>
-    /// </summary>
-    [Pure]
-    public static T SetThumbnail<T>(this T toolSettings, DiscordEmbedThumbnail thumbnail) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Thumbnail = thumbnail;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbed.Thumbnail"/></em></p>
-    ///   <p>Thumbnail information.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetThumbnail<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Thumbnail = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Thumbnail"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Thumbnail))]
+    public static T SetThumbnail<T>(this T o, DiscordEmbedThumbnail v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Thumbnail, v));
+    /// <inheritdoc cref="DiscordEmbed.Thumbnail"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Thumbnail))]
+    public static T SetThumbnail<T>(this T o, Configure<DiscordEmbedThumbnail> v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Thumbnail,  v.InvokeSafe(new())));
+    /// <inheritdoc cref="DiscordEmbed.Thumbnail"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Thumbnail))]
+    public static T ResetThumbnail<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.Remove(() => o.Thumbnail));
     #endregion
     #region Author
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Author"/></em></p>
-    ///   <p>Author information.</p>
-    /// </summary>
-    [Pure]
-    public static T SetAuthor<T>(this T toolSettings, DiscordEmbedAuthor author) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Author = author;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbed.Author"/></em></p>
-    ///   <p>Author information.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetAuthor<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Author = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Author"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Author))]
+    public static T SetAuthor<T>(this T o, DiscordEmbedAuthor v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Author, v));
+    /// <inheritdoc cref="DiscordEmbed.Author"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Author))]
+    public static T SetAuthor<T>(this T o, Configure<DiscordEmbedAuthor> v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Author,  v.InvokeSafe(new())));
+    /// <inheritdoc cref="DiscordEmbed.Author"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Author))]
+    public static T ResetAuthor<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.Remove(() => o.Author));
     #endregion
     #region Fields
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Fields"/> to a new list</em></p>
-    ///   <p>Fields information.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFields<T>(this T toolSettings, params DiscordEmbedField[] fields) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FieldsInternal = fields.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbed.Fields"/> to a new list</em></p>
-    ///   <p>Fields information.</p>
-    /// </summary>
-    [Pure]
-    public static T SetFields<T>(this T toolSettings, IEnumerable<DiscordEmbedField> fields) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FieldsInternal = fields.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DiscordEmbed.Fields"/></em></p>
-    ///   <p>Fields information.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFields<T>(this T toolSettings, params DiscordEmbedField[] fields) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FieldsInternal.AddRange(fields);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds a value to <see cref="DiscordEmbed.Fields"/></em></p>
-    ///   <p>Fields information.</p>
-    /// </summary>
-    [Pure]
-    public static T AddField<T>(this T toolSettings, Configure<DiscordEmbedField> configurator) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FieldsInternal.Add(configurator.InvokeSafe(new DiscordEmbedField()));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="DiscordEmbed.Fields"/></em></p>
-    ///   <p>Fields information.</p>
-    /// </summary>
-    [Pure]
-    public static T AddFields<T>(this T toolSettings, IEnumerable<DiscordEmbedField> fields) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FieldsInternal.AddRange(fields);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="DiscordEmbed.Fields"/></em></p>
-    ///   <p>Fields information.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearFields<T>(this T toolSettings) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FieldsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DiscordEmbed.Fields"/></em></p>
-    ///   <p>Fields information.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFields<T>(this T toolSettings, params DiscordEmbedField[] fields) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<DiscordEmbedField>(fields);
-        toolSettings.FieldsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="DiscordEmbed.Fields"/></em></p>
-    ///   <p>Fields information.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveFields<T>(this T toolSettings, IEnumerable<DiscordEmbedField> fields) where T : DiscordEmbed
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<DiscordEmbedField>(fields);
-        toolSettings.FieldsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbed.Fields"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Fields))]
+    public static T SetFields<T>(this T o, params DiscordEmbedField[] v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Fields, v));
+    /// <inheritdoc cref="DiscordEmbed.Fields"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Fields))]
+    public static T SetFields<T>(this T o, IEnumerable<DiscordEmbedField> v) where T : DiscordEmbed => o.Modify(b => b.Set(() => o.Fields, v));
+    /// <inheritdoc cref="DiscordEmbed.Fields"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Fields))]
+    public static T AddFields<T>(this T o, params DiscordEmbedField[] v) where T : DiscordEmbed => o.Modify(b => b.AddCollection(() => o.Fields, v));
+    /// <inheritdoc cref="DiscordEmbed.Fields"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Fields))]
+    public static T AddFields<T>(this T o, IEnumerable<DiscordEmbedField> v) where T : DiscordEmbed => o.Modify(b => b.AddCollection(() => o.Fields, v));
+    /// <inheritdoc cref="DiscordEmbed.Fields"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Fields))]
+    public static T AddFields<T>(this T o, Configure<DiscordEmbedField> v) where T : DiscordEmbed => o.Modify(b => b.AddCollection(() => o.Fields, v.InvokeSafe(new())));
+    /// <inheritdoc cref="DiscordEmbed.Fields"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Fields))]
+    public static T RemoveFields<T>(this T o, params DiscordEmbedField[] v) where T : DiscordEmbed => o.Modify(b => b.RemoveCollection(() => o.Fields, v));
+    /// <inheritdoc cref="DiscordEmbed.Fields"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Fields))]
+    public static T RemoveFields<T>(this T o, IEnumerable<DiscordEmbedField> v) where T : DiscordEmbed => o.Modify(b => b.RemoveCollection(() => o.Fields, v));
+    /// <inheritdoc cref="DiscordEmbed.Fields"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbed), Property = nameof(DiscordEmbed.Fields))]
+    public static T ClearFields<T>(this T o) where T : DiscordEmbed => o.Modify(b => b.ClearCollection(() => o.Fields));
     #endregion
 }
 #endregion
 #region DiscordEmbedFooterExtensions
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DiscordEmbedFooterExtensions
 {
     #region Text
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedFooter.Text"/></em></p>
-    ///   <p>Footer text.</p>
-    /// </summary>
-    [Pure]
-    public static T SetText<T>(this T toolSettings, string text) where T : DiscordEmbedFooter
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Text = text;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedFooter.Text"/></em></p>
-    ///   <p>Footer text.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetText<T>(this T toolSettings) where T : DiscordEmbedFooter
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Text = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedFooter.Text"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedFooter), Property = nameof(DiscordEmbedFooter.Text))]
+    public static T SetText<T>(this T o, string v) where T : DiscordEmbedFooter => o.Modify(b => b.Set(() => o.Text, v));
+    /// <inheritdoc cref="DiscordEmbedFooter.Text"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedFooter), Property = nameof(DiscordEmbedFooter.Text))]
+    public static T ResetText<T>(this T o) where T : DiscordEmbedFooter => o.Modify(b => b.Remove(() => o.Text));
     #endregion
     #region IconUrl
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedFooter.IconUrl"/></em></p>
-    ///   <p>Url of footer icon (only supports http(s) and attachments).</p>
-    /// </summary>
-    [Pure]
-    public static T SetIconUrl<T>(this T toolSettings, string iconUrl) where T : DiscordEmbedFooter
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IconUrl = iconUrl;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedFooter.IconUrl"/></em></p>
-    ///   <p>Url of footer icon (only supports http(s) and attachments).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetIconUrl<T>(this T toolSettings) where T : DiscordEmbedFooter
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IconUrl = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedFooter.IconUrl"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedFooter), Property = nameof(DiscordEmbedFooter.IconUrl))]
+    public static T SetIconUrl<T>(this T o, string v) where T : DiscordEmbedFooter => o.Modify(b => b.Set(() => o.IconUrl, v));
+    /// <inheritdoc cref="DiscordEmbedFooter.IconUrl"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedFooter), Property = nameof(DiscordEmbedFooter.IconUrl))]
+    public static T ResetIconUrl<T>(this T o) where T : DiscordEmbedFooter => o.Modify(b => b.Remove(() => o.IconUrl));
     #endregion
 }
 #endregion
 #region DiscordEmbedImageExtensions
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DiscordEmbedImageExtensions
 {
     #region Url
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedImage.Url"/></em></p>
-    ///   <p>Source url of image (only supports http(s) and attachments).</p>
-    /// </summary>
-    [Pure]
-    public static T SetUrl<T>(this T toolSettings, string url) where T : DiscordEmbedImage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Url = url;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedImage.Url"/></em></p>
-    ///   <p>Source url of image (only supports http(s) and attachments).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUrl<T>(this T toolSettings) where T : DiscordEmbedImage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Url = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedImage.Url"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedImage), Property = nameof(DiscordEmbedImage.Url))]
+    public static T SetUrl<T>(this T o, string v) where T : DiscordEmbedImage => o.Modify(b => b.Set(() => o.Url, v));
+    /// <inheritdoc cref="DiscordEmbedImage.Url"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedImage), Property = nameof(DiscordEmbedImage.Url))]
+    public static T ResetUrl<T>(this T o) where T : DiscordEmbedImage => o.Modify(b => b.Remove(() => o.Url));
     #endregion
     #region Height
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedImage.Height"/></em></p>
-    ///   <p>Height of image.</p>
-    /// </summary>
-    [Pure]
-    public static T SetHeight<T>(this T toolSettings, int? height) where T : DiscordEmbedImage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Height = height;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedImage.Height"/></em></p>
-    ///   <p>Height of image.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetHeight<T>(this T toolSettings) where T : DiscordEmbedImage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Height = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedImage.Height"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedImage), Property = nameof(DiscordEmbedImage.Height))]
+    public static T SetHeight<T>(this T o, int? v) where T : DiscordEmbedImage => o.Modify(b => b.Set(() => o.Height, v));
+    /// <inheritdoc cref="DiscordEmbedImage.Height"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedImage), Property = nameof(DiscordEmbedImage.Height))]
+    public static T ResetHeight<T>(this T o) where T : DiscordEmbedImage => o.Modify(b => b.Remove(() => o.Height));
     #endregion
     #region Width
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedImage.Width"/></em></p>
-    ///   <p>Width of image.</p>
-    /// </summary>
-    [Pure]
-    public static T SetWidth<T>(this T toolSettings, int? width) where T : DiscordEmbedImage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Width = width;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedImage.Width"/></em></p>
-    ///   <p>Width of image.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetWidth<T>(this T toolSettings) where T : DiscordEmbedImage
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Width = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedImage.Width"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedImage), Property = nameof(DiscordEmbedImage.Width))]
+    public static T SetWidth<T>(this T o, int? v) where T : DiscordEmbedImage => o.Modify(b => b.Set(() => o.Width, v));
+    /// <inheritdoc cref="DiscordEmbedImage.Width"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedImage), Property = nameof(DiscordEmbedImage.Width))]
+    public static T ResetWidth<T>(this T o) where T : DiscordEmbedImage => o.Modify(b => b.Remove(() => o.Width));
     #endregion
 }
 #endregion
 #region DiscordEmbedThumbnailExtensions
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DiscordEmbedThumbnailExtensions
 {
     #region Url
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedThumbnail.Url"/></em></p>
-    ///   <p>Source url of thumbnail (only supports http(s) and attachments).</p>
-    /// </summary>
-    [Pure]
-    public static T SetUrl<T>(this T toolSettings, string url) where T : DiscordEmbedThumbnail
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Url = url;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedThumbnail.Url"/></em></p>
-    ///   <p>Source url of thumbnail (only supports http(s) and attachments).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUrl<T>(this T toolSettings) where T : DiscordEmbedThumbnail
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Url = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedThumbnail.Url"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedThumbnail), Property = nameof(DiscordEmbedThumbnail.Url))]
+    public static T SetUrl<T>(this T o, string v) where T : DiscordEmbedThumbnail => o.Modify(b => b.Set(() => o.Url, v));
+    /// <inheritdoc cref="DiscordEmbedThumbnail.Url"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedThumbnail), Property = nameof(DiscordEmbedThumbnail.Url))]
+    public static T ResetUrl<T>(this T o) where T : DiscordEmbedThumbnail => o.Modify(b => b.Remove(() => o.Url));
     #endregion
     #region Height
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedThumbnail.Height"/></em></p>
-    ///   <p>Height of thumbnail.</p>
-    /// </summary>
-    [Pure]
-    public static T SetHeight<T>(this T toolSettings, int? height) where T : DiscordEmbedThumbnail
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Height = height;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedThumbnail.Height"/></em></p>
-    ///   <p>Height of thumbnail.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetHeight<T>(this T toolSettings) where T : DiscordEmbedThumbnail
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Height = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedThumbnail.Height"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedThumbnail), Property = nameof(DiscordEmbedThumbnail.Height))]
+    public static T SetHeight<T>(this T o, int? v) where T : DiscordEmbedThumbnail => o.Modify(b => b.Set(() => o.Height, v));
+    /// <inheritdoc cref="DiscordEmbedThumbnail.Height"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedThumbnail), Property = nameof(DiscordEmbedThumbnail.Height))]
+    public static T ResetHeight<T>(this T o) where T : DiscordEmbedThumbnail => o.Modify(b => b.Remove(() => o.Height));
     #endregion
     #region Width
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedThumbnail.Width"/></em></p>
-    ///   <p>Width of thumbnail.</p>
-    /// </summary>
-    [Pure]
-    public static T SetWidth<T>(this T toolSettings, int? width) where T : DiscordEmbedThumbnail
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Width = width;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedThumbnail.Width"/></em></p>
-    ///   <p>Width of thumbnail.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetWidth<T>(this T toolSettings) where T : DiscordEmbedThumbnail
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Width = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedThumbnail.Width"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedThumbnail), Property = nameof(DiscordEmbedThumbnail.Width))]
+    public static T SetWidth<T>(this T o, int? v) where T : DiscordEmbedThumbnail => o.Modify(b => b.Set(() => o.Width, v));
+    /// <inheritdoc cref="DiscordEmbedThumbnail.Width"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedThumbnail), Property = nameof(DiscordEmbedThumbnail.Width))]
+    public static T ResetWidth<T>(this T o) where T : DiscordEmbedThumbnail => o.Modify(b => b.Remove(() => o.Width));
     #endregion
 }
 #endregion
 #region DiscordEmbedAuthorExtensions
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DiscordEmbedAuthorExtensions
 {
     #region Name
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedAuthor.Name"/></em></p>
-    ///   <p>Name of author.</p>
-    /// </summary>
-    [Pure]
-    public static T SetName<T>(this T toolSettings, string name) where T : DiscordEmbedAuthor
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Name = name;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedAuthor.Name"/></em></p>
-    ///   <p>Name of author.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetName<T>(this T toolSettings) where T : DiscordEmbedAuthor
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Name = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedAuthor.Name"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedAuthor), Property = nameof(DiscordEmbedAuthor.Name))]
+    public static T SetName<T>(this T o, string v) where T : DiscordEmbedAuthor => o.Modify(b => b.Set(() => o.Name, v));
+    /// <inheritdoc cref="DiscordEmbedAuthor.Name"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedAuthor), Property = nameof(DiscordEmbedAuthor.Name))]
+    public static T ResetName<T>(this T o) where T : DiscordEmbedAuthor => o.Modify(b => b.Remove(() => o.Name));
     #endregion
     #region Url
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedAuthor.Url"/></em></p>
-    ///   <p>Url of author.</p>
-    /// </summary>
-    [Pure]
-    public static T SetUrl<T>(this T toolSettings, string url) where T : DiscordEmbedAuthor
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Url = url;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedAuthor.Url"/></em></p>
-    ///   <p>Url of author.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUrl<T>(this T toolSettings) where T : DiscordEmbedAuthor
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Url = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedAuthor.Url"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedAuthor), Property = nameof(DiscordEmbedAuthor.Url))]
+    public static T SetUrl<T>(this T o, string v) where T : DiscordEmbedAuthor => o.Modify(b => b.Set(() => o.Url, v));
+    /// <inheritdoc cref="DiscordEmbedAuthor.Url"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedAuthor), Property = nameof(DiscordEmbedAuthor.Url))]
+    public static T ResetUrl<T>(this T o) where T : DiscordEmbedAuthor => o.Modify(b => b.Remove(() => o.Url));
     #endregion
     #region IconUrl
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedAuthor.IconUrl"/></em></p>
-    ///   <p>Url of author icon (only supports http(s) and attachments).</p>
-    /// </summary>
-    [Pure]
-    public static T SetIconUrl<T>(this T toolSettings, string iconUrl) where T : DiscordEmbedAuthor
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IconUrl = iconUrl;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedAuthor.IconUrl"/></em></p>
-    ///   <p>Url of author icon (only supports http(s) and attachments).</p>
-    /// </summary>
-    [Pure]
-    public static T ResetIconUrl<T>(this T toolSettings) where T : DiscordEmbedAuthor
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.IconUrl = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedAuthor.IconUrl"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedAuthor), Property = nameof(DiscordEmbedAuthor.IconUrl))]
+    public static T SetIconUrl<T>(this T o, string v) where T : DiscordEmbedAuthor => o.Modify(b => b.Set(() => o.IconUrl, v));
+    /// <inheritdoc cref="DiscordEmbedAuthor.IconUrl"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedAuthor), Property = nameof(DiscordEmbedAuthor.IconUrl))]
+    public static T ResetIconUrl<T>(this T o) where T : DiscordEmbedAuthor => o.Modify(b => b.Remove(() => o.IconUrl));
     #endregion
 }
 #endregion
 #region DiscordEmbedFieldExtensions
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DiscordEmbedFieldExtensions
 {
     #region Name
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedField.Name"/></em></p>
-    ///   <p>Name of the field.</p>
-    /// </summary>
-    [Pure]
-    public static T SetName<T>(this T toolSettings, string name) where T : DiscordEmbedField
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Name = name;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedField.Name"/></em></p>
-    ///   <p>Name of the field.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetName<T>(this T toolSettings) where T : DiscordEmbedField
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Name = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedField.Name"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedField), Property = nameof(DiscordEmbedField.Name))]
+    public static T SetName<T>(this T o, string v) where T : DiscordEmbedField => o.Modify(b => b.Set(() => o.Name, v));
+    /// <inheritdoc cref="DiscordEmbedField.Name"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedField), Property = nameof(DiscordEmbedField.Name))]
+    public static T ResetName<T>(this T o) where T : DiscordEmbedField => o.Modify(b => b.Remove(() => o.Name));
     #endregion
     #region Value
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedField.Value"/></em></p>
-    ///   <p>Value of the field.</p>
-    /// </summary>
-    [Pure]
-    public static T SetValue<T>(this T toolSettings, string value) where T : DiscordEmbedField
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Value = value;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedField.Value"/></em></p>
-    ///   <p>Value of the field.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetValue<T>(this T toolSettings) where T : DiscordEmbedField
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Value = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedField.Value"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedField), Property = nameof(DiscordEmbedField.Value))]
+    public static T SetValue<T>(this T o, string v) where T : DiscordEmbedField => o.Modify(b => b.Set(() => o.Value, v));
+    /// <inheritdoc cref="DiscordEmbedField.Value"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedField), Property = nameof(DiscordEmbedField.Value))]
+    public static T ResetValue<T>(this T o) where T : DiscordEmbedField => o.Modify(b => b.Remove(() => o.Value));
     #endregion
     #region Inline
-    /// <summary>
-    ///   <p><em>Sets <see cref="DiscordEmbedField.Inline"/></em></p>
-    ///   <p>Whether or not this field should siplay inline.</p>
-    /// </summary>
-    [Pure]
-    public static T SetInline<T>(this T toolSettings, bool? inline) where T : DiscordEmbedField
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Inline = inline;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="DiscordEmbedField.Inline"/></em></p>
-    ///   <p>Whether or not this field should siplay inline.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetInline<T>(this T toolSettings) where T : DiscordEmbedField
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Inline = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="DiscordEmbedField.Inline"/></em></p>
-    ///   <p>Whether or not this field should siplay inline.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableInline<T>(this T toolSettings) where T : DiscordEmbedField
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Inline = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="DiscordEmbedField.Inline"/></em></p>
-    ///   <p>Whether or not this field should siplay inline.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableInline<T>(this T toolSettings) where T : DiscordEmbedField
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Inline = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="DiscordEmbedField.Inline"/></em></p>
-    ///   <p>Whether or not this field should siplay inline.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleInline<T>(this T toolSettings) where T : DiscordEmbedField
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Inline = !toolSettings.Inline;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="DiscordEmbedField.Inline"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedField), Property = nameof(DiscordEmbedField.Inline))]
+    public static T SetInline<T>(this T o, bool? v) where T : DiscordEmbedField => o.Modify(b => b.Set(() => o.Inline, v));
+    /// <inheritdoc cref="DiscordEmbedField.Inline"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedField), Property = nameof(DiscordEmbedField.Inline))]
+    public static T ResetInline<T>(this T o) where T : DiscordEmbedField => o.Modify(b => b.Remove(() => o.Inline));
+    /// <inheritdoc cref="DiscordEmbedField.Inline"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedField), Property = nameof(DiscordEmbedField.Inline))]
+    public static T EnableInline<T>(this T o) where T : DiscordEmbedField => o.Modify(b => b.Set(() => o.Inline, true));
+    /// <inheritdoc cref="DiscordEmbedField.Inline"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedField), Property = nameof(DiscordEmbedField.Inline))]
+    public static T DisableInline<T>(this T o) where T : DiscordEmbedField => o.Modify(b => b.Set(() => o.Inline, false));
+    /// <inheritdoc cref="DiscordEmbedField.Inline"/>
+    [Pure] [Builder(Type = typeof(DiscordEmbedField), Property = nameof(DiscordEmbedField.Inline))]
+    public static T ToggleInline<T>(this T o) where T : DiscordEmbedField => o.Modify(b => b.Set(() => o.Inline, !o.Inline));
     #endregion
 }
 #endregion
 #region DiscordEmbedType
-/// <summary>
-///   Used within <see cref="DiscordTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="DiscordTasks"/>.</summary>
 [PublicAPI]
 [Serializable]
 [ExcludeFromCodeCoverage]

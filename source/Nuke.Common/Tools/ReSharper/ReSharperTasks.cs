@@ -5,7 +5,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using JetBrains.Annotations;
 using Nuke.Common.CI.TeamCity;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
@@ -18,53 +17,51 @@ partial class ReSharperTasks
 {
     public const string ReSharperPluginLatest = "latest";
 
-    private static void PreProcess<T>(ref T toolSettings) where T : ReSharperSettingsBase
+    protected override ToolOptions PreProcess(ToolOptions options)
     {
-        if (toolSettings.Plugins.Count == 0)
-            return;
+        var resharperOptions = ((ReSharperSettingsBase)options)
+            .SetProcessToolPath(GetToolPath());
+        if (resharperOptions.Plugins.Count == 0)
+            return resharperOptions;
 
-        var wave = GetWave(toolSettings).NotNull("wave != null");
-        var shadowDirectory = GetShadowDirectory(toolSettings, wave);
+        var wave = GetWave(resharperOptions).NotNull("wave != null");
+        var shadowDirectory = NukeBuild.TemporaryDirectory / $"ReSharper-{wave}-{GetHash()}";
 
-        ((AbsolutePath)toolSettings.ProcessToolPath.NotNull()).Copy(
+        ((AbsolutePath)resharperOptions.ProcessToolPath).Parent.Copy(
             target: shadowDirectory,
             policy: ExistsPolicy.MergeAndOverwriteIfNewer);
 
-        toolSettings.Plugins
-            .Select(x => (Plugin: x.Key, Version: x.Value == ReSharperPluginLatest ? null : x.Value))
-            .ForEach(x => HttpTasks.HttpDownloadFile(
-                $"http://resharper-plugins.jetbrains.com/dotnet/api/v2/curated-feeds/Wave_v{wave}.0/Packages(Id='{x.Plugin}',Version='{x.Version}')/Download",
-                Path.Combine(shadowDirectory, $"{x.Plugin}.nupkg")));
+        DownloadPlugins();
 
-        toolSettings = toolSettings.SetProcessToolPath(Path.Combine(shadowDirectory, Path.GetFileName(toolSettings.ProcessToolPath)));
+        return resharperOptions
+            .SetProcessToolPath(shadowDirectory / Path.GetFileName(resharperOptions.ProcessToolPath));
+
+        string GetWave(ReSharperSettingsBase toolSettings) =>
+            Directory.GetParent(toolSettings.ProcessToolPath)
+                .DescendantsAndSelf(x => x.Parent)
+                .Select(x => Path.Combine(x.FullName, "jetbrains.resharper.globaltools.nuspec"))
+                .Where(File.Exists)
+                .Select(x => new FileInfo(x).Directory.NotNull().Name)
+                .Select(x => $"{x[2]}{x[3]}{x[5]}")
+                .SingleOrDefault();
+
+        string GetHash() =>
+            resharperOptions.ProcessToolPath
+                .Concat(resharperOptions.Plugins.Select(x => x.Key + x.Value))
+                .OrderBy(x => x).JoinComma()
+                .GetMD5Hash()[..4];
+
+        void DownloadPlugins() =>
+            resharperOptions.Plugins
+                .Select(x => (Plugin: x.Key, Version: x.Value == ReSharperPluginLatest ? null : x.Value))
+                .ForEach(x => HttpTasks.HttpDownloadFile(
+                    $"http://resharper-plugins.jetbrains.com/dotnet/api/v2/curated-feeds/Wave_v{wave}.0/Packages(Id='{x.Plugin}',Version='{x.Version}')/Download",
+                    shadowDirectory / $"{x.Plugin}.nupkg"));
     }
 
-    [CanBeNull]
-    private static string GetWave(ReSharperSettingsBase toolSettings)
+    protected override void PostProcess(ToolOptions options)
     {
-        return Directory.GetParent(toolSettings.ProcessToolPath)
-            .DescendantsAndSelf(x => x.Parent)
-            .Select(x => Path.Combine(x.FullName, "jetbrains.resharper.globaltools.nuspec"))
-            .Where(File.Exists)
-            .Select(x => new FileInfo(x).Directory.NotNull().Name)
-            .Select(x => $"{x[2]}{x[3]}{x[5]}")
-            .SingleOrDefault();
-    }
-
-    [CanBeNull]
-    private static IProcess StartProcess(ReSharperSettingsBase toolSettings)
-    {
-        return ProcessTasks.StartProcess(toolSettings);
-    }
-
-    private static void PostProcess(ReSharperInspectCodeSettings toolSettings)
-    {
-        TeamCity.Instance?.ImportData(TeamCityImportType.ReSharperInspectCode, toolSettings.Output);
-    }
-
-    private static string GetShadowDirectory(ReSharperSettingsBase toolSettings, string wave)
-    {
-        var hashCode = toolSettings.ProcessToolPath.Concat(toolSettings.Plugins.Select(x => x.Key + x.Value)).OrderBy(x => x).JoinCommaSpace().GetMD5Hash();
-        return Path.Combine(NukeBuild.TemporaryDirectory, $"ReSharper-{wave}-{hashCode[..4]}");
+        if (options is ReSharperInspectCodeSettings inspectCodeOptions)
+            TeamCity.Instance?.ImportData(TeamCityImportType.ReSharperInspectCode, inspectCodeOptions.Output);
     }
 }

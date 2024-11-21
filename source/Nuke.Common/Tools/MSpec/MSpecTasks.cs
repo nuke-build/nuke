@@ -10,10 +10,10 @@ namespace Nuke.Common.Tools.MSpec;
 
 partial class MSpecTasks
 {
-    internal static string GetToolPath()
+    protected override string GetToolPath(ToolOptions options = null)
     {
         return NuGetToolPathResolver.GetPackageExecutable(
-            "machine.specifications.runner.console",
+            PackageId,
             EnvironmentInfo.Is64Bit ? "mspec-clr4.exe" : "mspec-x86-clr4.exe");
     }
 }

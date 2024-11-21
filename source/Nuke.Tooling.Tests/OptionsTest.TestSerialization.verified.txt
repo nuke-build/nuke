@@ -1,0 +1,36 @@
+﻿{
+  "ScalarValue": "scalar-value",
+  "ListValue": [
+    1,
+    2,
+    3
+  ],
+  "DictionaryValue": {
+    "key": "value"
+  },
+  "LookupValue": {
+    "key": [
+      1,
+      2,
+      3
+    ]
+  },
+  "NestedValue": {
+    "ScalarValue": "scalar-value",
+    "ListValue": [
+      1,
+      2,
+      3
+    ],
+    "DictionaryValue": {
+      "key": "value"
+    },
+    "LookupValue": {
+      "key": [
+        1,
+        2,
+        3
+      ]
+    }
+  }
+}

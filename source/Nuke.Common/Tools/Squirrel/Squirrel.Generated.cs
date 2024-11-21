@@ -17,1098 +17,343 @@ using System.Text;
 
 namespace Nuke.Common.Tools.Squirrel;
 
-/// <summary>
-///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
-///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
-/// </summary>
+/// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(SquirrelPackageId)]
-public partial class SquirrelTasks
-    : IRequireNuGetPackage
+[NuGetPackageRequirement(PackageId)]
+[NuGetTool(Id = PackageId, Executable = PackageExecutable)]
+public partial class SquirrelTasks : ToolTasks, IRequireNuGetPackage
 {
-    public const string SquirrelPackageId = "Squirrel.Windows";
-    /// <summary>
-    ///   Path to the Squirrel executable.
-    /// </summary>
-    public static string SquirrelPath =>
-        ToolPathResolver.TryGetEnvironmentExecutable("SQUIRREL_EXE") ??
-        NuGetToolPathResolver.GetPackageExecutable("Squirrel.Windows", "Squirrel.exe");
-    public static Action<OutputType, string> SquirrelLogger { get; set; } = ProcessTasks.DefaultLogger;
-    public static Action<ToolSettings, IProcess> SquirrelExitHandler { get; set; } = ProcessTasks.DefaultExitHandler;
-    /// <summary>
-    ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
-    ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
-    /// </summary>
-    public static IReadOnlyCollection<Output> Squirrel(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Action<IProcess> exitHandler = null)
-    {
-        using var process = ProcessTasks.StartProcess(SquirrelPath, arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger ?? SquirrelLogger);
-        (exitHandler ?? (p => SquirrelExitHandler.Invoke(null, p))).Invoke(process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
-    ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>--baseUrl</c> via <see cref="SquirrelSettings.BaseUrl"/></li>
-    ///     <li><c>--bootstrapperExe</c> via <see cref="SquirrelSettings.BootstrapperExecutable"/></li>
-    ///     <li><c>--checkForUpdate</c> via <see cref="SquirrelSettings.CheckForUpdate"/></li>
-    ///     <li><c>--createShortcut</c> via <see cref="SquirrelSettings.CreateShortcut"/></li>
-    ///     <li><c>--download</c> via <see cref="SquirrelSettings.Download"/></li>
-    ///     <li><c>--framework-version</c> via <see cref="SquirrelSettings.FrameworkVersion"/></li>
-    ///     <li><c>--icon</c> via <see cref="SquirrelSettings.Icon"/></li>
-    ///     <li><c>--install</c> via <see cref="SquirrelSettings.Install"/></li>
-    ///     <li><c>--loadingGif</c> via <see cref="SquirrelSettings.LoadingGif"/></li>
-    ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
-    ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
-    ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
-    ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
-    ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
-    ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
-    ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
-    ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
-    ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>
-    ///     <li><c>--setupIcon</c> via <see cref="SquirrelSettings.SetupIcon"/></li>
-    ///     <li><c>--shortcut-locations</c> via <see cref="SquirrelSettings.ShortcutLocations"/></li>
-    ///     <li><c>--signWithParams</c> via <see cref="SquirrelSettings.SignWithParameters"/></li>
-    ///     <li><c>--uninstall</c> via <see cref="SquirrelSettings.Uninstall"/></li>
-    ///     <li><c>--update</c> via <see cref="SquirrelSettings.Update"/></li>
-    ///     <li><c>--updateSelf</c> via <see cref="SquirrelSettings.UpdateSelf"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> Squirrel(SquirrelSettings toolSettings = null)
-    {
-        toolSettings = toolSettings ?? new SquirrelSettings();
-        using var process = ProcessTasks.StartProcess(toolSettings);
-        toolSettings.ProcessExitHandler.Invoke(toolSettings, process.AssertWaitForExit());
-        return process.Output;
-    }
-    /// <summary>
-    ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
-    ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>--baseUrl</c> via <see cref="SquirrelSettings.BaseUrl"/></li>
-    ///     <li><c>--bootstrapperExe</c> via <see cref="SquirrelSettings.BootstrapperExecutable"/></li>
-    ///     <li><c>--checkForUpdate</c> via <see cref="SquirrelSettings.CheckForUpdate"/></li>
-    ///     <li><c>--createShortcut</c> via <see cref="SquirrelSettings.CreateShortcut"/></li>
-    ///     <li><c>--download</c> via <see cref="SquirrelSettings.Download"/></li>
-    ///     <li><c>--framework-version</c> via <see cref="SquirrelSettings.FrameworkVersion"/></li>
-    ///     <li><c>--icon</c> via <see cref="SquirrelSettings.Icon"/></li>
-    ///     <li><c>--install</c> via <see cref="SquirrelSettings.Install"/></li>
-    ///     <li><c>--loadingGif</c> via <see cref="SquirrelSettings.LoadingGif"/></li>
-    ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
-    ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
-    ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
-    ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
-    ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
-    ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
-    ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
-    ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
-    ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>
-    ///     <li><c>--setupIcon</c> via <see cref="SquirrelSettings.SetupIcon"/></li>
-    ///     <li><c>--shortcut-locations</c> via <see cref="SquirrelSettings.ShortcutLocations"/></li>
-    ///     <li><c>--signWithParams</c> via <see cref="SquirrelSettings.SignWithParameters"/></li>
-    ///     <li><c>--uninstall</c> via <see cref="SquirrelSettings.Uninstall"/></li>
-    ///     <li><c>--update</c> via <see cref="SquirrelSettings.Update"/></li>
-    ///     <li><c>--updateSelf</c> via <see cref="SquirrelSettings.UpdateSelf"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IReadOnlyCollection<Output> Squirrel(Configure<SquirrelSettings> configurator)
-    {
-        return Squirrel(configurator(new SquirrelSettings()));
-    }
-    /// <summary>
-    ///   <p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p>
-    ///   <p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p>
-    /// </summary>
-    /// <remarks>
-    ///   <p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p>
-    ///   <ul>
-    ///     <li><c>--baseUrl</c> via <see cref="SquirrelSettings.BaseUrl"/></li>
-    ///     <li><c>--bootstrapperExe</c> via <see cref="SquirrelSettings.BootstrapperExecutable"/></li>
-    ///     <li><c>--checkForUpdate</c> via <see cref="SquirrelSettings.CheckForUpdate"/></li>
-    ///     <li><c>--createShortcut</c> via <see cref="SquirrelSettings.CreateShortcut"/></li>
-    ///     <li><c>--download</c> via <see cref="SquirrelSettings.Download"/></li>
-    ///     <li><c>--framework-version</c> via <see cref="SquirrelSettings.FrameworkVersion"/></li>
-    ///     <li><c>--icon</c> via <see cref="SquirrelSettings.Icon"/></li>
-    ///     <li><c>--install</c> via <see cref="SquirrelSettings.Install"/></li>
-    ///     <li><c>--loadingGif</c> via <see cref="SquirrelSettings.LoadingGif"/></li>
-    ///     <li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li>
-    ///     <li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li>
-    ///     <li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li>
-    ///     <li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li>
-    ///     <li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li>
-    ///     <li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li>
-    ///     <li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li>
-    ///     <li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li>
-    ///     <li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li>
-    ///     <li><c>--setupIcon</c> via <see cref="SquirrelSettings.SetupIcon"/></li>
-    ///     <li><c>--shortcut-locations</c> via <see cref="SquirrelSettings.ShortcutLocations"/></li>
-    ///     <li><c>--signWithParams</c> via <see cref="SquirrelSettings.SignWithParameters"/></li>
-    ///     <li><c>--uninstall</c> via <see cref="SquirrelSettings.Uninstall"/></li>
-    ///     <li><c>--update</c> via <see cref="SquirrelSettings.Update"/></li>
-    ///     <li><c>--updateSelf</c> via <see cref="SquirrelSettings.UpdateSelf"/></li>
-    ///   </ul>
-    /// </remarks>
-    public static IEnumerable<(SquirrelSettings Settings, IReadOnlyCollection<Output> Output)> Squirrel(CombinatorialConfigure<SquirrelSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false)
-    {
-        return configurator.Invoke(Squirrel, SquirrelLogger, degreeOfParallelism, completeOnFailure);
-    }
+    public static string SquirrelPath => new SquirrelTasks().GetToolPath();
+    public const string PackageId = "Squirrel.Windows";
+    public const string PackageExecutable = "Squirrel.exe";
+    /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+    public static IReadOnlyCollection<Output> Squirrel(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new SquirrelTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
+    /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--baseUrl</c> via <see cref="SquirrelSettings.BaseUrl"/></li><li><c>--bootstrapperExe</c> via <see cref="SquirrelSettings.BootstrapperExecutable"/></li><li><c>--checkForUpdate</c> via <see cref="SquirrelSettings.CheckForUpdate"/></li><li><c>--createShortcut</c> via <see cref="SquirrelSettings.CreateShortcut"/></li><li><c>--download</c> via <see cref="SquirrelSettings.Download"/></li><li><c>--framework-version</c> via <see cref="SquirrelSettings.FrameworkVersion"/></li><li><c>--icon</c> via <see cref="SquirrelSettings.Icon"/></li><li><c>--install</c> via <see cref="SquirrelSettings.Install"/></li><li><c>--loadingGif</c> via <see cref="SquirrelSettings.LoadingGif"/></li><li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li><li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li><li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li><li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li><li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li><li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li><li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li><li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li><li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li><li><c>--setupIcon</c> via <see cref="SquirrelSettings.SetupIcon"/></li><li><c>--shortcut-locations</c> via <see cref="SquirrelSettings.ShortcutLocations"/></li><li><c>--signWithParams</c> via <see cref="SquirrelSettings.SignWithParameters"/></li><li><c>--uninstall</c> via <see cref="SquirrelSettings.Uninstall"/></li><li><c>--update</c> via <see cref="SquirrelSettings.Update"/></li><li><c>--updateSelf</c> via <see cref="SquirrelSettings.UpdateSelf"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> Squirrel(SquirrelSettings options = null) => new SquirrelTasks().Run(options);
+    /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--baseUrl</c> via <see cref="SquirrelSettings.BaseUrl"/></li><li><c>--bootstrapperExe</c> via <see cref="SquirrelSettings.BootstrapperExecutable"/></li><li><c>--checkForUpdate</c> via <see cref="SquirrelSettings.CheckForUpdate"/></li><li><c>--createShortcut</c> via <see cref="SquirrelSettings.CreateShortcut"/></li><li><c>--download</c> via <see cref="SquirrelSettings.Download"/></li><li><c>--framework-version</c> via <see cref="SquirrelSettings.FrameworkVersion"/></li><li><c>--icon</c> via <see cref="SquirrelSettings.Icon"/></li><li><c>--install</c> via <see cref="SquirrelSettings.Install"/></li><li><c>--loadingGif</c> via <see cref="SquirrelSettings.LoadingGif"/></li><li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li><li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li><li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li><li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li><li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li><li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li><li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li><li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li><li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li><li><c>--setupIcon</c> via <see cref="SquirrelSettings.SetupIcon"/></li><li><c>--shortcut-locations</c> via <see cref="SquirrelSettings.ShortcutLocations"/></li><li><c>--signWithParams</c> via <see cref="SquirrelSettings.SignWithParameters"/></li><li><c>--uninstall</c> via <see cref="SquirrelSettings.Uninstall"/></li><li><c>--update</c> via <see cref="SquirrelSettings.Update"/></li><li><c>--updateSelf</c> via <see cref="SquirrelSettings.UpdateSelf"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> Squirrel(Configure<SquirrelSettings> configurator) => new SquirrelTasks().Run(configurator.Invoke(new SquirrelSettings()));
+    /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--baseUrl</c> via <see cref="SquirrelSettings.BaseUrl"/></li><li><c>--bootstrapperExe</c> via <see cref="SquirrelSettings.BootstrapperExecutable"/></li><li><c>--checkForUpdate</c> via <see cref="SquirrelSettings.CheckForUpdate"/></li><li><c>--createShortcut</c> via <see cref="SquirrelSettings.CreateShortcut"/></li><li><c>--download</c> via <see cref="SquirrelSettings.Download"/></li><li><c>--framework-version</c> via <see cref="SquirrelSettings.FrameworkVersion"/></li><li><c>--icon</c> via <see cref="SquirrelSettings.Icon"/></li><li><c>--install</c> via <see cref="SquirrelSettings.Install"/></li><li><c>--loadingGif</c> via <see cref="SquirrelSettings.LoadingGif"/></li><li><c>--no-delta</c> via <see cref="SquirrelSettings.GenerateNoDelta"/></li><li><c>--no-msi</c> via <see cref="SquirrelSettings.GenerateNoMsi"/></li><li><c>--packagesDir</c> via <see cref="SquirrelSettings.PackagesDirectory"/></li><li><c>--process-start-args</c> via <see cref="SquirrelSettings.ProcessStartArguments"/></li><li><c>--processStart</c> via <see cref="SquirrelSettings.ProcessStart"/></li><li><c>--processStartAndWait</c> via <see cref="SquirrelSettings.ProcessStartAndWait"/></li><li><c>--releaseDir</c> via <see cref="SquirrelSettings.ReleaseDirectory"/></li><li><c>--releasify</c> via <see cref="SquirrelSettings.Releasify"/></li><li><c>--removeShortcut</c> via <see cref="SquirrelSettings.RemoveShortcut"/></li><li><c>--setupIcon</c> via <see cref="SquirrelSettings.SetupIcon"/></li><li><c>--shortcut-locations</c> via <see cref="SquirrelSettings.ShortcutLocations"/></li><li><c>--signWithParams</c> via <see cref="SquirrelSettings.SignWithParameters"/></li><li><c>--uninstall</c> via <see cref="SquirrelSettings.Uninstall"/></li><li><c>--update</c> via <see cref="SquirrelSettings.Update"/></li><li><c>--updateSelf</c> via <see cref="SquirrelSettings.UpdateSelf"/></li></ul></remarks>
+    public static IEnumerable<(SquirrelSettings Settings, IReadOnlyCollection<Output> Output)> Squirrel(CombinatorialConfigure<SquirrelSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(Squirrel, degreeOfParallelism, completeOnFailure);
 }
 #region SquirrelSettings
-/// <summary>
-///   Used within <see cref="SquirrelTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="SquirrelTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[Serializable]
-public partial class SquirrelSettings : ToolSettings
+[TypeConverter(typeof(TypeConverter<SquirrelSettings>))]
+[Command(Type = typeof(SquirrelTasks), Command = nameof(SquirrelTasks.Squirrel))]
+public partial class SquirrelSettings : ToolOptions
 {
-    /// <summary>
-    ///   Path to the Squirrel executable.
-    /// </summary>
-    public override string ProcessToolPath => base.ProcessToolPath ?? SquirrelTasks.SquirrelPath;
-    public override Action<OutputType, string> ProcessLogger => base.ProcessLogger ?? SquirrelTasks.SquirrelLogger;
-    public override Action<ToolSettings, IProcess> ProcessExitHandler => base.ProcessExitHandler ?? SquirrelTasks.SquirrelExitHandler;
-    /// <summary>
-    ///   Install the app whose package is in the specified directory.
-    /// </summary>
-    public virtual string Install { get; internal set; }
-    /// <summary>
-    ///   Uninstall the app the same dir as Update.exe.
-    /// </summary>
-    public virtual bool? Uninstall { get; internal set; }
-    /// <summary>
-    ///   Download the releases specified by the URL and write new results to stdout as JSON.
-    /// </summary>
-    public virtual bool? Download { get; internal set; }
-    /// <summary>
-    ///   Check for one available update and writes new results to stdout as JSON.
-    /// </summary>
-    public virtual bool? CheckForUpdate { get; internal set; }
-    /// <summary>
-    ///   Update the application to the latest remote version specified by URL.
-    /// </summary>
-    public virtual string Update { get; internal set; }
-    /// <summary>
-    ///   Update or generate a releases directory with a given NuGet package.
-    /// </summary>
-    public virtual string Releasify { get; internal set; }
-    /// <summary>
-    ///   Create a shortcut for the given executable name.
-    /// </summary>
-    public virtual string CreateShortcut { get; internal set; }
-    /// <summary>
-    ///   Remove a shortcut for the given executable name.
-    /// </summary>
-    public virtual string RemoveShortcut { get; internal set; }
-    /// <summary>
-    ///   Copy the currently executing Update.exe into the default location.
-    /// </summary>
-    public virtual string UpdateSelf { get; internal set; }
-    /// <summary>
-    ///   Start an executable in the latest version of the app package.
-    /// </summary>
-    public virtual string ProcessStart { get; internal set; }
-    /// <summary>
-    ///   Start an executable in the latest version of the app package.
-    /// </summary>
-    public virtual string ProcessStartAndWait { get; internal set; }
-    /// <summary>
-    ///   Path to a release directory to use with releasify.
-    /// </summary>
-    public virtual string ReleaseDirectory { get; internal set; }
-    /// <summary>
-    ///   Path to the NuGet Packages directory for C# apps.
-    /// </summary>
-    public virtual string PackagesDirectory { get; internal set; }
-    /// <summary>
-    ///   Path to the Setup.exe to use as a template.
-    /// </summary>
-    public virtual string BootstrapperExecutable { get; internal set; }
-    /// <summary>
-    ///   Path to an animated GIF to be displayed during installation.
-    /// </summary>
-    public virtual string LoadingGif { get; internal set; }
-    /// <summary>
-    ///   Path to an ICO file that will be used for icon shortcuts.
-    /// </summary>
-    public virtual string Icon { get; internal set; }
-    /// <summary>
-    ///   Path to an ICO file that will be used for the Setup executable's icon.
-    /// </summary>
-    public virtual string SetupIcon { get; internal set; }
-    /// <summary>
-    ///   Sign the installer via SignTool.exe with the parameters given.
-    /// </summary>
-    public virtual string SignWithParameters { get; internal set; }
-    /// <summary>
-    ///   Provides a base URL to prefix the RELEASES file packages with.
-    /// </summary>
-    public virtual string BaseUrl { get; internal set; }
-    /// <summary>
-    ///   Arguments that will be used when starting executable.
-    /// </summary>
-    public virtual string ProcessStartArguments { get; internal set; }
-    /// <summary>
-    ///   Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.
-    /// </summary>
-    public virtual IReadOnlyList<string> ShortcutLocations => ShortcutLocationsInternal.AsReadOnly();
-    internal List<string> ShortcutLocationsInternal { get; set; } = new List<string>();
-    /// <summary>
-    ///   Don't generate an MSI package.
-    /// </summary>
-    public virtual bool? GenerateNoMsi { get; internal set; }
-    /// <summary>
-    ///   Don't generate delta packages to save time
-    /// </summary>
-    public virtual bool? GenerateNoDelta { get; internal set; }
-    /// <summary>
-    ///   Set the required .NET framework version, e.g. net461
-    /// </summary>
-    public virtual string FrameworkVersion { get; internal set; }
-    protected override Arguments ConfigureProcessArguments(Arguments arguments)
-    {
-        arguments
-          .Add("--install={value}", Install)
-          .Add("--uninstall", Uninstall)
-          .Add("--download", Download)
-          .Add("--checkForUpdate", CheckForUpdate)
-          .Add("--update={value}", Update)
-          .Add("--releasify={value}", Releasify)
-          .Add("--createShortcut={value}", CreateShortcut)
-          .Add("--removeShortcut={value}", RemoveShortcut)
-          .Add("--updateSelf={value}", UpdateSelf)
-          .Add("--processStart={value}", ProcessStart)
-          .Add("--processStartAndWait={value}", ProcessStartAndWait)
-          .Add("--releaseDir={value}", ReleaseDirectory)
-          .Add("--packagesDir={value}", PackagesDirectory)
-          .Add("--bootstrapperExe={value}", BootstrapperExecutable)
-          .Add("--loadingGif={value}", LoadingGif)
-          .Add("--icon={value}", Icon)
-          .Add("--setupIcon={value}", SetupIcon)
-          .Add("--signWithParams={value}", SignWithParameters)
-          .Add("--baseUrl={value}", BaseUrl)
-          .Add("--process-start-args={value}", ProcessStartArguments)
-          .Add("--shortcut-locations={value}", ShortcutLocations, separator: ',')
-          .Add("--no-msi", GenerateNoMsi)
-          .Add("--no-delta", GenerateNoDelta)
-          .Add("--framework-version={value}", FrameworkVersion);
-        return base.ConfigureProcessArguments(arguments);
-    }
+    /// <summary>Install the app whose package is in the specified directory.</summary>
+    [Argument(Format = "--install={value}")] public string Install => Get<string>(() => Install);
+    /// <summary>Uninstall the app the same dir as Update.exe.</summary>
+    [Argument(Format = "--uninstall")] public bool? Uninstall => Get<bool?>(() => Uninstall);
+    /// <summary>Download the releases specified by the URL and write new results to stdout as JSON.</summary>
+    [Argument(Format = "--download")] public bool? Download => Get<bool?>(() => Download);
+    /// <summary>Check for one available update and writes new results to stdout as JSON.</summary>
+    [Argument(Format = "--checkForUpdate")] public bool? CheckForUpdate => Get<bool?>(() => CheckForUpdate);
+    /// <summary>Update the application to the latest remote version specified by URL.</summary>
+    [Argument(Format = "--update={value}")] public string Update => Get<string>(() => Update);
+    /// <summary>Update or generate a releases directory with a given NuGet package.</summary>
+    [Argument(Format = "--releasify={value}")] public string Releasify => Get<string>(() => Releasify);
+    /// <summary>Create a shortcut for the given executable name.</summary>
+    [Argument(Format = "--createShortcut={value}")] public string CreateShortcut => Get<string>(() => CreateShortcut);
+    /// <summary>Remove a shortcut for the given executable name.</summary>
+    [Argument(Format = "--removeShortcut={value}")] public string RemoveShortcut => Get<string>(() => RemoveShortcut);
+    /// <summary>Copy the currently executing Update.exe into the default location.</summary>
+    [Argument(Format = "--updateSelf={value}")] public string UpdateSelf => Get<string>(() => UpdateSelf);
+    /// <summary>Start an executable in the latest version of the app package.</summary>
+    [Argument(Format = "--processStart={value}")] public string ProcessStart => Get<string>(() => ProcessStart);
+    /// <summary>Start an executable in the latest version of the app package.</summary>
+    [Argument(Format = "--processStartAndWait={value}")] public string ProcessStartAndWait => Get<string>(() => ProcessStartAndWait);
+    /// <summary>Path to a release directory to use with releasify.</summary>
+    [Argument(Format = "--releaseDir={value}")] public string ReleaseDirectory => Get<string>(() => ReleaseDirectory);
+    /// <summary>Path to the NuGet Packages directory for C# apps.</summary>
+    [Argument(Format = "--packagesDir={value}")] public string PackagesDirectory => Get<string>(() => PackagesDirectory);
+    /// <summary>Path to the Setup.exe to use as a template.</summary>
+    [Argument(Format = "--bootstrapperExe={value}")] public string BootstrapperExecutable => Get<string>(() => BootstrapperExecutable);
+    /// <summary>Path to an animated GIF to be displayed during installation.</summary>
+    [Argument(Format = "--loadingGif={value}")] public string LoadingGif => Get<string>(() => LoadingGif);
+    /// <summary>Path to an ICO file that will be used for icon shortcuts.</summary>
+    [Argument(Format = "--icon={value}")] public string Icon => Get<string>(() => Icon);
+    /// <summary>Path to an ICO file that will be used for the Setup executable's icon.</summary>
+    [Argument(Format = "--setupIcon={value}")] public string SetupIcon => Get<string>(() => SetupIcon);
+    /// <summary>Sign the installer via SignTool.exe with the parameters given.</summary>
+    [Argument(Format = "--signWithParams={value}")] public string SignWithParameters => Get<string>(() => SignWithParameters);
+    /// <summary>Provides a base URL to prefix the RELEASES file packages with.</summary>
+    [Argument(Format = "--baseUrl={value}")] public string BaseUrl => Get<string>(() => BaseUrl);
+    /// <summary>Arguments that will be used when starting executable.</summary>
+    [Argument(Format = "--process-start-args={value}")] public string ProcessStartArguments => Get<string>(() => ProcessStartArguments);
+    /// <summary>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</summary>
+    [Argument(Format = "--shortcut-locations={value}", Separator = ",")] public IReadOnlyList<string> ShortcutLocations => Get<List<string>>(() => ShortcutLocations);
+    /// <summary>Don't generate an MSI package.</summary>
+    [Argument(Format = "--no-msi")] public bool? GenerateNoMsi => Get<bool?>(() => GenerateNoMsi);
+    /// <summary>Don't generate delta packages to save time</summary>
+    [Argument(Format = "--no-delta")] public bool? GenerateNoDelta => Get<bool?>(() => GenerateNoDelta);
+    /// <summary>Set the required .NET framework version, e.g. net461</summary>
+    [Argument(Format = "--framework-version={value}")] public string FrameworkVersion => Get<string>(() => FrameworkVersion);
 }
 #endregion
 #region SquirrelSettingsExtensions
-/// <summary>
-///   Used within <see cref="SquirrelTasks"/>.
-/// </summary>
+/// <summary>Used within <see cref="SquirrelTasks"/>.</summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class SquirrelSettingsExtensions
 {
     #region Install
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.Install"/></em></p>
-    ///   <p>Install the app whose package is in the specified directory.</p>
-    /// </summary>
-    [Pure]
-    public static T SetInstall<T>(this T toolSettings, string install) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Install = install;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.Install"/></em></p>
-    ///   <p>Install the app whose package is in the specified directory.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetInstall<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Install = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.Install"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Install))]
+    public static T SetInstall<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Install, v));
+    /// <inheritdoc cref="SquirrelSettings.Install"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Install))]
+    public static T ResetInstall<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.Install));
     #endregion
     #region Uninstall
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.Uninstall"/></em></p>
-    ///   <p>Uninstall the app the same dir as Update.exe.</p>
-    /// </summary>
-    [Pure]
-    public static T SetUninstall<T>(this T toolSettings, bool? uninstall) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Uninstall = uninstall;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.Uninstall"/></em></p>
-    ///   <p>Uninstall the app the same dir as Update.exe.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUninstall<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Uninstall = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="SquirrelSettings.Uninstall"/></em></p>
-    ///   <p>Uninstall the app the same dir as Update.exe.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableUninstall<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Uninstall = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="SquirrelSettings.Uninstall"/></em></p>
-    ///   <p>Uninstall the app the same dir as Update.exe.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableUninstall<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Uninstall = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="SquirrelSettings.Uninstall"/></em></p>
-    ///   <p>Uninstall the app the same dir as Update.exe.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleUninstall<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Uninstall = !toolSettings.Uninstall;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.Uninstall"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Uninstall))]
+    public static T SetUninstall<T>(this T o, bool? v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Uninstall, v));
+    /// <inheritdoc cref="SquirrelSettings.Uninstall"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Uninstall))]
+    public static T ResetUninstall<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.Uninstall));
+    /// <inheritdoc cref="SquirrelSettings.Uninstall"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Uninstall))]
+    public static T EnableUninstall<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Uninstall, true));
+    /// <inheritdoc cref="SquirrelSettings.Uninstall"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Uninstall))]
+    public static T DisableUninstall<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Uninstall, false));
+    /// <inheritdoc cref="SquirrelSettings.Uninstall"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Uninstall))]
+    public static T ToggleUninstall<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Uninstall, !o.Uninstall));
     #endregion
     #region Download
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.Download"/></em></p>
-    ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
-    /// </summary>
-    [Pure]
-    public static T SetDownload<T>(this T toolSettings, bool? download) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Download = download;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.Download"/></em></p>
-    ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetDownload<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Download = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="SquirrelSettings.Download"/></em></p>
-    ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableDownload<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Download = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="SquirrelSettings.Download"/></em></p>
-    ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableDownload<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Download = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="SquirrelSettings.Download"/></em></p>
-    ///   <p>Download the releases specified by the URL and write new results to stdout as JSON.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleDownload<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Download = !toolSettings.Download;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.Download"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Download))]
+    public static T SetDownload<T>(this T o, bool? v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Download, v));
+    /// <inheritdoc cref="SquirrelSettings.Download"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Download))]
+    public static T ResetDownload<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.Download));
+    /// <inheritdoc cref="SquirrelSettings.Download"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Download))]
+    public static T EnableDownload<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Download, true));
+    /// <inheritdoc cref="SquirrelSettings.Download"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Download))]
+    public static T DisableDownload<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Download, false));
+    /// <inheritdoc cref="SquirrelSettings.Download"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Download))]
+    public static T ToggleDownload<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Download, !o.Download));
     #endregion
     #region CheckForUpdate
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.CheckForUpdate"/></em></p>
-    ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
-    /// </summary>
-    [Pure]
-    public static T SetCheckForUpdate<T>(this T toolSettings, bool? checkForUpdate) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CheckForUpdate = checkForUpdate;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.CheckForUpdate"/></em></p>
-    ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetCheckForUpdate<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CheckForUpdate = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="SquirrelSettings.CheckForUpdate"/></em></p>
-    ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableCheckForUpdate<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CheckForUpdate = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="SquirrelSettings.CheckForUpdate"/></em></p>
-    ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableCheckForUpdate<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CheckForUpdate = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="SquirrelSettings.CheckForUpdate"/></em></p>
-    ///   <p>Check for one available update and writes new results to stdout as JSON.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleCheckForUpdate<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CheckForUpdate = !toolSettings.CheckForUpdate;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.CheckForUpdate"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.CheckForUpdate))]
+    public static T SetCheckForUpdate<T>(this T o, bool? v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.CheckForUpdate, v));
+    /// <inheritdoc cref="SquirrelSettings.CheckForUpdate"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.CheckForUpdate))]
+    public static T ResetCheckForUpdate<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.CheckForUpdate));
+    /// <inheritdoc cref="SquirrelSettings.CheckForUpdate"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.CheckForUpdate))]
+    public static T EnableCheckForUpdate<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.CheckForUpdate, true));
+    /// <inheritdoc cref="SquirrelSettings.CheckForUpdate"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.CheckForUpdate))]
+    public static T DisableCheckForUpdate<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.CheckForUpdate, false));
+    /// <inheritdoc cref="SquirrelSettings.CheckForUpdate"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.CheckForUpdate))]
+    public static T ToggleCheckForUpdate<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.CheckForUpdate, !o.CheckForUpdate));
     #endregion
     #region Update
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.Update"/></em></p>
-    ///   <p>Update the application to the latest remote version specified by URL.</p>
-    /// </summary>
-    [Pure]
-    public static T SetUpdate<T>(this T toolSettings, string update) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Update = update;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.Update"/></em></p>
-    ///   <p>Update the application to the latest remote version specified by URL.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUpdate<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Update = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.Update"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Update))]
+    public static T SetUpdate<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Update, v));
+    /// <inheritdoc cref="SquirrelSettings.Update"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Update))]
+    public static T ResetUpdate<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.Update));
     #endregion
     #region Releasify
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.Releasify"/></em></p>
-    ///   <p>Update or generate a releases directory with a given NuGet package.</p>
-    /// </summary>
-    [Pure]
-    public static T SetReleasify<T>(this T toolSettings, string releasify) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Releasify = releasify;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.Releasify"/></em></p>
-    ///   <p>Update or generate a releases directory with a given NuGet package.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetReleasify<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Releasify = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.Releasify"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Releasify))]
+    public static T SetReleasify<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Releasify, v));
+    /// <inheritdoc cref="SquirrelSettings.Releasify"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Releasify))]
+    public static T ResetReleasify<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.Releasify));
     #endregion
     #region CreateShortcut
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.CreateShortcut"/></em></p>
-    ///   <p>Create a shortcut for the given executable name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetCreateShortcut<T>(this T toolSettings, string createShortcut) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CreateShortcut = createShortcut;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.CreateShortcut"/></em></p>
-    ///   <p>Create a shortcut for the given executable name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetCreateShortcut<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.CreateShortcut = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.CreateShortcut"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.CreateShortcut))]
+    public static T SetCreateShortcut<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.CreateShortcut, v));
+    /// <inheritdoc cref="SquirrelSettings.CreateShortcut"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.CreateShortcut))]
+    public static T ResetCreateShortcut<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.CreateShortcut));
     #endregion
     #region RemoveShortcut
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.RemoveShortcut"/></em></p>
-    ///   <p>Remove a shortcut for the given executable name.</p>
-    /// </summary>
-    [Pure]
-    public static T SetRemoveShortcut<T>(this T toolSettings, string removeShortcut) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RemoveShortcut = removeShortcut;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.RemoveShortcut"/></em></p>
-    ///   <p>Remove a shortcut for the given executable name.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetRemoveShortcut<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.RemoveShortcut = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.RemoveShortcut"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.RemoveShortcut))]
+    public static T SetRemoveShortcut<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.RemoveShortcut, v));
+    /// <inheritdoc cref="SquirrelSettings.RemoveShortcut"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.RemoveShortcut))]
+    public static T ResetRemoveShortcut<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.RemoveShortcut));
     #endregion
     #region UpdateSelf
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.UpdateSelf"/></em></p>
-    ///   <p>Copy the currently executing Update.exe into the default location.</p>
-    /// </summary>
-    [Pure]
-    public static T SetUpdateSelf<T>(this T toolSettings, string updateSelf) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UpdateSelf = updateSelf;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.UpdateSelf"/></em></p>
-    ///   <p>Copy the currently executing Update.exe into the default location.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetUpdateSelf<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.UpdateSelf = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.UpdateSelf"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.UpdateSelf))]
+    public static T SetUpdateSelf<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.UpdateSelf, v));
+    /// <inheritdoc cref="SquirrelSettings.UpdateSelf"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.UpdateSelf))]
+    public static T ResetUpdateSelf<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.UpdateSelf));
     #endregion
     #region ProcessStart
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.ProcessStart"/></em></p>
-    ///   <p>Start an executable in the latest version of the app package.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProcessStart<T>(this T toolSettings, string processStart) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessStart = processStart;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.ProcessStart"/></em></p>
-    ///   <p>Start an executable in the latest version of the app package.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetProcessStart<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessStart = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.ProcessStart"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ProcessStart))]
+    public static T SetProcessStart<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.ProcessStart, v));
+    /// <inheritdoc cref="SquirrelSettings.ProcessStart"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ProcessStart))]
+    public static T ResetProcessStart<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.ProcessStart));
     #endregion
     #region ProcessStartAndWait
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.ProcessStartAndWait"/></em></p>
-    ///   <p>Start an executable in the latest version of the app package.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProcessStartAndWait<T>(this T toolSettings, string processStartAndWait) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessStartAndWait = processStartAndWait;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.ProcessStartAndWait"/></em></p>
-    ///   <p>Start an executable in the latest version of the app package.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetProcessStartAndWait<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessStartAndWait = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.ProcessStartAndWait"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ProcessStartAndWait))]
+    public static T SetProcessStartAndWait<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.ProcessStartAndWait, v));
+    /// <inheritdoc cref="SquirrelSettings.ProcessStartAndWait"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ProcessStartAndWait))]
+    public static T ResetProcessStartAndWait<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.ProcessStartAndWait));
     #endregion
     #region ReleaseDirectory
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.ReleaseDirectory"/></em></p>
-    ///   <p>Path to a release directory to use with releasify.</p>
-    /// </summary>
-    [Pure]
-    public static T SetReleaseDirectory<T>(this T toolSettings, string releaseDirectory) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReleaseDirectory = releaseDirectory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.ReleaseDirectory"/></em></p>
-    ///   <p>Path to a release directory to use with releasify.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetReleaseDirectory<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ReleaseDirectory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.ReleaseDirectory"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ReleaseDirectory))]
+    public static T SetReleaseDirectory<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.ReleaseDirectory, v));
+    /// <inheritdoc cref="SquirrelSettings.ReleaseDirectory"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ReleaseDirectory))]
+    public static T ResetReleaseDirectory<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.ReleaseDirectory));
     #endregion
     #region PackagesDirectory
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.PackagesDirectory"/></em></p>
-    ///   <p>Path to the NuGet Packages directory for C# apps.</p>
-    /// </summary>
-    [Pure]
-    public static T SetPackagesDirectory<T>(this T toolSettings, string packagesDirectory) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PackagesDirectory = packagesDirectory;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.PackagesDirectory"/></em></p>
-    ///   <p>Path to the NuGet Packages directory for C# apps.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetPackagesDirectory<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.PackagesDirectory = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.PackagesDirectory"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.PackagesDirectory))]
+    public static T SetPackagesDirectory<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.PackagesDirectory, v));
+    /// <inheritdoc cref="SquirrelSettings.PackagesDirectory"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.PackagesDirectory))]
+    public static T ResetPackagesDirectory<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.PackagesDirectory));
     #endregion
     #region BootstrapperExecutable
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.BootstrapperExecutable"/></em></p>
-    ///   <p>Path to the Setup.exe to use as a template.</p>
-    /// </summary>
-    [Pure]
-    public static T SetBootstrapperExecutable<T>(this T toolSettings, string bootstrapperExecutable) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.BootstrapperExecutable = bootstrapperExecutable;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.BootstrapperExecutable"/></em></p>
-    ///   <p>Path to the Setup.exe to use as a template.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetBootstrapperExecutable<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.BootstrapperExecutable = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.BootstrapperExecutable"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.BootstrapperExecutable))]
+    public static T SetBootstrapperExecutable<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.BootstrapperExecutable, v));
+    /// <inheritdoc cref="SquirrelSettings.BootstrapperExecutable"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.BootstrapperExecutable))]
+    public static T ResetBootstrapperExecutable<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.BootstrapperExecutable));
     #endregion
     #region LoadingGif
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.LoadingGif"/></em></p>
-    ///   <p>Path to an animated GIF to be displayed during installation.</p>
-    /// </summary>
-    [Pure]
-    public static T SetLoadingGif<T>(this T toolSettings, string loadingGif) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LoadingGif = loadingGif;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.LoadingGif"/></em></p>
-    ///   <p>Path to an animated GIF to be displayed during installation.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetLoadingGif<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.LoadingGif = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.LoadingGif"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.LoadingGif))]
+    public static T SetLoadingGif<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.LoadingGif, v));
+    /// <inheritdoc cref="SquirrelSettings.LoadingGif"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.LoadingGif))]
+    public static T ResetLoadingGif<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.LoadingGif));
     #endregion
     #region Icon
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.Icon"/></em></p>
-    ///   <p>Path to an ICO file that will be used for icon shortcuts.</p>
-    /// </summary>
-    [Pure]
-    public static T SetIcon<T>(this T toolSettings, string icon) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Icon = icon;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.Icon"/></em></p>
-    ///   <p>Path to an ICO file that will be used for icon shortcuts.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetIcon<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.Icon = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.Icon"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Icon))]
+    public static T SetIcon<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.Icon, v));
+    /// <inheritdoc cref="SquirrelSettings.Icon"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.Icon))]
+    public static T ResetIcon<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.Icon));
     #endregion
     #region SetupIcon
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.SetupIcon"/></em></p>
-    ///   <p>Path to an ICO file that will be used for the Setup executable's icon.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSetupIcon<T>(this T toolSettings, string setupIcon) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SetupIcon = setupIcon;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.SetupIcon"/></em></p>
-    ///   <p>Path to an ICO file that will be used for the Setup executable's icon.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetSetupIcon<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SetupIcon = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.SetupIcon"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.SetupIcon))]
+    public static T SetSetupIcon<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.SetupIcon, v));
+    /// <inheritdoc cref="SquirrelSettings.SetupIcon"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.SetupIcon))]
+    public static T ResetSetupIcon<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.SetupIcon));
     #endregion
     #region SignWithParameters
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.SignWithParameters"/></em></p>
-    ///   <p>Sign the installer via SignTool.exe with the parameters given.</p>
-    /// </summary>
-    [Pure]
-    public static T SetSignWithParameters<T>(this T toolSettings, string signWithParameters) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SignWithParameters = signWithParameters;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.SignWithParameters"/></em></p>
-    ///   <p>Sign the installer via SignTool.exe with the parameters given.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetSignWithParameters<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.SignWithParameters = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.SignWithParameters"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.SignWithParameters))]
+    public static T SetSignWithParameters<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.SignWithParameters, v));
+    /// <inheritdoc cref="SquirrelSettings.SignWithParameters"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.SignWithParameters))]
+    public static T ResetSignWithParameters<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.SignWithParameters));
     #endregion
     #region BaseUrl
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.BaseUrl"/></em></p>
-    ///   <p>Provides a base URL to prefix the RELEASES file packages with.</p>
-    /// </summary>
-    [Pure]
-    public static T SetBaseUrl<T>(this T toolSettings, string baseUrl) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.BaseUrl = baseUrl;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.BaseUrl"/></em></p>
-    ///   <p>Provides a base URL to prefix the RELEASES file packages with.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetBaseUrl<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.BaseUrl = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.BaseUrl"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.BaseUrl))]
+    public static T SetBaseUrl<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.BaseUrl, v));
+    /// <inheritdoc cref="SquirrelSettings.BaseUrl"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.BaseUrl))]
+    public static T ResetBaseUrl<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.BaseUrl));
     #endregion
     #region ProcessStartArguments
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.ProcessStartArguments"/></em></p>
-    ///   <p>Arguments that will be used when starting executable.</p>
-    /// </summary>
-    [Pure]
-    public static T SetProcessStartArguments<T>(this T toolSettings, string processStartArguments) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessStartArguments = processStartArguments;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.ProcessStartArguments"/></em></p>
-    ///   <p>Arguments that will be used when starting executable.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetProcessStartArguments<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ProcessStartArguments = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.ProcessStartArguments"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ProcessStartArguments))]
+    public static T SetProcessStartArguments<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.ProcessStartArguments, v));
+    /// <inheritdoc cref="SquirrelSettings.ProcessStartArguments"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ProcessStartArguments))]
+    public static T ResetProcessStartArguments<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.ProcessStartArguments));
     #endregion
     #region ShortcutLocations
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.ShortcutLocations"/> to a new list</em></p>
-    ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
-    /// </summary>
-    [Pure]
-    public static T SetShortcutLocations<T>(this T toolSettings, params string[] shortcutLocations) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ShortcutLocationsInternal = shortcutLocations.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.ShortcutLocations"/> to a new list</em></p>
-    ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
-    /// </summary>
-    [Pure]
-    public static T SetShortcutLocations<T>(this T toolSettings, IEnumerable<string> shortcutLocations) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ShortcutLocationsInternal = shortcutLocations.ToList();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="SquirrelSettings.ShortcutLocations"/></em></p>
-    ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
-    /// </summary>
-    [Pure]
-    public static T AddShortcutLocations<T>(this T toolSettings, params string[] shortcutLocations) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ShortcutLocationsInternal.AddRange(shortcutLocations);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Adds values to <see cref="SquirrelSettings.ShortcutLocations"/></em></p>
-    ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
-    /// </summary>
-    [Pure]
-    public static T AddShortcutLocations<T>(this T toolSettings, IEnumerable<string> shortcutLocations) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ShortcutLocationsInternal.AddRange(shortcutLocations);
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Clears <see cref="SquirrelSettings.ShortcutLocations"/></em></p>
-    ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
-    /// </summary>
-    [Pure]
-    public static T ClearShortcutLocations<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.ShortcutLocationsInternal.Clear();
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="SquirrelSettings.ShortcutLocations"/></em></p>
-    ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveShortcutLocations<T>(this T toolSettings, params string[] shortcutLocations) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(shortcutLocations);
-        toolSettings.ShortcutLocationsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Removes values from <see cref="SquirrelSettings.ShortcutLocations"/></em></p>
-    ///   <p>Comma-separated string of shortcut locations, e.g. 'Desktop,StartMenu'.</p>
-    /// </summary>
-    [Pure]
-    public static T RemoveShortcutLocations<T>(this T toolSettings, IEnumerable<string> shortcutLocations) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        var hashSet = new HashSet<string>(shortcutLocations);
-        toolSettings.ShortcutLocationsInternal.RemoveAll(x => hashSet.Contains(x));
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.ShortcutLocations"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ShortcutLocations))]
+    public static T SetShortcutLocations<T>(this T o, params string[] v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.ShortcutLocations, v));
+    /// <inheritdoc cref="SquirrelSettings.ShortcutLocations"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ShortcutLocations))]
+    public static T SetShortcutLocations<T>(this T o, IEnumerable<string> v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.ShortcutLocations, v));
+    /// <inheritdoc cref="SquirrelSettings.ShortcutLocations"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ShortcutLocations))]
+    public static T AddShortcutLocations<T>(this T o, params string[] v) where T : SquirrelSettings => o.Modify(b => b.AddCollection(() => o.ShortcutLocations, v));
+    /// <inheritdoc cref="SquirrelSettings.ShortcutLocations"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ShortcutLocations))]
+    public static T AddShortcutLocations<T>(this T o, IEnumerable<string> v) where T : SquirrelSettings => o.Modify(b => b.AddCollection(() => o.ShortcutLocations, v));
+    /// <inheritdoc cref="SquirrelSettings.ShortcutLocations"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ShortcutLocations))]
+    public static T RemoveShortcutLocations<T>(this T o, params string[] v) where T : SquirrelSettings => o.Modify(b => b.RemoveCollection(() => o.ShortcutLocations, v));
+    /// <inheritdoc cref="SquirrelSettings.ShortcutLocations"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ShortcutLocations))]
+    public static T RemoveShortcutLocations<T>(this T o, IEnumerable<string> v) where T : SquirrelSettings => o.Modify(b => b.RemoveCollection(() => o.ShortcutLocations, v));
+    /// <inheritdoc cref="SquirrelSettings.ShortcutLocations"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.ShortcutLocations))]
+    public static T ClearShortcutLocations<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.ClearCollection(() => o.ShortcutLocations));
     #endregion
     #region GenerateNoMsi
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.GenerateNoMsi"/></em></p>
-    ///   <p>Don't generate an MSI package.</p>
-    /// </summary>
-    [Pure]
-    public static T SetGenerateNoMsi<T>(this T toolSettings, bool? generateNoMsi) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.GenerateNoMsi = generateNoMsi;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.GenerateNoMsi"/></em></p>
-    ///   <p>Don't generate an MSI package.</p>
-    /// </summary>
-    [Pure]
-    public static T ResetGenerateNoMsi<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.GenerateNoMsi = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="SquirrelSettings.GenerateNoMsi"/></em></p>
-    ///   <p>Don't generate an MSI package.</p>
-    /// </summary>
-    [Pure]
-    public static T EnableGenerateNoMsi<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.GenerateNoMsi = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="SquirrelSettings.GenerateNoMsi"/></em></p>
-    ///   <p>Don't generate an MSI package.</p>
-    /// </summary>
-    [Pure]
-    public static T DisableGenerateNoMsi<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.GenerateNoMsi = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="SquirrelSettings.GenerateNoMsi"/></em></p>
-    ///   <p>Don't generate an MSI package.</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleGenerateNoMsi<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.GenerateNoMsi = !toolSettings.GenerateNoMsi;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.GenerateNoMsi"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.GenerateNoMsi))]
+    public static T SetGenerateNoMsi<T>(this T o, bool? v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.GenerateNoMsi, v));
+    /// <inheritdoc cref="SquirrelSettings.GenerateNoMsi"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.GenerateNoMsi))]
+    public static T ResetGenerateNoMsi<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.GenerateNoMsi));
+    /// <inheritdoc cref="SquirrelSettings.GenerateNoMsi"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.GenerateNoMsi))]
+    public static T EnableGenerateNoMsi<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.GenerateNoMsi, true));
+    /// <inheritdoc cref="SquirrelSettings.GenerateNoMsi"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.GenerateNoMsi))]
+    public static T DisableGenerateNoMsi<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.GenerateNoMsi, false));
+    /// <inheritdoc cref="SquirrelSettings.GenerateNoMsi"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.GenerateNoMsi))]
+    public static T ToggleGenerateNoMsi<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.GenerateNoMsi, !o.GenerateNoMsi));
     #endregion
     #region GenerateNoDelta
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.GenerateNoDelta"/></em></p>
-    ///   <p>Don't generate delta packages to save time</p>
-    /// </summary>
-    [Pure]
-    public static T SetGenerateNoDelta<T>(this T toolSettings, bool? generateNoDelta) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.GenerateNoDelta = generateNoDelta;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.GenerateNoDelta"/></em></p>
-    ///   <p>Don't generate delta packages to save time</p>
-    /// </summary>
-    [Pure]
-    public static T ResetGenerateNoDelta<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.GenerateNoDelta = null;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Enables <see cref="SquirrelSettings.GenerateNoDelta"/></em></p>
-    ///   <p>Don't generate delta packages to save time</p>
-    /// </summary>
-    [Pure]
-    public static T EnableGenerateNoDelta<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.GenerateNoDelta = true;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Disables <see cref="SquirrelSettings.GenerateNoDelta"/></em></p>
-    ///   <p>Don't generate delta packages to save time</p>
-    /// </summary>
-    [Pure]
-    public static T DisableGenerateNoDelta<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.GenerateNoDelta = false;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Toggles <see cref="SquirrelSettings.GenerateNoDelta"/></em></p>
-    ///   <p>Don't generate delta packages to save time</p>
-    /// </summary>
-    [Pure]
-    public static T ToggleGenerateNoDelta<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.GenerateNoDelta = !toolSettings.GenerateNoDelta;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.GenerateNoDelta"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.GenerateNoDelta))]
+    public static T SetGenerateNoDelta<T>(this T o, bool? v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.GenerateNoDelta, v));
+    /// <inheritdoc cref="SquirrelSettings.GenerateNoDelta"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.GenerateNoDelta))]
+    public static T ResetGenerateNoDelta<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.GenerateNoDelta));
+    /// <inheritdoc cref="SquirrelSettings.GenerateNoDelta"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.GenerateNoDelta))]
+    public static T EnableGenerateNoDelta<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.GenerateNoDelta, true));
+    /// <inheritdoc cref="SquirrelSettings.GenerateNoDelta"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.GenerateNoDelta))]
+    public static T DisableGenerateNoDelta<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.GenerateNoDelta, false));
+    /// <inheritdoc cref="SquirrelSettings.GenerateNoDelta"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.GenerateNoDelta))]
+    public static T ToggleGenerateNoDelta<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.GenerateNoDelta, !o.GenerateNoDelta));
     #endregion
     #region FrameworkVersion
-    /// <summary>
-    ///   <p><em>Sets <see cref="SquirrelSettings.FrameworkVersion"/></em></p>
-    ///   <p>Set the required .NET framework version, e.g. net461</p>
-    /// </summary>
-    [Pure]
-    public static T SetFrameworkVersion<T>(this T toolSettings, string frameworkVersion) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FrameworkVersion = frameworkVersion;
-        return toolSettings;
-    }
-    /// <summary>
-    ///   <p><em>Resets <see cref="SquirrelSettings.FrameworkVersion"/></em></p>
-    ///   <p>Set the required .NET framework version, e.g. net461</p>
-    /// </summary>
-    [Pure]
-    public static T ResetFrameworkVersion<T>(this T toolSettings) where T : SquirrelSettings
-    {
-        toolSettings = toolSettings.NewInstance();
-        toolSettings.FrameworkVersion = null;
-        return toolSettings;
-    }
+    /// <inheritdoc cref="SquirrelSettings.FrameworkVersion"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.FrameworkVersion))]
+    public static T SetFrameworkVersion<T>(this T o, string v) where T : SquirrelSettings => o.Modify(b => b.Set(() => o.FrameworkVersion, v));
+    /// <inheritdoc cref="SquirrelSettings.FrameworkVersion"/>
+    [Pure] [Builder(Type = typeof(SquirrelSettings), Property = nameof(SquirrelSettings.FrameworkVersion))]
+    public static T ResetFrameworkVersion<T>(this T o) where T : SquirrelSettings => o.Modify(b => b.Remove(() => o.FrameworkVersion));
     #endregion
 }
 #endregion

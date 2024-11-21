@@ -4,14 +4,32 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
+using JetBrains.Annotations;
+using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.MSBuild;
 
+[PublicAPI]
+public class MSBuildVerbosityMappingAttribute : VerbosityMappingAttribute
+{
+    public MSBuildVerbosityMappingAttribute()
+        : base(typeof(MSBuildVerbosity))
+    {
+        Quiet = nameof(MSBuildVerbosity.Quiet);
+        Minimal = nameof(MSBuildVerbosity.Minimal);
+        Normal = nameof(MSBuildVerbosity.Minimal);
+        Verbose = nameof(MSBuildVerbosity.Detailed);
+    }
+}
+
 partial class MSBuildTasks
 {
-    private static string GetToolPath()
+    protected override string GetToolPath(ToolOptions options = null)
     {
-        return MSBuildToolPathResolver.Resolve();
+        var msbuildOptions = options as MSBuildSettings;
+        return MSBuildToolPathResolver.Resolve(msbuildOptions?.MSBuildVersion, msbuildOptions?.MSBuildPlatform);
     }
 
     public static string EscapeMSBuild(string str)
@@ -25,5 +43,24 @@ partial class MSBuildTasks
             .Replace(";", "%3B")  // List separator
             .Replace("?", "%3F")  // Wildcard character for file names in Include and Exclude attributes
             .Replace("*", "%2A"); // Wildcard character for use in file names in Include and Exclude attributes
+    }
+}
+
+partial class MSBuildSettings
+{
+    [CanBeNull]
+    private string FormatPlatform(MSBuildTargetPlatform value, PropertyInfo property)
+    {
+        if (value == null)
+            return null;
+
+        if (Equals(value, MSBuildTargetPlatform.MSIL))
+        {
+            return TargetPath == null || TargetPath.EndsWithOrdinalIgnoreCase(".sln")
+                ? "Any CPU".DoubleQuote()
+                : "AnyCPU";
+        }
+
+        return value.ToString();
     }
 }

@@ -19,6 +19,7 @@
             "name": "Assembly",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "Path to the test assembly."
           },
           {

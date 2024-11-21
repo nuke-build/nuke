@@ -56,25 +56,27 @@ NUKE builds and tests itself on several CI/CD services, which helps to ensure a 
 
 - [ASP.NET Boilerplate](https://aspnetboilerplate.com/) <sup><a href="https://github.com/aspnetboilerplate/aspnetboilerplate">1</a></sup>
 - [AvaloniaUI](https://avaloniaui.net/) <sup><a href="https://github.com/AvaloniaUI/Avalonia">1</a></sup>
-- **[Aviva Solutions B.V.](https://www.avivasolutions.nl/)** <sup><a href="https://github.com/avivasolutionsnl/sitecore-commerce-docker">1</a> <a href="https://github.com/avivasolutionsnl/sitecore-docker">2</a></sup>
+- [Aviva Solutions B.V.](https://www.avivasolutions.nl/) <sup><a href="https://github.com/avivasolutionsnl/sitecore-commerce-docker">1</a> <a href="https://github.com/avivasolutionsnl/sitecore-docker">2</a></sup>
 - [ChilliCream](https://chillicream.com/) <sup><a href="https://github.com/ChilliCream/hotchocolate">1</a></sup>
 - [CsvHelper](https://joshclose.github.io/CsvHelper/) <sup><a href="https://github.com/JoshClose/CsvHelper">1</a></sup>
 - [DNN Community](https://dnncommunity.org/) <sup><a href="https://github.com/DNNCommunity/Dnn.ModuleCreator">1</a></sup>
 - [FluentAssertions](https://fluentassertions.com/) <sup><a href="https://github.com/fluentassertions/fluentassertions">1</a></sup>
-- **[JetBrains s.r.o.](https://www.jetbrains.com/)** <sup><a href="https://github.com/JetBrains/space-dotnet-sdk">1</a> <a href="https://github.com/JetBrains/YouTrackSharp">2</a></sup>
+- [JetBrains s.r.o.](https://www.jetbrains.com/) <sup><a href="https://github.com/JetBrains/space-dotnet-sdk">1</a> <a href="https://github.com/JetBrains/YouTrackSharp">2</a></sup>
 - [NSwag](https://github.com/RicoSuter/NSwag/) <sup><a href="https://github.com/RicoSuter/NSwag/">1</a></sup>
-- **[Octopus Deploy Pty. Ltd.](https://www.octopus.com/)** <sup><a href="https://github.com/OctopusDeploy/OctopusTentacle">1</a> <a href="https://github.com/OctopusDeploy/OctopusClients">2</a> <a href="https://github.com/OctopusDeploy/Octodiff">3</a></sup>
+- [Octopus Deploy Pty. Ltd.](https://www.octopus.com/) <sup><a href="https://github.com/OctopusDeploy/OctopusTentacle">1</a> <a href="https://github.com/OctopusDeploy/OctopusClients">2</a> <a href="https://github.com/OctopusDeploy/Octodiff">3</a></sup>
 - [OmniSharp](http://www.omnisharp.net/) <sup><a href="https://github.com/OmniSharp/csharp-language-server-protocol">1</a></sup>
 - [Quartz.NET](https://github.com/quartznet/quartznet) <sup><a href="https://github.com/quartznet/quartznet/">1</a></sup>
-- **[VirtoCommerce](https://virtocommerce.com/)** <sup><a href="https://github.com/VirtoCommerce/vc-build/">1</a></sup>
+- [VirtoCommerce](https://virtocommerce.com/) <sup><a href="https://github.com/VirtoCommerce/vc-build/">1</a></sup>
 
 ## Sponsors
 
 Thanks to all companies, organizations, and individuals who are sponsoring the further development of this project. Your support means a lot! 💙
 
-[<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/octopusdeploy-dark.svg"><img alt="Octopus Deploy" height="170px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/octopusdeploy-light.svg"></picture>](https://octopus.com)
+[<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nuke-build/nuke/refs/heads/develop/images/octopusdeploy-dark.svg"><img alt="Octopus Deploy" height="170px" src="https://raw.githubusercontent.com/nuke-build/nuke/refs/heads/develop/images/octopusdeploy-light.svg"></picture>](https://octopus.com)
 
-[<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/aws-dark.png"><img alt="Amazon Web Services" height="160px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/aws-light.png"></picture>](https://aws.amazon.com/)
+[<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nuke-build/nuke/refs/heads/develop/images/aws-dark.png"><img alt="Amazon Web Services" height="160px" src="https://raw.githubusercontent.com/nuke-build/nuke/refs/heads/develop/images/aws-light.png"></picture>](https://aws.amazon.com/)
+
+[<img height="120px" src="https://raw.githubusercontent.com/nuke-build/nuke/refs/heads/develop/images/datadog.svg" alt="Datadog" />](https://datadoghq.com/)
 
 [<img height="60px" src="https://www.dangl-it.de/media/1195/logo-en-rectangular.png" alt="Dangl-IT GmbH" />](https://www.dangl-it.com/)
 [<img height="60px" src="https://peiitalliance.com/logos/LevelingUp-Logo.svg" alt="Leveling Up" />](https://github.com/ron-myers)
@@ -106,7 +108,7 @@ Thanks to all companies, organizations, and individuals who are sponsoring the f
 
 Thanks to [JetBrains](https://jetbrains.com) for providing licenses for [Rider](https://jetbrains.com/rider) and access to a [TeamCity Cloud](https://jetbrains.com/teamcity) instance, which both make open-source development a real pleasure!
 
-[<img src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/jetbrains.png" width="450" />](https://jetbrains.com/)
+[<img src="https://raw.githubusercontent.com/nuke-build/nuke/refs/heads/develop/images/jetbrains.png" width="450" />](https://jetbrains.com/)
 
 Thanks to [SignPath](https://signpath.io?utm_source=foundation&utm_medium=github&utm_campaign=nukebuild) for providing free code signing service and to the [SignPath Foundation](https://signpath.org?utm_source=foundation&utm_medium=github&utm_campaign=nukebuild) for a free code signing certificate.
 

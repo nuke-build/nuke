@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nuke.Tooling\Nuke.Tooling.csproj" />
     <ProjectReference Include="..\Nuke.Utilities\Nuke.Utilities.csproj" />
     <ProjectReference Include="..\Nuke.Utilities.Net\Nuke.Utilities.Net.csproj" />
   </ItemGroup>

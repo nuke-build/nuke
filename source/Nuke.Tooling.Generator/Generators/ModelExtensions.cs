@@ -102,6 +102,11 @@ public static class ModelExtensions
         return property.Type.EqualsOrdinalIgnoreCase("string");
     }
 
+    public static bool IsCustomType(this Property property)
+    {
+        return property.DataClass.Tool.DataClasses.Any(x => x.Name == property.Type);
+    }
+
     public static bool HasCustomListType(this Property property)
     {
         return property.DataClass.Tool.DataClasses.Any(x => x.Name == property.GetListValueType());

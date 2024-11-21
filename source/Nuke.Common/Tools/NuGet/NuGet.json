@@ -22,6 +22,7 @@
             "name": "TargetPath",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "Path of the package to push."
           },
           {
@@ -104,6 +105,7 @@
             "name": "TargetPath",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "createOverload": true,
             "help": "The <c>.nuspec</c> or <c>.csproj</c> file."
           },
@@ -182,8 +184,7 @@
           {
             "name": "Properties",
             "type": "Dictionary<string, object>",
-            "format": "-Properties {value}",
-            "itemFormat": "{key}={value}",
+            "format": "-Properties {key}={value}",
             "separator": ";",
             "help": "Specifies a list of properties that override values in the project file; see <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties\">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.",
             "delegates": [
@@ -242,6 +243,7 @@
             "name": "TargetPath",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "createOverload": true,
             "help": "Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file."
           },
@@ -371,6 +373,7 @@
             "name": "PackageID",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "Name of the package to install."
           },
           {
