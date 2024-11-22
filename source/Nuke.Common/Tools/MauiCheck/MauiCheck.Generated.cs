@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.MauiCheck;
 /// <summary><p>A dotnet tool for helping set up your .NET MAUI environment.</p><p>For more details, visit the <a href="https://github.com/Redth/dotnet-maui-check">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class MauiCheckTasks : ToolTasks, IRequireNuGetPackage
 {

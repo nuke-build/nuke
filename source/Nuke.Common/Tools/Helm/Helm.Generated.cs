@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.Helm;
 /// <summary><p>For more details, visit the <a href="https://helm.sh/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[PathToolRequirement(PathExecutable)]
 [PathTool(Executable = PathExecutable)]
 public partial class HelmTasks : ToolTasks, IRequirePathTool
 {

@@ -21,7 +21,6 @@ namespace Nuke.Common.Tools.Coverlet;
 /// <summary><p><c>Coverlet</c> is a cross platform code coverage library for .NET Core, with support for line, branch and method coverage.The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p><p>For more details, visit the <a href="https://github.com/tonerdo/coverlet/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class CoverletTasks : ToolTasks, IRequireNuGetPackage
 {

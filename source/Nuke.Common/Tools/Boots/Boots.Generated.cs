@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.Boots;
 /// <summary><p>boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.</p><p>For more details, visit the <a href="https://github.com/jonathanpeppers/boots">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class BootsTasks : ToolTasks, IRequireNuGetPackage
 {

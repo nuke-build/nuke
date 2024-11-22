@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.ReSharper;
 /// <summary><p>For more details, visit the <a href="https://www.jetbrains.com/help/resharper/ReSharper_Command_Line_Tools.html">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class ReSharperTasks : ToolTasks, IRequireNuGetPackage
 {

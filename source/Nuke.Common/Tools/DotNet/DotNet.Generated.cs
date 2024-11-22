@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.DotNet;
 /// <summary><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[PathToolRequirement(PathExecutable)]
 [PathTool(Executable = PathExecutable)]
 public partial class DotNetTasks : ToolTasks, IRequirePathTool
 {

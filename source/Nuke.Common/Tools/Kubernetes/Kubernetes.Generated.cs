@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.Kubernetes;
 /// <summary><p>For more details, visit the <a href="https://kubernetes.io/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[PathToolRequirement(PathExecutable)]
 [PathTool(Executable = PathExecutable)]
 public partial class KubernetesTasks : ToolTasks, IRequirePathTool
 {

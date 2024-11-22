@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.Fixie;
 /// <summary><p>Fixie is a .NET modern test framework similar to NUnit and xUnit, but with an emphasis on low-ceremony defaults and flexible customization.</p><p>For more details, visit the <a href="https://fixie.github.io/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class FixieTasks : ToolTasks, IRequireNuGetPackage
 {

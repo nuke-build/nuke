@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.Squirrel;
 /// <summary><p>Squirrel is both a set of tools and a library, to completely manage both installation and updating your Desktop Windows application, written in either C# or any other language (i.e., Squirrel can manage native C++ applications).</p><p>For more details, visit the <a href="https://github.com/Squirrel/Squirrel.Windows">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class SquirrelTasks : ToolTasks, IRequireNuGetPackage
 {

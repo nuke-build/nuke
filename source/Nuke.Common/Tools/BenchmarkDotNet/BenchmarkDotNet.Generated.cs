@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.BenchmarkDotNet;
 /// <summary><p>Powerful .NET library for benchmarking</p><p>For more details, visit the <a href="https://benchmarkdotnet.org/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class BenchmarkDotNetTasks : ToolTasks, IRequireNuGetPackage
 {
