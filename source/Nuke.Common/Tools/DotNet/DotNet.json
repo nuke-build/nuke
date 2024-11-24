@@ -606,8 +606,7 @@
           {
             "name": "Properties",
             "type": "Dictionary<string, object>",
-            "format": "/property:{value}",
-            "itemFormat": "{key}={value}",
+            "format": "/property:{key}={value}",
             "disallowedCharacter": ";",
             "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
             "delegates": [
