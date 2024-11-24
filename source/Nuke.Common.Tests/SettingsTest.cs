@@ -123,6 +123,17 @@ public class SettingsTest
     }
 
     [Fact]
+    public void TestDotNet_Empty()
+    {
+        Assert(new DotNetBuildSettings()
+                .SetFramework(null)
+                .SetConfiguration("")
+                .SetProperty("foo1", null)
+                .SetProperty("foo2", ""),
+            "build");
+    }
+
+    [Fact]
     public void TestDocker()
     {
         Assert(new DockerAttachSettings()

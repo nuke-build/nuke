@@ -136,6 +136,9 @@ partial class ToolOptions
                 yield break;
 
             var value = Parse(token, property.PropertyType);
+            if (value.IsNullOrWhiteSpace())
+                yield break;
+
             foreach (var part in formatParts)
                 yield return part.Replace(ValuePlaceholder, value);
         }
@@ -145,7 +148,7 @@ partial class ToolOptions
             Assert.True(formatParts.Length <= 2);
 
             var valueType = property.PropertyType.GetScalarType();
-            var values = token.Value<JArray>().Select(x => Parse(x, valueType));
+            var values = token.Value<JArray>().Select(x => Parse(x, valueType)).Where(x => !x.IsNullOrWhiteSpace());
 
             if (attribute.Separator == null)
             {
@@ -175,7 +178,8 @@ partial class ToolOptions
         IEnumerable<string> GetDictionaryArguments()
         {
             var valueType = property.PropertyType.GetGenericArguments().Last();
-            var pairs = token.Value<JObject>().Properties().Select(x => (Key: x.Name, Value: Parse(x, valueType)));
+            var pairs = token.Value<JObject>().Properties().Select(x => (Key: x.Name, Value: Parse(x, valueType)))
+                .Where(x => !x.Value.IsNullOrWhiteSpace());
 
             if (attribute.Separator == null)
             {
