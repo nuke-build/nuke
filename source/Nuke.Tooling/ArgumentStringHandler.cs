@@ -89,7 +89,7 @@ public ref struct ArgumentStringHandler
     public Func<string, string> GetFilter()
     {
         var secretValues = _secretValues;
-        return x => secretValues.Aggregate(x, (arguments, value) => arguments.Replace(value, Arguments.Redacted));
+        return x => secretValues.Aggregate(x, (arguments, value) => arguments.Replace(value, "[REDACTED]"));
     }
 }
 #endif
