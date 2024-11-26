@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
@@ -63,8 +62,8 @@ public static class DockerTargetDefinitionExtensions
                     .SetOutput(buildAssemblyDirectory)
                     .SetRuntime(settings.DotNetRuntime)
                     .EnableSelfContained()
-                    .DisableProcessLogInvocation()
-                    .DisableProcessLogOutput());
+                    .DisableProcessOutputLogging()
+                    .DisableProcessInvocationLogging());
             }
             else
             {
@@ -96,8 +95,8 @@ public static class DockerTargetDefinitionExtensions
                     .SetUsername(settings.Username)
                     .SetPassword(settings.Password)
                     .SetServer(settings.Server)
-                    .DisableProcessLogInvocation()
-                    .DisableProcessLogOutput());
+                    .DisableProcessInvocationLogging()
+                    .DisableProcessOutputLogging());
             }
 
             try
@@ -117,7 +116,8 @@ public static class DockerTargetDefinitionExtensions
                                  definition.Target.Name,
                                  $"--{ParameterService.GetParameterDashedName(Constants.SkippedTargetsParameterName)}"
                              }.Concat(settings.Args))
-                    .DisableProcessLogInvocation()
+
+                    .DisableProcessInvocationLogging()
                     .SetProcessLogger((_, message) =>
                     {
                         try
@@ -142,8 +142,8 @@ public static class DockerTargetDefinitionExtensions
         return definition;
     }
 
-    private static IReadOnlyDictionary<string, string> GetEnvironmentVariables(
-        ToolSettings settings,
+    private static Dictionary<string, string> GetEnvironmentVariables(
+        ToolOptions settings,
         AbsolutePath rootDirectory,
         AbsolutePath tempDirectory)
     {
@@ -184,7 +184,6 @@ public static class DockerTargetDefinitionExtensions
                     !x.Key.Contains(' ') &&
                     !x.Key.EqualsAnyOrdinalIgnoreCase(excludedEnvironmentVariables) &&
                     !x.Value.Contains(EnvironmentInfo.NewLine))
-                .ToDictionary(x => x.Key, _ => default(string)).AsReadOnly())
-            .ToImmutableSortedDictionary();
+                .ToDictionary(x => x.Key, _ => default(string)));
     }
 }

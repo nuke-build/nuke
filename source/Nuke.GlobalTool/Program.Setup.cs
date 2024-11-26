@@ -27,7 +27,7 @@ partial class Program
 {
     // ReSharper disable InconsistentNaming
 
-    private const string TARGET_FRAMEWORK = "net6.0";
+    private const string TARGET_FRAMEWORK = "net8.0";
     private const string PROJECT_KIND = "9A19103F-16F7-4668-BE54-9A1E7A4F7556";
 
     // ReSharper disable once CognitiveComplexity
@@ -245,7 +245,7 @@ partial class Program
     private static void WriteConfigurationFile(AbsolutePath rootDirectory, [CanBeNull] AbsolutePath solutionFile)
     {
         var parametersFile = GetDefaultParametersFile(rootDirectory);
-        var dictionary = new Dictionary<string, string> { ["$schema"] = $"./{BuildSchemaFileName}" };
+        var dictionary = new Dictionary<string, string> { ["$schema"] = BuildSchemaFileName };
         if (solutionFile != null)
             dictionary["Solution"] = rootDirectory.GetUnixRelativePathTo(solutionFile).ToString();
         parametersFile.WriteJson(dictionary);

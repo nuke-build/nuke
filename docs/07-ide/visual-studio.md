@@ -4,9 +4,7 @@ title: Visual Studio
 
 import DownloadButton from '@site/src/components/DownloadButton';
 
-<DownloadButton
-    url="/download/visualstudio"
-    event="ICIIXSN5" />
+<DownloadButton url="/download/visual-studio" />
 
 In [Visual Studio](https://visualstudio.microsoft.com/) you can install the _NUKE Support extension_ to be more productive in writing, running, and debugging your builds.
 

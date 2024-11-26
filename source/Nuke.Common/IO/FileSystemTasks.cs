@@ -188,6 +188,7 @@ public static class FileSystemTasks
         File.Delete(file);
     }
 
+    [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.Copy)}")]
     public static void CopyFile(AbsolutePath source, AbsolutePath target, FileExistsPolicy policy = FileExistsPolicy.Fail, bool createDirectories = true)
     {
         if (!ShouldCopyFile(source, target, policy))
@@ -200,6 +201,7 @@ public static class FileSystemTasks
         File.Copy(source, target, overwrite: true);
     }
 
+    [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.CopyToDirectory)}")]
     public static void CopyFileToDirectory(
         AbsolutePath source,
         AbsolutePath targetDirectory,
@@ -209,6 +211,7 @@ public static class FileSystemTasks
         CopyFile(source, Path.Combine(targetDirectory, Path.GetFileName(source).NotNull()), policy, createDirectories);
     }
 
+    [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.Move)}")]
     public static void MoveFile(AbsolutePath source, AbsolutePath target, FileExistsPolicy policy = FileExistsPolicy.Fail, bool createDirectories = true)
     {
         if (!ShouldCopyFile(source, target, policy))
@@ -224,6 +227,7 @@ public static class FileSystemTasks
         File.Move(source, target);
     }
 
+    [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.MoveToDirectory)}")]
     public static void MoveFileToDirectory(
         AbsolutePath source,
         AbsolutePath targetDirectory,
@@ -233,6 +237,7 @@ public static class FileSystemTasks
         MoveFile(source, Path.Combine(targetDirectory, Path.GetFileName(source).NotNull()), policy, createDirectories);
     }
 
+    [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.Rename)}")]
     public static void RenameFile(AbsolutePath file, string newName, FileExistsPolicy policy = FileExistsPolicy.Fail)
     {
         if (Path.GetFileName(file) == newName)
@@ -241,6 +246,7 @@ public static class FileSystemTasks
         MoveFile(file, Path.Combine(Path.GetDirectoryName(file).NotNull(), newName), policy);
     }
 
+    [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.Move)}")]
     public static void MoveDirectory(
         AbsolutePath source,
         AbsolutePath target,
@@ -264,6 +270,7 @@ public static class FileSystemTasks
         }
     }
 
+    [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.MoveToDirectory)}")]
     public static void MoveDirectoryToDirectory(
         AbsolutePath source,
         AbsolutePath targetDirectory,
@@ -273,6 +280,7 @@ public static class FileSystemTasks
         MoveDirectory(source, Path.Combine(targetDirectory, new DirectoryInfo(source).Name), directoryPolicy, filePolicy);
     }
 
+    [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.Rename)}")]
     public static void RenameDirectory(
         string directory,
         string newName,
@@ -282,6 +290,7 @@ public static class FileSystemTasks
         MoveDirectory(directory, Path.Combine(Path.GetDirectoryName(directory).NotNull(), newName), directoryPolicy, filePolicy);
     }
 
+    [Obsolete($"Use {nameof(AbsolutePath)}.{nameof(AbsolutePathExtensions.Copy)}")]
     public static void CopyDirectoryRecursively(
         AbsolutePath source,
         AbsolutePath target,

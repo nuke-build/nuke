@@ -19,6 +19,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Utilities;
 using Nuke.Components;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -104,6 +105,7 @@ partial class Build
 
     Target ITest.Test => _ => _
         .Inherit<ITest>()
+        .OnlyWhenStatic(() => Host is not GitHubActions { Workflow: AlphaDeployment })
         .Partition(2);
 
     bool IReportCoverage.CreateCoverageHtmlReport => true;

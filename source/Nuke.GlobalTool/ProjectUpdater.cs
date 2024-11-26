@@ -29,13 +29,13 @@ public static class ProjectUpdater
 
     private static void UpdateTargetFramework(Microsoft.Build.Evaluation.Project buildProject)
     {
-        buildProject.SetProperty("TargetFramework", "net6.0");
+        buildProject.SetProperty("TargetFramework", "net8.0");
     }
 
     private static void UpdateNukeCommonPackage(Microsoft.Build.Evaluation.Project buildProject, out FloatRange previousPackageVersion)
     {
-        var packageItem = buildProject.Items.SingleOrDefault(x => x.EvaluatedInclude == Constants.NukeCommonPackageId);
-        previousPackageVersion = FloatRange.Parse(packageItem.NotNull().GetMetadataValue("Version"));
+        var packageItem = buildProject.Items.SingleOrDefault(x => x.EvaluatedInclude == Constants.NukeCommonPackageId).NotNull();
+        previousPackageVersion = FloatRange.Parse(packageItem.GetMetadataValue("Version"));
 
         var latestPackageVersion = NuGetVersionResolver.GetLatestVersion(Constants.NukeCommonPackageId, includePrereleases: false).GetAwaiter().GetResult();
         if (previousPackageVersion.Satisfies(NuGetVersion.Parse(latestPackageVersion)))

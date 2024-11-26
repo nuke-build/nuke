@@ -16,11 +16,11 @@ public static partial class CoverletSettingsExtensions
     /// </summary>
     /// <returns></returns>
     [Pure]
-    public static CoverletSettings SetTargetSettings(this CoverletSettings toolSettings, ToolSettings targetSettings)
+    public static CoverletSettings SetTargetSettings(this CoverletSettings toolSettings, ToolOptions targetSettings)
     {
         return toolSettings
             .SetTarget(targetSettings.ProcessToolPath)
-            .SetTargetArgs(targetSettings.GetProcessArguments().RenderForExecution());
+            .SetTargetArgs(targetSettings.GetArguments());
     }
 
     /// <summary>

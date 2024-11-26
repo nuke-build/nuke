@@ -26,6 +26,11 @@ public static partial class ReflectionUtility
         return type.IsNullableType() ? null : Activator.CreateInstance(type);
     }
 
+    public static bool IsAssignableTo(this Type type, Type otherType)
+    {
+        return otherType.IsAssignableFrom(type);
+    }
+
     public static bool IsNullableType(this Type type)
     {
         return Nullable.GetUnderlyingType(type) != null ||
@@ -161,17 +166,17 @@ public static partial class ReflectionUtility
     }
 
     public static IEnumerable<MemberInfo> GetAllMembers(
-        this Type buildType,
+        this Type type,
         Func<MemberInfo, bool> filter,
         BindingFlags bindingFlags,
         bool allowAmbiguity,
         bool filterQuasiOverridden = false)
     {
-        var interfaceMembersByName = buildType.GetInterfaces()
+        var interfaceMembersByName = type.GetInterfaces()
             .SelectMany(x => x.GetMembers(bindingFlags))
             .Where(filter)
-            .Where(x => buildType.GetMember(x.Name).SingleOrDefault() == null).ToLookup(x => x.GetDisplayShortName());
-        var classMembers = buildType
+            .Where(x => type.GetMember(x.Name).SingleOrDefault() == null).ToLookup(x => x.GetDisplayShortName());
+        var classMembers = type
             .GetMembers(bindingFlags)
             .Where(filter)
             .Where(x => !x.IsExplicit()).ToDictionary(x => x.Name);
@@ -215,7 +220,7 @@ public static partial class ReflectionUtility
         }
 
         return classMembers.Values
-            .Concat(interfaceMembersByName.SelectMany(x => x).Select(x => x.GetImplementedOrInterfaceMember(buildType)))
+            .Concat(interfaceMembersByName.SelectMany(x => x).Select(x => x.GetImplementedOrInterfaceMember(type)))
             .Except(removeMembers)
             .Where(filter).ToList();
     }

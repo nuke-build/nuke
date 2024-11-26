@@ -17,7 +17,6 @@ using Xunit;
 
 namespace Nuke.Common.Tests;
 
-[UsesVerify]
 public class ChangelogTasksTest
 {
     private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory).NotNull();

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Nuke.CodeGeneration.Model;
 using Nuke.CodeGeneration.Writers;
+using Nuke.Common.Utilities;
+using Nuke.Common.Utilities.Collections;
 using Serilog;
 
 namespace Nuke.CodeGeneration.Generators;
@@ -51,18 +53,16 @@ public static class WriterExtensions
         lines.AddRange(GetArgumentsList(task.SettingsClass));
 
         return writerWrapper
-            .WriteLine("/// <remarks>")
-            .ForEachWriteLine(lines.Select(x => $"///   {x}"))
-            .WriteLine("/// </remarks>");
+            .WriteLine($"/// <remarks>{lines.Join(string.Empty)}</remarks>");
     }
 
-    private static IEnumerable<string> GetArgumentsList(SettingsClass settingsClass)
+    private static IEnumerable<string> GetArgumentsList(DataClass dataClass)
     {
-        var properties = settingsClass.Properties.Where(x => !string.IsNullOrEmpty(x.Format)).ToList();
+        var allDataClasses = dataClass.Tool.Tasks.Select(x => x.SettingsClass).Concat(dataClass.Tool.DataClasses).ToList();
+        var typeHierarchy = dataClass.DescendantsAndSelf(x => allDataClasses.FirstOrDefault(y => y.Name == x.BaseClass));
+        var properties = typeHierarchy.SelectMany(x => x.Properties, (x, y) => (Class: x, Property: y)).Where(x => !string.IsNullOrEmpty(x.Property.Format)).ToList();
         if (properties.Count == 0)
             yield break;
-
-        yield return "<ul>";
 
         string GetArgument(Property property)
         {
@@ -73,24 +73,19 @@ public static class WriterExtensions
                     ? property.Format.Substring(startIndex: 0, valueIndex).TrimEnd(':', '=', ' ')
                     : $"&lt;{property.Name.ToInstance()}&gt;";
             if (!argument.Any(char.IsLetter))
-                Log.Warning("Format for property {ClassName}{PropertyName} is all non-letters", property.DataClass.Tool.Name, property.Name);
+                Log.Warning("Format for property {ClassName}.{PropertyName} is all non-letters", property.DataClass.Tool.Name, property.Name);
             return argument;
         }
 
         var propertiesWithArgument = properties
-            .Select(x => new { Property = settingsClass.Name + "." + x.Name, Argument = GetArgument(x) })
+            .Select(x => new { Property = x.Class.Name + "." + x.Property.Name, Argument = GetArgument(x.Property) })
             .OrderBy(x => !x.Argument.StartsWith("&lt;"))
             .ThenBy(x => x.Argument);
+
+        yield return "<ul>";
         foreach (var pair in propertiesWithArgument)
-            yield return $"  <li><c>{pair.Argument}</c> via {pair.Property.ToSeeCref()}</li>";
-
+            yield return $"<li><c>{pair.Argument}</c> via {pair.Property.ToSeeCref()}</li>";
         yield return "</ul>";
-    }
-
-    public static T WriteSummary<T>(this T writerWrapper, Property property)
-        where T : IWriterWrapper
-    {
-        return writerWrapper.WriteSummary(property.Help);
     }
 
     public static T WriteSummary<T>(this T writerWrapper, DataClass dataClass)
@@ -131,10 +126,7 @@ public static class WriterExtensions
         if (lines.Length == 0)
             return writerWrapper;
 
-        writerWrapper
-            .WriteLine("/// <summary>")
-            .ForEachWriteLine(lines.Select(x => $"///   {x}"))
-            .WriteLine("/// </summary>");
+        writerWrapper.WriteLine($"/// <summary>{lines.Join(string.Empty)}</summary>");
 
         return writerWrapper;
     }

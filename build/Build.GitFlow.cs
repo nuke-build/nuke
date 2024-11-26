@@ -77,7 +77,7 @@ partial class Build
                 .SetUrl(RootDirectory)
                 .SetBranch(MasterBranch)
                 .EnableNoFetch()
-                .DisableProcessLogOutput()).Result;
+                .DisableProcessOutputLogging()).Result;
 
             if (!GitRepository.IsOnHotfixBranch())
                 Checkout($"{HotfixBranchPrefix}/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1}", start: MasterBranch);

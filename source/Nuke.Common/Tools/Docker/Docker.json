@@ -202,7 +202,7 @@
       "postfix": "ConfigRm",
       "definiteArgument": "config rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Configs",
@@ -219,7 +219,7 @@
       "postfix": "Load",
       "definiteArgument": "load",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Input",
@@ -241,7 +241,7 @@
       "postfix": "ContainerPrune",
       "definiteArgument": "container prune",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -263,7 +263,7 @@
       "postfix": "Trust",
       "definiteArgument": "trust",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -271,7 +271,7 @@
       "postfix": "Stack",
       "definiteArgument": "stack",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Kubeconfig",
@@ -293,7 +293,7 @@
       "postfix": "Top",
       "definiteArgument": "top [ps",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Container",
@@ -315,7 +315,7 @@
       "postfix": "Pull",
       "definiteArgument": "pull",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AllTags",
@@ -355,7 +355,7 @@
       "postfix": "TrustSign",
       "definiteArgument": "trust sign IMAGE:TAG",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -363,7 +363,7 @@
       "postfix": "Checkpoint",
       "definiteArgument": "checkpoint",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -371,7 +371,7 @@
       "postfix": "TrustSigner",
       "definiteArgument": "trust signer",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -379,7 +379,7 @@
       "postfix": "ConfigInspect",
       "definiteArgument": "config inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -408,7 +408,7 @@
       "postfix": "Service",
       "definiteArgument": "service",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -416,7 +416,7 @@
       "postfix": "TrustKeyGenerate",
       "definiteArgument": "trust key generate",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Name",
@@ -432,7 +432,7 @@
       "postfix": "System",
       "definiteArgument": "system",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -440,7 +440,7 @@
       "postfix": "ConfigLs",
       "definiteArgument": "config ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -468,7 +468,7 @@
       "postfix": "ContextUpdate",
       "definiteArgument": "context update",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "DefaultStackOrchestrator",
@@ -548,7 +548,7 @@
       "postfix": "ContainerPort",
       "definiteArgument": "container port",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Container",
@@ -570,7 +570,7 @@
       "postfix": "Rename",
       "definiteArgument": "rename",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Container",
@@ -592,7 +592,7 @@
       "postfix": "Tag",
       "definiteArgument": "tag",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "SourceImage",
@@ -614,7 +614,7 @@
       "postfix": "SecretInspect",
       "definiteArgument": "secret inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -643,7 +643,7 @@
       "postfix": "Secret",
       "definiteArgument": "secret",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -651,7 +651,7 @@
       "postfix": "ContainerExport",
       "definiteArgument": "container export",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Output",
@@ -673,7 +673,7 @@
       "postfix": "History",
       "definiteArgument": "history",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -713,7 +713,7 @@
       "postfix": "ServiceCreate",
       "definiteArgument": "service create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Config",
@@ -969,7 +969,7 @@
           },
           {
             "name": "RestartCondition",
-            "type": "RestartCondition",
+            "type": "DockerRestartCondition",
             "format": "--restart-condition {value}",
             "help": "Restart when condition is met (\"none\"|\"on-failure\"|\"any\") (default \"any\")."
           },
@@ -999,7 +999,7 @@
           },
           {
             "name": "RollbackFailureAction",
-            "type": "RollbackFailureAction",
+            "type": "DockerRollbackFailureAction",
             "format": "--rollback-failure-action {value}",
             "help": "Action on rollback failure (\"pause\"|\"continue\") (default \"pause\")."
           },
@@ -1017,7 +1017,7 @@
           },
           {
             "name": "RollbackOrder",
-            "type": "RollbackOrder",
+            "type": "DockerRollbackOrder",
             "format": "--rollback-order {value}",
             "help": "Rollback order (\"start-first\"|\"stop-first\") (default \"stop-first\")."
           },
@@ -1065,7 +1065,7 @@
           },
           {
             "name": "UpdateFailureAction",
-            "type": "UpdateFailureAction",
+            "type": "DockerUpdateFailureAction",
             "format": "--update-failure-action {value}",
             "help": "Action on update failure (\"pause\"|\"continue\"|\"rollback\") (default \"pause\")."
           },
@@ -1083,7 +1083,7 @@
           },
           {
             "name": "UpdateOrder",
-            "type": "UpdateOrder",
+            "type": "DockerUpdateOrder",
             "format": "--update-order {value}",
             "help": "Update order (\"start-first\"|\"stop-first\") (default \"stop-first\")."
           },
@@ -1138,7 +1138,7 @@
       "postfix": "ServicePs",
       "definiteArgument": "service ps",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -1185,7 +1185,7 @@
       "postfix": "Stop",
       "definiteArgument": "stop",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Time",
@@ -1208,7 +1208,7 @@
       "postfix": "Node",
       "definiteArgument": "node",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -1216,7 +1216,7 @@
       "postfix": "Update",
       "definiteArgument": "update",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "BlkioWeight",
@@ -1323,7 +1323,7 @@
       "postfix": "PluginCreate",
       "definiteArgument": "plugin create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Compress",
@@ -1351,7 +1351,7 @@
       "postfix": "SystemInfo",
       "definiteArgument": "system info",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -1367,7 +1367,7 @@
       "postfix": "VolumePrune",
       "definiteArgument": "volume prune",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -1389,7 +1389,7 @@
       "postfix": "PluginUpgrade",
       "definiteArgument": "plugin upgrade",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "DisableContentTrust",
@@ -1429,7 +1429,7 @@
       "postfix": "BuilderPrune",
       "definiteArgument": "builder prune",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -1437,7 +1437,7 @@
       "postfix": "SwarmJoinToken",
       "definiteArgument": "swarm join-token",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Quiet",
@@ -1465,11 +1465,11 @@
       "postfix": "NodeUpdate",
       "definiteArgument": "node update",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Availability",
-            "type": "Availability",
+            "type": "DockerAvailability",
             "format": "--availability {value}",
             "help": "Availability of the node (\"active\"|\"pause\"|\"drain\")."
           },
@@ -1487,7 +1487,7 @@
           },
           {
             "name": "Role",
-            "type": "Role",
+            "type": "DockerRole",
             "format": "--role {value}",
             "help": "Role of the node (\"worker\"|\"manager\")."
           },
@@ -1505,7 +1505,7 @@
       "postfix": "TrustSignerAdd",
       "definiteArgument": "trust signer add",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Options",
@@ -1534,7 +1534,7 @@
       "postfix": "SwarmUpdate",
       "definiteArgument": "swarm update",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Autolock",
@@ -1586,7 +1586,7 @@
       "postfix": "ServiceLogs",
       "definiteArgument": "service logs",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Details",
@@ -1656,7 +1656,7 @@
       "postfix": "ServiceLs",
       "definiteArgument": "service ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -1684,7 +1684,7 @@
       "postfix": "SwarmUnlock",
       "definiteArgument": "swarm unlock",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -1692,7 +1692,7 @@
       "postfix": "NetworkLs",
       "definiteArgument": "network ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -1726,7 +1726,7 @@
       "postfix": "PluginLs",
       "definiteArgument": "plugin ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -1760,7 +1760,7 @@
       "postfix": "PluginRm",
       "definiteArgument": "plugin rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -1783,7 +1783,7 @@
       "postfix": "ImageBuild",
       "definiteArgument": "image build",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AddHost",
@@ -2009,7 +2009,7 @@
       "postfix": "TrustRevoke",
       "definiteArgument": "trust revoke",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Yes",
@@ -2031,7 +2031,7 @@
       "postfix": "Rmi",
       "definiteArgument": "rmi",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -2060,7 +2060,7 @@
       "postfix": "NetworkRm",
       "definiteArgument": "network rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Networks",
@@ -2077,7 +2077,7 @@
       "postfix": "Version",
       "definiteArgument": "version",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -2099,7 +2099,7 @@
       "postfix": "SecretCreate",
       "definiteArgument": "secret create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Driver",
@@ -2139,7 +2139,7 @@
       "postfix": "ServiceRm",
       "definiteArgument": "service rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Services",
@@ -2156,7 +2156,7 @@
       "postfix": "TrustKeyLoad",
       "definiteArgument": "trust key load",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Name",
@@ -2178,7 +2178,7 @@
       "postfix": "SecretRm",
       "definiteArgument": "secret rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Secrets",
@@ -2195,7 +2195,7 @@
       "postfix": "ImageInspect",
       "definiteArgument": "image inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -2218,7 +2218,7 @@
       "postfix": "ImageSave",
       "definiteArgument": "image save",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Output",
@@ -2241,7 +2241,7 @@
       "postfix": "TrustKey",
       "definiteArgument": "trust key",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -2249,7 +2249,7 @@
       "postfix": "ContainerAttach",
       "definiteArgument": "container attach",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "DetachKeys",
@@ -2283,7 +2283,7 @@
       "postfix": "ContextCreate",
       "definiteArgument": "context create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "DefaultStackOrchestrator",
@@ -2329,7 +2329,7 @@
       "postfix": "ConfigCreate",
       "definiteArgument": "config create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Label",
@@ -2363,7 +2363,7 @@
       "postfix": "VolumeInspect",
       "definiteArgument": "volume inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -2386,7 +2386,7 @@
       "postfix": "ContainerStop",
       "definiteArgument": "container stop",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Time",
@@ -2409,7 +2409,7 @@
       "postfix": "NetworkPrune",
       "definiteArgument": "network prune",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -2431,7 +2431,7 @@
       "postfix": "ManifestInspect",
       "definiteArgument": "manifest inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Insecure",
@@ -2465,7 +2465,7 @@
       "postfix": "Info",
       "definiteArgument": "info",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -2481,7 +2481,7 @@
       "postfix": "Commit",
       "definiteArgument": "commit",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Author",
@@ -2527,7 +2527,7 @@
       "postfix": "StackDeploy",
       "definiteArgument": "stack deploy",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "BundleFile",
@@ -2555,7 +2555,7 @@
           },
           {
             "name": "ResolveImage",
-            "type": "ResolveImage",
+            "type": "DockerResolveImage",
             "format": "--resolve-image {value}",
             "help": "Query the registry to resolve image digest and supported platforms (\"always\"|\"changed\"|\"never\")."
           },
@@ -2579,13 +2579,12 @@
       "postfix": "ServiceScale",
       "definiteArgument": "service scale",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "ServiceReplicas",
             "type": "Dictionary<string,string>",
-            "format": "{value}",
-            "itemFormat": "{key=value}",
+            "format": "{key}={value}",
             "help": "SERVICE=REPLICAS"
           }
         ]
@@ -2596,7 +2595,7 @@
       "postfix": "Run",
       "definiteArgument": "run",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AddHost",
@@ -3141,8 +3140,7 @@
           {
             "name": "Sysctl",
             "type": "Dictionary<string,string>",
-            "format": "--sysctl {value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--sysctl {key}:{value}",
             "help": "Sysctl options."
           },
           {
@@ -3232,7 +3230,7 @@
       "postfix": "Create",
       "definiteArgument": "create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AddHost",
@@ -3759,8 +3757,7 @@
           {
             "name": "Sysctl",
             "type": "Dictionary<string,string>",
-            "format": "--sysctl {value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--sysctl {key}:{value}",
             "help": "Sysctl options."
           },
           {
@@ -3850,7 +3847,7 @@
       "postfix": "ServiceUpdate",
       "definiteArgument": "service update",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Args",
@@ -4196,7 +4193,7 @@
           },
           {
             "name": "RestartCondition",
-            "type": "RestartCondition",
+            "type": "DockerRestartCondition",
             "format": "--restart-condition {value}",
             "help": "Restart when condition is met (\"none\"|\"on-failure\"|\"any\")."
           },
@@ -4232,7 +4229,7 @@
           },
           {
             "name": "RollbackFailureAction",
-            "type": "RollbackFailureAction",
+            "type": "DockerRollbackFailureAction",
             "format": "--rollback-failure-action {value}",
             "help": "Action on rollback failure (\"pause\"|\"continue\")."
           },
@@ -4250,7 +4247,7 @@
           },
           {
             "name": "RollbackOrder",
-            "type": "RollbackOrder",
+            "type": "DockerRollbackOrder",
             "format": "--rollback-order {value}",
             "help": "Rollback order (\"start-first\"|\"stop-first\")."
           },
@@ -4310,7 +4307,7 @@
           },
           {
             "name": "UpdateFailureAction",
-            "type": "UpdateFailureAction",
+            "type": "DockerUpdateFailureAction",
             "format": "--update-failure-action {value}",
             "help": "Action on update failure (\"pause\"|\"continue\"|\"rollback\")."
           },
@@ -4328,7 +4325,7 @@
           },
           {
             "name": "UpdateOrder",
-            "type": "UpdateOrder",
+            "type": "DockerUpdateOrder",
             "format": "--update-order {value}",
             "help": "Update order (\"start-first\"|\"stop-first\")."
           },
@@ -4370,7 +4367,7 @@
       "postfix": "Port",
       "definiteArgument": "port",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Container",
@@ -4392,7 +4389,7 @@
       "postfix": "Container",
       "definiteArgument": "container",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -4400,7 +4397,7 @@
       "postfix": "ImagePush",
       "definiteArgument": "image push",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AllTags",
@@ -4428,7 +4425,7 @@
       "postfix": "ServiceInspect",
       "definiteArgument": "service inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -4457,7 +4454,7 @@
       "postfix": "NetworkConnect",
       "definiteArgument": "network connect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Alias",
@@ -4515,7 +4512,7 @@
       "postfix": "SecretLs",
       "definiteArgument": "secret ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -4543,7 +4540,7 @@
       "postfix": "SwarmLeave",
       "definiteArgument": "swarm leave",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -4559,7 +4556,7 @@
       "postfix": "Images",
       "definiteArgument": "images",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "All",
@@ -4611,7 +4608,7 @@
       "postfix": "EngineUpdate",
       "definiteArgument": "engine update",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Containerd",
@@ -4645,7 +4642,7 @@
       "postfix": "SystemEvents",
       "definiteArgument": "system events",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -4679,7 +4676,7 @@
       "postfix": "Inspect",
       "definiteArgument": "inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -4714,7 +4711,7 @@
       "postfix": "EngineCheck",
       "definiteArgument": "engine check",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Containerd",
@@ -4772,7 +4769,7 @@
       "postfix": "Attach",
       "definiteArgument": "attach",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "DetachKeys",
@@ -4806,7 +4803,7 @@
       "postfix": "ContainerWait",
       "definiteArgument": "container wait",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Containers",
@@ -4823,7 +4820,7 @@
       "postfix": "SwarmCa",
       "definiteArgument": "swarm ca",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "CaCert",
@@ -4875,7 +4872,7 @@
       "postfix": "Engine",
       "definiteArgument": "engine",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Command",
@@ -4891,7 +4888,7 @@
       "postfix": "SystemPrune",
       "definiteArgument": "system prune",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "All",
@@ -4925,7 +4922,7 @@
       "postfix": "Builder",
       "definiteArgument": "builder",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -4933,7 +4930,7 @@
       "postfix": "ContainerPause",
       "definiteArgument": "container pause",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Containers",
@@ -4950,7 +4947,7 @@
       "postfix": "ContainerCommit",
       "definiteArgument": "container commit",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Author",
@@ -4996,7 +4993,7 @@
       "postfix": "ContextLs",
       "definiteArgument": "context ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -5018,7 +5015,7 @@
       "postfix": "ContextRm",
       "definiteArgument": "context rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Contexts",
@@ -5087,7 +5084,7 @@
       "postfix": "ContainerCreate",
       "definiteArgument": "container create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AddHost",
@@ -5614,8 +5611,7 @@
           {
             "name": "Sysctl",
             "type": "Dictionary<string,string>",
-            "format": "--sysctl {value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--sysctl {key}:{value}",
             "help": "Sysctl options."
           },
           {
@@ -5705,7 +5701,7 @@
       "postfix": "VolumeCreate",
       "definiteArgument": "volume create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Driver",
@@ -5728,8 +5724,7 @@
           {
             "name": "Opt",
             "type": "Dictionary<string,string>",
-            "format": "--opt {value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--opt {key}:{value}",
             "help": "Set driver specific options."
           },
           {
@@ -5746,7 +5741,7 @@
       "postfix": "Plugin",
       "definiteArgument": "plugin",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -5754,7 +5749,7 @@
       "postfix": "Login",
       "definiteArgument": "login",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Password",
@@ -5783,7 +5778,7 @@
       "postfix": "SwarmUnlockKey",
       "definiteArgument": "swarm unlock-key",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Quiet",
@@ -5805,7 +5800,7 @@
       "postfix": "Start",
       "definiteArgument": "start",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Attach",
@@ -5852,7 +5847,7 @@
       "postfix": "SwarmInit",
       "definiteArgument": "swarm init",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AdvertiseAddr",
@@ -5868,7 +5863,7 @@
           },
           {
             "name": "Availability",
-            "type": "Availability",
+            "type": "DockerAvailability",
             "format": "--availability {value}",
             "help": "Availability of the node (\"active\"|\"pause\"|\"drain\")."
           },
@@ -5952,7 +5947,7 @@
       "postfix": "ContainerDiff",
       "definiteArgument": "container diff",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Container",
@@ -5968,7 +5963,7 @@
       "postfix": "ContainerRestart",
       "definiteArgument": "container restart",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Time",
@@ -5991,7 +5986,7 @@
       "postfix": "Config",
       "definiteArgument": "config",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -5999,7 +5994,7 @@
       "postfix": "PluginDisable",
       "definiteArgument": "plugin disable",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -6021,7 +6016,7 @@
       "postfix": "ContainerUnpause",
       "definiteArgument": "container unpause",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Containers",
@@ -6038,7 +6033,7 @@
       "postfix": "ContextImport",
       "definiteArgument": "context import",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Context",
@@ -6060,7 +6055,7 @@
       "postfix": "Rm",
       "definiteArgument": "rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -6095,7 +6090,7 @@
       "postfix": "Deploy",
       "definiteArgument": "deploy",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "BundleFile",
@@ -6123,7 +6118,7 @@
           },
           {
             "name": "ResolveImage",
-            "type": "ResolveImage",
+            "type": "DockerResolveImage",
             "format": "--resolve-image {value}",
             "help": "Query the registry to resolve image digest and supported platforms (\"always\"|\"changed\"|\"never\")."
           },
@@ -6147,7 +6142,7 @@
       "postfix": "NodeRm",
       "definiteArgument": "node rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -6170,7 +6165,7 @@
       "postfix": "CheckpointRm",
       "definiteArgument": "checkpoint rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "CheckpointDir",
@@ -6198,7 +6193,7 @@
       "postfix": "Push",
       "definiteArgument": "push",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AllTags",
@@ -6226,7 +6221,7 @@
       "postfix": "NetworkCreate",
       "definiteArgument": "network create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Attachable",
@@ -6237,8 +6232,7 @@
           {
             "name": "AuxAddress",
             "type": "Dictionary<string,string>",
-            "format": "--aux-address {value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--aux-address {key}:{value}",
             "help": "Auxiliary IPv4 or IPv6 addresses used by Network driver."
           },
           {
@@ -6292,8 +6286,7 @@
           {
             "name": "IpamOpt",
             "type": "Dictionary<string,string>",
-            "format": "--ipam-opt {value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--ipam-opt {key}:{value}",
             "help": "Set IPAM driver specific options."
           },
           {
@@ -6311,8 +6304,7 @@
           {
             "name": "Opt",
             "type": "Dictionary<string,string>",
-            "format": "--opt {value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--opt {key}:{value}",
             "help": "Set driver specific options."
           },
           {
@@ -6341,7 +6333,7 @@
       "postfix": "VolumeLs",
       "definiteArgument": "volume ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -6369,7 +6361,7 @@
       "postfix": "TrustInspect",
       "definiteArgument": "trust inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Images",
@@ -6386,7 +6378,7 @@
       "postfix": "NetworkInspect",
       "definiteArgument": "network inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -6415,7 +6407,7 @@
       "postfix": "EngineActivate",
       "definiteArgument": "engine activate",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Containerd",
@@ -6473,7 +6465,7 @@
       "postfix": "ContextUse",
       "definiteArgument": "context use",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Context",
@@ -6489,7 +6481,7 @@
       "postfix": "VolumeRm",
       "definiteArgument": "volume rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -6512,7 +6504,7 @@
       "postfix": "ManifestCreate",
       "definiteArgument": "manifest create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "ManifestList",
@@ -6535,7 +6527,7 @@
       "postfix": "ManifestPush",
       "definiteArgument": "manifest push",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Insecure",
@@ -6563,7 +6555,7 @@
       "postfix": "PluginEnable",
       "definiteArgument": "plugin enable",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Timeout",
@@ -6585,7 +6577,7 @@
       "postfix": "Import",
       "definiteArgument": "import",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Change",
@@ -6625,7 +6617,7 @@
       "postfix": "ContainerRun",
       "definiteArgument": "container run",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AddHost",
@@ -7170,8 +7162,7 @@
           {
             "name": "Sysctl",
             "type": "Dictionary<string,string>",
-            "format": "--sysctl {value}",
-            "itemFormat": "{key}:{value}",
+            "format": "--sysctl {key}:{value}",
             "help": "Sysctl options."
           },
           {
@@ -7261,7 +7252,7 @@
       "postfix": "NodeInspect",
       "definiteArgument": "node inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -7290,7 +7281,7 @@
       "postfix": "Save",
       "definiteArgument": "save",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Output",
@@ -7313,7 +7304,7 @@
       "postfix": "ContainerStats",
       "definiteArgument": "container stats",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "All",
@@ -7354,7 +7345,7 @@
       "postfix": "ContainerExec",
       "definiteArgument": "container exec",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Detach",
@@ -7431,7 +7422,7 @@
       "postfix": "NodeLs",
       "definiteArgument": "node ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -7459,7 +7450,7 @@
       "postfix": "SwarmJoin",
       "definiteArgument": "swarm join HOST:PORT",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AdvertiseAddr",
@@ -7469,7 +7460,7 @@
           },
           {
             "name": "Availability",
-            "type": "Availability",
+            "type": "DockerAvailability",
             "format": "--availability {value}",
             "help": "Availability of the node (\"active\"|\"pause\"|\"drain\")."
           },
@@ -7499,7 +7490,7 @@
       "postfix": "ContainerLogs",
       "definiteArgument": "container logs",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Details",
@@ -7551,7 +7542,7 @@
       "postfix": "CheckpointLs",
       "definiteArgument": "checkpoint ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "CheckpointDir",
@@ -7573,7 +7564,7 @@
       "postfix": "ContainerKill",
       "definiteArgument": "container kill",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Signal",
@@ -7596,7 +7587,7 @@
       "postfix": "PluginInstall",
       "definiteArgument": "plugin install",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Alias",
@@ -7631,8 +7622,7 @@
           {
             "name": "KeyValues",
             "type": "Dictionary<string,string>",
-            "format": "{value}",
-            "itemFormat": "{key=value}",
+            "format": "{key}={value}",
             "help": "[KEY=VALUE...]"
           }
         ]
@@ -7643,7 +7633,7 @@
       "postfix": "ImagePrune",
       "definiteArgument": "image prune",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "All",
@@ -7671,7 +7661,7 @@
       "postfix": "ImageImport",
       "definiteArgument": "image import",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Change",
@@ -7711,7 +7701,7 @@
       "postfix": "Diff",
       "definiteArgument": "diff",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Container",
@@ -7727,7 +7717,7 @@
       "postfix": "Unpause",
       "definiteArgument": "unpause",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Containers",
@@ -7744,7 +7734,7 @@
       "postfix": "ContainerLs",
       "definiteArgument": "container ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "All",
@@ -7802,7 +7792,7 @@
       "postfix": "NodePs",
       "definiteArgument": "node ps",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -7849,7 +7839,7 @@
       "postfix": "ContainerTop",
       "definiteArgument": "container top [ps",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Container",
@@ -7871,7 +7861,7 @@
       "postfix": "ContainerRename",
       "definiteArgument": "container rename",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Container",
@@ -7893,7 +7883,7 @@
       "postfix": "ImageHistory",
       "definiteArgument": "image history",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -7933,7 +7923,7 @@
       "postfix": "Ps",
       "definiteArgument": "ps",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "All",
@@ -7991,7 +7981,7 @@
       "postfix": "ImageTag",
       "definiteArgument": "image tag",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "SourceImage",
@@ -8013,7 +8003,7 @@
       "postfix": "Export",
       "definiteArgument": "export",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Output",
@@ -8035,7 +8025,7 @@
       "postfix": "NetworkDisconnect",
       "definiteArgument": "network disconnect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -8063,7 +8053,7 @@
       "postfix": "BuilderBuild",
       "definiteArgument": "builder build",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AddHost",
@@ -8289,7 +8279,7 @@
       "postfix": "BuildxBuild",
       "definiteArgument": "buildx build",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AddHost",
@@ -8437,7 +8427,7 @@
           },
           {
             "name": "Progress",
-            "type": "ProgressType",
+            "type": "DockerProgressType",
             "format": "--progress {value}",
             "help": "Set type of progress output (<c>auto</c>, <c>plain</c>, <c>tty</c>). Use plain to show container output."
           },
@@ -8521,7 +8511,7 @@
       "postfix": "BuildxCreate",
       "definiteArgument": "buildx create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Append",
@@ -8555,7 +8545,7 @@
           },
           {
             "name": "Driver",
-            "type": "DriverType",
+            "type": "DockerDriverType",
             "format": "--driver {value}",
             "help": "Driver to use (available: <c>docker-container</c>, <c>kubernetes</c>, <c>remote</c>)."
           },
@@ -8603,7 +8593,7 @@
       "postfix": "Stats",
       "definiteArgument": "stats",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "All",
@@ -8644,7 +8634,7 @@
       "postfix": "Search",
       "definiteArgument": "search",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Automated",
@@ -8696,7 +8686,7 @@
       "postfix": "Manifest",
       "definiteArgument": "manifest",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Command",
@@ -8712,7 +8702,7 @@
       "postfix": "PluginPush",
       "definiteArgument": "plugin push",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "DisableContentTrust",
@@ -8734,7 +8724,7 @@
       "postfix": "ImageLoad",
       "definiteArgument": "image load",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Input",
@@ -8756,7 +8746,7 @@
       "postfix": "Swarm",
       "definiteArgument": "swarm",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -8764,7 +8754,7 @@
       "postfix": "ContainerRm",
       "definiteArgument": "container rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -8799,7 +8789,7 @@
       "postfix": "ContainerUpdate",
       "definiteArgument": "container update",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "BlkioWeight",
@@ -8906,7 +8896,7 @@
       "postfix": "PluginSet",
       "definiteArgument": "plugin set",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Plugin",
@@ -8917,8 +8907,7 @@
           {
             "name": "KeyValues",
             "type": "Dictionary<string,string>",
-            "format": "{value}",
-            "itemFormat": "{key=value}",
+            "format": "{key}={value}",
             "help": "KEY=VALUE"
           }
         ]
@@ -8929,7 +8918,7 @@
       "postfix": "Wait",
       "definiteArgument": "wait",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Containers",
@@ -8946,7 +8935,7 @@
       "postfix": "ContextExport",
       "definiteArgument": "context export",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Kubeconfig",
@@ -8974,7 +8963,7 @@
       "postfix": "ManifestAnnotate",
       "definiteArgument": "manifest annotate",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Arch",
@@ -9020,7 +9009,7 @@
       "postfix": "ImagePull",
       "definiteArgument": "image pull",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AllTags",
@@ -9060,7 +9049,7 @@
       "postfix": "Events",
       "definiteArgument": "events",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Filter",
@@ -9122,7 +9111,7 @@
       "postfix": "ContainerInspect",
       "definiteArgument": "container inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -9151,7 +9140,7 @@
       "postfix": "Kill",
       "definiteArgument": "kill",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Signal",
@@ -9174,7 +9163,7 @@
       "postfix": "CheckpointCreate",
       "definiteArgument": "checkpoint create",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "CheckpointDir",
@@ -9208,7 +9197,7 @@
       "postfix": "Pause",
       "definiteArgument": "pause",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Containers",
@@ -9225,7 +9214,7 @@
       "postfix": "Logs",
       "definiteArgument": "logs",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Details",
@@ -9277,7 +9266,7 @@
       "postfix": "ContextInspect",
       "definiteArgument": "context inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -9306,7 +9295,7 @@
       "postfix": "NodePromote",
       "definiteArgument": "node promote",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Nodes",
@@ -9323,7 +9312,7 @@
       "postfix": "NodeDemote",
       "definiteArgument": "node demote",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Nodes",
@@ -9340,7 +9329,7 @@
       "postfix": "Exec",
       "definiteArgument": "exec",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Detach",
@@ -9417,7 +9406,7 @@
       "postfix": "ImageRm",
       "definiteArgument": "image rm",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -9446,7 +9435,7 @@
       "postfix": "Image",
       "definiteArgument": "image",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -9454,7 +9443,7 @@
       "postfix": "Context",
       "definiteArgument": "context",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -9462,7 +9451,7 @@
       "postfix": "Volume",
       "definiteArgument": "volume",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Command",
@@ -9478,7 +9467,7 @@
       "postfix": "ContainerStart",
       "definiteArgument": "container start",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Attach",
@@ -9525,7 +9514,7 @@
       "postfix": "PluginInspect",
       "definiteArgument": "plugin inspect",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -9548,7 +9537,7 @@
       "postfix": "Logout",
       "definiteArgument": "logout",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Server",
@@ -9564,7 +9553,7 @@
       "postfix": "Network",
       "definiteArgument": "network",
       "settingsClass": {
-        "baseClass": "DockerSettings"
+        "baseClass": "DockerOptionsBase"
       }
     },
     {
@@ -9572,7 +9561,7 @@
       "postfix": "ImageLs",
       "definiteArgument": "image ls",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "All",
@@ -9624,7 +9613,7 @@
       "postfix": "SystemDf",
       "definiteArgument": "system df",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Format",
@@ -9646,7 +9635,7 @@
       "postfix": "ServiceRollback",
       "definiteArgument": "service rollback",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Detach",
@@ -9674,7 +9663,7 @@
       "postfix": "Restart",
       "definiteArgument": "restart",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Time",
@@ -9697,7 +9686,7 @@
       "postfix": "TrustSignerRemove",
       "definiteArgument": "trust signer remove",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -9749,7 +9738,7 @@
       "postfix": "Build",
       "definiteArgument": "build",
       "settingsClass": {
-        "baseClass": "DockerSettings",
+        "baseClass": "DockerOptionsBase",
         "properties": [
           {
             "name": "AddHost",
@@ -9885,7 +9874,7 @@
           },
           {
             "name": "Progress",
-            "type": "ProgressType",
+            "type": "DockerProgressType",
             "format": "--progress {value}",
             "help": "Set type of progress output (<c>auto</c>, <c>plain</c>, <c>tty</c>). Use plain to show container output."
           },
@@ -9971,16 +9960,62 @@
       }
     }
   ],
-  "commonTaskProperties": [
-    {
-      "name": "CliSettings",
-      "type": "CliSettings",
-      "format": "{value}",
-      "customImpl": true,
-      "customValue": true
-    }
-  ],
   "dataClasses": [
+    {
+      "name": "DockerOptionsBase",
+      "baseClass": "ToolOptions",
+      "extensionMethods": true,
+      "properties": [
+        {
+          "name": "LogLevel",
+          "type": "DockerLogLevel",
+          "format": "--log-level {value}",
+          "help": "Set the logging level."
+        },
+        {
+          "name": "Config",
+          "type": "string",
+          "format": "--config {value}",
+          "help": "Location of client config files (default ~/.docker)."
+        },
+        {
+          "name": "Debug",
+          "type": "bool",
+          "format": "--debug",
+          "help": "Enable debug mode."
+        },
+        {
+          "name": "TLS",
+          "type": "bool",
+          "format": "--tls",
+          "help": "Use TLS; implied by --tlsverify."
+        },
+        {
+          "name": "TLSVerify",
+          "type": "bool",
+          "format": "--tlsverify",
+          "help": "Use TLS and verify the remote."
+        },
+        {
+          "name": "TLSCaCert",
+          "type": "string",
+          "format": "--tlscacert {value}",
+          "help": "Trust certs signed only by this CA (default ~/.docker/ca.pem)."
+        },
+        {
+          "name": "TLSCert",
+          "type": "string",
+          "format": "--tlscert {value}",
+          "help": "Path to TLS certificate file (default ~/.docker/cert.pem)."
+        },
+        {
+          "name": "TLSKey",
+          "type": "string",
+          "format": "--tlskey {value}",
+          "help": "Path to TLS key file (default ~/.docker/key.pem)."
+        }
+      ]
+    },
     {
       "name": "DockerRunTargetSettings",
       "baseClass": "DockerRunSettings",
@@ -10029,64 +10064,11 @@
           "help": "The server for <c>docker login</c>."
         }
       ]
-    },
-    {
-      "name": "CliSettings",
-      "properties": [
-        {
-          "name": "LogLevel",
-          "type": "LogLevel",
-          "format": "--log-level {value}",
-          "help": "Set the logging level."
-        },
-        {
-          "name": "Config",
-          "type": "string",
-          "format": "--config {value}",
-          "help": "Location of client config files (default ~/.docker)."
-        },
-        {
-          "name": "Debug",
-          "type": "bool",
-          "format": "--debug",
-          "help": "Enable debug mode."
-        },
-        {
-          "name": "TLS",
-          "type": "bool",
-          "format": "--tls",
-          "help": "Use TLS; implied by --tlsverify."
-        },
-        {
-          "name": "TLSVerify",
-          "type": "bool",
-          "format": "--tlsverify",
-          "help": "Use TLS and verify the remote."
-        },
-        {
-          "name": "TLSCaCert",
-          "type": "string",
-          "format": "--tlscacert {value}",
-          "help": "Trust certs signed only by this CA (default ~/.docker/ca.pem)."
-        },
-        {
-          "name": "TLSCert",
-          "type": "string",
-          "format": "--tlscert {value}",
-          "help": "Path to TLS certificate file (default ~/.docker/cert.pem)."
-        },
-        {
-          "name": "TLSKey",
-          "type": "string",
-          "format": "--tlskey {value}",
-          "help": "Path to TLS key file (default ~/.docker/key.pem)."
-        }
-      ]
     }
   ],
   "enumerations": [
     {
-      "name": "LogLevel",
+      "name": "DockerLogLevel",
       "values": [
         "debug",
         "info",
@@ -10096,7 +10078,7 @@
       ]
     },
     {
-      "name": "RestartCondition",
+      "name": "DockerRestartCondition",
       "values": [
         "none",
         "on-failure",
@@ -10104,21 +10086,21 @@
       ]
     },
     {
-      "name": "RollbackFailureAction",
+      "name": "DockerRollbackFailureAction",
       "values": [
         "pause",
         "continue"
       ]
     },
     {
-      "name": "RollbackOrder",
+      "name": "DockerRollbackOrder",
       "values": [
         "start-first",
         "stop-first"
       ]
     },
     {
-      "name": "UpdateFailureAction",
+      "name": "DockerUpdateFailureAction",
       "values": [
         "pause",
         "continue",
@@ -10126,14 +10108,14 @@
       ]
     },
     {
-      "name": "UpdateOrder",
+      "name": "DockerUpdateOrder",
       "values": [
         "start-first",
         "stop-first"
       ]
     },
     {
-      "name": "Availability",
+      "name": "DockerAvailability",
       "values": [
         "active",
         "pause",
@@ -10141,14 +10123,14 @@
       ]
     },
     {
-      "name": "Role",
+      "name": "DockerRole",
       "values": [
         "worker",
         "manager"
       ]
     },
     {
-      "name": "ResolveImage",
+      "name": "DockerResolveImage",
       "values": [
         "always",
         "changed",
@@ -10156,7 +10138,7 @@
       ]
     },
     {
-      "name": "ProgressType",
+      "name": "DockerProgressType",
       "values": [
         "auto",
         "plain",
@@ -10164,7 +10146,7 @@
       ]
     },
     {
-      "name": "DriverType",
+      "name": "DockerDriverType",
       "values": [
         "docker-container",
         "kubernetes",

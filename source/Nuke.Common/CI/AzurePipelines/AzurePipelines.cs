@@ -205,14 +205,16 @@ public partial class AzurePipelines : Host, IBuildServer
                 .AddPairWhenValueNotNull("code", code));
     }
 
-    public void SetVariable(string name, string value, bool? isSecret = null)
+    public void SetVariable(string name, string value, bool? isSecret = null, bool? isOutput = null, bool? isReadOnly = null)
     {
         WriteCommand(
             "task.setvariable",
             value,
             dictionaryConfigurator: x => x
                 .AddPair("variable", name)
-                .AddPairWhenValueNotNull("issecret", isSecret));
+                .AddPairWhenValueNotNull("issecret", isSecret)
+                .AddPairWhenValueNotNull("isoutput", isOutput)
+                .AddPairWhenValueNotNull("isreadonly", isReadOnly));
     }
 
     private string GetText(AzurePipelinesIssueType type)
@@ -229,7 +231,7 @@ public partial class AzurePipelines : Host, IBuildServer
     public void WriteCommand(
         string command,
         string message = null,
-        Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator = null)
+        Func<Dictionary<string, object>, Dictionary<string, object>> dictionaryConfigurator = null)
     {
         var escapedTokens =
             dictionaryConfigurator?

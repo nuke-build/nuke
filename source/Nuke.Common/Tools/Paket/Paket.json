@@ -21,6 +21,7 @@
             "name": "PackageId",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "NuGet package ID."
           },
           {
@@ -202,6 +203,7 @@
             "name": "OutputDirectory",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "Output directory for .nupkg files."
           },
           {
@@ -237,8 +239,7 @@
           {
             "name": "SpecificVersions",
             "type": "Dictionary<string, string>",
-            "format": "--specific-version {value}",
-            "itemFormat": "{key} {value}",
+            "format": "--specific-version {key} {value}",
             "help": "Package IDs with version numbers."
           },
           {

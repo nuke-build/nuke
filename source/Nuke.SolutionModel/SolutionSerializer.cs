@@ -88,6 +88,7 @@ internal static class SolutionSerializer
             .SkipWhile(x => !Regex.IsMatch(x, $@"^\s*GlobalSection\({name}\) = \w+$"))
             .Skip(count: 1)
             .TakeWhile(x => !Regex.IsMatch(x, @"^\s*EndGlobalSection$"))
+            .Where(x => !x.StartsWith("#"))
             .ToList();
 
         return sectionLines.Count == 0

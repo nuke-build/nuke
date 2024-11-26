@@ -57,15 +57,8 @@
       "postfix": "Completion",
       "definiteArgument": "completion",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for completion."
-          },
           {
             "name": "Shell",
             "type": "string",
@@ -79,15 +72,8 @@
       "postfix": "Create",
       "definiteArgument": "create",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for create."
-          },
           {
             "name": "Starter",
             "type": "string",
@@ -109,7 +95,7 @@
       "postfix": "Delete",
       "definiteArgument": "delete",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "Description",
@@ -124,13 +110,6 @@
             "format": "--dry-run",
             "secret": false,
             "help": "Simulate a delete."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for delete."
           },
           {
             "name": "NoHooks",
@@ -210,15 +189,8 @@
       "postfix": "DependencyBuild",
       "definiteArgument": "dependency build",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for build."
-          },
           {
             "name": "Keyring",
             "type": "string",
@@ -247,15 +219,8 @@
       "postfix": "DependencyList",
       "definiteArgument": "dependency list",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for list."
-          },
           {
             "name": "Chart",
             "type": "string",
@@ -270,15 +235,8 @@
       "postfix": "DependencyUpdate",
       "definiteArgument": "dependency update",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for update."
-          },
           {
             "name": "Keyring",
             "type": "string",
@@ -314,7 +272,7 @@
       "postfix": "Fetch",
       "definiteArgument": "fetch",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "CaFile",
@@ -343,13 +301,6 @@
             "format": "--devel",
             "secret": false,
             "help": "Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for fetch."
           },
           {
             "name": "KeyFile",
@@ -436,15 +387,8 @@
       "postfix": "Get",
       "definiteArgument": "get",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for get."
-          },
           {
             "name": "Revision",
             "type": "int",
@@ -508,15 +452,8 @@
       "postfix": "GetHooks",
       "definiteArgument": "get hooks",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for hooks."
-          },
           {
             "name": "Revision",
             "type": "int",
@@ -580,15 +517,8 @@
       "postfix": "GetManifest",
       "definiteArgument": "get manifest",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for manifest."
-          },
           {
             "name": "Revision",
             "type": "int",
@@ -652,15 +582,8 @@
       "postfix": "GetNotes",
       "definiteArgument": "get notes",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for notes."
-          },
           {
             "name": "Revision",
             "type": "int",
@@ -723,7 +646,7 @@
       "postfix": "GetValues",
       "definiteArgument": "get values",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "All",
@@ -731,13 +654,6 @@
             "format": "--all",
             "secret": false,
             "help": "Dump all (computed) values."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for values."
           },
           {
             "name": "Output",
@@ -809,7 +725,7 @@
       "postfix": "History",
       "definiteArgument": "history",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "ColWidth",
@@ -817,13 +733,6 @@
             "format": "--col-width {value}",
             "secret": false,
             "help": "Specifies the max column width of output (default 60)."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for history."
           },
           {
             "name": "Max",
@@ -895,16 +804,7 @@
       "postfix": "Home",
       "definiteArgument": "home",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
-        "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for home."
-          }
-        ]
+        "baseClass": "HelmOptionsBase"
       }
     },
     {
@@ -912,7 +812,7 @@
       "postfix": "Init",
       "definiteArgument": "init",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "AutomountServiceAccountToken",
@@ -948,13 +848,6 @@
             "format": "--force-upgrade",
             "secret": false,
             "help": "Force upgrade of Tiller to the current helm version."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for init."
           },
           {
             "name": "HistoryMax",
@@ -994,8 +887,7 @@
           {
             "name": "Override",
             "type": "Dictionary<string, object>",
-            "format": "--override {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--override {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Override values for the Tiller Deployment manifest (can specify multiple or separate values with commas: key1=val1,key2=val2)."
@@ -1099,7 +991,7 @@
       "postfix": "Inspect",
       "definiteArgument": "inspect",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "CaFile",
@@ -1121,13 +1013,6 @@
             "format": "--devel",
             "secret": false,
             "help": "Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for inspect."
           },
           {
             "name": "KeyFile",
@@ -1192,7 +1077,7 @@
       "postfix": "InspectChart",
       "definiteArgument": "inspect chart",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "CaFile",
@@ -1214,13 +1099,6 @@
             "format": "--devel",
             "secret": false,
             "help": "Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for chart."
           },
           {
             "name": "KeyFile",
@@ -1285,7 +1163,7 @@
       "postfix": "InspectReadme",
       "definiteArgument": "inspect readme",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "CaFile",
@@ -1307,13 +1185,6 @@
             "format": "--devel",
             "secret": false,
             "help": "Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for readme."
           },
           {
             "name": "KeyFile",
@@ -1364,7 +1235,7 @@
       "postfix": "InspectValues",
       "definiteArgument": "inspect values",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "CaFile",
@@ -1386,13 +1257,6 @@
             "format": "--devel",
             "secret": false,
             "help": "Use development versions, too. Equivalent to version '&gt;0.0.0-0'. If --version is set, this is ignored."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for values."
           },
           {
             "name": "KeyFile",
@@ -1457,7 +1321,7 @@
       "postfix": "Install",
       "definiteArgument": "install",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "Atomic",
@@ -1507,13 +1371,6 @@
             "format": "--dry-run",
             "secret": false,
             "help": "Simulate an install."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for install."
           },
           {
             "name": "KeyFile",
@@ -1595,8 +1452,7 @@
           {
             "name": "Set",
             "type": "Dictionary<string, object>",
-            "format": "--set {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)."
@@ -1604,8 +1460,7 @@
           {
             "name": "SetFile",
             "type": "Dictionary<string, object>",
-            "format": "--set-file {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set-file {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)."
@@ -1613,8 +1468,7 @@
           {
             "name": "SetString",
             "type": "Dictionary<string, object>",
-            "format": "--set-string {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set-string {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)."
@@ -1717,15 +1571,8 @@
       "postfix": "Lint",
       "definiteArgument": "lint",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for lint."
-          },
           {
             "name": "Namespace",
             "type": "string",
@@ -1736,8 +1583,7 @@
           {
             "name": "Set",
             "type": "Dictionary<string, object>",
-            "format": "--set {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)."
@@ -1745,8 +1591,7 @@
           {
             "name": "SetFile",
             "type": "Dictionary<string, object>",
-            "format": "--set-file {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set-file {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)."
@@ -1754,8 +1599,7 @@
           {
             "name": "SetString",
             "type": "Dictionary<string, object>",
-            "format": "--set-string {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set-string {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)."
@@ -1788,7 +1632,7 @@
       "postfix": "List",
       "definiteArgument": "list",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "All",
@@ -1845,13 +1689,6 @@
             "format": "--failed",
             "secret": false,
             "help": "Show failed releases."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for list."
           },
           {
             "name": "Max",
@@ -1958,7 +1795,7 @@
       "postfix": "Package",
       "definiteArgument": "package",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "AppVersion",
@@ -1980,13 +1817,6 @@
             "format": "--destination {value}",
             "secret": false,
             "help": "Location to write the chart. (default \".\")."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for package."
           },
           {
             "name": "Key",
@@ -2038,15 +1868,8 @@
       "postfix": "PluginInstall",
       "definiteArgument": "plugin install",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for install."
-          },
           {
             "name": "Version",
             "type": "string",
@@ -2074,16 +1897,7 @@
       "postfix": "PluginList",
       "definiteArgument": "plugin list",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
-        "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for list."
-          }
-        ]
+        "baseClass": "HelmOptionsBase"
       }
     },
     {
@@ -2091,15 +1905,8 @@
       "postfix": "PluginRemove",
       "definiteArgument": "plugin remove",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for remove."
-          },
           {
             "name": "Plugins",
             "type": "List<string>",
@@ -2115,15 +1922,8 @@
       "postfix": "PluginUpdate",
       "definiteArgument": "plugin update",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for update."
-          },
           {
             "name": "Plugins",
             "type": "List<string>",
@@ -2139,7 +1939,7 @@
       "postfix": "RepoAdd",
       "definiteArgument": "repo add",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "CaFile",
@@ -2154,13 +1954,6 @@
             "format": "--cert-file {value}",
             "secret": false,
             "help": "Identify HTTPS client using this SSL certificate file."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for add."
           },
           {
             "name": "KeyFile",
@@ -2210,15 +2003,8 @@
       "postfix": "RepoIndex",
       "definiteArgument": "repo index",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for index."
-          },
           {
             "name": "Merge",
             "type": "string",
@@ -2247,16 +2033,7 @@
       "postfix": "RepoList",
       "definiteArgument": "repo list",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
-        "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for list."
-          }
-        ]
+        "baseClass": "HelmOptionsBase"
       }
     },
     {
@@ -2264,15 +2041,8 @@
       "postfix": "RepoRemove",
       "definiteArgument": "repo remove",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for remove."
-          },
           {
             "name": "Name",
             "type": "string",
@@ -2287,15 +2057,8 @@
       "postfix": "RepoUpdate",
       "definiteArgument": "repo update",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for update."
-          },
           {
             "name": "Strict",
             "type": "bool",
@@ -2311,7 +2074,7 @@
       "postfix": "Reset",
       "definiteArgument": "reset",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "Force",
@@ -2319,13 +2082,6 @@
             "format": "--force",
             "secret": false,
             "help": "Forces Tiller uninstall even if there are releases installed, or if Tiller is not in ready state. Releases are not deleted.)."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for reset."
           },
           {
             "name": "RemoveHelmHome",
@@ -2384,7 +2140,7 @@
       "postfix": "Rollback",
       "definiteArgument": "rollback",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "Description",
@@ -2406,13 +2162,6 @@
             "format": "--force",
             "secret": false,
             "help": "Force resource update through delete/recreate if needed."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for rollback."
           },
           {
             "name": "NoHooks",
@@ -2504,7 +2253,7 @@
       "postfix": "Search",
       "definiteArgument": "search",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "ColWidth",
@@ -2512,13 +2261,6 @@
             "format": "--col-width {value}",
             "secret": false,
             "help": "Specifies the max column width of output (default 60)."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for search."
           },
           {
             "name": "Regexp",
@@ -2555,7 +2297,7 @@
       "postfix": "Serve",
       "definiteArgument": "serve",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "Address",
@@ -2563,13 +2305,6 @@
             "format": "--address {value}",
             "secret": false,
             "help": "Address to listen on (default \"127.0.0.1:8879\")."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for serve."
           },
           {
             "name": "RepoPath",
@@ -2593,15 +2328,8 @@
       "postfix": "Status",
       "definiteArgument": "status",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for status."
-          },
           {
             "name": "Output",
             "type": "HelmOutputFormat",
@@ -2672,23 +2400,15 @@
       "postfix": "Template",
       "definiteArgument": "template",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "Execute",
             "type": "Dictionary<string, object>",
-            "format": "--execute {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--execute {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Only execute the given templates."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for template."
           },
           {
             "name": "IsUpgrade",
@@ -2742,8 +2462,7 @@
           {
             "name": "Set",
             "type": "Dictionary<string, object>",
-            "format": "--set {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)."
@@ -2751,8 +2470,7 @@
           {
             "name": "SetFile",
             "type": "Dictionary<string, object>",
-            "format": "--set-file {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set-file {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)."
@@ -2760,8 +2478,7 @@
           {
             "name": "SetString",
             "type": "Dictionary<string, object>",
-            "format": "--set-string {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set-string {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)."
@@ -2786,7 +2503,7 @@
       "postfix": "Test",
       "definiteArgument": "test",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "Cleanup",
@@ -2794,13 +2511,6 @@
             "format": "--cleanup",
             "secret": false,
             "help": "Delete test pods upon completion."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for test."
           },
           {
             "name": "Parallel",
@@ -2872,7 +2582,7 @@
       "postfix": "Upgrade",
       "definiteArgument": "upgrade",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "Atomic",
@@ -2922,13 +2632,6 @@
             "format": "--force",
             "secret": false,
             "help": "Force resource update through delete/recreate if needed."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for upgrade."
           },
           {
             "name": "Install",
@@ -3017,8 +2720,7 @@
           {
             "name": "Set",
             "type": "Dictionary<string, object>",
-            "format": "--set {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)."
@@ -3026,8 +2728,7 @@
           {
             "name": "SetFile",
             "type": "Dictionary<string, object>",
-            "format": "--set-file {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set-file{key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set values from respective files specified via the command line (can specify multiple or separate values with commas: key1=path1,key2=path2)."
@@ -3035,8 +2736,7 @@
           {
             "name": "SetString",
             "type": "Dictionary<string, object>",
-            "format": "--set-string {value}",
-            "itemFormat": "{key}={value}",
+            "format": "--set-string {key}={value}",
             "separator": ",",
             "secret": false,
             "help": "Set STRING values on the command line (can specify multiple or separate values with commas: key1=val1,key2=val2)."
@@ -3145,15 +2845,8 @@
       "postfix": "Verify",
       "definiteArgument": "verify",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for verify."
-          },
           {
             "name": "Keyring",
             "type": "string",
@@ -3175,7 +2868,7 @@
       "postfix": "Version",
       "definiteArgument": "version",
       "settingsClass": {
-        "baseClass": "HelmToolSettings",
+        "baseClass": "HelmOptionsBase",
         "properties": [
           {
             "name": "Client",
@@ -3183,13 +2876,6 @@
             "format": "--client",
             "secret": false,
             "help": "Client version only."
-          },
-          {
-            "name": "Help",
-            "type": "bool",
-            "format": "--help",
-            "secret": false,
-            "help": "Help for version."
           },
           {
             "name": "Server",
@@ -3260,7 +2946,8 @@
   ],
   "dataClasses": [
     {
-      "name": "HelmCommonSettings",
+      "name": "HelmOptionsBase",
+      "baseClass": "ToolOptions",
       "extensionMethods": true,
       "properties": [
         {
@@ -3269,13 +2956,6 @@
           "format": "--debug",
           "secret": false,
           "help": "Enable verbose output."
-        },
-        {
-          "name": "Help",
-          "type": "bool",
-          "format": "--help",
-          "secret": false,
-          "help": "Help for helm."
         },
         {
           "name": "Home",

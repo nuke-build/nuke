@@ -5,8 +5,8 @@
 using System;
 using JetBrains.Annotations;
 using Nuke.Common;
-using Nuke.Common.Tooling;
 using Nuke.Common.Tools.Docker;
+using Nuke.Common.Utilities;
 using Serilog;
 
 partial class Build

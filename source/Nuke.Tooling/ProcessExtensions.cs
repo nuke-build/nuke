@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using JetBrains.Annotations;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Nuke.Common.Utilities;
 
@@ -58,7 +57,7 @@ public static class ProcessExtensions
 
     public static T StdToJson<T>(this IEnumerable<Output> output)
     {
-        return JsonConvert.DeserializeObject<T>(output.StdToText());
+        return output.StdToText().GetJson<T>();
     }
 
     public static JObject StdToJson(this IEnumerable<Output> output)

@@ -6,8 +6,8 @@
   "name": "OctoVersion",
   "officialUrl": "https://github.com/OctopusDeploy/OctoVersion",
   "nugetPackageId": "OctoVersion.Tool",
+  "nugetFramework": true,
   "packageExecutable": "OctoVersion.Tool.dll",
-  "customExecutable": true,
   "tasks": [
     {
       "help": "Gets the version information for a project.",
@@ -103,69 +103,9 @@
         "type": "string",
         "format": "--OutputJsonFile {value}",
         "help": "Emit json to the specified file. Ensure that either the `JsonFile` output formatter is added, or that `DetectEnvironment` is `true`."
-      },
-      {
-        "name": "Framework",
-        "type": "string",
-        "noArgument": true
       }
     ]
   },
-  "dataClasses": [
-    {
-      "name": "OctoVersionInfo",
-      "properties": [
-        {
-          "name": "Major",
-          "type": "int"
-        },
-        {
-          "name": "Minor",
-          "type": "int"
-        },
-        {
-          "name": "Patch",
-          "type": "int"
-        },
-        {
-          "name": "PreReleaseTag",
-          "type": "string"
-        },
-        {
-          "name": "PreReleaseTagWithDash",
-          "type": "string"
-        },
-        {
-          "name": "BuildMetaData",
-          "type": "string"
-        },
-        {
-          "name": "BuildMetadataWithPlus",
-          "type": "string"
-        },
-        {
-          "name": "MajorMinorPatch",
-          "type": "string"
-        },
-        {
-          "name": "NuGetCompatiblePreReleaseWithDash",
-          "type": "string"
-        },
-        {
-          "name": "FullSemVer",
-          "type": "string"
-        },
-        {
-          "name": "InformationalVersion",
-          "type": "string"
-        },
-        {
-          "name": "NuGetVersion",
-          "type": "string"
-        }
-      ]
-    }
-  ],
   "enumerations": [
     {
       "name": "OctoVersionOutputFormatter",

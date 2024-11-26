@@ -27,7 +27,8 @@ var extensionWithDot = IndexFile.Extension;
 
 // Get the parent directory
 var parent1 = IndexFile.Parent;
-var parent2 = IndexFile / ".."; // gets normalized
+var parent2 = IndexFile / ..;   // gets normalized
+var parent3 = IndexFile / ".."; // gets normalized
 
 // Check if one path contains another
 var containsFile = SourceDirectory.Contains(IndexFile);
@@ -41,7 +42,7 @@ var pathExists = (RootDirectory / "dirOrFile").Exists(); // checks for both
 
 ## Relative Paths
 
-Occasionally, you may actually want relative paths, for instance to include them in manifest files that get shipped with your artifacts. In this case, you can make use of `RelativePath`, which uses the path separator dictated by the operating system, or one of types `WinRelativePath` or `UnixRelativePath`, which enforce using backslash or slash respectively:
+Occasionally, you may actually want relative paths, for instance, to include them in manifest files that get shipped with your artifacts. In this case, you can make use of `RelativePath`, which uses the path separator dictated by the operating system, or one of types `WinRelativePath` or `UnixRelativePath`, which enforce using backslash or slash respectively:
 
 <!-- snippet: path-construction-relative-paths -->
 ```cs
@@ -55,6 +56,30 @@ var indexUnixRelativePath2 = (UnixRelativePath)indexRelativeFile;
 <!-- endSnippet -->
 
 All relative path types support using the division operator.
+
+## File-system Operations
+
+Instances of the `AbsolutePath` type provide a wide range of file-system-related operations:
+
+```cs
+// Read/write file content
+file.ReadAllText();
+file.WriteAllLines(lines);
+
+// Touch a file / create a directory
+file.TouchFile();
+directory.CreateDirectory();
+
+// Rename a file or directory
+file.RenameWithoutExtension($"archive-{DateTime.Now.Year}.tar");
+directory.Rename(x => $"{x.Name}-final"); // combine previous name
+
+// Move a file or directory
+source.Move(target, ExistsPolicy.MergeAndSkip);
+
+// Copy a file or directory (recursively) to another directory
+source.CopyToDirectory(target, ExistsPolicy.DirectoryMerge | ExistsPolicy.FileFail);
+```
 
 ## Globbing
 

@@ -111,7 +111,7 @@ public partial class Program
                     : ToolPathResolver.GetPathExecutable("bash"),
                 Arguments = EnvironmentInfo.IsWin
                     ? $"-ExecutionPolicy ByPass -NoProfile -File {buildScript.DoubleQuoteIfNeeded()} {arguments}"
-                    : $"{buildScript} {arguments}"
+                    : $"{buildScript.DoubleQuoteIfNeeded()} {arguments}"
             };
         startInfo.Environment[Constants.GlobalToolVersionEnvironmentKey] = typeof(Program).Assembly.GetVersionText();
         startInfo.Environment[Constants.GlobalToolStartTimeEnvironmentKey] = DateTime.Now.ToString("O");

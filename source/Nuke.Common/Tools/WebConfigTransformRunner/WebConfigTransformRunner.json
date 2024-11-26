@@ -16,18 +16,21 @@
             "name": "WebConfigFilename",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The base web.config file"
           },
           {
             "name": "TransformFilename",
             "type": "string",
             "format": "{value}",
+            "position": 2,
             "help": "The transformation web.config file"
           },
           {
             "name": "OutputFilename",
             "type": "string",
             "format": "{value}",
+            "position": 3,
             "help": "The path to the output web.config file"
           }
         ]

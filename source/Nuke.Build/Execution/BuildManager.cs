@@ -43,7 +43,7 @@ internal static class BuildManager
         Console.OutputEncoding = Encoding.UTF8;
         Console.InputEncoding = Encoding.UTF8;
         Console.CancelKeyPress += (_, _) => s_cancellationHandlers.ForEach(x => x());
-        ToolSettings.Created += (settings, _) => VerbosityMapping.Apply(settings);
+        ToolOptions.Created += (options, _) => VerbosityMapping.Apply((ToolOptions)options);
 
         var build = new T();
 
@@ -62,6 +62,7 @@ internal static class BuildManager
             if (!build.NoLogo)
                 build.WriteLogo();
 
+            // TODO: move InvokedTargets to ExecutableTargetFactory
             build.ExecutionPlan = ExecutionPlanner.GetExecutionPlan(
                 build.ExecutableTargets,
                 ParameterService.GetParameter<string[]>(() => build.InvokedTargets));
@@ -74,7 +75,7 @@ internal static class BuildManager
                 build,
                 ParameterService.GetParameter<string[]>(() => build.SkippedTargets));
 
-            return build.ExitCode ??= build.IsSuccessful ? 0 : ErrorExitCode;
+            return build.ExitCode ??= build.IsSucceeding ? 0 : ErrorExitCode;
         }
         catch (Exception exception)
         {

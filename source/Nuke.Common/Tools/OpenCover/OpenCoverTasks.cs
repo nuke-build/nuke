@@ -4,6 +4,7 @@
 
 using JetBrains.Annotations;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.OpenCover;
 
@@ -22,11 +23,11 @@ public class OpenCoverVerbosityMappingAttribute : VerbosityMappingAttribute
 
 partial class OpenCoverSettingsExtensions
 {
-    public static OpenCoverSettings SetTargetSettings(this OpenCoverSettings toolSettings, ToolSettings targetSettings)
+    public static OpenCoverSettings SetTargetSettings(this OpenCoverSettings toolSettings, ToolOptions targetSettings)
     {
         return toolSettings
             .SetTargetPath(targetSettings.ProcessToolPath)
-            .SetTargetArguments(targetSettings.GetProcessArguments().RenderForExecution())
+            .SetTargetArguments(targetSettings.GetArguments().JoinSpace())
             .SetTargetDirectory(targetSettings.ProcessWorkingDirectory);
     }
 

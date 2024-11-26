@@ -25,15 +25,14 @@
   "officialUrl": "https://github.com/RSuter/NSwag",
   "help": "The project combines the functionality of Swashbuckle (Swagger generation) and AutoRest (client generation) in one toolchain. This way a lot of incompatibilites can be avoided and features which are not well described by the Swagger specification or JSON Schema are better supported (e.g. <a href=\"https://github.com/NJsonSchema/NJsonSchema/wiki/Inheritance\">inheritance</a>, <a href=\"https://github.com/NJsonSchema/NJsonSchema/wiki/Enums\">enum</a> and reference handling). The NSwag project heavily uses <a href=\"http://njsonschema.org/\">NJsonSchema for .NET</a> for JSON Schema handling and C#/TypeScript class/interface generation.",
   "nugetPackageId": "nswag.msbuild",
-  "customExecutable": true,
+  "nugetFramework": true,
+  "packageExecutable": "dotnet-nswag.dll|NSwag.exe",
   "tasks": [
     {
       "help": "Prints the toolchain version.",
       "postfix": "Version",
       "definiteArgument": "version",
-      "settingsClass": {
-        "baseClass": "NSwagSettings"
-      }
+      "settingsClass": {}
     },
     {
       "help": "List all types for the given assembly and settings.",
@@ -43,7 +42,6 @@
       ],
       "definiteArgument": "list-types",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "File",
@@ -54,8 +52,7 @@
           {
             "name": "Variables",
             "type": "Dictionary<string,object>",
-            "format": "/Variables:{value}",
-            "itemFormat": "{key}={value}"
+            "format": "/Variables:{key}={value}"
           }
         ]
       }
@@ -68,7 +65,6 @@
       ],
       "definiteArgument": "list-controllers",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "File",
@@ -79,8 +75,7 @@
           {
             "name": "Variables",
             "type": "Dictionary<string,object>",
-            "format": "/Variables:{value}",
-            "itemFormat": "{key}={value}"
+            "format": "/Variables:{key}={value}"
           }
         ]
       }
@@ -92,9 +87,7 @@
         "isolatedCommand"
       ],
       "definiteArgument": "types2openapi",
-      "settingsClass": {
-        "baseClass": "NSwagSettings"
-      }
+      "settingsClass": {}
     },
     {
       "postfix": "TypesToSwagger",
@@ -104,7 +97,6 @@
       ],
       "definiteArgument": "types2swagger",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "AllowReferencesWithProperties",
@@ -178,9 +170,7 @@
         "isolatedCommand"
       ],
       "definiteArgument": "webapi2openapi",
-      "settingsClass": {
-        "baseClass": "NSwagSettings"
-      }
+      "settingsClass": {}
     },
     {
       "help": "Generates a Swagger/OpenAPI specification for a controller or controlles contained in a .NET Web API assembly (obsolete: use webapi2openapi instead).",
@@ -192,7 +182,6 @@
       ],
       "definiteArgument": "webapi2swagger",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "AddMissingPathParameters",
@@ -248,9 +237,7 @@
         "isolatedCommand"
       ],
       "definiteArgument": "aspnetcore2openapi",
-      "settingsClass": {
-        "baseClass": "NSwagSettings"
-      }
+      "settingsClass": {}
     },
     {
       "help": "Generates a Swagger specification ASP.NET Core Mvc application using ApiExplorer (obsolete: use aspnetcore2openapi instead).",
@@ -262,7 +249,6 @@
       ],
       "definiteArgument": "aspnetcore2swagger",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "ApiGroupNames",
@@ -331,16 +317,13 @@
       "help": "Creates a new nswag.json file in the current directory.",
       "postfix": "CreateDocument",
       "definiteArgument": "new",
-      "settingsClass": {
-        "baseClass": "NSwagSettings"
-      }
+      "settingsClass": {}
     },
     {
       "help": "Executes an .nswag file. If 'input' is not specified then all *.nswag files and the nswag.json file is executed.",
       "postfix": "ExecuteDocument",
       "definiteArgument": "run",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "Input",
@@ -350,8 +333,7 @@
           {
             "name": "Variables",
             "type": "Dictionary<string,object>",
-            "format": "/Variables:{value}",
-            "itemFormat": "{key}={value}"
+            "format": "/Variables:{key}={value}"
           }
         ]
       }
@@ -365,7 +347,6 @@
       ],
       "definiteArgument": "jsonschema2csclient",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "AnyType",
@@ -439,7 +420,6 @@
       ],
       "definiteArgument": "jsonschema2tsclient",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "Name",
@@ -460,9 +440,7 @@
         "outputCommand"
       ],
       "definiteArgument": "openapi2csclient",
-      "settingsClass": {
-        "baseClass": "NSwagSettings"
-      }
+      "settingsClass": {}
     },
     {
       "help": "Generates CSharp client code from a Swagger/OpenAPI specification (obsolete: use openapi2csclient instead).",
@@ -475,7 +453,6 @@
       ],
       "definiteArgument": "swagger2csclient",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "ClientBaseClass",
@@ -652,9 +629,7 @@
         "outputCommand"
       ],
       "definiteArgument": "openapi2cscontroller",
-      "settingsClass": {
-        "baseClass": "NSwagSettings"
-      }
+      "settingsClass": {}
     },
     {
       "help": "Generates CSharp Web API controller code from a Swagger/OpenAPI specification (obsolete: use openapi2cscontroller instead).",
@@ -667,7 +642,6 @@
       ],
       "definiteArgument": "swagger2cscontroller",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "BasePath",
@@ -729,9 +703,7 @@
         "outputCommand"
       ],
       "definiteArgument": "openapi2tsclient",
-      "settingsClass": {
-        "baseClass": "NSwagSettings"
-      }
+      "settingsClass": {}
     },
     {
       "help": "Generates TypeScript client code from a Swagger/OpenAPI specification (obsolete: use openapi2tsclient instead).",
@@ -743,7 +715,6 @@
       ],
       "definiteArgument": "swagger2tsclient",
       "settingsClass": {
-        "baseClass": "NSwagSettings",
         "properties": [
           {
             "name": "BaseUrlTokenName",
@@ -1029,15 +1000,6 @@
           }
         ]
       }
-    }
-  ],
-  "commonTaskProperties": [
-    {
-      "name": "NSwagRuntime",
-      "type": "string",
-      "format": "{value}",
-      "customImpl": true,
-      "customValue": true
     }
   ],
   "commonTaskPropertySets": {

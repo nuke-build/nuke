@@ -23,6 +23,8 @@ public class ArgumentStringHandlerTest
     public void TestString()
     {
         ArgsToString("start end").Should().Be("start end");
+        ArgsToString("").Should().Be("");
+        ArgsToString(" ").Should().Be("");
     }
 
     [Fact]
@@ -83,6 +85,7 @@ public class ArgumentStringHandlerTest
         ArgsToString($"{"start end"}").Should().Be("start end");
         ArgsToString($"start {"spaced end"}").Should().Be("start \"spaced end\"");
         ArgsToString($"{"spaced start"} end").Should().Be("\"spaced start\" end");
+        ArgsToString($"{"spaced start"} {"spaced end"}").Should().Be("\"spaced start\" \"spaced end\"");
     }
 
     [Fact]

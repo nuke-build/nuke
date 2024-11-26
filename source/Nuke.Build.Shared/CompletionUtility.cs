@@ -14,25 +14,66 @@ namespace Nuke.Common.Utilities;
 
 public static class CompletionUtility
 {
-    public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(AbsolutePath schemaFile, IEnumerable<string> profileNames)
+    public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(
+        AbsolutePath schemaFile,
+        IEnumerable<string> profileNames = null,
+        Func<JsonProperty, bool> filter = null)
     {
         var schema = JsonDocument.Parse(schemaFile.ReadAllText());
-        return GetItemsFromSchema(schema, profileNames);
+        return GetItemsFromSchema(schema, profileNames, filter);
     }
 
-    public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(JsonDocument schema, IEnumerable<string> profileNames)
+    public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(
+        JsonDocument schema,
+        IEnumerable<string> profileNames = null,
+        Func<JsonProperty, bool> filter = null)
     {
-        string[] GetEnumValues(JsonElement property)
-            => property.TryGetProperty("enum", out var enumProperty)
-                ? enumProperty.EnumerateArray().Select(x => x.GetString()).ToArray()
-                : property.TryGetProperty("items", out var itemsProperty)
-                    ? GetEnumValues(itemsProperty)
-                    : null;
+        filter ??= _ => true;
+        var rootElement = schema.RootElement;
+        var definitions = rootElement.GetProperty("definitions").EnumerateObject().ToDictionary(x => x.Name, x => x);
 
-        var properties = schema.RootElement.GetProperty("definitions").GetProperty("build").GetProperty("properties")
-            .EnumerateObject().OfType<JsonProperty>();
-        return properties.ToDictionary(x => x.Name, x => GetEnumValues(x.Value))
-            .SetKeyValue(Constants.LoadedLocalProfilesParameterName, profileNames.ToArray()).AsReadOnly();
+        var parameterProperties = rootElement.GetProperty("definitions").TryGetProperty("NukeBuild", out var baseSchema)
+            ? baseSchema.GetProperty("properties").EnumerateObject()
+                .Concat(rootElement.GetProperty("allOf")[0].TryGetProperty("properties", out var properties) ? properties.EnumerateObject() : [])
+            : definitions["build"].Value.GetProperty("properties").EnumerateObject();
+
+        return parameterProperties
+            .Where(filter)
+            .Select(x => (x.Name, Values: GetValues(x)))
+            .Where(x => x.Values != null)
+            .ToDictionary(x => x.Name, x => x.Values).AsReadOnly();
+
+        string[] GetValues(JsonProperty property)
+        {
+            if (property.Name == Constants.LoadedLocalProfilesParameterName)
+                return profileNames.ToArray();
+
+            if (property.Value.TryGetProperty("type", out var typeProperty))
+            {
+                var types = typeProperty.ValueKind != JsonValueKind.Array
+                    ? [typeProperty.GetString()]
+                    : typeProperty.EnumerateArray().Select(x => x.GetString()).ToArray();
+                if (types.ContainsAnyOrdinalIgnoreCase("string", "boolean", "integer"))
+                {
+                    return property.Value.TryGetProperty("enum", out var enumProperty)
+                        ? enumProperty.EnumerateArray().Select(x => x.GetString()).ToArray()
+                        : [];
+                }
+
+                if (types.Single() == "array")
+                    return GetValues(property.Value.EnumerateObject().Single(x => x.Name == "items"));
+
+                if (types.Single() == "object")
+                    return null;
+            }
+            else if (property.Value.TryGetProperty("$ref", out var refProperty))
+            {
+                var definition = definitions.GetValueOrDefault(refProperty.GetString().NotNull().Split('/').LastOrDefault());
+                return GetValues(definition);
+            }
+
+            throw new NotSupportedException();
+        }
     }
 
     // ReSharper disable once CognitiveComplexity

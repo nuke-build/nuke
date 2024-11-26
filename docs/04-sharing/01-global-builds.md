@@ -23,7 +23,22 @@ As a first step, you need to extend the build project file with the [necessary i
 </Project>
 ```
 
-Afterwards, the project can be packaged and deployed as usual:
+:::warning
+Note that `PackageDownload` can only be used in the .NET global tool project directly, since they [do not work transitively](https://github.com/NuGet/Home/wiki/%5BSpec%5D-PackageDownload-support#package-declaration). Alternatively, you can reference tools the old way via `PackageReference` and set the `ExcludeAssets` property:
+
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="NUnit.ConsoleRunner" Version="3.9.0" ExcludeAssets="all" />
+  </ItemGroup>
+
+</Project>
+```
+
+:::
+
+Afterward, the project can be packaged and deployed as usual:
 
 ```powershell
 # terminal-command
