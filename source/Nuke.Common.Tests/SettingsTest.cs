@@ -120,6 +120,10 @@ public class SettingsTest
                 .SetProperty("foo", "bar")
                 .SetInformationalVersion("version"),
             "run --property:foo=bar --property:InformationalVersion=version -- arg1 arg2");
+
+        Assert(new DotNetPackSettings()
+                .SetAuthors("a", "b"),
+            "pack --property:Authors=a,b");
     }
 
     [Fact]
