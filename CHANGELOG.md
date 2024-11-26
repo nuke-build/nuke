@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed MSBuild tasks to use `net8.0` target framework
+- Fixed error handling in `:update` command
+- Fixed nullable options for `ToolTasks.Run`
+- Fixed skipping null and whitespaces arguments
+- Fixed tool requirements
+- Fixed NPM tool path resolution
+- Fixed logging errors as standard in `GitTasks` and `DockerTasks`
+- Fixed argument format in `DotNetTasks`
 
 ## [9.0.1] / 2024-11-21
 - Fixed `Options` serialization to JSON
