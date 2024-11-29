@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Added `LogErrorAsStandard` to `GitTasks` to not handle text on error output as tool error
 
 ## [9.0.1] / 2024-11-21
 - Fixed `Options` serialization to JSON
