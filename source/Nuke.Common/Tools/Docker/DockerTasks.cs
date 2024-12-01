@@ -10,4 +10,5 @@ using Serilog.Events;
 namespace Nuke.Common.Tools.Docker;
 
 [LogLevelPattern(LogEventLevel.Warning, "^WARNING!")]
+[LogErrorAsStandard]
 partial class DockerTasks;
