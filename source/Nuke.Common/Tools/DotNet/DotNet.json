@@ -187,6 +187,12 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -299,6 +305,12 @@
             "position": -1,
             "customValue": true,
             "help": "Arguments passed to the application being run."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -413,6 +425,12 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -511,6 +529,12 @@
             "type": "string",
             "format": "-bl:{value}",
             "help": "Generare MSBuild <a href=\"https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md\">binary log</a>."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -801,6 +825,12 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -976,6 +1006,12 @@
             "format": "/t:{value}",
             "separator": ";",
             "help": "<p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ee216359.aspx\">Target Build Order</a> and <a href=\"https://msdn.microsoft.com/en-us/library/ms171463.aspx\">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ms171462.aspx\">Targets</a>.</p>"
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
