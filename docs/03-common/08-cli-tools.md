@@ -186,13 +186,20 @@ This example will always have 5 packages being pushed simultaneously. Possible e
 
 ### Custom Arguments
 
-It may happen that certain arguments are not available from the fluent interface. In this case, the `SetProcessArgumentConfigurator` method can be used to add them manually:
+It may happen that certain arguments are not available from the fluent interface. In this case, the `SetProcessAdditionalArguments` or `AddProcessAdditionalArguments` methods can be used to add them manually:
 
 ```csharp
 MSBuildTasks.MSBuild(_ => _
     .SetTargetPath(SolutionFile)
-    .SetProcessArgumentConfigurator(_ => _
-        .Add("/r")));
+    .SetProcessAdditionalArguments( "/r" ));
+```
+
+If secrets are involved, add them with the `AddProcessRedactedSecrets` first:
+
+```csharp
+SonarScannerTasks.SonarScannerBegin(_ => _
+    .AddProcessRedactedSecrets( Secrets.SonarQubeAccessToken )
+    .AddProcessAdditionalArguments( $"/d:sonar.login={Secrets.SonarQubeAccessToken}" ));
 ```
 
 <!--
@@ -202,7 +209,9 @@ MSBuildTasks.MSBuild(_ => _
     SetEnvironmentVariables
     LogOutput
     When
-    SetArgumentConfigurator
+    SetProcessAdditionalArguments
+    AddProcessAdditionalArguments
+    AddProcessRedactedSecrets
 -->
 
 ### Exit Code Handling
