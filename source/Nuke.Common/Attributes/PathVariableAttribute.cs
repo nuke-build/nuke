@@ -41,7 +41,7 @@ public class PathVariableAttribute : ToolInjectionAttributeBase
     public override ToolRequirement GetRequirement(MemberInfo member)
     {
         var name = _pathExecutable ?? member.Name.ToLowerInvariant();
-        return PathToolRequirement.Create(name);
+        return new PathToolRequirement(name);
     }
 
     public override object GetValue(MemberInfo member, object instance)

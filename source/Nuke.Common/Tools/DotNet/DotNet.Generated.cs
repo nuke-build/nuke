@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.DotNet;
 /// <summary><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[PathToolRequirement(PathExecutable)]
 [PathTool(Executable = PathExecutable)]
 public partial class DotNetTasks : ToolTasks, IRequirePathTool
 {
@@ -559,7 +558,7 @@ public partial class DotNetMSBuildSettings : ToolOptions
     /// <summary>Generate MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.</summary>
     [Argument(Format = "-bl:{value}")] public string BinaryLog => Get<string>(() => BinaryLog);
     /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
-    [Argument(Format = "/property:{value}")] public IReadOnlyDictionary<string, object> Properties => Get<Dictionary<string, object>>(() => Properties);
+    [Argument(Format = "/property:{key}={value}")] public IReadOnlyDictionary<string, object> Properties => Get<Dictionary<string, object>>(() => Properties);
 }
 #endregion
 #region DotNetCleanSettings

@@ -17,6 +17,8 @@ public abstract partial class ToolTasks
     protected internal virtual partial Action<OutputType, string> GetLogger(ToolOptions options = null);
 
     protected virtual partial string GetToolPath(ToolOptions options = null);
+    protected virtual partial IReadOnlyCollection<Output> Run(ToolOptions options = null);
+    protected virtual partial (TResult Result, IReadOnlyCollection<Output> Output) Run<TResult>(ToolOptions options = null);
     protected virtual partial Func<ToolOptions, IProcess, object> GetExitHandler(ToolOptions options = null);
 
     protected virtual ToolOptions PreProcess(ToolOptions options) => options;

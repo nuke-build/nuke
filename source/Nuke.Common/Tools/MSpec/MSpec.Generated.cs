@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.MSpec;
 /// <summary><p>MSpec is called a 'context/specification' test framework because of the 'grammar' that is used in describing and coding the tests or 'specs'.</p><p>For more details, visit the <a href="https://github.com/machine/machine.specifications">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId)]
 public partial class MSpecTasks : ToolTasks, IRequireNuGetPackage
 {

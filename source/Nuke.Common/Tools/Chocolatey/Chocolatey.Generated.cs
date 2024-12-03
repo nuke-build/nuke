@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.Chocolatey;
 /// <summary><p>Chocolatey has the largest online registry of Windows packages. Chocolatey packages encapsulate everything required to manage a particular piece of software into one deployment artifact by wrapping installers, executables, zips, and/or scripts into a compiled package file.</p><p>For more details, visit the <a href="https://chocolatey.org/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[PathToolRequirement(PathExecutable)]
 [PathTool(Executable = PathExecutable)]
 public partial class ChocolateyTasks : ToolTasks, IRequirePathTool
 {

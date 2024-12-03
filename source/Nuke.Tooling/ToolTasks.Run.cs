@@ -12,13 +12,14 @@ namespace Nuke.Common.Tooling;
 
 partial class ToolTasks
 {
-    protected virtual IReadOnlyCollection<Output> Run(ToolOptions options)
+    protected virtual partial IReadOnlyCollection<Output> Run(ToolOptions options)
     {
-        var secrets = options.GetSecrets().ToList();
+        var secrets = options?.GetSecrets().ToList() ?? [];
         string Filter(string text) => secrets.Aggregate(text, (str, s) => str.Replace(s, "[REDACTED]"));
 
         options = PreProcess(options);
-        using var process = StartProcess(
+        using var process = ProcessTasks.StartProcess(
+            GetToolPathInternal(options),
             options.GetArguments().JoinSpace(),
             options.ProcessWorkingDirectory,
             options.ProcessEnvironmentVariables,
@@ -35,7 +36,7 @@ partial class ToolTasks
         return process.Output;
     }
 
-    protected virtual (TResult Result, IReadOnlyCollection<Output> Output) Run<TResult>(ToolOptions options)
+    protected virtual partial (TResult Result, IReadOnlyCollection<Output> Output) Run<TResult>(ToolOptions options)
     {
         var output = Run(options);
         try
@@ -97,5 +98,15 @@ partial class ToolTasks
             invocationLogging,
             logger,
             outputFilter);
+    }
+
+    public static T Resolve<T>()
+        where T : ToolTasks
+    {
+        var applicableTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+            .Where(x => x.IsAssignableTo(typeof(T)))
+            .OrderByDescending(x => x.Descendants(x => x.BaseType).Count());
+        var mostDerivedType = applicableTypes.First();
+        return mostDerivedType.CreateInstance<T>();
     }
 }

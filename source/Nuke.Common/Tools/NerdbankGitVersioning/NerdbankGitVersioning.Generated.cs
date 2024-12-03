@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning;
 /// <summary><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class NerdbankGitVersioningTasks : ToolTasks, IRequireNuGetPackage
 {

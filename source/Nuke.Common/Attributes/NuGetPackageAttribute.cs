@@ -55,7 +55,7 @@ public class NuGetPackageAttribute : ToolInjectionAttributeBase
 
     public override ToolRequirement GetRequirement(MemberInfo member)
     {
-        return NuGetPackageRequirement.Create(_packageId, Version);
+        return new NuGetPackageRequirement(_packageId, Version);
     }
 
     public override object GetValue(MemberInfo member, object instance)

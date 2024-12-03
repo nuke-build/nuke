@@ -20,7 +20,7 @@ namespace Nuke.Common.Tools.StaticWebApps;
 /// <summary><p>The Static Web Apps CLI, also known as SWA CLI, serves as a local development tool for <a href="https://docs.microsoft.com/azure/static-web-apps">Azure Static Web Apps</a>. It can:<ul><li>Serve static app assets, or proxy to your app dev server</li><li>Serve API requests, or proxy to APIs running in Azure Functions Core Tools</li><li>Emulate authentication and authorization</li><li>Emulate Static Web Apps configuration, including routing</li></ul></p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/azure/static-web-apps/local-development">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NpmPackageRequirement(PackageId)]
+[NpmTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class StaticWebAppsTasks : ToolTasks, IRequireNpmPackage
 {
     public static string StaticWebAppsPath => new StaticWebAppsTasks().GetToolPath();

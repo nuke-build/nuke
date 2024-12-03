@@ -14,6 +14,7 @@ namespace Nuke.Common.Tooling;
 public abstract class ToolAttribute : Attribute
 {
     internal abstract string GetToolPath(ToolOptions options);
+    internal abstract ToolRequirement GetRequirement(string version = null);
 }
 
 public abstract partial class ToolTasks
@@ -34,10 +35,16 @@ public abstract partial class ToolTasks
     protected virtual partial string GetToolPath(ToolOptions options)
     {
         var toolType = GetType();
-        return toolType.GetCustomAttribute<ToolAttribute>().NotNull().GetToolPath(options);
+        var attribute = toolType.GetCustomAttribute<ToolAttribute>();
+        if (attribute != null)
+            return attribute.GetToolPath(options);
+
+        Assert.Fail($"Unable to resolve tool path for {toolType.Name}. Set via {nameof(ToolOptionsExtensions.SetProcessToolPath)}.");
+        return null;
     }
 }
 
+[BaseTypeRequired(typeof(IRequirePathTool))]
 public class PathToolAttribute : ToolAttribute
 {
     public string Executable { get; set; }
@@ -46,12 +53,47 @@ public class PathToolAttribute : ToolAttribute
     {
         return ToolPathResolver.GetPathExecutable(Executable);
     }
+
+    internal override ToolRequirement GetRequirement(string version = null)
+    {
+        return new PathToolRequirement(Executable);
+    }
 }
 
-#if NET6_0_OR_GREATER
+[BaseTypeRequired(typeof(IRequireNpmPackage))]
+public class NpmToolAttribute : ToolAttribute
+{
+    public string Id { get; set; }
+    public string Executable { get; set; }
 
-// TODO OPTIONS: Npm etc.
+    internal override string GetToolPath(ToolOptions options)
+    {
+        return NpmToolPathResolver.GetNpmExecutable(Executable);
+    }
 
+    internal override ToolRequirement GetRequirement(string version = null)
+    {
+        return new NpmPackageRequirement(Id, version);
+    }
+}
+
+[BaseTypeRequired(typeof(IRequireAptGetPackage))]
+public class AptGetToolAttribute : ToolAttribute
+{
+    public string Id { get; set; }
+
+    internal override string GetToolPath(ToolOptions options)
+    {
+        return null;
+    }
+
+    internal override ToolRequirement GetRequirement(string version = null)
+    {
+        return new AptGetPackageRequirement(Id);
+    }
+}
+
+[BaseTypeRequired(typeof(IRequireNuGetPackage))]
 public class NuGetToolAttribute : ToolAttribute
 {
     public string Id { get; set; }
@@ -59,14 +101,24 @@ public class NuGetToolAttribute : ToolAttribute
 
     internal override string GetToolPath(ToolOptions options)
     {
+        // ReSharper disable once SuspiciousTypeConversion.Global
         var framework = (options as IToolOptionsWithFramework)?.Framework;
         return NuGetToolPathResolver.GetPackageExecutable(Id, Executable, framework: framework);
+    }
+
+    internal override ToolRequirement GetRequirement(string version = null)
+    {
+        return new NuGetPackageRequirement(Id, version);
     }
 }
 
 public interface IToolOptionsWithFramework
 {
+#if NET6_0_OR_GREATER
     public string Framework => ((IOptions)this).Get<string>(() => Framework);
+#else
+    public string Framework { get; }
+#endif
 }
 
 public static class ToolOptionsWithFrameworkExtensions
@@ -74,5 +126,3 @@ public static class ToolOptionsWithFrameworkExtensions
     [Pure] [Builder(Type = typeof(IToolOptionsWithFramework), Property = nameof(IToolOptionsWithFramework.Framework))]
     public static T SetFramework<T>(this T o, string v) where T : Options, IToolOptionsWithFramework => o.Modify(b => b.Set(() => o.Framework, v));
 }
-
-#endif

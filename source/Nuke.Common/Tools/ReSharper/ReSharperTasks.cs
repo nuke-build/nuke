@@ -21,7 +21,7 @@ partial class ReSharperTasks
     {
         var resharperOptions = ((ReSharperSettingsBase)options)
             .SetProcessToolPath(GetToolPath());
-        if (resharperOptions.Plugins.Count == 0)
+        if (resharperOptions.Plugins is not { Count: > 0 })
             return resharperOptions;
 
         var wave = GetWave(resharperOptions).NotNull("wave != null");
