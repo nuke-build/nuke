@@ -99,4 +99,14 @@ partial class ToolTasks
             logger,
             outputFilter);
     }
+
+    public static T Resolve<T>()
+        where T : ToolTasks
+    {
+        var applicableTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+            .Where(x => x.IsAssignableTo(typeof(T)))
+            .OrderByDescending(x => x.Descendants(x => x.BaseType).Count());
+        var mostDerivedType = applicableTypes.First();
+        return mostDerivedType.CreateInstance<T>();
+    }
 }
