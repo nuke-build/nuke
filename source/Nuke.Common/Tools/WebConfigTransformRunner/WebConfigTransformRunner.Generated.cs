@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner;
 /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class WebConfigTransformRunnerTasks : ToolTasks, IRequireNuGetPackage
 {

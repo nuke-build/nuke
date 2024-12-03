@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.MinVer;
 /// <summary><p>Minimalistic versioning using Git tags.</p><p>For more details, visit the <a href="https://github.com/adamralph/minver">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class MinVerTasks : ToolTasks, IRequireNuGetPackage
 {

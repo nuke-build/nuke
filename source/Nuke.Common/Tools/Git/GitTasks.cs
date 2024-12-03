@@ -4,9 +4,11 @@
 
 using System;
 using System.Linq;
+using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.Git;
 
+[LogErrorAsStandard]
 partial class GitTasks
 {
     public static bool GitIsDetached()

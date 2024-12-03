@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.SpecFlow;
 /// <summary><p>Use SpecFlow to define, manage and automatically execute human-readable acceptance tests in .NET projects. Writing easily understandable tests is a cornerstone of the BDD paradigm and also helps build up a living documentation of your system.</p><p>For more details, visit the <a href="https://specflow.org/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class SpecFlowTasks : ToolTasks, IRequireNuGetPackage
 {

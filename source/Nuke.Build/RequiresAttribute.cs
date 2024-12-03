@@ -22,6 +22,6 @@ public class RequiresAttribute<T> : RequiresAttribute
 
     public override ToolRequirement GetRequirement()
     {
-        return typeof(T).GetCustomAttribute<ToolRequirementAttributeBase>().NotNull().GetRequirement(Version);
+        return typeof(T).GetCustomAttribute<ToolAttribute>().NotNull().GetRequirement(Version);
     }
 }

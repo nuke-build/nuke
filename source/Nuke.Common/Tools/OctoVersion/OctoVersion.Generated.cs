@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.OctoVersion;
 /// <summary><p>For more details, visit the <a href="https://github.com/OctopusDeploy/OctoVersion">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[NuGetPackageRequirement(PackageId)]
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class OctoVersionTasks : ToolTasks, IRequireNuGetPackage
 {

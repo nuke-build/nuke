@@ -117,8 +117,24 @@ public class SettingsTest
         Assert(new DotNetRunSettings()
                 .AddApplicationArguments("arg1")
                 .AddApplicationArguments("arg2")
-                .SetProperty("foo", "bar"),
-            "run --property:foo=bar -- arg1 arg2");
+                .SetProperty("foo", "bar")
+                .SetInformationalVersion("version"),
+            "run --property:foo=bar --property:InformationalVersion=version -- arg1 arg2");
+
+        Assert(new DotNetPackSettings()
+                .SetAuthors("a", "b"),
+            "pack --property:Authors=a,b");
+    }
+
+    [Fact]
+    public void TestDotNet_Empty()
+    {
+        Assert(new DotNetBuildSettings()
+                .SetFramework(null)
+                .SetConfiguration("")
+                .SetProperty("foo1", null)
+                .SetProperty("foo2", ""),
+            "build");
     }
 
     [Fact]
@@ -157,9 +173,10 @@ public class SettingsTest
             "exec --container=container --cluster=cluster -- command arg1 arg2");
     }
 
-    private static void Assert<T>(T options, string arguments)
+    private static void Assert<T>(T options, string expected)
         where T : ToolOptions, new()
     {
-        options.GetArguments().JoinSpace().Should().Be(arguments);
+        var arguments = options.GetArguments().JoinSpace();
+        arguments.Should().Be(expected);
     }
 }

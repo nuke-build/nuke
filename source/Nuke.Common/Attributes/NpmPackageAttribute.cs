@@ -25,7 +25,7 @@ public class NpmPackageAttribute : ToolInjectionAttributeBase
 
     public override ToolRequirement GetRequirement(MemberInfo member)
     {
-        return NpmPackageRequirement.Create(_packageId, Version);
+        return new NpmPackageRequirement(_packageId, Version);
     }
 
     public override object GetValue(MemberInfo member, object instance)

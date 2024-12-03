@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.Netlify;
 /// <summary><p>Netlify’s command line interface (CLI) lets you configure <a href="https://docs.netlify.com/cli/get-started/#continuous-deployment">continuous deployment</a> straight from the command line. You can use Netlify CLI to <a href="https://docs.netlify.com/cli/get-started/#run-a-local-development-environment">run a local development server</a> that you can share with others, <a href="https://docs.netlify.com/cli/get-started/#run-builds-locally">run a local build and plugins</a>, and <a href="https://docs.netlify.com/cli/get-started/#manual-deploys">deploy your site</a>.</p><p>For more details, visit the <a href="https://docs.netlify.com/cli/get-started/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[PathToolRequirement(PathExecutable)]
 [PathTool(Executable = PathExecutable)]
 public partial class NetlifyTasks : ToolTasks, IRequirePathTool
 {

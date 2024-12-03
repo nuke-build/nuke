@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.CorFlags;
 /// <summary><p>The CorFlags Conversion tool allows you to configure the CorFlags section of the header of a portable executable image.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/corflags-exe-corflags-conversion-tool">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[PathToolRequirement(PathExecutable)]
 [PathTool(Executable = PathExecutable)]
 public partial class CorFlagsTasks : ToolTasks, IRequirePathTool
 {

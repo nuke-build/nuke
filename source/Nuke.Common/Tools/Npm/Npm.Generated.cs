@@ -20,7 +20,6 @@ namespace Nuke.Common.Tools.Npm;
 /// <summary><p>npm is the package manager for the Node JavaScript platform. It puts modules in place so that node can find them, and manages dependency conflicts intelligently.<para/>It is extremely configurable to support a wide variety of use cases. Most commonly, it is used to publish, discover, install, and develop node programs.</p><p>For more details, visit the <a href="https://www.npmjs.com/">official website</a>.</p></summary>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
-[PathToolRequirement(PathExecutable)]
 [PathTool(Executable = PathExecutable)]
 public partial class NpmTasks : ToolTasks, IRequirePathTool
 {
