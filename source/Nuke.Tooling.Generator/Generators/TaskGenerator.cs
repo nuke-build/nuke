@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -42,7 +42,8 @@ public static class TaskGenerator
             .WriteBlock(w =>
             {
                 w
-                    .WriteLine($"public static string {tool.Name}Path => new {tool.GetClassName()}().GetToolPath();")
+                    .WriteSummary($"Get the {tool.Name} executable path or '{tool.Name.ToUpperInvariant()}_EXE' environment variable.")
+                    .WriteLine($"public static string {tool.Name}Path => ToolTasks.GetToolPath<{tool.GetClassName()}>();")
                     .WriteLineIfTrue(tool.NuGetPackageId != null, $"public const string PackageId = {tool.NuGetPackageId.DoubleQuote()};")
                     .WriteLineIfTrue(tool.PackageExecutable != null, $"public const string PackageExecutable = {tool.PackageExecutable.DoubleQuote()};")
                     .WriteLineIfTrue(tool.NpmPackageId != null, $"public const string PackageId = {tool.NpmPackageId.DoubleQuote()};")
