@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Fixed nullable options for `ToolTasks.Run`
+- Fixed static tool path resolution
+- Fixed tool requirements initialization
+- Fixed documentation link in tool wrapper remarks
+- Fixed documentation on task methods and settings classes
+- Fixed missing `NuGetKeyVaultSignTool`
+- Fixed package executable in `OctopusTasks`
 
 ## [9.0.2] / 2024-12-03
 - Fixed MSBuild tasks to use `net8.0` target framework
