@@ -23,23 +23,21 @@ namespace Nuke.Common.Tools.Boots;
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class BootsTasks : ToolTasks, IRequireNuGetPackage
 {
-    public static string BootsPath => new BootsTasks().GetToolPath();
+    public static string BootsPath { get => new BootsTasks().GetToolPathInternal(); set => new BootsTasks().SetToolPath(value); }
     public const string PackageId = "Boots";
     public const string PackageExecutable = "Boots.exe";
     /// <summary><p>boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.</p><p>For more details, visit the <a href="https://github.com/jonathanpeppers/boots">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> Boots(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new BootsTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.</p><p>For more details, visit the <a href="https://github.com/jonathanpeppers/boots">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--file-type</c> via <see cref="BootsSettings.FileType"/></li><li><c>--preview</c> via <see cref="BootsSettings.Preview"/></li><li><c>--read-write-timeout</c> via <see cref="BootsSettings.ReadWriteTimeout"/></li><li><c>--retries</c> via <see cref="BootsSettings.Retries"/></li><li><c>--stable</c> via <see cref="BootsSettings.Stable"/></li><li><c>--timeout</c> via <see cref="BootsSettings.Timeout"/></li><li><c>--url</c> via <see cref="BootsSettings.Url"/></li><li><c>--version</c> via <see cref="BootsSettings.Version"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> Boots(BootsSettings options = null) => new BootsTasks().Run(options);
-    /// <summary><p>boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.</p><p>For more details, visit the <a href="https://github.com/jonathanpeppers/boots">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--file-type</c> via <see cref="BootsSettings.FileType"/></li><li><c>--preview</c> via <see cref="BootsSettings.Preview"/></li><li><c>--read-write-timeout</c> via <see cref="BootsSettings.ReadWriteTimeout"/></li><li><c>--retries</c> via <see cref="BootsSettings.Retries"/></li><li><c>--stable</c> via <see cref="BootsSettings.Stable"/></li><li><c>--timeout</c> via <see cref="BootsSettings.Timeout"/></li><li><c>--url</c> via <see cref="BootsSettings.Url"/></li><li><c>--version</c> via <see cref="BootsSettings.Version"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> Boots(Configure<BootsSettings> configurator) => new BootsTasks().Run(configurator.Invoke(new BootsSettings()));
-    /// <summary><p>boots is a .NET global tool for <c>bootstrapping</c> <c>vsix</c> and <c>pkg</c> files.</p><p>For more details, visit the <a href="https://github.com/jonathanpeppers/boots">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--file-type</c> via <see cref="BootsSettings.FileType"/></li><li><c>--preview</c> via <see cref="BootsSettings.Preview"/></li><li><c>--read-write-timeout</c> via <see cref="BootsSettings.ReadWriteTimeout"/></li><li><c>--retries</c> via <see cref="BootsSettings.Retries"/></li><li><c>--stable</c> via <see cref="BootsSettings.Stable"/></li><li><c>--timeout</c> via <see cref="BootsSettings.Timeout"/></li><li><c>--url</c> via <see cref="BootsSettings.Url"/></li><li><c>--version</c> via <see cref="BootsSettings.Version"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--file-type</c> via <see cref="BootsSettings.FileType"/></li><li><c>--preview</c> via <see cref="BootsSettings.Preview"/></li><li><c>--read-write-timeout</c> via <see cref="BootsSettings.ReadWriteTimeout"/></li><li><c>--retries</c> via <see cref="BootsSettings.Retries"/></li><li><c>--stable</c> via <see cref="BootsSettings.Stable"/></li><li><c>--timeout</c> via <see cref="BootsSettings.Timeout"/></li><li><c>--url</c> via <see cref="BootsSettings.Url"/></li><li><c>--version</c> via <see cref="BootsSettings.Version"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> Boots(BootsSettings options = null) => new BootsTasks().Run<BootsSettings>(options);
+    /// <inheritdoc cref="BootsTasks.Boots(Nuke.Common.Tools.Boots.BootsSettings)"/>
+    public static IReadOnlyCollection<Output> Boots(Configure<BootsSettings> configurator) => new BootsTasks().Run<BootsSettings>(configurator.Invoke(new BootsSettings()));
+    /// <inheritdoc cref="BootsTasks.Boots(Nuke.Common.Tools.Boots.BootsSettings)"/>
     public static IEnumerable<(BootsSettings Settings, IReadOnlyCollection<Output> Output)> Boots(CombinatorialConfigure<BootsSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(Boots, degreeOfParallelism, completeOnFailure);
 }
 #region BootsSettings
-/// <summary>Used within <see cref="BootsTasks"/>.</summary>
+/// <inheritdoc cref="BootsTasks.Boots(Nuke.Common.Tools.Boots.BootsSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(BootsTasks), Command = nameof(BootsTasks.Boots))]
@@ -64,7 +62,7 @@ public partial class BootsSettings : ToolOptions
 }
 #endregion
 #region BootsSettingsExtensions
-/// <summary>Used within <see cref="BootsTasks"/>.</summary>
+/// <inheritdoc cref="BootsTasks.Boots(Nuke.Common.Tools.Boots.BootsSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class BootsSettingsExtensions

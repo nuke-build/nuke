@@ -23,23 +23,21 @@ namespace Nuke.Common.Tools.CodeMetrics;
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class CodeMetricsTasks : ToolTasks, IRequireNuGetPackage
 {
-    public static string CodeMetricsPath => new CodeMetricsTasks().GetToolPath();
+    public static string CodeMetricsPath { get => new CodeMetricsTasks().GetToolPathInternal(); set => new CodeMetricsTasks().SetToolPath(value); }
     public const string PackageId = "Microsoft.CodeAnalysis.Metrics";
     public const string PackageExecutable = "Metrics.exe";
     /// <summary><p>Code metrics is a set of software measures that provide developers better insight into the code they are developing. By taking advantage of code metrics, developers can understand which types and/or methods should be reworked or more thoroughly tested. Development teams can identify potential risks, understand the current state of a project, and track progress during software development.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/visualstudio/code-quality/code-metrics-values">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> CodeMetrics(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new CodeMetricsTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>Code metrics is a set of software measures that provide developers better insight into the code they are developing. By taking advantage of code metrics, developers can understand which types and/or methods should be reworked or more thoroughly tested. Development teams can identify potential risks, understand the current state of a project, and track progress during software development.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/visualstudio/code-quality/code-metrics-values">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>/out</c> via <see cref="CodeMetricsSettings.OutputFile"/></li><li><c>/project</c> via <see cref="CodeMetricsSettings.Project"/></li><li><c>/solution</c> via <see cref="CodeMetricsSettings.Solution"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> CodeMetrics(CodeMetricsSettings options = null) => new CodeMetricsTasks().Run(options);
-    /// <summary><p>Code metrics is a set of software measures that provide developers better insight into the code they are developing. By taking advantage of code metrics, developers can understand which types and/or methods should be reworked or more thoroughly tested. Development teams can identify potential risks, understand the current state of a project, and track progress during software development.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/visualstudio/code-quality/code-metrics-values">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>/out</c> via <see cref="CodeMetricsSettings.OutputFile"/></li><li><c>/project</c> via <see cref="CodeMetricsSettings.Project"/></li><li><c>/solution</c> via <see cref="CodeMetricsSettings.Solution"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> CodeMetrics(Configure<CodeMetricsSettings> configurator) => new CodeMetricsTasks().Run(configurator.Invoke(new CodeMetricsSettings()));
-    /// <summary><p>Code metrics is a set of software measures that provide developers better insight into the code they are developing. By taking advantage of code metrics, developers can understand which types and/or methods should be reworked or more thoroughly tested. Development teams can identify potential risks, understand the current state of a project, and track progress during software development.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/visualstudio/code-quality/code-metrics-values">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>/out</c> via <see cref="CodeMetricsSettings.OutputFile"/></li><li><c>/project</c> via <see cref="CodeMetricsSettings.Project"/></li><li><c>/solution</c> via <see cref="CodeMetricsSettings.Solution"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>/out</c> via <see cref="CodeMetricsSettings.OutputFile"/></li><li><c>/project</c> via <see cref="CodeMetricsSettings.Project"/></li><li><c>/solution</c> via <see cref="CodeMetricsSettings.Solution"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> CodeMetrics(CodeMetricsSettings options = null) => new CodeMetricsTasks().Run<CodeMetricsSettings>(options);
+    /// <inheritdoc cref="CodeMetricsTasks.CodeMetrics(Nuke.Common.Tools.CodeMetrics.CodeMetricsSettings)"/>
+    public static IReadOnlyCollection<Output> CodeMetrics(Configure<CodeMetricsSettings> configurator) => new CodeMetricsTasks().Run<CodeMetricsSettings>(configurator.Invoke(new CodeMetricsSettings()));
+    /// <inheritdoc cref="CodeMetricsTasks.CodeMetrics(Nuke.Common.Tools.CodeMetrics.CodeMetricsSettings)"/>
     public static IEnumerable<(CodeMetricsSettings Settings, IReadOnlyCollection<Output> Output)> CodeMetrics(CombinatorialConfigure<CodeMetricsSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(CodeMetrics, degreeOfParallelism, completeOnFailure);
 }
 #region CodeMetricsSettings
-/// <summary>Used within <see cref="CodeMetricsTasks"/>.</summary>
+/// <inheritdoc cref="CodeMetricsTasks.CodeMetrics(Nuke.Common.Tools.CodeMetrics.CodeMetricsSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(CodeMetricsTasks), Command = nameof(CodeMetricsTasks.CodeMetrics))]
@@ -54,7 +52,7 @@ public partial class CodeMetricsSettings : ToolOptions
 }
 #endregion
 #region CodeMetricsSettingsExtensions
-/// <summary>Used within <see cref="CodeMetricsTasks"/>.</summary>
+/// <inheritdoc cref="CodeMetricsTasks.CodeMetrics(Nuke.Common.Tools.CodeMetrics.CodeMetricsSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class CodeMetricsSettingsExtensions

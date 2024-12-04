@@ -23,32 +23,28 @@ namespace Nuke.Common.Tools.DotnetPackaging;
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class DotnetPackagingTasks : ToolTasks, IRequireNuGetPackage
 {
-    public static string DotnetPackagingPath => new DotnetPackagingTasks().GetToolPath();
+    public static string DotnetPackagingPath { get => new DotnetPackagingTasks().GetToolPathInternal(); set => new DotnetPackagingTasks().SetToolPath(value); }
     public const string PackageId = "DotnetPackaging.Console";
     public const string PackageExecutable = "DotnetPackaging.Console.dll";
     /// <summary><p>DotnetPackaging is able to package your application into various formats, including Deb and AppImage.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> DotnetPackaging(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new DotnetPackagingTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>Creates a Debian package from the specified directory.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--directory</c> via <see cref="DotnetPackagingDebSettings.Directory"/></li><li><c>--metadata</c> via <see cref="DotnetPackagingDebSettings.Metadata"/></li><li><c>--output</c> via <see cref="DotnetPackagingDebSettings.Output"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> DotnetPackagingDeb(DotnetPackagingDebSettings options = null) => new DotnetPackagingTasks().Run(options);
-    /// <summary><p>Creates a Debian package from the specified directory.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--directory</c> via <see cref="DotnetPackagingDebSettings.Directory"/></li><li><c>--metadata</c> via <see cref="DotnetPackagingDebSettings.Metadata"/></li><li><c>--output</c> via <see cref="DotnetPackagingDebSettings.Output"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> DotnetPackagingDeb(Configure<DotnetPackagingDebSettings> configurator) => new DotnetPackagingTasks().Run(configurator.Invoke(new DotnetPackagingDebSettings()));
-    /// <summary><p>Creates a Debian package from the specified directory.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--directory</c> via <see cref="DotnetPackagingDebSettings.Directory"/></li><li><c>--metadata</c> via <see cref="DotnetPackagingDebSettings.Metadata"/></li><li><c>--output</c> via <see cref="DotnetPackagingDebSettings.Output"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--directory</c> via <see cref="DotnetPackagingDebSettings.Directory"/></li><li><c>--metadata</c> via <see cref="DotnetPackagingDebSettings.Metadata"/></li><li><c>--output</c> via <see cref="DotnetPackagingDebSettings.Output"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotnetPackagingDeb(DotnetPackagingDebSettings options = null) => new DotnetPackagingTasks().Run<DotnetPackagingDebSettings>(options);
+    /// <inheritdoc cref="DotnetPackagingTasks.DotnetPackagingDeb(Nuke.Common.Tools.DotnetPackaging.DotnetPackagingDebSettings)"/>
+    public static IReadOnlyCollection<Output> DotnetPackagingDeb(Configure<DotnetPackagingDebSettings> configurator) => new DotnetPackagingTasks().Run<DotnetPackagingDebSettings>(configurator.Invoke(new DotnetPackagingDebSettings()));
+    /// <inheritdoc cref="DotnetPackagingTasks.DotnetPackagingDeb(Nuke.Common.Tools.DotnetPackaging.DotnetPackagingDebSettings)"/>
     public static IEnumerable<(DotnetPackagingDebSettings Settings, IReadOnlyCollection<Output> Output)> DotnetPackagingDeb(CombinatorialConfigure<DotnetPackagingDebSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotnetPackagingDeb, degreeOfParallelism, completeOnFailure);
     /// <summary><p>Creates an AppImage package.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--additional-categories</c> via <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></li><li><c>--appId</c> via <see cref="DotnetPackagingAppImageSettings.AppId"/></li><li><c>--application-name</c> via <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></li><li><c>--directory</c> via <see cref="DotnetPackagingAppImageSettings.Directory"/></li><li><c>--homepage</c> via <see cref="DotnetPackagingAppImageSettings.Homepage"/></li><li><c>--icon</c> via <see cref="DotnetPackagingAppImageSettings.Icon"/></li><li><c>--license</c> via <see cref="DotnetPackagingAppImageSettings.License"/></li><li><c>--main-category</c> via <see cref="DotnetPackagingAppImageSettings.MainCategory"/></li><li><c>--output</c> via <see cref="DotnetPackagingAppImageSettings.Output"/></li><li><c>--screenshot-urls</c> via <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></li><li><c>--summary</c> via <see cref="DotnetPackagingAppImageSettings.Summary"/></li><li><c>--version</c> via <see cref="DotnetPackagingAppImageSettings.Version"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> DotnetPackagingAppImage(DotnetPackagingAppImageSettings options = null) => new DotnetPackagingTasks().Run(options);
-    /// <summary><p>Creates an AppImage package.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--additional-categories</c> via <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></li><li><c>--appId</c> via <see cref="DotnetPackagingAppImageSettings.AppId"/></li><li><c>--application-name</c> via <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></li><li><c>--directory</c> via <see cref="DotnetPackagingAppImageSettings.Directory"/></li><li><c>--homepage</c> via <see cref="DotnetPackagingAppImageSettings.Homepage"/></li><li><c>--icon</c> via <see cref="DotnetPackagingAppImageSettings.Icon"/></li><li><c>--license</c> via <see cref="DotnetPackagingAppImageSettings.License"/></li><li><c>--main-category</c> via <see cref="DotnetPackagingAppImageSettings.MainCategory"/></li><li><c>--output</c> via <see cref="DotnetPackagingAppImageSettings.Output"/></li><li><c>--screenshot-urls</c> via <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></li><li><c>--summary</c> via <see cref="DotnetPackagingAppImageSettings.Summary"/></li><li><c>--version</c> via <see cref="DotnetPackagingAppImageSettings.Version"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> DotnetPackagingAppImage(Configure<DotnetPackagingAppImageSettings> configurator) => new DotnetPackagingTasks().Run(configurator.Invoke(new DotnetPackagingAppImageSettings()));
-    /// <summary><p>Creates an AppImage package.</p><p>For more details, visit the <a href="https://github.com/superjmn/dotnetpackaging">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--additional-categories</c> via <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></li><li><c>--appId</c> via <see cref="DotnetPackagingAppImageSettings.AppId"/></li><li><c>--application-name</c> via <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></li><li><c>--directory</c> via <see cref="DotnetPackagingAppImageSettings.Directory"/></li><li><c>--homepage</c> via <see cref="DotnetPackagingAppImageSettings.Homepage"/></li><li><c>--icon</c> via <see cref="DotnetPackagingAppImageSettings.Icon"/></li><li><c>--license</c> via <see cref="DotnetPackagingAppImageSettings.License"/></li><li><c>--main-category</c> via <see cref="DotnetPackagingAppImageSettings.MainCategory"/></li><li><c>--output</c> via <see cref="DotnetPackagingAppImageSettings.Output"/></li><li><c>--screenshot-urls</c> via <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></li><li><c>--summary</c> via <see cref="DotnetPackagingAppImageSettings.Summary"/></li><li><c>--version</c> via <see cref="DotnetPackagingAppImageSettings.Version"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--additional-categories</c> via <see cref="DotnetPackagingAppImageSettings.AdditionalCategories"/></li><li><c>--appId</c> via <see cref="DotnetPackagingAppImageSettings.AppId"/></li><li><c>--application-name</c> via <see cref="DotnetPackagingAppImageSettings.ApplicationName"/></li><li><c>--directory</c> via <see cref="DotnetPackagingAppImageSettings.Directory"/></li><li><c>--homepage</c> via <see cref="DotnetPackagingAppImageSettings.Homepage"/></li><li><c>--icon</c> via <see cref="DotnetPackagingAppImageSettings.Icon"/></li><li><c>--license</c> via <see cref="DotnetPackagingAppImageSettings.License"/></li><li><c>--main-category</c> via <see cref="DotnetPackagingAppImageSettings.MainCategory"/></li><li><c>--output</c> via <see cref="DotnetPackagingAppImageSettings.Output"/></li><li><c>--screenshot-urls</c> via <see cref="DotnetPackagingAppImageSettings.ScreenshotUrls"/></li><li><c>--summary</c> via <see cref="DotnetPackagingAppImageSettings.Summary"/></li><li><c>--version</c> via <see cref="DotnetPackagingAppImageSettings.Version"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotnetPackagingAppImage(DotnetPackagingAppImageSettings options = null) => new DotnetPackagingTasks().Run<DotnetPackagingAppImageSettings>(options);
+    /// <inheritdoc cref="DotnetPackagingTasks.DotnetPackagingAppImage(Nuke.Common.Tools.DotnetPackaging.DotnetPackagingAppImageSettings)"/>
+    public static IReadOnlyCollection<Output> DotnetPackagingAppImage(Configure<DotnetPackagingAppImageSettings> configurator) => new DotnetPackagingTasks().Run<DotnetPackagingAppImageSettings>(configurator.Invoke(new DotnetPackagingAppImageSettings()));
+    /// <inheritdoc cref="DotnetPackagingTasks.DotnetPackagingAppImage(Nuke.Common.Tools.DotnetPackaging.DotnetPackagingAppImageSettings)"/>
     public static IEnumerable<(DotnetPackagingAppImageSettings Settings, IReadOnlyCollection<Output> Output)> DotnetPackagingAppImage(CombinatorialConfigure<DotnetPackagingAppImageSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotnetPackagingAppImage, degreeOfParallelism, completeOnFailure);
 }
 #region DotnetPackagingDebSettings
-/// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
+/// <inheritdoc cref="DotnetPackagingTasks.DotnetPackagingDeb(Nuke.Common.Tools.DotnetPackaging.DotnetPackagingDebSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(DotnetPackagingTasks), Command = nameof(DotnetPackagingTasks.DotnetPackagingDeb), Arguments = "deb")]
@@ -63,7 +59,7 @@ public partial class DotnetPackagingDebSettings : ToolOptions
 }
 #endregion
 #region DotnetPackagingAppImageSettings
-/// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
+/// <inheritdoc cref="DotnetPackagingTasks.DotnetPackagingAppImage(Nuke.Common.Tools.DotnetPackaging.DotnetPackagingAppImageSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(DotnetPackagingTasks), Command = nameof(DotnetPackagingTasks.DotnetPackagingAppImage), Arguments = "appimage")]
@@ -96,7 +92,7 @@ public partial class DotnetPackagingAppImageSettings : ToolOptions
 }
 #endregion
 #region DotnetPackagingDebSettingsExtensions
-/// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
+/// <inheritdoc cref="DotnetPackagingTasks.DotnetPackagingDeb(Nuke.Common.Tools.DotnetPackaging.DotnetPackagingDebSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotnetPackagingDebSettingsExtensions
@@ -128,7 +124,7 @@ public static partial class DotnetPackagingDebSettingsExtensions
 }
 #endregion
 #region DotnetPackagingAppImageSettingsExtensions
-/// <summary>Used within <see cref="DotnetPackagingTasks"/>.</summary>
+/// <inheritdoc cref="DotnetPackagingTasks.DotnetPackagingAppImage(Nuke.Common.Tools.DotnetPackaging.DotnetPackagingAppImageSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class DotnetPackagingAppImageSettingsExtensions

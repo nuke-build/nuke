@@ -23,23 +23,21 @@ namespace Nuke.Common.Tools.MinVer;
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class MinVerTasks : ToolTasks, IRequireNuGetPackage
 {
-    public static string MinVerPath => new MinVerTasks().GetToolPath();
+    public static string MinVerPath { get => new MinVerTasks().GetToolPathInternal(); set => new MinVerTasks().SetToolPath(value); }
     public const string PackageId = "minver-cli";
     public const string PackageExecutable = "minver-cli.dll";
     /// <summary><p>Minimalistic versioning using Git tags.</p><p>For more details, visit the <a href="https://github.com/adamralph/minver">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> MinVer(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new MinVerTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>Minimalistic versioning using Git tags.</p><p>For more details, visit the <a href="https://github.com/adamralph/minver">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--auto-increment</c> via <see cref="MinVerSettings.AutoIncrement"/></li><li><c>--build-metadata</c> via <see cref="MinVerSettings.BuildMetadata"/></li><li><c>--default-pre-release-identifiers</c> via <see cref="MinVerSettings.DefaultPreReleaseIdentifiers"/></li><li><c>--minimum-major-minor</c> via <see cref="MinVerSettings.MinimumMajorMinor"/></li><li><c>--tag-prefix</c> via <see cref="MinVerSettings.TagPrefix"/></li><li><c>--verbosity</c> via <see cref="MinVerSettings.Verbosity"/></li></ul></remarks>
-    public static (MinVer Result, IReadOnlyCollection<Output> Output) MinVer(MinVerSettings options = null) => new MinVerTasks().Run<MinVer>(options);
-    /// <summary><p>Minimalistic versioning using Git tags.</p><p>For more details, visit the <a href="https://github.com/adamralph/minver">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--auto-increment</c> via <see cref="MinVerSettings.AutoIncrement"/></li><li><c>--build-metadata</c> via <see cref="MinVerSettings.BuildMetadata"/></li><li><c>--default-pre-release-identifiers</c> via <see cref="MinVerSettings.DefaultPreReleaseIdentifiers"/></li><li><c>--minimum-major-minor</c> via <see cref="MinVerSettings.MinimumMajorMinor"/></li><li><c>--tag-prefix</c> via <see cref="MinVerSettings.TagPrefix"/></li><li><c>--verbosity</c> via <see cref="MinVerSettings.Verbosity"/></li></ul></remarks>
-    public static (MinVer Result, IReadOnlyCollection<Output> Output) MinVer(Configure<MinVerSettings> configurator) => new MinVerTasks().Run<MinVer>(configurator.Invoke(new MinVerSettings()));
-    /// <summary><p>Minimalistic versioning using Git tags.</p><p>For more details, visit the <a href="https://github.com/adamralph/minver">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--auto-increment</c> via <see cref="MinVerSettings.AutoIncrement"/></li><li><c>--build-metadata</c> via <see cref="MinVerSettings.BuildMetadata"/></li><li><c>--default-pre-release-identifiers</c> via <see cref="MinVerSettings.DefaultPreReleaseIdentifiers"/></li><li><c>--minimum-major-minor</c> via <see cref="MinVerSettings.MinimumMajorMinor"/></li><li><c>--tag-prefix</c> via <see cref="MinVerSettings.TagPrefix"/></li><li><c>--verbosity</c> via <see cref="MinVerSettings.Verbosity"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--auto-increment</c> via <see cref="MinVerSettings.AutoIncrement"/></li><li><c>--build-metadata</c> via <see cref="MinVerSettings.BuildMetadata"/></li><li><c>--default-pre-release-identifiers</c> via <see cref="MinVerSettings.DefaultPreReleaseIdentifiers"/></li><li><c>--minimum-major-minor</c> via <see cref="MinVerSettings.MinimumMajorMinor"/></li><li><c>--tag-prefix</c> via <see cref="MinVerSettings.TagPrefix"/></li><li><c>--verbosity</c> via <see cref="MinVerSettings.Verbosity"/></li></ul></remarks>
+    public static (MinVer Result, IReadOnlyCollection<Output> Output) MinVer(MinVerSettings options = null) => new MinVerTasks().Run<MinVerSettings, MinVer>(options);
+    /// <inheritdoc cref="MinVerTasks.MinVer(Nuke.Common.Tools.MinVer.MinVerSettings)"/>
+    public static (MinVer Result, IReadOnlyCollection<Output> Output) MinVer(Configure<MinVerSettings> configurator) => new MinVerTasks().Run<MinVerSettings, MinVer>(configurator.Invoke(new MinVerSettings()));
+    /// <inheritdoc cref="MinVerTasks.MinVer(Nuke.Common.Tools.MinVer.MinVerSettings)"/>
     public static IEnumerable<(MinVerSettings Settings, MinVer Result, IReadOnlyCollection<Output> Output)> MinVer(CombinatorialConfigure<MinVerSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(MinVer, degreeOfParallelism, completeOnFailure);
 }
 #region MinVerSettings
-/// <summary>Used within <see cref="MinVerTasks"/>.</summary>
+/// <inheritdoc cref="MinVerTasks.MinVer(Nuke.Common.Tools.MinVer.MinVerSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(MinVerTasks), Command = nameof(MinVerTasks.MinVer))]
@@ -60,7 +58,7 @@ public partial class MinVerSettings : ToolOptions, IToolOptionsWithFramework
 }
 #endregion
 #region MinVerSettingsExtensions
-/// <summary>Used within <see cref="MinVerTasks"/>.</summary>
+/// <inheritdoc cref="MinVerTasks.MinVer(Nuke.Common.Tools.MinVer.MinVerSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class MinVerSettingsExtensions

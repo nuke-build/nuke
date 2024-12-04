@@ -23,22 +23,20 @@ namespace Nuke.Common.Tools.CorFlags;
 [PathTool(Executable = PathExecutable)]
 public partial class CorFlagsTasks : ToolTasks, IRequirePathTool
 {
-    public static string CorFlagsPath => new CorFlagsTasks().GetToolPath();
+    public static string CorFlagsPath { get => new CorFlagsTasks().GetToolPathInternal(); set => new CorFlagsTasks().SetToolPath(value); }
     public const string PathExecutable = "CorFlags.exe";
     /// <summary><p>The CorFlags Conversion tool allows you to configure the CorFlags section of the header of a portable executable image.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/corflags-exe-corflags-conversion-tool">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> CorFlags(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new CorFlagsTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>The CorFlags Conversion tool allows you to configure the CorFlags section of the header of a portable executable image.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/corflags-exe-corflags-conversion-tool">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;assembly&gt;</c> via <see cref="CorFlagsSettings.Assembly"/></li><li><c>-32BIT</c> via <see cref="CorFlagsSettings.Require32Bit"/></li><li><c>-32BITPREF</c> via <see cref="CorFlagsSettings.Prefer32Bit"/></li><li><c>-Force</c> via <see cref="CorFlagsSettings.Force"/></li><li><c>-ILONLY</c> via <see cref="CorFlagsSettings.ILOnly"/></li><li><c>-nologo</c> via <see cref="CorFlagsSettings.NoLogo"/></li><li><c>-RevertCLRHeader</c> via <see cref="CorFlagsSettings.RevertCLRHeader"/></li><li><c>-UpgradeCLRHeader</c> via <see cref="CorFlagsSettings.UpgradeCLRHeader"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> CorFlags(CorFlagsSettings options = null) => new CorFlagsTasks().Run(options);
-    /// <summary><p>The CorFlags Conversion tool allows you to configure the CorFlags section of the header of a portable executable image.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/corflags-exe-corflags-conversion-tool">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;assembly&gt;</c> via <see cref="CorFlagsSettings.Assembly"/></li><li><c>-32BIT</c> via <see cref="CorFlagsSettings.Require32Bit"/></li><li><c>-32BITPREF</c> via <see cref="CorFlagsSettings.Prefer32Bit"/></li><li><c>-Force</c> via <see cref="CorFlagsSettings.Force"/></li><li><c>-ILONLY</c> via <see cref="CorFlagsSettings.ILOnly"/></li><li><c>-nologo</c> via <see cref="CorFlagsSettings.NoLogo"/></li><li><c>-RevertCLRHeader</c> via <see cref="CorFlagsSettings.RevertCLRHeader"/></li><li><c>-UpgradeCLRHeader</c> via <see cref="CorFlagsSettings.UpgradeCLRHeader"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> CorFlags(Configure<CorFlagsSettings> configurator) => new CorFlagsTasks().Run(configurator.Invoke(new CorFlagsSettings()));
-    /// <summary><p>The CorFlags Conversion tool allows you to configure the CorFlags section of the header of a portable executable image.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/framework/tools/corflags-exe-corflags-conversion-tool">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;assembly&gt;</c> via <see cref="CorFlagsSettings.Assembly"/></li><li><c>-32BIT</c> via <see cref="CorFlagsSettings.Require32Bit"/></li><li><c>-32BITPREF</c> via <see cref="CorFlagsSettings.Prefer32Bit"/></li><li><c>-Force</c> via <see cref="CorFlagsSettings.Force"/></li><li><c>-ILONLY</c> via <see cref="CorFlagsSettings.ILOnly"/></li><li><c>-nologo</c> via <see cref="CorFlagsSettings.NoLogo"/></li><li><c>-RevertCLRHeader</c> via <see cref="CorFlagsSettings.RevertCLRHeader"/></li><li><c>-UpgradeCLRHeader</c> via <see cref="CorFlagsSettings.UpgradeCLRHeader"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;assembly&gt;</c> via <see cref="CorFlagsSettings.Assembly"/></li><li><c>-32BIT</c> via <see cref="CorFlagsSettings.Require32Bit"/></li><li><c>-32BITPREF</c> via <see cref="CorFlagsSettings.Prefer32Bit"/></li><li><c>-Force</c> via <see cref="CorFlagsSettings.Force"/></li><li><c>-ILONLY</c> via <see cref="CorFlagsSettings.ILOnly"/></li><li><c>-nologo</c> via <see cref="CorFlagsSettings.NoLogo"/></li><li><c>-RevertCLRHeader</c> via <see cref="CorFlagsSettings.RevertCLRHeader"/></li><li><c>-UpgradeCLRHeader</c> via <see cref="CorFlagsSettings.UpgradeCLRHeader"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> CorFlags(CorFlagsSettings options = null) => new CorFlagsTasks().Run<CorFlagsSettings>(options);
+    /// <inheritdoc cref="CorFlagsTasks.CorFlags(Nuke.Common.Tools.CorFlags.CorFlagsSettings)"/>
+    public static IReadOnlyCollection<Output> CorFlags(Configure<CorFlagsSettings> configurator) => new CorFlagsTasks().Run<CorFlagsSettings>(configurator.Invoke(new CorFlagsSettings()));
+    /// <inheritdoc cref="CorFlagsTasks.CorFlags(Nuke.Common.Tools.CorFlags.CorFlagsSettings)"/>
     public static IEnumerable<(CorFlagsSettings Settings, IReadOnlyCollection<Output> Output)> CorFlags(CombinatorialConfigure<CorFlagsSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(CorFlags, degreeOfParallelism, completeOnFailure);
 }
 #region CorFlagsSettings
-/// <summary>Used within <see cref="CorFlagsTasks"/>.</summary>
+/// <inheritdoc cref="CorFlagsTasks.CorFlags(Nuke.Common.Tools.CorFlags.CorFlagsSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(CorFlagsTasks), Command = nameof(CorFlagsTasks.CorFlags))]
@@ -63,7 +61,7 @@ public partial class CorFlagsSettings : ToolOptions
 }
 #endregion
 #region CorFlagsSettingsExtensions
-/// <summary>Used within <see cref="CorFlagsTasks"/>.</summary>
+/// <inheritdoc cref="CorFlagsTasks.CorFlags(Nuke.Common.Tools.CorFlags.CorFlagsSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class CorFlagsSettingsExtensions

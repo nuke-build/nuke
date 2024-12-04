@@ -23,23 +23,21 @@ namespace Nuke.Common.Tools.Fixie;
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class FixieTasks : ToolTasks, IRequireNuGetPackage
 {
-    public static string FixiePath => new FixieTasks().GetToolPath();
+    public static string FixiePath { get => new FixieTasks().GetToolPathInternal(); set => new FixieTasks().SetToolPath(value); }
     public const string PackageId = "fixie.console";
     public const string PackageExecutable = "dotnet-fixie.dll";
     /// <summary><p>Fixie is a .NET modern test framework similar to NUnit and xUnit, but with an emphasis on low-ceremony defaults and flexible customization.</p><p>For more details, visit the <a href="https://fixie.github.io/">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> Fixie(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new FixieTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>The <c>dotnet fixie</c> command is used to execute Fixie unit tests in a given project.</p><p>For more details, visit the <a href="https://fixie.github.io/">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="FixieSettings.CustomArguments"/></li><li><c>--configuration</c> via <see cref="FixieSettings.Configuration"/></li><li><c>--framework</c> via <see cref="FixieSettings.Framework"/></li><li><c>--no-build</c> via <see cref="FixieSettings.NoBuild"/></li><li><c>--report</c> via <see cref="FixieSettings.Report"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> Fixie(FixieSettings options = null) => new FixieTasks().Run(options);
-    /// <summary><p>The <c>dotnet fixie</c> command is used to execute Fixie unit tests in a given project.</p><p>For more details, visit the <a href="https://fixie.github.io/">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="FixieSettings.CustomArguments"/></li><li><c>--configuration</c> via <see cref="FixieSettings.Configuration"/></li><li><c>--framework</c> via <see cref="FixieSettings.Framework"/></li><li><c>--no-build</c> via <see cref="FixieSettings.NoBuild"/></li><li><c>--report</c> via <see cref="FixieSettings.Report"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> Fixie(Configure<FixieSettings> configurator) => new FixieTasks().Run(configurator.Invoke(new FixieSettings()));
-    /// <summary><p>The <c>dotnet fixie</c> command is used to execute Fixie unit tests in a given project.</p><p>For more details, visit the <a href="https://fixie.github.io/">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="FixieSettings.CustomArguments"/></li><li><c>--configuration</c> via <see cref="FixieSettings.Configuration"/></li><li><c>--framework</c> via <see cref="FixieSettings.Framework"/></li><li><c>--no-build</c> via <see cref="FixieSettings.NoBuild"/></li><li><c>--report</c> via <see cref="FixieSettings.Report"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="FixieSettings.CustomArguments"/></li><li><c>--configuration</c> via <see cref="FixieSettings.Configuration"/></li><li><c>--framework</c> via <see cref="FixieSettings.Framework"/></li><li><c>--no-build</c> via <see cref="FixieSettings.NoBuild"/></li><li><c>--report</c> via <see cref="FixieSettings.Report"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> Fixie(FixieSettings options = null) => new FixieTasks().Run<FixieSettings>(options);
+    /// <inheritdoc cref="FixieTasks.Fixie(Nuke.Common.Tools.Fixie.FixieSettings)"/>
+    public static IReadOnlyCollection<Output> Fixie(Configure<FixieSettings> configurator) => new FixieTasks().Run<FixieSettings>(configurator.Invoke(new FixieSettings()));
+    /// <inheritdoc cref="FixieTasks.Fixie(Nuke.Common.Tools.Fixie.FixieSettings)"/>
     public static IEnumerable<(FixieSettings Settings, IReadOnlyCollection<Output> Output)> Fixie(CombinatorialConfigure<FixieSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(Fixie, degreeOfParallelism, completeOnFailure);
 }
 #region FixieSettings
-/// <summary>Used within <see cref="FixieTasks"/>.</summary>
+/// <inheritdoc cref="FixieTasks.Fixie(Nuke.Common.Tools.Fixie.FixieSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(FixieTasks), Command = nameof(FixieTasks.Fixie))]
@@ -58,7 +56,7 @@ public partial class FixieSettings : ToolOptions
 }
 #endregion
 #region FixieSettingsExtensions
-/// <summary>Used within <see cref="FixieTasks"/>.</summary>
+/// <inheritdoc cref="FixieTasks.Fixie(Nuke.Common.Tools.Fixie.FixieSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class FixieSettingsExtensions
