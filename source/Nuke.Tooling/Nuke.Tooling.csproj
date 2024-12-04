@@ -15,8 +15,4 @@
     <PackageReference Include="Serilog" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="ExtensionHelper.cs" />
-  </ItemGroup>
-
 </Project>
