@@ -48,7 +48,7 @@ public static class WriterExtensions
         where T : IWriterWrapper
     {
         var lines = new List<string>();
-        lines.Add(("This is a <a href=\"http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis\">"
+        lines.Add(("This is a <a href=\"https://www.nuke.build/docs/common/cli-tools/#fluent-api\">"
                    + "CLI wrapper with fluent API</a> that allows to modify the following arguments:").Paragraph());
         lines.AddRange(GetArgumentsList(task.SettingsClass));
 
