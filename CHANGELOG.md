@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [9.0.3] / 2024-12-05
+- Fixed nullable options for `ToolTasks.Run`
+- Fixed static tool path resolution
+- Fixed tool requirements initialization
+- Fixed documentation link in tool wrapper remarks
+- Fixed documentation on task methods and settings classes
+- Fixed missing `NuGetKeyVaultSignTool`
+- Fixed package executable in `OctopusTasks`
+
 ## [9.0.2] / 2024-12-03
 - Fixed MSBuild tasks to use `net8.0` target framework
 - Fixed error handling in `:update` command
@@ -1196,7 +1205,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/9.0.2...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/9.0.3...HEAD
+[9.0.3]: https://github.com/nuke-build/nuke/compare/9.0.2...9.0.3
 [9.0.2]: https://github.com/nuke-build/nuke/compare/9.0.1...9.0.2
 [9.0.1]: https://github.com/nuke-build/nuke/compare/9.0.0...9.0.1
 [9.0.0]: https://github.com/nuke-build/nuke/compare/8.1.4...9.0.0

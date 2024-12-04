@@ -23,32 +23,28 @@ namespace Nuke.Common.Tools.MauiCheck;
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class MauiCheckTasks : ToolTasks, IRequireNuGetPackage
 {
-    public static string MauiCheckPath => new MauiCheckTasks().GetToolPath();
+    public static string MauiCheckPath { get => new MauiCheckTasks().GetToolPathInternal(); set => new MauiCheckTasks().SetToolPath(value); }
     public const string PackageId = "Redth.Net.Maui.Check";
     public const string PackageExecutable = "MauiCheck.dll";
     /// <summary><p>A dotnet tool for helping set up your .NET MAUI environment.</p><p>For more details, visit the <a href="https://github.com/Redth/dotnet-maui-check">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> MauiCheck(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new MauiCheckTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>A dotnet tool for helping set up your .NET MAUI environment.</p><p>For more details, visit the <a href="https://github.com/Redth/dotnet-maui-check">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--ci</c> via <see cref="MauiCheckSettings.Ci"/></li><li><c>--fix</c> via <see cref="MauiCheckSettings.Fix"/></li><li><c>--manifest</c> via <see cref="MauiCheckSettings.Manifest"/></li><li><c>--non-interactive</c> via <see cref="MauiCheckSettings.NonInteractive"/></li><li><c>--preview</c> via <see cref="MauiCheckSettings.Preview"/></li><li><c>--skip</c> via <see cref="MauiCheckSettings.Skip"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> MauiCheck(MauiCheckSettings options = null) => new MauiCheckTasks().Run(options);
-    /// <summary><p>A dotnet tool for helping set up your .NET MAUI environment.</p><p>For more details, visit the <a href="https://github.com/Redth/dotnet-maui-check">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--ci</c> via <see cref="MauiCheckSettings.Ci"/></li><li><c>--fix</c> via <see cref="MauiCheckSettings.Fix"/></li><li><c>--manifest</c> via <see cref="MauiCheckSettings.Manifest"/></li><li><c>--non-interactive</c> via <see cref="MauiCheckSettings.NonInteractive"/></li><li><c>--preview</c> via <see cref="MauiCheckSettings.Preview"/></li><li><c>--skip</c> via <see cref="MauiCheckSettings.Skip"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> MauiCheck(Configure<MauiCheckSettings> configurator) => new MauiCheckTasks().Run(configurator.Invoke(new MauiCheckSettings()));
-    /// <summary><p>A dotnet tool for helping set up your .NET MAUI environment.</p><p>For more details, visit the <a href="https://github.com/Redth/dotnet-maui-check">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--ci</c> via <see cref="MauiCheckSettings.Ci"/></li><li><c>--fix</c> via <see cref="MauiCheckSettings.Fix"/></li><li><c>--manifest</c> via <see cref="MauiCheckSettings.Manifest"/></li><li><c>--non-interactive</c> via <see cref="MauiCheckSettings.NonInteractive"/></li><li><c>--preview</c> via <see cref="MauiCheckSettings.Preview"/></li><li><c>--skip</c> via <see cref="MauiCheckSettings.Skip"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--ci</c> via <see cref="MauiCheckSettings.Ci"/></li><li><c>--fix</c> via <see cref="MauiCheckSettings.Fix"/></li><li><c>--manifest</c> via <see cref="MauiCheckSettings.Manifest"/></li><li><c>--non-interactive</c> via <see cref="MauiCheckSettings.NonInteractive"/></li><li><c>--preview</c> via <see cref="MauiCheckSettings.Preview"/></li><li><c>--skip</c> via <see cref="MauiCheckSettings.Skip"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> MauiCheck(MauiCheckSettings options = null) => new MauiCheckTasks().Run<MauiCheckSettings>(options);
+    /// <inheritdoc cref="MauiCheckTasks.MauiCheck(Nuke.Common.Tools.MauiCheck.MauiCheckSettings)"/>
+    public static IReadOnlyCollection<Output> MauiCheck(Configure<MauiCheckSettings> configurator) => new MauiCheckTasks().Run<MauiCheckSettings>(configurator.Invoke(new MauiCheckSettings()));
+    /// <inheritdoc cref="MauiCheckTasks.MauiCheck(Nuke.Common.Tools.MauiCheck.MauiCheckSettings)"/>
     public static IEnumerable<(MauiCheckSettings Settings, IReadOnlyCollection<Output> Output)> MauiCheck(CombinatorialConfigure<MauiCheckSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(MauiCheck, degreeOfParallelism, completeOnFailure);
     /// <summary><p>A dotnet tool for helping set up your .NET MAUI environment.</p><p>For more details, visit the <a href="https://github.com/Redth/dotnet-maui-check">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--dotnet-pre</c> via <see cref="MauiCheckConfigSettings.DotNetPrerelease"/></li><li><c>--dotnet-rollForward</c> via <see cref="MauiCheckConfigSettings.DotNetRollForward"/></li><li><c>--dotnet-version</c> via <see cref="MauiCheckConfigSettings.DotNetVersion"/></li><li><c>--nuget-sources</c> via <see cref="MauiCheckConfigSettings.NuGetSources"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> MauiCheckConfig(MauiCheckConfigSettings options = null) => new MauiCheckTasks().Run(options);
-    /// <summary><p>A dotnet tool for helping set up your .NET MAUI environment.</p><p>For more details, visit the <a href="https://github.com/Redth/dotnet-maui-check">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--dotnet-pre</c> via <see cref="MauiCheckConfigSettings.DotNetPrerelease"/></li><li><c>--dotnet-rollForward</c> via <see cref="MauiCheckConfigSettings.DotNetRollForward"/></li><li><c>--dotnet-version</c> via <see cref="MauiCheckConfigSettings.DotNetVersion"/></li><li><c>--nuget-sources</c> via <see cref="MauiCheckConfigSettings.NuGetSources"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> MauiCheckConfig(Configure<MauiCheckConfigSettings> configurator) => new MauiCheckTasks().Run(configurator.Invoke(new MauiCheckConfigSettings()));
-    /// <summary><p>A dotnet tool for helping set up your .NET MAUI environment.</p><p>For more details, visit the <a href="https://github.com/Redth/dotnet-maui-check">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--dotnet-pre</c> via <see cref="MauiCheckConfigSettings.DotNetPrerelease"/></li><li><c>--dotnet-rollForward</c> via <see cref="MauiCheckConfigSettings.DotNetRollForward"/></li><li><c>--dotnet-version</c> via <see cref="MauiCheckConfigSettings.DotNetVersion"/></li><li><c>--nuget-sources</c> via <see cref="MauiCheckConfigSettings.NuGetSources"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--dotnet-pre</c> via <see cref="MauiCheckConfigSettings.DotNetPrerelease"/></li><li><c>--dotnet-rollForward</c> via <see cref="MauiCheckConfigSettings.DotNetRollForward"/></li><li><c>--dotnet-version</c> via <see cref="MauiCheckConfigSettings.DotNetVersion"/></li><li><c>--nuget-sources</c> via <see cref="MauiCheckConfigSettings.NuGetSources"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> MauiCheckConfig(MauiCheckConfigSettings options = null) => new MauiCheckTasks().Run<MauiCheckConfigSettings>(options);
+    /// <inheritdoc cref="MauiCheckTasks.MauiCheckConfig(Nuke.Common.Tools.MauiCheck.MauiCheckConfigSettings)"/>
+    public static IReadOnlyCollection<Output> MauiCheckConfig(Configure<MauiCheckConfigSettings> configurator) => new MauiCheckTasks().Run<MauiCheckConfigSettings>(configurator.Invoke(new MauiCheckConfigSettings()));
+    /// <inheritdoc cref="MauiCheckTasks.MauiCheckConfig(Nuke.Common.Tools.MauiCheck.MauiCheckConfigSettings)"/>
     public static IEnumerable<(MauiCheckConfigSettings Settings, IReadOnlyCollection<Output> Output)> MauiCheckConfig(CombinatorialConfigure<MauiCheckConfigSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(MauiCheckConfig, degreeOfParallelism, completeOnFailure);
 }
 #region MauiCheckSettings
-/// <summary>Used within <see cref="MauiCheckTasks"/>.</summary>
+/// <inheritdoc cref="MauiCheckTasks.MauiCheck(Nuke.Common.Tools.MauiCheck.MauiCheckSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(MauiCheckTasks), Command = nameof(MauiCheckTasks.MauiCheck))]
@@ -69,7 +65,7 @@ public partial class MauiCheckSettings : ToolOptions
 }
 #endregion
 #region MauiCheckConfigSettings
-/// <summary>Used within <see cref="MauiCheckTasks"/>.</summary>
+/// <inheritdoc cref="MauiCheckTasks.MauiCheckConfig(Nuke.Common.Tools.MauiCheck.MauiCheckConfigSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(MauiCheckTasks), Command = nameof(MauiCheckTasks.MauiCheckConfig), Arguments = "config")]
@@ -86,7 +82,7 @@ public partial class MauiCheckConfigSettings : ToolOptions
 }
 #endregion
 #region MauiCheckSettingsExtensions
-/// <summary>Used within <see cref="MauiCheckTasks"/>.</summary>
+/// <inheritdoc cref="MauiCheckTasks.MauiCheck(Nuke.Common.Tools.MauiCheck.MauiCheckSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class MauiCheckSettingsExtensions
@@ -193,7 +189,7 @@ public static partial class MauiCheckSettingsExtensions
 }
 #endregion
 #region MauiCheckConfigSettingsExtensions
-/// <summary>Used within <see cref="MauiCheckTasks"/>.</summary>
+/// <inheritdoc cref="MauiCheckTasks.MauiCheckConfig(Nuke.Common.Tools.MauiCheck.MauiCheckConfigSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class MauiCheckConfigSettingsExtensions

@@ -48,12 +48,18 @@ public static class WriterExtensions
         where T : IWriterWrapper
     {
         var lines = new List<string>();
-        lines.Add(("This is a <a href=\"http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis\">"
+        lines.Add(("This is a <a href=\"https://www.nuke.build/docs/common/cli-tools/#fluent-api\">"
                    + "CLI wrapper with fluent API</a> that allows to modify the following arguments:").Paragraph());
         lines.AddRange(GetArgumentsList(task.SettingsClass));
 
         return writerWrapper
             .WriteLine($"/// <remarks>{lines.Join(string.Empty)}</remarks>");
+    }
+
+    public static T WriteInherit<T>(this T writerWrapper, Task task)
+        where T : IWriterWrapper
+    {
+        return writerWrapper.WriteLine($"/// <inheritdoc cref=\"{task.Tool.GetClassName()}.{task.GetTaskMethodName()}({task.Tool.Namespace}.{task.SettingsClass.Name})\"/>");
     }
 
     private static IEnumerable<string> GetArgumentsList(DataClass dataClass)
@@ -91,7 +97,9 @@ public static class WriterExtensions
     public static T WriteSummary<T>(this T writerWrapper, DataClass dataClass)
         where T : IWriterWrapper
     {
-        return writerWrapper.WriteSummary(GetUsedWithinText(dataClass.Tool));
+        return writerWrapper
+            .When(dataClass is SettingsClass, x => x.WriteInherit(((SettingsClass)dataClass).Task))
+            .When(dataClass is not SettingsClass, x => x.WriteSummary(GetUsedWithinText(dataClass.Tool)));
     }
 
     public static T WriteSummary<T>(this T writerWrapper, Enumeration enumeration)

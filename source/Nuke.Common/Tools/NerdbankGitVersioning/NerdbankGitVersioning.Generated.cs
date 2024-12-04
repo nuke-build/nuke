@@ -23,77 +23,63 @@ namespace Nuke.Common.Tools.NerdbankGitVersioning;
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class NerdbankGitVersioningTasks : ToolTasks, IRequireNuGetPackage
 {
-    public static string NerdbankGitVersioningPath => new NerdbankGitVersioningTasks().GetToolPath();
+    public static string NerdbankGitVersioningPath { get => new NerdbankGitVersioningTasks().GetToolPathInternal(); set => new NerdbankGitVersioningTasks().SetToolPath(value); }
     public const string PackageId = "nbgv";
     public const string PackageExecutable = "nbgv.dll";
     /// <summary><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> NerdbankGitVersioning(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new NerdbankGitVersioningTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>Prepares a project to have version stamps applied using Nerdbank.GitVersioning.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--path</c> via <see cref="NerdbankGitVersioningInstallSettings.Path"/></li><li><c>--source</c> via <see cref="NerdbankGitVersioningInstallSettings.Sources"/></li><li><c>--version</c> via <see cref="NerdbankGitVersioningInstallSettings.Version"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningInstall(NerdbankGitVersioningInstallSettings options = null) => new NerdbankGitVersioningTasks().Run(options);
-    /// <summary><p>Prepares a project to have version stamps applied using Nerdbank.GitVersioning.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--path</c> via <see cref="NerdbankGitVersioningInstallSettings.Path"/></li><li><c>--source</c> via <see cref="NerdbankGitVersioningInstallSettings.Sources"/></li><li><c>--version</c> via <see cref="NerdbankGitVersioningInstallSettings.Version"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningInstall(Configure<NerdbankGitVersioningInstallSettings> configurator) => new NerdbankGitVersioningTasks().Run(configurator.Invoke(new NerdbankGitVersioningInstallSettings()));
-    /// <summary><p>Prepares a project to have version stamps applied using Nerdbank.GitVersioning.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--path</c> via <see cref="NerdbankGitVersioningInstallSettings.Path"/></li><li><c>--source</c> via <see cref="NerdbankGitVersioningInstallSettings.Sources"/></li><li><c>--version</c> via <see cref="NerdbankGitVersioningInstallSettings.Version"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--path</c> via <see cref="NerdbankGitVersioningInstallSettings.Path"/></li><li><c>--source</c> via <see cref="NerdbankGitVersioningInstallSettings.Sources"/></li><li><c>--version</c> via <see cref="NerdbankGitVersioningInstallSettings.Version"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningInstall(NerdbankGitVersioningInstallSettings options = null) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningInstallSettings>(options);
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningInstall(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningInstallSettings)"/>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningInstall(Configure<NerdbankGitVersioningInstallSettings> configurator) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningInstallSettings>(configurator.Invoke(new NerdbankGitVersioningInstallSettings()));
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningInstall(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningInstallSettings)"/>
     public static IEnumerable<(NerdbankGitVersioningInstallSettings Settings, IReadOnlyCollection<Output> Output)> NerdbankGitVersioningInstall(CombinatorialConfigure<NerdbankGitVersioningInstallSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NerdbankGitVersioningInstall, degreeOfParallelism, completeOnFailure);
     /// <summary><p>Gets the version information for a project.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningGetVersionSettings.CommitIsh"/></li><li><c>--format</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Format"/></li><li><c>--metadata</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Metadata"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Project"/></li><li><c>--variable</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Variable"/></li></ul></remarks>
-    public static (NerdbankGitVersioning Result, IReadOnlyCollection<Output> Output) NerdbankGitVersioningGetVersion(NerdbankGitVersioningGetVersionSettings options = null) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioning>(options);
-    /// <summary><p>Gets the version information for a project.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningGetVersionSettings.CommitIsh"/></li><li><c>--format</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Format"/></li><li><c>--metadata</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Metadata"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Project"/></li><li><c>--variable</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Variable"/></li></ul></remarks>
-    public static (NerdbankGitVersioning Result, IReadOnlyCollection<Output> Output) NerdbankGitVersioningGetVersion(Configure<NerdbankGitVersioningGetVersionSettings> configurator) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioning>(configurator.Invoke(new NerdbankGitVersioningGetVersionSettings()));
-    /// <summary><p>Gets the version information for a project.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningGetVersionSettings.CommitIsh"/></li><li><c>--format</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Format"/></li><li><c>--metadata</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Metadata"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Project"/></li><li><c>--variable</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Variable"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningGetVersionSettings.CommitIsh"/></li><li><c>--format</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Format"/></li><li><c>--metadata</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Metadata"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Project"/></li><li><c>--variable</c> via <see cref="NerdbankGitVersioningGetVersionSettings.Variable"/></li></ul></remarks>
+    public static (NerdbankGitVersioning Result, IReadOnlyCollection<Output> Output) NerdbankGitVersioningGetVersion(NerdbankGitVersioningGetVersionSettings options = null) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningGetVersionSettings, NerdbankGitVersioning>(options);
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningGetVersion(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningGetVersionSettings)"/>
+    public static (NerdbankGitVersioning Result, IReadOnlyCollection<Output> Output) NerdbankGitVersioningGetVersion(Configure<NerdbankGitVersioningGetVersionSettings> configurator) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningGetVersionSettings, NerdbankGitVersioning>(configurator.Invoke(new NerdbankGitVersioningGetVersionSettings()));
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningGetVersion(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningGetVersionSettings)"/>
     public static IEnumerable<(NerdbankGitVersioningGetVersionSettings Settings, NerdbankGitVersioning Result, IReadOnlyCollection<Output> Output)> NerdbankGitVersioningGetVersion(CombinatorialConfigure<NerdbankGitVersioningGetVersionSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NerdbankGitVersioningGetVersion, degreeOfParallelism, completeOnFailure);
     /// <summary><p>Updates the version stamp that is applied to a project.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningSetVersionSettings.Version"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningSetVersionSettings.Project"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningSetVersion(NerdbankGitVersioningSetVersionSettings options = null) => new NerdbankGitVersioningTasks().Run(options);
-    /// <summary><p>Updates the version stamp that is applied to a project.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningSetVersionSettings.Version"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningSetVersionSettings.Project"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningSetVersion(Configure<NerdbankGitVersioningSetVersionSettings> configurator) => new NerdbankGitVersioningTasks().Run(configurator.Invoke(new NerdbankGitVersioningSetVersionSettings()));
-    /// <summary><p>Updates the version stamp that is applied to a project.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningSetVersionSettings.Version"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningSetVersionSettings.Project"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningSetVersionSettings.Version"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningSetVersionSettings.Project"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningSetVersion(NerdbankGitVersioningSetVersionSettings options = null) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningSetVersionSettings>(options);
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningSetVersion(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningSetVersionSettings)"/>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningSetVersion(Configure<NerdbankGitVersioningSetVersionSettings> configurator) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningSetVersionSettings>(configurator.Invoke(new NerdbankGitVersioningSetVersionSettings()));
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningSetVersion(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningSetVersionSettings)"/>
     public static IEnumerable<(NerdbankGitVersioningSetVersionSettings Settings, IReadOnlyCollection<Output> Output)> NerdbankGitVersioningSetVersion(CombinatorialConfigure<NerdbankGitVersioningSetVersionSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NerdbankGitVersioningSetVersion, degreeOfParallelism, completeOnFailure);
     /// <summary><p>Creates a git tag to mark a version.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningTagSettings.VersionOrRef"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningTagSettings.Project"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningTag(NerdbankGitVersioningTagSettings options = null) => new NerdbankGitVersioningTasks().Run(options);
-    /// <summary><p>Creates a git tag to mark a version.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningTagSettings.VersionOrRef"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningTagSettings.Project"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningTag(Configure<NerdbankGitVersioningTagSettings> configurator) => new NerdbankGitVersioningTasks().Run(configurator.Invoke(new NerdbankGitVersioningTagSettings()));
-    /// <summary><p>Creates a git tag to mark a version.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningTagSettings.VersionOrRef"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningTagSettings.Project"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningTagSettings.VersionOrRef"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningTagSettings.Project"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningTag(NerdbankGitVersioningTagSettings options = null) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningTagSettings>(options);
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningTag(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningTagSettings)"/>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningTag(Configure<NerdbankGitVersioningTagSettings> configurator) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningTagSettings>(configurator.Invoke(new NerdbankGitVersioningTagSettings()));
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningTag(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningTagSettings)"/>
     public static IEnumerable<(NerdbankGitVersioningTagSettings Settings, IReadOnlyCollection<Output> Output)> NerdbankGitVersioningTag(CombinatorialConfigure<NerdbankGitVersioningTagSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NerdbankGitVersioningTag, degreeOfParallelism, completeOnFailure);
     /// <summary><p>Gets the commit(s) that match a given version.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Version"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Project"/></li><li><c>--quiet</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Quiet"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningGetCommits(NerdbankGitVersioningGetCommitsSettings options = null) => new NerdbankGitVersioningTasks().Run(options);
-    /// <summary><p>Gets the commit(s) that match a given version.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Version"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Project"/></li><li><c>--quiet</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Quiet"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningGetCommits(Configure<NerdbankGitVersioningGetCommitsSettings> configurator) => new NerdbankGitVersioningTasks().Run(configurator.Invoke(new NerdbankGitVersioningGetCommitsSettings()));
-    /// <summary><p>Gets the commit(s) that match a given version.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Version"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Project"/></li><li><c>--quiet</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Quiet"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Version"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Project"/></li><li><c>--quiet</c> via <see cref="NerdbankGitVersioningGetCommitsSettings.Quiet"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningGetCommits(NerdbankGitVersioningGetCommitsSettings options = null) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningGetCommitsSettings>(options);
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningGetCommits(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningGetCommitsSettings)"/>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningGetCommits(Configure<NerdbankGitVersioningGetCommitsSettings> configurator) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningGetCommitsSettings>(configurator.Invoke(new NerdbankGitVersioningGetCommitsSettings()));
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningGetCommits(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningGetCommitsSettings)"/>
     public static IEnumerable<(NerdbankGitVersioningGetCommitsSettings Settings, IReadOnlyCollection<Output> Output)> NerdbankGitVersioningGetCommits(CombinatorialConfigure<NerdbankGitVersioningGetCommitsSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NerdbankGitVersioningGetCommits, degreeOfParallelism, completeOnFailure);
     /// <summary><p>Communicates with the ambient cloud build to set the build number and/or other cloud build variables.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--all-vars</c> via <see cref="NerdbankGitVersioningCloudSettings.AllVars"/></li><li><c>--ci-system</c> via <see cref="NerdbankGitVersioningCloudSettings.CISystem"/></li><li><c>--common-vars</c> via <see cref="NerdbankGitVersioningCloudSettings.CommonVars"/></li><li><c>--define</c> via <see cref="NerdbankGitVersioningCloudSettings.Variables"/></li><li><c>--metadata</c> via <see cref="NerdbankGitVersioningCloudSettings.Metadata"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningCloudSettings.Project"/></li><li><c>--version</c> via <see cref="NerdbankGitVersioningCloudSettings.Version"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningCloud(NerdbankGitVersioningCloudSettings options = null) => new NerdbankGitVersioningTasks().Run(options);
-    /// <summary><p>Communicates with the ambient cloud build to set the build number and/or other cloud build variables.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--all-vars</c> via <see cref="NerdbankGitVersioningCloudSettings.AllVars"/></li><li><c>--ci-system</c> via <see cref="NerdbankGitVersioningCloudSettings.CISystem"/></li><li><c>--common-vars</c> via <see cref="NerdbankGitVersioningCloudSettings.CommonVars"/></li><li><c>--define</c> via <see cref="NerdbankGitVersioningCloudSettings.Variables"/></li><li><c>--metadata</c> via <see cref="NerdbankGitVersioningCloudSettings.Metadata"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningCloudSettings.Project"/></li><li><c>--version</c> via <see cref="NerdbankGitVersioningCloudSettings.Version"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningCloud(Configure<NerdbankGitVersioningCloudSettings> configurator) => new NerdbankGitVersioningTasks().Run(configurator.Invoke(new NerdbankGitVersioningCloudSettings()));
-    /// <summary><p>Communicates with the ambient cloud build to set the build number and/or other cloud build variables.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--all-vars</c> via <see cref="NerdbankGitVersioningCloudSettings.AllVars"/></li><li><c>--ci-system</c> via <see cref="NerdbankGitVersioningCloudSettings.CISystem"/></li><li><c>--common-vars</c> via <see cref="NerdbankGitVersioningCloudSettings.CommonVars"/></li><li><c>--define</c> via <see cref="NerdbankGitVersioningCloudSettings.Variables"/></li><li><c>--metadata</c> via <see cref="NerdbankGitVersioningCloudSettings.Metadata"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningCloudSettings.Project"/></li><li><c>--version</c> via <see cref="NerdbankGitVersioningCloudSettings.Version"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--all-vars</c> via <see cref="NerdbankGitVersioningCloudSettings.AllVars"/></li><li><c>--ci-system</c> via <see cref="NerdbankGitVersioningCloudSettings.CISystem"/></li><li><c>--common-vars</c> via <see cref="NerdbankGitVersioningCloudSettings.CommonVars"/></li><li><c>--define</c> via <see cref="NerdbankGitVersioningCloudSettings.Variables"/></li><li><c>--metadata</c> via <see cref="NerdbankGitVersioningCloudSettings.Metadata"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningCloudSettings.Project"/></li><li><c>--version</c> via <see cref="NerdbankGitVersioningCloudSettings.Version"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningCloud(NerdbankGitVersioningCloudSettings options = null) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningCloudSettings>(options);
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningCloud(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningCloudSettings)"/>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningCloud(Configure<NerdbankGitVersioningCloudSettings> configurator) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningCloudSettings>(configurator.Invoke(new NerdbankGitVersioningCloudSettings()));
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningCloud(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningCloudSettings)"/>
     public static IEnumerable<(NerdbankGitVersioningCloudSettings Settings, IReadOnlyCollection<Output> Output)> NerdbankGitVersioningCloud(CombinatorialConfigure<NerdbankGitVersioningCloudSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NerdbankGitVersioningCloud, degreeOfParallelism, completeOnFailure);
     /// <summary><p>Prepares a release by creating a release branch for the current version and adjusting the version on the current branch.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.Tag"/></li><li><c>--nextVersion</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.NextVersion"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.Project"/></li><li><c>--versionIncrement</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.VersionIncrement"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningPrepareRelease(NerdbankGitVersioningPrepareReleaseSettings options = null) => new NerdbankGitVersioningTasks().Run(options);
-    /// <summary><p>Prepares a release by creating a release branch for the current version and adjusting the version on the current branch.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.Tag"/></li><li><c>--nextVersion</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.NextVersion"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.Project"/></li><li><c>--versionIncrement</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.VersionIncrement"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> NerdbankGitVersioningPrepareRelease(Configure<NerdbankGitVersioningPrepareReleaseSettings> configurator) => new NerdbankGitVersioningTasks().Run(configurator.Invoke(new NerdbankGitVersioningPrepareReleaseSettings()));
-    /// <summary><p>Prepares a release by creating a release branch for the current version and adjusting the version on the current branch.</p><p>For more details, visit the <a href="https://github.com/AArnott/Nerdbank.GitVersioning">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.Tag"/></li><li><c>--nextVersion</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.NextVersion"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.Project"/></li><li><c>--versionIncrement</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.VersionIncrement"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.Tag"/></li><li><c>--nextVersion</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.NextVersion"/></li><li><c>--project</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.Project"/></li><li><c>--versionIncrement</c> via <see cref="NerdbankGitVersioningPrepareReleaseSettings.VersionIncrement"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningPrepareRelease(NerdbankGitVersioningPrepareReleaseSettings options = null) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningPrepareReleaseSettings>(options);
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningPrepareRelease(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningPrepareReleaseSettings)"/>
+    public static IReadOnlyCollection<Output> NerdbankGitVersioningPrepareRelease(Configure<NerdbankGitVersioningPrepareReleaseSettings> configurator) => new NerdbankGitVersioningTasks().Run<NerdbankGitVersioningPrepareReleaseSettings>(configurator.Invoke(new NerdbankGitVersioningPrepareReleaseSettings()));
+    /// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningPrepareRelease(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningPrepareReleaseSettings)"/>
     public static IEnumerable<(NerdbankGitVersioningPrepareReleaseSettings Settings, IReadOnlyCollection<Output> Output)> NerdbankGitVersioningPrepareRelease(CombinatorialConfigure<NerdbankGitVersioningPrepareReleaseSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NerdbankGitVersioningPrepareRelease, degreeOfParallelism, completeOnFailure);
 }
 #region NerdbankGitVersioningInstallSettings
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningInstall(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningInstallSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningInstall), Arguments = "install")]
@@ -108,7 +94,7 @@ public partial class NerdbankGitVersioningInstallSettings : ToolOptions
 }
 #endregion
 #region NerdbankGitVersioningGetVersionSettings
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningGetVersion(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningGetVersionSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningGetVersion), Arguments = "get-version")]
@@ -127,7 +113,7 @@ public partial class NerdbankGitVersioningGetVersionSettings : ToolOptions
 }
 #endregion
 #region NerdbankGitVersioningSetVersionSettings
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningSetVersion(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningSetVersionSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningSetVersion), Arguments = "set-version")]
@@ -140,7 +126,7 @@ public partial class NerdbankGitVersioningSetVersionSettings : ToolOptions
 }
 #endregion
 #region NerdbankGitVersioningTagSettings
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningTag(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningTagSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningTag), Arguments = "tag")]
@@ -153,7 +139,7 @@ public partial class NerdbankGitVersioningTagSettings : ToolOptions
 }
 #endregion
 #region NerdbankGitVersioningGetCommitsSettings
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningGetCommits(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningGetCommitsSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningGetCommits), Arguments = "get-commits")]
@@ -168,7 +154,7 @@ public partial class NerdbankGitVersioningGetCommitsSettings : ToolOptions
 }
 #endregion
 #region NerdbankGitVersioningCloudSettings
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningCloud(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningCloudSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningCloud), Arguments = "cloud")]
@@ -191,7 +177,7 @@ public partial class NerdbankGitVersioningCloudSettings : ToolOptions
 }
 #endregion
 #region NerdbankGitVersioningPrepareReleaseSettings
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningPrepareRelease(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningPrepareReleaseSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(NerdbankGitVersioningTasks), Command = nameof(NerdbankGitVersioningTasks.NerdbankGitVersioningPrepareRelease), Arguments = "prepare-release")]
@@ -208,7 +194,7 @@ public partial class NerdbankGitVersioningPrepareReleaseSettings : ToolOptions
 }
 #endregion
 #region NerdbankGitVersioningInstallSettingsExtensions
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningInstall(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningInstallSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class NerdbankGitVersioningInstallSettingsExtensions
@@ -255,7 +241,7 @@ public static partial class NerdbankGitVersioningInstallSettingsExtensions
 }
 #endregion
 #region NerdbankGitVersioningGetVersionSettingsExtensions
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningGetVersion(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningGetVersionSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class NerdbankGitVersioningGetVersionSettingsExtensions
@@ -303,7 +289,7 @@ public static partial class NerdbankGitVersioningGetVersionSettingsExtensions
 }
 #endregion
 #region NerdbankGitVersioningSetVersionSettingsExtensions
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningSetVersion(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningSetVersionSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class NerdbankGitVersioningSetVersionSettingsExtensions
@@ -327,7 +313,7 @@ public static partial class NerdbankGitVersioningSetVersionSettingsExtensions
 }
 #endregion
 #region NerdbankGitVersioningTagSettingsExtensions
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningTag(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningTagSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class NerdbankGitVersioningTagSettingsExtensions
@@ -351,7 +337,7 @@ public static partial class NerdbankGitVersioningTagSettingsExtensions
 }
 #endregion
 #region NerdbankGitVersioningGetCommitsSettingsExtensions
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningGetCommits(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningGetCommitsSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class NerdbankGitVersioningGetCommitsSettingsExtensions
@@ -392,7 +378,7 @@ public static partial class NerdbankGitVersioningGetCommitsSettingsExtensions
 }
 #endregion
 #region NerdbankGitVersioningCloudSettingsExtensions
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningCloud(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningCloudSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class NerdbankGitVersioningCloudSettingsExtensions
@@ -483,7 +469,7 @@ public static partial class NerdbankGitVersioningCloudSettingsExtensions
 }
 #endregion
 #region NerdbankGitVersioningPrepareReleaseSettingsExtensions
-/// <summary>Used within <see cref="NerdbankGitVersioningTasks"/>.</summary>
+/// <inheritdoc cref="NerdbankGitVersioningTasks.NerdbankGitVersioningPrepareRelease(Nuke.Common.Tools.NerdbankGitVersioning.NerdbankGitVersioningPrepareReleaseSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class NerdbankGitVersioningPrepareReleaseSettingsExtensions

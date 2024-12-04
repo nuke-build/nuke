@@ -42,7 +42,7 @@ public static class TaskGenerator
             .WriteBlock(w =>
             {
                 w
-                    .WriteLine($"public static string {tool.Name}Path => new {tool.GetClassName()}().GetToolPath();")
+                    .WriteLine($"public static string {tool.Name}Path {{ get => new {tool.GetClassName()}().GetToolPathInternal(); set => new {tool.GetClassName()}().SetToolPath(value); }}")
                     .WriteLineIfTrue(tool.NuGetPackageId != null, $"public const string PackageId = {tool.NuGetPackageId.DoubleQuote()};")
                     .WriteLineIfTrue(tool.PackageExecutable != null, $"public const string PackageExecutable = {tool.PackageExecutable.DoubleQuote()};")
                     .WriteLineIfTrue(tool.NpmPackageId != null, $"public const string PackageId = {tool.NpmPackageId.DoubleQuote()};")
@@ -98,8 +98,8 @@ public static class TaskGenerator
             : $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)";
         var signature = $"{returnType} {task.GetTaskMethodName()}({task.SettingsClass.Name} options = null)";
         var invocation = !task.HasReturnValue()
-            ? $"new {task.Tool.GetClassName()}().Run(options)"
-            : $"new {task.Tool.GetClassName()}().Run<{task.ReturnType}>(options)";
+            ? $"new {task.Tool.GetClassName()}().Run<{task.SettingsClass.Name}>(options)"
+            : $"new {task.Tool.GetClassName()}().Run<{task.SettingsClass.Name}, {task.ReturnType}>(options)";
 
         return writer
             .WriteSummary(task)
@@ -116,12 +116,11 @@ public static class TaskGenerator
             : $"({task.ReturnType} Result, IReadOnlyCollection<Output> Output)";
         var signature = $"{returnType} {task.GetTaskMethodName()}(Configure<{task.SettingsClass.Name}> configurator)";
         var invocation = !task.HasReturnValue()
-            ? $"new {task.Tool.GetClassName()}().Run(configurator.Invoke(new {task.SettingsClass.Name}()))"
-            : $"new {task.Tool.GetClassName()}().Run<{task.ReturnType}>(configurator.Invoke(new {task.SettingsClass.Name}()))";
+            ? $"new {task.Tool.GetClassName()}().Run<{task.SettingsClass.Name}>(configurator.Invoke(new {task.SettingsClass.Name}()))"
+            : $"new {task.Tool.GetClassName()}().Run<{task.SettingsClass.Name}, {task.ReturnType}>(configurator.Invoke(new {task.SettingsClass.Name}()))";
 
         return writer
-            .WriteSummary(task)
-            .WriteRemarks(task)
+            .WriteInherit(task)
             .WriteObsoleteAttributeWhenObsolete(task)
             .WriteLine($"public static {signature} => {invocation};");
     }
@@ -144,8 +143,7 @@ public static class TaskGenerator
         var invocation = $"configurator.Invoke({task.GetTaskMethodName()}, degreeOfParallelism, completeOnFailure)";
 
         return writer
-            .WriteSummary(task)
-            .WriteRemarks(task)
+            .WriteInherit(task)
             .WriteObsoleteAttributeWhenObsolete(task)
             .WriteLine($"public static {signature} => {invocation};");
     }

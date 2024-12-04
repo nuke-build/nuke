@@ -74,11 +74,11 @@ partial class UnityTasks
         return options;
     }
 
-    protected override IReadOnlyCollection<Output> Run(ToolOptions options)
+    protected override IReadOnlyCollection<Output> Run<T>(ToolOptions options = null)
     {
         try
         {
-            return base.Run(options);
+            return base.Run<T>(options);
         }
         catch (Exception)
         {
