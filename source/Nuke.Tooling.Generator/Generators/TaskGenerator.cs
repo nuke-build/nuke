@@ -120,8 +120,7 @@ public static class TaskGenerator
             : $"new {task.Tool.GetClassName()}().Run<{task.SettingsClass.Name}, {task.ReturnType}>(configurator.Invoke(new {task.SettingsClass.Name}()))";
 
         return writer
-            .WriteSummary(task)
-            .WriteRemarks(task)
+            .WriteInherit(task)
             .WriteObsoleteAttributeWhenObsolete(task)
             .WriteLine($"public static {signature} => {invocation};");
     }
@@ -144,8 +143,7 @@ public static class TaskGenerator
         var invocation = $"configurator.Invoke({task.GetTaskMethodName()}, degreeOfParallelism, completeOnFailure)";
 
         return writer
-            .WriteSummary(task)
-            .WriteRemarks(task)
+            .WriteInherit(task)
             .WriteObsoleteAttributeWhenObsolete(task)
             .WriteLine($"public static {signature} => {invocation};");
     }

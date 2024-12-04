@@ -56,6 +56,12 @@ public static class WriterExtensions
             .WriteLine($"/// <remarks>{lines.Join(string.Empty)}</remarks>");
     }
 
+    public static T WriteInherit<T>(this T writerWrapper, Task task)
+        where T : IWriterWrapper
+    {
+        return writerWrapper.WriteLine($"/// <inheritdoc cref=\"{task.Tool.GetClassName()}.{task.GetTaskMethodName()}({task.Tool.Namespace}.{task.SettingsClass.Name})\"/>");
+    }
+
     private static IEnumerable<string> GetArgumentsList(DataClass dataClass)
     {
         var allDataClasses = dataClass.Tool.Tasks.Select(x => x.SettingsClass).Concat(dataClass.Tool.DataClasses).ToList();
@@ -91,7 +97,9 @@ public static class WriterExtensions
     public static T WriteSummary<T>(this T writerWrapper, DataClass dataClass)
         where T : IWriterWrapper
     {
-        return writerWrapper.WriteSummary(GetUsedWithinText(dataClass.Tool));
+        return writerWrapper
+            .When(dataClass is SettingsClass, x => x.WriteInherit(((SettingsClass)dataClass).Task))
+            .When(dataClass is not SettingsClass, x => x.WriteSummary(GetUsedWithinText(dataClass.Tool)));
     }
 
     public static T WriteSummary<T>(this T writerWrapper, Enumeration enumeration)
