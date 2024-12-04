@@ -84,6 +84,16 @@ public static class GitHubTasks
         return milestones.FirstOrDefault(x => x.Title == name);
     }
 
+    public static async Task<IReadOnlyList<Issue>> GetGitHubMilestoneIssues(this GitRepository repository, string name)
+    {
+        Assert.True(repository.IsGitHubRepository());
+        var milestone = await repository.GetGitHubMilestone(name).NotNull();
+        return await GitHubClient.Issue.GetAllForRepository(
+            repository.GetGitHubOwner(),
+            repository.GetGitHubName(),
+            new RepositoryIssueRequest { State = ItemStateFilter.All, Milestone = milestone.Number.ToString() });
+    }
+
     public static async Task TryCreateGitHubMilestone(this GitRepository repository, string title)
     {
         try

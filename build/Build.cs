@@ -18,6 +18,7 @@ using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Utilities;
 using Nuke.Components;
@@ -178,7 +179,13 @@ partial class Build
         .Inherit<ICreateGitHubRelease>()
         .TriggeredBy<IPublish>()
         .ProceedAfterFailure()
-        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch());
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
+        .Executes(async () =>
+        {
+            var issues = await GitRepository.GetGitHubMilestoneIssues(MilestoneTitle);
+            foreach (var issue in issues)
+                await GitHubActions.Instance.CreateComment(issue.Number, $"Released in {MilestoneTitle}! 🎉");
+        });
 
     Target Install => _ => _
         .DependsOn<IPack>()
