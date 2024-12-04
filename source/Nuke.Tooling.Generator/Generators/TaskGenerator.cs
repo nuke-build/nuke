@@ -42,7 +42,7 @@ public static class TaskGenerator
             .WriteBlock(w =>
             {
                 w
-                    .WriteLine($"public static string {tool.Name}Path => new {tool.GetClassName()}().GetToolPath();")
+                    .WriteLine($"public static string {tool.Name}Path {{ get => new {tool.GetClassName()}().GetToolPathInternal(); set => new {tool.GetClassName()}().SetToolPath(value); }}")
                     .WriteLineIfTrue(tool.NuGetPackageId != null, $"public const string PackageId = {tool.NuGetPackageId.DoubleQuote()};")
                     .WriteLineIfTrue(tool.PackageExecutable != null, $"public const string PackageExecutable = {tool.PackageExecutable.DoubleQuote()};")
                     .WriteLineIfTrue(tool.NpmPackageId != null, $"public const string PackageId = {tool.NpmPackageId.DoubleQuote()};")

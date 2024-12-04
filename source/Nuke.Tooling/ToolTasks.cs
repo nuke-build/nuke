@@ -12,8 +12,6 @@ namespace Nuke.Common.Tooling;
 [PublicAPI]
 public abstract partial class ToolTasks
 {
-    public static string GetToolPath<T>() where T : ToolTasks, new() => new T().GetToolPathInternal();
-
     protected internal virtual partial Action<OutputType, string> GetLogger(ToolOptions options = null);
 
     protected virtual partial string GetToolPath(ToolOptions options = null);
