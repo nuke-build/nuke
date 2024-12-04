@@ -23,22 +23,20 @@ namespace Nuke.Common.Tools.InnoSetup;
 [PathTool(Executable = PathExecutable)]
 public partial class InnoSetupTasks : ToolTasks, IRequirePathTool
 {
-    public static string InnoSetupPath => new InnoSetupTasks().GetToolPath();
+    public static string InnoSetupPath { get => new InnoSetupTasks().GetToolPathInternal(); set => new InnoSetupTasks().SetToolPath(value); }
     public const string PathExecutable = "iscc";
     /// <summary><p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p><p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> InnoSetup(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new InnoSetupTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p><p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;scriptFile&gt;</c> via <see cref="InnoSetupSettings.ScriptFile"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyValueDefinitions"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyDefinitions"/></li><li><c>/F</c> via <see cref="InnoSetupSettings.OutputBaseFilename"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.Output"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.OutputDir"/></li><li><c>/Q</c> via <see cref="InnoSetupSettings.Quiet"/></li><li><c>/Qp</c> via <see cref="InnoSetupSettings.QuietWithProgress"/></li><li><c>/S</c> via <see cref="InnoSetupSettings.SignTools"/></li><li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> InnoSetup(InnoSetupSettings options = null) => new InnoSetupTasks().Run(options);
-    /// <summary><p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p><p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;scriptFile&gt;</c> via <see cref="InnoSetupSettings.ScriptFile"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyValueDefinitions"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyDefinitions"/></li><li><c>/F</c> via <see cref="InnoSetupSettings.OutputBaseFilename"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.Output"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.OutputDir"/></li><li><c>/Q</c> via <see cref="InnoSetupSettings.Quiet"/></li><li><c>/Qp</c> via <see cref="InnoSetupSettings.QuietWithProgress"/></li><li><c>/S</c> via <see cref="InnoSetupSettings.SignTools"/></li><li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> InnoSetup(Configure<InnoSetupSettings> configurator) => new InnoSetupTasks().Run(configurator.Invoke(new InnoSetupSettings()));
-    /// <summary><p>Inno Setup is a free installer for Windows programs by Jordan Russell and Martijn Laan. First introduced in 1997, Inno Setup today rivals and even surpasses many commercial installers in feature set and stability.</p><p>For more details, visit the <a href="http://www.jrsoftware.org/isinfo.php">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;scriptFile&gt;</c> via <see cref="InnoSetupSettings.ScriptFile"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyValueDefinitions"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyDefinitions"/></li><li><c>/F</c> via <see cref="InnoSetupSettings.OutputBaseFilename"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.Output"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.OutputDir"/></li><li><c>/Q</c> via <see cref="InnoSetupSettings.Quiet"/></li><li><c>/Qp</c> via <see cref="InnoSetupSettings.QuietWithProgress"/></li><li><c>/S</c> via <see cref="InnoSetupSettings.SignTools"/></li><li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;scriptFile&gt;</c> via <see cref="InnoSetupSettings.ScriptFile"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyValueDefinitions"/></li><li><c>/D</c> via <see cref="InnoSetupSettings.KeyDefinitions"/></li><li><c>/F</c> via <see cref="InnoSetupSettings.OutputBaseFilename"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.Output"/></li><li><c>/O</c> via <see cref="InnoSetupSettings.OutputDir"/></li><li><c>/Q</c> via <see cref="InnoSetupSettings.Quiet"/></li><li><c>/Qp</c> via <see cref="InnoSetupSettings.QuietWithProgress"/></li><li><c>/S</c> via <see cref="InnoSetupSettings.SignTools"/></li><li><c>/V</c> via <see cref="InnoSetupSettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> InnoSetup(InnoSetupSettings options = null) => new InnoSetupTasks().Run<InnoSetupSettings>(options);
+    /// <inheritdoc cref="InnoSetupTasks.InnoSetup(Nuke.Common.Tools.InnoSetup.InnoSetupSettings)"/>
+    public static IReadOnlyCollection<Output> InnoSetup(Configure<InnoSetupSettings> configurator) => new InnoSetupTasks().Run<InnoSetupSettings>(configurator.Invoke(new InnoSetupSettings()));
+    /// <inheritdoc cref="InnoSetupTasks.InnoSetup(Nuke.Common.Tools.InnoSetup.InnoSetupSettings)"/>
     public static IEnumerable<(InnoSetupSettings Settings, IReadOnlyCollection<Output> Output)> InnoSetup(CombinatorialConfigure<InnoSetupSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(InnoSetup, degreeOfParallelism, completeOnFailure);
 }
 #region InnoSetupSettings
-/// <summary>Used within <see cref="InnoSetupTasks"/>.</summary>
+/// <inheritdoc cref="InnoSetupTasks.InnoSetup(Nuke.Common.Tools.InnoSetup.InnoSetupSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(InnoSetupTasks), Command = nameof(InnoSetupTasks.InnoSetup))]
@@ -67,7 +65,7 @@ public partial class InnoSetupSettings : ToolOptions
 }
 #endregion
 #region InnoSetupSettingsExtensions
-/// <summary>Used within <see cref="InnoSetupTasks"/>.</summary>
+/// <inheritdoc cref="InnoSetupTasks.InnoSetup(Nuke.Common.Tools.InnoSetup.InnoSetupSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class InnoSetupSettingsExtensions

@@ -23,23 +23,21 @@ namespace Nuke.Common.Tools.WebConfigTransformRunner;
 [NuGetTool(Id = PackageId, Executable = PackageExecutable)]
 public partial class WebConfigTransformRunnerTasks : ToolTasks, IRequireNuGetPackage
 {
-    public static string WebConfigTransformRunnerPath => new WebConfigTransformRunnerTasks().GetToolPath();
+    public static string WebConfigTransformRunnerPath { get => new WebConfigTransformRunnerTasks().GetToolPathInternal(); set => new WebConfigTransformRunnerTasks().SetToolPath(value); }
     public const string PackageId = "WebConfigTransformRunner";
     public const string PackageExecutable = "WebConfigTransformRunner.exe";
     /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> WebConfigTransformRunner(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new WebConfigTransformRunnerTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;outputFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.OutputFilename"/></li><li><c>&lt;transformFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.TransformFilename"/></li><li><c>&lt;webConfigFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> WebConfigTransformRunner(WebConfigTransformRunnerSettings options = null) => new WebConfigTransformRunnerTasks().Run(options);
-    /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;outputFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.OutputFilename"/></li><li><c>&lt;transformFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.TransformFilename"/></li><li><c>&lt;webConfigFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator) => new WebConfigTransformRunnerTasks().Run(configurator.Invoke(new WebConfigTransformRunnerSettings()));
-    /// <summary><p>This is a commandline tool to run an ASP.Net web.config tranformation.</p><p>For more details, visit the <a href="https://github.com/erichexter/WebConfigTransformRunner">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="http://www.nuke.build/docs/authoring-builds/cli-tools.html#fluent-apis">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;outputFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.OutputFilename"/></li><li><c>&lt;transformFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.TransformFilename"/></li><li><c>&lt;webConfigFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;outputFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.OutputFilename"/></li><li><c>&lt;transformFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.TransformFilename"/></li><li><c>&lt;webConfigFilename&gt;</c> via <see cref="WebConfigTransformRunnerSettings.WebConfigFilename"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> WebConfigTransformRunner(WebConfigTransformRunnerSettings options = null) => new WebConfigTransformRunnerTasks().Run<WebConfigTransformRunnerSettings>(options);
+    /// <inheritdoc cref="WebConfigTransformRunnerTasks.WebConfigTransformRunner(Nuke.Common.Tools.WebConfigTransformRunner.WebConfigTransformRunnerSettings)"/>
+    public static IReadOnlyCollection<Output> WebConfigTransformRunner(Configure<WebConfigTransformRunnerSettings> configurator) => new WebConfigTransformRunnerTasks().Run<WebConfigTransformRunnerSettings>(configurator.Invoke(new WebConfigTransformRunnerSettings()));
+    /// <inheritdoc cref="WebConfigTransformRunnerTasks.WebConfigTransformRunner(Nuke.Common.Tools.WebConfigTransformRunner.WebConfigTransformRunnerSettings)"/>
     public static IEnumerable<(WebConfigTransformRunnerSettings Settings, IReadOnlyCollection<Output> Output)> WebConfigTransformRunner(CombinatorialConfigure<WebConfigTransformRunnerSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(WebConfigTransformRunner, degreeOfParallelism, completeOnFailure);
 }
 #region WebConfigTransformRunnerSettings
-/// <summary>Used within <see cref="WebConfigTransformRunnerTasks"/>.</summary>
+/// <inheritdoc cref="WebConfigTransformRunnerTasks.WebConfigTransformRunner(Nuke.Common.Tools.WebConfigTransformRunner.WebConfigTransformRunnerSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(WebConfigTransformRunnerTasks), Command = nameof(WebConfigTransformRunnerTasks.WebConfigTransformRunner))]
@@ -54,7 +52,7 @@ public partial class WebConfigTransformRunnerSettings : ToolOptions
 }
 #endregion
 #region WebConfigTransformRunnerSettingsExtensions
-/// <summary>Used within <see cref="WebConfigTransformRunnerTasks"/>.</summary>
+/// <inheritdoc cref="WebConfigTransformRunnerTasks.WebConfigTransformRunner(Nuke.Common.Tools.WebConfigTransformRunner.WebConfigTransformRunnerSettings)"/>
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 public static partial class WebConfigTransformRunnerSettingsExtensions

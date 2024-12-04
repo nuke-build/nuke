@@ -19,14 +19,12 @@ public abstract class ToolAttribute : Attribute
 
 public abstract partial class ToolTasks
 {
-    internal string GetToolPathInternal(ToolOptions options = null)
+    protected internal string GetToolPathInternal(ToolOptions options = null)
     {
         if (options?.ProcessToolPath != null)
             return options.ProcessToolPath;
 
-        var toolType = GetType();
-        var environmentVariable = toolType.Name.TrimEnd("Tasks").ToUpperInvariant() + "_EXE";
-        if (ToolPathResolver.TryGetEnvironmentExecutable(environmentVariable) is { } environmentExecutable)
+        if (ToolPathResolver.TryGetEnvironmentExecutable(ToolPathOverrideVariableName) is { } environmentExecutable)
             return environmentExecutable;
 
         return GetToolPath(options);
@@ -41,6 +39,22 @@ public abstract partial class ToolTasks
 
         Assert.Fail($"Unable to resolve tool path for {toolType.Name}. Set via {nameof(ToolOptionsExtensions.SetProcessToolPath)}.");
         return null;
+    }
+
+    protected void SetToolPath(string path)
+    {
+        Assert.FileExists(path);
+        EnvironmentInfo.SetVariable(ToolPathOverrideVariableName, path);
+    }
+
+    private string ToolPathOverrideVariableName
+    {
+        get
+        {
+            var toolType = GetType();
+            var environmentVariable = toolType.Name.TrimEnd("Tasks").ToUpperInvariant() + "_EXE";
+            return environmentVariable;
+        }
     }
 }
 
