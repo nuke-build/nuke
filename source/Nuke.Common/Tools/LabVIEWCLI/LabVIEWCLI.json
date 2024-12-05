@@ -1,0 +1,234 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "references": [
+    "https://www.ni.com/docs/en-US/bundle/labview/page/predefined-command-line-operations.html"
+  ],
+  "name": "LabVIEWCLI",
+  "officialUrl": "https://ni.com/",
+  "help": "The NI LabVIEW Command Line Interface (CLI) is a software add-on for LabVIEW. You can use it to automate the build process of LabVIEW applications and run the VIs and custom operations you create in LabVIEW.",
+  "pathExecutable": "labviewcli",
+  "tasks": [
+    {
+      "help": "Mass compiles the files in the specified directory.",
+      "postfix": "MassCompile",
+      "definiteArgument": "-OperationName MassCompile",
+      "officialUrl": "https://www.ni.com/docs/en-US/bundle/labview/page/predefined-command-line-operations.html#d140024e85",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "DirectoryToCompile",
+            "type": "string",
+            "format": "-DirectoryToCompile {value}",
+            "default": "System.IO.Directory.GetCurrentDirectory()",
+            "help": "Specifies the directory where the mass compile should begin. This is required argument."
+          },
+          {
+            "name": "MassCompileLogFile",
+            "type": "string",
+            "format": "-MassCompileLogFile {value}",
+            "help": "Specifies a file path where results of the mass compile should be placed. Default value is No file."
+          },
+          {
+            "name": "AppendToMassCompileLog",
+            "type": "bool",
+            "format": "-AppendToMassCompileLog {value}",
+            "help": "Specifies whether results should be appended to the log file. Default value is FALSE."
+          },
+          {
+            "name": "NumberOfVIsToCache",
+            "type": "int",
+            "format": "-NumberOfVIsToCache {value}",
+            "help": "Specifies the number of VIs that should be allowed to remain in memory during the mass compile. Default value is 0."
+          },
+          {
+            "name": "ReloadLVSBs",
+            "type": "bool",
+            "format": "-ReloadLVSBs {value}",
+            "help": "If TRUE, causes CINs in VIs to be ignored and the application to search for them. Useful when a large number of CINs have been recompiled and need to be reloaded. Default value is FALSE."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Builds an application or a library using the settings in the specified build specification(s) and returns the path of the output files.",
+      "postfix": "ExecuteBuildSpec",
+      "definiteArgument": "-OperationName ExecuteBuildSpec",
+      "officialUrl": "https://www.ni.com/docs/en-US/bundle/labview/page/predefined-command-line-operations.html#d140024e146",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ProjectPath",
+            "type": "string",
+            "format": "-ProjectPath {value}",
+            "default": "System.IO.Directory.GetCurrentDirectory()",
+            "help": "Specifies the full path to the LabVIEW project (.lvproj) file that contains the build specification."
+          },
+          {
+            "name": "TargetName",
+            "type": "string",
+            "format": "-TargetName {value}",
+            "help": "Specifies the target that contains the build specification. The target is \"My Computer\" by default."
+          },
+          {
+            "name": "BuildSpecName",
+            "type": "string",
+            "format": "-BuildSpecName {value}",
+            "help": "Specifies the name of the build specification. Enter the name that appears under Build Specifications in the Project Explorer window to specify which build specification builds. If you do not specify a build specification, the LabVIEWCLI builds all build specifications under the specified target."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Runs a VI with the following connector pane interface and returns the output or error information.",
+      "postfix": "RunVI",
+      "definiteArgument": "-OperationName RunVI",
+      "officialUrl": "https://www.ni.com/docs/en-US/bundle/labview/page/predefined-command-line-operations.html#d140024e277",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "VIPath",
+            "type": "string",
+            "format": "-VIPath {value}",
+            "default": "System.IO.Directory.GetCurrentDirectory()",
+            "help": "Path to the VI to run in LabVIEW. If the connector pane of the VI does not match the predefined interface, the CLI for LabVIEW returns an error."
+          },
+          {
+            "name": "VIArguments",
+            "type": "List<string>",
+            "format": "{value}",
+            "help": "Elements of the input array of the VI."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Closes LabVIEW without any prompts.",
+      "postfix": "CloseLabVIEW",
+      "definiteArgument": "-OperationName CloseLabVIEW",
+      "officialUrl": "https://www.ni.com/docs/en-US/bundle/labview/page/predefined-command-line-operations.html#d140024e475",
+      "settingsClass": {}
+    },
+    {
+      "help": "Runs the specified VI analyzer task in the LabVIEW VI Analyzer Toolkit and saves the test report to the specified location.",
+      "postfix": "RunVIAnalyzer",
+      "definiteArgument": "-OperationName RunVIAnalyzer",
+      "officialUrl": "https://www.ni.com/docs/en-US/bundle/labview/page/predefined-command-line-operations.html#d140024e523",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigPath",
+            "type": "string",
+            "format": "-ConfigPath {value}",
+            "default": "System.IO.Directory.GetCurrentDirectory()",
+            "help": "Path to the configuration file that contains VI Analyzer task settings to use in the analysis. You can use a configuration file you saved through the VI Analyzer or the VI Analyzer VIs. Alternatively, you can specify a VI, folder, or LLB to analyze. If you specify an item other than a configuration file, the VI runs all VI Analyzer tests on the specified item."
+          },
+          {
+            "name": "ReportPath",
+            "type": "string",
+            "format": "-ReportPath {value}",
+            "help": "Path to the report file."
+          },
+          {
+            "name": "ConfigPassword",
+            "type": "string",
+            "format": "-ConfigPassword {value}",
+            "secret": true,
+            "help": "Password of the configuration file, if any."
+          },
+          {
+            "name": "ReportSaveType",
+            "type": "ReportSaveType",
+            "format": "-ReportSaveType {value}",
+            "help": "Format of the report or results file."
+          },
+          {
+            "name": "ResultsPath",
+            "type": "string",
+            "format": "-ResultsPath {value}",
+            "help": "Path to the results file. If the path is an empty string, LabVIEW ignores this argument."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Runs tests on the specified files in the LabVIEW Unit Test Framework Toolkit and saves the JUnit file to the specified location.",
+      "postfix": "RunUnitTests",
+      "definiteArgument": "-OperationName RunUnitTests",
+      "officialUrl": "https://www.ni.com/docs/en-US/bundle/labview/page/predefined-command-line-operations.html#d140024e757",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ProjectPath",
+            "type": "string",
+            "format": "-ProjectPath {value}",
+            "default": "System.IO.Directory.GetCurrentDirectory()",
+            "help": "Specifies the full path to the LabVIEW project (.lvproj) file."
+          },
+          {
+            "name": "JUnitReportPath",
+            "type": "string",
+            "format": "-JUnitReportPath {value}",
+            "help": "Path to the output JUnit file."
+          }
+        ]
+      }
+    }
+  ],
+  "commonTaskProperties": [
+    {
+      "name": "PortNumber",
+      "type": "int",
+      "format": "-PortNumber {value}",
+      "help": "Port on which the remote LabVIEW application is listening."
+    },
+    {
+      "name": "LabVIEWPath",
+      "type": "string",
+      "format": "-LabVIEWPath {value}",
+      "help": "Path of the LabVIEW in which the operation will run."
+    },
+    {
+      "name": "LogFilePath",
+      "type": "string",
+      "format": "-LogFilePath {value}",
+      "help": "Path of the LabVIEWCLI log file."
+    },
+    {
+      "name": "LogToConsole",
+      "type": "bool",
+      "format": "-LogToConsole {value}",
+      "help": "If the value is True, the output that gets logged to console and the log file, else output will be logged only to log file. Default is True."
+    },
+    {
+      "name": "Verbosity",
+      "type": "LabVIEWCLIVerbosity",
+      "format": "-Verbosity {value}",
+      "help": "This command line argument is used to control the output being logged. Default is \"Default\". Possible values are Minimal, Default, Detailed and Diagnostic\""
+    },
+    {
+      "name": "AdditionalOperationDirectory",
+      "type": "string",
+      "format": "-AdditionalOperationDirectory {value}",
+      "help": "Additional directory where LabVIEWCLI will look for additional operation class other than default location."
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "LabVIEWCLIVerbosity",
+      "values": [
+        "Minimal",
+        "Default",
+        "Detailed",
+        "Diagnostic"
+      ]
+    },
+    {
+      "name": "ReportSaveType",
+      "values": [
+        "ASCII",
+        "HTML",
+        "RSLFile"
+      ]
+    }
+  ]
+}
