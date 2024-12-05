@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" />
-    <PackageReference Include="System.Net.Http" />
   </ItemGroup>
 
 </Project>
