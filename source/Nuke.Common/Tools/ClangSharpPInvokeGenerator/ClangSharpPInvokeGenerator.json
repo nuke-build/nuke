@@ -1,0 +1,281 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "name": "ClangSharpPInvokeGenerator",
+  "officialUrl": "https://github.com/dotnet/clangsharp/",
+  "help": "ClangSharp P/Invoke Binding Generator is a tool for generating strongly-typed safe bindings written in C# for .NET and Mono.",
+  "nugetPackageId": "ClangSharpPInvokeGenerator",
+  "packageExecutable": "ClangSharpPInvokeGenerator.dll",
+  "customExitHandler": true,
+  "tasks": [
+    {
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Additional",
+            "type": "List<string>",
+            "format": "--additional {value}",
+            "help": "An argument to pass to Clang when parsing the input files."
+          },
+          {
+            "name": "Config",
+            "type": "List<ClangSharpPInvokeGeneratorConfigOption>",
+            "format": "--config {value}",
+            "help": "A configuration option that controls how the bindings are generated."
+          },
+          {
+            "name": "DefineMacro",
+            "type": "List<string>",
+            "format": "--define-macro {value}",
+            "help": "Define <macro> to <value> (or 1 if <value> omitted)."
+          },
+          {
+            "name": "Exclude",
+            "type": "List<string>",
+            "format": "--exclude {value}",
+            "help": "A declaration name to exclude from binding generation."
+          },
+          {
+            "name": "File",
+            "type": "List<string>",
+            "format": "--file {value}",
+            "help": "A file to parse and generate bindings for."
+          },
+          {
+            "name": "FileDirectories",
+            "type": "List<string>",
+            "format": "--file-directory {value}",
+            "help": "The base path for files to parse."
+          },
+          {
+            "name": "HeaderFiles",
+            "type": "List<string>",
+            "format": "--headerFile {value}",
+            "help": "A file which contains the header to prefix every generated file with."
+          },
+          {
+            "name": "Include",
+            "type": "List<string>",
+            "format": "--include {value}",
+            "help": "A declaration name to include in binding generation."
+          },
+          {
+            "name": "IncludeDirectory",
+            "type": "List<string>",
+            "format": "--include-directory {value}",
+            "help": "Add directory to include search path."
+          },
+          {
+            "name": "Language",
+            "type": "string",
+            "format": "--language {value}",
+            "help": "Treat subsequent input files as having type <language>."
+          },
+          {
+            "name": "LibraryPath",
+            "type": "string",
+            "format": "--libraryPath {value}",
+            "help": "The string to use in the <c>DllImport</c> attribute used when generating bindings."
+          },
+          {
+            "name": "MethodClassName",
+            "type": "string",
+            "format": "--methodClassName {value}",
+            "help": "The name of the static class that will contain the generated method bindings."
+          },
+          {
+            "name": "Namespace",
+            "type": "string",
+            "format": "--namespace {value}",
+            "help": "The namespace in which to place the generated bindings."
+          },
+          {
+            "name": "NativeTypeNamesToStrip",
+            "type": "string",
+            "format": "--nativeTypeNamesToStrip {value}",
+            "help": "The contents to strip from the generated NativeTypeName attributes."
+          },
+          {
+            "name": "OutputMode",
+            "type": "ClangSharpPInvokeGeneratorOutputMode",
+            "format": "--output-mode {value}",
+            "help": "The mode describing how the information collected from the headers are presented in the resultant bindings."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "The output location to write the generated bindings to."
+          },
+          {
+            "name": "PrefixStrip",
+            "type": "List<string>",
+            "format": "--prefixStrip {value}",
+            "help": "The prefix to strip from the generated method bindings."
+          },
+          {
+            "name": "Remap",
+            "type": "List<string>",
+            "format": "--remap {value}",
+            "help": "A declaration name to be remapped to another name during binding generation."
+          },
+          {
+            "name": "Std",
+            "type": "string",
+            "format": "--std {value}",
+            "help": "Language standard to compile for."
+          },
+          {
+            "name": "TestOutput",
+            "type": "string",
+            "format": "--test-output {value}",
+            "help": "The output location to write the generated tests to."
+          },
+          {
+            "name": "Traverse",
+            "type": "List<string>",
+            "format": "--traverse {value}",
+            "help": "A file name included either directly or indirectly by -f that should be traversed during binding generation."
+          },
+          {
+            "name": "WithAccessSpecifier",
+            "type": "List<string>",
+            "format": "--with-access-specifier {value}",
+            "help": "An access specifier to be used with the given qualified or remapped declaration name during binding generation. Supports wildcards."
+          },
+          {
+            "name": "WithAttribute",
+            "type": "List<string>",
+            "format": "--with-attribute {value}",
+            "help": "An attribute to be added to the given remapped declaration name during binding generation. Supports wildcards."
+          },
+          {
+            "name": "WithCallConv",
+            "type": "List<string>",
+            "format": "--with-callconv {value}",
+            "help": "A calling convention to be used for the given declaration during binding generation. Supports wildcards."
+          },
+          {
+            "name": "WithClass",
+            "type": "List<string>",
+            "format": "--with-class {value}",
+            "help": "A class to be used for the given remapped constant or function declaration name during binding generation. Supports wildcards."
+          },
+          {
+            "name": "WithGuid",
+            "type": "List<string>",
+            "format": "--with-guid {value}",
+            "help": "A GUID to be used for the given declaration during binding generation. Supports wildcards."
+          },
+          {
+            "name": "WithLibraryPath",
+            "type": "List<string>",
+            "format": "--with-librarypath {value}",
+            "help": "A library path to be used for the given declaration during binding generation. Supports wildcards."
+          },
+          {
+            "name": "WithManualImport",
+            "type": "List<string>",
+            "format": "--with-manual-import {value}",
+            "help": "A remapped function name to be treated as a manual import during binding generation. Supports wildcards."
+          },
+          {
+            "name": "WithNamespace",
+            "type": "List<string>",
+            "format": "--with-namespace {value}",
+            "help": "A namespace to be used for the given remapped declaration name during binding generation. Supports wildcards."
+          },
+          {
+            "name": "WithPacking",
+            "type": "List<string>",
+            "format": "--with-packing {value}",
+            "help": "Overrides the <c>StructLayoutAttribute.Pack</c> property for the given type. Supports wildcards."
+          },
+          {
+            "name": "WithSetLastError",
+            "type": "List<string>",
+            "format": "--with-setlasterror {value}",
+            "help": "Add the <c>SetLastError=true</c> modifier to a given <c>DllImport</c> or <c>UnmanagedFunctionPointer</c>. Supports wildcards."
+          },
+          {
+            "name": "WithSuppressGCTransition",
+            "type": "List<string>",
+            "format": "--with-suppressgctransition {value}",
+            "help": "Add the <c>SuppressGCTransition</c> calling convention to a given <c>DllImport</c> or <c>UnmanagedFunctionPointer</c>. Supports wildcards."
+          },
+          {
+            "name": "WithTransparentStruct",
+            "type": "List<string>",
+            "format": "--with-transparent-struct {value}",
+            "help": "A remapped type name to be treated as a transparent wrapper during binding generation. Supports wildcards."
+          },
+          {
+            "name": "WithType",
+            "type": "List<string>",
+            "format": "--with-type {value}",
+            "help": "A type to be used for the given enum declaration during binding generation. Supports wildcards."
+          },
+          {
+            "name": "WithUsing",
+            "type": "List<string>",
+            "format": "--with-using {value}",
+            "help": "A using directive to be included for the given remapped declaration name during binding generation. Supports wildcards."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "ClangSharpPInvokeGeneratorConfigOption",
+      "values": [
+        "compatible-codegen",
+        "default-codegen",
+        "latest-codegen",
+        "preview-codegen",
+        "single-file",
+        "multi-file",
+        "unix-types",
+        "windows-types",
+        "exclude-anonymous-field-helpers",
+        "exclude-com-proxies",
+        "exclude-default-remappings",
+        "exclude-empty-records",
+        "exclude-enum-operators",
+        "exclude-fnptr-codegen",
+        "exclude-funcs-with-body",
+        "exclude-using-statics-for-enums",
+        "explicit-vtbls",
+        "implicit-vtbls",
+        "trimmable-vtbls",
+        "generate-tests-nunit",
+        "generate-tests-xunit",
+        "generate-aggressive-inlining",
+        "generate-callconv-member-function",
+        "generate-cpp-attributes",
+        "generate-disable-runtime-marshalling",
+        "generate-doc-includes",
+        "generate-file-scoped-namespaces",
+        "generate-guid-member",
+        "generate-helper-types",
+        "generate-macro-bindings",
+        "generate-marker-interfaces",
+        "generate-native-bitfield-attribute",
+        "generate-native-inheritance-attribute",
+        "generate-setslastsystemerror-attribute",
+        "generate-template-bindings",
+        "generate-unmanaged-constants",
+        "generate-vtbl-index-attribute",
+        "log-exclusions",
+        "log-potential-typedef-remappings",
+        "log-visited-files"
+      ]
+    },
+    {
+      "name": "ClangSharpPInvokeGeneratorOutputMode",
+      "values": [
+        "CSharp",
+        "Xml"
+      ]
+    }
+  ]
+}
