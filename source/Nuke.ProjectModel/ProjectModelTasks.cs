@@ -125,28 +125,6 @@ public static class ProjectModelTasks
         return msbuildProject;
     }
 
-    [Obsolete($"Use {nameof(SolutionModelTasks)}")]
-    public static Solution CreateSolution(string fileName = null, params Solution[] solutions)
-    {
-        return SolutionModelTasks.CreateSolution(fileName, solutions);
-    }
-
-    [Obsolete($"Use {nameof(SolutionModelTasks)}")]
-    public static Solution CreateSolution(
-        string fileName = null,
-        IEnumerable<Solution> solutions = null,
-        Func<Solution, string> folderNameProvider = null,
-        bool randomizeProjectIds = true)
-    {
-        return SolutionModelTasks.CreateSolution(fileName, solutions, folderNameProvider, randomizeProjectIds);
-    }
-
-    [Obsolete($"Use {nameof(SolutionModelTasks)}")]
-    public static Solution ParseSolution(string solutionFile)
-    {
-        return SolutionModelTasks.ParseSolution(solutionFile);
-    }
-
     private static Dictionary<string, string> GetProperties([CanBeNull] string configuration, [CanBeNull] string targetFramework)
     {
         var properties = new Dictionary<string, string>();
