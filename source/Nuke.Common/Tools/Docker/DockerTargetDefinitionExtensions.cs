@@ -116,6 +116,7 @@ public static class DockerTargetDefinitionExtensions
                                  definition.Target.Name,
                                  $"--{ParameterService.GetParameterDashedName(Constants.SkippedTargetsParameterName)}"
                              }.Concat(settings.Args))
+
                     .DisableProcessInvocationLogging()
                     .SetProcessLogger((_, message) =>
                     {
