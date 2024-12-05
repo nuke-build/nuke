@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using JetBrains.Annotations;
 using Nuke.Common.CI.AzurePipelines.Configuration;
 using Nuke.Common.Execution;
@@ -274,6 +275,15 @@ public class AzurePipelinesAttribute : ChainedConfigurationAttributeBase
         //                BuildType = buildTypes[dependency].Single(x => x.Partition == null),
         //                ArtifactRules = rules
         //            }).ToArray<TeamCityDependency>();
+
+        var customSteps = executableTarget.Member
+            .GetCustomAttributes(typeof(AzurePipelineStepAttribute), true)
+            .ToList();
+
+        foreach (var customStep in customSteps.Cast<AzurePipelineStepAttribute>())
+        {
+            yield return customStep.Get();
+        }
 
         var chainLinkTargets = GetInvokedTargets(executableTarget, relevantTargets).ToArray();
         yield return new AzurePipelinesCmdStep
