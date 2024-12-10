@@ -172,6 +172,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -424,6 +425,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -666,6 +668,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -678,6 +681,7 @@
             "name": "DeploymentLabelKey",
             "type": "string",
             "format": "--deployment-label-key={value}",
+            "secret": false,
             "help": "The key to use to differentiate between two different controllers, default 'deployment'.  Only relevant when --image is specified, ignored otherwise."
           },
           {
@@ -781,6 +785,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -896,6 +901,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -1087,6 +1093,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -1385,6 +1392,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -1456,6 +1464,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -1559,6 +1568,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -1732,6 +1742,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -1869,6 +1880,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -2086,6 +2098,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -2204,6 +2217,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -2263,6 +2277,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -2329,6 +2344,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -2448,6 +2464,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -2694,6 +2711,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {
@@ -2777,6 +2795,7 @@
             "name": "AllowMissingTemplateKeys",
             "type": "bool",
             "format": "--allow-missing-template-keys={value}",
+            "secret": false,
             "help": "If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats."
           },
           {

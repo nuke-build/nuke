@@ -289,28 +289,6 @@
       }
     },
     {
-      "help": "Display the running processes of a container.",
-      "postfix": "Top",
-      "definiteArgument": "top [ps",
-      "settingsClass": {
-        "baseClass": "DockerOptionsBase",
-        "properties": [
-          {
-            "name": "Container",
-            "type": "string",
-            "format": "{value}",
-            "help": "CONTAINER"
-          },
-          {
-            "name": "Options",
-            "type": "string",
-            "format": "{value}",
-            "help": "OPTIONS]"
-          }
-        ]
-      }
-    },
-    {
       "help": "Pull an image or a repository from a registry.",
       "postfix": "Pull",
       "definiteArgument": "pull",
@@ -345,6 +323,7 @@
             "name": "Name",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "NAME[:TAG|@DIGEST]"
           }
         ]
@@ -398,6 +377,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONFIG"
           }
         ]
@@ -498,6 +478,7 @@
             "name": "Context",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTEXT"
           }
         ]
@@ -538,6 +519,7 @@
             "name": "Stack",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "STACK"
           }
         ]
@@ -554,12 +536,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTAINER"
           },
           {
             "name": "PrivatePort",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[PRIVATE_PORT[/PROTO]]"
           }
         ]
@@ -576,12 +560,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTAINER"
           },
           {
             "name": "NewName",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "NEW_NAME"
           }
         ]
@@ -598,12 +584,14 @@
             "name": "SourceImage",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "SOURCE_IMAGE[:TAG]"
           },
           {
             "name": "TargetImage",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "TARGET_IMAGE[:TAG]"
           }
         ]
@@ -633,6 +621,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "SECRET"
           }
         ]
@@ -663,6 +652,7 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -703,6 +693,7 @@
             "name": "Image",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "IMAGE"
           }
         ]
@@ -1115,12 +1106,14 @@
             "name": "Image",
             "type": "string",
             "format": "{value}",
+            "position": -3,
             "help": "IMAGE"
           },
           {
             "name": "Command",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "[COMMAND]"
           },
           {
@@ -1128,6 +1121,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[ARG...]"
           }
         ]
@@ -1175,6 +1169,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "SERVICE"
           }
         ]
@@ -1198,6 +1193,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -1313,6 +1309,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -1335,12 +1332,14 @@
             "name": "Plugin",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "PLUGIN"
           },
           {
             "name": "PluginDataDir",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "PLUGIN-DATA-DIR"
           }
         ]
@@ -1413,12 +1412,14 @@
             "name": "Plugin",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "PLUGIN"
           },
           {
             "name": "Remote",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[REMOTE]"
           }
         ]
@@ -1455,6 +1456,7 @@
             "name": "Worker",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "(worker|manager)"
           }
         ]
@@ -1495,6 +1497,7 @@
             "name": "Node",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "NODE"
           }
         ]
@@ -1511,12 +1514,14 @@
             "name": "Options",
             "type": "string",
             "format": "{value}",
+            "position": -3,
             "help": "OPTIONS"
           },
           {
             "name": "Name",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "NAME"
           },
           {
@@ -1524,6 +1529,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "REPOSITORY"
           }
         ]
@@ -1646,6 +1652,7 @@
             "name": "Service",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "SERVICE|TASK"
           }
         ]
@@ -1773,6 +1780,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "PLUGIN"
           }
         ]
@@ -1999,6 +2007,7 @@
             "name": "Path",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "Path or url where the build context is located."
           }
         ]
@@ -2021,6 +2030,7 @@
             "name": "Image",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "IMAGE[:TAG]"
           }
         ]
@@ -2050,6 +2060,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "IMAGE"
           }
         ]
@@ -2123,12 +2134,14 @@
             "name": "Secret",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "SECRET"
           },
           {
             "name": "File",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "Path to file to create the secret from."
           }
         ]
@@ -2168,6 +2181,8 @@
             "name": "Keyfile",
             "type": "string",
             "format": "{value}",
+            "secret": false,
+            "position": -1,
             "help": "KEYFILE"
           }
         ]
@@ -2208,6 +2223,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "IMAGE"
           }
         ]
@@ -2231,6 +2247,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "IMAGE"
           }
         ]
@@ -2255,6 +2272,7 @@
             "name": "DetachKeys",
             "type": "string",
             "format": "--detach-keys {value}",
+            "secret": false,
             "help": "Override the key sequence for detaching a container."
           },
           {
@@ -2273,6 +2291,7 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -2319,6 +2338,7 @@
             "name": "Context",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTEXT"
           }
         ]
@@ -2347,12 +2367,14 @@
             "name": "Config",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONFIG"
           },
           {
             "name": "File",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "file|-"
           }
         ]
@@ -2376,6 +2398,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "VOLUME"
           }
         ]
@@ -2399,6 +2422,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -2449,12 +2473,14 @@
             "name": "ManifestList",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "[MANIFEST_LIST]"
           },
           {
             "name": "Manifest",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "MANIFEST"
           }
         ]
@@ -2511,12 +2537,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTAINER"
           },
           {
             "name": "Repository",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[REPOSITORY[:TAG]]"
           }
         ]
@@ -2569,6 +2597,7 @@
             "name": "Stack",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "STACK"
           }
         ]
@@ -2715,6 +2744,7 @@
             "name": "DetachKeys",
             "type": "string",
             "format": "--detach-keys {value}",
+            "secret": false,
             "help": "Override the key sequence for detaching a container."
           },
           {
@@ -3207,12 +3237,14 @@
             "name": "Image",
             "type": "string",
             "format": "{value}",
+            "position": -3,
             "help": "IMAGE"
           },
           {
             "name": "Command",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "[COMMAND]"
           },
           {
@@ -3220,6 +3252,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[ARG...]"
           }
         ]
@@ -3824,12 +3857,14 @@
             "name": "Image",
             "type": "string",
             "format": "{value}",
+            "position": -3,
             "help": "IMAGE"
           },
           {
             "name": "Command",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "[COMMAND]"
           },
           {
@@ -3837,6 +3872,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[ARG...]"
           }
         ]
@@ -4357,6 +4393,7 @@
             "name": "Service",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "SERVICE"
           }
         ]
@@ -4373,12 +4410,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTAINER"
           },
           {
             "name": "PrivatePort",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[PRIVATE_PORT[/PROTO]]"
           }
         ]
@@ -4415,6 +4454,7 @@
             "name": "Name",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "NAME[:TAG]"
           }
         ]
@@ -4444,6 +4484,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "SERVICE"
           }
         ]
@@ -4496,12 +4537,14 @@
             "name": "Network",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "NETWORK"
           },
           {
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -4598,6 +4641,7 @@
             "name": "Repository",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[REPOSITORY[:TAG]]"
           }
         ]
@@ -4701,6 +4745,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "NAME|ID"
           }
         ]
@@ -4775,6 +4820,7 @@
             "name": "DetachKeys",
             "type": "string",
             "format": "--detach-keys {value}",
+            "secret": false,
             "help": "Override the key sequence for detaching a container."
           },
           {
@@ -4793,6 +4839,7 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -4832,6 +4879,7 @@
             "name": "CaKey",
             "type": "string",
             "format": "--ca-key {value}",
+            "secret": false,
             "help": "Path to the PEM-formatted root CA key to use for the new cluster."
           },
           {
@@ -4977,12 +5025,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTAINER"
           },
           {
             "name": "Repository",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[REPOSITORY[:TAG]]"
           }
         ]
@@ -5074,6 +5124,7 @@
             "name": "Stack",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "STACK"
           }
         ]
@@ -5678,12 +5729,14 @@
             "name": "Image",
             "type": "string",
             "format": "{value}",
+            "position": -3,
             "help": "IMAGE"
           },
           {
             "name": "Command",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "[COMMAND]"
           },
           {
@@ -5691,6 +5744,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[ARG...]"
           }
         ]
@@ -5731,6 +5785,7 @@
             "name": "Volume",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[VOLUME]"
           }
         ]
@@ -5768,6 +5823,7 @@
             "name": "Server",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[SERVER]"
           }
         ]
@@ -5824,6 +5880,7 @@
             "name": "DetachKeys",
             "type": "string",
             "format": "--detach-keys {value}",
+            "secret": false,
             "help": "Override the key sequence for detaching a container."
           },
           {
@@ -5837,6 +5894,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -5976,6 +6034,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -6006,6 +6065,7 @@
             "name": "Plugin",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "PLUGIN"
           }
         ]
@@ -6039,12 +6099,14 @@
             "name": "Context",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTEXT"
           },
           {
             "name": "File",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "FILE|-"
           }
         ]
@@ -6080,6 +6142,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -6132,6 +6195,7 @@
             "name": "Stack",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "STACK"
           }
         ]
@@ -6155,6 +6219,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "NODE"
           }
         ]
@@ -6177,12 +6242,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTAINER"
           },
           {
             "name": "Checkpoint",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CHECKPOINT"
           }
         ]
@@ -6211,6 +6278,7 @@
             "name": "Name",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "NAME[:TAG]"
           }
         ]
@@ -6323,6 +6391,7 @@
             "name": "Network",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "NETWORK"
           }
         ]
@@ -6397,6 +6466,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "NETWORK"
           }
         ]
@@ -6494,6 +6564,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "VOLUME"
           }
         ]
@@ -6510,6 +6581,7 @@
             "name": "ManifestList",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "MANIFEST_LIST"
           },
           {
@@ -6517,6 +6589,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "MANIFEST"
           }
         ]
@@ -6545,6 +6618,7 @@
             "name": "ManifestList",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "MANIFEST_LIST"
           }
         ]
@@ -6567,6 +6641,7 @@
             "name": "Plugin",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "PLUGIN"
           }
         ]
@@ -6601,12 +6676,14 @@
             "name": "File",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "file|URL|-"
           },
           {
             "name": "Repository",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[REPOSITORY[:TAG]]"
           }
         ]
@@ -6737,6 +6814,7 @@
             "name": "DetachKeys",
             "type": "string",
             "format": "--detach-keys {value}",
+            "secret": false,
             "help": "Override the key sequence for detaching a container."
           },
           {
@@ -7229,12 +7307,14 @@
             "name": "Image",
             "type": "string",
             "format": "{value}",
+            "position": -3,
             "help": "IMAGE"
           },
           {
             "name": "Command",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "[COMMAND]"
           },
           {
@@ -7242,6 +7322,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[ARG...]"
           }
         ]
@@ -7271,6 +7352,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "self|NODE"
           }
         ]
@@ -7294,6 +7376,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "IMAGE"
           }
         ]
@@ -7335,6 +7418,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[CONTAINER...]"
           }
         ]
@@ -7357,6 +7441,7 @@
             "name": "DetachKeys",
             "type": "string",
             "format": "--detach-keys {value}",
+            "secret": false,
             "help": "Override the key sequence for detaching a container."
           },
           {
@@ -7399,12 +7484,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -3,
             "help": "CONTAINER"
           },
           {
             "name": "Command",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "COMMAND"
           },
           {
@@ -7412,6 +7499,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[ARG...]"
           }
         ]
@@ -7448,7 +7536,7 @@
     {
       "help": "Join a swarm as a node and/or manager.",
       "postfix": "SwarmJoin",
-      "definiteArgument": "swarm join HOST:PORT",
+      "definiteArgument": "swarm join",
       "settingsClass": {
         "baseClass": "DockerOptionsBase",
         "properties": [
@@ -7480,6 +7568,7 @@
             "name": "Token",
             "type": "string",
             "format": "--token {value}",
+            "secret": true,
             "help": "Token for entry into the swarm."
           }
         ]
@@ -7532,6 +7621,7 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -7554,6 +7644,7 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -7577,6 +7668,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -7617,12 +7709,15 @@
             "name": "Plugin",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "PLUGIN"
           },
           {
             "name": "KeyValues",
             "type": "Dictionary<string,string>",
             "format": "{key}={value}",
+            "secret": false,
+            "position": -1,
             "help": "[KEY=VALUE...]"
           }
         ]
@@ -7685,12 +7780,14 @@
             "name": "File",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "file|URL|-"
           },
           {
             "name": "Repository",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[REPOSITORY[:TAG]]"
           }
         ]
@@ -7724,6 +7821,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -7829,6 +7927,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[NODE...]"
           }
         ]
@@ -7845,12 +7944,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTAINER"
           },
           {
             "name": "Options",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "OPTIONS]"
           }
         ]
@@ -7867,12 +7968,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTAINER"
           },
           {
             "name": "NewName",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "NEW_NAME"
           }
         ]
@@ -7913,6 +8016,7 @@
             "name": "Image",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "IMAGE"
           }
         ]
@@ -7987,12 +8091,14 @@
             "name": "SourceImage",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "SOURCE_IMAGE[:TAG]"
           },
           {
             "name": "TargetImage",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "TARGET_IMAGE[:TAG]"
           }
         ]
@@ -8015,6 +8121,7 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -8037,12 +8144,14 @@
             "name": "Network",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "NETWORK"
           },
           {
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -8269,6 +8378,7 @@
             "name": "Path",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "Path or url where the build context is located."
           }
         ]
@@ -8501,6 +8611,7 @@
             "name": "Path",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "Path or url where the build context is located."
           }
         ]
@@ -8624,6 +8735,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[CONTAINER...]"
           }
         ]
@@ -8676,6 +8788,7 @@
             "name": "Term",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "TERM"
           }
         ]
@@ -8714,6 +8827,7 @@
             "name": "Plugin",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "PLUGIN[:TAG]"
           }
         ]
@@ -8779,6 +8893,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -8886,6 +9001,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -8902,12 +9018,15 @@
             "name": "Plugin",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "PLUGIN"
           },
           {
             "name": "KeyValues",
             "type": "Dictionary<string,string>",
             "format": "{key}={value}",
+            "secret": false,
+            "position": -1,
             "help": "KEY=VALUE"
           }
         ]
@@ -8947,12 +9066,14 @@
             "name": "Context",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTEXT"
           },
           {
             "name": "File",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[FILE|-]"
           }
         ]
@@ -8993,12 +9114,14 @@
             "name": "ManifestList",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "MANIFEST_LIST"
           },
           {
             "name": "Manifest",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "MANIFEST"
           }
         ]
@@ -9039,6 +9162,7 @@
             "name": "Name",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "NAME[:TAG|@DIGEST]"
           }
         ]
@@ -9130,6 +9254,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -9153,6 +9278,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -9181,12 +9307,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "CONTAINER"
           },
           {
             "name": "Checkpoint",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CHECKPOINT"
           }
         ]
@@ -9256,6 +9384,7 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -9278,6 +9407,7 @@
             "name": "Context",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "[CONTEXT]"
           },
           {
@@ -9285,6 +9415,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[CONTEXT...]"
           }
         ]
@@ -9341,6 +9472,7 @@
             "name": "DetachKeys",
             "type": "string",
             "format": "--detach-keys {value}",
+            "secret": false,
             "help": "Override the key sequence for detaching a container."
           },
           {
@@ -9383,12 +9515,14 @@
             "name": "Container",
             "type": "string",
             "format": "{value}",
+            "position": -3,
             "help": "CONTAINER"
           },
           {
             "name": "Command",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "COMMAND"
           },
           {
@@ -9396,6 +9530,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "[ARG...]"
           }
         ]
@@ -9425,6 +9560,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "IMAGE"
           }
         ]
@@ -9491,6 +9627,7 @@
             "name": "DetachKeys",
             "type": "string",
             "format": "--detach-keys {value}",
+            "secret": false,
             "help": "Override the key sequence for detaching a container."
           },
           {
@@ -9504,6 +9641,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -9527,6 +9665,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "PLUGIN"
           }
         ]
@@ -9603,6 +9742,7 @@
             "name": "Repository",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "[REPOSITORY[:TAG]]"
           }
         ]
@@ -9653,6 +9793,7 @@
             "name": "Service",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "SERVICE"
           }
         ]
@@ -9676,6 +9817,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "CONTAINER"
           }
         ]
@@ -9698,6 +9840,7 @@
             "name": "Name",
             "type": "string",
             "format": "{value}",
+            "position": -2,
             "help": "NAME"
           },
           {
@@ -9705,6 +9848,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "REPOSITORY"
           }
         ]
@@ -9728,6 +9872,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": -1,
             "help": "STACK"
           }
         ]
@@ -9954,6 +10099,7 @@
             "name": "Path",
             "type": "string",
             "format": "{value}",
+            "position": -1,
             "help": "Path or url where the build context is located."
           }
         ]
