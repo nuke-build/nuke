@@ -177,6 +177,7 @@
       "name": "Token",
       "type": "string",
       "format": "--token {value}",
+      "secret": false,
       "help": "The access token to access GitHub with."
     }
   ]

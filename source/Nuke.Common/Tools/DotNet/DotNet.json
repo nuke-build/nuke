@@ -1095,6 +1095,7 @@
             "name": "StorePasswordInClearText",
             "type": "bool",
             "format": "--store-password-in-clear-text",
+            "secret": false,
             "help": "Enables storing portable package source credentials by disabling password encryption."
           },
           {
@@ -1150,6 +1151,7 @@
             "name": "StorePasswordInClearText",
             "type": "bool",
             "format": "--store-password-in-clear-text",
+            "secret": false,
             "help": "Enables storing portable package source credentials by disabling password encryption."
           },
           {

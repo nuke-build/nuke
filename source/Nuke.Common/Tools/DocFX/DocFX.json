@@ -167,6 +167,7 @@
             "name": "NoLangKeyword",
             "type": "bool",
             "format": "--noLangKeyword",
+            "secret": false,
             "help": "Disable default lang keyword."
           },
           {
@@ -864,6 +865,7 @@
         "name": "NoLangKeyword",
         "type": "bool",
         "format": "--noLangKeyword",
+        "secret": false,
         "help": "Disable default lang keyword."
       },
       {
