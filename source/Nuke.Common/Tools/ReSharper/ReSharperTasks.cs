@@ -17,7 +17,7 @@ partial class ReSharperTasks
 {
     public const string ReSharperPluginLatest = "latest";
 
-    protected override ToolOptions PreProcess(ToolOptions options)
+    protected override T PreProcess<T>(T options)
     {
         var resharperOptions = ((ReSharperSettingsBase)options)
             .SetProcessToolPath(GetToolPath());
