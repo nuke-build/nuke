@@ -124,6 +124,7 @@
       ],
       "definiteArgument": "dupfinder",
       "settingsClass": {
+        "baseClass": "ReSharperSettingsBase",
         "properties": [
           {
             "name": "Source",
