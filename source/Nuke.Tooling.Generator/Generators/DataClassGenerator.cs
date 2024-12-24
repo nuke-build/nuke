@@ -26,8 +26,51 @@ public static class DataClassGenerator
         {
             foreach (var property in dataClass.Properties)
             {
-                CheckMissingValue(property);
-                CheckMissingSecret(property);
+                CheckMissingValue();
+                CheckMissingSecret();
+                if (dataClass.Properties.Count > 1)
+                    CheckMissingPosition();
+
+                void CheckMissingValue()
+                {
+                    if (property.NoArgument)
+                        return;
+
+                    if (property.Format != null && property.Format.Contains("{value}"))
+                        return;
+
+                    if (new[] { "int", "bool" }.Contains(property.Type))
+                        return;
+
+                    Log.Warning("Property {ClassName}.{PropertyName} doesn't contain '{{value}}'", property.DataClass.Name, property.Name);
+                }
+
+                void CheckMissingSecret()
+                {
+                    if (property.Secret.HasValue)
+                        return;
+
+                    if (!property.Name.ContainsOrdinalIgnoreCase("key") &&
+                        !property.Name.ContainsOrdinalIgnoreCase("password") &&
+                        !property.Name.ContainsOrdinalIgnoreCase("token"))
+                        return;
+
+                    Log.Warning("Property {ClassName}.{PropertyName} should have explicit secret definition", property.DataClass.Name, property.Name);
+                }
+
+                void CheckMissingPosition()
+                {
+                    if (property.NoArgument)
+                        return;
+
+                    if (!property.Format.StartsWith("{"))
+                        return;
+
+                    if (property.Position != null)
+                        return;
+
+                    Log.Warning("Property {ClassName}.{PropertyName} does not have a position", property.DataClass.Name, property.Name);
+                }
             }
         }
 
@@ -64,33 +107,6 @@ public static class DataClassGenerator
                 .Select(x => $"{x.Name} = {x.Value}").JoinCommaSpace();
             return $"[Command({commandArguments})]";
         }
-    }
-
-    private static void CheckMissingValue(Property property)
-    {
-        if (property.NoArgument)
-            return;
-
-        if (property.Format != null && property.Format.Contains("{value}"))
-            return;
-
-        if (new[] { "int", "bool" }.Contains(property.Type))
-            return;
-
-        Log.Warning("Property {ClassName}.{PropertyName} doesn't contain '{{value}}'", property.DataClass.Name, property.Name);
-    }
-
-    private static void CheckMissingSecret(Property property)
-    {
-        if (property.Secret.HasValue)
-            return;
-
-        if (!property.Name.ContainsOrdinalIgnoreCase("key") &&
-            !property.Name.ContainsOrdinalIgnoreCase("password") &&
-            !property.Name.ContainsOrdinalIgnoreCase("token"))
-            return;
-
-        Log.Warning("Property {ClassName}.{PropertyName} should have explicit secret definition", property.DataClass.Name, property.Name);
     }
 
     private static void WritePropertyDeclaration(DataClassWriter writer, Property property)
