@@ -155,7 +155,7 @@ public partial class DocFXBuildSettings : ToolOptions
     /// <summary>Set the max parallelism, 0 is auto.</summary>
     [Argument(Format = "--maxParallelism={value}")] public int? MaxParallelism => Get<int?>(() => MaxParallelism);
     /// <summary>Disable default lang keyword.</summary>
-    [Argument(Format = "--noLangKeyword")] public bool? NoLangKeyword => Get<bool?>(() => NoLangKeyword);
+    [Argument(Format = "--noLangKeyword", Secret = false)] public bool? NoLangKeyword => Get<bool?>(() => NoLangKeyword);
     /// <summary>Specify the output base directory.</summary>
     [Argument(Format = "--output={value}")] public string OutputFolder => Get<string>(() => OutputFolder);
     /// <summary>The output folder for files generated for debugging purpose when in debug mode. If not specified, it is ${TempPath}/docfx.</summary>
@@ -416,7 +416,7 @@ public partial class DocFXPdfSettings : ToolOptions
     /// <summary>Set the max parallelism, 0 is auto.</summary>
     [Argument(Format = "--maxParallelism={value}")] public int? MaxParallelism => Get<int?>(() => MaxParallelism);
     /// <summary>Disable default lang keyword.</summary>
-    [Argument(Format = "--noLangKeyword")] public bool? NoLangKeyword => Get<bool?>(() => NoLangKeyword);
+    [Argument(Format = "--noLangKeyword", Secret = false)] public bool? NoLangKeyword => Get<bool?>(() => NoLangKeyword);
     /// <summary>Specify the output base directory.</summary>
     [Argument(Format = "--output={value}")] public string OutputFolder => Get<string>(() => OutputFolder);
     /// <summary>The output folder for files generated for debugging purpose when in debug mode. If not specified, it is ${TempPath}/docfx.</summary>

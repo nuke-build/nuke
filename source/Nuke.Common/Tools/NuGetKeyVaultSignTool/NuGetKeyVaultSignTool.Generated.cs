@@ -44,21 +44,21 @@ public partial class NuGetKeyVaultSignToolTasks : ToolTasks, IRequireNuGetPackag
 public partial class NuGetKeyVaultSignToolSettings : ToolOptions
 {
     /// <summary>Package to sign.</summary>
-    [Argument(Format = "{value}")] public string File => Get<string>(() => File);
+    [Argument(Format = "{value}", Position = 1)] public string File => Get<string>(() => File);
     /// <summary>A fully qualified URL of the key vault with the certificate that will be used for signing. An example value might be <c>https://my-vault.vault.azure.net</c>.</summary>
-    [Argument(Format = "--azure-key-vault-url {value}")] public string KeyVaultUrl => Get<string>(() => KeyVaultUrl);
+    [Argument(Format = "--azure-key-vault-url {value}", Secret = false)] public string KeyVaultUrl => Get<string>(() => KeyVaultUrl);
     /// <summary>This is the client ID used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option. If this parameter is supplied, <c>--azure-key-vault-client-secret</c> and <c>--azure-key-vault-tenant-id</c> must be supplied as well.</summary>
-    [Argument(Format = "--azure-key-vault-client-id {value}")] public string KeyVaultClientId => Get<string>(() => KeyVaultClientId);
+    [Argument(Format = "--azure-key-vault-client-id {value}", Secret = false)] public string KeyVaultClientId => Get<string>(() => KeyVaultClientId);
     /// <summary>This is the client secret used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option or when using managed identities with <c>--azure-key-vault-managed-identity</c>. If this parameter is supplied, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-tenant-id</c> must be supplied as well.</summary>
     [Argument(Format = "--azure-key-vault-client-secret {value}", Secret = true)] public string KeyVaultClientSecret => Get<string>(() => KeyVaultClientSecret);
     /// <summary>This is the tenant id used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option or when using managed identities with <c>--azure-key-vault-managed-identity</c>. If this parameter is supplied, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> must be supplied as well.</summary>
-    [Argument(Format = "--azure-key-vault-tenant-id {value}")] public string KeyVaultTenantId => Get<string>(() => KeyVaultTenantId);
+    [Argument(Format = "--azure-key-vault-tenant-id {value}", Secret = false)] public string KeyVaultTenantId => Get<string>(() => KeyVaultTenantId);
     /// <summary>The name of the certificate used to perform the signing operation.</summary>
-    [Argument(Format = "--azure-key-vault-certificate {value}")] public string KeyVaultCertificateName => Get<string>(() => KeyVaultCertificateName);
+    [Argument(Format = "--azure-key-vault-certificate {value}", Secret = false)] public string KeyVaultCertificateName => Get<string>(() => KeyVaultCertificateName);
     /// <summary>An access token used to authenticate to Azure. This can be used instead of the <c>--azure-key-vault-managed-identity</c>, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> options. This is useful if NuGetKeyVaultSignTool is being used as part of another program that is already authenticated and has an access token to Azure.</summary>
     [Argument(Format = "--azure-key-vault-accesstoken {value}", Secret = true)] public string KeyVaultAccessToken => Get<string>(() => KeyVaultAccessToken);
     /// <summary>Use the ambient Managed Identity to authenticate to Azure. This can be used instead of the <c>--azure-key-vault-accesstoken</c>, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> options. This is useful if NuGetKeyVaultSignTool is being used on a VM/service/CLI that is configured for managed identities to Azure.</summary>
-    [Argument(Format = "--azure-key-vault-managed-identity")] public bool? KeyVaultManagedIdentity => Get<bool?>(() => KeyVaultManagedIdentity);
+    [Argument(Format = "--azure-key-vault-managed-identity", Secret = false)] public bool? KeyVaultManagedIdentity => Get<bool?>(() => KeyVaultManagedIdentity);
     /// <summary>A URL to an RFC3161 compliant timestamping service. This parameter serves the same purpose as the <c>/tr</c> option in the Windows SDK <c>signtool</c>. This parameter should be used in favor of the <c>--timestamp</c> option. Using this parameter will allow using modern, RFC3161 timestamps which also support timestamp digest algorithms other than SHA1.</summary>
     [Argument(Format = "--timestamp-rfc3161 {value}")] public string TimestampRfc3161Url => Get<string>(() => TimestampRfc3161Url);
     /// <summary>The name of the digest algorithm used for timestamping. This parameter is ignored unless the <c>--timestamp-rfc3161</c> parameter is also supplied. The default value is <c>sha256</c>.</summary>

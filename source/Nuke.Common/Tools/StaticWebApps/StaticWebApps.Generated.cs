@@ -69,7 +69,7 @@ public partial class StaticWebAppsStartSettings : ToolOptions
     /// <summary>SSL certificate (.crt) to use for serving HTTPS</summary>
     [Argument(Format = "--ssl-cert {value}")] public string SslCertificate => Get<string>(() => SslCertificate);
     /// <summary>SSL key (.key) to use for serving HTTPS</summary>
-    [Argument(Format = "--ssl-key {value}")] public string SslKey => Get<string>(() => SslKey);
+    [Argument(Format = "--ssl-key {value}", Secret = false)] public string SslKey => Get<string>(() => SslKey);
     /// <summary>Run a command at startup</summary>
     [Argument(Format = "--run {value}")] public string StartupScript => Get<string>(() => StartupScript);
     /// <summary>Time to wait(in ms) for the dev server to start (default: <c>30000</c>)</summary>

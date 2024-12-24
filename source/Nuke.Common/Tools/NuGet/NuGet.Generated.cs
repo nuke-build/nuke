@@ -1,4 +1,4 @@
-﻿// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/NuGet/NuGet.json
+// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/NuGet/NuGet.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -35,6 +35,27 @@ public partial class NuGetTasks : ToolTasks, IRequireNuGetPackage
     public static IReadOnlyCollection<Output> NuGetPush(Configure<NuGetPushSettings> configurator) => new NuGetTasks().Run<NuGetPushSettings>(configurator.Invoke(new NuGetPushSettings()));
     /// <inheritdoc cref="NuGetTasks.NuGetPush(Nuke.Common.Tools.NuGet.NuGetPushSettings)"/>
     public static IEnumerable<(NuGetPushSettings Settings, IReadOnlyCollection<Output> Output)> NuGetPush(CombinatorialConfigure<NuGetPushSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NuGetPush, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;packageId&gt;</c> via <see cref="NuGetDeleteSettings.PackageId"/></li><li><c>&lt;packageVersion&gt;</c> via <see cref="NuGetDeleteSettings.PackageVersion"/></li><li><c>-ApiKey</c> via <see cref="NuGetDeleteSettings.ApiKey"/></li><li><c>-ConfigFile</c> via <see cref="NuGetDeleteSettings.ConfigFile"/></li><li><c>-ForceEnglishOutput</c> via <see cref="NuGetDeleteSettings.ForceEnglishOutput"/></li><li><c>-NonInteractive</c> via <see cref="NuGetDeleteSettings.NonInteractive"/></li><li><c>-NoPrompt</c> via <see cref="NuGetDeleteSettings.NoPrompt"/></li><li><c>-Source</c> via <see cref="NuGetDeleteSettings.Source"/></li><li><c>-Verbosity</c> via <see cref="NuGetDeleteSettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> NuGetDelete(NuGetDeleteSettings options = null) => new NuGetTasks().Run<NuGetDeleteSettings>(options);
+    /// <inheritdoc cref="NuGetTasks.NuGetDelete(Nuke.Common.Tools.NuGet.NuGetDeleteSettings)"/>
+    public static IReadOnlyCollection<Output> NuGetDelete(Configure<NuGetDeleteSettings> configurator) => new NuGetTasks().Run<NuGetDeleteSettings>(configurator.Invoke(new NuGetDeleteSettings()));
+    /// <inheritdoc cref="NuGetTasks.NuGetDelete(Nuke.Common.Tools.NuGet.NuGetDeleteSettings)"/>
+    public static IEnumerable<(NuGetDeleteSettings Settings, IReadOnlyCollection<Output> Output)> NuGetDelete(CombinatorialConfigure<NuGetDeleteSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NuGetDelete, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;targetPath&gt;</c> via <see cref="NuGetSignSettings.TargetPath"/></li><li><c>-CertificateFingerprint</c> via <see cref="NuGetSignSettings.CertificateFingerprint"/></li><li><c>-CertificatePassword</c> via <see cref="NuGetSignSettings.CertificatePassword"/></li><li><c>-CertificatePath</c> via <see cref="NuGetSignSettings.CertificatePath"/></li><li><c>-CertificateStoreLocation</c> via <see cref="NuGetSignSettings.CertificateStoreLocation"/></li><li><c>-CertificateStoreName</c> via <see cref="NuGetSignSettings.CertificateStoreName"/></li><li><c>-CertificateSubjectName</c> via <see cref="NuGetSignSettings.CertificateSubjectName"/></li><li><c>-ConfigFile</c> via <see cref="NuGetSignSettings.ConfigFile"/></li><li><c>-ForceEnglishOutput</c> via <see cref="NuGetSignSettings.ForceEnglishOutput"/></li><li><c>-HashAlgorithm</c> via <see cref="NuGetSignSettings.HashAlgorithm"/></li><li><c>-NonInteractive</c> via <see cref="NuGetSignSettings.NonInteractive"/></li><li><c>-OutputDirectory</c> via <see cref="NuGetSignSettings.OutputDirectory"/></li><li><c>-Overwrite</c> via <see cref="NuGetSignSettings.Overwrite"/></li><li><c>-Timestamper</c> via <see cref="NuGetSignSettings.Timestamper"/></li><li><c>-TimestampHashAlgorithm</c> via <see cref="NuGetSignSettings.TimestampHashAlgorithm"/></li><li><c>-Verbosity</c> via <see cref="NuGetSignSettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> NuGetSign(NuGetSignSettings options = null) => new NuGetTasks().Run<NuGetSignSettings>(options);
+    /// <inheritdoc cref="NuGetTasks.NuGetSign(Nuke.Common.Tools.NuGet.NuGetSignSettings)"/>
+    public static IReadOnlyCollection<Output> NuGetSign(Configure<NuGetSignSettings> configurator) => new NuGetTasks().Run<NuGetSignSettings>(configurator.Invoke(new NuGetSignSettings()));
+    /// <inheritdoc cref="NuGetTasks.NuGetSign(Nuke.Common.Tools.NuGet.NuGetSignSettings)"/>
+    public static IEnumerable<(NuGetSignSettings Settings, IReadOnlyCollection<Output> Output)> NuGetSign(CombinatorialConfigure<NuGetSignSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NuGetSign, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>-CertificateFingerprint</c> via <see cref="NuGetVerifySettings.CertificateFingerprint"/></li><li><c>-ConfigFile</c> via <see cref="NuGetVerifySettings.ConfigFile"/></li><li><c>-ForceEnglishOutput</c> via <see cref="NuGetVerifySettings.ForceEnglishOutput"/></li><li><c>-NonInteractive</c> via <see cref="NuGetVerifySettings.NonInteractive"/></li><li><c>-Signatures</c> via <see cref="NuGetVerifySettings.TargetPath"/></li><li><c>-Verbosity</c> via <see cref="NuGetVerifySettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> NuGetVerify(NuGetVerifySettings options = null) => new NuGetTasks().Run<NuGetVerifySettings>(options);
+    /// <inheritdoc cref="NuGetTasks.NuGetVerify(Nuke.Common.Tools.NuGet.NuGetVerifySettings)"/>
+    public static IReadOnlyCollection<Output> NuGetVerify(Configure<NuGetVerifySettings> configurator) => new NuGetTasks().Run<NuGetVerifySettings>(configurator.Invoke(new NuGetVerifySettings()));
+    /// <inheritdoc cref="NuGetTasks.NuGetVerify(Nuke.Common.Tools.NuGet.NuGetVerifySettings)"/>
+    public static IEnumerable<(NuGetVerifySettings Settings, IReadOnlyCollection<Output> Output)> NuGetVerify(CombinatorialConfigure<NuGetVerifySettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(NuGetVerify, degreeOfParallelism, completeOnFailure);
     /// <summary><p>The NuGet Command Line Interface (CLI) provides the full extent of NuGet functionality to install, create, publish, and manage packages.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/nuget/tools/nuget-exe-cli-reference">official website</a>.</p></summary>
     /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;targetPath&gt;</c> via <see cref="NuGetPackSettings.TargetPath"/></li><li><c>-BasePath</c> via <see cref="NuGetPackSettings.BasePath"/></li><li><c>-Build</c> via <see cref="NuGetPackSettings.Build"/></li><li><c>-Exclude</c> via <see cref="NuGetPackSettings.Exclude"/></li><li><c>-ExcludeEmptyDirectories</c> via <see cref="NuGetPackSettings.ExcludeEmptyDirectories"/></li><li><c>-ForceEnglishOutput</c> via <see cref="NuGetPackSettings.ForceEnglishOutput"/></li><li><c>-IncludeReferencedProjects</c> via <see cref="NuGetPackSettings.IncludeReferencedProjects"/></li><li><c>-MinClientVersion</c> via <see cref="NuGetPackSettings.MinClientVersion"/></li><li><c>-MSBuildPath</c> via <see cref="NuGetPackSettings.MSBuildPath"/></li><li><c>-MSBuildVersion</c> via <see cref="NuGetPackSettings.MSBuildVersion"/></li><li><c>-NoDefaultExcludes</c> via <see cref="NuGetPackSettings.NoDefaultExcludes"/></li><li><c>-NoPackageAnalysis</c> via <see cref="NuGetPackSettings.NoPackageAnalysis"/></li><li><c>-OutputDirectory</c> via <see cref="NuGetPackSettings.OutputDirectory"/></li><li><c>-Properties</c> via <see cref="NuGetPackSettings.Properties"/></li><li><c>-Suffix</c> via <see cref="NuGetPackSettings.Suffix"/></li><li><c>-SymbolPackageFormat</c> via <see cref="NuGetPackSettings.SymbolPackageFormat"/></li><li><c>-Symbols</c> via <see cref="NuGetPackSettings.Symbols"/></li><li><c>-Tool</c> via <see cref="NuGetPackSettings.Tool"/></li><li><c>-Verbosity</c> via <see cref="NuGetPackSettings.Verbosity"/></li><li><c>-Version</c> via <see cref="NuGetPackSettings.Version"/></li></ul></remarks>
     public static IReadOnlyCollection<Output> NuGetPack(NuGetPackSettings options = null) => new NuGetTasks().Run<NuGetPackSettings>(options);
@@ -130,6 +151,95 @@ public partial class NuGetPushSettings : ToolOptions
     [Argument(Format = "-NonInteractive")] public bool? NonInteractive => Get<bool?>(() => NonInteractive);
     /// <summary>Specifies the timeout, in seconds, for pushing to a server. The default is 300 seconds (5 minutes).</summary>
     [Argument(Format = "-Timeout {value}")] public int? Timeout => Get<int?>(() => Timeout);
+}
+#endregion
+#region NuGetDeleteSettings
+/// <inheritdoc cref="NuGetTasks.NuGetDelete(Nuke.Common.Tools.NuGet.NuGetDeleteSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetDelete), Arguments = "delete")]
+public partial class NuGetDeleteSettings : ToolOptions
+{
+    /// <summary>Package Id to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted.</summary>
+    [Argument(Format = "{value}", Position = 1)] public string PackageId => Get<string>(() => PackageId);
+    /// <summary>Package Version to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted.</summary>
+    [Argument(Format = "{value}", Position = 2)] public string PackageVersion => Get<string>(() => PackageVersion);
+    /// <summary>The API key for the target repository. If not present, the one specified in <em>%AppData%\NuGet\NuGet.Config</em> is used.</summary>
+    [Argument(Format = "-ApiKey {value}", Secret = true)] public string ApiKey => Get<string>(() => ApiKey);
+    /// <summary>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</summary>
+    [Argument(Format = "-ConfigFile {value}")] public string ConfigFile => Get<string>(() => ConfigFile);
+    /// <summary><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</summary>
+    [Argument(Format = "-ForceEnglishOutput")] public bool? ForceEnglishOutput => Get<bool?>(() => ForceEnglishOutput);
+    /// <summary>Suppresses prompts for user input or confirmations.</summary>
+    [Argument(Format = "-NonInteractive")] public bool? NonInteractive => Get<bool?>(() => NonInteractive);
+    /// <summary>Do not prompt when deleting.</summary>
+    [Argument(Format = "-NoPrompt")] public bool? NoPrompt => Get<bool?>(() => NoPrompt);
+    /// <summary>Specifies the server URL. NuGet identifies a UNC or local folder source and simply copies the file there instead of pushing it using HTTP.  Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value (see <a href="https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Configuring NuGet behavior</a>).</summary>
+    [Argument(Format = "-Source {value}")] public string Source => Get<string>(() => Source);
+    /// <summary>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</summary>
+    [Argument(Format = "-Verbosity {value}")] public NuGetVerbosity Verbosity => Get<NuGetVerbosity>(() => Verbosity);
+}
+#endregion
+#region NuGetSignSettings
+/// <inheritdoc cref="NuGetTasks.NuGetSign(Nuke.Common.Tools.NuGet.NuGetSignSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetSign), Arguments = "sign")]
+public partial class NuGetSignSettings : ToolOptions
+{
+    /// <summary>Path of the package to sign.</summary>
+    [Argument(Format = "{value}", Position = 1)] public string TargetPath => Get<string>(() => TargetPath);
+    /// <summary>Specifies the fingerprint to be used to search for the certificate in a local certificate store.</summary>
+    [Argument(Format = "-CertificateFingerprint {value}")] public string CertificateFingerprint => Get<string>(() => CertificateFingerprint);
+    /// <summary>Specifies the certificate password, if needed. If a certificate is password protected but no password is provided, the command will prompt for a password at run time, unless the -NonInteractive option is passed.</summary>
+    [Argument(Format = "-CertificatePassword {value}", Secret = true)] public string CertificatePassword => Get<string>(() => CertificatePassword);
+    /// <summary>Specifies the file path to the certificate to be used in signing the package.</summary>
+    [Argument(Format = "-CertificatePath {value}")] public string CertificatePath => Get<string>(() => CertificatePath);
+    /// <summary>Specifies the name of the X.509 certificate store use to search for the certificate. Defaults to 'CurrentUser', the X.509 certificate store used by the current user. This option should be used when specifying the certificate via -CertificateSubjectName or -CertificateFingerprint options.</summary>
+    [Argument(Format = "-CertificateStoreLocation {value}")] public string CertificateStoreLocation => Get<string>(() => CertificateStoreLocation);
+    /// <summary>Specifies the name of the X.509 certificate store to use to search for the certificate. Defaults to 'My', the X.509 certificate store for personal certificates. This option should be used when specifying the certificate via -CertificateSubjectName or -CertificateFingerprint options.</summary>
+    [Argument(Format = "-CertificateStoreName {value}")] public string CertificateStoreName => Get<string>(() => CertificateStoreName);
+    /// <summary>Specifies the subject name of the certificate used to search a local certificate store for the certificate. The search is a case-insensitive string comparison using the supplied value, which will find all certificates with the subject name containing that string, regardless of other subject values. The certificate store can be specified by -CertificateStoreName and -CertificateStoreLocation options.</summary>
+    [Argument(Format = "-CertificateSubjectName {value}")] public string CertificateSubjectName => Get<string>(() => CertificateSubjectName);
+    /// <summary>Hash algorithm to be used to sign the package. Defaults to SHA256. Possible values are SHA256, SHA384, and SHA512.</summary>
+    [Argument(Format = "-HashAlgorithm {value}")] public NuGetSignHashAlgorithm HashAlgorithm => Get<NuGetSignHashAlgorithm>(() => HashAlgorithm);
+    /// <summary>Specifies the directory where the signed package should be saved. By default the original package is overwritten by the signed package.</summary>
+    [Argument(Format = "-OutputDirectory {value}")] public string OutputDirectory => Get<string>(() => OutputDirectory);
+    /// <summary>Switch to indicate if the current signature should be overwritten. By default the command will fail if the package already has a signature.</summary>
+    [Argument(Format = "-Overwrite")] public bool? Overwrite => Get<bool?>(() => Overwrite);
+    /// <summary>URL to an RFC 3161 timestamping server.</summary>
+    [Argument(Format = "-Timestamper {value}")] public string Timestamper => Get<string>(() => Timestamper);
+    /// <summary>Hash algorithm to be used by the RFC 3161 timestamp server. Defaults to SHA256.</summary>
+    [Argument(Format = "-TimestampHashAlgorithm {value}")] public NuGetSignHashAlgorithm TimestampHashAlgorithm => Get<NuGetSignHashAlgorithm>(() => TimestampHashAlgorithm);
+    /// <summary>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</summary>
+    [Argument(Format = "-ConfigFile {value}")] public string ConfigFile => Get<string>(() => ConfigFile);
+    /// <summary><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</summary>
+    [Argument(Format = "-ForceEnglishOutput")] public bool? ForceEnglishOutput => Get<bool?>(() => ForceEnglishOutput);
+    /// <summary>Suppresses prompts for user input or confirmations.</summary>
+    [Argument(Format = "-NonInteractive")] public bool? NonInteractive => Get<bool?>(() => NonInteractive);
+    /// <summary>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</summary>
+    [Argument(Format = "-Verbosity {value}")] public NuGetVerbosity Verbosity => Get<NuGetVerbosity>(() => Verbosity);
+}
+#endregion
+#region NuGetVerifySettings
+/// <inheritdoc cref="NuGetTasks.NuGetVerify(Nuke.Common.Tools.NuGet.NuGetVerifySettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Command(Type = typeof(NuGetTasks), Command = nameof(NuGetTasks.NuGetVerify), Arguments = "verify")]
+public partial class NuGetVerifySettings : ToolOptions
+{
+    /// <summary>Path of the package to verify Signatures.</summary>
+    [Argument(Format = "-Signatures {value}", Position = 1)] public string TargetPath => Get<string>(() => TargetPath);
+    /// <summary>Specifies one or more SHA-256 certificate fingerprints of certificates(s) which signed packages must be signed with. A certificate SHA-256 fingerprint is a SHA-256 hash of the certificate. Multiple inputs should be semicolon separated.</summary>
+    [Argument(Format = "-CertificateFingerprint {value}")] public string CertificateFingerprint => Get<string>(() => CertificateFingerprint);
+    /// <summary>The NuGet configuration file to apply. If not specified, <c>%AppData%\NuGet\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used.</summary>
+    [Argument(Format = "-ConfigFile {value}")] public string ConfigFile => Get<string>(() => ConfigFile);
+    /// <summary><em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture.</summary>
+    [Argument(Format = "-ForceEnglishOutput")] public bool? ForceEnglishOutput => Get<bool?>(() => ForceEnglishOutput);
+    /// <summary>Suppresses prompts for user input or confirmations.</summary>
+    [Argument(Format = "-NonInteractive")] public bool? NonInteractive => Get<bool?>(() => NonInteractive);
+    /// <summary>Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>.</summary>
+    [Argument(Format = "-Verbosity {value}")] public NuGetVerbosity Verbosity => Get<NuGetVerbosity>(() => Verbosity);
 }
 #endregion
 #region NuGetPackSettings
@@ -540,6 +650,350 @@ public static partial class NuGetPushSettingsExtensions
     /// <inheritdoc cref="NuGetPushSettings.Timeout"/>
     [Pure] [Builder(Type = typeof(NuGetPushSettings), Property = nameof(NuGetPushSettings.Timeout))]
     public static T ResetTimeout<T>(this T o) where T : NuGetPushSettings => o.Modify(b => b.Remove(() => o.Timeout));
+    #endregion
+}
+#endregion
+#region NuGetDeleteSettingsExtensions
+/// <inheritdoc cref="NuGetTasks.NuGetDelete(Nuke.Common.Tools.NuGet.NuGetDeleteSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class NuGetDeleteSettingsExtensions
+{
+    #region PackageId
+    /// <inheritdoc cref="NuGetDeleteSettings.PackageId"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.PackageId))]
+    public static T SetPackageId<T>(this T o, string v) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.PackageId, v));
+    /// <inheritdoc cref="NuGetDeleteSettings.PackageId"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.PackageId))]
+    public static T ResetPackageId<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Remove(() => o.PackageId));
+    #endregion
+    #region PackageVersion
+    /// <inheritdoc cref="NuGetDeleteSettings.PackageVersion"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.PackageVersion))]
+    public static T SetPackageVersion<T>(this T o, string v) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.PackageVersion, v));
+    /// <inheritdoc cref="NuGetDeleteSettings.PackageVersion"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.PackageVersion))]
+    public static T ResetPackageVersion<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Remove(() => o.PackageVersion));
+    #endregion
+    #region ApiKey
+    /// <inheritdoc cref="NuGetDeleteSettings.ApiKey"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.ApiKey))]
+    public static T SetApiKey<T>(this T o, [Secret] string v) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.ApiKey, v));
+    /// <inheritdoc cref="NuGetDeleteSettings.ApiKey"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.ApiKey))]
+    public static T ResetApiKey<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Remove(() => o.ApiKey));
+    #endregion
+    #region ConfigFile
+    /// <inheritdoc cref="NuGetDeleteSettings.ConfigFile"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.ConfigFile))]
+    public static T SetConfigFile<T>(this T o, string v) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.ConfigFile, v));
+    /// <inheritdoc cref="NuGetDeleteSettings.ConfigFile"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.ConfigFile))]
+    public static T ResetConfigFile<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Remove(() => o.ConfigFile));
+    #endregion
+    #region ForceEnglishOutput
+    /// <inheritdoc cref="NuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.ForceEnglishOutput))]
+    public static T SetForceEnglishOutput<T>(this T o, bool? v) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, v));
+    /// <inheritdoc cref="NuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.ForceEnglishOutput))]
+    public static T ResetForceEnglishOutput<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Remove(() => o.ForceEnglishOutput));
+    /// <inheritdoc cref="NuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.ForceEnglishOutput))]
+    public static T EnableForceEnglishOutput<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, true));
+    /// <inheritdoc cref="NuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.ForceEnglishOutput))]
+    public static T DisableForceEnglishOutput<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, false));
+    /// <inheritdoc cref="NuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.ForceEnglishOutput))]
+    public static T ToggleForceEnglishOutput<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, !o.ForceEnglishOutput));
+    #endregion
+    #region NonInteractive
+    /// <inheritdoc cref="NuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.NonInteractive))]
+    public static T SetNonInteractive<T>(this T o, bool? v) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, v));
+    /// <inheritdoc cref="NuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.NonInteractive))]
+    public static T ResetNonInteractive<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Remove(() => o.NonInteractive));
+    /// <inheritdoc cref="NuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.NonInteractive))]
+    public static T EnableNonInteractive<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, true));
+    /// <inheritdoc cref="NuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.NonInteractive))]
+    public static T DisableNonInteractive<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, false));
+    /// <inheritdoc cref="NuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.NonInteractive))]
+    public static T ToggleNonInteractive<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, !o.NonInteractive));
+    #endregion
+    #region NoPrompt
+    /// <inheritdoc cref="NuGetDeleteSettings.NoPrompt"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.NoPrompt))]
+    public static T SetNoPrompt<T>(this T o, bool? v) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoPrompt, v));
+    /// <inheritdoc cref="NuGetDeleteSettings.NoPrompt"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.NoPrompt))]
+    public static T ResetNoPrompt<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Remove(() => o.NoPrompt));
+    /// <inheritdoc cref="NuGetDeleteSettings.NoPrompt"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.NoPrompt))]
+    public static T EnableNoPrompt<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoPrompt, true));
+    /// <inheritdoc cref="NuGetDeleteSettings.NoPrompt"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.NoPrompt))]
+    public static T DisableNoPrompt<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoPrompt, false));
+    /// <inheritdoc cref="NuGetDeleteSettings.NoPrompt"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.NoPrompt))]
+    public static T ToggleNoPrompt<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoPrompt, !o.NoPrompt));
+    #endregion
+    #region Source
+    /// <inheritdoc cref="NuGetDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.Source))]
+    public static T SetSource<T>(this T o, string v) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.Source, v));
+    /// <inheritdoc cref="NuGetDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.Source))]
+    public static T ResetSource<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Remove(() => o.Source));
+    #endregion
+    #region Verbosity
+    /// <inheritdoc cref="NuGetDeleteSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.Verbosity))]
+    public static T SetVerbosity<T>(this T o, NuGetVerbosity v) where T : NuGetDeleteSettings => o.Modify(b => b.Set(() => o.Verbosity, v));
+    /// <inheritdoc cref="NuGetDeleteSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(NuGetDeleteSettings), Property = nameof(NuGetDeleteSettings.Verbosity))]
+    public static T ResetVerbosity<T>(this T o) where T : NuGetDeleteSettings => o.Modify(b => b.Remove(() => o.Verbosity));
+    #endregion
+}
+#endregion
+#region NuGetSignSettingsExtensions
+/// <inheritdoc cref="NuGetTasks.NuGetSign(Nuke.Common.Tools.NuGet.NuGetSignSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class NuGetSignSettingsExtensions
+{
+    #region TargetPath
+    /// <inheritdoc cref="NuGetSignSettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.TargetPath))]
+    public static T SetTargetPath<T>(this T o, string v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.TargetPath, v));
+    /// <inheritdoc cref="NuGetSignSettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.TargetPath))]
+    public static T ResetTargetPath<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.TargetPath));
+    #endregion
+    #region CertificateFingerprint
+    /// <inheritdoc cref="NuGetSignSettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificateFingerprint))]
+    public static T SetCertificateFingerprint<T>(this T o, string v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateFingerprint, v));
+    /// <inheritdoc cref="NuGetSignSettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificateFingerprint))]
+    public static T ResetCertificateFingerprint<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateFingerprint));
+    #endregion
+    #region CertificatePassword
+    /// <inheritdoc cref="NuGetSignSettings.CertificatePassword"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificatePassword))]
+    public static T SetCertificatePassword<T>(this T o, [Secret] string v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.CertificatePassword, v));
+    /// <inheritdoc cref="NuGetSignSettings.CertificatePassword"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificatePassword))]
+    public static T ResetCertificatePassword<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificatePassword));
+    #endregion
+    #region CertificatePath
+    /// <inheritdoc cref="NuGetSignSettings.CertificatePath"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificatePath))]
+    public static T SetCertificatePath<T>(this T o, string v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.CertificatePath, v));
+    /// <inheritdoc cref="NuGetSignSettings.CertificatePath"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificatePath))]
+    public static T ResetCertificatePath<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificatePath));
+    #endregion
+    #region CertificateStoreLocation
+    /// <inheritdoc cref="NuGetSignSettings.CertificateStoreLocation"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificateStoreLocation))]
+    public static T SetCertificateStoreLocation<T>(this T o, string v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateStoreLocation, v));
+    /// <inheritdoc cref="NuGetSignSettings.CertificateStoreLocation"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificateStoreLocation))]
+    public static T ResetCertificateStoreLocation<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateStoreLocation));
+    #endregion
+    #region CertificateStoreName
+    /// <inheritdoc cref="NuGetSignSettings.CertificateStoreName"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificateStoreName))]
+    public static T SetCertificateStoreName<T>(this T o, string v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateStoreName, v));
+    /// <inheritdoc cref="NuGetSignSettings.CertificateStoreName"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificateStoreName))]
+    public static T ResetCertificateStoreName<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateStoreName));
+    #endregion
+    #region CertificateSubjectName
+    /// <inheritdoc cref="NuGetSignSettings.CertificateSubjectName"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificateSubjectName))]
+    public static T SetCertificateSubjectName<T>(this T o, string v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateSubjectName, v));
+    /// <inheritdoc cref="NuGetSignSettings.CertificateSubjectName"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.CertificateSubjectName))]
+    public static T ResetCertificateSubjectName<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateSubjectName));
+    #endregion
+    #region HashAlgorithm
+    /// <inheritdoc cref="NuGetSignSettings.HashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.HashAlgorithm))]
+    public static T SetHashAlgorithm<T>(this T o, NuGetSignHashAlgorithm v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.HashAlgorithm, v));
+    /// <inheritdoc cref="NuGetSignSettings.HashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.HashAlgorithm))]
+    public static T ResetHashAlgorithm<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.HashAlgorithm));
+    #endregion
+    #region OutputDirectory
+    /// <inheritdoc cref="NuGetSignSettings.OutputDirectory"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.OutputDirectory))]
+    public static T SetOutputDirectory<T>(this T o, string v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.OutputDirectory, v));
+    /// <inheritdoc cref="NuGetSignSettings.OutputDirectory"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.OutputDirectory))]
+    public static T ResetOutputDirectory<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.OutputDirectory));
+    #endregion
+    #region Overwrite
+    /// <inheritdoc cref="NuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.Overwrite))]
+    public static T SetOverwrite<T>(this T o, bool? v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, v));
+    /// <inheritdoc cref="NuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.Overwrite))]
+    public static T ResetOverwrite<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.Overwrite));
+    /// <inheritdoc cref="NuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.Overwrite))]
+    public static T EnableOverwrite<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, true));
+    /// <inheritdoc cref="NuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.Overwrite))]
+    public static T DisableOverwrite<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, false));
+    /// <inheritdoc cref="NuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.Overwrite))]
+    public static T ToggleOverwrite<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, !o.Overwrite));
+    #endregion
+    #region Timestamper
+    /// <inheritdoc cref="NuGetSignSettings.Timestamper"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.Timestamper))]
+    public static T SetTimestamper<T>(this T o, string v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.Timestamper, v));
+    /// <inheritdoc cref="NuGetSignSettings.Timestamper"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.Timestamper))]
+    public static T ResetTimestamper<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.Timestamper));
+    #endregion
+    #region TimestampHashAlgorithm
+    /// <inheritdoc cref="NuGetSignSettings.TimestampHashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.TimestampHashAlgorithm))]
+    public static T SetTimestampHashAlgorithm<T>(this T o, NuGetSignHashAlgorithm v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.TimestampHashAlgorithm, v));
+    /// <inheritdoc cref="NuGetSignSettings.TimestampHashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.TimestampHashAlgorithm))]
+    public static T ResetTimestampHashAlgorithm<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.TimestampHashAlgorithm));
+    #endregion
+    #region ConfigFile
+    /// <inheritdoc cref="NuGetSignSettings.ConfigFile"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.ConfigFile))]
+    public static T SetConfigFile<T>(this T o, string v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.ConfigFile, v));
+    /// <inheritdoc cref="NuGetSignSettings.ConfigFile"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.ConfigFile))]
+    public static T ResetConfigFile<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.ConfigFile));
+    #endregion
+    #region ForceEnglishOutput
+    /// <inheritdoc cref="NuGetSignSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.ForceEnglishOutput))]
+    public static T SetForceEnglishOutput<T>(this T o, bool? v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, v));
+    /// <inheritdoc cref="NuGetSignSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.ForceEnglishOutput))]
+    public static T ResetForceEnglishOutput<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.ForceEnglishOutput));
+    /// <inheritdoc cref="NuGetSignSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.ForceEnglishOutput))]
+    public static T EnableForceEnglishOutput<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, true));
+    /// <inheritdoc cref="NuGetSignSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.ForceEnglishOutput))]
+    public static T DisableForceEnglishOutput<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, false));
+    /// <inheritdoc cref="NuGetSignSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.ForceEnglishOutput))]
+    public static T ToggleForceEnglishOutput<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, !o.ForceEnglishOutput));
+    #endregion
+    #region NonInteractive
+    /// <inheritdoc cref="NuGetSignSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.NonInteractive))]
+    public static T SetNonInteractive<T>(this T o, bool? v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.NonInteractive, v));
+    /// <inheritdoc cref="NuGetSignSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.NonInteractive))]
+    public static T ResetNonInteractive<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.NonInteractive));
+    /// <inheritdoc cref="NuGetSignSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.NonInteractive))]
+    public static T EnableNonInteractive<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.NonInteractive, true));
+    /// <inheritdoc cref="NuGetSignSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.NonInteractive))]
+    public static T DisableNonInteractive<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.NonInteractive, false));
+    /// <inheritdoc cref="NuGetSignSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.NonInteractive))]
+    public static T ToggleNonInteractive<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.NonInteractive, !o.NonInteractive));
+    #endregion
+    #region Verbosity
+    /// <inheritdoc cref="NuGetSignSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.Verbosity))]
+    public static T SetVerbosity<T>(this T o, NuGetVerbosity v) where T : NuGetSignSettings => o.Modify(b => b.Set(() => o.Verbosity, v));
+    /// <inheritdoc cref="NuGetSignSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(NuGetSignSettings), Property = nameof(NuGetSignSettings.Verbosity))]
+    public static T ResetVerbosity<T>(this T o) where T : NuGetSignSettings => o.Modify(b => b.Remove(() => o.Verbosity));
+    #endregion
+}
+#endregion
+#region NuGetVerifySettingsExtensions
+/// <inheritdoc cref="NuGetTasks.NuGetVerify(Nuke.Common.Tools.NuGet.NuGetVerifySettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class NuGetVerifySettingsExtensions
+{
+    #region TargetPath
+    /// <inheritdoc cref="NuGetVerifySettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.TargetPath))]
+    public static T SetTargetPath<T>(this T o, string v) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.TargetPath, v));
+    /// <inheritdoc cref="NuGetVerifySettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.TargetPath))]
+    public static T ResetTargetPath<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Remove(() => o.TargetPath));
+    #endregion
+    #region CertificateFingerprint
+    /// <inheritdoc cref="NuGetVerifySettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.CertificateFingerprint))]
+    public static T SetCertificateFingerprint<T>(this T o, string v) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.CertificateFingerprint, v));
+    /// <inheritdoc cref="NuGetVerifySettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.CertificateFingerprint))]
+    public static T ResetCertificateFingerprint<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Remove(() => o.CertificateFingerprint));
+    #endregion
+    #region ConfigFile
+    /// <inheritdoc cref="NuGetVerifySettings.ConfigFile"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.ConfigFile))]
+    public static T SetConfigFile<T>(this T o, string v) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.ConfigFile, v));
+    /// <inheritdoc cref="NuGetVerifySettings.ConfigFile"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.ConfigFile))]
+    public static T ResetConfigFile<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Remove(() => o.ConfigFile));
+    #endregion
+    #region ForceEnglishOutput
+    /// <inheritdoc cref="NuGetVerifySettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.ForceEnglishOutput))]
+    public static T SetForceEnglishOutput<T>(this T o, bool? v) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, v));
+    /// <inheritdoc cref="NuGetVerifySettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.ForceEnglishOutput))]
+    public static T ResetForceEnglishOutput<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Remove(() => o.ForceEnglishOutput));
+    /// <inheritdoc cref="NuGetVerifySettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.ForceEnglishOutput))]
+    public static T EnableForceEnglishOutput<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, true));
+    /// <inheritdoc cref="NuGetVerifySettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.ForceEnglishOutput))]
+    public static T DisableForceEnglishOutput<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, false));
+    /// <inheritdoc cref="NuGetVerifySettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.ForceEnglishOutput))]
+    public static T ToggleForceEnglishOutput<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, !o.ForceEnglishOutput));
+    #endregion
+    #region NonInteractive
+    /// <inheritdoc cref="NuGetVerifySettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.NonInteractive))]
+    public static T SetNonInteractive<T>(this T o, bool? v) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.NonInteractive, v));
+    /// <inheritdoc cref="NuGetVerifySettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.NonInteractive))]
+    public static T ResetNonInteractive<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Remove(() => o.NonInteractive));
+    /// <inheritdoc cref="NuGetVerifySettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.NonInteractive))]
+    public static T EnableNonInteractive<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.NonInteractive, true));
+    /// <inheritdoc cref="NuGetVerifySettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.NonInteractive))]
+    public static T DisableNonInteractive<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.NonInteractive, false));
+    /// <inheritdoc cref="NuGetVerifySettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.NonInteractive))]
+    public static T ToggleNonInteractive<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.NonInteractive, !o.NonInteractive));
+    #endregion
+    #region Verbosity
+    /// <inheritdoc cref="NuGetVerifySettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.Verbosity))]
+    public static T SetVerbosity<T>(this T o, NuGetVerbosity v) where T : NuGetVerifySettings => o.Modify(b => b.Set(() => o.Verbosity, v));
+    /// <inheritdoc cref="NuGetVerifySettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(NuGetVerifySettings), Property = nameof(NuGetVerifySettings.Verbosity))]
+    public static T ResetVerbosity<T>(this T o) where T : NuGetVerifySettings => o.Modify(b => b.Remove(() => o.Verbosity));
     #endregion
 }
 #endregion
@@ -1913,6 +2367,23 @@ public partial class DependencyVersion : Enumeration
     public static implicit operator DependencyVersion(string value)
     {
         return new DependencyVersion { Value = value };
+    }
+}
+#endregion
+#region NuGetSignHashAlgorithm
+/// <summary>Used within <see cref="NuGetTasks"/>.</summary>
+[PublicAPI]
+[Serializable]
+[ExcludeFromCodeCoverage]
+[TypeConverter(typeof(TypeConverter<NuGetSignHashAlgorithm>))]
+public partial class NuGetSignHashAlgorithm : Enumeration
+{
+    public static NuGetSignHashAlgorithm sha256 = (NuGetSignHashAlgorithm) "sha256";
+    public static NuGetSignHashAlgorithm sha384 = (NuGetSignHashAlgorithm) "sha384";
+    public static NuGetSignHashAlgorithm sha512 = (NuGetSignHashAlgorithm) "sha512";
+    public static implicit operator NuGetSignHashAlgorithm(string value)
+    {
+        return new NuGetSignHashAlgorithm { Value = value };
     }
 }
 #endregion
