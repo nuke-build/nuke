@@ -62,13 +62,6 @@ public partial class DockerTasks : ToolTasks, IRequirePathTool
     public static IReadOnlyCollection<Output> DockerStack(Configure<DockerStackSettings> configurator) => new DockerTasks().Run<DockerStackSettings>(configurator.Invoke(new DockerStackSettings()));
     /// <inheritdoc cref="DockerTasks.DockerStack(Nuke.Common.Tools.Docker.DockerStackSettings)"/>
     public static IEnumerable<(DockerStackSettings Settings, IReadOnlyCollection<Output> Output)> DockerStack(CombinatorialConfigure<DockerStackSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DockerStack, degreeOfParallelism, completeOnFailure);
-    /// <summary><p>Display the running processes of a container.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;container&gt;</c> via <see cref="DockerTopSettings.Container"/></li><li><c>&lt;options&gt;</c> via <see cref="DockerTopSettings.Options"/></li><li><c>--config</c> via <see cref="DockerOptionsBase.Config"/></li><li><c>--debug</c> via <see cref="DockerOptionsBase.Debug"/></li><li><c>--log-level</c> via <see cref="DockerOptionsBase.LogLevel"/></li><li><c>--tls</c> via <see cref="DockerOptionsBase.TLS"/></li><li><c>--tlscacert</c> via <see cref="DockerOptionsBase.TLSCaCert"/></li><li><c>--tlscert</c> via <see cref="DockerOptionsBase.TLSCert"/></li><li><c>--tlskey</c> via <see cref="DockerOptionsBase.TLSKey"/></li><li><c>--tlsverify</c> via <see cref="DockerOptionsBase.TLSVerify"/></li></ul></remarks>
-    public static IReadOnlyCollection<Output> DockerTop(DockerTopSettings options = null) => new DockerTasks().Run<DockerTopSettings>(options);
-    /// <inheritdoc cref="DockerTasks.DockerTop(Nuke.Common.Tools.Docker.DockerTopSettings)"/>
-    public static IReadOnlyCollection<Output> DockerTop(Configure<DockerTopSettings> configurator) => new DockerTasks().Run<DockerTopSettings>(configurator.Invoke(new DockerTopSettings()));
-    /// <inheritdoc cref="DockerTasks.DockerTop(Nuke.Common.Tools.Docker.DockerTopSettings)"/>
-    public static IEnumerable<(DockerTopSettings Settings, IReadOnlyCollection<Output> Output)> DockerTop(CombinatorialConfigure<DockerTopSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DockerTop, degreeOfParallelism, completeOnFailure);
     /// <summary><p>Pull an image or a repository from a registry.</p><p>For more details, visit the <a href="https://www.docker.com/">official website</a>.</p></summary>
     /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;name&gt;</c> via <see cref="DockerPullSettings.Name"/></li><li><c>--all-tags</c> via <see cref="DockerPullSettings.AllTags"/></li><li><c>--config</c> via <see cref="DockerOptionsBase.Config"/></li><li><c>--debug</c> via <see cref="DockerOptionsBase.Debug"/></li><li><c>--disable-content-trust</c> via <see cref="DockerPullSettings.DisableContentTrust"/></li><li><c>--log-level</c> via <see cref="DockerOptionsBase.LogLevel"/></li><li><c>--platform</c> via <see cref="DockerPullSettings.Platform"/></li><li><c>--quiet</c> via <see cref="DockerPullSettings.Quiet"/></li><li><c>--tls</c> via <see cref="DockerOptionsBase.TLS"/></li><li><c>--tlscacert</c> via <see cref="DockerOptionsBase.TLSCaCert"/></li><li><c>--tlscert</c> via <see cref="DockerOptionsBase.TLSCert"/></li><li><c>--tlskey</c> via <see cref="DockerOptionsBase.TLSKey"/></li><li><c>--tlsverify</c> via <see cref="DockerOptionsBase.TLSVerify"/></li></ul></remarks>
     public static IReadOnlyCollection<Output> DockerPull(DockerPullSettings options = null) => new DockerTasks().Run<DockerPullSettings>(options);
@@ -1403,19 +1396,6 @@ public partial class DockerStackSettings : DockerOptionsBase
     [Argument(Format = "--orchestrator {value}")] public string Orchestrator => Get<string>(() => Orchestrator);
 }
 #endregion
-#region DockerTopSettings
-/// <inheritdoc cref="DockerTasks.DockerTop(Nuke.Common.Tools.Docker.DockerTopSettings)"/>
-[PublicAPI]
-[ExcludeFromCodeCoverage]
-[Command(Type = typeof(DockerTasks), Command = nameof(DockerTasks.DockerTop), Arguments = "top [ps")]
-public partial class DockerTopSettings : DockerOptionsBase
-{
-    /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
-    /// <summary>OPTIONS]</summary>
-    [Argument(Format = "{value}")] public string Options => Get<string>(() => Options);
-}
-#endregion
 #region DockerPullSettings
 /// <inheritdoc cref="DockerTasks.DockerPull(Nuke.Common.Tools.Docker.DockerPullSettings)"/>
 [PublicAPI]
@@ -1432,7 +1412,7 @@ public partial class DockerPullSettings : DockerOptionsBase
     /// <summary>Suppress verbose output.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>NAME[:TAG|@DIGEST]</summary>
-    [Argument(Format = "{value}")] public string Name => Get<string>(() => Name);
+    [Argument(Format = "{value}", Position = -1)] public string Name => Get<string>(() => Name);
 }
 #endregion
 #region DockerTrustSignSettings
@@ -1474,7 +1454,7 @@ public partial class DockerConfigInspectSettings : DockerOptionsBase
     /// <summary>Print the information in a human friendly format.</summary>
     [Argument(Format = "--pretty")] public bool? Pretty => Get<bool?>(() => Pretty);
     /// <summary>CONFIG</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Configs => Get<List<string>>(() => Configs);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Configs => Get<List<string>>(() => Configs);
 }
 #endregion
 #region DockerServiceSettings
@@ -1537,7 +1517,7 @@ public partial class DockerContextUpdateSettings : DockerOptionsBase
     /// <summary>set the kubernetes endpoint.</summary>
     [Argument(Format = "--kubernetes {value}")] public string Kubernetes => Get<string>(() => Kubernetes);
     /// <summary>CONTEXT</summary>
-    [Argument(Format = "{value}")] public string Context => Get<string>(() => Context);
+    [Argument(Format = "{value}", Position = -1)] public string Context => Get<string>(() => Context);
 }
 #endregion
 #region DockerStackServicesSettings
@@ -1556,7 +1536,7 @@ public partial class DockerStackServicesSettings : DockerStackSettings
     /// <summary>Only display IDs.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>STACK</summary>
-    [Argument(Format = "{value}")] public string Stack => Get<string>(() => Stack);
+    [Argument(Format = "{value}", Position = -1)] public string Stack => Get<string>(() => Stack);
 }
 #endregion
 #region DockerContainerPortSettings
@@ -1567,9 +1547,9 @@ public partial class DockerStackServicesSettings : DockerStackSettings
 public partial class DockerContainerPortSettings : DockerOptionsBase
 {
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -2)] public string Container => Get<string>(() => Container);
     /// <summary>[PRIVATE_PORT[/PROTO]]</summary>
-    [Argument(Format = "{value}")] public string PrivatePort => Get<string>(() => PrivatePort);
+    [Argument(Format = "{value}", Position = -1)] public string PrivatePort => Get<string>(() => PrivatePort);
 }
 #endregion
 #region DockerRenameSettings
@@ -1580,9 +1560,9 @@ public partial class DockerContainerPortSettings : DockerOptionsBase
 public partial class DockerRenameSettings : DockerOptionsBase
 {
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -2)] public string Container => Get<string>(() => Container);
     /// <summary>NEW_NAME</summary>
-    [Argument(Format = "{value}")] public string NewName => Get<string>(() => NewName);
+    [Argument(Format = "{value}", Position = -1)] public string NewName => Get<string>(() => NewName);
 }
 #endregion
 #region DockerTagSettings
@@ -1593,9 +1573,9 @@ public partial class DockerRenameSettings : DockerOptionsBase
 public partial class DockerTagSettings : DockerOptionsBase
 {
     /// <summary>SOURCE_IMAGE[:TAG]</summary>
-    [Argument(Format = "{value}")] public string SourceImage => Get<string>(() => SourceImage);
+    [Argument(Format = "{value}", Position = -2)] public string SourceImage => Get<string>(() => SourceImage);
     /// <summary>TARGET_IMAGE[:TAG]</summary>
-    [Argument(Format = "{value}")] public string TargetImage => Get<string>(() => TargetImage);
+    [Argument(Format = "{value}", Position = -1)] public string TargetImage => Get<string>(() => TargetImage);
 }
 #endregion
 #region DockerSecretInspectSettings
@@ -1610,7 +1590,7 @@ public partial class DockerSecretInspectSettings : DockerOptionsBase
     /// <summary>Print the information in a human friendly format.</summary>
     [Argument(Format = "--pretty")] public bool? Pretty => Get<bool?>(() => Pretty);
     /// <summary>SECRET</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Secrets => Get<List<string>>(() => Secrets);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Secrets => Get<List<string>>(() => Secrets);
 }
 #endregion
 #region DockerSecretSettings
@@ -1632,7 +1612,7 @@ public partial class DockerContainerExportSettings : DockerOptionsBase
     /// <summary>Write to a file, instead of STDOUT.</summary>
     [Argument(Format = "--output {value}")] public string Output => Get<string>(() => Output);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -1)] public string Container => Get<string>(() => Container);
 }
 #endregion
 #region DockerHistorySettings
@@ -1651,7 +1631,7 @@ public partial class DockerHistorySettings : DockerOptionsBase
     /// <summary>Only show numeric IDs.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}")] public string Image => Get<string>(() => Image);
+    [Argument(Format = "{value}", Position = -1)] public string Image => Get<string>(() => Image);
 }
 #endregion
 #region DockerServiceCreateSettings
@@ -1794,11 +1774,11 @@ public partial class DockerServiceCreateSettings : DockerOptionsBase
     /// <summary>Working directory inside the container.</summary>
     [Argument(Format = "--workdir {value}")] public string Workdir => Get<string>(() => Workdir);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}")] public string Image => Get<string>(() => Image);
+    [Argument(Format = "{value}", Position = -3)] public string Image => Get<string>(() => Image);
     /// <summary>[COMMAND]</summary>
-    [Argument(Format = "{value}")] public string Command => Get<string>(() => Command);
+    [Argument(Format = "{value}", Position = -2)] public string Command => Get<string>(() => Command);
     /// <summary>[ARG...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
 }
 #endregion
 #region DockerServicePsSettings
@@ -1819,7 +1799,7 @@ public partial class DockerServicePsSettings : DockerOptionsBase
     /// <summary>Only display task IDs.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>SERVICE</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Services => Get<List<string>>(() => Services);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Services => Get<List<string>>(() => Services);
 }
 #endregion
 #region DockerStopSettings
@@ -1832,7 +1812,7 @@ public partial class DockerStopSettings : DockerOptionsBase
     /// <summary>Seconds to wait for stop before killing it.</summary>
     [Argument(Format = "--time {value}")] public int? Time => Get<int?>(() => Time);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerNodeSettings
@@ -1882,7 +1862,7 @@ public partial class DockerUpdateSettings : DockerOptionsBase
     /// <summary>Restart policy to apply when a container exits.</summary>
     [Argument(Format = "--restart {value}")] public string Restart => Get<string>(() => Restart);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerPluginCreateSettings
@@ -1895,9 +1875,9 @@ public partial class DockerPluginCreateSettings : DockerOptionsBase
     /// <summary>Compress the context using gzip.</summary>
     [Argument(Format = "--compress")] public bool? Compress => Get<bool?>(() => Compress);
     /// <summary>PLUGIN</summary>
-    [Argument(Format = "{value}")] public string Plugin => Get<string>(() => Plugin);
+    [Argument(Format = "{value}", Position = -2)] public string Plugin => Get<string>(() => Plugin);
     /// <summary>PLUGIN-DATA-DIR</summary>
-    [Argument(Format = "{value}")] public string PluginDataDir => Get<string>(() => PluginDataDir);
+    [Argument(Format = "{value}", Position = -1)] public string PluginDataDir => Get<string>(() => PluginDataDir);
 }
 #endregion
 #region DockerSystemInfoSettings
@@ -1938,9 +1918,9 @@ public partial class DockerPluginUpgradeSettings : DockerOptionsBase
     /// <summary>Do not check if specified remote plugin matches existing plugin image.</summary>
     [Argument(Format = "--skip-remote-check")] public bool? SkipRemoteCheck => Get<bool?>(() => SkipRemoteCheck);
     /// <summary>PLUGIN</summary>
-    [Argument(Format = "{value}")] public string Plugin => Get<string>(() => Plugin);
+    [Argument(Format = "{value}", Position = -2)] public string Plugin => Get<string>(() => Plugin);
     /// <summary>[REMOTE]</summary>
-    [Argument(Format = "{value}")] public string Remote => Get<string>(() => Remote);
+    [Argument(Format = "{value}", Position = -1)] public string Remote => Get<string>(() => Remote);
 }
 #endregion
 #region DockerBuilderPruneSettings
@@ -1964,7 +1944,7 @@ public partial class DockerSwarmJoinTokenSettings : DockerOptionsBase
     /// <summary>Rotate join token.</summary>
     [Argument(Format = "--rotate")] public bool? Rotate => Get<bool?>(() => Rotate);
     /// <summary>(worker|manager)</summary>
-    [Argument(Format = "{value}")] public string Worker => Get<string>(() => Worker);
+    [Argument(Format = "{value}", Position = -1)] public string Worker => Get<string>(() => Worker);
 }
 #endregion
 #region DockerNodeUpdateSettings
@@ -1983,7 +1963,7 @@ public partial class DockerNodeUpdateSettings : DockerOptionsBase
     /// <summary>Role of the node ("worker"|"manager").</summary>
     [Argument(Format = "--role {value}")] public DockerRole Role => Get<DockerRole>(() => Role);
     /// <summary>NODE</summary>
-    [Argument(Format = "{value}")] public string Node => Get<string>(() => Node);
+    [Argument(Format = "{value}", Position = -1)] public string Node => Get<string>(() => Node);
 }
 #endregion
 #region DockerTrustSignerAddSettings
@@ -1994,11 +1974,11 @@ public partial class DockerNodeUpdateSettings : DockerOptionsBase
 public partial class DockerTrustSignerAddSettings : DockerOptionsBase
 {
     /// <summary>OPTIONS</summary>
-    [Argument(Format = "{value}")] public string Options => Get<string>(() => Options);
+    [Argument(Format = "{value}", Position = -3)] public string Options => Get<string>(() => Options);
     /// <summary>NAME</summary>
-    [Argument(Format = "{value}")] public string Name => Get<string>(() => Name);
+    [Argument(Format = "{value}", Position = -2)] public string Name => Get<string>(() => Name);
     /// <summary>REPOSITORY</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Repositories => Get<List<string>>(() => Repositories);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Repositories => Get<List<string>>(() => Repositories);
 }
 #endregion
 #region DockerSwarmUpdateSettings
@@ -2050,7 +2030,7 @@ public partial class DockerServiceLogsSettings : DockerOptionsBase
     /// <summary>Show timestamps.</summary>
     [Argument(Format = "--timestamps")] public bool? Timestamps => Get<bool?>(() => Timestamps);
     /// <summary>SERVICE|TASK</summary>
-    [Argument(Format = "{value}")] public string Service => Get<string>(() => Service);
+    [Argument(Format = "{value}", Position = -1)] public string Service => Get<string>(() => Service);
 }
 #endregion
 #region DockerServiceLsSettings
@@ -2121,7 +2101,7 @@ public partial class DockerPluginRmSettings : DockerOptionsBase
     /// <summary>Force the removal of an active plugin.</summary>
     [Argument(Format = "--force")] public bool? Force => Get<bool?>(() => Force);
     /// <summary>PLUGIN</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Plugins => Get<List<string>>(() => Plugins);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Plugins => Get<List<string>>(() => Plugins);
 }
 #endregion
 #region DockerImageBuildSettings
@@ -2202,7 +2182,7 @@ public partial class DockerImageBuildSettings : DockerOptionsBase
     /// <summary>Ulimit options.</summary>
     [Argument(Format = "--ulimit {value}")] public string Ulimit => Get<string>(() => Ulimit);
     /// <summary>Path or url where the build context is located.</summary>
-    [Argument(Format = "{value}")] public string Path => Get<string>(() => Path);
+    [Argument(Format = "{value}", Position = -1)] public string Path => Get<string>(() => Path);
 }
 #endregion
 #region DockerTrustRevokeSettings
@@ -2215,7 +2195,7 @@ public partial class DockerTrustRevokeSettings : DockerOptionsBase
     /// <summary>Do not prompt for confirmation.</summary>
     [Argument(Format = "--yes")] public bool? Yes => Get<bool?>(() => Yes);
     /// <summary>IMAGE[:TAG]</summary>
-    [Argument(Format = "{value}")] public string Image => Get<string>(() => Image);
+    [Argument(Format = "{value}", Position = -1)] public string Image => Get<string>(() => Image);
 }
 #endregion
 #region DockerRmiSettings
@@ -2230,7 +2210,7 @@ public partial class DockerRmiSettings : DockerOptionsBase
     /// <summary>Do not delete untagged parents.</summary>
     [Argument(Format = "--no-prune")] public bool? NoPrune => Get<bool?>(() => NoPrune);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Images => Get<List<string>>(() => Images);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Images => Get<List<string>>(() => Images);
 }
 #endregion
 #region DockerNetworkRmSettings
@@ -2271,9 +2251,9 @@ public partial class DockerSecretCreateSettings : DockerOptionsBase
     /// <summary>Template driver.</summary>
     [Argument(Format = "--template-driver {value}")] public string TemplateDriver => Get<string>(() => TemplateDriver);
     /// <summary>SECRET</summary>
-    [Argument(Format = "{value}")] public string Secret => Get<string>(() => Secret);
+    [Argument(Format = "{value}", Position = -2)] public string Secret => Get<string>(() => Secret);
     /// <summary>Path to file to create the secret from.</summary>
-    [Argument(Format = "{value}")] public string File => Get<string>(() => File);
+    [Argument(Format = "{value}", Position = -1)] public string File => Get<string>(() => File);
 }
 #endregion
 #region DockerServiceRmSettings
@@ -2297,7 +2277,7 @@ public partial class DockerTrustKeyLoadSettings : DockerOptionsBase
     /// <summary>Name for the loaded key.</summary>
     [Argument(Format = "--name {value}")] public string Name => Get<string>(() => Name);
     /// <summary>KEYFILE</summary>
-    [Argument(Format = "{value}")] public string Keyfile => Get<string>(() => Keyfile);
+    [Argument(Format = "{value}", Position = -1, Secret = false)] public string Keyfile => Get<string>(() => Keyfile);
 }
 #endregion
 #region DockerSecretRmSettings
@@ -2321,7 +2301,7 @@ public partial class DockerImageInspectSettings : DockerOptionsBase
     /// <summary>Format the output using the given Go template.</summary>
     [Argument(Format = "--format {value}")] public string Format => Get<string>(() => Format);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Images => Get<List<string>>(() => Images);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Images => Get<List<string>>(() => Images);
 }
 #endregion
 #region DockerImageSaveSettings
@@ -2334,7 +2314,7 @@ public partial class DockerImageSaveSettings : DockerOptionsBase
     /// <summary>Write to a file, instead of STDOUT.</summary>
     [Argument(Format = "--output {value}")] public string Output => Get<string>(() => Output);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Images => Get<List<string>>(() => Images);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Images => Get<List<string>>(() => Images);
 }
 #endregion
 #region DockerTrustKeySettings
@@ -2354,13 +2334,13 @@ public partial class DockerTrustKeySettings : DockerOptionsBase
 public partial class DockerContainerAttachSettings : DockerOptionsBase
 {
     /// <summary>Override the key sequence for detaching a container.</summary>
-    [Argument(Format = "--detach-keys {value}")] public string DetachKeys => Get<string>(() => DetachKeys);
+    [Argument(Format = "--detach-keys {value}", Secret = false)] public string DetachKeys => Get<string>(() => DetachKeys);
     /// <summary>Do not attach STDIN.</summary>
     [Argument(Format = "--no-stdin")] public bool? NoStdin => Get<bool?>(() => NoStdin);
     /// <summary>Proxy all received signals to the process.</summary>
     [Argument(Format = "--sig-proxy")] public bool? SigProxy => Get<bool?>(() => SigProxy);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -1)] public string Container => Get<string>(() => Container);
 }
 #endregion
 #region DockerContextCreateSettings
@@ -2381,7 +2361,7 @@ public partial class DockerContextCreateSettings : DockerOptionsBase
     /// <summary>set the kubernetes endpoint.</summary>
     [Argument(Format = "--kubernetes {value}")] public string Kubernetes => Get<string>(() => Kubernetes);
     /// <summary>CONTEXT</summary>
-    [Argument(Format = "{value}")] public string Context => Get<string>(() => Context);
+    [Argument(Format = "{value}", Position = -1)] public string Context => Get<string>(() => Context);
 }
 #endregion
 #region DockerConfigCreateSettings
@@ -2396,9 +2376,9 @@ public partial class DockerConfigCreateSettings : DockerOptionsBase
     /// <summary>Template driver.</summary>
     [Argument(Format = "--template-driver {value}")] public string TemplateDriver => Get<string>(() => TemplateDriver);
     /// <summary>CONFIG</summary>
-    [Argument(Format = "{value}")] public string Config => Get<string>(() => Config);
+    [Argument(Format = "{value}", Position = -2)] public string Config => Get<string>(() => Config);
     /// <summary>file|-</summary>
-    [Argument(Format = "{value}")] public string File => Get<string>(() => File);
+    [Argument(Format = "{value}", Position = -1)] public string File => Get<string>(() => File);
 }
 #endregion
 #region DockerVolumeInspectSettings
@@ -2411,7 +2391,7 @@ public partial class DockerVolumeInspectSettings : DockerOptionsBase
     /// <summary>Format the output using the given Go template.</summary>
     [Argument(Format = "--format {value}")] public string Format => Get<string>(() => Format);
     /// <summary>VOLUME</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Volumes => Get<List<string>>(() => Volumes);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Volumes => Get<List<string>>(() => Volumes);
 }
 #endregion
 #region DockerContainerStopSettings
@@ -2424,7 +2404,7 @@ public partial class DockerContainerStopSettings : DockerOptionsBase
     /// <summary>Seconds to wait for stop before killing it.</summary>
     [Argument(Format = "--time {value}")] public int? Time => Get<int?>(() => Time);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerNetworkPruneSettings
@@ -2452,9 +2432,9 @@ public partial class DockerManifestInspectSettings : DockerOptionsBase
     /// <summary>Output additional info including layers and platform.</summary>
     [Argument(Format = "--verbose")] public bool? Verbose => Get<bool?>(() => Verbose);
     /// <summary>[MANIFEST_LIST]</summary>
-    [Argument(Format = "{value}")] public string ManifestList => Get<string>(() => ManifestList);
+    [Argument(Format = "{value}", Position = -2)] public string ManifestList => Get<string>(() => ManifestList);
     /// <summary>MANIFEST</summary>
-    [Argument(Format = "{value}")] public string Manifest => Get<string>(() => Manifest);
+    [Argument(Format = "{value}", Position = -1)] public string Manifest => Get<string>(() => Manifest);
 }
 #endregion
 #region DockerInfoSettings
@@ -2484,9 +2464,9 @@ public partial class DockerCommitSettings : DockerOptionsBase
     /// <summary>Pause container during commit.</summary>
     [Argument(Format = "--pause")] public bool? Pause => Get<bool?>(() => Pause);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -2)] public string Container => Get<string>(() => Container);
     /// <summary>[REPOSITORY[:TAG]]</summary>
-    [Argument(Format = "{value}")] public string Repository => Get<string>(() => Repository);
+    [Argument(Format = "{value}", Position = -1)] public string Repository => Get<string>(() => Repository);
 }
 #endregion
 #region DockerStackDeploySettings
@@ -2509,7 +2489,7 @@ public partial class DockerStackDeploySettings : DockerOptionsBase
     /// <summary>Send registry authentication details to Swarm agents.</summary>
     [Argument(Format = "--with-registry-auth")] public bool? WithRegistryAuth => Get<bool?>(() => WithRegistryAuth);
     /// <summary>STACK</summary>
-    [Argument(Format = "{value}")] public string Stack => Get<string>(() => Stack);
+    [Argument(Format = "{value}", Position = -1)] public string Stack => Get<string>(() => Stack);
 }
 #endregion
 #region DockerServiceScaleSettings
@@ -2569,7 +2549,7 @@ public partial class DockerRunSettings : DockerOptionsBase
     /// <summary>Run container in background and print container ID.</summary>
     [Argument(Format = "--detach")] public bool? Detach => Get<bool?>(() => Detach);
     /// <summary>Override the key sequence for detaching a container.</summary>
-    [Argument(Format = "--detach-keys {value}")] public string DetachKeys => Get<string>(() => DetachKeys);
+    [Argument(Format = "--detach-keys {value}", Secret = false)] public string DetachKeys => Get<string>(() => DetachKeys);
     /// <summary>Add a host device to the container.</summary>
     [Argument(Format = "--device {value}")] public IReadOnlyList<string> Device => Get<List<string>>(() => Device);
     /// <summary>Add a rule to the cgroup allowed devices list.</summary>
@@ -2733,11 +2713,11 @@ public partial class DockerRunSettings : DockerOptionsBase
     /// <summary>Working directory inside the container.</summary>
     [Argument(Format = "--workdir {value}")] public string Workdir => Get<string>(() => Workdir);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}")] public string Image => Get<string>(() => Image);
+    [Argument(Format = "{value}", Position = -3)] public string Image => Get<string>(() => Image);
     /// <summary>[COMMAND]</summary>
-    [Argument(Format = "{value}")] public string Command => Get<string>(() => Command);
+    [Argument(Format = "{value}", Position = -2)] public string Command => Get<string>(() => Command);
     /// <summary>[ARG...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
 }
 #endregion
 #region DockerCreateSettings
@@ -2944,11 +2924,11 @@ public partial class DockerCreateSettings : DockerOptionsBase
     /// <summary>Working directory inside the container.</summary>
     [Argument(Format = "--workdir {value}")] public string Workdir => Get<string>(() => Workdir);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}")] public string Image => Get<string>(() => Image);
+    [Argument(Format = "{value}", Position = -3)] public string Image => Get<string>(() => Image);
     /// <summary>[COMMAND]</summary>
-    [Argument(Format = "{value}")] public string Command => Get<string>(() => Command);
+    [Argument(Format = "{value}", Position = -2)] public string Command => Get<string>(() => Command);
     /// <summary>[ARG...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
 }
 #endregion
 #region DockerServiceUpdateSettings
@@ -3127,7 +3107,7 @@ public partial class DockerServiceUpdateSettings : DockerOptionsBase
     /// <summary>Working directory inside the container.</summary>
     [Argument(Format = "--workdir {value}")] public string Workdir => Get<string>(() => Workdir);
     /// <summary>SERVICE</summary>
-    [Argument(Format = "{value}")] public string Service => Get<string>(() => Service);
+    [Argument(Format = "{value}", Position = -1)] public string Service => Get<string>(() => Service);
 }
 #endregion
 #region DockerPortSettings
@@ -3138,9 +3118,9 @@ public partial class DockerServiceUpdateSettings : DockerOptionsBase
 public partial class DockerPortSettings : DockerOptionsBase
 {
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -2)] public string Container => Get<string>(() => Container);
     /// <summary>[PRIVATE_PORT[/PROTO]]</summary>
-    [Argument(Format = "{value}")] public string PrivatePort => Get<string>(() => PrivatePort);
+    [Argument(Format = "{value}", Position = -1)] public string PrivatePort => Get<string>(() => PrivatePort);
 }
 #endregion
 #region DockerContainerSettings
@@ -3164,7 +3144,7 @@ public partial class DockerImagePushSettings : DockerOptionsBase
     /// <summary>Skip image signing.</summary>
     [Argument(Format = "--disable-content-trust")] public bool? DisableContentTrust => Get<bool?>(() => DisableContentTrust);
     /// <summary>NAME[:TAG]</summary>
-    [Argument(Format = "{value}")] public string Name => Get<string>(() => Name);
+    [Argument(Format = "{value}", Position = -1)] public string Name => Get<string>(() => Name);
 }
 #endregion
 #region DockerServiceInspectSettings
@@ -3179,7 +3159,7 @@ public partial class DockerServiceInspectSettings : DockerOptionsBase
     /// <summary>Print the information in a human friendly format.</summary>
     [Argument(Format = "--pretty")] public bool? Pretty => Get<bool?>(() => Pretty);
     /// <summary>SERVICE</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Services => Get<List<string>>(() => Services);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Services => Get<List<string>>(() => Services);
 }
 #endregion
 #region DockerNetworkConnectSettings
@@ -3202,9 +3182,9 @@ public partial class DockerNetworkConnectSettings : DockerOptionsBase
     /// <summary>Add a link-local address for the container.</summary>
     [Argument(Format = "--link-local-ip {value}")] public IReadOnlyList<string> LinkLocalIp => Get<List<string>>(() => LinkLocalIp);
     /// <summary>NETWORK</summary>
-    [Argument(Format = "{value}")] public string Network => Get<string>(() => Network);
+    [Argument(Format = "{value}", Position = -2)] public string Network => Get<string>(() => Network);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -1)] public string Container => Get<string>(() => Container);
 }
 #endregion
 #region DockerSecretLsSettings
@@ -3253,7 +3233,7 @@ public partial class DockerImagesSettings : DockerOptionsBase
     /// <summary>Only show numeric IDs.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>[REPOSITORY[:TAG]]</summary>
-    [Argument(Format = "{value}")] public string Repository => Get<string>(() => Repository);
+    [Argument(Format = "{value}", Position = -1)] public string Repository => Get<string>(() => Repository);
 }
 #endregion
 #region DockerEngineUpdateSettings
@@ -3304,7 +3284,7 @@ public partial class DockerInspectSettings : DockerOptionsBase
     /// <summary>Return JSON for specified type.</summary>
     [Argument(Format = "--type {value}")] public string Type => Get<string>(() => Type);
     /// <summary>NAME|ID</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Names => Get<List<string>>(() => Names);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Names => Get<List<string>>(() => Names);
 }
 #endregion
 #region DockerEngineCheckSettings
@@ -3340,13 +3320,13 @@ public partial class DockerEngineCheckSettings : DockerOptionsBase
 public partial class DockerAttachSettings : DockerOptionsBase
 {
     /// <summary>Override the key sequence for detaching a container.</summary>
-    [Argument(Format = "--detach-keys {value}")] public string DetachKeys => Get<string>(() => DetachKeys);
+    [Argument(Format = "--detach-keys {value}", Secret = false)] public string DetachKeys => Get<string>(() => DetachKeys);
     /// <summary>Do not attach STDIN.</summary>
     [Argument(Format = "--no-stdin")] public bool? NoStdin => Get<bool?>(() => NoStdin);
     /// <summary>Proxy all received signals to the process.</summary>
     [Argument(Format = "--sig-proxy")] public bool? SigProxy => Get<bool?>(() => SigProxy);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -1)] public string Container => Get<string>(() => Container);
 }
 #endregion
 #region DockerContainerWaitSettings
@@ -3447,9 +3427,9 @@ public partial class DockerContainerCommitSettings : DockerOptionsBase
     /// <summary>Pause container during commit.</summary>
     [Argument(Format = "--pause")] public bool? Pause => Get<bool?>(() => Pause);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -2)] public string Container => Get<string>(() => Container);
     /// <summary>[REPOSITORY[:TAG]]</summary>
-    [Argument(Format = "{value}")] public string Repository => Get<string>(() => Repository);
+    [Argument(Format = "{value}", Position = -1)] public string Repository => Get<string>(() => Repository);
 }
 #endregion
 #region DockerContextLsSettings
@@ -3496,7 +3476,7 @@ public partial class DockerStackPsSettings : DockerStackSettings
     /// <summary>Only display task IDs.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>STACK</summary>
-    [Argument(Format = "{value}")] public string Stack => Get<string>(() => Stack);
+    [Argument(Format = "{value}", Position = -1)] public string Stack => Get<string>(() => Stack);
 }
 #endregion
 #region DockerContainerCreateSettings
@@ -3703,11 +3683,11 @@ public partial class DockerContainerCreateSettings : DockerOptionsBase
     /// <summary>Working directory inside the container.</summary>
     [Argument(Format = "--workdir {value}")] public string Workdir => Get<string>(() => Workdir);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}")] public string Image => Get<string>(() => Image);
+    [Argument(Format = "{value}", Position = -3)] public string Image => Get<string>(() => Image);
     /// <summary>[COMMAND]</summary>
-    [Argument(Format = "{value}")] public string Command => Get<string>(() => Command);
+    [Argument(Format = "{value}", Position = -2)] public string Command => Get<string>(() => Command);
     /// <summary>[ARG...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
 }
 #endregion
 #region DockerVolumeCreateSettings
@@ -3726,7 +3706,7 @@ public partial class DockerVolumeCreateSettings : DockerOptionsBase
     /// <summary>Set driver specific options.</summary>
     [Argument(Format = "--opt {key}:{value}")] public IReadOnlyDictionary<string, string> Opt => Get<Dictionary<string, string>>(() => Opt);
     /// <summary>[VOLUME]</summary>
-    [Argument(Format = "{value}")] public string Volume => Get<string>(() => Volume);
+    [Argument(Format = "{value}", Position = -1)] public string Volume => Get<string>(() => Volume);
 }
 #endregion
 #region DockerPluginSettings
@@ -3750,7 +3730,7 @@ public partial class DockerLoginSettings : DockerOptionsBase
     /// <summary>Username.</summary>
     [Argument(Format = "--username {value}")] public string Username => Get<string>(() => Username);
     /// <summary>[SERVER]</summary>
-    [Argument(Format = "{value}")] public string Server => Get<string>(() => Server);
+    [Argument(Format = "{value}", Position = -1)] public string Server => Get<string>(() => Server);
 }
 #endregion
 #region DockerSwarmUnlockKeySettings
@@ -3780,11 +3760,11 @@ public partial class DockerStartSettings : DockerOptionsBase
     /// <summary>Use a custom checkpoint storage directory.</summary>
     [Argument(Format = "--checkpoint-dir {value}")] public string CheckpointDir => Get<string>(() => CheckpointDir);
     /// <summary>Override the key sequence for detaching a container.</summary>
-    [Argument(Format = "--detach-keys {value}")] public string DetachKeys => Get<string>(() => DetachKeys);
+    [Argument(Format = "--detach-keys {value}", Secret = false)] public string DetachKeys => Get<string>(() => DetachKeys);
     /// <summary>Attach container's STDIN.</summary>
     [Argument(Format = "--interactive")] public bool? Interactive => Get<bool?>(() => Interactive);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerSwarmInitSettings
@@ -3847,7 +3827,7 @@ public partial class DockerContainerRestartSettings : DockerOptionsBase
     /// <summary>Seconds to wait for stop before killing the container.</summary>
     [Argument(Format = "--time {value}")] public int? Time => Get<int?>(() => Time);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerConfigSettings
@@ -3869,7 +3849,7 @@ public partial class DockerPluginDisableSettings : DockerOptionsBase
     /// <summary>Force the disable of an active plugin.</summary>
     [Argument(Format = "--force")] public bool? Force => Get<bool?>(() => Force);
     /// <summary>PLUGIN</summary>
-    [Argument(Format = "{value}")] public string Plugin => Get<string>(() => Plugin);
+    [Argument(Format = "{value}", Position = -1)] public string Plugin => Get<string>(() => Plugin);
 }
 #endregion
 #region DockerContainerUnpauseSettings
@@ -3891,9 +3871,9 @@ public partial class DockerContainerUnpauseSettings : DockerOptionsBase
 public partial class DockerContextImportSettings : DockerOptionsBase
 {
     /// <summary>CONTEXT</summary>
-    [Argument(Format = "{value}")] public string Context => Get<string>(() => Context);
+    [Argument(Format = "{value}", Position = -2)] public string Context => Get<string>(() => Context);
     /// <summary>FILE|-</summary>
-    [Argument(Format = "{value}")] public string File => Get<string>(() => File);
+    [Argument(Format = "{value}", Position = -1)] public string File => Get<string>(() => File);
 }
 #endregion
 #region DockerRmSettings
@@ -3910,7 +3890,7 @@ public partial class DockerRmSettings : DockerOptionsBase
     /// <summary>Remove the volumes associated with the container.</summary>
     [Argument(Format = "--volumes")] public bool? Volumes => Get<bool?>(() => Volumes);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerDeploySettings
@@ -3933,7 +3913,7 @@ public partial class DockerDeploySettings : DockerOptionsBase
     /// <summary>Send registry authentication details to Swarm agents.</summary>
     [Argument(Format = "--with-registry-auth")] public bool? WithRegistryAuth => Get<bool?>(() => WithRegistryAuth);
     /// <summary>STACK</summary>
-    [Argument(Format = "{value}")] public string Stack => Get<string>(() => Stack);
+    [Argument(Format = "{value}", Position = -1)] public string Stack => Get<string>(() => Stack);
 }
 #endregion
 #region DockerNodeRmSettings
@@ -3946,7 +3926,7 @@ public partial class DockerNodeRmSettings : DockerOptionsBase
     /// <summary>Force remove a node from the swarm.</summary>
     [Argument(Format = "--force")] public bool? Force => Get<bool?>(() => Force);
     /// <summary>NODE</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Nodes => Get<List<string>>(() => Nodes);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Nodes => Get<List<string>>(() => Nodes);
 }
 #endregion
 #region DockerCheckpointRmSettings
@@ -3959,9 +3939,9 @@ public partial class DockerCheckpointRmSettings : DockerOptionsBase
     /// <summary>Use a custom checkpoint storage directory.</summary>
     [Argument(Format = "--checkpoint-dir {value}")] public string CheckpointDir => Get<string>(() => CheckpointDir);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -2)] public string Container => Get<string>(() => Container);
     /// <summary>CHECKPOINT</summary>
-    [Argument(Format = "{value}")] public string Checkpoint => Get<string>(() => Checkpoint);
+    [Argument(Format = "{value}", Position = -1)] public string Checkpoint => Get<string>(() => Checkpoint);
 }
 #endregion
 #region DockerPushSettings
@@ -3976,7 +3956,7 @@ public partial class DockerPushSettings : DockerOptionsBase
     /// <summary>Skip image signing.</summary>
     [Argument(Format = "--disable-content-trust")] public bool? DisableContentTrust => Get<bool?>(() => DisableContentTrust);
     /// <summary>NAME[:TAG]</summary>
-    [Argument(Format = "{value}")] public string Name => Get<string>(() => Name);
+    [Argument(Format = "{value}", Position = -1)] public string Name => Get<string>(() => Name);
 }
 #endregion
 #region DockerNetworkCreateSettings
@@ -4019,7 +3999,7 @@ public partial class DockerNetworkCreateSettings : DockerOptionsBase
     /// <summary>Subnet in CIDR format that represents a network segment.</summary>
     [Argument(Format = "--subnet {value}")] public IReadOnlyList<string> Subnet => Get<List<string>>(() => Subnet);
     /// <summary>NETWORK</summary>
-    [Argument(Format = "{value}")] public string Network => Get<string>(() => Network);
+    [Argument(Format = "{value}", Position = -1)] public string Network => Get<string>(() => Network);
 }
 #endregion
 #region DockerVolumeLsSettings
@@ -4060,7 +4040,7 @@ public partial class DockerNetworkInspectSettings : DockerOptionsBase
     /// <summary>Verbose output for diagnostics.</summary>
     [Argument(Format = "--verbose")] public bool? Verbose => Get<bool?>(() => Verbose);
     /// <summary>NETWORK</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Networks => Get<List<string>>(() => Networks);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Networks => Get<List<string>>(() => Networks);
 }
 #endregion
 #region DockerEngineActivateSettings
@@ -4109,7 +4089,7 @@ public partial class DockerVolumeRmSettings : DockerOptionsBase
     /// <summary>Force the removal of one or more volumes.</summary>
     [Argument(Format = "--force")] public bool? Force => Get<bool?>(() => Force);
     /// <summary>VOLUME</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Volumes => Get<List<string>>(() => Volumes);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Volumes => Get<List<string>>(() => Volumes);
 }
 #endregion
 #region DockerManifestCreateSettings
@@ -4120,9 +4100,9 @@ public partial class DockerVolumeRmSettings : DockerOptionsBase
 public partial class DockerManifestCreateSettings : DockerOptionsBase
 {
     /// <summary>MANIFEST_LIST</summary>
-    [Argument(Format = "{value}")] public string ManifestList => Get<string>(() => ManifestList);
+    [Argument(Format = "{value}", Position = -2)] public string ManifestList => Get<string>(() => ManifestList);
     /// <summary>MANIFEST</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Manifests => Get<List<string>>(() => Manifests);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Manifests => Get<List<string>>(() => Manifests);
 }
 #endregion
 #region DockerManifestPushSettings
@@ -4137,7 +4117,7 @@ public partial class DockerManifestPushSettings : DockerOptionsBase
     /// <summary>Remove the local manifest list after push.</summary>
     [Argument(Format = "--purge")] public bool? Purge => Get<bool?>(() => Purge);
     /// <summary>MANIFEST_LIST</summary>
-    [Argument(Format = "{value}")] public string ManifestList => Get<string>(() => ManifestList);
+    [Argument(Format = "{value}", Position = -1)] public string ManifestList => Get<string>(() => ManifestList);
 }
 #endregion
 #region DockerPluginEnableSettings
@@ -4150,7 +4130,7 @@ public partial class DockerPluginEnableSettings : DockerOptionsBase
     /// <summary>HTTP client timeout (in seconds).</summary>
     [Argument(Format = "--timeout {value}")] public int? Timeout => Get<int?>(() => Timeout);
     /// <summary>PLUGIN</summary>
-    [Argument(Format = "{value}")] public string Plugin => Get<string>(() => Plugin);
+    [Argument(Format = "{value}", Position = -1)] public string Plugin => Get<string>(() => Plugin);
 }
 #endregion
 #region DockerImportSettings
@@ -4167,9 +4147,9 @@ public partial class DockerImportSettings : DockerOptionsBase
     /// <summary>Set platform if server is multi-platform capable.</summary>
     [Argument(Format = "--platform {value}")] public string Platform => Get<string>(() => Platform);
     /// <summary>file|URL|-</summary>
-    [Argument(Format = "{value}")] public string File => Get<string>(() => File);
+    [Argument(Format = "{value}", Position = -2)] public string File => Get<string>(() => File);
     /// <summary>[REPOSITORY[:TAG]]</summary>
-    [Argument(Format = "{value}")] public string Repository => Get<string>(() => Repository);
+    [Argument(Format = "{value}", Position = -1)] public string Repository => Get<string>(() => Repository);
 }
 #endregion
 #region DockerContainerRunSettings
@@ -4218,7 +4198,7 @@ public partial class DockerContainerRunSettings : DockerOptionsBase
     /// <summary>Run container in background and print container ID.</summary>
     [Argument(Format = "--detach")] public bool? Detach => Get<bool?>(() => Detach);
     /// <summary>Override the key sequence for detaching a container.</summary>
-    [Argument(Format = "--detach-keys {value}")] public string DetachKeys => Get<string>(() => DetachKeys);
+    [Argument(Format = "--detach-keys {value}", Secret = false)] public string DetachKeys => Get<string>(() => DetachKeys);
     /// <summary>Add a host device to the container.</summary>
     [Argument(Format = "--device {value}")] public IReadOnlyList<string> Device => Get<List<string>>(() => Device);
     /// <summary>Add a rule to the cgroup allowed devices list.</summary>
@@ -4382,11 +4362,11 @@ public partial class DockerContainerRunSettings : DockerOptionsBase
     /// <summary>Working directory inside the container.</summary>
     [Argument(Format = "--workdir {value}")] public string Workdir => Get<string>(() => Workdir);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}")] public string Image => Get<string>(() => Image);
+    [Argument(Format = "{value}", Position = -3)] public string Image => Get<string>(() => Image);
     /// <summary>[COMMAND]</summary>
-    [Argument(Format = "{value}")] public string Command => Get<string>(() => Command);
+    [Argument(Format = "{value}", Position = -2)] public string Command => Get<string>(() => Command);
     /// <summary>[ARG...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
 }
 #endregion
 #region DockerNodeInspectSettings
@@ -4401,7 +4381,7 @@ public partial class DockerNodeInspectSettings : DockerOptionsBase
     /// <summary>Print the information in a human friendly format.</summary>
     [Argument(Format = "--pretty")] public bool? Pretty => Get<bool?>(() => Pretty);
     /// <summary>self|NODE</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Selves => Get<List<string>>(() => Selves);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Selves => Get<List<string>>(() => Selves);
 }
 #endregion
 #region DockerSaveSettings
@@ -4414,7 +4394,7 @@ public partial class DockerSaveSettings : DockerOptionsBase
     /// <summary>Write to a file, instead of STDOUT.</summary>
     [Argument(Format = "--output {value}")] public string Output => Get<string>(() => Output);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Images => Get<List<string>>(() => Images);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Images => Get<List<string>>(() => Images);
 }
 #endregion
 #region DockerContainerStatsSettings
@@ -4433,7 +4413,7 @@ public partial class DockerContainerStatsSettings : DockerOptionsBase
     /// <summary>Do not truncate output.</summary>
     [Argument(Format = "--no-trunc")] public bool? NoTrunc => Get<bool?>(() => NoTrunc);
     /// <summary>[CONTAINER...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerContainerExecSettings
@@ -4446,7 +4426,7 @@ public partial class DockerContainerExecSettings : DockerOptionsBase
     /// <summary>Detached mode: run command in the background.</summary>
     [Argument(Format = "--detach")] public bool? Detach => Get<bool?>(() => Detach);
     /// <summary>Override the key sequence for detaching a container.</summary>
-    [Argument(Format = "--detach-keys {value}")] public string DetachKeys => Get<string>(() => DetachKeys);
+    [Argument(Format = "--detach-keys {value}", Secret = false)] public string DetachKeys => Get<string>(() => DetachKeys);
     /// <summary>Set environment variables.</summary>
     [Argument(Format = "--env {value}")] public IReadOnlyList<string> Env => Get<List<string>>(() => Env);
     /// <summary>Keep STDIN open even if not attached.</summary>
@@ -4460,11 +4440,11 @@ public partial class DockerContainerExecSettings : DockerOptionsBase
     /// <summary>Working directory inside the container.</summary>
     [Argument(Format = "--workdir {value}")] public string Workdir => Get<string>(() => Workdir);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -3)] public string Container => Get<string>(() => Container);
     /// <summary>COMMAND</summary>
-    [Argument(Format = "{value}")] public string Command => Get<string>(() => Command);
+    [Argument(Format = "{value}", Position = -2)] public string Command => Get<string>(() => Command);
     /// <summary>[ARG...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
 }
 #endregion
 #region DockerNodeLsSettings
@@ -4521,7 +4501,7 @@ public partial class DockerContainerLogsSettings : DockerOptionsBase
     /// <summary>Show logs before a timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes).</summary>
     [Argument(Format = "--until {value}")] public string Until => Get<string>(() => Until);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -1)] public string Container => Get<string>(() => Container);
 }
 #endregion
 #region DockerCheckpointLsSettings
@@ -4534,7 +4514,7 @@ public partial class DockerCheckpointLsSettings : DockerOptionsBase
     /// <summary>Use a custom checkpoint storage directory.</summary>
     [Argument(Format = "--checkpoint-dir {value}")] public string CheckpointDir => Get<string>(() => CheckpointDir);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -1)] public string Container => Get<string>(() => Container);
 }
 #endregion
 #region DockerContainerKillSettings
@@ -4547,7 +4527,7 @@ public partial class DockerContainerKillSettings : DockerOptionsBase
     /// <summary>Signal to send to the container.</summary>
     [Argument(Format = "--signal {value}")] public string Signal => Get<string>(() => Signal);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerPluginInstallSettings
@@ -4566,9 +4546,9 @@ public partial class DockerPluginInstallSettings : DockerOptionsBase
     /// <summary>Grant all permissions necessary to run the plugin.</summary>
     [Argument(Format = "--grant-all-permissions")] public bool? GrantAllPermissions => Get<bool?>(() => GrantAllPermissions);
     /// <summary>PLUGIN</summary>
-    [Argument(Format = "{value}")] public string Plugin => Get<string>(() => Plugin);
+    [Argument(Format = "{value}", Position = -2)] public string Plugin => Get<string>(() => Plugin);
     /// <summary>[KEY=VALUE...]</summary>
-    [Argument(Format = "{key}={value}")] public IReadOnlyDictionary<string, string> KeyValues => Get<Dictionary<string, string>>(() => KeyValues);
+    [Argument(Format = "{key}={value}", Position = -1)] public IReadOnlyDictionary<string, string> KeyValues => Get<Dictionary<string, string>>(() => KeyValues);
 }
 #endregion
 #region DockerImagePruneSettings
@@ -4600,9 +4580,9 @@ public partial class DockerImageImportSettings : DockerOptionsBase
     /// <summary>Set platform if server is multi-platform capable.</summary>
     [Argument(Format = "--platform {value}")] public string Platform => Get<string>(() => Platform);
     /// <summary>file|URL|-</summary>
-    [Argument(Format = "{value}")] public string File => Get<string>(() => File);
+    [Argument(Format = "{value}", Position = -2)] public string File => Get<string>(() => File);
     /// <summary>[REPOSITORY[:TAG]]</summary>
-    [Argument(Format = "{value}")] public string Repository => Get<string>(() => Repository);
+    [Argument(Format = "{value}", Position = -1)] public string Repository => Get<string>(() => Repository);
 }
 #endregion
 #region DockerDiffSettings
@@ -4624,7 +4604,7 @@ public partial class DockerDiffSettings : DockerOptionsBase
 public partial class DockerUnpauseSettings : DockerOptionsBase
 {
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerContainerLsSettings
@@ -4670,7 +4650,7 @@ public partial class DockerNodePsSettings : DockerOptionsBase
     /// <summary>Only display task IDs.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>[NODE...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Nodes => Get<List<string>>(() => Nodes);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Nodes => Get<List<string>>(() => Nodes);
 }
 #endregion
 #region DockerContainerTopSettings
@@ -4681,9 +4661,9 @@ public partial class DockerNodePsSettings : DockerOptionsBase
 public partial class DockerContainerTopSettings : DockerOptionsBase
 {
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -2)] public string Container => Get<string>(() => Container);
     /// <summary>OPTIONS]</summary>
-    [Argument(Format = "{value}")] public string Options => Get<string>(() => Options);
+    [Argument(Format = "{value}", Position = -1)] public string Options => Get<string>(() => Options);
 }
 #endregion
 #region DockerContainerRenameSettings
@@ -4694,9 +4674,9 @@ public partial class DockerContainerTopSettings : DockerOptionsBase
 public partial class DockerContainerRenameSettings : DockerOptionsBase
 {
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -2)] public string Container => Get<string>(() => Container);
     /// <summary>NEW_NAME</summary>
-    [Argument(Format = "{value}")] public string NewName => Get<string>(() => NewName);
+    [Argument(Format = "{value}", Position = -1)] public string NewName => Get<string>(() => NewName);
 }
 #endregion
 #region DockerImageHistorySettings
@@ -4715,7 +4695,7 @@ public partial class DockerImageHistorySettings : DockerOptionsBase
     /// <summary>Only show numeric IDs.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}")] public string Image => Get<string>(() => Image);
+    [Argument(Format = "{value}", Position = -1)] public string Image => Get<string>(() => Image);
 }
 #endregion
 #region DockerPsSettings
@@ -4751,9 +4731,9 @@ public partial class DockerPsSettings : DockerOptionsBase
 public partial class DockerImageTagSettings : DockerOptionsBase
 {
     /// <summary>SOURCE_IMAGE[:TAG]</summary>
-    [Argument(Format = "{value}")] public string SourceImage => Get<string>(() => SourceImage);
+    [Argument(Format = "{value}", Position = -2)] public string SourceImage => Get<string>(() => SourceImage);
     /// <summary>TARGET_IMAGE[:TAG]</summary>
-    [Argument(Format = "{value}")] public string TargetImage => Get<string>(() => TargetImage);
+    [Argument(Format = "{value}", Position = -1)] public string TargetImage => Get<string>(() => TargetImage);
 }
 #endregion
 #region DockerExportSettings
@@ -4766,7 +4746,7 @@ public partial class DockerExportSettings : DockerOptionsBase
     /// <summary>Write to a file, instead of STDOUT.</summary>
     [Argument(Format = "--output {value}")] public string Output => Get<string>(() => Output);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -1)] public string Container => Get<string>(() => Container);
 }
 #endregion
 #region DockerNetworkDisconnectSettings
@@ -4779,9 +4759,9 @@ public partial class DockerNetworkDisconnectSettings : DockerOptionsBase
     /// <summary>Force the container to disconnect from a network.</summary>
     [Argument(Format = "--force")] public bool? Force => Get<bool?>(() => Force);
     /// <summary>NETWORK</summary>
-    [Argument(Format = "{value}")] public string Network => Get<string>(() => Network);
+    [Argument(Format = "{value}", Position = -2)] public string Network => Get<string>(() => Network);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -1)] public string Container => Get<string>(() => Container);
 }
 #endregion
 #region DockerBuilderBuildSettings
@@ -4862,7 +4842,7 @@ public partial class DockerBuilderBuildSettings : DockerOptionsBase
     /// <summary>Ulimit options.</summary>
     [Argument(Format = "--ulimit {value}")] public string Ulimit => Get<string>(() => Ulimit);
     /// <summary>Path or url where the build context is located.</summary>
-    [Argument(Format = "{value}")] public string Path => Get<string>(() => Path);
+    [Argument(Format = "{value}", Position = -1)] public string Path => Get<string>(() => Path);
 }
 #endregion
 #region DockerBuildxBuildSettings
@@ -4945,7 +4925,7 @@ public partial class DockerBuildxBuildSettings : DockerOptionsBase
     /// <summary>Ulimit options.</summary>
     [Argument(Format = "--ulimit {value}")] public string Ulimit => Get<string>(() => Ulimit);
     /// <summary>Path or url where the build context is located.</summary>
-    [Argument(Format = "{value}")] public string Path => Get<string>(() => Path);
+    [Argument(Format = "{value}", Position = -1)] public string Path => Get<string>(() => Path);
 }
 #endregion
 #region DockerBuildxCreateSettings
@@ -4997,7 +4977,7 @@ public partial class DockerStatsSettings : DockerOptionsBase
     /// <summary>Do not truncate output.</summary>
     [Argument(Format = "--no-trunc")] public bool? NoTrunc => Get<bool?>(() => NoTrunc);
     /// <summary>[CONTAINER...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerSearchSettings
@@ -5020,7 +5000,7 @@ public partial class DockerSearchSettings : DockerOptionsBase
     /// <summary>Only displays with at least x stars.</summary>
     [Argument(Format = "--stars {value}")] public int? Stars => Get<int?>(() => Stars);
     /// <summary>TERM</summary>
-    [Argument(Format = "{value}")] public string Term => Get<string>(() => Term);
+    [Argument(Format = "{value}", Position = -1)] public string Term => Get<string>(() => Term);
 }
 #endregion
 #region DockerManifestSettings
@@ -5044,7 +5024,7 @@ public partial class DockerPluginPushSettings : DockerOptionsBase
     /// <summary>Skip image signing.</summary>
     [Argument(Format = "--disable-content-trust")] public bool? DisableContentTrust => Get<bool?>(() => DisableContentTrust);
     /// <summary>PLUGIN[:TAG]</summary>
-    [Argument(Format = "{value}")] public string Plugin => Get<string>(() => Plugin);
+    [Argument(Format = "{value}", Position = -1)] public string Plugin => Get<string>(() => Plugin);
 }
 #endregion
 #region DockerImageLoadSettings
@@ -5083,7 +5063,7 @@ public partial class DockerContainerRmSettings : DockerOptionsBase
     /// <summary>Remove the volumes associated with the container.</summary>
     [Argument(Format = "--volumes")] public bool? Volumes => Get<bool?>(() => Volumes);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerContainerUpdateSettings
@@ -5124,7 +5104,7 @@ public partial class DockerContainerUpdateSettings : DockerOptionsBase
     /// <summary>Restart policy to apply when a container exits.</summary>
     [Argument(Format = "--restart {value}")] public string Restart => Get<string>(() => Restart);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerPluginSetSettings
@@ -5135,9 +5115,9 @@ public partial class DockerContainerUpdateSettings : DockerOptionsBase
 public partial class DockerPluginSetSettings : DockerOptionsBase
 {
     /// <summary>PLUGIN</summary>
-    [Argument(Format = "{value}")] public string Plugin => Get<string>(() => Plugin);
+    [Argument(Format = "{value}", Position = -2)] public string Plugin => Get<string>(() => Plugin);
     /// <summary>KEY=VALUE</summary>
-    [Argument(Format = "{key}={value}")] public IReadOnlyDictionary<string, string> KeyValues => Get<Dictionary<string, string>>(() => KeyValues);
+    [Argument(Format = "{key}={value}", Position = -1)] public IReadOnlyDictionary<string, string> KeyValues => Get<Dictionary<string, string>>(() => KeyValues);
 }
 #endregion
 #region DockerWaitSettings
@@ -5161,9 +5141,9 @@ public partial class DockerContextExportSettings : DockerOptionsBase
     /// <summary>Export as a kubeconfig file.</summary>
     [Argument(Format = "--kubeconfig")] public bool? Kubeconfig => Get<bool?>(() => Kubeconfig);
     /// <summary>CONTEXT</summary>
-    [Argument(Format = "{value}")] public string Context => Get<string>(() => Context);
+    [Argument(Format = "{value}", Position = -2)] public string Context => Get<string>(() => Context);
     /// <summary>[FILE|-]</summary>
-    [Argument(Format = "{value}")] public string File => Get<string>(() => File);
+    [Argument(Format = "{value}", Position = -1)] public string File => Get<string>(() => File);
 }
 #endregion
 #region DockerManifestAnnotateSettings
@@ -5182,9 +5162,9 @@ public partial class DockerManifestAnnotateSettings : DockerOptionsBase
     /// <summary>Set architecture variant.</summary>
     [Argument(Format = "--variant {value}")] public string Variant => Get<string>(() => Variant);
     /// <summary>MANIFEST_LIST</summary>
-    [Argument(Format = "{value}")] public string ManifestList => Get<string>(() => ManifestList);
+    [Argument(Format = "{value}", Position = -2)] public string ManifestList => Get<string>(() => ManifestList);
     /// <summary>MANIFEST</summary>
-    [Argument(Format = "{value}")] public string Manifest => Get<string>(() => Manifest);
+    [Argument(Format = "{value}", Position = -1)] public string Manifest => Get<string>(() => Manifest);
 }
 #endregion
 #region DockerImagePullSettings
@@ -5203,7 +5183,7 @@ public partial class DockerImagePullSettings : DockerOptionsBase
     /// <summary>Suppress verbose output.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>NAME[:TAG|@DIGEST]</summary>
-    [Argument(Format = "{value}")] public string Name => Get<string>(() => Name);
+    [Argument(Format = "{value}", Position = -1)] public string Name => Get<string>(() => Name);
 }
 #endregion
 #region DockerEventsSettings
@@ -5250,7 +5230,7 @@ public partial class DockerContainerInspectSettings : DockerOptionsBase
     /// <summary>Display total file sizes.</summary>
     [Argument(Format = "--size")] public bool? Size => Get<bool?>(() => Size);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerKillSettings
@@ -5263,7 +5243,7 @@ public partial class DockerKillSettings : DockerOptionsBase
     /// <summary>Signal to send to the container.</summary>
     [Argument(Format = "--signal {value}")] public string Signal => Get<string>(() => Signal);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerCheckpointCreateSettings
@@ -5278,9 +5258,9 @@ public partial class DockerCheckpointCreateSettings : DockerOptionsBase
     /// <summary>Leave the container running after checkpoint.</summary>
     [Argument(Format = "--leave-running")] public bool? LeaveRunning => Get<bool?>(() => LeaveRunning);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -2)] public string Container => Get<string>(() => Container);
     /// <summary>CHECKPOINT</summary>
-    [Argument(Format = "{value}")] public string Checkpoint => Get<string>(() => Checkpoint);
+    [Argument(Format = "{value}", Position = -1)] public string Checkpoint => Get<string>(() => Checkpoint);
 }
 #endregion
 #region DockerPauseSettings
@@ -5314,7 +5294,7 @@ public partial class DockerLogsSettings : DockerOptionsBase
     /// <summary>Show logs before a timestamp (e.g. 2013-01-02T13:23:37) or relative (e.g. 42m for 42 minutes).</summary>
     [Argument(Format = "--until {value}")] public string Until => Get<string>(() => Until);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -1)] public string Container => Get<string>(() => Container);
 }
 #endregion
 #region DockerContextInspectSettings
@@ -5327,9 +5307,9 @@ public partial class DockerContextInspectSettings : DockerOptionsBase
     /// <summary>Format the output using the given Go template.</summary>
     [Argument(Format = "--format {value}")] public string Format => Get<string>(() => Format);
     /// <summary>[CONTEXT]</summary>
-    [Argument(Format = "{value}")] public string Context => Get<string>(() => Context);
+    [Argument(Format = "{value}", Position = -2)] public string Context => Get<string>(() => Context);
     /// <summary>[CONTEXT...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Contexts => Get<List<string>>(() => Contexts);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Contexts => Get<List<string>>(() => Contexts);
 }
 #endregion
 #region DockerNodePromoteSettings
@@ -5364,7 +5344,7 @@ public partial class DockerExecSettings : DockerOptionsBase
     /// <summary>Detached mode: run command in the background.</summary>
     [Argument(Format = "--detach")] public bool? Detach => Get<bool?>(() => Detach);
     /// <summary>Override the key sequence for detaching a container.</summary>
-    [Argument(Format = "--detach-keys {value}")] public string DetachKeys => Get<string>(() => DetachKeys);
+    [Argument(Format = "--detach-keys {value}", Secret = false)] public string DetachKeys => Get<string>(() => DetachKeys);
     /// <summary>Set environment variables.</summary>
     [Argument(Format = "--env {value}")] public IReadOnlyList<string> Env => Get<List<string>>(() => Env);
     /// <summary>Keep STDIN open even if not attached.</summary>
@@ -5378,11 +5358,11 @@ public partial class DockerExecSettings : DockerOptionsBase
     /// <summary>Working directory inside the container.</summary>
     [Argument(Format = "--workdir {value}")] public string Workdir => Get<string>(() => Workdir);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}")] public string Container => Get<string>(() => Container);
+    [Argument(Format = "{value}", Position = -3)] public string Container => Get<string>(() => Container);
     /// <summary>COMMAND</summary>
-    [Argument(Format = "{value}")] public string Command => Get<string>(() => Command);
+    [Argument(Format = "{value}", Position = -2)] public string Command => Get<string>(() => Command);
     /// <summary>[ARG...]</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Args => Get<List<string>>(() => Args);
 }
 #endregion
 #region DockerImageRmSettings
@@ -5397,7 +5377,7 @@ public partial class DockerImageRmSettings : DockerOptionsBase
     /// <summary>Do not delete untagged parents.</summary>
     [Argument(Format = "--no-prune")] public bool? NoPrune => Get<bool?>(() => NoPrune);
     /// <summary>IMAGE</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Images => Get<List<string>>(() => Images);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Images => Get<List<string>>(() => Images);
 }
 #endregion
 #region DockerImageSettings
@@ -5443,11 +5423,11 @@ public partial class DockerContainerStartSettings : DockerOptionsBase
     /// <summary>Use a custom checkpoint storage directory.</summary>
     [Argument(Format = "--checkpoint-dir {value}")] public string CheckpointDir => Get<string>(() => CheckpointDir);
     /// <summary>Override the key sequence for detaching a container.</summary>
-    [Argument(Format = "--detach-keys {value}")] public string DetachKeys => Get<string>(() => DetachKeys);
+    [Argument(Format = "--detach-keys {value}", Secret = false)] public string DetachKeys => Get<string>(() => DetachKeys);
     /// <summary>Attach container's STDIN.</summary>
     [Argument(Format = "--interactive")] public bool? Interactive => Get<bool?>(() => Interactive);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerPluginInspectSettings
@@ -5460,7 +5440,7 @@ public partial class DockerPluginInspectSettings : DockerOptionsBase
     /// <summary>Format the output using the given Go template.</summary>
     [Argument(Format = "--format {value}")] public string Format => Get<string>(() => Format);
     /// <summary>PLUGIN</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Plugins => Get<List<string>>(() => Plugins);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Plugins => Get<List<string>>(() => Plugins);
 }
 #endregion
 #region DockerLogoutSettings
@@ -5503,7 +5483,7 @@ public partial class DockerImageLsSettings : DockerOptionsBase
     /// <summary>Only show numeric IDs.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>[REPOSITORY[:TAG]]</summary>
-    [Argument(Format = "{value}")] public string Repository => Get<string>(() => Repository);
+    [Argument(Format = "{value}", Position = -1)] public string Repository => Get<string>(() => Repository);
 }
 #endregion
 #region DockerSystemDfSettings
@@ -5531,7 +5511,7 @@ public partial class DockerServiceRollbackSettings : DockerOptionsBase
     /// <summary>Suppress progress output.</summary>
     [Argument(Format = "--quiet")] public bool? Quiet => Get<bool?>(() => Quiet);
     /// <summary>SERVICE</summary>
-    [Argument(Format = "{value}")] public string Service => Get<string>(() => Service);
+    [Argument(Format = "{value}", Position = -1)] public string Service => Get<string>(() => Service);
 }
 #endregion
 #region DockerRestartSettings
@@ -5544,7 +5524,7 @@ public partial class DockerRestartSettings : DockerOptionsBase
     /// <summary>Seconds to wait for stop before killing the container.</summary>
     [Argument(Format = "--time {value}")] public int? Time => Get<int?>(() => Time);
     /// <summary>CONTAINER</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Containers => Get<List<string>>(() => Containers);
 }
 #endregion
 #region DockerTrustSignerRemoveSettings
@@ -5557,9 +5537,9 @@ public partial class DockerTrustSignerRemoveSettings : DockerOptionsBase
     /// <summary>Do not prompt for confirmation before removing the most recent signer.</summary>
     [Argument(Format = "--force")] public bool? Force => Get<bool?>(() => Force);
     /// <summary>NAME</summary>
-    [Argument(Format = "{value}")] public string Name => Get<string>(() => Name);
+    [Argument(Format = "{value}", Position = -2)] public string Name => Get<string>(() => Name);
     /// <summary>REPOSITORY</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Repositories => Get<List<string>>(() => Repositories);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Repositories => Get<List<string>>(() => Repositories);
 }
 #endregion
 #region DockerStackRmSettings
@@ -5572,7 +5552,7 @@ public partial class DockerStackRmSettings : DockerStackSettings
     /// <summary>Kubernetes namespace to use.</summary>
     [Argument(Format = "--namespace {value}")] public string Namespace => Get<string>(() => Namespace);
     /// <summary>STACK</summary>
-    [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> Stacks => Get<List<string>>(() => Stacks);
+    [Argument(Format = "{value}", Position = -1, Separator = " ")] public IReadOnlyList<string> Stacks => Get<List<string>>(() => Stacks);
 }
 #endregion
 #region DockerBuildSettings
@@ -5653,7 +5633,7 @@ public partial class DockerBuildSettings : DockerOptionsBase
     /// <summary>Ulimit options.</summary>
     [Argument(Format = "--ulimit {value}")] public string Ulimit => Get<string>(() => Ulimit);
     /// <summary>Path or url where the build context is located.</summary>
-    [Argument(Format = "{value}")] public string Path => Get<string>(() => Path);
+    [Argument(Format = "{value}", Position = -1)] public string Path => Get<string>(() => Path);
 }
 #endregion
 #region DockerOptionsBase
@@ -5828,30 +5808,6 @@ public static partial class DockerStackSettingsExtensions
     /// <inheritdoc cref="DockerStackSettings.Orchestrator"/>
     [Pure] [Builder(Type = typeof(DockerStackSettings), Property = nameof(DockerStackSettings.Orchestrator))]
     public static T ResetOrchestrator<T>(this T o) where T : DockerStackSettings => o.Modify(b => b.Remove(() => o.Orchestrator));
-    #endregion
-}
-#endregion
-#region DockerTopSettingsExtensions
-/// <inheritdoc cref="DockerTasks.DockerTop(Nuke.Common.Tools.Docker.DockerTopSettings)"/>
-[PublicAPI]
-[ExcludeFromCodeCoverage]
-public static partial class DockerTopSettingsExtensions
-{
-    #region Container
-    /// <inheritdoc cref="DockerTopSettings.Container"/>
-    [Pure] [Builder(Type = typeof(DockerTopSettings), Property = nameof(DockerTopSettings.Container))]
-    public static T SetContainer<T>(this T o, string v) where T : DockerTopSettings => o.Modify(b => b.Set(() => o.Container, v));
-    /// <inheritdoc cref="DockerTopSettings.Container"/>
-    [Pure] [Builder(Type = typeof(DockerTopSettings), Property = nameof(DockerTopSettings.Container))]
-    public static T ResetContainer<T>(this T o) where T : DockerTopSettings => o.Modify(b => b.Remove(() => o.Container));
-    #endregion
-    #region Options
-    /// <inheritdoc cref="DockerTopSettings.Options"/>
-    [Pure] [Builder(Type = typeof(DockerTopSettings), Property = nameof(DockerTopSettings.Options))]
-    public static T SetOptions<T>(this T o, string v) where T : DockerTopSettings => o.Modify(b => b.Set(() => o.Options, v));
-    /// <inheritdoc cref="DockerTopSettings.Options"/>
-    [Pure] [Builder(Type = typeof(DockerTopSettings), Property = nameof(DockerTopSettings.Options))]
-    public static T ResetOptions<T>(this T o) where T : DockerTopSettings => o.Modify(b => b.Remove(() => o.Options));
     #endregion
 }
 #endregion
