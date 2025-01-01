@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -59,6 +59,12 @@ public class ArgumentStringHandlerTest
                     };
         ArgsToString($"start {paths} end").Should().Be("start C:\\foo\\bar \"/foo bar/foo\" end");
         ArgsToString($"start {paths:sn} end").Should().Be("start C:\\foo\\bar '/foo bar/foo' end");
+    }
+
+    [Fact]
+    public void TestSpacedPathOnly()
+    {
+        ArgsToString($"{(AbsolutePath)"C:" / "Program Files"}").Should().Be("\"C:\\Program Files\"");
     }
 
     [Fact]
