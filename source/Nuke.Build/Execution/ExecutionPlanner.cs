@@ -105,7 +105,7 @@ internal static class ExecutionPlanner
         if (executableTarget == null)
         {
             Assert.Fail($"Target with name {targetName.SingleQuote()} does not exist. Available targets are:"
-                .Concat(executableTargets.Select(x => $"  - {x.Name}").OrderBy(x => x))
+                .Concat(executableTargets.Where(x => x.Listed).Select(x => $"  - {x.Name}").OrderBy(x => x))
                 .JoinNewLine());
         }
 
