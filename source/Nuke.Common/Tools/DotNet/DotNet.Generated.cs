@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/DotNet/DotNet.json
+﻿// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/DotNet/DotNet.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -97,6 +97,27 @@ public partial class DotNetTasks : ToolTasks, IRequirePathTool
     public static IReadOnlyCollection<Output> DotNetNuGetPush(Configure<DotNetNuGetPushSettings> configurator) => new DotNetTasks().Run<DotNetNuGetPushSettings>(configurator.Invoke(new DotNetNuGetPushSettings()));
     /// <inheritdoc cref="DotNetTasks.DotNetNuGetPush(Nuke.Common.Tools.DotNet.DotNetNuGetPushSettings)"/>
     public static IEnumerable<(DotNetNuGetPushSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetPush(CombinatorialConfigure<DotNetNuGetPushSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetNuGetPush, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>The dotnet nuget delete command deletes or unlists a package from the server. For nuget.org, the action is to unlist the package.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;packageId&gt;</c> via <see cref="DotNetNuGetDeleteSettings.PackageId"/></li><li><c>&lt;packageVersion&gt;</c> via <see cref="DotNetNuGetDeleteSettings.PackageVersion"/></li><li><c>--api-key</c> via <see cref="DotNetNuGetDeleteSettings.ApiKey"/></li><li><c>--force-english-output</c> via <see cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/></li><li><c>--interactive</c> via <see cref="DotNetNuGetDeleteSettings.Interactive"/></li><li><c>--no-service-endpoint</c> via <see cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/></li><li><c>--non-interactive</c> via <see cref="DotNetNuGetDeleteSettings.NonInteractive"/></li><li><c>--source</c> via <see cref="DotNetNuGetDeleteSettings.Source"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotNetNuGetDelete(DotNetNuGetDeleteSettings options = null) => new DotNetTasks().Run<DotNetNuGetDeleteSettings>(options);
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetDelete(Nuke.Common.Tools.DotNet.DotNetNuGetDeleteSettings)"/>
+    public static IReadOnlyCollection<Output> DotNetNuGetDelete(Configure<DotNetNuGetDeleteSettings> configurator) => new DotNetTasks().Run<DotNetNuGetDeleteSettings>(configurator.Invoke(new DotNetNuGetDeleteSettings()));
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetDelete(Nuke.Common.Tools.DotNet.DotNetNuGetDeleteSettings)"/>
+    public static IEnumerable<(DotNetNuGetDeleteSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetDelete(CombinatorialConfigure<DotNetNuGetDeleteSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetNuGetDelete, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>The dotnet nuget sign command signs all the packages matching the first argument with a certificate. The certificate with the private key can be obtained from a file or from a certificate installed in a certificate store by providing a subject name or a SHA-1 fingerprint.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;targetPath&gt;</c> via <see cref="DotNetNuGetSignSettings.TargetPath"/></li><li><c>--certificate-fingerprint</c> via <see cref="DotNetNuGetSignSettings.CertificateFingerprint"/></li><li><c>--certificate-password</c> via <see cref="DotNetNuGetSignSettings.CertificatePassword"/></li><li><c>--certificate-path</c> via <see cref="DotNetNuGetSignSettings.CertificatePath"/></li><li><c>--certificate-store-location</c> via <see cref="DotNetNuGetSignSettings.CertificateStoreLocation"/></li><li><c>--certificate-store-name</c> via <see cref="DotNetNuGetSignSettings.CertificateStoreName"/></li><li><c>--certificate-subject-name</c> via <see cref="DotNetNuGetSignSettings.CertificateSubjectName"/></li><li><c>--hash-algorithm</c> via <see cref="DotNetNuGetSignSettings.HashAlgorithm"/></li><li><c>--output</c> via <see cref="DotNetNuGetSignSettings.Output"/></li><li><c>--overwrite</c> via <see cref="DotNetNuGetSignSettings.Overwrite"/></li><li><c>--timestamp-hash-algorithm</c> via <see cref="DotNetNuGetSignSettings.TimestampHashAlgorithm"/></li><li><c>--timestamper</c> via <see cref="DotNetNuGetSignSettings.Timestamper"/></li><li><c>--verbosity</c> via <see cref="DotNetNuGetSignSettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotNetNuGetSign(DotNetNuGetSignSettings options = null) => new DotNetTasks().Run<DotNetNuGetSignSettings>(options);
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetSign(Nuke.Common.Tools.DotNet.DotNetNuGetSignSettings)"/>
+    public static IReadOnlyCollection<Output> DotNetNuGetSign(Configure<DotNetNuGetSignSettings> configurator) => new DotNetTasks().Run<DotNetNuGetSignSettings>(configurator.Invoke(new DotNetNuGetSignSettings()));
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetSign(Nuke.Common.Tools.DotNet.DotNetNuGetSignSettings)"/>
+    public static IEnumerable<(DotNetNuGetSignSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetSign(CombinatorialConfigure<DotNetNuGetSignSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetNuGetSign, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>The dotnet nuget verify command verifies a signed NuGet package.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;targetPath&gt;</c> via <see cref="DotNetNuGetVerifySettings.TargetPath"/></li><li><c>--certificate-fingerprint</c> via <see cref="DotNetNuGetVerifySettings.CertificateFingerprint"/></li><li><c>--configfile</c> via <see cref="DotNetNuGetVerifySettings.ConfigFile"/></li><li><c>--verbosity</c> via <see cref="DotNetNuGetVerifySettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotNetNuGetVerify(DotNetNuGetVerifySettings options = null) => new DotNetTasks().Run<DotNetNuGetVerifySettings>(options);
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetVerify(Nuke.Common.Tools.DotNet.DotNetNuGetVerifySettings)"/>
+    public static IReadOnlyCollection<Output> DotNetNuGetVerify(Configure<DotNetNuGetVerifySettings> configurator) => new DotNetTasks().Run<DotNetNuGetVerifySettings>(configurator.Invoke(new DotNetNuGetVerifySettings()));
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetVerify(Nuke.Common.Tools.DotNet.DotNetNuGetVerifySettings)"/>
+    public static IEnumerable<(DotNetNuGetVerifySettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetVerify(CombinatorialConfigure<DotNetNuGetVerifySettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetNuGetVerify, degreeOfParallelism, completeOnFailure);
     /// <summary><p>Adds a NuGet source.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
     /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li><li><c>--configfile</c> via <see cref="DotNetNuGetAddSourceSettings.ConfigFile"/></li><li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li><li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li><li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li><li><c>--username</c> via <see cref="DotNetNuGetAddSourceSettings.Username"/></li><li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></li></ul></remarks>
     public static IReadOnlyCollection<Output> DotNetNuGetAddSource(DotNetNuGetAddSourceSettings options = null) => new DotNetTasks().Run<DotNetNuGetAddSourceSettings>(options);
@@ -667,6 +688,83 @@ public partial class DotNetNuGetPushSettings : ToolOptions
     [Argument(Format = "--skip-duplicate")] public bool? SkipDuplicate => Get<bool?>(() => SkipDuplicate);
     /// <summary>Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.</summary>
     [Argument(Format = "--no-service-endpoint")] public bool? NoServiceEndpoint => Get<bool?>(() => NoServiceEndpoint);
+}
+#endregion
+#region DotNetNuGetDeleteSettings
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetDelete(Nuke.Common.Tools.DotNet.DotNetNuGetDeleteSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetNuGetDelete), Arguments = "nuget delete")]
+public partial class DotNetNuGetDeleteSettings : ToolOptions
+{
+    /// <summary>Package Id to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted.</summary>
+    [Argument(Format = "{value}", Position = 1)] public string PackageId => Get<string>(() => PackageId);
+    /// <summary>Package Version to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted.</summary>
+    [Argument(Format = "{value}", Position = 2)] public string PackageVersion => Get<string>(() => PackageVersion);
+    /// <summary>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</summary>
+    [Argument(Format = "--source {value}")] public string Source => Get<string>(() => Source);
+    /// <summary>The API key for the server.</summary>
+    [Argument(Format = "--api-key {value}", Secret = true)] public string ApiKey => Get<string>(() => ApiKey);
+    /// <summary>Forces all logged output in English.</summary>
+    [Argument(Format = "--force-english-output")] public bool? ForceEnglishOutput => Get<bool?>(() => ForceEnglishOutput);
+    /// <summary>Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.</summary>
+    [Argument(Format = "--no-service-endpoint")] public bool? NoServiceEndpoint => Get<bool?>(() => NoServiceEndpoint);
+    /// <summary>Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK.</summary>
+    [Argument(Format = "--interactive")] public bool? Interactive => Get<bool?>(() => Interactive);
+    /// <summary>Doesn't prompt for user input or confirmations.</summary>
+    [Argument(Format = "--non-interactive")] public bool? NonInteractive => Get<bool?>(() => NonInteractive);
+}
+#endregion
+#region DotNetNuGetSignSettings
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetSign(Nuke.Common.Tools.DotNet.DotNetNuGetSignSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetNuGetSign), Arguments = "nuget sign")]
+public partial class DotNetNuGetSignSettings : ToolOptions
+{
+    /// <summary>Path of the package to sign.</summary>
+    [Argument(Format = "{value}", Position = 1)] public string TargetPath => Get<string>(() => TargetPath);
+    /// <summary>Specifies the file path to the certificate to be used in signing the package.</summary>
+    [Argument(Format = "--certificate-path {value}")] public string CertificatePath => Get<string>(() => CertificatePath);
+    /// <summary>Specifies the name of the X.509 certificate store to use to search for the certificate. Defaults to 'My', the X.509 certificate store for personal certificates. This option should be used when specifying the certificate via --certificate-subject-name or --certificate-fingerprint options.</summary>
+    [Argument(Format = "--certificate-store-name {value}")] public string CertificateStoreName => Get<string>(() => CertificateStoreName);
+    /// <summary>Specifies the name of the X.509 certificate store use to search for the certificate. Defaults to 'CurrentUser', the X.509 certificate store used by the current user. This option should be used when specifying the certificate via --certificate-subject-name or --certificate-fingerprint options.</summary>
+    [Argument(Format = "--certificate-store-location {value}")] public string CertificateStoreLocation => Get<string>(() => CertificateStoreLocation);
+    /// <summary>Specifies the subject name of the certificate used to search a local certificate store for the certificate. The search is a case-insensitive string comparison using the supplied value, which finds all certificates with the subject name containing that string, regardless of other subject values. The certificate store can be specified by --certificate-store-name and --certificate-store-location options.</summary>
+    [Argument(Format = "--certificate-subject-name {value}")] public string CertificateSubjectName => Get<string>(() => CertificateSubjectName);
+    /// <summary>Specifies the fingerprint of the certificate used to search a local certificate store for the certificate. Starting with .NET 9, this option can be used to specify the SHA-1, SHA-256, SHA-384, or SHA-512 fingerprint of the certificate. However, a NU3043 warning is raised when a SHA-1 certificate fingerprint is used because it is no longer considered secure.</summary>
+    [Argument(Format = "--certificate-fingerprint {value}")] public string CertificateFingerprint => Get<string>(() => CertificateFingerprint);
+    /// <summary>Specifies the certificate password, if needed. If a certificate is password protected but no password is provided, the sign command will fail.</summary>
+    [Argument(Format = "--certificate-password {value}", Secret = true)] public string CertificatePassword => Get<string>(() => CertificatePassword);
+    /// <summary>Hash algorithm to be used to sign the package. Defaults to SHA256. Possible values are SHA256, SHA384, and SHA512.</summary>
+    [Argument(Format = "--hash-algorithm {value}")] public DotNetNuGetSignHashAlgorithm HashAlgorithm => Get<DotNetNuGetSignHashAlgorithm>(() => HashAlgorithm);
+    /// <summary>Specifies the directory where the signed package should be saved. If this option isn't specified, by default the original package is overwritten by the signed package.</summary>
+    [Argument(Format = "--output {value}")] public string Output => Get<string>(() => Output);
+    /// <summary>Indicate that the current signature should be overwritten. By default the command will fail if the package already has a signature.</summary>
+    [Argument(Format = "--overwrite")] public bool? Overwrite => Get<bool?>(() => Overwrite);
+    /// <summary>Hash algorithm to be used by the RFC 3161 timestamp server. Defaults to SHA256.</summary>
+    [Argument(Format = "--timestamp-hash-algorithm {value}")] public DotNetNuGetSignHashAlgorithm TimestampHashAlgorithm => Get<DotNetNuGetSignHashAlgorithm>(() => TimestampHashAlgorithm);
+    /// <summary>URL to an RFC 3161 timestamping server.</summary>
+    [Argument(Format = "--timestamper {value}")] public string Timestamper => Get<string>(() => Timestamper);
+    /// <summary>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</summary>
+    [Argument(Format = "--verbosity {value}")] public DotNetVerbosity Verbosity => Get<DotNetVerbosity>(() => Verbosity);
+}
+#endregion
+#region DotNetNuGetVerifySettings
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetVerify(Nuke.Common.Tools.DotNet.DotNetNuGetVerifySettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetNuGetVerify), Arguments = "nuget verify")]
+public partial class DotNetNuGetVerifySettings : ToolOptions
+{
+    /// <summary>Path of the package to verify.</summary>
+    [Argument(Format = "{value}", Position = 1)] public string TargetPath => Get<string>(() => TargetPath);
+    /// <summary>Verify that the signer certificate matches with one of the specified SHA256 fingerprints. This option can be supplied multiple times to provide multiple fingerprints.</summary>
+    [Argument(Format = "--certificate-fingerprint {value}")] public string CertificateFingerprint => Get<string>(() => CertificateFingerprint);
+    /// <summary>The NuGet configuration file (nuget.config) to use.</summary>
+    [Argument(Format = "--configfile {value}")] public string ConfigFile => Get<string>(() => ConfigFile);
+    /// <summary>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</summary>
+    [Argument(Format = "--verbosity {value}")] public DotNetVerbosity Verbosity => Get<DotNetVerbosity>(() => Verbosity);
 }
 #endregion
 #region DotNetNuGetAddSourceSettings
@@ -6953,6 +7051,275 @@ public static partial class DotNetNuGetPushSettingsExtensions
     #endregion
 }
 #endregion
+#region DotNetNuGetDeleteSettingsExtensions
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetDelete(Nuke.Common.Tools.DotNet.DotNetNuGetDeleteSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetNuGetDeleteSettingsExtensions
+{
+    #region PackageId
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.PackageId"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.PackageId))]
+    public static T SetPackageId<T>(this T o, string v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.PackageId, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.PackageId"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.PackageId))]
+    public static T ResetPackageId<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.PackageId));
+    #endregion
+    #region PackageVersion
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.PackageVersion"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.PackageVersion))]
+    public static T SetPackageVersion<T>(this T o, string v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.PackageVersion, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.PackageVersion"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.PackageVersion))]
+    public static T ResetPackageVersion<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.PackageVersion));
+    #endregion
+    #region Source
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Source))]
+    public static T SetSource<T>(this T o, string v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.Source, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Source))]
+    public static T ResetSource<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.Source));
+    #endregion
+    #region ApiKey
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ApiKey"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ApiKey))]
+    public static T SetApiKey<T>(this T o, [Secret] string v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.ApiKey, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ApiKey"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ApiKey))]
+    public static T ResetApiKey<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.ApiKey));
+    #endregion
+    #region ForceEnglishOutput
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ForceEnglishOutput))]
+    public static T SetForceEnglishOutput<T>(this T o, bool? v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ForceEnglishOutput))]
+    public static T ResetForceEnglishOutput<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.ForceEnglishOutput));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ForceEnglishOutput))]
+    public static T EnableForceEnglishOutput<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, true));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ForceEnglishOutput))]
+    public static T DisableForceEnglishOutput<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, false));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ForceEnglishOutput))]
+    public static T ToggleForceEnglishOutput<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, !o.ForceEnglishOutput));
+    #endregion
+    #region NoServiceEndpoint
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NoServiceEndpoint))]
+    public static T SetNoServiceEndpoint<T>(this T o, bool? v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoServiceEndpoint, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NoServiceEndpoint))]
+    public static T ResetNoServiceEndpoint<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.NoServiceEndpoint));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NoServiceEndpoint))]
+    public static T EnableNoServiceEndpoint<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoServiceEndpoint, true));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NoServiceEndpoint))]
+    public static T DisableNoServiceEndpoint<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoServiceEndpoint, false));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NoServiceEndpoint))]
+    public static T ToggleNoServiceEndpoint<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoServiceEndpoint, !o.NoServiceEndpoint));
+    #endregion
+    #region Interactive
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Interactive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Interactive))]
+    public static T SetInteractive<T>(this T o, bool? v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.Interactive, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Interactive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Interactive))]
+    public static T ResetInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.Interactive));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Interactive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Interactive))]
+    public static T EnableInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.Interactive, true));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Interactive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Interactive))]
+    public static T DisableInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.Interactive, false));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Interactive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Interactive))]
+    public static T ToggleInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.Interactive, !o.Interactive));
+    #endregion
+    #region NonInteractive
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NonInteractive))]
+    public static T SetNonInteractive<T>(this T o, bool? v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NonInteractive))]
+    public static T ResetNonInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.NonInteractive));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NonInteractive))]
+    public static T EnableNonInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, true));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NonInteractive))]
+    public static T DisableNonInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, false));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NonInteractive))]
+    public static T ToggleNonInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, !o.NonInteractive));
+    #endregion
+}
+#endregion
+#region DotNetNuGetSignSettingsExtensions
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetSign(Nuke.Common.Tools.DotNet.DotNetNuGetSignSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetNuGetSignSettingsExtensions
+{
+    #region TargetPath
+    /// <inheritdoc cref="DotNetNuGetSignSettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.TargetPath))]
+    public static T SetTargetPath<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.TargetPath, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.TargetPath))]
+    public static T ResetTargetPath<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.TargetPath));
+    #endregion
+    #region CertificatePath
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificatePath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificatePath))]
+    public static T SetCertificatePath<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificatePath, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificatePath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificatePath))]
+    public static T ResetCertificatePath<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificatePath));
+    #endregion
+    #region CertificateStoreName
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateStoreName"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateStoreName))]
+    public static T SetCertificateStoreName<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateStoreName, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateStoreName"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateStoreName))]
+    public static T ResetCertificateStoreName<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateStoreName));
+    #endregion
+    #region CertificateStoreLocation
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateStoreLocation"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateStoreLocation))]
+    public static T SetCertificateStoreLocation<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateStoreLocation, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateStoreLocation"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateStoreLocation))]
+    public static T ResetCertificateStoreLocation<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateStoreLocation));
+    #endregion
+    #region CertificateSubjectName
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateSubjectName"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateSubjectName))]
+    public static T SetCertificateSubjectName<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateSubjectName, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateSubjectName"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateSubjectName))]
+    public static T ResetCertificateSubjectName<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateSubjectName));
+    #endregion
+    #region CertificateFingerprint
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateFingerprint))]
+    public static T SetCertificateFingerprint<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateFingerprint, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateFingerprint))]
+    public static T ResetCertificateFingerprint<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateFingerprint));
+    #endregion
+    #region CertificatePassword
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificatePassword"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificatePassword))]
+    public static T SetCertificatePassword<T>(this T o, [Secret] string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificatePassword, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificatePassword"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificatePassword))]
+    public static T ResetCertificatePassword<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificatePassword));
+    #endregion
+    #region HashAlgorithm
+    /// <inheritdoc cref="DotNetNuGetSignSettings.HashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.HashAlgorithm))]
+    public static T SetHashAlgorithm<T>(this T o, DotNetNuGetSignHashAlgorithm v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.HashAlgorithm, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.HashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.HashAlgorithm))]
+    public static T ResetHashAlgorithm<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.HashAlgorithm));
+    #endregion
+    #region Output
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Output"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Output))]
+    public static T SetOutput<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Output, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Output"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Output))]
+    public static T ResetOutput<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.Output));
+    #endregion
+    #region Overwrite
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Overwrite))]
+    public static T SetOverwrite<T>(this T o, bool? v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Overwrite))]
+    public static T ResetOverwrite<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.Overwrite));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Overwrite))]
+    public static T EnableOverwrite<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, true));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Overwrite))]
+    public static T DisableOverwrite<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, false));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Overwrite))]
+    public static T ToggleOverwrite<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, !o.Overwrite));
+    #endregion
+    #region TimestampHashAlgorithm
+    /// <inheritdoc cref="DotNetNuGetSignSettings.TimestampHashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.TimestampHashAlgorithm))]
+    public static T SetTimestampHashAlgorithm<T>(this T o, DotNetNuGetSignHashAlgorithm v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.TimestampHashAlgorithm, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.TimestampHashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.TimestampHashAlgorithm))]
+    public static T ResetTimestampHashAlgorithm<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.TimestampHashAlgorithm));
+    #endregion
+    #region Timestamper
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Timestamper"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Timestamper))]
+    public static T SetTimestamper<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Timestamper, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Timestamper"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Timestamper))]
+    public static T ResetTimestamper<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.Timestamper));
+    #endregion
+    #region Verbosity
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Verbosity))]
+    public static T SetVerbosity<T>(this T o, DotNetVerbosity v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Verbosity, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Verbosity))]
+    public static T ResetVerbosity<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.Verbosity));
+    #endregion
+}
+#endregion
+#region DotNetNuGetVerifySettingsExtensions
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetVerify(Nuke.Common.Tools.DotNet.DotNetNuGetVerifySettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetNuGetVerifySettingsExtensions
+{
+    #region TargetPath
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.TargetPath))]
+    public static T SetTargetPath<T>(this T o, string v) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Set(() => o.TargetPath, v));
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.TargetPath))]
+    public static T ResetTargetPath<T>(this T o) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Remove(() => o.TargetPath));
+    #endregion
+    #region CertificateFingerprint
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.CertificateFingerprint))]
+    public static T SetCertificateFingerprint<T>(this T o, string v) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Set(() => o.CertificateFingerprint, v));
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.CertificateFingerprint))]
+    public static T ResetCertificateFingerprint<T>(this T o) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Remove(() => o.CertificateFingerprint));
+    #endregion
+    #region ConfigFile
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.ConfigFile"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.ConfigFile))]
+    public static T SetConfigFile<T>(this T o, string v) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Set(() => o.ConfigFile, v));
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.ConfigFile"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.ConfigFile))]
+    public static T ResetConfigFile<T>(this T o) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Remove(() => o.ConfigFile));
+    #endregion
+    #region Verbosity
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.Verbosity))]
+    public static T SetVerbosity<T>(this T o, DotNetVerbosity v) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Set(() => o.Verbosity, v));
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.Verbosity))]
+    public static T ResetVerbosity<T>(this T o) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Remove(() => o.Verbosity));
+    #endregion
+}
+#endregion
 #region DotNetNuGetAddSourceSettingsExtensions
 /// <inheritdoc cref="DotNetTasks.DotNetNuGetAddSource(Nuke.Common.Tools.DotNet.DotNetNuGetAddSourceSettings)"/>
 [PublicAPI]
@@ -8251,6 +8618,23 @@ public partial class DotNetFormatSeverity : Enumeration
     public static implicit operator DotNetFormatSeverity(string value)
     {
         return new DotNetFormatSeverity { Value = value };
+    }
+}
+#endregion
+#region DotNetNuGetSignHashAlgorithm
+/// <summary>Used within <see cref="DotNetTasks"/>.</summary>
+[PublicAPI]
+[Serializable]
+[ExcludeFromCodeCoverage]
+[TypeConverter(typeof(TypeConverter<DotNetNuGetSignHashAlgorithm>))]
+public partial class DotNetNuGetSignHashAlgorithm : Enumeration
+{
+    public static DotNetNuGetSignHashAlgorithm sha256 = (DotNetNuGetSignHashAlgorithm) "sha256";
+    public static DotNetNuGetSignHashAlgorithm sha384 = (DotNetNuGetSignHashAlgorithm) "sha384";
+    public static DotNetNuGetSignHashAlgorithm sha512 = (DotNetNuGetSignHashAlgorithm) "sha512";
+    public static implicit operator DotNetNuGetSignHashAlgorithm(string value)
+    {
+        return new DotNetNuGetSignHashAlgorithm { Value = value };
     }
 }
 #endregion
