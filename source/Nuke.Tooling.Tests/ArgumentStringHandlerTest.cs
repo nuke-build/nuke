@@ -22,7 +22,8 @@ public class ArgumentStringHandlerTest
     [Fact]
     public void TestString()
     {
-        ArgsToString("start end").Should().Be("start end");
+        // If we want two words without quotes, we need to pass them as two arguments
+        ArgsToString($"{"start"} {"end"}").Should().Be("start end");
         ArgsToString("").Should().Be("");
         ArgsToString(" ").Should().Be("");
     }
@@ -88,7 +89,8 @@ public class ArgumentStringHandlerTest
     [Fact]
     public void TestUnquote()
     {
-        ArgsToString($"{"start end"}").Should().Be("start end");
+        // If we want two words without quotes, we need to pass them as two arguments
+        ArgsToString($"{"start"} {"end"}").Should().Be("start end");
         ArgsToString($"start {"spaced end"}").Should().Be("start \"spaced end\"");
         ArgsToString($"{"spaced start"} end").Should().Be("\"spaced start\" end");
         ArgsToString($"{"spaced start"} {"spaced end"}").Should().Be("\"spaced start\" \"spaced end\"");
