@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+- Security: Fixed output filter from `ArgumentStringHandler`
+- Removed obsolete members
+- Fixed `PreProcess` of tasks requires exact options type
+- Fixed missing `position` and `secret` properties
+- Fixed preparation of shadow directory in `ReSharperTasks`
+- Fixed base class in `ReSharperTasks`
+- Fixed missing arguments in `DotNetTasks`
+- Fixed missing commands in `DotNetTasks` and `NuGetTasks`
+- Fixed package executable in `OctoVersionTasks`
 
 ## [9.0.3] / 2024-12-05
 - Fixed nullable options for `ToolTasks.Run`
