@@ -12,7 +12,7 @@ namespace Nuke.Common.Tooling;
 
 partial class ToolTasks
 {
-    protected virtual partial IReadOnlyCollection<Output> Run<T>(ToolOptions options)
+    protected virtual partial IReadOnlyCollection<Output> Run<T>(T options)
         where T : ToolOptions, new()
     {
         options ??= new T();
@@ -39,10 +39,10 @@ partial class ToolTasks
         return process.Output;
     }
 
-    protected virtual partial (TResult Result, IReadOnlyCollection<Output> Output) Run<TOptions, TResult>(ToolOptions options)
+    protected virtual partial (TResult Result, IReadOnlyCollection<Output> Output) Run<TOptions, TResult>(TOptions options)
         where TOptions : ToolOptions, new()
     {
-        var output = Run<TOptions>(options);
+        var output = Run(options);
         try
         {
             var result = GetResult<TResult>(options, output);

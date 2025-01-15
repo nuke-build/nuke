@@ -44,19 +44,19 @@ public partial class AzureSignToolTasks : ToolTasks, IRequireNuGetPackage
 public partial class AzureSignToolSettings : ToolOptions
 {
     /// <summary>A fully qualified URL of the key vault with the certificate that will be used for signing. An example value might be <c>https://my-vault.vault.azure.net</c>.</summary>
-    [Argument(Format = "--azure-key-vault-url {value}")] public string KeyVaultUrl => Get<string>(() => KeyVaultUrl);
+    [Argument(Format = "--azure-key-vault-url {value}", Secret = false)] public string KeyVaultUrl => Get<string>(() => KeyVaultUrl);
     /// <summary>This is the client ID used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option. If this parameter is supplied, <c>--azure-key-vault-client-secret</c> and <c>--azure-key-vault-tenant-id</c> must be supplied as well.</summary>
-    [Argument(Format = "--azure-key-vault-client-id {value}")] public string KeyVaultClientId => Get<string>(() => KeyVaultClientId);
+    [Argument(Format = "--azure-key-vault-client-id {value}", Secret = false)] public string KeyVaultClientId => Get<string>(() => KeyVaultClientId);
     /// <summary>This is the client secret used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option or when using managed identities with <c>--azure-key-vault-managed-identity</c>. If this parameter is supplied, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-tenant-id</c> must be supplied as well.</summary>
     [Argument(Format = "--azure-key-vault-client-secret {value}", Secret = true)] public string KeyVaultClientSecret => Get<string>(() => KeyVaultClientSecret);
     /// <summary>This is the tenant id used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option or when using managed identities with <c>--azure-key-vault-managed-identity</c>. If this parameter is supplied, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> must be supplied as well.</summary>
-    [Argument(Format = "--azure-key-vault-tenant-id {value}")] public string KeyVaultTenantId => Get<string>(() => KeyVaultTenantId);
+    [Argument(Format = "--azure-key-vault-tenant-id {value}", Secret = false)] public string KeyVaultTenantId => Get<string>(() => KeyVaultTenantId);
     /// <summary>The name of the certificate used to perform the signing operation.</summary>
-    [Argument(Format = "--azure-key-vault-certificate {value}")] public string KeyVaultCertificateName => Get<string>(() => KeyVaultCertificateName);
+    [Argument(Format = "--azure-key-vault-certificate {value}", Secret = false)] public string KeyVaultCertificateName => Get<string>(() => KeyVaultCertificateName);
     /// <summary>An access token used to authenticate to Azure. This can be used instead of the <c>--azure-key-vault-managed-identity</c>, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> options. This is useful if AzureSignTool is being used as part of another program that is already authenticated and has an access token to Azure.</summary>
     [Argument(Format = "--azure-key-vault-accesstoken {value}", Secret = true)] public string KeyVaultAccessToken => Get<string>(() => KeyVaultAccessToken);
     /// <summary>Use the ambient Managed Identity to authenticate to Azure. This can be used instead of the <c>--azure-key-vault-accesstoken</c>, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> options. This is useful if AzureSignTool is being used on a VM/service/CLI that is configured for managed identities to Azure.</summary>
-    [Argument(Format = "--azure-key-vault-managed-identity")] public bool? KeyVaultManagedIdentity => Get<bool?>(() => KeyVaultManagedIdentity);
+    [Argument(Format = "--azure-key-vault-managed-identity", Secret = false)] public bool? KeyVaultManagedIdentity => Get<bool?>(() => KeyVaultManagedIdentity);
     /// <summary>A description of the signed content. This parameter serves the same purpose as the <c>/d</c> option in the Windows SDK <c>signtool</c>. If this parameter is not supplied, the signature will not contain a description.</summary>
     [Argument(Format = "--description {value}")] public string Description => Get<string>(() => Description);
     /// <summary>A URL with more information of the signed content. This parameter serves the same purpose as the <c>/du</c> option in the Windows SDK <c>signtool</c>. If this parameter is not supplied, the signature will not contain a URL description.</summary>

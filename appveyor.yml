@@ -37,7 +37,7 @@ environment:
   PublicNuGetApiKey:
     secure: AzhHrKZGYyWnvMtPg06Q7PMJPp47dl5NxAHaE9ZB9tjIWVqmySx3F26YtVhRSPGa
   GitHubReleaseGitHubToken:
-    secure: a5UfxXiDEere9GkCCN9TURaC8CmN/ZaqWIeoHbHNshmXWLedwrEAdwGNzPf3dusKEykOMB7T/fIorZHPIqSRuuR3JsMya/3zPrvozT5o1A5qf6LpNAtWpdB20+3rvupZ
+    secure: a5UfxXiDEere9GkCCN9TUUq2+8QHAJoeVpZudQZXdWyloZWE5xKOkqzpxdMoYDPSxrVbWxjXbk1Xe9p0OydwuGVnr/3DC//BguNeGtFddbyMWlAiX36XvD1ZGEgP+ZIN
   SignPathApiToken:
     secure: uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn
   TwitterConsumerKey:

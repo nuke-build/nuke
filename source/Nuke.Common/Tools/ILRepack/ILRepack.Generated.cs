@@ -44,9 +44,9 @@ public partial class ILRepackTasks : ToolTasks, IRequireNuGetPackage
 public partial class ILRepackSettings : ToolOptions
 {
     /// <summary>Specifies a keyfile to sign the output assembly.</summary>
-    [Argument(Format = "--keyfile:{value}")] public string KeyFile => Get<string>(() => KeyFile);
+    [Argument(Format = "--keyfile:{value}", Secret = false)] public string KeyFile => Get<string>(() => KeyFile);
     /// <summary>Specifies a key container to sign the output assembly (takes precedence over <c>--keyfile</c>).</summary>
-    [Argument(Format = "--keycontainer:{value}")] public string KeyContainer => Get<string>(() => KeyContainer);
+    [Argument(Format = "--keycontainer:{value}", Secret = false)] public string KeyContainer => Get<string>(() => KeyContainer);
     /// <summary>Enable logging (to a file, if given) (default is disabled).</summary>
     [Argument(Format = "--log:{value}")] public string LogFile => Get<string>(() => LogFile);
     /// <summary>Target assembly version.</summary>
