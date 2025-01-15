@@ -380,6 +380,7 @@
             "name": "Key",
             "type": "string",
             "format": "{value}",
+            "secret": false,
             "position": 1,
             "help": "The key to the key-value pair in the configuration."
           },
@@ -421,6 +422,7 @@
             "name": "Key",
             "type": "string",
             "format": "{value}",
+            "secret": false,
             "position": 1,
             "help": "The key to the key-value pair in the configuration."
           },
@@ -442,6 +444,7 @@
             "name": "Key",
             "type": "string",
             "format": "{value}",
+            "secret": false,
             "position": 1,
             "help": "The key to the key-value pair in the configuration."
           },

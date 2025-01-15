@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [vNext]
 
+## [9.0.4] / 2025-01-15
+- Security: Fixed output filter from `ArgumentStringHandler`
+- Removed obsolete members
+- Fixed `PreProcess` of tasks requires exact options type
+- Fixed missing `position` and `secret` properties
+- Fixed preparation of shadow directory in `ReSharperTasks`
+- Fixed base class in `ReSharperTasks`
+- Fixed missing arguments in `DotNetTasks`
+- Fixed missing commands in `DotNetTasks` and `NuGetTasks`
+- Fixed package executable in `OctoVersionTasks`
+
 ## [9.0.3] / 2024-12-05
 - Fixed nullable options for `ToolTasks.Run`
 - Fixed static tool path resolution
@@ -1205,7 +1216,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/9.0.3...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/9.0.4...HEAD
+[9.0.4]: https://github.com/nuke-build/nuke/compare/9.0.3...9.0.4
 [9.0.3]: https://github.com/nuke-build/nuke/compare/9.0.2...9.0.3
 [9.0.2]: https://github.com/nuke-build/nuke/compare/9.0.1...9.0.2
 [9.0.1]: https://github.com/nuke-build/nuke/compare/9.0.0...9.0.1

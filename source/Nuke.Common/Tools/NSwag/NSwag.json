@@ -689,6 +689,7 @@
             "name": "UseCancellationToken",
             "type": "bool",
             "format": "/UseCancellationToken:{value}",
+            "secret": false,
             "help": "Add a cancellation token parameter (default: false)."
           }
         ]
@@ -720,6 +721,7 @@
             "name": "BaseUrlTokenName",
             "type": "string",
             "format": "/BaseUrlTokenName:{value}",
+            "secret": false,
             "help": "The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL')."
           },
           {
@@ -864,6 +866,7 @@
             "name": "InjectionTokenType",
             "type": "InjectionTokenType",
             "format": "/InjectionTokenType:{value}",
+            "secret": false,
             "help": "The Angular injection token type (default 'InjectionToken', 'OpaqueToken')."
           },
           {

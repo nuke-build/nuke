@@ -9,6 +9,9 @@
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-clean.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-publish.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-nuget-push.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-nuget-delete.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-nuget-sign.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-nuget-verify.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-install.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-uninstall.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-update.md",
@@ -187,6 +190,12 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -299,6 +308,12 @@
             "position": -1,
             "customValue": true,
             "help": "Arguments passed to the application being run."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -413,6 +428,12 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -511,6 +532,12 @@
             "type": "string",
             "format": "-bl:{value}",
             "help": "Generare MSBuild <a href=\"https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md\">binary log</a>."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -800,6 +827,12 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -975,6 +1008,12 @@
             "format": "/t:{value}",
             "separator": ";",
             "help": "<p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ee216359.aspx\">Target Build Order</a> and <a href=\"https://msdn.microsoft.com/en-us/library/ms171463.aspx\">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ms171462.aspx\">Targets</a>.</p>"
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -1059,6 +1098,192 @@
       }
     },
     {
+      "help": "The dotnet nuget delete command deletes or unlists a package from the server. For nuget.org, the action is to unlist the package.",
+      "postfix": "NuGetDelete",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget delete",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageId",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "Package Id to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted."
+          },
+          {
+            "name": "PackageVersion",
+            "type": "string",
+            "format": "{value}",
+            "position": 2,
+            "help": "Package Version to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file."
+          },
+          {
+            "name": "ApiKey",
+            "type": "string",
+            "format": "--api-key {value}",
+            "secret": true,
+            "help": "The API key for the server."
+          },
+          {
+            "name": "ForceEnglishOutput",
+            "type": "bool",
+            "format": "--force-english-output",
+            "help": "Forces all logged output in English."
+          },
+          {
+            "name": "NoServiceEndpoint",
+            "type": "bool",
+            "format": "--no-service-endpoint",
+            "help": "Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "NonInteractive",
+            "type": "bool",
+            "format": "--non-interactive",
+            "help": "Doesn't prompt for user input or confirmations."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The dotnet nuget sign command signs all the packages matching the first argument with a certificate. The certificate with the private key can be obtained from a file or from a certificate installed in a certificate store by providing a subject name or a SHA-1 fingerprint.",
+      "postfix": "NuGetSign",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget sign",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "Path of the package to sign."
+          },
+          {
+            "name": "CertificatePath",
+            "type": "string",
+            "format": "--certificate-path {value}",
+            "help": "Specifies the file path to the certificate to be used in signing the package."
+          },
+          {
+            "name": "CertificateStoreName",
+            "type": "string",
+            "format": "--certificate-store-name {value}",
+            "help": "Specifies the name of the X.509 certificate store to use to search for the certificate. Defaults to 'My', the X.509 certificate store for personal certificates. This option should be used when specifying the certificate via --certificate-subject-name or --certificate-fingerprint options."
+          },
+          {
+            "name": "CertificateStoreLocation",
+            "type": "string",
+            "format": "--certificate-store-location {value}",
+            "help": "Specifies the name of the X.509 certificate store use to search for the certificate. Defaults to 'CurrentUser', the X.509 certificate store used by the current user. This option should be used when specifying the certificate via --certificate-subject-name or --certificate-fingerprint options."
+          },
+          {
+            "name": "CertificateSubjectName",
+            "type": "string",
+            "format": "--certificate-subject-name {value}",
+            "help": "Specifies the subject name of the certificate used to search a local certificate store for the certificate. The search is a case-insensitive string comparison using the supplied value, which finds all certificates with the subject name containing that string, regardless of other subject values. The certificate store can be specified by --certificate-store-name and --certificate-store-location options."
+          },
+          {
+            "name": "CertificateFingerprint",
+            "type": "string",
+            "format": "--certificate-fingerprint {value}",
+            "help": "Specifies the fingerprint of the certificate used to search a local certificate store for the certificate. Starting with .NET 9, this option can be used to specify the SHA-1, SHA-256, SHA-384, or SHA-512 fingerprint of the certificate. However, a NU3043 warning is raised when a SHA-1 certificate fingerprint is used because it is no longer considered secure."
+          },
+          {
+            "name": "CertificatePassword",
+            "type": "string",
+            "format": "--certificate-password {value}",
+            "secret": true,
+            "help": "Specifies the certificate password, if needed. If a certificate is password protected but no password is provided, the sign command will fail."
+          },
+          {
+            "name": "HashAlgorithm",
+            "type": "DotNetNuGetSignHashAlgorithm",
+            "format": "--hash-algorithm {value}",
+            "help": "Hash algorithm to be used to sign the package. Defaults to SHA256. Possible values are SHA256, SHA384, and SHA512."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Specifies the directory where the signed package should be saved. If this option isn't specified, by default the original package is overwritten by the signed package."
+          },
+          {
+            "name": "Overwrite",
+            "type": "bool",
+            "format": "--overwrite",
+            "help": "Indicate that the current signature should be overwritten. By default the command will fail if the package already has a signature."
+          },
+          {
+            "name": "TimestampHashAlgorithm",
+            "type": "DotNetNuGetSignHashAlgorithm",
+            "format": "--timestamp-hash-algorithm {value}",
+            "help": "Hash algorithm to be used by the RFC 3161 timestamp server. Defaults to SHA256."
+          },
+          {
+            "name": "Timestamper",
+            "type": "string",
+            "format": "--timestamper {value}",
+            "help": "URL to an RFC 3161 timestamping server."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The dotnet nuget verify command verifies a signed NuGet package.",
+      "postfix": "NuGetVerify",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget verify",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "Path of the package to verify."
+          },
+          {
+            "name": "CertificateFingerprint",
+            "type": "string",
+            "format": "--certificate-fingerprint {value}",
+            "help": "Verify that the signer certificate matches with one of the specified SHA256 fingerprints. This option can be supplied multiple times to provide multiple fingerprints."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
       "help": "Adds a NuGet source.",
       "postfix": "NuGetAddSource",
       "omitCommonProperties": true,
@@ -1095,6 +1320,7 @@
             "name": "StorePasswordInClearText",
             "type": "bool",
             "format": "--store-password-in-clear-text",
+            "secret": false,
             "help": "Enables storing portable package source credentials by disabling password encryption."
           },
           {
@@ -1150,6 +1376,7 @@
             "name": "StorePasswordInClearText",
             "type": "bool",
             "format": "--store-password-in-clear-text",
+            "secret": false,
             "help": "Enables storing portable package source credentials by disabling password encryption."
           },
           {
@@ -1967,6 +2194,14 @@
         "info",
         "warn",
         "error"
+      ]
+    },
+    {
+      "name": "DotNetNuGetSignHashAlgorithm",
+      "values": [
+        "sha256",
+        "sha384",
+        "sha512"
       ]
     }
   ]

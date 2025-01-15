@@ -53,12 +53,3 @@ public class LocalPathAttribute : ToolInjectionAttributeBase
         return ToolResolver.GetTool(toolPath);
     }
 }
-
-[Obsolete($"Use {nameof(LocalPathAttribute)} instead")]
-public class LocalExecutableAttribute : LocalPathAttribute
-{
-    public LocalExecutableAttribute(string absoluteOrRelativePath)
-        : base(absoluteOrRelativePath)
-    {
-    }
-}

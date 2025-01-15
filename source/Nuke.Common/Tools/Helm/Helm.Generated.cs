@@ -1182,7 +1182,7 @@ public partial class HelmSearchSettings : HelmOptionsBase
     /// <summary>Show the long listing, with each version of each chart on its own line.</summary>
     [Argument(Format = "--versions", Secret = false)] public bool? Versions => Get<bool?>(() => Versions);
     /// <summary>The keyword to search for.</summary>
-    [Argument(Format = "{value}")] public string Keyword => Get<string>(() => Keyword);
+    [Argument(Format = "{value}", Secret = false)] public string Keyword => Get<string>(() => Keyword);
 }
 #endregion
 #region HelmServeSettings

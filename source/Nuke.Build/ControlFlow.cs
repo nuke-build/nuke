@@ -21,42 +21,6 @@ namespace Nuke.Common;
 [DebuggerStepThrough]
 public static class ControlFlow
 {
-    [Obsolete("Use " + nameof(Common.Assert) + "." + nameof(Common.Assert.Fail))]
-    public static void Fail(string format, params object[] args)
-    {
-        Fail(string.Format(format, args));
-    }
-
-    [Obsolete("Use " + nameof(Common.Assert) + "." + nameof(Common.Assert.Fail))]
-    public static void Fail(object value, Exception exception = null)
-    {
-        Fail(value.ToString(), exception);
-    }
-
-    [Obsolete("Use " + nameof(Common.Assert) + "." + nameof(Common.Assert.Fail))]
-    public static void Fail(string text, Exception exception = null)
-    {
-        Common.Assert.Fail(text, exception);
-    }
-
-    [Obsolete("Use " + nameof(Common.Assert) + "." + nameof(Common.Assert.True) +
-              " or " + nameof(Common.Assert) + "." + nameof(Common.Assert.False))]
-    public static void Assert(
-        [AssertionCondition(AssertionConditionType.IS_TRUE)]
-        bool condition,
-        string text)
-    {
-        Common.Assert.True(condition, text);
-    }
-
-    [Obsolete("Use " + nameof(Common.Assert) + "." + nameof(Common.Assert.NotNullOrEmpty))]
-    public static IReadOnlyCollection<T> NotEmpty<T>([CanBeNull] this IEnumerable<T> enumerable, string message = null)
-    {
-        var collection = enumerable.NotNull().ToList().AsReadOnly();
-        Common.Assert.NotEmpty(collection);
-        return collection;
-    }
-
     public static void SuppressErrors(Action action, bool includeStackTrace = false, bool logWarning = true)
     {
         SuppressErrorsIf(condition: true, action, includeStackTrace: includeStackTrace, logWarning: logWarning);
@@ -106,7 +70,7 @@ public static class ControlFlow
         TimeSpan? delay = null,
         Action<string> logAction = null)
     {
-        Assert(retryAttempts > 0, "retryAttempts > 0");
+        Assert.True(retryAttempts > 0);
 
         logAction ??= Log.Warning;
         Exception lastException = null;
@@ -138,7 +102,7 @@ public static class ControlFlow
             }
         }
 
-        Fail(new[]
+        Assert.Fail(new[]
              {
                  $"Execution failed permanently after {retryAttempts} attempts.",
                  $"Last attempt failed with: {lastException!.Message}"

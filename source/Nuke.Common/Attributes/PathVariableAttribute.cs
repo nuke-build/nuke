@@ -51,12 +51,3 @@ public class PathVariableAttribute : ToolInjectionAttributeBase
                ToolResolver.GetPathTool(name);
     }
 }
-
-[Obsolete($"Use {nameof(PathVariableAttribute)} instead")]
-public class PathExecutableAttribute : PathVariableAttribute
-{
-    public PathExecutableAttribute(string pathExecutable = null)
-        : base(pathExecutable)
-    {
-    }
-}

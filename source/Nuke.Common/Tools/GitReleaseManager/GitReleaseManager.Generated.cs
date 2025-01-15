@@ -88,7 +88,7 @@ public partial class GitReleaseManagerAddAssetsSettings : ToolOptions
     /// <summary>Path to where log file should be created. Defaults is <em>logging to console</em>.</summary>
     [Argument(Format = "--logFilePath {value}")] public string LogFilePath => Get<string>(() => LogFilePath);
     /// <summary>The access token to access GitHub with.</summary>
-    [Argument(Format = "--token {value}")] public string Token => Get<string>(() => Token);
+    [Argument(Format = "--token {value}", Secret = true)] public string Token => Get<string>(() => Token);
 }
 #endregion
 #region GitReleaseManagerCloseSettings
@@ -113,7 +113,7 @@ public partial class GitReleaseManagerCloseSettings : ToolOptions
     /// <summary>Path to where log file should be created. Defaults is <em>logging to console</em>.</summary>
     [Argument(Format = "--logFilePath {value}")] public string LogFilePath => Get<string>(() => LogFilePath);
     /// <summary>The access token to access GitHub with.</summary>
-    [Argument(Format = "--token {value}")] public string Token => Get<string>(() => Token);
+    [Argument(Format = "--token {value}", Secret = true)] public string Token => Get<string>(() => Token);
 }
 #endregion
 #region GitReleaseManagerCreateSettings
@@ -148,7 +148,7 @@ public partial class GitReleaseManagerCreateSettings : ToolOptions
     /// <summary>Path to where log file should be created. Defaults is <em>logging to console</em>.</summary>
     [Argument(Format = "--logFilePath {value}")] public string LogFilePath => Get<string>(() => LogFilePath);
     /// <summary>The access token to access GitHub with.</summary>
-    [Argument(Format = "--token {value}")] public string Token => Get<string>(() => Token);
+    [Argument(Format = "--token {value}", Secret = true)] public string Token => Get<string>(() => Token);
 }
 #endregion
 #region GitReleaseManagerExportSettings
@@ -175,7 +175,7 @@ public partial class GitReleaseManagerExportSettings : ToolOptions
     /// <summary>Path to where log file should be created. Defaults is <em>logging to console</em>.</summary>
     [Argument(Format = "--logFilePath {value}")] public string LogFilePath => Get<string>(() => LogFilePath);
     /// <summary>The access token to access GitHub with.</summary>
-    [Argument(Format = "--token {value}")] public string Token => Get<string>(() => Token);
+    [Argument(Format = "--token {value}", Secret = true)] public string Token => Get<string>(() => Token);
 }
 #endregion
 #region GitReleaseManagerPublishSettings
@@ -200,7 +200,7 @@ public partial class GitReleaseManagerPublishSettings : ToolOptions
     /// <summary>Path to where log file should be created. Defaults is <em>logging to console</em>.</summary>
     [Argument(Format = "--logFilePath {value}")] public string LogFilePath => Get<string>(() => LogFilePath);
     /// <summary>The access token to access GitHub with.</summary>
-    [Argument(Format = "--token {value}")] public string Token => Get<string>(() => Token);
+    [Argument(Format = "--token {value}", Secret = true)] public string Token => Get<string>(() => Token);
 }
 #endregion
 #region GitReleaseManagerAddAssetsSettingsExtensions
@@ -291,7 +291,7 @@ public static partial class GitReleaseManagerAddAssetsSettingsExtensions
     #region Token
     /// <inheritdoc cref="GitReleaseManagerAddAssetsSettings.Token"/>
     [Pure] [Builder(Type = typeof(GitReleaseManagerAddAssetsSettings), Property = nameof(GitReleaseManagerAddAssetsSettings.Token))]
-    public static T SetToken<T>(this T o, string v) where T : GitReleaseManagerAddAssetsSettings => o.Modify(b => b.Set(() => o.Token, v));
+    public static T SetToken<T>(this T o, [Secret] string v) where T : GitReleaseManagerAddAssetsSettings => o.Modify(b => b.Set(() => o.Token, v));
     /// <inheritdoc cref="GitReleaseManagerAddAssetsSettings.Token"/>
     [Pure] [Builder(Type = typeof(GitReleaseManagerAddAssetsSettings), Property = nameof(GitReleaseManagerAddAssetsSettings.Token))]
     public static T ResetToken<T>(this T o) where T : GitReleaseManagerAddAssetsSettings => o.Modify(b => b.Remove(() => o.Token));
@@ -363,7 +363,7 @@ public static partial class GitReleaseManagerCloseSettingsExtensions
     #region Token
     /// <inheritdoc cref="GitReleaseManagerCloseSettings.Token"/>
     [Pure] [Builder(Type = typeof(GitReleaseManagerCloseSettings), Property = nameof(GitReleaseManagerCloseSettings.Token))]
-    public static T SetToken<T>(this T o, string v) where T : GitReleaseManagerCloseSettings => o.Modify(b => b.Set(() => o.Token, v));
+    public static T SetToken<T>(this T o, [Secret] string v) where T : GitReleaseManagerCloseSettings => o.Modify(b => b.Set(() => o.Token, v));
     /// <inheritdoc cref="GitReleaseManagerCloseSettings.Token"/>
     [Pure] [Builder(Type = typeof(GitReleaseManagerCloseSettings), Property = nameof(GitReleaseManagerCloseSettings.Token))]
     public static T ResetToken<T>(this T o) where T : GitReleaseManagerCloseSettings => o.Modify(b => b.Remove(() => o.Token));
@@ -499,7 +499,7 @@ public static partial class GitReleaseManagerCreateSettingsExtensions
     #region Token
     /// <inheritdoc cref="GitReleaseManagerCreateSettings.Token"/>
     [Pure] [Builder(Type = typeof(GitReleaseManagerCreateSettings), Property = nameof(GitReleaseManagerCreateSettings.Token))]
-    public static T SetToken<T>(this T o, string v) where T : GitReleaseManagerCreateSettings => o.Modify(b => b.Set(() => o.Token, v));
+    public static T SetToken<T>(this T o, [Secret] string v) where T : GitReleaseManagerCreateSettings => o.Modify(b => b.Set(() => o.Token, v));
     /// <inheritdoc cref="GitReleaseManagerCreateSettings.Token"/>
     [Pure] [Builder(Type = typeof(GitReleaseManagerCreateSettings), Property = nameof(GitReleaseManagerCreateSettings.Token))]
     public static T ResetToken<T>(this T o) where T : GitReleaseManagerCreateSettings => o.Modify(b => b.Remove(() => o.Token));
@@ -579,7 +579,7 @@ public static partial class GitReleaseManagerExportSettingsExtensions
     #region Token
     /// <inheritdoc cref="GitReleaseManagerExportSettings.Token"/>
     [Pure] [Builder(Type = typeof(GitReleaseManagerExportSettings), Property = nameof(GitReleaseManagerExportSettings.Token))]
-    public static T SetToken<T>(this T o, string v) where T : GitReleaseManagerExportSettings => o.Modify(b => b.Set(() => o.Token, v));
+    public static T SetToken<T>(this T o, [Secret] string v) where T : GitReleaseManagerExportSettings => o.Modify(b => b.Set(() => o.Token, v));
     /// <inheritdoc cref="GitReleaseManagerExportSettings.Token"/>
     [Pure] [Builder(Type = typeof(GitReleaseManagerExportSettings), Property = nameof(GitReleaseManagerExportSettings.Token))]
     public static T ResetToken<T>(this T o) where T : GitReleaseManagerExportSettings => o.Modify(b => b.Remove(() => o.Token));
@@ -651,7 +651,7 @@ public static partial class GitReleaseManagerPublishSettingsExtensions
     #region Token
     /// <inheritdoc cref="GitReleaseManagerPublishSettings.Token"/>
     [Pure] [Builder(Type = typeof(GitReleaseManagerPublishSettings), Property = nameof(GitReleaseManagerPublishSettings.Token))]
-    public static T SetToken<T>(this T o, string v) where T : GitReleaseManagerPublishSettings => o.Modify(b => b.Set(() => o.Token, v));
+    public static T SetToken<T>(this T o, [Secret] string v) where T : GitReleaseManagerPublishSettings => o.Modify(b => b.Set(() => o.Token, v));
     /// <inheritdoc cref="GitReleaseManagerPublishSettings.Token"/>
     [Pure] [Builder(Type = typeof(GitReleaseManagerPublishSettings), Property = nameof(GitReleaseManagerPublishSettings.Token))]
     public static T ResetToken<T>(this T o) where T : GitReleaseManagerPublishSettings => o.Modify(b => b.Remove(() => o.Token));

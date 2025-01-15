@@ -12,7 +12,6 @@ namespace Nuke.Common.Tooling;
 partial class ToolOptionsExtensions
 {
     /// <inheritdoc cref="ToolOptions.ProcessLogger"/>
-    [Obsolete($"Marked for removal")]
     [Builder(Type = typeof(ToolOptions), Property = nameof(ToolOptions.ProcessLogger))]
     public static T SetProcessLogger<T>(this T o, Action<OutputType, string> v)
         where T : ToolOptions
@@ -24,9 +23,8 @@ partial class ToolOptionsExtensions
     }
 
     /// <inheritdoc cref="ToolOptions.ProcessExitHandler"/>
-    [Obsolete($"Marked for removal")]
     [Builder(Type = typeof(ToolOptions), Property = nameof(ToolOptions.ProcessExitHandler))]
-    [System.Diagnostics.Contracts.Pure]
+    [Pure]
     public static T SetProcessExitHandler<T>(this T o, [CanBeNull] Action<IProcess> exitHandler)
         where T : ToolOptions
     {
@@ -43,9 +41,8 @@ partial class ToolOptionsExtensions
     }
 
     /// <inheritdoc cref="ToolOptions.ProcessExitHandler"/>
-    [Obsolete($"Marked for removal")]
     [Builder(Type = typeof(ToolOptions), Property = nameof(ToolOptions.ProcessExitHandler))]
-    [System.Diagnostics.Contracts.Pure]
+    [Pure]
     public static T SetProcessExitHandler<T>(this T o, [CanBeNull] Func<IProcess, object> exitHandler)
         where T : ToolOptions
     {
@@ -58,9 +55,8 @@ partial class ToolOptionsExtensions
     }
 
     /// <inheritdoc cref="ToolOptions.ProcessExitHandler"/>
-    [Obsolete($"Marked for removal")]
     [Builder(Type = typeof(ToolOptions), Property = nameof(ToolOptions.ProcessExitHandler))]
-    [System.Diagnostics.Contracts.Pure]
+    [Pure]
     public static T SetProcessExitHandler<T>(this T o, [CanBeNull] Action<T, IProcess> exitHandler)
         where T : ToolOptions
     {
@@ -77,9 +73,8 @@ partial class ToolOptionsExtensions
     }
 
     /// <inheritdoc cref="ToolOptions.ProcessExitHandler"/>
-    [Obsolete($"Marked for removal")]
     [Builder(Type = typeof(ToolOptions), Property = nameof(ToolOptions.ProcessExitHandler))]
-    [System.Diagnostics.Contracts.Pure]
+    [Pure]
     public static T SetProcessExitHandler<T>(this T o, [CanBeNull] Func<T, IProcess, object> exitHandler)
         where T : ToolOptions
     {
@@ -102,4 +97,8 @@ partial class ToolOptionsExtensions
     [Builder(Type = typeof(ToolOptions), Property = nameof(ToolOptions.ProcessInvocationLogging))]
     public static T DisableProcessLogInvocation<T>(this T o)
         where T : ToolOptions => o.DisableProcessInvocationLogging();
+
+    [Obsolete($"Use {nameof(SetProcessAdditionalArguments)} instead")]
+    public static T SetProcessArgumentConfigurator<T>(this T o)
+        where T : ToolOptions => throw new NotImplementedException();
 }
