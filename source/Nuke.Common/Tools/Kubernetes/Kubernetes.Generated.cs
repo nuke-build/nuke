@@ -399,7 +399,7 @@ public partial class KubernetesRunSettings : KubernetesOptionsBase
     /// <summary>The name of the container.</summary>
     [Argument(Format = "{value}")] public string Name => Get<string>(() => Name);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</summary>
     [Argument(Format = "--attach={value}")] public bool? Attach => Get<bool?>(() => Attach);
     /// <summary>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</summary>
@@ -488,7 +488,7 @@ public partial class KubernetesGetSettings : KubernetesOptionsBase
     /// <summary>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</summary>
     [Argument(Format = "--all-namespaces={value}")] public bool? AllNamespaces => Get<bool?>(() => AllNamespaces);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>Return large lists in chunks rather than all at once. Pass 0 to disable. This flag is beta and may change in the future.</summary>
     [Argument(Format = "--chunk-size={value}")] public long? ChunkSize => Get<long?>(() => ChunkSize);
     /// <summary>If true, use 'export' for the resources.  Exported resources are stripped of cluster-specific information.</summary>
@@ -597,7 +597,7 @@ public partial class KubernetesExecSettings : KubernetesOptionsBase
 public partial class KubernetesRollingUpdateSettings : KubernetesOptionsBase
 {
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>Container name which will have its image upgraded. Only relevant when --image is specified, ignored otherwise. Required when using --image on a multi-container pod.</summary>
     [Argument(Format = "--container={value}")] public string Container => Get<string>(() => Container);
     /// <summary>The key to use to differentiate between two different controllers, default 'deployment'.  Only relevant when --image is specified, ignored otherwise.</summary>
@@ -640,7 +640,7 @@ public partial class KubernetesLabelSettings : KubernetesOptionsBase
     /// <summary>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</summary>
     [Argument(Format = "--all={value}")] public bool? All => Get<bool?>(() => All);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>If true, only print the object that would be sent, without sending it.</summary>
     [Argument(Format = "--dry-run={value}")] public bool? DryRun => Get<bool?>(() => DryRun);
     /// <summary>Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.</summary>
@@ -683,7 +683,7 @@ public partial class KubernetesAnnotateSettings : KubernetesOptionsBase
     /// <summary>Select all resources, including uninitialized ones, in the namespace of the specified resource types.</summary>
     [Argument(Format = "--all={value}")] public bool? All => Get<bool?>(() => All);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>If true, only print the object that would be sent, without sending it.</summary>
     [Argument(Format = "--dry-run={value}")] public bool? DryRun => Get<bool?>(() => DryRun);
     /// <summary>Selector (field query) to filter on, supports '=', '==', and '!='.(e.g. --field-selector key1=value1,key2=value2). The server only supports a limited number of field queries per type.</summary>
@@ -757,7 +757,7 @@ public partial class KubernetesDeleteSettings : KubernetesOptionsBase
 public partial class KubernetesExposeSettings : KubernetesOptionsBase
 {
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>ClusterIP to be assigned to the service. Leave empty to auto-allocate, or set to 'None' to create a headless service.</summary>
     [Argument(Format = "--cluster-ip={value}")] public string ClusterIp => Get<string>(() => ClusterIp);
     /// <summary>Synonym for --target-port.</summary>
@@ -898,7 +898,7 @@ public partial class KubernetesPatchSettings : KubernetesOptionsBase
     /// <summary>The type or/and name of the ressource.</summary>
     [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> TypeName => Get<List<string>>(() => TypeName);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>If true, only print the object that would be sent, without sending it.</summary>
     [Argument(Format = "--dry-run={value}")] public bool? DryRun => Get<bool?>(() => DryRun);
     /// <summary>Filename, directory, or URL to files identifying the resource to update.</summary>
@@ -927,7 +927,7 @@ public partial class KubernetesPatchSettings : KubernetesOptionsBase
 public partial class KubernetesReplaceSettings : KubernetesOptionsBase
 {
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</summary>
     [Argument(Format = "--cascade={value}")] public bool? Cascade => Get<bool?>(() => Cascade);
     /// <summary>to use to replace the resource.</summary>
@@ -966,7 +966,7 @@ public partial class KubernetesTaintSettings : KubernetesOptionsBase
     /// <summary>Select all nodes in the cluster.</summary>
     [Argument(Format = "--all={value}")] public bool? All => Get<bool?>(() => All);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>Output format. One of: json|yaml|name|template|go-template|go-template-file|templatefile|jsonpath|jsonpath-file.</summary>
     [Argument(Format = "--output={value}")] public KubernetesTaintOutput Output => Get<KubernetesTaintOutput>(() => Output);
     /// <summary>If true, allow taints to be overwritten, otherwise reject taint updates that overwrite existing taints.</summary>
@@ -1056,7 +1056,7 @@ public partial class KubernetesApplySettings : KubernetesOptionsBase
     /// <summary>Select all resources in the namespace of the specified resource types.</summary>
     [Argument(Format = "--all={value}")] public bool? All => Get<bool?>(() => All);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</summary>
     [Argument(Format = "--cascade={value}")] public bool? Cascade => Get<bool?>(() => Cascade);
     /// <summary>If true, only print the object that would be sent, without sending it.</summary>
@@ -1107,7 +1107,7 @@ public partial class KubernetesApplyKustomizeSettings : KubernetesOptionsBase
     /// <summary>Select all resources in the namespace of the specified resource types.</summary>
     [Argument(Format = "--all={value}")] public bool? All => Get<bool?>(() => All);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</summary>
     [Argument(Format = "--cascade={value}")] public bool? Cascade => Get<bool?>(() => Cascade);
     /// <summary>If true, only print the object that would be sent, without sending it.</summary>
@@ -1208,7 +1208,7 @@ public partial class KubernetesUncordonSettings : KubernetesOptionsBase
 public partial class KubernetesAutoscaleSettings : KubernetesOptionsBase
 {
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>The target average CPU utilization (represented as a percent of requested CPU) over all the pods. If it's not specified or negative, a default autoscaling policy will be used.</summary>
     [Argument(Format = "--cpu-percent={value}")] public int? CpuPercent => Get<int?>(() => CpuPercent);
     /// <summary>If true, only print the object that would be sent, without sending it.</summary>
@@ -1265,7 +1265,7 @@ public partial class KubernetesWaitSettings : KubernetesOptionsBase
     /// <summary>If present, list the requested object(s) across all namespaces. Namespace in current context is ignored even if specified with --namespace.</summary>
     [Argument(Format = "--all-namespaces={value}")] public bool? AllNamespaces => Get<bool?>(() => AllNamespaces);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>identifying the resource.</summary>
     [Argument(Format = "--filename={value}", Separator = ",")] public IReadOnlyList<string> Filename => Get<List<string>>(() => Filename);
     /// <summary>The condition to wait on: [delete|condition=condition-name].</summary>
@@ -1290,7 +1290,7 @@ public partial class KubernetesWaitSettings : KubernetesOptionsBase
 public partial class KubernetesConvertSettings : KubernetesOptionsBase
 {
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>Filename, directory, or URL to files to need to get converted.</summary>
     [Argument(Format = "--filename={value}", Separator = ",")] public IReadOnlyList<string> Filename => Get<List<string>>(() => Filename);
     /// <summary>If true, convert will NOT try to contact api-server but run locally.</summary>
@@ -1317,7 +1317,7 @@ public partial class KubernetesCreateSettings : KubernetesOptionsBase
     /// <summary>The type (and name) of the resource. When only specifying a type either a --selector or --all needs to be specified</summary>
     [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> TypeName => Get<List<string>>(() => TypeName);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>If true, only print the object that would be sent, without sending it.</summary>
     [Argument(Format = "--dry-run={value}")] public bool? DryRun => Get<bool?>(() => DryRun);
     /// <summary>Edit the API resource before creating.</summary>
@@ -1367,7 +1367,7 @@ public partial class KubernetesPortForwardSettings : KubernetesOptionsBase
 public partial class KubernetesRunContainerSettings : KubernetesOptionsBase
 {
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>If true, wait for the Pod to start running, and then attach to the Pod as if 'kubectl attach ...' were called.  Default false, unless '-i/--stdin' is set, in which case the default is true. With '--restart=Never' the exit code of the container process is returned.</summary>
     [Argument(Format = "--attach={value}")] public bool? Attach => Get<bool?>(() => Attach);
     /// <summary>If true, cascade the deletion of the resources managed by this resource (e.g. Pods created by a ReplicationController).  Default true.</summary>
@@ -1454,7 +1454,7 @@ public partial class KubernetesEditSettings : KubernetesOptionsBase
     /// <summary>The type or/and name of the ressource.</summary>
     [Argument(Format = "{value}", Separator = " ")] public IReadOnlyList<string> TypeName => Get<List<string>>(() => TypeName);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>Filename, directory, or URL to files to use to edit the resource.</summary>
     [Argument(Format = "--filename={value}", Separator = ",")] public IReadOnlyList<string> Filename => Get<List<string>>(() => Filename);
     /// <summary>If true, the kubectl command applies to uninitialized objects. If explicitly set to false, this flag overrides other flags that make the kubectl commands apply to uninitialized objects, e.g., "--all". Objects with empty metadata.initializers are regarded as initialized.</summary>
@@ -1487,7 +1487,7 @@ public partial class KubernetesScaleSettings : KubernetesOptionsBase
     /// <summary>Select all resources in the namespace of the specified resource types.</summary>
     [Argument(Format = "--all={value}")] public bool? All => Get<bool?>(() => All);
     /// <summary>If true, ignore any errors in templates when a field or map key is missing in the template. Only applies to golang and jsonpath output formats.</summary>
-    [Argument(Format = "--allow-missing-template-keys={value}")] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
+    [Argument(Format = "--allow-missing-template-keys={value}", Secret = false)] public bool? AllowMissingTemplateKeys => Get<bool?>(() => AllowMissingTemplateKeys);
     /// <summary>Precondition for current size. Requires that the current size of the resource match this value in order to scale.</summary>
     [Argument(Format = "--current-replicas={value}")] public int? CurrentReplicas => Get<int?>(() => CurrentReplicas);
     /// <summary>Filename, directory, or URL to files identifying the resource to set a new size.</summary>

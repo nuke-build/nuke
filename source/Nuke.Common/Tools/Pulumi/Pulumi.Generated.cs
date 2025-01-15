@@ -442,7 +442,7 @@ public partial class PulumiConfigCopySettings : ToolOptions
 public partial class PulumiConfigGetSettings : ToolOptions
 {
     /// <summary>The key to the key-value pair in the configuration.</summary>
-    [Argument(Format = "{value}", Position = 1)] public string Key => Get<string>(() => Key);
+    [Argument(Format = "{value}", Position = 1, Secret = false)] public string Key => Get<string>(() => Key);
     /// <summary>Serialize the preview diffs, operations, and overall output as JSON.</summary>
     [Argument(Format = "--json")] public bool? Json => Get<bool?>(() => Json);
     /// <summary>The key contains a path to a property in a map or list to set.</summary>
@@ -508,7 +508,7 @@ public partial class PulumiConfigRefreshSettings : ToolOptions
 public partial class PulumiConfigRemoveSettings : ToolOptions
 {
     /// <summary>The key to the key-value pair in the configuration.</summary>
-    [Argument(Format = "{value}", Position = 1)] public string Key => Get<string>(() => Key);
+    [Argument(Format = "{value}", Position = 1, Secret = false)] public string Key => Get<string>(() => Key);
     /// <summary>The key contains a path to a property in a map or list to set.</summary>
     [Argument(Format = "--path {value}")] public string Path => Get<string>(() => Path);
     /// <summary>Colorize output. Choices are: always, never, raw, auto (default <c>auto</c>).</summary>
@@ -541,7 +541,7 @@ public partial class PulumiConfigRemoveSettings : ToolOptions
 public partial class PulumiConfigSetSettings : ToolOptions
 {
     /// <summary>The key to the key-value pair in the configuration.</summary>
-    [Argument(Format = "{value}", Position = 1)] public string Key => Get<string>(() => Key);
+    [Argument(Format = "{value}", Position = 1, Secret = false)] public string Key => Get<string>(() => Key);
     /// <summary>The new value for specified configuration key.</summary>
     [Argument(Format = "{value}", Position = 1)] public string Value => Get<string>(() => Value);
     /// <summary>The key contains a path to a property in a map or list to set.</summary>

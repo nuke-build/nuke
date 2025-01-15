@@ -685,7 +685,7 @@ public partial class DotNetNuGetAddSourceSettings : ToolOptions
     /// <summary>Password to be used when connecting to an authenticated source.</summary>
     [Argument(Format = "--password {value}", Secret = true)] public string Password => Get<string>(() => Password);
     /// <summary>Enables storing portable package source credentials by disabling password encryption.</summary>
-    [Argument(Format = "--store-password-in-clear-text")] public bool? StorePasswordInClearText => Get<bool?>(() => StorePasswordInClearText);
+    [Argument(Format = "--store-password-in-clear-text", Secret = false)] public bool? StorePasswordInClearText => Get<bool?>(() => StorePasswordInClearText);
     /// <summary>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</summary>
     [Argument(Format = "--valid-authentication-types {value}", Separator = ",")] public IReadOnlyList<DotNetNuGetAuthentication> ValidAuthenticationTypes => Get<List<DotNetNuGetAuthentication>>(() => ValidAuthenticationTypes);
     /// <summary>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet Configurations</a>.</summary>
@@ -708,7 +708,7 @@ public partial class DotNetNuGetUpdateSourceSettings : ToolOptions
     /// <summary>Password to be used when connecting to an authenticated source.</summary>
     [Argument(Format = "--password {value}", Secret = true)] public string Password => Get<string>(() => Password);
     /// <summary>Enables storing portable package source credentials by disabling password encryption.</summary>
-    [Argument(Format = "--store-password-in-clear-text")] public bool? StorePasswordInClearText => Get<bool?>(() => StorePasswordInClearText);
+    [Argument(Format = "--store-password-in-clear-text", Secret = false)] public bool? StorePasswordInClearText => Get<bool?>(() => StorePasswordInClearText);
     /// <summary>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</summary>
     [Argument(Format = "--valid-authentication-types {value}", Separator = ",")] public IReadOnlyList<DotNetNuGetAuthentication> ValidAuthenticationTypes => Get<List<DotNetNuGetAuthentication>>(() => ValidAuthenticationTypes);
     /// <summary>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet Configurations</a>.</summary>

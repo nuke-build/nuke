@@ -1,4 +1,4 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
@@ -22,7 +22,8 @@ public class ArgumentStringHandlerTest
     [Fact]
     public void TestString()
     {
-        ArgsToString("start end").Should().Be("start end");
+        // If we want two words without quotes, we need to pass them as two arguments
+        ArgsToString($"{"start"} {"end"}").Should().Be("start end");
         ArgsToString("").Should().Be("");
         ArgsToString(" ").Should().Be("");
     }
@@ -62,6 +63,12 @@ public class ArgumentStringHandlerTest
     }
 
     [Fact]
+    public void TestSpacedPathOnly()
+    {
+        ArgsToString($"{(AbsolutePath)"C:" / "Program Files"}").Should().Be("\"C:\\Program Files\"");
+    }
+
+    [Fact]
     public void TestFormat()
     {
         ArgsToString($"start {"spaced args":nq} end").Should().Be("start spaced args end");
@@ -82,7 +89,8 @@ public class ArgumentStringHandlerTest
     [Fact]
     public void TestUnquote()
     {
-        ArgsToString($"{"start end"}").Should().Be("start end");
+        // If we want two words without quotes, we need to pass them as two arguments
+        ArgsToString($"{"start"} {"end"}").Should().Be("start end");
         ArgsToString($"start {"spaced end"}").Should().Be("start \"spaced end\"");
         ArgsToString($"{"spaced start"} end").Should().Be("\"spaced start\" end");
         ArgsToString($"{"spaced start"} {"spaced end"}").Should().Be("\"spaced start\" \"spaced end\"");

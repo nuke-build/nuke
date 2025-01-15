@@ -88,7 +88,7 @@ public partial class GitReleaseManagerAddAssetsSettings : ToolOptions
     /// <summary>Path to where log file should be created. Defaults is <em>logging to console</em>.</summary>
     [Argument(Format = "--logFilePath {value}")] public string LogFilePath => Get<string>(() => LogFilePath);
     /// <summary>The access token to access GitHub with.</summary>
-    [Argument(Format = "--token {value}")] public string Token => Get<string>(() => Token);
+    [Argument(Format = "--token {value}", Secret = false)] public string Token => Get<string>(() => Token);
 }
 #endregion
 #region GitReleaseManagerCloseSettings
@@ -113,7 +113,7 @@ public partial class GitReleaseManagerCloseSettings : ToolOptions
     /// <summary>Path to where log file should be created. Defaults is <em>logging to console</em>.</summary>
     [Argument(Format = "--logFilePath {value}")] public string LogFilePath => Get<string>(() => LogFilePath);
     /// <summary>The access token to access GitHub with.</summary>
-    [Argument(Format = "--token {value}")] public string Token => Get<string>(() => Token);
+    [Argument(Format = "--token {value}", Secret = false)] public string Token => Get<string>(() => Token);
 }
 #endregion
 #region GitReleaseManagerCreateSettings
@@ -148,7 +148,7 @@ public partial class GitReleaseManagerCreateSettings : ToolOptions
     /// <summary>Path to where log file should be created. Defaults is <em>logging to console</em>.</summary>
     [Argument(Format = "--logFilePath {value}")] public string LogFilePath => Get<string>(() => LogFilePath);
     /// <summary>The access token to access GitHub with.</summary>
-    [Argument(Format = "--token {value}")] public string Token => Get<string>(() => Token);
+    [Argument(Format = "--token {value}", Secret = false)] public string Token => Get<string>(() => Token);
 }
 #endregion
 #region GitReleaseManagerExportSettings
@@ -175,7 +175,7 @@ public partial class GitReleaseManagerExportSettings : ToolOptions
     /// <summary>Path to where log file should be created. Defaults is <em>logging to console</em>.</summary>
     [Argument(Format = "--logFilePath {value}")] public string LogFilePath => Get<string>(() => LogFilePath);
     /// <summary>The access token to access GitHub with.</summary>
-    [Argument(Format = "--token {value}")] public string Token => Get<string>(() => Token);
+    [Argument(Format = "--token {value}", Secret = false)] public string Token => Get<string>(() => Token);
 }
 #endregion
 #region GitReleaseManagerPublishSettings
@@ -200,7 +200,7 @@ public partial class GitReleaseManagerPublishSettings : ToolOptions
     /// <summary>Path to where log file should be created. Defaults is <em>logging to console</em>.</summary>
     [Argument(Format = "--logFilePath {value}")] public string LogFilePath => Get<string>(() => LogFilePath);
     /// <summary>The access token to access GitHub with.</summary>
-    [Argument(Format = "--token {value}")] public string Token => Get<string>(() => Token);
+    [Argument(Format = "--token {value}", Secret = false)] public string Token => Get<string>(() => Token);
 }
 #endregion
 #region GitReleaseManagerAddAssetsSettingsExtensions

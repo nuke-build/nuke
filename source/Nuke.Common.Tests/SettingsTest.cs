@@ -142,9 +142,9 @@ public class SettingsTest
     {
         Assert(new DockerAttachSettings()
                 .SetDetachKeys("detach-keys")
-                .SetContainer("container")
-                .SetLogLevel(DockerLogLevel.debug),
-            "attach --detach-keys detach-keys container --log-level debug");
+                .SetLogLevel(DockerLogLevel.debug)
+                .SetContainer("container"),
+            "attach --detach-keys detach-keys --log-level debug container");
     }
 
     [Fact]

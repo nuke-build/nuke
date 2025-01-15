@@ -60,9 +60,9 @@ partial class UnityTasks
         }
     }
 
-    protected override ToolOptions PreProcess(ToolOptions options)
+    protected override T PreProcess<T>(T options)
     {
-        var unityOptions = (UnityOptionsBase)options;
+        var unityOptions = (options as UnityOptionsBase).NotNull();
         var logFile = (AbsolutePath)unityOptions.LogFile ?? NukeBuild.TemporaryDirectory / "unity.log";
         logFile.DeleteFile();
 
@@ -74,7 +74,7 @@ partial class UnityTasks
         return options;
     }
 
-    protected override IReadOnlyCollection<Output> Run<T>(ToolOptions options = null)
+    protected override IReadOnlyCollection<Output> Run<T>(T options = null)
     {
         try
         {
