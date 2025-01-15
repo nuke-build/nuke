@@ -111,7 +111,7 @@ public partial class SonarScannerBeginSettings : ToolOptions, IToolOptionsWithFr
     /// <summary>Name of the branch (visible in the UI)</summary>
     [Argument(Format = "/d:sonar.branch.name={value}")] public string BranchName => Get<string>(() => BranchName);
     /// <summary>Unique identifier of your Pull Request. Must correspond to the key of the Pull Request in your ALM. e.g.: <c>sonar.pullrequest.key=5</c></summary>
-    [Argument(Format = "/d:sonar.pullrequest.key={value}")] public string PullRequestKey => Get<string>(() => PullRequestKey);
+    [Argument(Format = "/d:sonar.pullrequest.key={value}", Secret = false)] public string PullRequestKey => Get<string>(() => PullRequestKey);
     /// <summary>The name of the branch that contains the changes to be merged. e.g.: <c>sonar.pullrequest.branch=feature/my-new-feature</c></summary>
     [Argument(Format = "/d:sonar.pullrequest.branch={value}")] public string PullRequestBranch => Get<string>(() => PullRequestBranch);
     /// <summary>The branch into which the Pull Request will be merged. Default: <c>master</c>. e.g.: <c>sonar.pullrequest.base=master</c></summary>
@@ -137,7 +137,7 @@ public partial class SonarScannerBeginSettings : ToolOptions, IToolOptionsWithFr
     /// <summary>Specifies the path to a client certificate used to access SonarQube. The certificate must be password protected.</summary>
     [Argument(Format = "/d:sonar.clientcert.path={value}")] public string ClientCertificatePath => Get<string>(() => ClientCertificatePath);
     /// <summary>Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used.</summary>
-    [Argument(Format = "/d:sonar.clientcert.password={value}")] public string ClientCertificatePassword => Get<string>(() => ClientCertificatePassword);
+    [Argument(Format = "/d:sonar.clientcert.password={value}", Secret = true)] public string ClientCertificatePassword => Get<string>(() => ClientCertificatePassword);
 }
 #endregion
 #region SonarScannerEndSettings
@@ -154,7 +154,7 @@ public partial class SonarScannerEndSettings : ToolOptions, IToolOptionsWithFram
     /// <summary>Specifies the authentication token used to authenticate with to SonarQube. If this argument is added to the begin step, it must also be added to the end step.</summary>
     [Argument(Format = "/d:sonar.token={value}", Secret = true)] public string Token => Get<string>(() => Token);
     /// <summary>Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used.</summary>
-    [Argument(Format = "/d:sonar.clientcert.password={value}")] public string ClientCertificatePassword => Get<string>(() => ClientCertificatePassword);
+    [Argument(Format = "/d:sonar.clientcert.password={value}", Secret = true)] public string ClientCertificatePassword => Get<string>(() => ClientCertificatePassword);
 }
 #endregion
 #region SonarScannerBeginSettingsExtensions
@@ -768,7 +768,7 @@ public static partial class SonarScannerBeginSettingsExtensions
     #region ClientCertificatePassword
     /// <inheritdoc cref="SonarScannerBeginSettings.ClientCertificatePassword"/>
     [Pure] [Builder(Type = typeof(SonarScannerBeginSettings), Property = nameof(SonarScannerBeginSettings.ClientCertificatePassword))]
-    public static T SetClientCertificatePassword<T>(this T o, string v) where T : SonarScannerBeginSettings => o.Modify(b => b.Set(() => o.ClientCertificatePassword, v));
+    public static T SetClientCertificatePassword<T>(this T o, [Secret] string v) where T : SonarScannerBeginSettings => o.Modify(b => b.Set(() => o.ClientCertificatePassword, v));
     /// <inheritdoc cref="SonarScannerBeginSettings.ClientCertificatePassword"/>
     [Pure] [Builder(Type = typeof(SonarScannerBeginSettings), Property = nameof(SonarScannerBeginSettings.ClientCertificatePassword))]
     public static T ResetClientCertificatePassword<T>(this T o) where T : SonarScannerBeginSettings => o.Modify(b => b.Remove(() => o.ClientCertificatePassword));
@@ -808,7 +808,7 @@ public static partial class SonarScannerEndSettingsExtensions
     #region ClientCertificatePassword
     /// <inheritdoc cref="SonarScannerEndSettings.ClientCertificatePassword"/>
     [Pure] [Builder(Type = typeof(SonarScannerEndSettings), Property = nameof(SonarScannerEndSettings.ClientCertificatePassword))]
-    public static T SetClientCertificatePassword<T>(this T o, string v) where T : SonarScannerEndSettings => o.Modify(b => b.Set(() => o.ClientCertificatePassword, v));
+    public static T SetClientCertificatePassword<T>(this T o, [Secret] string v) where T : SonarScannerEndSettings => o.Modify(b => b.Set(() => o.ClientCertificatePassword, v));
     /// <inheritdoc cref="SonarScannerEndSettings.ClientCertificatePassword"/>
     [Pure] [Builder(Type = typeof(SonarScannerEndSettings), Property = nameof(SonarScannerEndSettings.ClientCertificatePassword))]
     public static T ResetClientCertificatePassword<T>(this T o) where T : SonarScannerEndSettings => o.Modify(b => b.Remove(() => o.ClientCertificatePassword));

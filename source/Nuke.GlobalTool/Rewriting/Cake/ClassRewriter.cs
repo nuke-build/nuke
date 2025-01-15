@@ -47,10 +47,7 @@ internal class ClassRewriter : SafeSyntaxRewriter
         new[]
         {
             typeof(ControlFlow),
-            typeof(Logger),
-            typeof(CompressionTasks),
             typeof(DotNetTasks),
-            typeof(FileSystemTasks),
             typeof(MSBuildTasks),
             typeof(SignToolTasks),
             typeof(NuGetTasks),

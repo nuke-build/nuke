@@ -24,7 +24,7 @@ namespace Nuke.Common.Tools.OctoVersion;
 public partial class OctoVersionTasks : ToolTasks, IRequireNuGetPackage
 {
     public static string OctoVersionPath { get => new OctoVersionTasks().GetToolPathInternal(); set => new OctoVersionTasks().SetToolPath(value); }
-    public const string PackageId = "OctoVersion.Tool";
+    public const string PackageId = "Octopus.OctoVersion.Tool";
     public const string PackageExecutable = "OctoVersion.Tool.dll";
     /// <summary><p>For more details, visit the <a href="https://github.com/OctopusDeploy/OctoVersion">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> OctoVersion(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new OctoVersionTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);

@@ -1150,7 +1150,7 @@ public partial class NSwagSwaggerToCSharpControllerSettings : ToolOptions, ITool
     /// <summary>Use ASP.Net Core (2.1) ActionResult type as return type (default: false)</summary>
     [Argument(Format = "/UseActionResultType:{value}")] public bool? UseActionResultType => Get<bool?>(() => UseActionResultType);
     /// <summary>Add a cancellation token parameter (default: false).</summary>
-    [Argument(Format = "/UseCancellationToken:{value}")] public bool? UseCancellationToken => Get<bool?>(() => UseCancellationToken);
+    [Argument(Format = "/UseCancellationToken:{value}", Secret = false)] public bool? UseCancellationToken => Get<bool?>(() => UseCancellationToken);
     /// <summary>The additional contract namespace usages.</summary>
     [Argument(Format = "/AdditionalContractNamespaceUsages:{value}")] public IReadOnlyList<string> AdditionalContractNamespaceUsages => Get<List<string>>(() => AdditionalContractNamespaceUsages);
     /// <summary>The additional namespace usages.</summary>
@@ -1290,7 +1290,7 @@ public partial class NSwagOpenApiToTypeScriptClientSettings : ToolOptions, ITool
 public partial class NSwagSwaggerToTypeScriptClientSettings : ToolOptions, IToolOptionsWithFramework
 {
     /// <summary>The token name for injecting the API base URL string (used in the Angular template, default: 'API_BASE_URL').</summary>
-    [Argument(Format = "/BaseUrlTokenName:{value}")] public string BaseUrlTokenName => Get<string>(() => BaseUrlTokenName);
+    [Argument(Format = "/BaseUrlTokenName:{value}", Secret = false)] public string BaseUrlTokenName => Get<string>(() => BaseUrlTokenName);
     /// <summary>The class name of the generated client.</summary>
     [Argument(Format = "/ClassName:{value}")] public string ClassName => Get<string>(() => ClassName);
     /// <summary>The type names which always generate plain TypeScript classes.</summary>
@@ -1338,7 +1338,7 @@ public partial class NSwagSwaggerToTypeScriptClientSettings : ToolOptions, ITool
     /// <summary>Specifies whether required types should be imported (default: true).</summary>
     [Argument(Format = "/ImportRequiredTypes:{value}")] public bool? ImportRequiredTypes => Get<bool?>(() => ImportRequiredTypes);
     /// <summary>The Angular injection token type (default 'InjectionToken', 'OpaqueToken').</summary>
-    [Argument(Format = "/InjectionTokenType:{value}")] public InjectionTokenType InjectionTokenType => Get<InjectionTokenType>(() => InjectionTokenType);
+    [Argument(Format = "/InjectionTokenType:{value}", Secret = false)] public InjectionTokenType InjectionTokenType => Get<InjectionTokenType>(() => InjectionTokenType);
     /// <summary>Inline named any types (default: false).</summary>
     [Argument(Format = "/InlineNamedAny:{value}")] public bool? InlineNamedAny => Get<bool?>(() => InlineNamedAny);
     /// <summary>Inline named dictionaries (default: false).</summary>

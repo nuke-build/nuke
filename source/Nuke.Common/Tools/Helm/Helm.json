@@ -2287,6 +2287,7 @@
             "name": "Keyword",
             "type": "string",
             "format": "{value}",
+            "secret": false,
             "help": "The keyword to search for."
           }
         ]

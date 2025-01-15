@@ -14,12 +14,14 @@
             "name": "KeyVaultUrl",
             "type": "string",
             "format": "--azure-key-vault-url {value}",
+            "secret": false,
             "help": "A fully qualified URL of the key vault with the certificate that will be used for signing. An example value might be <c>https://my-vault.vault.azure.net</c>."
           },
           {
             "name": "KeyVaultClientId",
             "type": "string",
             "format": "--azure-key-vault-client-id {value}",
+            "secret": false,
             "help": "This is the client ID used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option. If this parameter is supplied, <c>--azure-key-vault-client-secret</c> and <c>--azure-key-vault-tenant-id</c> must be supplied as well."
           },
           {
@@ -33,12 +35,14 @@
             "name": "KeyVaultTenantId",
             "type": "string",
             "format": "--azure-key-vault-tenant-id {value}",
+            "secret": false,
             "help": "This is the tenant id used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option or when using managed identities with <c>--azure-key-vault-managed-identity</c>. If this parameter is supplied, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> must be supplied as well."
           },
           {
             "name": "KeyVaultCertificateName",
             "type": "string",
             "format": "--azure-key-vault-certificate {value}",
+            "secret": false,
             "help": "The name of the certificate used to perform the signing operation."
           },
           {
@@ -52,6 +56,7 @@
             "name": "KeyVaultManagedIdentity",
             "type": "bool",
             "format": "--azure-key-vault-managed-identity",
+            "secret": false,
             "help": "Use the ambient Managed Identity to authenticate to Azure. This can be used instead of the <c>--azure-key-vault-accesstoken</c>, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> options. This is useful if AzureSignTool is being used on a VM/service/CLI that is configured for managed identities to Azure."
           },
           {

@@ -64,17 +64,3 @@ public class NuGetPackageAttribute : ToolInjectionAttributeBase
                ToolResolver.GetNuGetTool(_packageId, _packageExecutable, Version, Framework);
     }
 }
-
-[Obsolete($"Use {nameof(NuGetPackageAttribute)} instead")]
-public class PackageExecutableAttribute : NuGetPackageAttribute
-{
-    public PackageExecutableAttribute(string packageId, string packageExecutable)
-        : this(packageId, packageExecutable32: packageExecutable, packageExecutable64: packageExecutable)
-    {
-    }
-
-    public PackageExecutableAttribute(string packageId, string packageExecutable32, string packageExecutable64)
-        : base(packageId, packageExecutable32, packageExecutable64)
-    {
-    }
-}

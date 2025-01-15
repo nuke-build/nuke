@@ -167,7 +167,7 @@ public partial class ReSharperCleanupCodeSettings : ReSharperSettingsBase
 [PublicAPI]
 [ExcludeFromCodeCoverage]
 [Command(Type = typeof(ReSharperTasks), Command = nameof(ReSharperTasks.ReSharperDupFinder), Arguments = "dupfinder")]
-public partial class ReSharperDupFinderSettings : ToolOptions
+public partial class ReSharperDupFinderSettings : ReSharperSettingsBase
 {
     /// <summary>Defines files included into the duplicates search. Use Visual Studio solution or project files, Ant-like wildcards or specific source file and folder names. Paths should be either absolute or relative to the working directory.</summary>
     [Argument(Format = "{value}", Position = 1)] public string Source => Get<string>(() => Source);

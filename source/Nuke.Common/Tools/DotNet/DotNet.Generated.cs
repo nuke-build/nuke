@@ -28,14 +28,14 @@ public partial class DotNetTasks : ToolTasks, IRequirePathTool
     /// <summary><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
     public static IReadOnlyCollection<Output> DotNet(ArgumentStringHandler arguments, string workingDirectory = null, IReadOnlyDictionary<string, string> environmentVariables = null, int? timeout = null, bool? logOutput = null, bool? logInvocation = null, Action<OutputType, string> logger = null, Func<IProcess, object> exitHandler = null) => new DotNetTasks().Run(arguments, workingDirectory, environmentVariables, timeout, logOutput, logInvocation, logger, exitHandler);
     /// <summary><p>The <c>dotnet test</c> command is used to execute unit tests in a given project. Unit tests are console application projects that have dependencies on the unit test framework (for example, MSTest, NUnit, or xUnit) and the dotnet test runner for the unit testing framework. These are packaged as NuGet packages and are restored as ordinary dependencies for the project.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li><li><c>--</c> via <see cref="DotNetTestSettings.RunSettings"/></li><li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li><li><c>--blame-crash</c> via <see cref="DotNetTestSettings.BlameCrash"/></li><li><c>--blame-crash-collect-always</c> via <see cref="DotNetTestSettings.BlameCrashCollectAlways"/></li><li><c>--blame-crash-dump-type</c> via <see cref="DotNetTestSettings.BlameCrashDumpType"/></li><li><c>--blame-hang</c> via <see cref="DotNetTestSettings.BlameHang"/></li><li><c>--blame-hang-dump-type</c> via <see cref="DotNetTestSettings.BlameHangDumpType"/></li><li><c>--blame-hang-timeout</c> via <see cref="DotNetTestSettings.BlameHangTimeout"/></li><li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li><li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li><li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li><li><c>--disable-parallel</c> via <see cref="DotNetTestSettings.DisableParallel"/></li><li><c>--filter</c> via <see cref="DotNetTestSettings.Filter"/></li><li><c>--force</c> via <see cref="DotNetTestSettings.Force"/></li><li><c>--force-evaluate</c> via <see cref="DotNetTestSettings.ForceEvaluate"/></li><li><c>--framework</c> via <see cref="DotNetTestSettings.Framework"/></li><li><c>--ignore-failed-sources</c> via <see cref="DotNetTestSettings.IgnoreFailedSources"/></li><li><c>--list-tests</c> via <see cref="DotNetTestSettings.ListTests"/></li><li><c>--lock-file-path</c> via <see cref="DotNetTestSettings.LockFilePath"/></li><li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li><li><c>--logger</c> via <see cref="DotNetTestSettings.Loggers"/></li><li><c>--no-build</c> via <see cref="DotNetTestSettings.NoBuild"/></li><li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li><li><c>--no-dependencies</c> via <see cref="DotNetTestSettings.NoDependencies"/></li><li><c>--no-restore</c> via <see cref="DotNetTestSettings.NoRestore"/></li><li><c>--nologo</c> via <see cref="DotNetTestSettings.NoLogo"/></li><li><c>--output</c> via <see cref="DotNetTestSettings.Output"/></li><li><c>--packages</c> via <see cref="DotNetTestSettings.PackageDirectory"/></li><li><c>--results-directory</c> via <see cref="DotNetTestSettings.ResultsDirectory"/></li><li><c>--runtime</c> via <see cref="DotNetTestSettings.Runtime"/></li><li><c>--settings</c> via <see cref="DotNetTestSettings.SettingsFile"/></li><li><c>--source</c> via <see cref="DotNetTestSettings.Sources"/></li><li><c>--test-adapter-path</c> via <see cref="DotNetTestSettings.TestAdapterPath"/></li><li><c>--use-lock-file</c> via <see cref="DotNetTestSettings.UseLockFile"/></li><li><c>--verbosity</c> via <see cref="DotNetTestSettings.Verbosity"/></li><li><c>/property</c> via <see cref="DotNetTestSettings.Properties"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;projectFile&gt;</c> via <see cref="DotNetTestSettings.ProjectFile"/></li><li><c>--</c> via <see cref="DotNetTestSettings.RunSettings"/></li><li><c>--artifacts-path</c> via <see cref="DotNetTestSettings.ArtifactsPath"/></li><li><c>--blame</c> via <see cref="DotNetTestSettings.BlameMode"/></li><li><c>--blame-crash</c> via <see cref="DotNetTestSettings.BlameCrash"/></li><li><c>--blame-crash-collect-always</c> via <see cref="DotNetTestSettings.BlameCrashCollectAlways"/></li><li><c>--blame-crash-dump-type</c> via <see cref="DotNetTestSettings.BlameCrashDumpType"/></li><li><c>--blame-hang</c> via <see cref="DotNetTestSettings.BlameHang"/></li><li><c>--blame-hang-dump-type</c> via <see cref="DotNetTestSettings.BlameHangDumpType"/></li><li><c>--blame-hang-timeout</c> via <see cref="DotNetTestSettings.BlameHangTimeout"/></li><li><c>--collect</c> via <see cref="DotNetTestSettings.DataCollector"/></li><li><c>--configuration</c> via <see cref="DotNetTestSettings.Configuration"/></li><li><c>--diag</c> via <see cref="DotNetTestSettings.DiagnosticsFile"/></li><li><c>--disable-parallel</c> via <see cref="DotNetTestSettings.DisableParallel"/></li><li><c>--filter</c> via <see cref="DotNetTestSettings.Filter"/></li><li><c>--force</c> via <see cref="DotNetTestSettings.Force"/></li><li><c>--force-evaluate</c> via <see cref="DotNetTestSettings.ForceEvaluate"/></li><li><c>--framework</c> via <see cref="DotNetTestSettings.Framework"/></li><li><c>--ignore-failed-sources</c> via <see cref="DotNetTestSettings.IgnoreFailedSources"/></li><li><c>--list-tests</c> via <see cref="DotNetTestSettings.ListTests"/></li><li><c>--lock-file-path</c> via <see cref="DotNetTestSettings.LockFilePath"/></li><li><c>--locked-mode</c> via <see cref="DotNetTestSettings.LockedMode"/></li><li><c>--logger</c> via <see cref="DotNetTestSettings.Loggers"/></li><li><c>--no-build</c> via <see cref="DotNetTestSettings.NoBuild"/></li><li><c>--no-cache</c> via <see cref="DotNetTestSettings.NoCache"/></li><li><c>--no-dependencies</c> via <see cref="DotNetTestSettings.NoDependencies"/></li><li><c>--no-restore</c> via <see cref="DotNetTestSettings.NoRestore"/></li><li><c>--nologo</c> via <see cref="DotNetTestSettings.NoLogo"/></li><li><c>--output</c> via <see cref="DotNetTestSettings.Output"/></li><li><c>--packages</c> via <see cref="DotNetTestSettings.PackageDirectory"/></li><li><c>--results-directory</c> via <see cref="DotNetTestSettings.ResultsDirectory"/></li><li><c>--runtime</c> via <see cref="DotNetTestSettings.Runtime"/></li><li><c>--settings</c> via <see cref="DotNetTestSettings.SettingsFile"/></li><li><c>--source</c> via <see cref="DotNetTestSettings.Sources"/></li><li><c>--test-adapter-path</c> via <see cref="DotNetTestSettings.TestAdapterPath"/></li><li><c>--use-lock-file</c> via <see cref="DotNetTestSettings.UseLockFile"/></li><li><c>--verbosity</c> via <see cref="DotNetTestSettings.Verbosity"/></li><li><c>/property</c> via <see cref="DotNetTestSettings.Properties"/></li></ul></remarks>
     public static IReadOnlyCollection<Output> DotNetTest(DotNetTestSettings options = null) => new DotNetTasks().Run<DotNetTestSettings>(options);
     /// <inheritdoc cref="DotNetTasks.DotNetTest(Nuke.Common.Tools.DotNet.DotNetTestSettings)"/>
     public static IReadOnlyCollection<Output> DotNetTest(Configure<DotNetTestSettings> configurator) => new DotNetTasks().Run<DotNetTestSettings>(configurator.Invoke(new DotNetTestSettings()));
     /// <inheritdoc cref="DotNetTasks.DotNetTest(Nuke.Common.Tools.DotNet.DotNetTestSettings)"/>
     public static IEnumerable<(DotNetTestSettings Settings, IReadOnlyCollection<Output> Output)> DotNetTest(CombinatorialConfigure<DotNetTestSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetTest, degreeOfParallelism, completeOnFailure);
     /// <summary><p>The <c>dotnet run</c> command provides a convenient option to run your application from the source code with one command. It's useful for fast iterative development from the command line. The command depends on the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build"><c>dotnet build</c></a> command to build the code. Any requirements for the build, such as that the project must be restored first, apply to <c>dotnet run</c> as well.</p><p>Output files are written into the default location, which is <c>bin/&lt;configuration&gt;/&lt;target&gt;</c>. For example if you have a <c>netcoreapp1.0</c> application and you run <c>dotnet run</c>, the output is placed in <c>bin/Debug/netcoreapp1.0</c>. Files are overwritten as needed. Temporary files are placed in the <c>obj</c> directory.</p><p>If the project specifies multiple frameworks, executing <c>dotnet run</c> results in an error unless the <c>-f|--framework &lt;FRAMEWORK&gt;</c> option is used to specify the framework.</p><p>The <c>dotnet run</c> command is used in the context of projects, not built assemblies. If you're trying to run a framework-dependent application DLL instead, you must use <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet">dotnet</a> without a command. For example, to run <c>myapp.dll</c>, use: <c>dotnet myapp.dll</c></p><p>For more information on the <c>dotnet</c> driver, see the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/index">.NET Core Command Line Tools (CLI)</a> topic.</p><p>In order to run the application, the <c>dotnet run</c> command resolves the dependencies of the application that are outside of the shared runtime from the NuGet cache. Because it uses cached dependencies, it's not recommended to use <c>dotnet run</c> to run applications in production. Instead, <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">create a deployment</a> using the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish"><c>dotnet publish</c></a> command and deploy the published output.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="DotNetRunSettings.ApplicationArguments"/></li><li><c>--arch</c> via <see cref="DotNetRunSettings.Architecture"/></li><li><c>--configuration</c> via <see cref="DotNetRunSettings.Configuration"/></li><li><c>--disable-build-servers</c> via <see cref="DotNetRunSettings.DisableBuildServers"/></li><li><c>--disable-parallel</c> via <see cref="DotNetRunSettings.DisableParallel"/></li><li><c>--force</c> via <see cref="DotNetRunSettings.Force"/></li><li><c>--force-evaluate</c> via <see cref="DotNetRunSettings.ForceEvaluate"/></li><li><c>--framework</c> via <see cref="DotNetRunSettings.Framework"/></li><li><c>--ignore-failed-sources</c> via <see cref="DotNetRunSettings.IgnoreFailedSources"/></li><li><c>--interactive</c> via <see cref="DotNetRunSettings.Interactive"/></li><li><c>--launch-profile</c> via <see cref="DotNetRunSettings.LaunchProfile"/></li><li><c>--lock-file-path</c> via <see cref="DotNetRunSettings.LockFilePath"/></li><li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li><li><c>--no-build</c> via <see cref="DotNetRunSettings.NoBuild"/></li><li><c>--no-cache</c> via <see cref="DotNetRunSettings.NoCache"/></li><li><c>--no-dependencies</c> via <see cref="DotNetRunSettings.NoDependencies"/></li><li><c>--no-launch-profile</c> via <see cref="DotNetRunSettings.NoLaunchProfile"/></li><li><c>--no-restore</c> via <see cref="DotNetRunSettings.NoRestore"/></li><li><c>--no-self-contained</c> via <see cref="DotNetRunSettings.NoSelfContained"/></li><li><c>--os</c> via <see cref="DotNetRunSettings.OperatingSystem"/></li><li><c>--packages</c> via <see cref="DotNetRunSettings.PackageDirectory"/></li><li><c>--project</c> via <see cref="DotNetRunSettings.ProjectFile"/></li><li><c>--property</c> via <see cref="DotNetRunSettings.Properties"/></li><li><c>--runtime</c> via <see cref="DotNetRunSettings.Runtime"/></li><li><c>--self-contained</c> via <see cref="DotNetRunSettings.SelfContained"/></li><li><c>--source</c> via <see cref="DotNetRunSettings.Sources"/></li><li><c>--use-lock-file</c> via <see cref="DotNetRunSettings.UseLockFile"/></li><li><c>--verbosity</c> via <see cref="DotNetRunSettings.Verbosity"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>--</c> via <see cref="DotNetRunSettings.ApplicationArguments"/></li><li><c>--arch</c> via <see cref="DotNetRunSettings.Architecture"/></li><li><c>--artifacts-path</c> via <see cref="DotNetRunSettings.ArtifactsPath"/></li><li><c>--configuration</c> via <see cref="DotNetRunSettings.Configuration"/></li><li><c>--disable-build-servers</c> via <see cref="DotNetRunSettings.DisableBuildServers"/></li><li><c>--disable-parallel</c> via <see cref="DotNetRunSettings.DisableParallel"/></li><li><c>--force</c> via <see cref="DotNetRunSettings.Force"/></li><li><c>--force-evaluate</c> via <see cref="DotNetRunSettings.ForceEvaluate"/></li><li><c>--framework</c> via <see cref="DotNetRunSettings.Framework"/></li><li><c>--ignore-failed-sources</c> via <see cref="DotNetRunSettings.IgnoreFailedSources"/></li><li><c>--interactive</c> via <see cref="DotNetRunSettings.Interactive"/></li><li><c>--launch-profile</c> via <see cref="DotNetRunSettings.LaunchProfile"/></li><li><c>--lock-file-path</c> via <see cref="DotNetRunSettings.LockFilePath"/></li><li><c>--locked-mode</c> via <see cref="DotNetRunSettings.LockedMode"/></li><li><c>--no-build</c> via <see cref="DotNetRunSettings.NoBuild"/></li><li><c>--no-cache</c> via <see cref="DotNetRunSettings.NoCache"/></li><li><c>--no-dependencies</c> via <see cref="DotNetRunSettings.NoDependencies"/></li><li><c>--no-launch-profile</c> via <see cref="DotNetRunSettings.NoLaunchProfile"/></li><li><c>--no-restore</c> via <see cref="DotNetRunSettings.NoRestore"/></li><li><c>--no-self-contained</c> via <see cref="DotNetRunSettings.NoSelfContained"/></li><li><c>--os</c> via <see cref="DotNetRunSettings.OperatingSystem"/></li><li><c>--packages</c> via <see cref="DotNetRunSettings.PackageDirectory"/></li><li><c>--project</c> via <see cref="DotNetRunSettings.ProjectFile"/></li><li><c>--property</c> via <see cref="DotNetRunSettings.Properties"/></li><li><c>--runtime</c> via <see cref="DotNetRunSettings.Runtime"/></li><li><c>--self-contained</c> via <see cref="DotNetRunSettings.SelfContained"/></li><li><c>--source</c> via <see cref="DotNetRunSettings.Sources"/></li><li><c>--use-lock-file</c> via <see cref="DotNetRunSettings.UseLockFile"/></li><li><c>--verbosity</c> via <see cref="DotNetRunSettings.Verbosity"/></li></ul></remarks>
     public static IReadOnlyCollection<Output> DotNetRun(DotNetRunSettings options = null) => new DotNetTasks().Run<DotNetRunSettings>(options);
     /// <inheritdoc cref="DotNetTasks.DotNetRun(Nuke.Common.Tools.DotNet.DotNetRunSettings)"/>
     public static IReadOnlyCollection<Output> DotNetRun(Configure<DotNetRunSettings> configurator) => new DotNetTasks().Run<DotNetRunSettings>(configurator.Invoke(new DotNetRunSettings()));
@@ -49,14 +49,14 @@ public partial class DotNetTasks : ToolTasks, IRequirePathTool
     /// <inheritdoc cref="DotNetTasks.DotNetRestore(Nuke.Common.Tools.DotNet.DotNetRestoreSettings)"/>
     public static IEnumerable<(DotNetRestoreSettings Settings, IReadOnlyCollection<Output> Output)> DotNetRestore(CombinatorialConfigure<DotNetRestoreSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetRestore, degreeOfParallelism, completeOnFailure);
     /// <summary><p>The <c>dotnet pack</c> command builds the project and creates NuGet packages. The result of this command is a NuGet package. If the <c>--include-symbols</c> option is present, another package containing the debug symbols is created.</p><p>NuGet dependencies of the packed project are added to the <em>.nuspec</em> file, so they're properly resolved when the package is installed. Project-to-project references aren't packaged inside the project. Currently, you must have a package per project if you have project-to-project dependencies.</p><p>By default, <c>dotnet pack</c> builds the project first. If you wish to avoid this behavior, pass the <c>--no-build</c> option. This is often useful in Continuous Integration (CI) build scenarios where you know the code was previously built.</p><p>You can provide MSBuild properties to the <c>dotnet pack</c> command for the packing process. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/csproj#nuget-metadata-properties">NuGet metadata properties</a> and the <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference">MSBuild Command-Line Reference</a>.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;project&gt;</c> via <see cref="DotNetPackSettings.Project"/></li><li><c>--configuration</c> via <see cref="DotNetPackSettings.Configuration"/></li><li><c>--disable-parallel</c> via <see cref="DotNetPackSettings.DisableParallel"/></li><li><c>--force</c> via <see cref="DotNetPackSettings.Force"/></li><li><c>--force-evaluate</c> via <see cref="DotNetPackSettings.ForceEvaluate"/></li><li><c>--ignore-failed-sources</c> via <see cref="DotNetPackSettings.IgnoreFailedSources"/></li><li><c>--include-source</c> via <see cref="DotNetPackSettings.IncludeSource"/></li><li><c>--include-symbols</c> via <see cref="DotNetPackSettings.IncludeSymbols"/></li><li><c>--lock-file-path</c> via <see cref="DotNetPackSettings.LockFilePath"/></li><li><c>--locked-mode</c> via <see cref="DotNetPackSettings.LockedMode"/></li><li><c>--no-build</c> via <see cref="DotNetPackSettings.NoBuild"/></li><li><c>--no-cache</c> via <see cref="DotNetPackSettings.NoCache"/></li><li><c>--no-dependencies</c> via <see cref="DotNetPackSettings.NoDependencies"/></li><li><c>--no-restore</c> via <see cref="DotNetPackSettings.NoRestore"/></li><li><c>--nologo</c> via <see cref="DotNetPackSettings.NoLogo"/></li><li><c>--output</c> via <see cref="DotNetPackSettings.OutputDirectory"/></li><li><c>--packages</c> via <see cref="DotNetPackSettings.PackageDirectory"/></li><li><c>--property</c> via <see cref="DotNetPackSettings.Properties"/></li><li><c>--runtime</c> via <see cref="DotNetPackSettings.Runtime"/></li><li><c>--serviceable</c> via <see cref="DotNetPackSettings.Serviceable"/></li><li><c>--source</c> via <see cref="DotNetPackSettings.Sources"/></li><li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li><li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbosity"/></li><li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;project&gt;</c> via <see cref="DotNetPackSettings.Project"/></li><li><c>--artifacts-path</c> via <see cref="DotNetPackSettings.ArtifactsPath"/></li><li><c>--configuration</c> via <see cref="DotNetPackSettings.Configuration"/></li><li><c>--disable-parallel</c> via <see cref="DotNetPackSettings.DisableParallel"/></li><li><c>--force</c> via <see cref="DotNetPackSettings.Force"/></li><li><c>--force-evaluate</c> via <see cref="DotNetPackSettings.ForceEvaluate"/></li><li><c>--ignore-failed-sources</c> via <see cref="DotNetPackSettings.IgnoreFailedSources"/></li><li><c>--include-source</c> via <see cref="DotNetPackSettings.IncludeSource"/></li><li><c>--include-symbols</c> via <see cref="DotNetPackSettings.IncludeSymbols"/></li><li><c>--lock-file-path</c> via <see cref="DotNetPackSettings.LockFilePath"/></li><li><c>--locked-mode</c> via <see cref="DotNetPackSettings.LockedMode"/></li><li><c>--no-build</c> via <see cref="DotNetPackSettings.NoBuild"/></li><li><c>--no-cache</c> via <see cref="DotNetPackSettings.NoCache"/></li><li><c>--no-dependencies</c> via <see cref="DotNetPackSettings.NoDependencies"/></li><li><c>--no-restore</c> via <see cref="DotNetPackSettings.NoRestore"/></li><li><c>--nologo</c> via <see cref="DotNetPackSettings.NoLogo"/></li><li><c>--output</c> via <see cref="DotNetPackSettings.OutputDirectory"/></li><li><c>--packages</c> via <see cref="DotNetPackSettings.PackageDirectory"/></li><li><c>--property</c> via <see cref="DotNetPackSettings.Properties"/></li><li><c>--runtime</c> via <see cref="DotNetPackSettings.Runtime"/></li><li><c>--serviceable</c> via <see cref="DotNetPackSettings.Serviceable"/></li><li><c>--source</c> via <see cref="DotNetPackSettings.Sources"/></li><li><c>--use-lock-file</c> via <see cref="DotNetPackSettings.UseLockFile"/></li><li><c>--verbosity</c> via <see cref="DotNetPackSettings.Verbosity"/></li><li><c>--version-suffix</c> via <see cref="DotNetPackSettings.VersionSuffix"/></li></ul></remarks>
     public static IReadOnlyCollection<Output> DotNetPack(DotNetPackSettings options = null) => new DotNetTasks().Run<DotNetPackSettings>(options);
     /// <inheritdoc cref="DotNetTasks.DotNetPack(Nuke.Common.Tools.DotNet.DotNetPackSettings)"/>
     public static IReadOnlyCollection<Output> DotNetPack(Configure<DotNetPackSettings> configurator) => new DotNetTasks().Run<DotNetPackSettings>(configurator.Invoke(new DotNetPackSettings()));
     /// <inheritdoc cref="DotNetTasks.DotNetPack(Nuke.Common.Tools.DotNet.DotNetPackSettings)"/>
     public static IEnumerable<(DotNetPackSettings Settings, IReadOnlyCollection<Output> Output)> DotNetPack(CombinatorialConfigure<DotNetPackSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetPack, degreeOfParallelism, completeOnFailure);
     /// <summary><p>The <c>dotnet build</c> command builds the project and its dependencies into a set of binaries. The binaries include the project's code in Intermediate Language (IL) files with a <em>.dll</em> extension and symbol files used for debugging with a <em>.pdb</em> extension. A dependencies JSON file (<em>*.deps.json</em>) is produced that lists the dependencies of the application. A <em>.runtimeconfig.json</em> file is produced, which specifies the shared runtime and its version for the application.</p><p>If the project has third-party dependencies, such as libraries from NuGet, they're resolved from the NuGet cache and aren't available with the project's built output. With that in mind, the product of <c>dotnet build</c>d isn't ready to be transferred to another machine to run. This is in contrast to the behavior of the .NET Framework in which building an executable project (an application) produces output that's runnable on any machine where the .NET Framework is installed. To have a similar experience with .NET Core, you use the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish"><c>dotnet publish</c></a> command. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core Application Deployment</a>.</p><p>Building requires the <em>project.assets.json</em> file, which lists the dependencies of your application. The file is created <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-restore"><c>dotnet restore</c></a> is executed. Without the assets file in place, the tooling cannot resolve reference assemblies, which will result in errors. With .NET Core 1.x SDK, you needed to explicitily run the <c>dotnet restore</c> before running <c>dotnet build</c>. Starting with .NET Core 2.0 SDK, <c>dotnet restore</c> runs implicitily when you run <c>dotnet build</c>. If you want to disable implicit restore when running the build command, you can pass the <c>--no-restore</c> option.</p><p><c>dotnet build</c> uses MSBuild to build the project; thus, it supports both parallel and incremental builds. Refer to <a href="https://docs.microsoft.com/visualstudio/msbuild/incremental-builds">Incremental Builds</a> for more information.</p><p>In addition to its options, the <c>dotnet build</c> command accepts MSBuild options, such as <c>/p</c> for setting properties or <c>/l</c> to define a logger. Learn more about these options in the <a href="https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference">MSBuild Command-Line Reference</a>.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;projectFile&gt;</c> via <see cref="DotNetBuildSettings.ProjectFile"/></li><li><c>--configuration</c> via <see cref="DotNetBuildSettings.Configuration"/></li><li><c>--disable-parallel</c> via <see cref="DotNetBuildSettings.DisableParallel"/></li><li><c>--force</c> via <see cref="DotNetBuildSettings.Force"/></li><li><c>--force-evaluate</c> via <see cref="DotNetBuildSettings.ForceEvaluate"/></li><li><c>--framework</c> via <see cref="DotNetBuildSettings.Framework"/></li><li><c>--ignore-failed-sources</c> via <see cref="DotNetBuildSettings.IgnoreFailedSources"/></li><li><c>--lock-file-path</c> via <see cref="DotNetBuildSettings.LockFilePath"/></li><li><c>--locked-mode</c> via <see cref="DotNetBuildSettings.LockedMode"/></li><li><c>--no-cache</c> via <see cref="DotNetBuildSettings.NoCache"/></li><li><c>--no-dependencies</c> via <see cref="DotNetBuildSettings.NoDependencies"/></li><li><c>--no-incremental</c> via <see cref="DotNetBuildSettings.NoIncremental"/></li><li><c>--no-restore</c> via <see cref="DotNetBuildSettings.NoRestore"/></li><li><c>--nologo</c> via <see cref="DotNetBuildSettings.NoLogo"/></li><li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li><li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li><li><c>--property</c> via <see cref="DotNetBuildSettings.Properties"/></li><li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li><li><c>--self-contained</c> via <see cref="DotNetBuildSettings.SelfContained"/></li><li><c>--source</c> via <see cref="DotNetBuildSettings.Sources"/></li><li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li><li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li><li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li><li><c>-bl</c> via <see cref="DotNetBuildSettings.BinaryLog"/></li><li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li><li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;projectFile&gt;</c> via <see cref="DotNetBuildSettings.ProjectFile"/></li><li><c>--artifacts-path</c> via <see cref="DotNetBuildSettings.ArtifactsPath"/></li><li><c>--configuration</c> via <see cref="DotNetBuildSettings.Configuration"/></li><li><c>--disable-parallel</c> via <see cref="DotNetBuildSettings.DisableParallel"/></li><li><c>--force</c> via <see cref="DotNetBuildSettings.Force"/></li><li><c>--force-evaluate</c> via <see cref="DotNetBuildSettings.ForceEvaluate"/></li><li><c>--framework</c> via <see cref="DotNetBuildSettings.Framework"/></li><li><c>--ignore-failed-sources</c> via <see cref="DotNetBuildSettings.IgnoreFailedSources"/></li><li><c>--lock-file-path</c> via <see cref="DotNetBuildSettings.LockFilePath"/></li><li><c>--locked-mode</c> via <see cref="DotNetBuildSettings.LockedMode"/></li><li><c>--no-cache</c> via <see cref="DotNetBuildSettings.NoCache"/></li><li><c>--no-dependencies</c> via <see cref="DotNetBuildSettings.NoDependencies"/></li><li><c>--no-incremental</c> via <see cref="DotNetBuildSettings.NoIncremental"/></li><li><c>--no-restore</c> via <see cref="DotNetBuildSettings.NoRestore"/></li><li><c>--nologo</c> via <see cref="DotNetBuildSettings.NoLogo"/></li><li><c>--output</c> via <see cref="DotNetBuildSettings.OutputDirectory"/></li><li><c>--packages</c> via <see cref="DotNetBuildSettings.PackageDirectory"/></li><li><c>--property</c> via <see cref="DotNetBuildSettings.Properties"/></li><li><c>--runtime</c> via <see cref="DotNetBuildSettings.Runtime"/></li><li><c>--self-contained</c> via <see cref="DotNetBuildSettings.SelfContained"/></li><li><c>--source</c> via <see cref="DotNetBuildSettings.Sources"/></li><li><c>--use-lock-file</c> via <see cref="DotNetBuildSettings.UseLockFile"/></li><li><c>--verbosity</c> via <see cref="DotNetBuildSettings.Verbosity"/></li><li><c>--version-suffix</c> via <see cref="DotNetBuildSettings.VersionSuffix"/></li><li><c>-bl</c> via <see cref="DotNetBuildSettings.BinaryLog"/></li><li><c>/logger</c> via <see cref="DotNetBuildSettings.Loggers"/></li><li><c>/noconsolelogger</c> via <see cref="DotNetBuildSettings.NoConsoleLogger"/></li></ul></remarks>
     public static IReadOnlyCollection<Output> DotNetBuild(DotNetBuildSettings options = null) => new DotNetTasks().Run<DotNetBuildSettings>(options);
     /// <inheritdoc cref="DotNetTasks.DotNetBuild(Nuke.Common.Tools.DotNet.DotNetBuildSettings)"/>
     public static IReadOnlyCollection<Output> DotNetBuild(Configure<DotNetBuildSettings> configurator) => new DotNetTasks().Run<DotNetBuildSettings>(configurator.Invoke(new DotNetBuildSettings()));
@@ -70,7 +70,7 @@ public partial class DotNetTasks : ToolTasks, IRequirePathTool
     /// <inheritdoc cref="DotNetTasks.DotNetMSBuild(Nuke.Common.Tools.DotNet.DotNetMSBuildSettings)"/>
     public static IEnumerable<(DotNetMSBuildSettings Settings, IReadOnlyCollection<Output> Output)> DotNetMSBuild(CombinatorialConfigure<DotNetMSBuildSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetMSBuild, degreeOfParallelism, completeOnFailure);
     /// <summary><p>The <c>dotnet clean</c> command cleans the output of the previous build. It's implemented as an <a href="https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-targets">MSBuild target</a>, so the project is evaluated when the command is run. Only the outputs created during the build are cleaned. Both intermediate <em>(obj)</em> and final output <em>(bin)</em> folders are cleaned.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;project&gt;</c> via <see cref="DotNetCleanSettings.Project"/></li><li><c>--configuration</c> via <see cref="DotNetCleanSettings.Configuration"/></li><li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li><li><c>--nologo</c> via <see cref="DotNetCleanSettings.NoLogo"/></li><li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li><li><c>--property</c> via <see cref="DotNetCleanSettings.Properties"/></li><li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li><li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;project&gt;</c> via <see cref="DotNetCleanSettings.Project"/></li><li><c>--artifacts-path</c> via <see cref="DotNetCleanSettings.ArtifactsPath"/></li><li><c>--configuration</c> via <see cref="DotNetCleanSettings.Configuration"/></li><li><c>--framework</c> via <see cref="DotNetCleanSettings.Framework"/></li><li><c>--nologo</c> via <see cref="DotNetCleanSettings.NoLogo"/></li><li><c>--output</c> via <see cref="DotNetCleanSettings.Output"/></li><li><c>--property</c> via <see cref="DotNetCleanSettings.Properties"/></li><li><c>--runtime</c> via <see cref="DotNetCleanSettings.Runtime"/></li><li><c>--verbosity</c> via <see cref="DotNetCleanSettings.Verbosity"/></li></ul></remarks>
     public static IReadOnlyCollection<Output> DotNetClean(DotNetCleanSettings options = null) => new DotNetTasks().Run<DotNetCleanSettings>(options);
     /// <inheritdoc cref="DotNetTasks.DotNetClean(Nuke.Common.Tools.DotNet.DotNetCleanSettings)"/>
     public static IReadOnlyCollection<Output> DotNetClean(Configure<DotNetCleanSettings> configurator) => new DotNetTasks().Run<DotNetCleanSettings>(configurator.Invoke(new DotNetCleanSettings()));
@@ -84,7 +84,7 @@ public partial class DotNetTasks : ToolTasks, IRequirePathTool
     /// <inheritdoc cref="DotNetTasks.DotNetFormat(Nuke.Common.Tools.DotNet.DotNetFormatSettings)"/>
     public static IEnumerable<(DotNetFormatSettings Settings, IReadOnlyCollection<Output> Output)> DotNetFormat(CombinatorialConfigure<DotNetFormatSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetFormat, degreeOfParallelism, completeOnFailure);
     /// <summary><p><c>dotnet publish</c> compiles the application, reads through its dependencies specified in the project file, and publishes the resulting set of files to a directory. The output will contain the following:<para/><ul><li>Intermediate Language (IL) code in an assembly with a <em>dll</em> extension.</li><li><em>.deps.json</em> file that contains all of the dependencies of the project.</li><li><em>.runtime.config.json</em> file that specifies the shared runtime that the application expects, as well as other configuration options for the runtime (for example, garbage collection type).</li><li>The application's dependencies. These are copied from the NuGet cache into the output folder.</li></ul><para/>The <c>dotnet publish</c> command's output is ready for deployment to a hosting system (for example, a server, PC, Mac, laptop) for execution and is the only officially supported way to prepare the application for deployment. Depending on the type of deployment that the project specifies, the hosting system may or may not have the .NET Core shared runtime installed on it. For more information, see <a href="https://docs.microsoft.com/en-us/dotnet/core/deploying/index">.NET Core Application Deployment</a>. For the directory structure of a published application, see <a href="https://docs.microsoft.com/en-us/aspnet/core/hosting/directory-structure">Directory structure</a>.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
-    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;project&gt;</c> via <see cref="DotNetPublishSettings.Project"/></li><li><c>--arch</c> via <see cref="DotNetPublishSettings.Architecture"/></li><li><c>--configuration</c> via <see cref="DotNetPublishSettings.Configuration"/></li><li><c>--disable-parallel</c> via <see cref="DotNetPublishSettings.DisableParallel"/></li><li><c>--force</c> via <see cref="DotNetPublishSettings.Force"/></li><li><c>--force-evaluate</c> via <see cref="DotNetPublishSettings.ForceEvaluate"/></li><li><c>--framework</c> via <see cref="DotNetPublishSettings.Framework"/></li><li><c>--ignore-failed-sources</c> via <see cref="DotNetPublishSettings.IgnoreFailedSources"/></li><li><c>--lock-file-path</c> via <see cref="DotNetPublishSettings.LockFilePath"/></li><li><c>--locked-mode</c> via <see cref="DotNetPublishSettings.LockedMode"/></li><li><c>--manifest</c> via <see cref="DotNetPublishSettings.Manifest"/></li><li><c>--no-build</c> via <see cref="DotNetPublishSettings.NoBuild"/></li><li><c>--no-cache</c> via <see cref="DotNetPublishSettings.NoCache"/></li><li><c>--no-dependencies</c> via <see cref="DotNetPublishSettings.NoDependencies"/></li><li><c>--no-restore</c> via <see cref="DotNetPublishSettings.NoRestore"/></li><li><c>--nologo</c> via <see cref="DotNetPublishSettings.NoLogo"/></li><li><c>--os</c> via <see cref="DotNetPublishSettings.OperatingSystem"/></li><li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li><li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li><li><c>--property</c> via <see cref="DotNetPublishSettings.Properties"/></li><li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li><li><c>--self-contained</c> via <see cref="DotNetPublishSettings.SelfContained"/></li><li><c>--source</c> via <see cref="DotNetPublishSettings.Sources"/></li><li><c>--use-lock-file</c> via <see cref="DotNetPublishSettings.UseLockFile"/></li><li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li><li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li><li><c>/t</c> via <see cref="DotNetPublishSettings.Targets"/></li></ul></remarks>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;project&gt;</c> via <see cref="DotNetPublishSettings.Project"/></li><li><c>--arch</c> via <see cref="DotNetPublishSettings.Architecture"/></li><li><c>--artifacts-path</c> via <see cref="DotNetPublishSettings.ArtifactsPath"/></li><li><c>--configuration</c> via <see cref="DotNetPublishSettings.Configuration"/></li><li><c>--disable-parallel</c> via <see cref="DotNetPublishSettings.DisableParallel"/></li><li><c>--force</c> via <see cref="DotNetPublishSettings.Force"/></li><li><c>--force-evaluate</c> via <see cref="DotNetPublishSettings.ForceEvaluate"/></li><li><c>--framework</c> via <see cref="DotNetPublishSettings.Framework"/></li><li><c>--ignore-failed-sources</c> via <see cref="DotNetPublishSettings.IgnoreFailedSources"/></li><li><c>--lock-file-path</c> via <see cref="DotNetPublishSettings.LockFilePath"/></li><li><c>--locked-mode</c> via <see cref="DotNetPublishSettings.LockedMode"/></li><li><c>--manifest</c> via <see cref="DotNetPublishSettings.Manifest"/></li><li><c>--no-build</c> via <see cref="DotNetPublishSettings.NoBuild"/></li><li><c>--no-cache</c> via <see cref="DotNetPublishSettings.NoCache"/></li><li><c>--no-dependencies</c> via <see cref="DotNetPublishSettings.NoDependencies"/></li><li><c>--no-restore</c> via <see cref="DotNetPublishSettings.NoRestore"/></li><li><c>--nologo</c> via <see cref="DotNetPublishSettings.NoLogo"/></li><li><c>--os</c> via <see cref="DotNetPublishSettings.OperatingSystem"/></li><li><c>--output</c> via <see cref="DotNetPublishSettings.Output"/></li><li><c>--packages</c> via <see cref="DotNetPublishSettings.PackageDirectory"/></li><li><c>--property</c> via <see cref="DotNetPublishSettings.Properties"/></li><li><c>--runtime</c> via <see cref="DotNetPublishSettings.Runtime"/></li><li><c>--self-contained</c> via <see cref="DotNetPublishSettings.SelfContained"/></li><li><c>--source</c> via <see cref="DotNetPublishSettings.Sources"/></li><li><c>--use-lock-file</c> via <see cref="DotNetPublishSettings.UseLockFile"/></li><li><c>--verbosity</c> via <see cref="DotNetPublishSettings.Verbosity"/></li><li><c>--version-suffix</c> via <see cref="DotNetPublishSettings.VersionSuffix"/></li><li><c>/t</c> via <see cref="DotNetPublishSettings.Targets"/></li></ul></remarks>
     public static IReadOnlyCollection<Output> DotNetPublish(DotNetPublishSettings options = null) => new DotNetTasks().Run<DotNetPublishSettings>(options);
     /// <inheritdoc cref="DotNetTasks.DotNetPublish(Nuke.Common.Tools.DotNet.DotNetPublishSettings)"/>
     public static IReadOnlyCollection<Output> DotNetPublish(Configure<DotNetPublishSettings> configurator) => new DotNetTasks().Run<DotNetPublishSettings>(configurator.Invoke(new DotNetPublishSettings()));
@@ -97,6 +97,27 @@ public partial class DotNetTasks : ToolTasks, IRequirePathTool
     public static IReadOnlyCollection<Output> DotNetNuGetPush(Configure<DotNetNuGetPushSettings> configurator) => new DotNetTasks().Run<DotNetNuGetPushSettings>(configurator.Invoke(new DotNetNuGetPushSettings()));
     /// <inheritdoc cref="DotNetTasks.DotNetNuGetPush(Nuke.Common.Tools.DotNet.DotNetNuGetPushSettings)"/>
     public static IEnumerable<(DotNetNuGetPushSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetPush(CombinatorialConfigure<DotNetNuGetPushSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetNuGetPush, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>The dotnet nuget delete command deletes or unlists a package from the server. For nuget.org, the action is to unlist the package.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;packageId&gt;</c> via <see cref="DotNetNuGetDeleteSettings.PackageId"/></li><li><c>&lt;packageVersion&gt;</c> via <see cref="DotNetNuGetDeleteSettings.PackageVersion"/></li><li><c>--api-key</c> via <see cref="DotNetNuGetDeleteSettings.ApiKey"/></li><li><c>--force-english-output</c> via <see cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/></li><li><c>--interactive</c> via <see cref="DotNetNuGetDeleteSettings.Interactive"/></li><li><c>--no-service-endpoint</c> via <see cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/></li><li><c>--non-interactive</c> via <see cref="DotNetNuGetDeleteSettings.NonInteractive"/></li><li><c>--source</c> via <see cref="DotNetNuGetDeleteSettings.Source"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotNetNuGetDelete(DotNetNuGetDeleteSettings options = null) => new DotNetTasks().Run<DotNetNuGetDeleteSettings>(options);
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetDelete(Nuke.Common.Tools.DotNet.DotNetNuGetDeleteSettings)"/>
+    public static IReadOnlyCollection<Output> DotNetNuGetDelete(Configure<DotNetNuGetDeleteSettings> configurator) => new DotNetTasks().Run<DotNetNuGetDeleteSettings>(configurator.Invoke(new DotNetNuGetDeleteSettings()));
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetDelete(Nuke.Common.Tools.DotNet.DotNetNuGetDeleteSettings)"/>
+    public static IEnumerable<(DotNetNuGetDeleteSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetDelete(CombinatorialConfigure<DotNetNuGetDeleteSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetNuGetDelete, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>The dotnet nuget sign command signs all the packages matching the first argument with a certificate. The certificate with the private key can be obtained from a file or from a certificate installed in a certificate store by providing a subject name or a SHA-1 fingerprint.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;targetPath&gt;</c> via <see cref="DotNetNuGetSignSettings.TargetPath"/></li><li><c>--certificate-fingerprint</c> via <see cref="DotNetNuGetSignSettings.CertificateFingerprint"/></li><li><c>--certificate-password</c> via <see cref="DotNetNuGetSignSettings.CertificatePassword"/></li><li><c>--certificate-path</c> via <see cref="DotNetNuGetSignSettings.CertificatePath"/></li><li><c>--certificate-store-location</c> via <see cref="DotNetNuGetSignSettings.CertificateStoreLocation"/></li><li><c>--certificate-store-name</c> via <see cref="DotNetNuGetSignSettings.CertificateStoreName"/></li><li><c>--certificate-subject-name</c> via <see cref="DotNetNuGetSignSettings.CertificateSubjectName"/></li><li><c>--hash-algorithm</c> via <see cref="DotNetNuGetSignSettings.HashAlgorithm"/></li><li><c>--output</c> via <see cref="DotNetNuGetSignSettings.Output"/></li><li><c>--overwrite</c> via <see cref="DotNetNuGetSignSettings.Overwrite"/></li><li><c>--timestamp-hash-algorithm</c> via <see cref="DotNetNuGetSignSettings.TimestampHashAlgorithm"/></li><li><c>--timestamper</c> via <see cref="DotNetNuGetSignSettings.Timestamper"/></li><li><c>--verbosity</c> via <see cref="DotNetNuGetSignSettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotNetNuGetSign(DotNetNuGetSignSettings options = null) => new DotNetTasks().Run<DotNetNuGetSignSettings>(options);
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetSign(Nuke.Common.Tools.DotNet.DotNetNuGetSignSettings)"/>
+    public static IReadOnlyCollection<Output> DotNetNuGetSign(Configure<DotNetNuGetSignSettings> configurator) => new DotNetTasks().Run<DotNetNuGetSignSettings>(configurator.Invoke(new DotNetNuGetSignSettings()));
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetSign(Nuke.Common.Tools.DotNet.DotNetNuGetSignSettings)"/>
+    public static IEnumerable<(DotNetNuGetSignSettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetSign(CombinatorialConfigure<DotNetNuGetSignSettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetNuGetSign, degreeOfParallelism, completeOnFailure);
+    /// <summary><p>The dotnet nuget verify command verifies a signed NuGet package.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
+    /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;targetPath&gt;</c> via <see cref="DotNetNuGetVerifySettings.TargetPath"/></li><li><c>--certificate-fingerprint</c> via <see cref="DotNetNuGetVerifySettings.CertificateFingerprint"/></li><li><c>--configfile</c> via <see cref="DotNetNuGetVerifySettings.ConfigFile"/></li><li><c>--verbosity</c> via <see cref="DotNetNuGetVerifySettings.Verbosity"/></li></ul></remarks>
+    public static IReadOnlyCollection<Output> DotNetNuGetVerify(DotNetNuGetVerifySettings options = null) => new DotNetTasks().Run<DotNetNuGetVerifySettings>(options);
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetVerify(Nuke.Common.Tools.DotNet.DotNetNuGetVerifySettings)"/>
+    public static IReadOnlyCollection<Output> DotNetNuGetVerify(Configure<DotNetNuGetVerifySettings> configurator) => new DotNetTasks().Run<DotNetNuGetVerifySettings>(configurator.Invoke(new DotNetNuGetVerifySettings()));
+    /// <inheritdoc cref="DotNetTasks.DotNetNuGetVerify(Nuke.Common.Tools.DotNet.DotNetNuGetVerifySettings)"/>
+    public static IEnumerable<(DotNetNuGetVerifySettings Settings, IReadOnlyCollection<Output> Output)> DotNetNuGetVerify(CombinatorialConfigure<DotNetNuGetVerifySettings> configurator, int degreeOfParallelism = 1, bool completeOnFailure = false) => configurator.Invoke(DotNetNuGetVerify, degreeOfParallelism, completeOnFailure);
     /// <summary><p>Adds a NuGet source.</p><p>For more details, visit the <a href="https://docs.microsoft.com/en-us/dotnet/core/tools/">official website</a>.</p></summary>
     /// <remarks><p>This is a <a href="https://www.nuke.build/docs/common/cli-tools/#fluent-api">CLI wrapper with fluent API</a> that allows to modify the following arguments:</p><ul><li><c>&lt;source&gt;</c> via <see cref="DotNetNuGetAddSourceSettings.Source"/></li><li><c>--configfile</c> via <see cref="DotNetNuGetAddSourceSettings.ConfigFile"/></li><li><c>--name</c> via <see cref="DotNetNuGetAddSourceSettings.Name"/></li><li><c>--password</c> via <see cref="DotNetNuGetAddSourceSettings.Password"/></li><li><c>--store-password-in-clear-text</c> via <see cref="DotNetNuGetAddSourceSettings.StorePasswordInClearText"/></li><li><c>--username</c> via <see cref="DotNetNuGetAddSourceSettings.Username"/></li><li><c>--valid-authentication-types</c> via <see cref="DotNetNuGetAddSourceSettings.ValidAuthenticationTypes"/></li></ul></remarks>
     public static IReadOnlyCollection<Output> DotNetNuGetAddSource(DotNetNuGetAddSourceSettings options = null) => new DotNetTasks().Run<DotNetNuGetAddSourceSettings>(options);
@@ -232,6 +253,8 @@ public partial class DotNetTestSettings : ToolOptions
     [Argument(Format = "-- {key}={value}", Position = -1, Separator = " ")] public IReadOnlyDictionary<string, object> RunSettings => Get<Dictionary<string, object>>(() => RunSettings);
     /// <summary>Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK.</summary>
     [Argument(Format = "--nologo")] public bool? NoLogo => Get<bool?>(() => NoLogo);
+    /// <summary>All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href="https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output">Artifacts Output Layout</a>. Available since .NET 8 SDK.</summary>
+    [Argument(Format = "--artifacts-path {value}")] public string ArtifactsPath => Get<string>(() => ArtifactsPath);
     /// <summary>Disables restoring multiple projects in parallel.</summary>
     [Argument(Format = "--disable-parallel")] public bool? DisableParallel => Get<bool?>(() => DisableParallel);
     /// <summary>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</summary>
@@ -297,6 +320,8 @@ public partial class DotNetRunSettings : ToolOptions
     [Argument(Format = "--verbosity {value}")] public DotNetVerbosity Verbosity => Get<DotNetVerbosity>(() => Verbosity);
     /// <summary>Arguments passed to the application being run.</summary>
     [Argument(Format = "-- {value}", Position = -1, Separator = " ")] public IReadOnlyList<string> ApplicationArguments => Get<List<string>>(() => ApplicationArguments);
+    /// <summary>All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href="https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output">Artifacts Output Layout</a>. Available since .NET 8 SDK.</summary>
+    [Argument(Format = "--artifacts-path {value}")] public string ArtifactsPath => Get<string>(() => ArtifactsPath);
     /// <summary>Disables restoring multiple projects in parallel.</summary>
     [Argument(Format = "--disable-parallel")] public bool? DisableParallel => Get<bool?>(() => DisableParallel);
     /// <summary>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</summary>
@@ -393,6 +418,8 @@ public partial class DotNetPackSettings : ToolOptions
     [Argument(Format = "--version-suffix {value}")] public string VersionSuffix => Get<string>(() => VersionSuffix);
     /// <summary>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</summary>
     [Argument(Format = "--nologo")] public bool? NoLogo => Get<bool?>(() => NoLogo);
+    /// <summary>All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href="https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output">Artifacts Output Layout</a>. Available since .NET 8 SDK.</summary>
+    [Argument(Format = "--artifacts-path {value}")] public string ArtifactsPath => Get<string>(() => ArtifactsPath);
     /// <summary>Disables restoring multiple projects in parallel.</summary>
     [Argument(Format = "--disable-parallel")] public bool? DisableParallel => Get<bool?>(() => DisableParallel);
     /// <summary>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</summary>
@@ -456,6 +483,8 @@ public partial class DotNetBuildSettings : ToolOptions
     [Argument(Format = "--nologo")] public bool? NoLogo => Get<bool?>(() => NoLogo);
     /// <summary>Generare MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.</summary>
     [Argument(Format = "-bl:{value}")] public string BinaryLog => Get<string>(() => BinaryLog);
+    /// <summary>All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href="https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output">Artifacts Output Layout</a>. Available since .NET 8 SDK.</summary>
+    [Argument(Format = "--artifacts-path {value}")] public string ArtifactsPath => Get<string>(() => ArtifactsPath);
     /// <summary>Disables restoring multiple projects in parallel.</summary>
     [Argument(Format = "--disable-parallel")] public bool? DisableParallel => Get<bool?>(() => DisableParallel);
     /// <summary>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</summary>
@@ -540,6 +569,8 @@ public partial class DotNetCleanSettings : ToolOptions
     [Argument(Format = "--verbosity {value}")] public DotNetVerbosity Verbosity => Get<DotNetVerbosity>(() => Verbosity);
     /// <summary>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</summary>
     [Argument(Format = "--nologo")] public bool? NoLogo => Get<bool?>(() => NoLogo);
+    /// <summary>All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href="https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output">Artifacts Output Layout</a>. Available since .NET 8 SDK.</summary>
+    [Argument(Format = "--artifacts-path {value}")] public string ArtifactsPath => Get<string>(() => ArtifactsPath);
     /// <summary><p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\Debug</c></p></summary>
     [Argument(Format = "--property:{key}={value}")] public IReadOnlyDictionary<string, object> Properties => Get<Dictionary<string, object>>(() => Properties);
 }
@@ -612,6 +643,8 @@ public partial class DotNetPublishSettings : ToolOptions
     [Argument(Format = "--nologo")] public bool? NoLogo => Get<bool?>(() => NoLogo);
     /// <summary><p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ee216359.aspx">Target Build Order</a> and <a href="https://msdn.microsoft.com/en-us/library/ms171463.aspx">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href="https://msdn.microsoft.com/en-us/library/ms171462.aspx">Targets</a>.</p></summary>
     [Argument(Format = "/t:{value}", Separator = ";")] public IReadOnlyList<string> Targets => Get<List<string>>(() => Targets);
+    /// <summary>All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href="https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output">Artifacts Output Layout</a>. Available since .NET 8 SDK.</summary>
+    [Argument(Format = "--artifacts-path {value}")] public string ArtifactsPath => Get<string>(() => ArtifactsPath);
     /// <summary>Disables restoring multiple projects in parallel.</summary>
     [Argument(Format = "--disable-parallel")] public bool? DisableParallel => Get<bool?>(() => DisableParallel);
     /// <summary>Forces all dependencies to be resolved even if the last restore was successful. This is equivalent to deleting the <em>project.assets.json</em> file.</summary>
@@ -669,6 +702,83 @@ public partial class DotNetNuGetPushSettings : ToolOptions
     [Argument(Format = "--no-service-endpoint")] public bool? NoServiceEndpoint => Get<bool?>(() => NoServiceEndpoint);
 }
 #endregion
+#region DotNetNuGetDeleteSettings
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetDelete(Nuke.Common.Tools.DotNet.DotNetNuGetDeleteSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetNuGetDelete), Arguments = "nuget delete")]
+public partial class DotNetNuGetDeleteSettings : ToolOptions
+{
+    /// <summary>Package Id to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted.</summary>
+    [Argument(Format = "{value}", Position = 1)] public string PackageId => Get<string>(() => PackageId);
+    /// <summary>Package Version to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted.</summary>
+    [Argument(Format = "{value}", Position = 2)] public string PackageVersion => Get<string>(() => PackageVersion);
+    /// <summary>Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file.</summary>
+    [Argument(Format = "--source {value}")] public string Source => Get<string>(() => Source);
+    /// <summary>The API key for the server.</summary>
+    [Argument(Format = "--api-key {value}", Secret = true)] public string ApiKey => Get<string>(() => ApiKey);
+    /// <summary>Forces all logged output in English.</summary>
+    [Argument(Format = "--force-english-output")] public bool? ForceEnglishOutput => Get<bool?>(() => ForceEnglishOutput);
+    /// <summary>Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK.</summary>
+    [Argument(Format = "--no-service-endpoint")] public bool? NoServiceEndpoint => Get<bool?>(() => NoServiceEndpoint);
+    /// <summary>Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK.</summary>
+    [Argument(Format = "--interactive")] public bool? Interactive => Get<bool?>(() => Interactive);
+    /// <summary>Doesn't prompt for user input or confirmations.</summary>
+    [Argument(Format = "--non-interactive")] public bool? NonInteractive => Get<bool?>(() => NonInteractive);
+}
+#endregion
+#region DotNetNuGetSignSettings
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetSign(Nuke.Common.Tools.DotNet.DotNetNuGetSignSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetNuGetSign), Arguments = "nuget sign")]
+public partial class DotNetNuGetSignSettings : ToolOptions
+{
+    /// <summary>Path of the package to sign.</summary>
+    [Argument(Format = "{value}", Position = 1)] public string TargetPath => Get<string>(() => TargetPath);
+    /// <summary>Specifies the file path to the certificate to be used in signing the package.</summary>
+    [Argument(Format = "--certificate-path {value}")] public string CertificatePath => Get<string>(() => CertificatePath);
+    /// <summary>Specifies the name of the X.509 certificate store to use to search for the certificate. Defaults to 'My', the X.509 certificate store for personal certificates. This option should be used when specifying the certificate via --certificate-subject-name or --certificate-fingerprint options.</summary>
+    [Argument(Format = "--certificate-store-name {value}")] public string CertificateStoreName => Get<string>(() => CertificateStoreName);
+    /// <summary>Specifies the name of the X.509 certificate store use to search for the certificate. Defaults to 'CurrentUser', the X.509 certificate store used by the current user. This option should be used when specifying the certificate via --certificate-subject-name or --certificate-fingerprint options.</summary>
+    [Argument(Format = "--certificate-store-location {value}")] public string CertificateStoreLocation => Get<string>(() => CertificateStoreLocation);
+    /// <summary>Specifies the subject name of the certificate used to search a local certificate store for the certificate. The search is a case-insensitive string comparison using the supplied value, which finds all certificates with the subject name containing that string, regardless of other subject values. The certificate store can be specified by --certificate-store-name and --certificate-store-location options.</summary>
+    [Argument(Format = "--certificate-subject-name {value}")] public string CertificateSubjectName => Get<string>(() => CertificateSubjectName);
+    /// <summary>Specifies the fingerprint of the certificate used to search a local certificate store for the certificate. Starting with .NET 9, this option can be used to specify the SHA-1, SHA-256, SHA-384, or SHA-512 fingerprint of the certificate. However, a NU3043 warning is raised when a SHA-1 certificate fingerprint is used because it is no longer considered secure.</summary>
+    [Argument(Format = "--certificate-fingerprint {value}")] public string CertificateFingerprint => Get<string>(() => CertificateFingerprint);
+    /// <summary>Specifies the certificate password, if needed. If a certificate is password protected but no password is provided, the sign command will fail.</summary>
+    [Argument(Format = "--certificate-password {value}", Secret = true)] public string CertificatePassword => Get<string>(() => CertificatePassword);
+    /// <summary>Hash algorithm to be used to sign the package. Defaults to SHA256. Possible values are SHA256, SHA384, and SHA512.</summary>
+    [Argument(Format = "--hash-algorithm {value}")] public DotNetNuGetSignHashAlgorithm HashAlgorithm => Get<DotNetNuGetSignHashAlgorithm>(() => HashAlgorithm);
+    /// <summary>Specifies the directory where the signed package should be saved. If this option isn't specified, by default the original package is overwritten by the signed package.</summary>
+    [Argument(Format = "--output {value}")] public string Output => Get<string>(() => Output);
+    /// <summary>Indicate that the current signature should be overwritten. By default the command will fail if the package already has a signature.</summary>
+    [Argument(Format = "--overwrite")] public bool? Overwrite => Get<bool?>(() => Overwrite);
+    /// <summary>Hash algorithm to be used by the RFC 3161 timestamp server. Defaults to SHA256.</summary>
+    [Argument(Format = "--timestamp-hash-algorithm {value}")] public DotNetNuGetSignHashAlgorithm TimestampHashAlgorithm => Get<DotNetNuGetSignHashAlgorithm>(() => TimestampHashAlgorithm);
+    /// <summary>URL to an RFC 3161 timestamping server.</summary>
+    [Argument(Format = "--timestamper {value}")] public string Timestamper => Get<string>(() => Timestamper);
+    /// <summary>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</summary>
+    [Argument(Format = "--verbosity {value}")] public DotNetVerbosity Verbosity => Get<DotNetVerbosity>(() => Verbosity);
+}
+#endregion
+#region DotNetNuGetVerifySettings
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetVerify(Nuke.Common.Tools.DotNet.DotNetNuGetVerifySettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+[Command(Type = typeof(DotNetTasks), Command = nameof(DotNetTasks.DotNetNuGetVerify), Arguments = "nuget verify")]
+public partial class DotNetNuGetVerifySettings : ToolOptions
+{
+    /// <summary>Path of the package to verify.</summary>
+    [Argument(Format = "{value}", Position = 1)] public string TargetPath => Get<string>(() => TargetPath);
+    /// <summary>Verify that the signer certificate matches with one of the specified SHA256 fingerprints. This option can be supplied multiple times to provide multiple fingerprints.</summary>
+    [Argument(Format = "--certificate-fingerprint {value}")] public string CertificateFingerprint => Get<string>(() => CertificateFingerprint);
+    /// <summary>The NuGet configuration file (nuget.config) to use.</summary>
+    [Argument(Format = "--configfile {value}")] public string ConfigFile => Get<string>(() => ConfigFile);
+    /// <summary>Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>.</summary>
+    [Argument(Format = "--verbosity {value}")] public DotNetVerbosity Verbosity => Get<DotNetVerbosity>(() => Verbosity);
+}
+#endregion
 #region DotNetNuGetAddSourceSettings
 /// <inheritdoc cref="DotNetTasks.DotNetNuGetAddSource(Nuke.Common.Tools.DotNet.DotNetNuGetAddSourceSettings)"/>
 [PublicAPI]
@@ -685,7 +795,7 @@ public partial class DotNetNuGetAddSourceSettings : ToolOptions
     /// <summary>Password to be used when connecting to an authenticated source.</summary>
     [Argument(Format = "--password {value}", Secret = true)] public string Password => Get<string>(() => Password);
     /// <summary>Enables storing portable package source credentials by disabling password encryption.</summary>
-    [Argument(Format = "--store-password-in-clear-text")] public bool? StorePasswordInClearText => Get<bool?>(() => StorePasswordInClearText);
+    [Argument(Format = "--store-password-in-clear-text", Secret = false)] public bool? StorePasswordInClearText => Get<bool?>(() => StorePasswordInClearText);
     /// <summary>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</summary>
     [Argument(Format = "--valid-authentication-types {value}", Separator = ",")] public IReadOnlyList<DotNetNuGetAuthentication> ValidAuthenticationTypes => Get<List<DotNetNuGetAuthentication>>(() => ValidAuthenticationTypes);
     /// <summary>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet Configurations</a>.</summary>
@@ -708,7 +818,7 @@ public partial class DotNetNuGetUpdateSourceSettings : ToolOptions
     /// <summary>Password to be used when connecting to an authenticated source.</summary>
     [Argument(Format = "--password {value}", Secret = true)] public string Password => Get<string>(() => Password);
     /// <summary>Enables storing portable package source credentials by disabling password encryption.</summary>
-    [Argument(Format = "--store-password-in-clear-text")] public bool? StorePasswordInClearText => Get<bool?>(() => StorePasswordInClearText);
+    [Argument(Format = "--store-password-in-clear-text", Secret = false)] public bool? StorePasswordInClearText => Get<bool?>(() => StorePasswordInClearText);
     /// <summary>List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful.</summary>
     [Argument(Format = "--valid-authentication-types {value}", Separator = ",")] public IReadOnlyList<DotNetNuGetAuthentication> ValidAuthenticationTypes => Get<List<DotNetNuGetAuthentication>>(() => ValidAuthenticationTypes);
     /// <summary>The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href="https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior">Common NuGet Configurations</a>.</summary>
@@ -1255,6 +1365,14 @@ public static partial class DotNetTestSettingsExtensions
     [Pure] [Builder(Type = typeof(DotNetTestSettings), Property = nameof(DotNetTestSettings.NoLogo))]
     public static T ToggleNoLogo<T>(this T o) where T : DotNetTestSettings => o.Modify(b => b.Set(() => o.NoLogo, !o.NoLogo));
     #endregion
+    #region ArtifactsPath
+    /// <inheritdoc cref="DotNetTestSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetTestSettings), Property = nameof(DotNetTestSettings.ArtifactsPath))]
+    public static T SetArtifactsPath<T>(this T o, string v) where T : DotNetTestSettings => o.Modify(b => b.Set(() => o.ArtifactsPath, v));
+    /// <inheritdoc cref="DotNetTestSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetTestSettings), Property = nameof(DotNetTestSettings.ArtifactsPath))]
+    public static T ResetArtifactsPath<T>(this T o) where T : DotNetTestSettings => o.Modify(b => b.Remove(() => o.ArtifactsPath));
+    #endregion
     #region DisableParallel
     /// <inheritdoc cref="DotNetTestSettings.DisableParallel"/>
     [Pure] [Builder(Type = typeof(DotNetTestSettings), Property = nameof(DotNetTestSettings.DisableParallel))]
@@ -1651,6 +1769,14 @@ public static partial class DotNetRunSettingsExtensions
     /// <inheritdoc cref="DotNetRunSettings.ApplicationArguments"/>
     [Pure] [Builder(Type = typeof(DotNetRunSettings), Property = nameof(DotNetRunSettings.ApplicationArguments))]
     public static T ClearApplicationArguments<T>(this T o) where T : DotNetRunSettings => o.Modify(b => b.ClearCollection(() => o.ApplicationArguments));
+    #endregion
+    #region ArtifactsPath
+    /// <inheritdoc cref="DotNetRunSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetRunSettings), Property = nameof(DotNetRunSettings.ArtifactsPath))]
+    public static T SetArtifactsPath<T>(this T o, string v) where T : DotNetRunSettings => o.Modify(b => b.Set(() => o.ArtifactsPath, v));
+    /// <inheritdoc cref="DotNetRunSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetRunSettings), Property = nameof(DotNetRunSettings.ArtifactsPath))]
+    public static T ResetArtifactsPath<T>(this T o) where T : DotNetRunSettings => o.Modify(b => b.Remove(() => o.ArtifactsPath));
     #endregion
     #region DisableParallel
     /// <inheritdoc cref="DotNetRunSettings.DisableParallel"/>
@@ -3020,6 +3146,14 @@ public static partial class DotNetPackSettingsExtensions
     [Pure] [Builder(Type = typeof(DotNetPackSettings), Property = nameof(DotNetPackSettings.NoLogo))]
     public static T ToggleNoLogo<T>(this T o) where T : DotNetPackSettings => o.Modify(b => b.Set(() => o.NoLogo, !o.NoLogo));
     #endregion
+    #region ArtifactsPath
+    /// <inheritdoc cref="DotNetPackSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetPackSettings), Property = nameof(DotNetPackSettings.ArtifactsPath))]
+    public static T SetArtifactsPath<T>(this T o, string v) where T : DotNetPackSettings => o.Modify(b => b.Set(() => o.ArtifactsPath, v));
+    /// <inheritdoc cref="DotNetPackSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetPackSettings), Property = nameof(DotNetPackSettings.ArtifactsPath))]
+    public static T ResetArtifactsPath<T>(this T o) where T : DotNetPackSettings => o.Modify(b => b.Remove(() => o.ArtifactsPath));
+    #endregion
     #region DisableParallel
     /// <inheritdoc cref="DotNetPackSettings.DisableParallel"/>
     [Pure] [Builder(Type = typeof(DotNetPackSettings), Property = nameof(DotNetPackSettings.DisableParallel))]
@@ -3796,6 +3930,14 @@ public static partial class DotNetBuildSettingsExtensions
     /// <inheritdoc cref="DotNetBuildSettings.BinaryLog"/>
     [Pure] [Builder(Type = typeof(DotNetBuildSettings), Property = nameof(DotNetBuildSettings.BinaryLog))]
     public static T ResetBinaryLog<T>(this T o) where T : DotNetBuildSettings => o.Modify(b => b.Remove(() => o.BinaryLog));
+    #endregion
+    #region ArtifactsPath
+    /// <inheritdoc cref="DotNetBuildSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetBuildSettings), Property = nameof(DotNetBuildSettings.ArtifactsPath))]
+    public static T SetArtifactsPath<T>(this T o, string v) where T : DotNetBuildSettings => o.Modify(b => b.Set(() => o.ArtifactsPath, v));
+    /// <inheritdoc cref="DotNetBuildSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetBuildSettings), Property = nameof(DotNetBuildSettings.ArtifactsPath))]
+    public static T ResetArtifactsPath<T>(this T o) where T : DotNetBuildSettings => o.Modify(b => b.Remove(() => o.ArtifactsPath));
     #endregion
     #region DisableParallel
     /// <inheritdoc cref="DotNetBuildSettings.DisableParallel"/>
@@ -5069,6 +5211,14 @@ public static partial class DotNetCleanSettingsExtensions
     [Pure] [Builder(Type = typeof(DotNetCleanSettings), Property = nameof(DotNetCleanSettings.NoLogo))]
     public static T ToggleNoLogo<T>(this T o) where T : DotNetCleanSettings => o.Modify(b => b.Set(() => o.NoLogo, !o.NoLogo));
     #endregion
+    #region ArtifactsPath
+    /// <inheritdoc cref="DotNetCleanSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetCleanSettings), Property = nameof(DotNetCleanSettings.ArtifactsPath))]
+    public static T SetArtifactsPath<T>(this T o, string v) where T : DotNetCleanSettings => o.Modify(b => b.Set(() => o.ArtifactsPath, v));
+    /// <inheritdoc cref="DotNetCleanSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetCleanSettings), Property = nameof(DotNetCleanSettings.ArtifactsPath))]
+    public static T ResetArtifactsPath<T>(this T o) where T : DotNetCleanSettings => o.Modify(b => b.Remove(() => o.ArtifactsPath));
+    #endregion
     #region Properties
     /// <inheritdoc cref="DotNetCleanSettings.Properties"/>
     [Pure] [Builder(Type = typeof(DotNetCleanSettings), Property = nameof(DotNetCleanSettings.Properties))]
@@ -6221,6 +6371,14 @@ public static partial class DotNetPublishSettingsExtensions
     [Pure] [Builder(Type = typeof(DotNetPublishSettings), Property = nameof(DotNetPublishSettings.Targets))]
     public static T ClearTargets<T>(this T o) where T : DotNetPublishSettings => o.Modify(b => b.ClearCollection(() => o.Targets));
     #endregion
+    #region ArtifactsPath
+    /// <inheritdoc cref="DotNetPublishSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetPublishSettings), Property = nameof(DotNetPublishSettings.ArtifactsPath))]
+    public static T SetArtifactsPath<T>(this T o, string v) where T : DotNetPublishSettings => o.Modify(b => b.Set(() => o.ArtifactsPath, v));
+    /// <inheritdoc cref="DotNetPublishSettings.ArtifactsPath"/>
+    [Pure] [Builder(Type = typeof(DotNetPublishSettings), Property = nameof(DotNetPublishSettings.ArtifactsPath))]
+    public static T ResetArtifactsPath<T>(this T o) where T : DotNetPublishSettings => o.Modify(b => b.Remove(() => o.ArtifactsPath));
+    #endregion
     #region DisableParallel
     /// <inheritdoc cref="DotNetPublishSettings.DisableParallel"/>
     [Pure] [Builder(Type = typeof(DotNetPublishSettings), Property = nameof(DotNetPublishSettings.DisableParallel))]
@@ -6950,6 +7108,275 @@ public static partial class DotNetNuGetPushSettingsExtensions
     /// <inheritdoc cref="DotNetNuGetPushSettings.NoServiceEndpoint"/>
     [Pure] [Builder(Type = typeof(DotNetNuGetPushSettings), Property = nameof(DotNetNuGetPushSettings.NoServiceEndpoint))]
     public static T ToggleNoServiceEndpoint<T>(this T o) where T : DotNetNuGetPushSettings => o.Modify(b => b.Set(() => o.NoServiceEndpoint, !o.NoServiceEndpoint));
+    #endregion
+}
+#endregion
+#region DotNetNuGetDeleteSettingsExtensions
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetDelete(Nuke.Common.Tools.DotNet.DotNetNuGetDeleteSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetNuGetDeleteSettingsExtensions
+{
+    #region PackageId
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.PackageId"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.PackageId))]
+    public static T SetPackageId<T>(this T o, string v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.PackageId, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.PackageId"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.PackageId))]
+    public static T ResetPackageId<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.PackageId));
+    #endregion
+    #region PackageVersion
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.PackageVersion"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.PackageVersion))]
+    public static T SetPackageVersion<T>(this T o, string v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.PackageVersion, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.PackageVersion"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.PackageVersion))]
+    public static T ResetPackageVersion<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.PackageVersion));
+    #endregion
+    #region Source
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Source))]
+    public static T SetSource<T>(this T o, string v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.Source, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Source"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Source))]
+    public static T ResetSource<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.Source));
+    #endregion
+    #region ApiKey
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ApiKey"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ApiKey))]
+    public static T SetApiKey<T>(this T o, [Secret] string v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.ApiKey, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ApiKey"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ApiKey))]
+    public static T ResetApiKey<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.ApiKey));
+    #endregion
+    #region ForceEnglishOutput
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ForceEnglishOutput))]
+    public static T SetForceEnglishOutput<T>(this T o, bool? v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ForceEnglishOutput))]
+    public static T ResetForceEnglishOutput<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.ForceEnglishOutput));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ForceEnglishOutput))]
+    public static T EnableForceEnglishOutput<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, true));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ForceEnglishOutput))]
+    public static T DisableForceEnglishOutput<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, false));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.ForceEnglishOutput"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.ForceEnglishOutput))]
+    public static T ToggleForceEnglishOutput<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.ForceEnglishOutput, !o.ForceEnglishOutput));
+    #endregion
+    #region NoServiceEndpoint
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NoServiceEndpoint))]
+    public static T SetNoServiceEndpoint<T>(this T o, bool? v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoServiceEndpoint, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NoServiceEndpoint))]
+    public static T ResetNoServiceEndpoint<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.NoServiceEndpoint));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NoServiceEndpoint))]
+    public static T EnableNoServiceEndpoint<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoServiceEndpoint, true));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NoServiceEndpoint))]
+    public static T DisableNoServiceEndpoint<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoServiceEndpoint, false));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NoServiceEndpoint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NoServiceEndpoint))]
+    public static T ToggleNoServiceEndpoint<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NoServiceEndpoint, !o.NoServiceEndpoint));
+    #endregion
+    #region Interactive
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Interactive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Interactive))]
+    public static T SetInteractive<T>(this T o, bool? v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.Interactive, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Interactive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Interactive))]
+    public static T ResetInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.Interactive));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Interactive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Interactive))]
+    public static T EnableInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.Interactive, true));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Interactive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Interactive))]
+    public static T DisableInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.Interactive, false));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.Interactive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.Interactive))]
+    public static T ToggleInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.Interactive, !o.Interactive));
+    #endregion
+    #region NonInteractive
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NonInteractive))]
+    public static T SetNonInteractive<T>(this T o, bool? v) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, v));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NonInteractive))]
+    public static T ResetNonInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Remove(() => o.NonInteractive));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NonInteractive))]
+    public static T EnableNonInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, true));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NonInteractive))]
+    public static T DisableNonInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, false));
+    /// <inheritdoc cref="DotNetNuGetDeleteSettings.NonInteractive"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetDeleteSettings), Property = nameof(DotNetNuGetDeleteSettings.NonInteractive))]
+    public static T ToggleNonInteractive<T>(this T o) where T : DotNetNuGetDeleteSettings => o.Modify(b => b.Set(() => o.NonInteractive, !o.NonInteractive));
+    #endregion
+}
+#endregion
+#region DotNetNuGetSignSettingsExtensions
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetSign(Nuke.Common.Tools.DotNet.DotNetNuGetSignSettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetNuGetSignSettingsExtensions
+{
+    #region TargetPath
+    /// <inheritdoc cref="DotNetNuGetSignSettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.TargetPath))]
+    public static T SetTargetPath<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.TargetPath, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.TargetPath))]
+    public static T ResetTargetPath<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.TargetPath));
+    #endregion
+    #region CertificatePath
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificatePath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificatePath))]
+    public static T SetCertificatePath<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificatePath, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificatePath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificatePath))]
+    public static T ResetCertificatePath<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificatePath));
+    #endregion
+    #region CertificateStoreName
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateStoreName"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateStoreName))]
+    public static T SetCertificateStoreName<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateStoreName, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateStoreName"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateStoreName))]
+    public static T ResetCertificateStoreName<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateStoreName));
+    #endregion
+    #region CertificateStoreLocation
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateStoreLocation"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateStoreLocation))]
+    public static T SetCertificateStoreLocation<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateStoreLocation, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateStoreLocation"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateStoreLocation))]
+    public static T ResetCertificateStoreLocation<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateStoreLocation));
+    #endregion
+    #region CertificateSubjectName
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateSubjectName"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateSubjectName))]
+    public static T SetCertificateSubjectName<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateSubjectName, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateSubjectName"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateSubjectName))]
+    public static T ResetCertificateSubjectName<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateSubjectName));
+    #endregion
+    #region CertificateFingerprint
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateFingerprint))]
+    public static T SetCertificateFingerprint<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificateFingerprint, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificateFingerprint))]
+    public static T ResetCertificateFingerprint<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificateFingerprint));
+    #endregion
+    #region CertificatePassword
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificatePassword"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificatePassword))]
+    public static T SetCertificatePassword<T>(this T o, [Secret] string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.CertificatePassword, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.CertificatePassword"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.CertificatePassword))]
+    public static T ResetCertificatePassword<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.CertificatePassword));
+    #endregion
+    #region HashAlgorithm
+    /// <inheritdoc cref="DotNetNuGetSignSettings.HashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.HashAlgorithm))]
+    public static T SetHashAlgorithm<T>(this T o, DotNetNuGetSignHashAlgorithm v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.HashAlgorithm, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.HashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.HashAlgorithm))]
+    public static T ResetHashAlgorithm<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.HashAlgorithm));
+    #endregion
+    #region Output
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Output"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Output))]
+    public static T SetOutput<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Output, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Output"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Output))]
+    public static T ResetOutput<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.Output));
+    #endregion
+    #region Overwrite
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Overwrite))]
+    public static T SetOverwrite<T>(this T o, bool? v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Overwrite))]
+    public static T ResetOverwrite<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.Overwrite));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Overwrite))]
+    public static T EnableOverwrite<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, true));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Overwrite))]
+    public static T DisableOverwrite<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, false));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Overwrite"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Overwrite))]
+    public static T ToggleOverwrite<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Overwrite, !o.Overwrite));
+    #endregion
+    #region TimestampHashAlgorithm
+    /// <inheritdoc cref="DotNetNuGetSignSettings.TimestampHashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.TimestampHashAlgorithm))]
+    public static T SetTimestampHashAlgorithm<T>(this T o, DotNetNuGetSignHashAlgorithm v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.TimestampHashAlgorithm, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.TimestampHashAlgorithm"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.TimestampHashAlgorithm))]
+    public static T ResetTimestampHashAlgorithm<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.TimestampHashAlgorithm));
+    #endregion
+    #region Timestamper
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Timestamper"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Timestamper))]
+    public static T SetTimestamper<T>(this T o, string v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Timestamper, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Timestamper"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Timestamper))]
+    public static T ResetTimestamper<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.Timestamper));
+    #endregion
+    #region Verbosity
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Verbosity))]
+    public static T SetVerbosity<T>(this T o, DotNetVerbosity v) where T : DotNetNuGetSignSettings => o.Modify(b => b.Set(() => o.Verbosity, v));
+    /// <inheritdoc cref="DotNetNuGetSignSettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetSignSettings), Property = nameof(DotNetNuGetSignSettings.Verbosity))]
+    public static T ResetVerbosity<T>(this T o) where T : DotNetNuGetSignSettings => o.Modify(b => b.Remove(() => o.Verbosity));
+    #endregion
+}
+#endregion
+#region DotNetNuGetVerifySettingsExtensions
+/// <inheritdoc cref="DotNetTasks.DotNetNuGetVerify(Nuke.Common.Tools.DotNet.DotNetNuGetVerifySettings)"/>
+[PublicAPI]
+[ExcludeFromCodeCoverage]
+public static partial class DotNetNuGetVerifySettingsExtensions
+{
+    #region TargetPath
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.TargetPath))]
+    public static T SetTargetPath<T>(this T o, string v) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Set(() => o.TargetPath, v));
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.TargetPath"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.TargetPath))]
+    public static T ResetTargetPath<T>(this T o) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Remove(() => o.TargetPath));
+    #endregion
+    #region CertificateFingerprint
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.CertificateFingerprint))]
+    public static T SetCertificateFingerprint<T>(this T o, string v) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Set(() => o.CertificateFingerprint, v));
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.CertificateFingerprint"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.CertificateFingerprint))]
+    public static T ResetCertificateFingerprint<T>(this T o) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Remove(() => o.CertificateFingerprint));
+    #endregion
+    #region ConfigFile
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.ConfigFile"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.ConfigFile))]
+    public static T SetConfigFile<T>(this T o, string v) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Set(() => o.ConfigFile, v));
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.ConfigFile"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.ConfigFile))]
+    public static T ResetConfigFile<T>(this T o) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Remove(() => o.ConfigFile));
+    #endregion
+    #region Verbosity
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.Verbosity))]
+    public static T SetVerbosity<T>(this T o, DotNetVerbosity v) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Set(() => o.Verbosity, v));
+    /// <inheritdoc cref="DotNetNuGetVerifySettings.Verbosity"/>
+    [Pure] [Builder(Type = typeof(DotNetNuGetVerifySettings), Property = nameof(DotNetNuGetVerifySettings.Verbosity))]
+    public static T ResetVerbosity<T>(this T o) where T : DotNetNuGetVerifySettings => o.Modify(b => b.Remove(() => o.Verbosity));
     #endregion
 }
 #endregion
@@ -8251,6 +8678,23 @@ public partial class DotNetFormatSeverity : Enumeration
     public static implicit operator DotNetFormatSeverity(string value)
     {
         return new DotNetFormatSeverity { Value = value };
+    }
+}
+#endregion
+#region DotNetNuGetSignHashAlgorithm
+/// <summary>Used within <see cref="DotNetTasks"/>.</summary>
+[PublicAPI]
+[Serializable]
+[ExcludeFromCodeCoverage]
+[TypeConverter(typeof(TypeConverter<DotNetNuGetSignHashAlgorithm>))]
+public partial class DotNetNuGetSignHashAlgorithm : Enumeration
+{
+    public static DotNetNuGetSignHashAlgorithm sha256 = (DotNetNuGetSignHashAlgorithm) "sha256";
+    public static DotNetNuGetSignHashAlgorithm sha384 = (DotNetNuGetSignHashAlgorithm) "sha384";
+    public static DotNetNuGetSignHashAlgorithm sha512 = (DotNetNuGetSignHashAlgorithm) "sha512";
+    public static implicit operator DotNetNuGetSignHashAlgorithm(string value)
+    {
+        return new DotNetNuGetSignHashAlgorithm { Value = value };
     }
 }
 #endregion

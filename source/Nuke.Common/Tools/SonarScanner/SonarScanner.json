@@ -218,6 +218,7 @@
             "name": "PullRequestKey",
             "type": "string",
             "format": "/d:sonar.pullrequest.key={value}",
+            "secret": false,
             "help": "Unique identifier of your Pull Request. Must correspond to the key of the Pull Request in your ALM. e.g.: <c>sonar.pullrequest.key=5</c>"
           },
           {
@@ -296,6 +297,7 @@
             "name": "ClientCertificatePassword",
             "type": "string",
             "format": "/d:sonar.clientcert.password={value}",
+            "secret": true,
             "help": "Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used."
           }
         ]
@@ -331,6 +333,7 @@
             "name": "ClientCertificatePassword",
             "type": "string",
             "format": "/d:sonar.clientcert.password={value}",
+            "secret": true,
             "help": "Specifies the password for the client certificate used to access SonarQube. Required if a client certificate is used."
           }
         ]
