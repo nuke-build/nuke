@@ -73,7 +73,8 @@ partial class ToolTasks
             timeout,
             logOutput,
             logInvocation,
-            logger ?? GetLogger());
+            logger ?? GetLogger(),
+            arguments.GetFilter());
 
         process.AssertWaitForExit();
         GetExitHandlerInternal(exitHandler: exitHandler).Invoke(null, process);
