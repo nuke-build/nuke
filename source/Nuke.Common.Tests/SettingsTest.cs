@@ -144,7 +144,7 @@ public class SettingsTest
                 .SetDetachKeys("detach-keys")
                 .SetContainer("container")
                 .SetLogLevel(DockerLogLevel.debug),
-            "attach --detach-keys detach-keys container --log-level debug");
+            "attach --detach-keys detach-keys --log-level debug container");
     }
 
     [Fact]
