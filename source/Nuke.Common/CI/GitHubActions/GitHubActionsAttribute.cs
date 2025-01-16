@@ -86,6 +86,8 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
     public string JobConcurrencyGroup { get; set; }
     public bool JobConcurrencyCancelInProgress { get; set; }
 
+    public string[] SetupDotNetVersions { get; set; } = new string[0];
+
     public string[] InvokedTargets { get; set; } = new string[0];
 
     public GitHubActionsSubmodules Submodules
@@ -178,6 +180,14 @@ public class GitHubActionsAttribute : ConfigurationAttributeBase
                              IncludePatterns = CacheIncludePatterns,
                              ExcludePatterns = CacheExcludePatterns,
                              KeyFiles = CacheKeyFiles
+                         };
+        }
+
+        if (SetupDotNetVersions.Any())
+        {
+            yield return new GitHubActionsSetupDotNetStep
+                         {
+                             Versions = SetupDotNetVersions,
                          };
         }
 

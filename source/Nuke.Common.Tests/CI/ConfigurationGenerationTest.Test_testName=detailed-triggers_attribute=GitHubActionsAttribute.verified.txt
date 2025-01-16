@@ -74,6 +74,11 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0
+            9.0
       - name: 'Run: Test'
         run: ./build.cmd Test
         env:
@@ -122,6 +127,11 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0
+            9.0
       - name: 'Run: Test'
         run: ./build.cmd Test
         env:
@@ -170,6 +180,11 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0
+            9.0
       - name: 'Run: Test'
         run: ./build.cmd Test
         env:
