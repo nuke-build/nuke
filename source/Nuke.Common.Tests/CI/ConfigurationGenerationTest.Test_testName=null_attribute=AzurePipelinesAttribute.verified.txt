@@ -131,6 +131,9 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj, **/Directory.Packages.props
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(HOME)/.nuget/packages
+          - task: DownloadSecureFile@1
+            inputs:
+              secureFile: 'securefile.zip'
           - task: CmdLine@2
             displayName: 'Run: Test'
             inputs:
@@ -271,6 +274,9 @@ stages:
               key: $(Agent.OS) | nuget-packages | **/global.json, **/*.csproj, **/Directory.Packages.props
               restoreKeys: $(Agent.OS) | nuget-packages
               path: $(USERPROFILE)/.nuget/packages
+          - task: DownloadSecureFile@1
+            inputs:
+              secureFile: 'securefile.zip'
           - task: CmdLine@2
             displayName: 'Run: Test'
             inputs:
