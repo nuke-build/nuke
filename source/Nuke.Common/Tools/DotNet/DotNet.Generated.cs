@@ -1,4 +1,4 @@
-// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/DotNet/DotNet.json
+﻿// Generated from https://github.com/nuke-build/nuke/blob/master/source/Nuke.Common/Tools/DotNet/DotNet.json
 
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -418,6 +418,8 @@ public partial class DotNetPackSettings : ToolOptions
     [Argument(Format = "--version-suffix {value}")] public string VersionSuffix => Get<string>(() => VersionSuffix);
     /// <summary>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</summary>
     [Argument(Format = "--nologo")] public bool? NoLogo => Get<bool?>(() => NoLogo);
+    /// <summary>Generate MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.</summary>
+    [Argument(Format = "-bl:{value}")] public string BinaryLog => Get<string>(() => BinaryLog);
     /// <summary>All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href="https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output">Artifacts Output Layout</a>. Available since .NET 8 SDK.</summary>
     [Argument(Format = "--artifacts-path {value}")] public string ArtifactsPath => Get<string>(() => ArtifactsPath);
     /// <summary>Disables restoring multiple projects in parallel.</summary>
@@ -481,7 +483,7 @@ public partial class DotNetBuildSettings : ToolOptions
     [Argument(Format = "/noconsolelogger")] public bool? NoConsoleLogger => Get<bool?>(() => NoConsoleLogger);
     /// <summary>Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK.</summary>
     [Argument(Format = "--nologo")] public bool? NoLogo => Get<bool?>(() => NoLogo);
-    /// <summary>Generare MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.</summary>
+    /// <summary>Generate MSBuild <a href="https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md">binary log</a>.</summary>
     [Argument(Format = "-bl:{value}")] public string BinaryLog => Get<string>(() => BinaryLog);
     /// <summary>All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href="https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output">Artifacts Output Layout</a>. Available since .NET 8 SDK.</summary>
     [Argument(Format = "--artifacts-path {value}")] public string ArtifactsPath => Get<string>(() => ArtifactsPath);
@@ -3145,6 +3147,16 @@ public static partial class DotNetPackSettingsExtensions
     /// <inheritdoc cref="DotNetPackSettings.NoLogo"/>
     [Pure] [Builder(Type = typeof(DotNetPackSettings), Property = nameof(DotNetPackSettings.NoLogo))]
     public static T ToggleNoLogo<T>(this T o) where T : DotNetPackSettings => o.Modify(b => b.Set(() => o.NoLogo, !o.NoLogo));
+    #endregion
+    #region BinaryLog
+    /// <inheritdoc cref="DotNetPackSettings.BinaryLog"/>
+    [Pure]
+    [Builder(Type = typeof(DotNetPackSettings), Property = nameof(DotNetPackSettings.BinaryLog))]
+    public static T SetBinaryLog<T>(this T o, string v) where T : DotNetPackSettings => o.Modify(b => b.Set(() => o.BinaryLog, v));
+    /// <inheritdoc cref="DotNetPackSettings.BinaryLog"/>
+    [Pure]
+    [Builder(Type = typeof(DotNetPackSettings), Property = nameof(DotNetPackSettings.BinaryLog))]
+    public static T ResetBinaryLog<T>(this T o) where T : DotNetPackSettings => o.Modify(b => b.Remove(() => o.BinaryLog));
     #endregion
     #region ArtifactsPath
     /// <inheritdoc cref="DotNetPackSettings.ArtifactsPath"/>
