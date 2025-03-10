@@ -15,7 +15,7 @@ readonly string MyParameter;
 You can set default values for parameters as you would normally do through field and property initializers. You can also use static [build base properties](04-builds.md#base-properties) like `IsLocalBuild` or `IsServerBuild` for environmental adjustments:
 
 ```csharp
-[Parameters]
+[Parameter]
 readonly Configuration Configuration = IsServerBuild
     ? Configuration.Release
     : Configuration.Debug;
