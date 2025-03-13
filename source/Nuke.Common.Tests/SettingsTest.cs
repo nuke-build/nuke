@@ -127,6 +127,28 @@ public class SettingsTest
     }
 
     [Fact]
+    public void TestDotNet_Delegate()
+    {
+        Assert(new DotNetBuildSettings()
+                .SetNoWarns(1337),
+            "build --property:NoWarn=1337");
+
+        Assert(new DotNetBuildSettings()
+                .SetNoWarns(1337, 555)
+                .RemoveNoWarns(555),
+            "build --property:NoWarn=1337");
+
+        Assert(new DotNetBuildSettings()
+                .AddNoWarns(1337),
+            "build --property:NoWarn=1337");
+
+        Assert(new DotNetBuildSettings()
+                .AddNoWarns(1337)
+                .SetNoWarns(555),
+            "build --property:NoWarn=555");
+    }
+
+    [Fact]
     public void TestDotNet_Empty()
     {
         Assert(new DotNetBuildSettings()
