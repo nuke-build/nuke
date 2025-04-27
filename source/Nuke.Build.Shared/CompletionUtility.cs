@@ -84,7 +84,7 @@ public static class CompletionUtility
         completionItems = new Dictionary<string, string[]>(completionItems.ToDictionary(x => x.Key, x => x.Value), StringComparer.OrdinalIgnoreCase).AsReadOnly();
         var suggestedItems = new List<string>();
 
-        var parts = words.Split(separator: ' ');
+        ICollection<string> parts = words.Split(separator: ' ');
         var currentWord = parts.Last() != string.Empty ? parts.Last() : null;
         var parameters = parts.Where(ArgumentParser.IsArgument).Select(ArgumentParser.GetArgumentMemberName).ToList();
         var lastParameter = parameters.LastOrDefault();
