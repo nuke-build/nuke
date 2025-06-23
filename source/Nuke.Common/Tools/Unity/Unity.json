@@ -200,58 +200,56 @@
       }
     }
   ],
-  "commonTaskProperties": [
-    {
-      "name": "Username",
-      "type": "string",
-      "format": "-username {value}",
-      "help": "Enter a username into the log-in form during activation of the Unity Editor."
-    },
-    {
-      "name": "Password",
-      "type": "string",
-      "format": "-password {value}",
-      "secret": true,
-      "help": "Enter a password into the log-in form during activation of the Unity Editor."
-    },
-    {
-      "name": "Serial",
-      "type": "string",
-      "format": "-serial {value}",
-      "secret": true,
-      "help": "Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href=\"https://docs.unity3d.com/Manual/LogFiles.html\">Editor.log</a> for info."
-    },
-    {
-      "name": "BatchMode",
-      "type": "bool",
-      "format": "-batchmode",
-      "help": "Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href=\"https://docs.unity3d.com/Manual/LogFiles.html\">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time."
-    },
-    {
-      "name": "SilentCrashes",
-      "type": "bool",
-      "format": "-silent-crashes",
-      "help": "Don't display a crash dialog."
-    },
-    {
-      "name": "NoGraphics",
-      "type": "bool",
-      "format": "-nographics",
-      "help": "When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration."
-    },
-    {
-      "name": "Quit",
-      "type": "bool",
-      "format": "-quit",
-      "help": "Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file)."
-    }
-  ],
   "dataClasses": [
     {
       "name": "UnityOptionsBase",
       "baseClass": "ToolOptions",
       "extensionMethods": true,
       "properties": [
+        {
+          "name": "Username",
+          "type": "string",
+          "format": "-username {value}",
+          "help": "Enter a username into the log-in form during activation of the Unity Editor."
+        },
+        {
+          "name": "Password",
+          "type": "string",
+          "format": "-password {value}",
+          "secret": true,
+          "help": "Enter a password into the log-in form during activation of the Unity Editor."
+        },
+        {
+          "name": "Serial",
+          "type": "string",
+          "format": "-serial {value}",
+          "secret": true,
+          "help": "Activate Unity with the specified serial key. It is good practice to pass the <c>-batchmode</c> and <c>-quit</c> arguments as well, in order to quit Unity when done, if using this for automated activation of Unity. Please allow a few seconds before the license file is created, because Unity needs to communicate with the license server. Make sure that license file folder exists, and has appropriate permissions before running Unity with this argument. If activation fails, see the <a href=\"https://docs.unity3d.com/Manual/LogFiles.html\">Editor.log</a> for info."
+        },
+        {
+          "name": "BatchMode",
+          "type": "bool",
+          "format": "-batchmode",
+          "help": "Run Unity in batch mode. This should always be used in conjunction with the other command line arguments, because it ensures no pop-up windows appear and eliminates the need for any human intervention. When an exception occurs during execution of the script code, the Asset server updates fail, or other operations that fail, Unity immediately exits with return code <b>1</b>.<para/>Note that in batch mode, Unity sends a minimal version of its log output to the console. However, the <a href=\"https://docs.unity3d.com/Manual/LogFiles.html\">Log Files</a> still contain the full log information. Opening a project in batch mode while the Editor has the same project open is not supported; only a single instance of Unity can run at a time."
+        },
+        {
+          "name": "SilentCrashes",
+          "type": "bool",
+          "format": "-silent-crashes",
+          "help": "Don't display a crash dialog."
+        },
+        {
+          "name": "NoGraphics",
+          "type": "bool",
+          "format": "-nographics",
+          "help": "When running in batch mode, do not initialize the graphics device at all. This makes it possible to run your automated workflows on machines that don't even have a GPU (automated workflows only work when you have a window in focus, otherwise you can't send simulated input commands). Please note that <c>-nographics</c> does not allow you to bake GI on OSX, since Enlighten requires GPU acceleration."
+        },
+        {
+          "name": "Quit",
+          "type": "bool",
+          "format": "-quit",
+          "help": "Quit the Unity Editor after other commands have finished executing. Note that this can cause error messages to be hidden (however, they still appear in the Editor.log file)."
+        },
         {
           "name": "LogFile",
           "type": "string",
