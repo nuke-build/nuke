@@ -32,6 +32,7 @@
             "name": "AccessToken",
             "type": "string",
             "format": "/AccessToken:{value}",
+            "secret": true,
             "help": "Specifies the token-based authentication access token to use when connect to the target database."
           },
           {
@@ -44,6 +45,7 @@
             "name": "AzureKeyVaultAuthMethod",
             "type": "AzureKeyVaultAuthMethod",
             "format": "/AzureKeyVaultAuthMethod:{value}",
+            "secret": false,
             "help": "Specifies what authentication method is used for accessing Azure KeyVault if a publish operation includes modifications to an encrypted table/column."
           },
           {
@@ -153,27 +155,27 @@
               {
                 "name": "AzureSharedAccessSignatureToken",
                 "type": "string",
-              "help": "Azure shared access signature (SAS) token. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
+                "help": "Azure shared access signature (SAS) token. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageBlobEndpoint",
                 "type": "string",
-              "help": "Azure Blob Storage endpoint, see <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
+                "help": "Azure Blob Storage endpoint, see <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageContainer",
                 "type": "string",
-              "help": "Azure Blob Storage container, see <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
+                "help": "Azure Blob Storage container, see <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageKey",
                 "type": "string",
-              "help": "Azure storage account key, see <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
+                "help": "Azure storage account key, see <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageRootPath",
                 "type": "string",
-              "help": "Storage root path within the container. Without this property, the path defaults to <c>servername/databasename/timestamp/</c>. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
+                "help": "Storage root path within the container. Without this property, the path defaults to <c>servername/databasename/timestamp/</c>. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "BackupDatabaseBeforeChanges",
@@ -267,14 +269,14 @@
               },
               {
                 "name": "DoNotDropObjectType",
-                "type": "string",
-                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers. This property may be specified multiple times to indicate multiple options."
+                "type": "ObjectTypeName",
+                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. This property may be specified multiple times to indicate multiple options."
               },
               {
                 "name": "DoNotDropObjectTypes",
-                "type": "List<string>",
+                "type": "List<ObjectTypeName>",
                 "separator": ";",
-                "help": "A semicolon-delimited list of object types that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers."
+                "help": "A semicolon-delimited list of object types that should not be dropped when DropObjectsNotInSource is true."
               },
               {
                 "name": "DropConstraintsNotInSource",
@@ -328,14 +330,14 @@
               },
               {
                 "name": "ExcludeObjectType",
-                "type": "string",
-                "help": "An object type that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages. This property may be specified multiple times to indicate multiple options."
+                "type": "ObjectTypeName",
+                "help": "An object type that should be ignored during deployment. This property may be specified multiple times to indicate multiple options."
               },
               {
                 "name": "ExcludeObjectTypes",
-                "type": "List<string>",
+                "type": "List<ObjectTypeName>",
                 "separator": ";",
-                "help": "A semicolon-delimited list of object types that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
+                "help": "A semicolon-delimited list of object types that should be ignored during deployment."
               },
               {
                 "name": "GenerateSmartDefaults",
@@ -712,6 +714,7 @@
             "name": "SourcePassword",
             "type": "string",
             "format": "/SourcePassword:{value}",
+            "secret": true,
             "help": "For SQL Server Auth scenarios, defines the password to use to access the source database."
           },
           {
@@ -766,6 +769,7 @@
             "name": "TargetPassword",
             "type": "string",
             "format": "/TargetPassword:{value}",
+            "secret": true,
             "help": "For SQL Server Auth scenarios, defines the password to use to access the target database."
           },
           {
@@ -808,7 +812,7 @@
             "name": "UniversalAuthentication",
             "type": "bool",
             "format": "/UniversalAuthentication:{value}",
-"help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
           },
           {
             "name": "Variables",
@@ -831,6 +835,7 @@
             "name": "AccessToken",
             "type": "string",
             "format": "/AccessToken:{value}",
+            "secret": true,
             "help": "Specifies the token based authentication access token to use when connect to the target database."
           },
           {
@@ -947,7 +952,7 @@
               {
                 "name": "DatabaseEdition",
                 "type": "DatabaseEdition",
-              "help": "Defines the edition of an Azure SQL Database. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-publish.md#databaseedition\">Azure SQL Database service tiers</a>."
+                "help": "Defines the edition of an Azure SQL Database. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-publish.md#databaseedition\">Azure SQL Database service tiers</a>."
               },
               {
                 "name": "DatabaseLockTimeout",
@@ -986,14 +991,14 @@
               },
               {
                 "name": "DoNotDropObjectType",
-                "type": "string",
-                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers. This property may be specified multiple times to indicate multiple options."
+                "type": "ObjectTypeName",
+                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. This property may be specified multiple times to indicate multiple options."
               },
               {
                 "name": "DoNotDropObjectTypes",
-                "type": "List<string>",
+                "type": "List<ObjectTypeName>",
                 "separator": ";",
-                "help": "A semicolon-delimited list of object types that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers."
+                "help": "A semicolon-delimited list of object types that should not be dropped when DropObjectsNotInSource is true."
               },
               {
                 "name": "DropConstraintsNotInSource",
@@ -1037,14 +1042,14 @@
               },
               {
                 "name": "ExcludeObjectType",
-                "type": "string",
-                "help": "An object type that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers."
+                "type": "ObjectTypeName",
+                "help": "An object type that should be ignored during deployment."
               },
               {
                 "name": "ExcludeObjectTypes",
-                "type": "List<string>",
+                "type": "List<ObjectTypeName>",
                 "separator": ";",
-                "help": "A semicolon-delimited list of object types that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers."
+                "help": "A semicolon-delimited list of object types that should be ignored during deployment."
               },
               {
                 "name": "GenerateSmartDefaults",
@@ -1378,6 +1383,7 @@
             "name": "SourcePassword",
             "type": "string",
             "format": "/SourcePassword:{value}",
+            "secret": true,
             "help": "For SQL Server Auth scenarios, defines the password to use to access the source database."
           },
           {
@@ -1438,6 +1444,7 @@
             "name": "TargetPassword",
             "type": "string",
             "format": "/TargetPassword:{value}",
+            "secret": true,
             "help": "For SQL Server Auth scenarios, defines the password to use to access the target database."
           },
           {
@@ -1474,7 +1481,7 @@
             "name": "UniversalAuthentication",
             "type": "bool",
             "format": "/UniversalAuthentication:{value}",
-"help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
           },
           {
             "name": "Variables",
@@ -1497,6 +1504,7 @@
             "name": "AccessToken",
             "type": "string",
             "format": "/AccessToken:{value}",
+            "secret": true,
             "help": "Specifies the token based authentication access token to use when connect to the target database."
           },
           {
@@ -1563,6 +1571,7 @@
             "name": "TargetPassword",
             "type": "string",
             "format": "/TargetPassword:{value}",
+            "secret": true,
             "help": "For SQL Server Auth scenarios, defines the password to use to access the target database."
           },
           {
@@ -1615,6 +1624,7 @@
             "name": "AccessToken",
             "type": "string",
             "format": "/AccessToken:{value}",
+            "secret": true,
             "help": "Specifies the token based authentication access token to use when connect to the target database."
           },
           {
@@ -1804,14 +1814,14 @@
               },
               {
                 "name": "DoNotDropObjectType",
-                "type": "string",
-                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages. This property may be specified multiple times to indicate multiple options."
+                "type": "ObjectTypeName",
+                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. This property may be specified multiple times to indicate multiple options."
               },
               {
                 "name": "DoNotDropObjectTypes",
-                "type": "List<string>",
+                "type": "List<ObjectTypeName>",
                 "separator": ";",
-                "help": "A semicolon-delimited list of object types that should not be dropped whenDropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
+                "help": "A semicolon-delimited list of object types that should not be dropped whenDropObjectsNotInSource is true."
               },
               {
                 "name": "DoNotDropWorkloadClassifiers",
@@ -1875,14 +1885,14 @@
               },
               {
                 "name": "ExcludeObjectType",
-                "type": "string",
-                "help": "An object type that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
+                "type": "ObjectTypeName",
+                "help": "An object type that should be ignored during deployment."
               },
               {
                 "name": "ExcludeObjectTypes",
-                "type": "List<string>",
+                "type": "List<ObjectTypeName>",
                 "separator": ";",
-                "help": "A semicolon-delimited list of object types that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
+                "help": "A semicolon-delimited list of object types that should be ignored during deployment."
               },
               {
                 "name": "GenerateSmartDefaults",
@@ -2258,6 +2268,7 @@
             "name": "SourcePassword",
             "type": "string",
             "format": "/SourcePassword:{value}",
+            "secret": true,
             "help": "For SQL Server Auth scenarios, defines the password to use to access the source database."
           },
           {
@@ -2318,6 +2329,7 @@
             "name": "TargetPassword",
             "type": "string",
             "format": "/TargetPassword:{value}",
+            "secret": true,
             "help": "For SQL Server Auth scenarios, defines the password to use to access the target database."
           },
           {
@@ -2383,6 +2395,7 @@
             "name": "AccessToken",
             "type": "string",
             "format": "/AccessToken:{value}",
+            "secret": true,
             "help": "Specifies the token-based authentication access token to use when connect to the target database."
           },
           {
@@ -2542,6 +2555,7 @@
             "name": "TargetPassword",
             "type": "string",
             "format": "/TargetPassword:{value}",
+            "secret": true,
             "help": "For SQL Server Auth scenarios, defines the password to use to access the target database."
           },
           {
@@ -2600,6 +2614,7 @@
             "name": "AccessToken",
             "type": "string",
             "format": "/AccessToken:{value}",
+            "secret": true,
             "help": "Specifies the token-based authentication access token to use when connect to the target database."
           },
           {
@@ -2735,6 +2750,7 @@
             "name": "SourcePassword",
             "type": "string",
             "format": "/SourcePassword:{value}",
+            "secret": true,
             "help": "For SQL Server Auth scenarios, defines the password to use to access the source database."
           },
           {
@@ -2799,6 +2815,7 @@
             "name": "AccessToken",
             "type": "string",
             "format": "/AccessToken:{value}",
+            "secret": true,
             "help": "Specifies the token based authentication access token to use when connect to the target database."
           },
           {
@@ -2999,6 +3016,7 @@
             "name": "SourcePassword",
             "type": "string",
             "format": "/SourcePassword:{value}",
+            "secret": true,
             "help": "For SQL Server Auth scenarios, defines the password to use to access the source database."
           },
           {
@@ -3119,6 +3137,84 @@
         "ObjectType",
         "Schema",
         "SchemaObjectType"
+      ]
+    },
+    {
+      "name": "ObjectTypeName",
+      "values": [
+        "Aggregates",
+        "ApplicationRoles",
+        "Assemblies",
+        "AssemblyFiles",
+        "AsymmetricKeys",
+        "BrokerPriorities",
+        "Certificates",
+        "ColumnEncryptionKeys",
+        "ColumnMasterKeys",
+        "Contracts",
+        "DatabaseOptions",
+        "DatabaseRoles",
+        "DatabaseTriggers",
+        "Defaults",
+        "ExtendedProperties",
+        "ExternalDataSources",
+        "ExternalFileFormats",
+        "ExternalTables",
+        "Filegroups",
+        "Files",
+        "FileTables",
+        "FullTextCatalogs",
+        "FullTextStoplists",
+        "MessageTypes",
+        "PartitionFunctions",
+        "PartitionSchemes",
+        "Permissions",
+        "Queues",
+        "RemoteServiceBindings",
+        "RoleMembership",
+        "Rules",
+        "ScalarValuedFunctions",
+        "SearchPropertyLists",
+        "SecurityPolicies",
+        "Sequences",
+        "Services",
+        "Signatures",
+        "StoredProcedures",
+        "SymmetricKeys",
+        "Synonyms",
+        "Tables",
+        "TableValuedFunctions",
+        "UserDefinedDataTypes",
+        "UserDefinedTableTypes",
+        "ClrUserDefinedTypes",
+        "Users",
+        "Views",
+        "XmlSchemaCollections",
+        "Audits",
+        "Credentials",
+        "CryptographicProviders",
+        "DatabaseAuditSpecifications",
+        "DatabaseEncryptionKeys",
+        "DatabaseScopedCredentials",
+        "Endpoints",
+        "ErrorMessages",
+        "EventNotifications",
+        "EventSessions",
+        "LinkedServerLogins",
+        "LinkedServers",
+        "Logins",
+        "MasterKeys",
+        "Routes",
+        "ServerAuditSpecifications",
+        "ServerRoleMembership",
+        "ServerRoles",
+        "ServerTriggers",
+        "ExternalStreams",
+        "ExternalStreamingJobs",
+        "DatabaseWorkloadGroups",
+        "WorkloadClassifiers",
+        "ExternalLibraries",
+        "ExternalLanguages"
       ]
     }
   ]
