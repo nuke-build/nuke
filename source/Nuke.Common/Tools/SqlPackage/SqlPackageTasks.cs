@@ -6,7 +6,7 @@ public partial class SqlPackageTasks
 {
     internal static string GetToolPath()
     {
-         return NuGetToolPathResolver.GetPackageExecutable(packageId: "Microsoft.SqlPackage", packageExecutable: "sqlpackage.dll|sqlpackage.exe");
+        return NuGetToolPathResolver.GetPackageExecutable(packageId: "Microsoft.SqlPackage", packageExecutable: "sqlpackage.dll|sqlpackage.exe");
     }
 }
 
