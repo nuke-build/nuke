@@ -173,7 +173,7 @@
               {
                 "name": "AzureStorageRootPath",
                 "type": "string",
-              "help": "Storage root path within the container. Without this property, the path defaults to `servername/databasename/timestamp/`. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
+              "help": "Storage root path within the container. Without this property, the path defaults to <c>servername/databasename/timestamp/</c>. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "BackupDatabaseBeforeChanges",
@@ -183,7 +183,7 @@
               {
                 "name": "BlockOnPossibleDataLoss",
                 "type": "bool",
-                "help": "Specifies that the operation will be terminated during the schema validation step if the resulting schema changes could incur a loss of data, including due to data precision reduction or a data type change that requires a cast operation. The default (`True`) value causes the operation to terminate regardless if the target database contains data.  An execution with a `False` value for BlockOnPossibleDataLoss can still fail during deployment plan execution if data is present on the target that cannot be converted to the new column type."
+                "help": "Specifies that the operation will be terminated during the schema validation step if the resulting schema changes could incur a loss of data, including due to data precision reduction or a data type change that requires a cast operation. The default (<c>True</c>) value causes the operation to terminate regardless if the target database contains data.  An execution with a <c>False</c> value for BlockOnPossibleDataLoss can still fail during deployment plan execution if data is present on the target that cannot be converted to the new column type."
               },
               {
                 "name": "BlockWhenDriftDetected",
@@ -917,7 +917,7 @@
               {
                 "name": "BlockOnPossibleDataLoss",
                 "type": "bool",
-                "help": "Specifies that the operation will be terminated during the schema validation step if the resulting schema changes could incur a loss of data, including due to data precision reduction or a data type change that requires a cast operation. The default (`True`) value causes the operation to terminate regardless if the target database contains data.  An execution with a `False` value for BlockOnPossibleDataLoss can still fail during deployment plan execution if data is present on the target that cannot be converted to the new column type."
+                "help": "Specifies that the operation will be terminated during the schema validation step if the resulting schema changes could incur a loss of data, including due to data precision reduction or a data type change that requires a cast operation. The default (<c>True</c>) value causes the operation to terminate regardless if the target database contains data.  An execution with a <c>False</c> value for BlockOnPossibleDataLoss can still fail during deployment plan execution if data is present on the target that cannot be converted to the new column type."
               },
               {
                 "name": "BlockWhenDriftDetected",
@@ -1735,7 +1735,7 @@
               {
                 "name": "BlockOnPossibleDataLoss",
                 "type": "bool",
-                "help": "Specifies that the operation will be terminated during the schema validation step if the resulting schema changes could incur a loss of data, including due to data precision reduction or a data type change that requires a cast operation. The default (`True`) value causes the operation to terminate regardless if the target database contains data.  An execution with a `False` value for BlockOnPossibleDataLoss can still fail during deployment plan execution if data is present on the target that cannot be converted to the new column type."
+                "help": "Specifies that the operation will be terminated during the schema validation step if the resulting schema changes could incur a loss of data, including due to data precision reduction or a data type change that requires a cast operation. The default (<c>True</c>) value causes the operation to terminate regardless if the target database contains data.  An execution with a <c>False</c> value for BlockOnPossibleDataLoss can still fail during deployment plan execution if data is present on the target that cannot be converted to the new column type."
               },
               {
                 "name": "BlockWhenDriftDetected",
@@ -2856,7 +2856,7 @@
               {
                 "name": "AzureStorageRootPath",
                 "type": "string",
-                "help": "Storage root path within the container. Without this property, the path defaults to `servername/databasename/timestamp/`. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#extract-export-data\">SqlPackage for Azure Synapse Analytics</a>."
+                "help": "Storage root path within the container. Without this property, the path defaults to <c>servername/databasename/timestamp/</c>. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#extract-export-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "CommandTimeout",
@@ -2911,7 +2911,7 @@
               {
                 "name": "ExtractTarget",
                 "type": "ExtractTarget",
-                "help": "Specifies alternative output formats of the database schema, default is 'DacPac' to output a `.dacpac` single file. Additional options output one or more `.sql` files organized by either 'SchemaObjectType' (files in folders for each schema and object type), 'Schema' (files in folders for each schema), 'ObjectType' (files in folders for each object type), 'Flat' (all files in the same folder), or 'File' (1 single file)."
+                "help": "Specifies alternative output formats of the database schema, default is 'DacPac' to output a <c>.dacpac</c> single file. Additional options output one or more <c>.sql</c> files organized by either 'SchemaObjectType' (files in folders for each schema and object type), 'Schema' (files in folders for each schema), 'ObjectType' (files in folders for each object type), 'Flat' (all files in the same folder), or 'File' (1 single file)."
               },
               {
                 "name": "ExtractUsageProperties",
