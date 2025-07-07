@@ -5,9 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Nuke.Common.IO;
 using Nuke.Common.Tooling;
-using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.VSWhere;
 
@@ -17,13 +15,12 @@ partial class VSWhereTasks
     public const string MsBuildComponent = "Microsoft.Component.MSBuild";
     public const string NetCoreComponent = "Microsoft.Net.Core.Component.SDK";
 
-    private static List<VSWhereResult> GetResult(IProcess process, VSWhereSettings toolSettings)
+    protected override object GetResult<T>(ToolOptions options, IReadOnlyCollection<Output> output)
     {
-        // RESHARPER: unintentional reference comparison
-        if (!(toolSettings.UTF8 ?? false) || toolSettings.Format.Equals(VSWhereFormat.json) || toolSettings.Property != null)
+        if (options is not VSWhereSettings { UTF8: true, Property: null } vswhereOptions ||
+            !vswhereOptions.Format.Equals(VSWhereFormat.json))
             return null;
 
-        var output = process.Output.EnsureOnlyStd().Select(x => x.Text).JoinNewLine();
-        return output.GetJson<VSWhereResult[]>().ToList();
+        return output.EnsureOnlyStd().StdToJson<VSWhereResult[]>().ToList();
     }
 }

@@ -19,7 +19,8 @@
           {
             "name": "ConfigFile",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "ChangesFile",
@@ -166,6 +167,7 @@
             "name": "NoLangKeyword",
             "type": "bool",
             "format": "--noLangKeyword",
+            "secret": false,
             "help": "Disable default lang keyword."
           },
           {
@@ -270,7 +272,8 @@
           {
             "name": "DependencyFile",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "IntermediateFolder",
@@ -302,7 +305,8 @@
           {
             "name": "ArchiveFile",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "PrintHelpMessage",
@@ -328,7 +332,8 @@
           {
             "name": "Command",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           }
         ]
       }
@@ -396,7 +401,8 @@
           {
             "name": "ConfigFile",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "Content",
@@ -453,6 +459,7 @@
             "type": "List<string>",
             "format": "{value}",
             "separator": " ",
+            "position": 1,
             "help": "The projects for which the metadata should be built."
           },
           {
@@ -488,8 +495,7 @@
           {
             "name": "MSBuildProperties",
             "type": "Dictionary<string, string>",
-            "format": "--property={value}",
-            "itemFormat": "{key}={value}",
+            "format": "--property {key}={value}",
             "separator": ";",
             "help": "--property &lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; An optional set of MSBuild properties used when interpreting project files. These are the same properties that are passed to msbuild via the /property:&lt;n1&gt;=&lt;v1&gt;;&lt;n2&gt;=&lt;v2&gt; command line argument."
           },
@@ -614,7 +620,8 @@
           {
             "name": "Folder",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "Host",
@@ -648,6 +655,7 @@
             "type": "string",
             "format": "{value}",
             "separator": " ",
+            "position": 1,
             "help": "The command to execute."
           },
           {
@@ -709,7 +717,8 @@
       {
         "name": "ConfigFile",
         "type": "string",
-        "format": "{value}"
+        "format": "{value}",
+        "position": 1
       },
       {
         "name": "ChangesFile",
@@ -856,6 +865,7 @@
         "name": "NoLangKeyword",
         "type": "bool",
         "format": "--noLangKeyword",
+        "secret": false,
         "help": "Disable default lang keyword."
       },
       {

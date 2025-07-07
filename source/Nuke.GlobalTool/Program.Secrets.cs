@@ -30,7 +30,10 @@ partial class Program
     [UsedImplicitly]
     public static int Secrets(string[] args, [CanBeNull] AbsolutePath rootDirectory, [CanBeNull] AbsolutePath buildScript)
     {
-        var secretParameters = GetSecretParameters(rootDirectory.NotNull("No root directory")).ToList();
+        var secretParameters = CompletionUtility.GetItemsFromSchema(
+                GetBuildSchemaFile(rootDirectory.NotNull("No root directory")),
+                filter: x => x.Value.TryGetProperty("default", out _))
+            .Select(x => x.Key).ToList();
         if (secretParameters.Count == 0)
         {
             Host.Information($"There are no parameters marked with {nameof(SecretAttribute)}");
@@ -101,18 +104,5 @@ partial class Program
             foreach (var (name, secret) in secrets)
                 obj[name] = Encrypt(secret, password);
         });
-    }
-
-    private static IEnumerable<string> GetSecretParameters(AbsolutePath rootDirectory)
-    {
-        var buildSchemaFile = GetBuildSchemaFile(rootDirectory);
-        var jobject = buildSchemaFile.ReadJson();
-        return jobject
-            .GetPropertyValue("definitions")
-            .GetPropertyValue("build")
-            .GetPropertyValue("properties")
-            .Children<JProperty>()
-            .Where(x => x.Value.Value<JObject>().GetPropertyValueOrNull<string>("default") != null)
-            .Select(x => x.Name);
     }
 }

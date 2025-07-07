@@ -163,7 +163,7 @@ public partial class Host
     protected internal virtual void WriteBuildOutcome(INukeBuild build)
     {
         Debug();
-        if (build.IsSuccessful)
+        if (build.IsSucceeding)
             Success($"Build succeeded on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. ＼（＾ᴗ＾）／");
         else
             Error($"Build failed on {DateTime.Now.ToString(CultureInfo.CurrentCulture)}. (╯°□°）╯︵ ┻━┻");
@@ -180,10 +180,10 @@ public partial class Host
 
         public void Emit(LogEvent logEvent)
         {
-            if (logEvent.Level == LogEventLevel.Warning)
-                _host.ReportWarning(logEvent.RenderMessage());
-            else if (logEvent.Level == LogEventLevel.Error)
-                _host.ReportError(logEvent.RenderMessage());
+            if (logEvent.Level is LogEventLevel.Warning)
+                _host.ReportWarning(logEvent.RenderMessage(), logEvent.Exception?.ToString());
+            else if (logEvent.Level is LogEventLevel.Error or LogEventLevel.Fatal)
+                _host.ReportError(logEvent.RenderMessage(), logEvent.Exception?.ToString());
         }
     }
 }

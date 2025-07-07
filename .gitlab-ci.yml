@@ -1,4 +1,4 @@
-image: mcr.microsoft.com/dotnet/sdk:5.0
+image: mcr.microsoft.com/dotnet/sdk:8.0
 
 variables:
   GIT_DEPTH: 0

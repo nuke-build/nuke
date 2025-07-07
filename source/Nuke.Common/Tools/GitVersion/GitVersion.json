@@ -8,7 +8,8 @@
   "officialUrl": "http://gitversion.readthedocs.io/en/stable/",
   "help": "GitVersion is a tool to help you achieve Semantic Versioning on your project.",
   "nugetPackageId": "GitVersion.Tool",
-  "customExecutable": true,
+  "nugetFramework": true,
+  "packageExecutable": "GitVersion.dll|GitVersion.exe",
   "tasks": [
     {
       "returnType": "GitVersion",
@@ -18,6 +19,7 @@
             "name": "TargetPath",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The directory containing .git. If not defined current directory is used. (Must be first argument)."
           },
           {
@@ -59,8 +61,7 @@
           {
             "name": "ConfigurationOverride",
             "type": "Dictionary<string, object>",
-            "format": "/overrideconfig {value}",
-            "itemFormat": "{key}={value}",
+            "format": "/overrideconfig {key}={value}",
             "help": "Overrides GitVersion config values inline (semicolon-separated key value pairs e.g. <c>/overrideconfig tag-prefix=Foo</c>). Currently supported config overrides: <c>tag-prefix</c>."
           },
           {
@@ -160,153 +161,9 @@
             "type": "GitVersionVerbosity",
             "format": "/verbosity {value}",
             "help": "Set Verbosity level (<c>debug</c>, <c>info</c>, <c>warn</c>, <c>error</c>, <c>none</c>). Default is <c>info</c>."
-          },
-          {
-            "name": "Framework",
-            "type": "string",
-            "noArgument": true
           }
         ]
       }
-    }
-  ],
-  "dataClasses": [
-    {
-      "name": "GitVersion",
-      "properties": [
-        {
-          "name": "Major",
-          "type": "int!"
-        },
-        {
-          "name": "Minor",
-          "type": "int!"
-        },
-        {
-          "name": "Patch",
-          "type": "int!"
-        },
-        {
-          "name": "PreReleaseTag",
-          "type": "string"
-        },
-        {
-          "name": "PreReleaseTagWithDash",
-          "type": "string"
-        },
-        {
-          "name": "PreReleaseLabel",
-          "type": "string"
-        },
-        {
-          "name": "PreReleaseLabelWithDash",
-          "type": "string"
-        },
-        {
-          "name": "PreReleaseNumber",
-          "type": "string"
-        },
-        {
-          "name": "WeightedPreReleaseNumber",
-          "type": "string"
-        },
-        {
-          "name": "BuildMetaData",
-          "type": "string"
-        },
-        {
-          "name": "BuildMetaDataPadded",
-          "type": "string"
-        },
-        {
-          "name": "FullBuildMetaData",
-          "type": "string"
-        },
-        {
-          "name": "MajorMinorPatch",
-          "type": "string"
-        },
-        {
-          "name": "SemVer",
-          "type": "string"
-        },
-        {
-          "name": "LegacySemVer",
-          "type": "string"
-        },
-        {
-          "name": "LegacySemVerPadded",
-          "type": "string"
-        },
-        {
-          "name": "AssemblySemVer",
-          "type": "string"
-        },
-        {
-          "name": "AssemblySemFileVer",
-          "type": "string"
-        },
-        {
-          "name": "FullSemVer",
-          "type": "string"
-        },
-        {
-          "name": "InformationalVersion",
-          "type": "string"
-        },
-        {
-          "name": "BranchName",
-          "type": "string"
-        },
-        {
-          "name": "EscapedBranchName",
-          "type": "string"
-        },
-        {
-          "name": "Sha",
-          "type": "string"
-        },
-        {
-          "name": "ShortSha",
-          "type": "string"
-        },
-        {
-          "name": "NuGetVersionV2",
-          "type": "string"
-        },
-        {
-          "name": "NuGetVersion",
-          "type": "string"
-        },
-        {
-          "name": "NuGetPreReleaseTagV2",
-          "type": "string"
-        },
-        {
-          "name": "NuGetPreReleaseTag",
-          "type": "string"
-        },
-        {
-          "name": "VersionSourceSha",
-          "type": "string"
-        },
-        {
-          "name": "CommitsSinceVersionSource",
-          "type": "string"
-        },
-        {
-          "name": "CommitsSinceVersionSourcePadded",
-          "type": "string"
-        },
-        {
-          "name": "UncommittedChanges",
-          "type": "int"
-        },
-        {
-          "name": "CommitDate",
-          "type": "string"
-        }
-      ]
     }
   ],
   "enumerations": [

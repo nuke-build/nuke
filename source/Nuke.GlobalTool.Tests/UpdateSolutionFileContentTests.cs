@@ -11,7 +11,6 @@ using Xunit;
 
 namespace Nuke.GlobalTool.Tests;
 
-[UsesVerify]
 public class UpdateSolutionFileContentTests
 {
     [Theory]

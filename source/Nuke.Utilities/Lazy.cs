@@ -3,9 +3,15 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Diagnostics;
+using System.Linq;
+using JetBrains.Annotations;
 
 namespace Nuke.Common.Utilities;
 
+[PublicAPI]
+[DebuggerNonUserCode]
+[DebuggerStepThrough]
 public static class Lazy
 {
     /// <summary>

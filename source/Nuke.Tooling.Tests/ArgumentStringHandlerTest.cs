@@ -23,6 +23,8 @@ public class ArgumentStringHandlerTest
     public void TestString()
     {
         ArgsToString("start end").Should().Be("start end");
+        ArgsToString("").Should().Be("");
+        ArgsToString(" ").Should().Be("");
     }
 
     [Fact]
@@ -45,6 +47,18 @@ public class ArgumentStringHandlerTest
     public void TestAbsolutePath(string path, string expected)
     {
         ArgsToString($"start {(AbsolutePath)path} end").Should().Be(expected);
+    }
+
+    [Fact]
+    public void TestAbsolutePathCollection()
+    {
+        var paths = new AbsolutePath[]
+                    {
+                        "C:\\foo\\bar",
+                        "/foo bar/foo"
+                    };
+        ArgsToString($"start {paths} end").Should().Be("start C:\\foo\\bar \"/foo bar/foo\" end");
+        ArgsToString($"start {paths:sn} end").Should().Be("start C:\\foo\\bar '/foo bar/foo' end");
     }
 
     [Fact]
@@ -71,6 +85,7 @@ public class ArgumentStringHandlerTest
         ArgsToString($"{"start end"}").Should().Be("start end");
         ArgsToString($"start {"spaced end"}").Should().Be("start \"spaced end\"");
         ArgsToString($"{"spaced start"} end").Should().Be("\"spaced start\" end");
+        ArgsToString($"{"spaced start"} {"spaced end"}").Should().Be("\"spaced start\" \"spaced end\"");
     }
 
     [Fact]

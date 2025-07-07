@@ -17,7 +17,7 @@ namespace Nuke.Common;
 [PublicAPI]
 public interface INukeBuild
 {
-    void ReportSummary(Configure<IDictionary<string, string>> configurator = null);
+    void ReportSummary(Configure<Dictionary<string, string>> configurator = null);
 
     internal IReadOnlyCollection<ExecutableTarget> ExecutableTargets { get; }
     internal IReadOnlyCollection<IBuildExtension> BuildExtensions { get; }
@@ -35,7 +35,7 @@ public interface INukeBuild
     IReadOnlyCollection<ExecutableTarget> SucceededTargets { get; }
     IReadOnlyCollection<ExecutableTarget> FinishedTargets { get; }
 
-    bool IsSuccessful { get; }
+    bool IsSucceeding { get; }
     bool IsFailing { get; }
     bool IsFinished { get; }
     int? ExitCode { get; set; }

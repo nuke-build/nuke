@@ -1,0 +1,35 @@
+﻿{
+  Continue: [],
+  Help: [],
+  Host: [
+    Rider,
+    Terminal,
+    VisualStudio,
+    VSCode
+  ],
+  NoLogo: [],
+  Partition: [],
+  Plan: [],
+  Profile: [
+    dev
+  ],
+  Root: [],
+  Skip: [
+    ExplicitTarget,
+    ImplementedTarget,
+    InheritedTarget,
+    RegularTarget
+  ],
+  Target: [
+    ExplicitTarget,
+    ImplementedTarget,
+    InheritedTarget,
+    RegularTarget
+  ],
+  Verbosity: [
+    Verbose,
+    Normal,
+    Minimal,
+    Quiet
+  ]
+}

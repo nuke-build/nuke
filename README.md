@@ -13,8 +13,6 @@
 - [Elevator Pitch](#elevator-pitch)
 - [Example](#example)
 - [Build Status](#build-status)
-- [In Action](#in-action)
-- [Sponsors](#sponsors)
 - [Technology Sponsors](#technology-sponsors)
 
 ## Elevator Pitch
@@ -29,7 +27,7 @@ NUKE brings your build automation to an even level with every other .NET project
 
 [![Slack](https://img.shields.io/badge/slack-nukebuildnet-red.svg?style=for-the-badge&colorB=F5015F&logo=slack)](https://nuke.build/slack)
 [![Discord](https://img.shields.io/badge/discord-nuke-blue.svg?style=for-the-badge&colorB=5B65EA&logo=discord&logoColor=white)](https://nuke.build/discord)
-[![Twitter](https://img.shields.io/badge/twitter-%40nukebuildnet-blue.svg?style=for-the-badge&logo=twitter&logoColor=white)](https://nuke.build/twitter)
+[![Twitter](https://img.shields.io/badge/twitter-%40nukebuildnet-blue.svg?style=for-the-badge&logo=x&logoColor=white)](https://nuke.build/twitter)
 [![Mastodon](https://img.shields.io/badge/mastodon-%40nuke%40dotnet.social-blue.svg?style=for-the-badge&logo=mastodon&logoColor=white&colorB=6364FF)](https://dotnet.social/@nuke)
 
 ## Example
@@ -52,55 +50,12 @@ NUKE builds and tests itself on several CI/CD services, which helps to ensure a 
 [comment]: <> (| Travis CI | [![Travis CI]&#40;https://img.shields.io/travis/nuke-build/nuke/develop?style=flat-square&label=build&logo=travis-ci&logoColor=white&#41;]&#40;https://travis-ci.org/nuke-build/nuke&#41; | MacOS / Ubuntu | [.travis.yml]&#40;https://github.com/nuke-build/nuke/blob/develop/.travis.yml&#41; |)
 [comment]: <> (| Jenkins | [![Jenkins Build]&#40;https://img.shields.io/jenkins/s/https/jenkins.nuke.build/job/nuke-build/job/nuke/job/develop.svg?style=for-the-badge&label=jenkins&logo=%20data%3Aimage%2Fpng%3Bbase64%2CiVBORw0KGgoAAAANSUhEUgAAACgAAAAoCAYAAACM%2FrhtAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAAZdEVYdFNvZnR3YXJlAHBhaW50Lm5ldCA0LjAuMjHxIGmVAAAGBklEQVRYR82YfayWcxjHT%2B%2BnkuQlU2e9iE6MiJS%2FakOLFCvOJHGY1kRYRqNh2LAOUXZaTJFWMubloGYtm7Nl8tZ0hlUzJ0dFRVGhF53j8%2F093%2Ftxnufc9%2FNyTjbf7bvf77qu73Xd93M%2Fv%2Fv3cpe0BU1NTaWNjY0Xw2nwSbgMroK1cD38BK5BtxTeT380bSen%2FzfgAj250G1wLTyIHQtih%2BE%2BeMSuAOxf4bOwzCWPDajdjaKPwX2pS2UC%2Fx9wGd0K2v607Z3XHrsvvAJWwXrr%2F4T3Rbo2gSKnU%2BwbFc4G%2FqNwETzF8pwgRTc8Gf7g%2FDdhF4eLB8m9o2LZwL8fjre0KJCuobLKdd6gaedQcSB5pYpkA%2F9fcJRlrQJlOlFjtevNsrtwkNQfHlWBbOCfYVmbQKkTqPUjPAD72J0fiLvCFanbyYSLtRg3%2BE6DI5AMgR3sjgU61R8I9QJNcd35DucH4reVlATiYy3VUzgf%2B%2BNUJI0BDseC%2BPSULNTa43YvTaklyUCoCTUfKqSlHYL%2Bd3gEvgofgnNDoRxAUw4Xkb%2BU9rtQEdCfYEkyED1tfSyIC%2F2trUmZjRNDcitAyQ7kL3Tt%2FH8zonckTgLxWkulHQ%2FvsJkGPq02NchzTh9oytF8RHsD1OqzzqFkIArzUxKIT7U0EWietzY9FdHXSvIh7vTqgX0mPAS%2FhZvhboeSgWi5iseBmMZaD0sTgWak9cvtkq%2FavvPsCsCeZ%2F%2FfUCtT7pUF7SNKiAPJDZYlAllHtWg%2Fhwdh2BjQjnWNBbYrYR2slT8Cdm%2FFE4Gg%2BUvym9sAYodoeloaCzTacmm79bVzZspPV%2Buw%2Fkrd9NlwDvwF6qlp87DD%2BoGhUBwI3mTROpoL7XtYvgjYVwdxDAhrj7gGhq0Y7VY42GHVuhTqhrbAvvIh6wz1JmvaUc6gIM4GsY4Ed8Bt9I%2BTkLYdbZkSI2Df45REINM6exJti%2B0Ufm2zVKcepm%2BG%2Fkv2xy95BC6wYB7sAXWzsx3TAN4G70SSf7bPA%2BrMgoL2hyfb95Yc2N2CKBvEokGs5Bvdv9uxGZhtvrHmoOYcX6PKtsatNsTxcyfB6Ak%2BB%2B%2BFm%2BBQh1sNagyHGX8btjYJL%2Fh6mjM1lHQc2GhJSyDSuNkJd8ET7W4zqKXDlFaJ66H%2BHb3lh31zX0HtgsI4p13htHgg0BiTUHPYGfJh9qOvbX1YfwsF%2BuPdzlTNCNh6i7X7uZm2qzT0KxwLQyoRaPSo51usF%2BMz2GD7WsvyAu25cA%2FU8lYGr4R3wUnwVF9Hvu%2FhdXCxr1HYkEI4Dq4lJ0zU9KsdKgjoR8DNztUT2wh1QNL41s1vdUzr8O1wN9QbXdzZhKSwN6R9wq4A7NlQW%2FXYSRW%2FnpLG9FT4PtSKIWgVGQp%2FhkvQaD95Tdw1CgJ5nUncCzPeLuzJLvq4XWngewbqqU1DEtZl2nawFPZSPwiB%2Buj0BUKbkOQlLhdIjKaDc%2BySrwtsgDqflNsdgD0Y7nKOdtsb6H5Bq4m%2B3rIA7InWpXc9RYN8nTmExXYFYE9IucONXmR3AHYf%2BBTcADW%2B9Bdrv6e%2Fu7s1OjXqpg9wjZxnmJwg%2BTKKROeOYXYHYGuA621XbCEs6JsLukEweom0pOY%2Fi2SDJB1s3lORCNjb4XBLArBHwS2Oa0LWOaUScwDMeCvx66k9CvdL3xz43qXpZ2kyEOkwrYEeZvts4NfTehmOwexFq7kt6aOSvnBpydQ0E%2FZ7uYBG%2F1T8kYK4NpS3wp0peeEgR%2BvoXLgEbrc7AFs7lDQwV8ORUOeROrvTwCeM8W2lgGMYXG9NQUD%2FAc3r7q90Kf1Q7SunwC8Vi4D9E5xkWQD2AoezMd2SIHoAZnxoLATkaK6LlsXXXC4D%2BC%2BBL8Jq2OITHb6qUCwL%2BK8KAvqaiGM%2FEBUDasTeYD6Q94pLZAD%2FWZYE0af2txrUqHG5NHBrTI%2Bj1ecNfRYR9flXf%2F%2Fl%2BKfThu8yzYFP55l%2Fv2XjuCUVaj2osYlGN9QdjoZ6YcKGoFiQV%2BdbSwGfvj%2Fry1KbQA0te8diuLRc9nA%2BCLX3%2Bz%2BwMnVXJSX%2FACrjqI7wt59WAAAAAElFTkSuQmCC&#41;]&#40;https://jenkins.nuke.build/blue/organizations/jenkins/nuke-build%2Fnuke/branches/&#41; |)
 
-## In Action
-
-- [ASP.NET Boilerplate](https://aspnetboilerplate.com/) <sup><a href="https://github.com/aspnetboilerplate/aspnetboilerplate">1</a></sup>
-- [AvaloniaUI](https://avaloniaui.net/) <sup><a href="https://github.com/AvaloniaUI/Avalonia">1</a></sup>
-- **[Aviva Solutions B.V.](https://www.avivasolutions.nl/)** <sup><a href="https://github.com/avivasolutionsnl/sitecore-commerce-docker">1</a> <a href="https://github.com/avivasolutionsnl/sitecore-docker">2</a></sup>
-- [ChilliCream](https://chillicream.com/) <sup><a href="https://github.com/ChilliCream/hotchocolate">1</a></sup>
-- [CsvHelper](https://joshclose.github.io/CsvHelper/) <sup><a href="https://github.com/JoshClose/CsvHelper">1</a></sup>
-- [DNN Community](https://dnncommunity.org/) <sup><a href="https://github.com/DNNCommunity/Dnn.ModuleCreator">1</a></sup>
-- [FluentAssertions](https://fluentassertions.com/) <sup><a href="https://github.com/fluentassertions/fluentassertions">1</a></sup>
-- **[JetBrains s.r.o.](https://www.jetbrains.com/)** <sup><a href="https://github.com/JetBrains/space-dotnet-sdk">1</a> <a href="https://github.com/JetBrains/YouTrackSharp">2</a></sup>
-- [NSwag](https://github.com/RicoSuter/NSwag/) <sup><a href="https://github.com/RicoSuter/NSwag/">1</a></sup>
-- **[Octopus Deploy Pty. Ltd.](https://www.octopus.com/)** <sup><a href="https://github.com/OctopusDeploy/OctopusTentacle">1</a> <a href="https://github.com/OctopusDeploy/OctopusClients">2</a> <a href="https://github.com/OctopusDeploy/Octodiff">3</a></sup>
-- [OmniSharp](http://www.omnisharp.net/) <sup><a href="https://github.com/OmniSharp/csharp-language-server-protocol">1</a></sup>
-- [Quartz.NET](https://github.com/quartznet/quartznet) <sup><a href="https://github.com/quartznet/quartznet/">1</a></sup>
-- **[VirtoCommerce](https://virtocommerce.com/)** <sup><a href="https://github.com/VirtoCommerce/vc-build/">1</a></sup>
-
-## Sponsors
-
-Thanks to all companies, organizations, and individuals who are sponsoring the further development of this project. Your support means a lot! 💙
-
-[<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/octopusdeploy-dark.svg"><img alt="Octopus Deploy" height="170px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/octopusdeploy-light.svg"></picture>](https://octopus.com)
-
-[<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/aws-dark.png"><img alt="Amazon Web Services" height="160px" src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/aws-light.png"></picture>](https://aws.amazon.com/)
-
-[<img height="60px" src="https://www.dangl-it.de/media/1195/logo-en-rectangular.png" alt="Dangl-IT GmbH" />](https://www.dangl-it.com/)
-[<img height="60px" src="https://peiitalliance.com/logos/LevelingUp-Logo.svg" alt="Leveling Up" />](https://github.com/ron-myers)
-
-[![Rodney Littles II](https://avatars.githubusercontent.com/RLittlesII?s=60&v=4)](https://github.com/RLittlesII)
-[![Olga Nelioubov](https://avatars.githubusercontent.com/onelioubov?s=60&v=4)](https://github.com/onelioubov)
-[![Daniel Valadas](https://avatars.githubusercontent.com/valadas?s=60&v=4)](https://github.com/valadas)
-[![Anton Wieslander](https://avatars.githubusercontent.com/T0shik?s=60&v=4)](https://github.com/T0shik)
-[![business//acts](https://avatars.githubusercontent.com/BusinessActs?s=60&v=4)](https://github.com/BusinessActs)
-[![Steven Kuhn](https://avatars.githubusercontent.com/stevenkuhn?s=60&v=4)](https://github.com/stevenkuhn)
-
-[![Stephan Müller](https://avatars.githubusercontent.com/chaquotay?s=45&v=4)](https://github.com/chaquotay)
-[![David Driscoll](https://avatars.githubusercontent.com/david-driscoll?s=45&v=4)](https://github.com/david-driscoll)
-[![Actipro Software](https://avatars.githubusercontent.com/Actipro?s=45&v=4)](https://github.com/Actipro)
-[![Logan Laughlin](https://avatars.githubusercontent.com/llaughlin?s=45&v=4)](https://github.com/llaughlin)
-[![Alex Sink](https://avatars.githubusercontent.com/hardcoded2?s=45&v=4)](https://github.com/hardcoded2)
-[![Martin Gill](https://avatars.githubusercontent.com/MartinSGill?s=45&v=4)](https://github.com/MartinSGill)
-[![Todor Todorov](https://avatars.githubusercontent.com/totollygeek?s=45&v=4)](https://github.com/totollygeek)
-[![Derek Beattie](https://avatars.githubusercontent.com/dbeattie71?s=45&v=4)](https://github.com/dbeattie71)
-[![Andrei Andreev](https://avatars.githubusercontent.com/Razenpok?s=45&v=4)](https://github.com/Razenpok)
-[![patrik53](https://avatars.githubusercontent.com/patrik53?s=45&v=4)](https://github.com/patrik53)
-[<img height="45px" src="https://images.opencollective.com/archon-systems-inc/85fa9b1/logo/256.png" alt="Archon Systems Inc." />](https://opencollective.com/archon-systems-inc/)
-[<img height="45px" src="https://images.opencollective.com/bitzer-electronics-as/39862ac/logo/256.png" alt="BITZER Electronics A/S" />](https://opencollective.com/bitzer-electronics-as)
-
 ## Technology Sponsors
 
 Thanks to [JetBrains](https://jetbrains.com) for providing licenses for [Rider](https://jetbrains.com/rider) and access to a [TeamCity Cloud](https://jetbrains.com/teamcity) instance, which both make open-source development a real pleasure!
 
-[<img src="https://raw.githubusercontent.com/nuke-build/nuke/develop/images/jetbrains.png" width="450" />](https://jetbrains.com/)
+[<img src="https://raw.githubusercontent.com/nuke-build/nuke/refs/heads/develop/images/jetbrains.png" width="450" />](https://jetbrains.com/)
+
+Thanks to [SignPath](https://signpath.io?utm_source=foundation&utm_medium=github&utm_campaign=nukebuild) for providing free code signing service and to the [SignPath Foundation](https://signpath.org?utm_source=foundation&utm_medium=github&utm_campaign=nukebuild) for a free code signing certificate.
+
+[<img src="https://raw.githubusercontent.com/SignPath/website/3168d6c7f0e60e647c13fd746df18b52cd52f59c/docs/assets/logo_signpath_500.png" width="450" />](https://signpath.io?utm_source=foundation&utm_medium=github&utm_campaign=nukebuild)

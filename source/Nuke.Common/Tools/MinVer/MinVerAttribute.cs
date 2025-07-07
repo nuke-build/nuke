@@ -28,7 +28,7 @@ public class MinVerAttribute : ValueInjectionAttributeBase
     {
         var version = MinVerTasks.MinVer(s => s
                 .SetFramework(Framework)
-                .DisableProcessLogOutput())
+                .DisableProcessOutputLogging())
             .Result;
 
         if (UpdateBuildNumber)

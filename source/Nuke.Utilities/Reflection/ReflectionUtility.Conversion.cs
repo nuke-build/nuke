@@ -42,13 +42,15 @@ public static partial class ReflectionUtility
 
     // TODO: rename overloads?
     [CanBeNull]
-    public static object Convert(string value, Type destinationType, char? separator)
+    public static object Convert(string value, Type destinationType, char? separator, bool booleanDefault)
     {
-        return Convert(separator.HasValue ? value.Split(separator.Value) : new[] { value }, destinationType);
+        var values = (separator.HasValue ? value.Split(separator.Value) : new[] { value })
+            .Where(x => !x.IsNullOrWhiteSpace()).ToArray();
+        return Convert(values, destinationType, booleanDefault);
     }
 
     [CanBeNull]
-    public static object Convert(IReadOnlyCollection<string> values, Type destinationType)
+    public static object Convert(IReadOnlyCollection<string> values, Type destinationType, bool booleanDefault)
     {
         Assert.True(!destinationType.IsArray || destinationType.GetArrayRank() == 1, "Arrays must have a rank of 1");
         var elementType = (destinationType.IsArray ? destinationType.GetElementType() : destinationType).NotNull();
@@ -60,7 +62,7 @@ public static partial class ReflectionUtility
                 return Array.CreateInstance(elementType, length: 0);
 
             if (destinationType == typeof(bool) || destinationType == typeof(bool?))
-                return true;
+                return booleanDefault;
 
             return null;
         }

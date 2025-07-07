@@ -14,13 +14,21 @@ using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.AzureKeyVault
 {
+    public partial class AzureKeyVaultConfiguration
+    {
+        public virtual string TenantId { get; internal set; }
+        public virtual string ClientId { get; internal set; }
+        public virtual string ClientSecret { get; internal set; }
+        public virtual string BaseUrl { get; internal set; }
+    }
+
     [PublicAPI]
     public class AzureKeyVault
     {
         private readonly Lazy<CertificateClient> _certificateClient;
         private readonly Lazy<KeyClient> _keyClient;
         private readonly Lazy<SecretClient> _secretClient;
-        
+
         internal AzureKeyVault(string tenantId, string clientId, string clientSecret, string baseUrl)
         {
             var credential = new ClientSecretCredential(tenantId, clientId, clientSecret);

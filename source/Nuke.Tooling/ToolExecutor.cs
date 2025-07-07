@@ -60,7 +60,7 @@ internal class ToolExecutor
             logger,
             outputFilter);
 #endif
-        (exitHandler ?? (p => ProcessTasks.DefaultExitHandler(toolSettings: null, p))).Invoke(process.AssertWaitForExit());
+        (exitHandler ?? (p => p.AssertZeroExitCode())).Invoke(process.AssertWaitForExit());
         return process.Output;
     }
 }

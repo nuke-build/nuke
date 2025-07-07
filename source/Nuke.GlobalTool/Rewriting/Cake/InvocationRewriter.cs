@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Nuke.Common;
 using Nuke.Common.IO;
+using Serilog;
 using static Microsoft.CodeAnalysis.CSharp.SyntaxFactory;
 
 namespace Nuke.GlobalTool.Rewriting.Cake;
@@ -24,12 +25,8 @@ internal class InvocationRewriter : SafeSyntaxRewriter
             new(original: "ContinueOnError", replacement: nameof(ITargetDefinition.ProceedAfterFailure)),
             new(original: "WithCriteria", replacement: RenameWithCriteria, convert: ConvertWithCriteria),
             // Logger
-            new(original: "Information", replacement: nameof(Logger.Info)),
-            new(original: "Verbose", replacement: nameof(Logger.Trace)),
-            // FileSystem
-            new(original: "CreateDirectory", replacement: nameof(FileSystemTasks.EnsureExistingDirectory)),
-            new(original: "CleanDirectory", replacement: nameof(FileSystemTasks.EnsureCleanDirectory)),
-            new(original: "CalculateFileHash", replacement: nameof(FileSystemTasks.GetFileHash)),
+            new(original: "Information", replacement: $"{nameof(Log)}.{nameof(Log.Information)}"),
+            new(original: "Verbose", replacement: $"{nameof(Log)}.{nameof(Log.Debug)}"),
         };
 
     private static Func<ExpressionSyntax, ExpressionSyntax> ConvertStringToIdentifier = x =>

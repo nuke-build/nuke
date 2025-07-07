@@ -14,7 +14,6 @@ using Xunit;
 
 namespace Nuke.GlobalTool.Tests;
 
-[UsesVerify]
 public class CakeConversionTests
 {
     private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory);

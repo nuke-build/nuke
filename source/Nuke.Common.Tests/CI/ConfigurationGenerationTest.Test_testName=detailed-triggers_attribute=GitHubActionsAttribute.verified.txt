@@ -44,22 +44,31 @@ on:
   schedule:
     - cron: '* 0 * * *'
 
+concurrency:
+  group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
 jobs:
   macos-latest:
     name: macos-latest
     runs-on: macos-latest
     timeout-minutes: 30
     concurrency:
-      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      group: custom-job-group
       cancel-in-progress: true
+    environment:
+      name: environment-name
+      url: environment-url
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
           lfs: true
           fetch-depth: 2
+          progress: false
+          filter: tree:0
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             .nuke/temp
@@ -71,19 +80,19 @@ jobs:
           OptionalInput: ${{ github.event.inputs.OptionalInput }}
           RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - name: 'Publish: src'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: src
           path: src
       - name: 'Publish: test-results'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: test-results
           path: output/test-results
       - name: 'Publish: coverage-report.zip'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: coverage-report.zip
@@ -93,16 +102,21 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     concurrency:
-      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      group: custom-job-group
       cancel-in-progress: true
+    environment:
+      name: environment-name
+      url: environment-url
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
           lfs: true
           fetch-depth: 2
+          progress: false
+          filter: tree:0
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             .nuke/temp
@@ -114,19 +128,19 @@ jobs:
           OptionalInput: ${{ github.event.inputs.OptionalInput }}
           RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - name: 'Publish: src'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: src
           path: src
       - name: 'Publish: test-results'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: test-results
           path: output/test-results
       - name: 'Publish: coverage-report.zip'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: coverage-report.zip
@@ -136,16 +150,21 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 30
     concurrency:
-      group: ${{ github.workflow }} @ ${{ github.event.pull_request.head.label || github.head_ref || github.run_id }}
+      group: custom-job-group
       cancel-in-progress: true
+    environment:
+      name: environment-name
+      url: environment-url
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
           lfs: true
           fetch-depth: 2
+          progress: false
+          filter: tree:0
       - name: 'Cache: .nuke/temp, ~/.nuget/packages'
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             .nuke/temp
@@ -157,19 +176,19 @@ jobs:
           OptionalInput: ${{ github.event.inputs.OptionalInput }}
           RequiredInput: ${{ github.event.inputs.RequiredInput }}
       - name: 'Publish: src'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: src
           path: src
       - name: 'Publish: test-results'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: test-results
           path: output/test-results
       - name: 'Publish: coverage-report.zip'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: success() || failure()
         with:
           name: coverage-report.zip

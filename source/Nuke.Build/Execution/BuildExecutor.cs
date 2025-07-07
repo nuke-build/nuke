@@ -27,6 +27,7 @@ internal static class BuildExecutor
     {
         if (skippedTargets != null)
         {
+            skippedTargets = skippedTargets.Select(x => x.Replace("-", string.Empty)).ToArray();
             build.ExecutionPlan
                 .Where(x => skippedTargets.Count == 0 || skippedTargets.Contains(x.Name, StringComparer.OrdinalIgnoreCase))
                 .ForEach(x => MarkTargetSkipped(build, x, reason: "via parameter"));
@@ -180,23 +181,26 @@ internal static class BuildExecutor
 
     private static void MarkTargetSkipped(INukeBuild build, ExecutableTarget target, string reason = null)
     {
-        if (target.Invoked || target.Status != ExecutionStatus.Scheduled)
+        if (target.Status != ExecutionStatus.Scheduled)
             return;
 
-        target.Status = ExecutionStatus.Skipped;
-        target.Skipped ??= reason;
+        if (!target.Invoked)
+        {
+            target.Status = ExecutionStatus.Skipped;
+            target.Skipped ??= reason;
+        }
 
         if (target.DependencyBehavior == DependencyBehavior.Execute)
             return;
 
         bool HasOtherDependencies(ExecutableTarget dependentTarget)
             => build.ExecutionPlan
-                .Where(x => x.Status == ExecutionStatus.Scheduled)
+                .Where(x => x != target && x.Status == ExecutionStatus.Scheduled)
                 .Any(x => x.ExecutionDependencies.Contains(dependentTarget) || x.Triggers.Contains(dependentTarget));
 
-        var skippableTargets = target.ExecutionDependencies.Concat(target.Triggers)
+        var skippableDependencies = target.ExecutionDependencies.Concat(target.Triggers)
             .Where(x => !HasOtherDependencies(x)).ToList();
-        skippableTargets.ForEach(x => MarkTargetSkipped(build, x, $"because of {target.Name}"));
+        skippableDependencies.ForEach(x => MarkTargetSkipped(build, x, $"because of {target.Name}"));
     }
 
     private static void AppendToBuildAttemptFile(string value)

@@ -17,7 +17,7 @@ namespace Nuke.Common.ProjectModel;
 /// Represents a solution file (<c>*.sln</c>).
 /// </summary>
 [PublicAPI]
-public class Solution
+public class Solution : IAbsolutePathHolder
 {
     internal List<PrimitiveProject> PrimitiveProjects { get; } = new();
     internal Dictionary<PrimitiveProject, SolutionFolder> PrimitiveProjectParents { get; } = new();

@@ -13,12 +13,14 @@
             "name": "KeyFile",
             "type": "string",
             "format": "--keyfile:{value}",
+            "secret": false,
             "help": "Specifies a keyfile to sign the output assembly."
           },
           {
             "name": "KeyContainer",
             "type": "string",
             "format": "--keycontainer:{value}",
+            "secret": false,
             "help": "Specifies a key container to sign the output assembly (takes precedence over <c>--keyfile</c>)."
           },
           {
@@ -169,6 +171,7 @@
             "name": "Assemblies",
             "type": "List<string>",
             "format": "{value}",
+            "position": -1,
             "help": "Primary and other assemblies to be merged."
           }
         ]

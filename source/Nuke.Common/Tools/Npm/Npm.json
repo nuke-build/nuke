@@ -26,6 +26,7 @@
             "name": "Packages",
             "type": "List<string>",
             "format": "{value}",
+            "position": 1,
             "help": "List of packages to be installed."
           },
           {
@@ -113,6 +114,7 @@
             "name": "Command",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The command to be executed."
           },
           {
@@ -120,6 +122,7 @@
             "type": "List<string>",
             "format": "-- {value}",
             "separator": " ",
+            "position": -1,
             "help": "Arguments passed to the script."
           }
         ]

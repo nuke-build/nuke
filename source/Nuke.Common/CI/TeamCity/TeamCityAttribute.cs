@@ -277,20 +277,18 @@ public class TeamCityAttribute : ChainedConfigurationAttributeBase
         var valueSet = ParameterService.GetParameterValueSet(member, Build);
         var valueSeparator = attribute.NotNull().Separator ?? " ";
 
-        // TODO: Abstract AbsolutePath/Solution/Project etc.
+        var memberType = member.GetMemberType();
         var defaultValue = !member.HasCustomAttribute<SecretAttribute>() ? member.GetValue(Build) : default(string);
         // TODO: enumerables of ...
         if (defaultValue != null &&
-            (member.GetMemberType() == typeof(AbsolutePath) ||
-             member.GetMemberType() == typeof(Solution) ||
-             member.GetMemberType() == typeof(Project)))
+            (memberType.IsAssignableTo(typeof(IAbsolutePathHolder))))
             defaultValue = Build.RootDirectory.GetUnixRelativePathTo(defaultValue.ToString());
 
         TeamCityParameterType GetParameterType()
         {
             if (member.HasCustomAttribute<SecretAttribute>())
                 return TeamCityParameterType.Password;
-            if (member.GetMemberType() == typeof(bool))
+            if (memberType == typeof(bool))
                 return TeamCityParameterType.Checkbox;
             if (valueSet != null)
                 return TeamCityParameterType.Select;
@@ -304,11 +302,11 @@ public class TeamCityAttribute : ChainedConfigurationAttributeBase
                    Description = attribute.Description,
                    Options = valueSet?.ToDictionary(x => x.Item1, x => x.Item2),
                    Type = GetParameterType(),
-                   DefaultValue = member.GetMemberType().IsArray && defaultValue is IEnumerable enumerable
+                   DefaultValue = memberType.IsArray && defaultValue is IEnumerable enumerable
                        ? enumerable.Cast<object>().Select(x => x.ToString()).Join(valueSeparator)
                        : defaultValue?.ToString(),
                    Display = required ? TeamCityParameterDisplay.Prompt : TeamCityParameterDisplay.Normal,
-                   AllowMultiple = member.GetMemberType().IsArray && valueSet is not null,
+                   AllowMultiple = memberType.IsArray && valueSet is not null,
                    ValueSeparator = valueSeparator
                };
     }
