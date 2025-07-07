@@ -184,10 +184,7 @@ public abstract partial class NukeBuild : INukeBuild
     internal IEnumerable<string> TargetNames => ExecutableTargetFactory.GetTargetProperties(GetType()).Select(x => x.GetDisplayShortName());
     internal IEnumerable<string> HostNames => Host.AvailableTypes.Select(x => x.Name);
 
-    public bool IsSuccessful => ExecutionPlan.All(x => x.Status is
-        ExecutionStatus.Succeeded or
-        ExecutionStatus.Skipped or
-        ExecutionStatus.Collective);
+    public bool IsSucceeding => !IsFailing;
 
     public bool IsFailing => ExecutionPlan.Any(x => x.Status is
         ExecutionStatus.Failed or
@@ -205,13 +202,13 @@ public abstract partial class NukeBuild : INukeBuild
 
     private bool IsInterceptorExecution => Environment.GetEnvironmentVariable(InterceptorEnvironmentKey) == "1";
 
-    public void ReportSummary(Configure<IDictionary<string, string>> configurator = null)
+    public void ReportSummary(Configure<Dictionary<string, string>> configurator = null)
     {
         var target = ExecutionPlan.Single(x => x.Status == ExecutionStatus.Running);
         ReportSummary(target, configurator);
     }
 
-    internal void ReportSummary(ExecutableTarget target, Configure<IDictionary<string, string>> configurator)
+    internal void ReportSummary(ExecutableTarget target, Configure<Dictionary<string, string>> configurator)
     {
         target.SummaryInformation = configurator.InvokeSafe(new Dictionary<string, string>()).ToDictionary(x => x.Key, x => x.Value);
         ExecuteExtension<IOnTargetSummaryUpdated>(x => x.OnTargetSummaryUpdated(this, target));

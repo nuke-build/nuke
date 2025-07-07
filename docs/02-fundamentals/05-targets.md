@@ -207,7 +207,7 @@ class Build : NukeBuild
         // highlight-start
         .OnlyWhenDynamic(() => Data.Any())
         // highlight-end
-        .Execute(() => { });
+        .Executes(() => { });
 }
 ```
 
@@ -229,7 +229,7 @@ class Build : NukeBuild
         .WhenSkipped(DependencyBehavior.Execute)
         // highlight-end
         .DependsOn(A)
-        .Execute(() => { });
+        .Executes(() => { });
 }
 ```
 
@@ -286,7 +286,7 @@ class Build : NukeBuild
 
     Target B => _ => _
         .DependsOn(A)
-        .Execute(() => { });
+        .Executes(() => { });
 }
 ```
 
@@ -309,7 +309,7 @@ class Build : NukeBuild
         .AssuredAfterFailure()
         // highlight-end
         .DependsOn(A)
-        .Execute(() => { });
+        .Executes(() => { });
 }
 ```
 

@@ -36,8 +36,8 @@ jobs:
             .nuke/temp
             ~/.nuget/packages
           key: ${{ runner.os }}-${{ hashFiles('**/global.json', '**/*.csproj', '**/Directory.Packages.props') }}
-      - name: 'Run: Test, Pack, Publish'
-        run: ./build.cmd Test Pack Publish
+      - name: 'Run: Publish'
+        run: ./build.cmd Publish
         env:
           FeedzNuGetApiKey: ${{ secrets.FEEDZ_NUGET_API_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

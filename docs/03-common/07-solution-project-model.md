@@ -34,7 +34,7 @@ With an instance of the `Solution` type you can **read and write the solution** 
 ```csharp
 // Gather projects
 var globalToolProject = Solution.GetProject("Nuke.GlobalTool");
-var testProjects = Solution.GetProjects("*.Tests");
+var testProjects = Solution.GetAllProjects("*.Tests");
 
 // Gather all solution items
 var allItems = Solution.AllSolutionFolders.SelectMany(x => x.Items);

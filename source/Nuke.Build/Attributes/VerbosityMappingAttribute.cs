@@ -51,9 +51,9 @@ internal static class VerbosityMapping
 {
     public static readonly LookupTable<Type, (Verbosity Verbosity, object MappedVerbosity)> Mappings = new();
 
-    public static void Apply(object obj)
+    public static void Apply(ToolOptions options)
     {
-        foreach (var property in obj.GetType().GetProperties())
+        foreach (var property in options.GetType().GetProperties())
         {
             if (!Mappings.Contains(property.PropertyType))
                 continue;
@@ -62,7 +62,7 @@ internal static class VerbosityMapping
             foreach (var (verbosity, mappedVerbosity) in mappings)
             {
                 if (verbosity == NukeBuild.Verbosity)
-                    property.SetValue(obj, mappedVerbosity);
+                    options.Set(property.Name, mappedVerbosity);
             }
         }
     }

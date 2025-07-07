@@ -14,35 +14,46 @@ namespace Nuke.Common.Utilities;
 
 public static class CompletionUtility
 {
-    public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(AbsolutePath schemaFile, IEnumerable<string> profileNames)
+    public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(
+        AbsolutePath schemaFile,
+        IEnumerable<string> profileNames = null,
+        Func<JsonProperty, bool> filter = null)
     {
         var schema = JsonDocument.Parse(schemaFile.ReadAllText());
-        return GetItemsFromSchema(schema, profileNames);
+        return GetItemsFromSchema(schema, profileNames, filter);
     }
 
-    public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(JsonDocument schema, IEnumerable<string> profileNames)
+    public static IReadOnlyDictionary<string, string[]> GetItemsFromSchema(
+        JsonDocument schema,
+        IEnumerable<string> profileNames = null,
+        Func<JsonProperty, bool> filter = null)
     {
-        var definitions = schema.RootElement.GetProperty("definitions").EnumerateObject().ToDictionary(x => x.Name, x => x);
+        filter ??= _ => true;
+        var rootElement = schema.RootElement;
+        var definitions = rootElement.GetProperty("definitions").EnumerateObject().ToDictionary(x => x.Name, x => x);
 
-        var parameterProperties = schema.RootElement.GetProperty("definitions").TryGetProperty("NukeBuild", out var nukebuildProperty)
-            ? nukebuildProperty.GetProperty("properties").EnumerateObject()
-                .Concat(schema.RootElement.TryGetProperty("properties", out var properties) ? properties.EnumerateObject() : [])
+        var parameterProperties = rootElement.GetProperty("definitions").TryGetProperty("NukeBuild", out var baseSchema)
+            ? baseSchema.GetProperty("properties").EnumerateObject()
+                .Concat(rootElement.GetProperty("allOf")[0].TryGetProperty("properties", out var properties) ? properties.EnumerateObject() : [])
             : definitions["build"].Value.GetProperty("properties").EnumerateObject();
 
         return parameterProperties
+            .Where(filter)
             .Select(x => (x.Name, Values: GetValues(x)))
             .Where(x => x.Values != null)
-            .ToDictionary(x => x.Name, x => x.Values)
-            .SetKeyValue(Constants.LoadedLocalProfilesParameterName, profileNames.ToArray()).AsReadOnly();
+            .ToDictionary(x => x.Name, x => x.Values).AsReadOnly();
 
         string[] GetValues(JsonProperty property)
         {
+            if (property.Name == Constants.LoadedLocalProfilesParameterName)
+                return profileNames.ToArray();
+
             if (property.Value.TryGetProperty("type", out var typeProperty))
             {
                 var types = typeProperty.ValueKind != JsonValueKind.Array
                     ? [typeProperty.GetString()]
                     : typeProperty.EnumerateArray().Select(x => x.GetString()).ToArray();
-                if (types.ContainsAnyOrdinalIgnoreCase(["string", "boolean", "integer"]))
+                if (types.ContainsAnyOrdinalIgnoreCase("string", "boolean", "integer"))
                 {
                     return property.Value.TryGetProperty("enum", out var enumProperty)
                         ? enumProperty.EnumerateArray().Select(x => x.GetString()).ToArray()
@@ -73,7 +84,7 @@ public static class CompletionUtility
         completionItems = new Dictionary<string, string[]>(completionItems.ToDictionary(x => x.Key, x => x.Value), StringComparer.OrdinalIgnoreCase).AsReadOnly();
         var suggestedItems = new List<string>();
 
-        var parts = words.Split(separator: ' ');
+        ICollection<string> parts = words.Split(separator: ' ');
         var currentWord = parts.Last() != string.Empty ? parts.Last() : null;
         var parameters = parts.Where(ArgumentParser.IsArgument).Select(ArgumentParser.GetArgumentMemberName).ToList();
         var lastParameter = parameters.LastOrDefault();

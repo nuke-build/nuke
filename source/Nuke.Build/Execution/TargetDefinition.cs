@@ -140,14 +140,14 @@ internal class TargetDefinition : ITargetDefinition
     public ITargetDefinition Requires<T>()
         where T : IRequireTool
     {
-        ToolRequirements.Add(typeof(T).GetCustomAttribute<ToolRequirementAttributeBase>().NotNull().GetRequirement());
+        ToolRequirements.Add(typeof(T).GetCustomAttribute<ToolAttribute>().NotNull().GetRequirement());
         return this;
     }
 
     public ITargetDefinition Requires<T>(string version)
         where T : IRequireToolWithVersion
     {
-        ToolRequirements.Add(typeof(T).GetCustomAttribute<ToolRequirementAttributeBase>().NotNull().GetRequirement(version));
+        ToolRequirements.Add(typeof(T).GetCustomAttribute<ToolAttribute>().NotNull().GetRequirement(version));
         return this;
     }
 

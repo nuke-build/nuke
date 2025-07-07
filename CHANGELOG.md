@@ -5,16 +5,96 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [vNext]
+
+## [9.0.4] / 2025-01-15
+- Security: Fixed output filter from `ArgumentStringHandler`
+- Removed obsolete members
+- Fixed `PreProcess` of tasks requires exact options type
+- Fixed missing `position` and `secret` properties
+- Fixed preparation of shadow directory in `ReSharperTasks`
+- Fixed base class in `ReSharperTasks`
+- Fixed missing arguments in `DotNetTasks`
+- Fixed missing commands in `DotNetTasks` and `NuGetTasks`
+- Fixed package executable in `OctoVersionTasks`
+
+## [9.0.3] / 2024-12-05
+- Fixed nullable options for `ToolTasks.Run`
+- Fixed static tool path resolution
+- Fixed tool requirements initialization
+- Fixed documentation link in tool wrapper remarks
+- Fixed documentation on task methods and settings classes
+- Fixed missing `NuGetKeyVaultSignTool`
+- Fixed package executable in `OctopusTasks`
+
+## [9.0.2] / 2024-12-03
+- Fixed MSBuild tasks to use `net8.0` target framework
+- Fixed error handling in `:update` command
+- Fixed resolving tool path from options
+- Fixed nullable options for `ToolTasks.Run`
+- Fixed nullable underlying dictionary for delegate properties
+- Fixed skipping null and whitespace arguments
+- Fixed tool requirements
+- Fixed NPM tool path resolution
+- Fixed logging errors as standard in `GitTasks` and `DockerTasks`
+- Fixed argument format in `DotNetTasks`
+- Fixed nullable `Plugins` dictionary in `ReSharperTasks` 
+
+## [9.0.1] / 2024-11-21
+- Fixed `Options` serialization to JSON
+- Fixed `Options` for default members in interfaces
+- Fixed missing `ProcessExitHandler` setters
+
+## [9.0.0] / 2024-11-21
+- Removed usages of `BinaryFormatter`
+- Changed minimum framework from `net6.0` to `net8.0`
+
+## [8.1.4] / 2024-11-06
+- Fixed `build.schema.json` generation to use `allOf` for user and base type properties
+
+## [8.1.3] / 2024-11-05
+- Fixed naming from `NukeBuild.IsSucessful` to `IsSucceeding`
+- Fixed `NukeBuild.IsSucceeding` to negate `IsFailing`
+- Fixed NJsonSchema reference version
+- Fixed `:secrets` command to find secret parameters
+- Fixed argument format in `DotNetTasks`
+- Fixed definite argument in `EntityFrameworkTasks`
+- Fixed deprecated argument in `MinVerTasks`
+
+## [8.1.2] / 2024-10-13
+- Fixed exclusion of skipped target from lookup for skippable dependencies
+- Fixed resolution of empty environment variables to false
+- Fixed parallel execution to prefer logger from settings
+
+## [8.1.1] / 2024-10-05
+- Fixed nested solution folders in `StronglyTypedSolutionGenerator`
+- Fixed whitespace arguments in `ArgumentStringHandler`
+- Fixed output logging in parallel execution
+- Fixed exclusion of invoked targets from skipping
+- Fixed definite argument in `EntityFrameworkTasks`
+
+## [8.1.0] / 2024-09-10
+- Added schema generation with references for `build.schema.json`
+- Added deserialization of full objects from `parameters.json`
 - Added `AbsolutePath` extension methods for `AddUnixSymlink`, `Copy*`, `Move*`, `Rename*`
+- Added support for preprocessor directives in solution parsing
 - Added `Pattern` in favor of property in `LatestGitHubReleaseAttribute`
 - Added `ConcurrencyGroup`, `ConcurrencyCancelInProgress`, `EnvironmentName`, `EnvironmentUrl` in `GitHubActionsAttribute`
+- Added `DotnetPackagingTasks`
+- Fixed invoked targets to not be excluded from skipping
+- Fixed stripping of hyphens in skipped target names
+- Fixed empty environment variables to be resolved as empty arrays
+- Fixed `EnableUnsafeBinaryFormatterSerialization` to be set through `AppContext`
 - Fixed unquoting of multiple quoted arguments in `ArgumentStringHandler`
+- Fixed using logger from settings in parallel execution
+- Fixed handling of duplicated NuGet package files
+- Fixed inclusion of original NuGet packages in requirements
 - Fixed GitHubActions to use latest action versions
 - Fixed `DotCoverTasks` and `EntityFrameworkTasks` tool path resolution
 - Fixed missing members in `GitHubActionsImage`
 - Fixed missing properties in `GitLab`
 - Fixed missing parameters in `AzurePipelines.SetVariables`
 - Fixed missing arguments in `DotNetTasks`
+- Fixed tool path in `CodecovTasks`
 
 ## [8.0.0] / 2024-01-18
 - Changed string parameters to violate requirement when empty or whitespace
@@ -1136,7 +1216,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Added CLT tasks for Git
 - Fixed background color in console output
 
-[vNext]: https://github.com/nuke-build/nuke/compare/8.0.0...HEAD
+[vNext]: https://github.com/nuke-build/nuke/compare/9.0.4...HEAD
+[9.0.4]: https://github.com/nuke-build/nuke/compare/9.0.3...9.0.4
+[9.0.3]: https://github.com/nuke-build/nuke/compare/9.0.2...9.0.3
+[9.0.2]: https://github.com/nuke-build/nuke/compare/9.0.1...9.0.2
+[9.0.1]: https://github.com/nuke-build/nuke/compare/9.0.0...9.0.1
+[9.0.0]: https://github.com/nuke-build/nuke/compare/8.1.4...9.0.0
+[8.1.4]: https://github.com/nuke-build/nuke/compare/8.1.3...8.1.4
+[8.1.3]: https://github.com/nuke-build/nuke/compare/8.1.2...8.1.3
+[8.1.2]: https://github.com/nuke-build/nuke/compare/8.1.1...8.1.2
+[8.1.1]: https://github.com/nuke-build/nuke/compare/8.1.0...8.1.1
+[8.1.0]: https://github.com/nuke-build/nuke/compare/8.0.0...8.1.0
 [8.0.0]: https://github.com/nuke-build/nuke/compare/7.0.6...8.0.0
 [7.0.6]: https://github.com/nuke-build/nuke/compare/7.0.5...7.0.6
 [7.0.5]: https://github.com/nuke-build/nuke/compare/7.0.4...7.0.5

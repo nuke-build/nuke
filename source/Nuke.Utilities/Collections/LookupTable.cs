@@ -12,9 +12,9 @@ namespace Nuke.Common.Utilities.Collections;
 
 [PublicAPI]
 [Serializable]
-public class LookupTable<TKey, TValue> : ILookup<TKey, TValue>
+public class LookupTable<TKey, TValue>(Dictionary<TKey, List<TValue>> dictionary) : ILookup<TKey, TValue>
 {
-    private readonly Dictionary<TKey, List<TValue>> _dictionary;
+    private readonly Dictionary<TKey, List<TValue>> _dictionary = dictionary;
 
     public LookupTable()
         : this(new Dictionary<TKey, List<TValue>>())
@@ -27,13 +27,8 @@ public class LookupTable<TKey, TValue> : ILookup<TKey, TValue>
     }
 
     public LookupTable(ILookup<TKey, TValue> lookupTable, IEqualityComparer<TKey> comparer = null)
-        : this(Enumerable.ToDictionary(lookupTable, x => x.Key, x => x.ToList(), comparer))
+        : this(lookupTable.ToDictionary(x => x.Key, x => x.ToList(), comparer))
     {
-    }
-
-    public LookupTable(Dictionary<TKey, List<TValue>> dictionary)
-    {
-        _dictionary = dictionary;
     }
 
     private ILookup<TKey, TValue> Lookup =>
@@ -42,7 +37,11 @@ public class LookupTable<TKey, TValue> : ILookup<TKey, TValue>
 
     public int Count => Lookup.Count;
 
-    public IEnumerable<TValue> this[[NotNull] TKey key] => Lookup[key];
+    public IEnumerable<TValue> this[[NotNull] TKey key]
+    {
+        get => Lookup[key];
+        set => _dictionary[key] = value.ToList();
+    }
 
     public void Add(TKey key, TValue value)
     {

@@ -22,6 +22,7 @@
             "name": "TargetPath",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "Path of the package to push."
           },
           {
@@ -96,6 +97,222 @@
       }
     },
     {
+      "postfix": "Delete",
+      "definiteArgument": "delete",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageId",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "Package Id to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted."
+          },
+          {
+            "name": "PackageVersion",
+            "type": "string",
+            "format": "{value}",
+            "position": 2,
+            "help": "Package Version to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted."
+          },
+          {
+            "name": "ApiKey",
+            "type": "string",
+            "format": "-ApiKey {value}",
+            "secret": true,
+            "help": "The API key for the target repository. If not present, the one specified in <em>%AppData%\\NuGet\\NuGet.Config</em> is used."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "-ConfigFile {value}",
+            "help": "The NuGet configuration file to apply. If not specified, <c>%AppData%\\NuGet\\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used."
+          },
+          {
+            "name": "ForceEnglishOutput",
+            "type": "bool",
+            "format": "-ForceEnglishOutput",
+            "help": "<em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture."
+          },
+          {
+            "name": "NonInteractive",
+            "type": "bool",
+            "format": "-NonInteractive",
+            "help": "Suppresses prompts for user input or confirmations."
+          },
+          {
+            "name": "NoPrompt",
+            "type": "bool",
+            "format": "-NoPrompt",
+            "help": "Do not prompt when deleting."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "-Source {value}",
+            "help": "Specifies the server URL. NuGet identifies a UNC or local folder source and simply copies the file there instead of pushing it using HTTP.  Also, starting with NuGet 3.4.2, this is a mandatory parameter unless the <em>NuGet.Config</em> file specifies a <em>DefaultPushSource</em> value (see <a href=\"https://docs.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior\">Configuring NuGet behavior</a>)."
+          },
+          {
+            "name": "Verbosity",
+            "type": "NuGetVerbosity",
+            "format": "-Verbosity {value}",
+            "help": "Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Sign",
+      "definiteArgument": "sign",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "Path of the package to sign."
+          },
+          {
+            "name": "CertificateFingerprint",
+            "type": "string",
+            "format": "-CertificateFingerprint {value}",
+            "help": "Specifies the fingerprint to be used to search for the certificate in a local certificate store."
+          },
+          {
+            "name": "CertificatePassword",
+            "type": "string",
+            "format": "-CertificatePassword {value}",
+            "secret": true,
+            "help": "Specifies the certificate password, if needed. If a certificate is password protected but no password is provided, the command will prompt for a password at run time, unless the -NonInteractive option is passed."
+          },
+          {
+            "name": "CertificatePath",
+            "type": "string",
+            "format": "-CertificatePath {value}",
+            "help": "Specifies the file path to the certificate to be used in signing the package."
+          },
+          {
+            "name": "CertificateStoreLocation",
+            "type": "string",
+            "format": "-CertificateStoreLocation {value}",
+            "help": "Specifies the name of the X.509 certificate store use to search for the certificate. Defaults to 'CurrentUser', the X.509 certificate store used by the current user. This option should be used when specifying the certificate via -CertificateSubjectName or -CertificateFingerprint options."
+          },
+          {
+            "name": "CertificateStoreName",
+            "type": "string",
+            "format": "-CertificateStoreName {value}",
+            "help": "Specifies the name of the X.509 certificate store to use to search for the certificate. Defaults to 'My', the X.509 certificate store for personal certificates. This option should be used when specifying the certificate via -CertificateSubjectName or -CertificateFingerprint options."
+          },
+          {
+            "name": "CertificateSubjectName",
+            "type": "string",
+            "format": "-CertificateSubjectName {value}",
+            "help": "Specifies the subject name of the certificate used to search a local certificate store for the certificate. The search is a case-insensitive string comparison using the supplied value, which will find all certificates with the subject name containing that string, regardless of other subject values. The certificate store can be specified by -CertificateStoreName and -CertificateStoreLocation options."
+          },
+          {
+            "name": "HashAlgorithm",
+            "type": "NuGetSignHashAlgorithm",
+            "format": "-HashAlgorithm {value}",
+            "help": "Hash algorithm to be used to sign the package. Defaults to SHA256. Possible values are SHA256, SHA384, and SHA512."
+          },
+          {
+            "name": "OutputDirectory",
+            "type": "string",
+            "format": "-OutputDirectory {value}",
+            "help": "Specifies the directory where the signed package should be saved. By default the original package is overwritten by the signed package."
+          },
+          {
+            "name": "Overwrite",
+            "type": "bool",
+            "format": "-Overwrite",
+            "help": "Switch to indicate if the current signature should be overwritten. By default the command will fail if the package already has a signature."
+          },
+          {
+            "name": "Timestamper",
+            "type": "string",
+            "format": "-Timestamper {value}",
+            "help": "URL to an RFC 3161 timestamping server."
+          },
+          {
+            "name": "TimestampHashAlgorithm",
+            "type": "NuGetSignHashAlgorithm",
+            "format": "-TimestampHashAlgorithm {value}",
+            "help": "Hash algorithm to be used by the RFC 3161 timestamp server. Defaults to SHA256."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "-ConfigFile {value}",
+            "help": "The NuGet configuration file to apply. If not specified, <c>%AppData%\\NuGet\\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used."
+          },
+          {
+            "name": "ForceEnglishOutput",
+            "type": "bool",
+            "format": "-ForceEnglishOutput",
+            "help": "<em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture."
+          },
+          {
+            "name": "NonInteractive",
+            "type": "bool",
+            "format": "-NonInteractive",
+            "help": "Suppresses prompts for user input or confirmations."
+          },
+          {
+            "name": "Verbosity",
+            "type": "NuGetVerbosity",
+            "format": "-Verbosity {value}",
+            "help": "Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>."
+          }
+        ]
+      }
+    },
+    {
+      "postfix": "Verify",
+      "definiteArgument": "verify",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "-Signatures {value}",
+            "position": 1,
+            "help": "Path of the package to verify Signatures."
+          },
+          {
+            "name": "CertificateFingerprint",
+            "type": "string",
+            "format": "-CertificateFingerprint {value}",
+            "help": "Specifies one or more SHA-256 certificate fingerprints of certificates(s) which signed packages must be signed with. A certificate SHA-256 fingerprint is a SHA-256 hash of the certificate. Multiple inputs should be semicolon separated."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "-ConfigFile {value}",
+            "help": "The NuGet configuration file to apply. If not specified, <c>%AppData%\\NuGet\\NuGet.Config</c> (Windows) or <c>~/.nuget/NuGet/NuGet.Config</c> (Mac/Linux) is used."
+          },
+          {
+            "name": "ForceEnglishOutput",
+            "type": "bool",
+            "format": "-ForceEnglishOutput",
+            "help": "<em>(3.5+)</em> Forces nuget.exe to run using an invariant, English-based culture."
+          },
+          {
+            "name": "NonInteractive",
+            "type": "bool",
+            "format": "-NonInteractive",
+            "help": "Suppresses prompts for user input or confirmations."
+          },
+          {
+            "name": "Verbosity",
+            "type": "NuGetVerbosity",
+            "format": "-Verbosity {value}",
+            "help": "Specifies the amount of detail displayed in the output: <em>normal</em>, <em>quiet</em>, <em>detailed</em>."
+          }
+        ]
+      }
+    },
+    {
       "postfix": "Pack",
       "definiteArgument": "pack",
       "settingsClass": {
@@ -104,6 +321,7 @@
             "name": "TargetPath",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "createOverload": true,
             "help": "The <c>.nuspec</c> or <c>.csproj</c> file."
           },
@@ -182,8 +400,7 @@
           {
             "name": "Properties",
             "type": "Dictionary<string, object>",
-            "format": "-Properties {value}",
-            "itemFormat": "{key}={value}",
+            "format": "-Properties {key}={value}",
             "separator": ";",
             "help": "Specifies a list of properties that override values in the project file; see <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-properties\">Common MSBuild Project Properties</a> for property names. The Properties argument here is a list of token=value pairs, separated by semicolons, where each occurrence of <c>$token$</c> in the <c>.nuspec</c> file will be replaced with the given value. Values can be strings in quotation marks. Note that for the &quot;Configuration&quot; property, the default is &quot;Debug&quot;. To change to a Release configuration, use <c>-Properties Configuration=Release</c>.",
             "delegates": [
@@ -242,6 +459,7 @@
             "name": "TargetPath",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "createOverload": true,
             "help": "Defines the project to restore. I.e., the location of a solution file, a <c>packages.config</c>, or a <c>project.json</c> file."
           },
@@ -371,6 +589,7 @@
             "name": "PackageID",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "Name of the package to install."
           },
           {
@@ -633,6 +852,14 @@
         "HighestMinor",
         "Highest",
         "Ignore"
+      ]
+    },
+    {
+      "name": "NuGetSignHashAlgorithm",
+      "values": [
+        "sha256",
+        "sha384",
+        "sha512"
       ]
     }
   ]

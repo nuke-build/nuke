@@ -3,48 +3,32 @@
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using JetBrains.Annotations;
 using Nuke.Common.Tooling;
 
 namespace Nuke.Common.Tools.MinVer;
 
 partial class MinVerTasks
 {
-    internal static string GetToolPath(string framework = null)
+    protected override object GetResult<T>(ToolOptions options, IReadOnlyCollection<Output> output)
     {
-        return NuGetToolPathResolver.GetPackageExecutable(
-            packageId: "minver-cli",
-            packageExecutable: "minver-cli.dll",
-            framework: framework);
-    }
-
-    private static MinVer GetResult(IProcess process, MinVerSettings toolSettings)
-    {
-        var versionString = process.Output.Select(x => x.Text).Single(x => !x.StartsWith("MinVer:"));
-
-        var version = new MinVer
-                      {
-                          MinVerVersion = versionString,
-                          MinVerMajor = versionString.Split('.')[0],
-                          MinVerMinor = versionString.Split('.')[1],
-                          MinVerPatch = versionString.Split('.')[2].Split('-')[0].Split('+')[0],
-                          MinVerPreRelease = versionString.Split('+')[0].Contains('-') ? versionString.Split('+')[0].Split(new[] { '-' }, count: 2)[1] : null,
-                          MinVerBuildMetadata = versionString.Contains('+') ? versionString.Split(new[] { '+' }, count: 2)[1] : null
-                      };
-
-        version.AssemblyVersion = $"{version.MinVerMajor}.0.0.0";
-        version.FileVersion = $"{version.MinVerMajor}.{version.MinVerMinor}.{version.MinVerPatch}.0";
-        version.PackageVersion = versionString;
-        version.Version = versionString;
-
-        return version;
+        var versionString = output.Select(x => x.Text).Single(x => !x.StartsWith("MinVer:"));
+        return new MinVer(versionString);
     }
 }
 
-partial class MinVerSettings
+[PublicAPI]
+public record MinVer(string MinVerVersion)
 {
-    private string GetProcessToolPath()
-    {
-        return MinVerTasks.GetToolPath(Framework);
-    }
+    public string MinVerMajor => MinVerVersion.Split('.')[0];
+    public string MinVerMinor => MinVerVersion.Split('.')[1];
+    public string MinVerPatch => MinVerVersion.Split('.')[2].Split('-')[0].Split('+')[0];
+    public string MinVerPreRelease => MinVerVersion.Split('+')[0].Contains('-') ? MinVerVersion.Split('+')[0].Split(['-',], count: 2)[1] : null;
+    public string MinVerBuildMetadata => MinVerVersion.Contains('+') ? MinVerVersion.Split(['+',], count: 2)[1] : null;
+    public string AssemblyVersion => $"{MinVerMajor}.0.0.0";
+    public string FileVersion => $"{MinVerMajor}.{MinVerMinor}.{MinVerPatch}.0";
+    public string PackageVersion => MinVerVersion;
+    public string Version => MinVerVersion;
 }

@@ -16,7 +16,7 @@
       "customAssertion": true,
       "definiteArgument": "-createManualActivationFile",
       "settingsClass": {
-        "baseClass": "UnityBaseSettings"
+        "baseClass": "UnityOptionsBase"
       }
     },
     {
@@ -26,7 +26,7 @@
       "customStart": true,
       "customAssertion": true,
       "settingsClass": {
-        "baseClass": "UnityBaseSettings",
+        "baseClass": "UnityOptionsBase",
         "properties": [
           {
             "name": "LicenseFile",
@@ -43,7 +43,7 @@
       "customStart": true,
       "customAssertion": true,
       "settingsClass": {
-        "baseClass": "UnityProjectSettings",
+        "baseClass": "UnityProjectOptions",
         "properties": [
           {
             "name": "BuildLinux32Player",
@@ -155,7 +155,7 @@
       "customAssertion": true,
       "definiteArgument": "-returnlicense",
       "settingsClass": {
-        "baseClass": "UnityBaseSettings"
+        "baseClass": "UnityOptionsBase"
       }
     },
     {
@@ -166,7 +166,7 @@
       "customAssertion": true,
       "definiteArgument": "-runTests",
       "settingsClass": {
-        "baseClass": "UnityProjectSettings",
+        "baseClass": "UnityProjectOptions",
         "properties": [
           {
             "name": "TestCategories",
@@ -192,7 +192,7 @@
           },
           {
             "name": "TestPlatform",
-            "type": "string",
+            "type": "UnityTestPlatform",
             "format": "-testPlatform {value}",
             "help": "The platform to run tests on."
           }
@@ -248,7 +248,8 @@
   ],
   "dataClasses": [
     {
-      "name": "UnityBaseSettings",
+      "name": "UnityOptionsBase",
+      "baseClass": "ToolOptions",
       "extensionMethods": true,
       "properties": [
         {
@@ -279,8 +280,8 @@
       ]
     },
     {
-      "name": "UnityProjectSettings",
-      "baseClass": "UnityBaseSettings",
+      "name": "UnityProjectOptions",
+      "baseClass": "UnityOptionsBase",
       "extensionMethods": true,
       "properties": [
         {
@@ -291,7 +292,7 @@
         },
         {
           "name": "BuildTarget",
-          "type": "string",
+          "type": "UnityBuildTarget",
           "format": "-buildTarget {value}",
           "help": "Allows the selection of an active build target before a project is loaded."
         },

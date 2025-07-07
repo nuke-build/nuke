@@ -180,8 +180,19 @@ public partial class Program
         if (confirmation)
         {
             AnsiConsole.MarkupLine($":hourglass_not_done:  {title} ...");
-            action.Invoke();
-            ClearPreviousLine();
+            try
+            {
+                action.Invoke();
+            }
+            catch (Exception)
+            {
+                confirmation = false;
+                title = $"{title} (failed)";
+            }
+            finally
+            {
+                ClearPreviousLine();
+            }
         }
 
         var (emoji, color) = confirmation ? ("check_mark", "green") : ("multiply", "red");

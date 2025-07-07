@@ -56,6 +56,9 @@ public class Tool : IDeprecatable
     [Description("ID for the NuGet package.")]
     public string NuGetPackageId { get; set; }
 
+    [JsonProperty(PropertyName = "nugetFramework")]
+    public bool NuGetFramework { get; set; }
+
     [Description("ID for the NPM package.")]
     public string NpmPackageId { get; set; }
 

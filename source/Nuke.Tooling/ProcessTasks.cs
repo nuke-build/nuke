@@ -51,22 +51,6 @@ public static class ProcessTasks
             outputFilter);
     }
 
-    public static IProcess StartProcess(ToolSettings toolSettings)
-    {
-        var arguments = toolSettings.GetProcessArguments();
-
-        return StartProcess(
-            toolSettings.ProcessToolPath,
-            arguments.RenderForExecution(),
-            toolSettings.ProcessWorkingDirectory,
-            toolSettings.ProcessEnvironmentVariables,
-            toolSettings.ProcessExecutionTimeout,
-            toolSettings.ProcessLogOutput,
-            toolSettings.ProcessLogInvocation,
-            toolSettings.ProcessLogger,
-            arguments.FilterSecrets);
-    }
-
 #if NET6_0_OR_GREATER
 
         public static IProcess StartProcess(
@@ -104,7 +88,7 @@ public static class ProcessTasks
         Action<OutputType, string> logger = null,
         Func<string, string> outputFilter = null)
     {
-        Assert.True(toolPath != null);
+        Assert.NotNull(toolPath);
         if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
             toolPath = ToolPathResolver.GetPathExecutable(toolPath);
 
@@ -250,11 +234,6 @@ public static class ProcessTasks
             Log.Debug(output);
         else
             Log.Error(output);
-    }
-
-    public static void DefaultExitHandler(ToolSettings toolSettings, IProcess process)
-    {
-        process.AssertZeroExitCode();
     }
 
     public static void PrintEnvironmentVariables()

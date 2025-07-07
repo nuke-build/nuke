@@ -214,26 +214,11 @@ internal partial class ParameterService
 
         try
         {
-            return ConvertValues(variableName, separator.HasValue ? value.Split(separator.Value) : new[] { value }, destinationType);
+            return Convert(value, destinationType, separator, booleanDefault: false);
         }
         catch (Exception ex)
         {
-            Assert.Fail(new[] { ex.Message, "Environment variable was:", value }.JoinNewLine());
-            // ReSharper disable once HeuristicUnreachableCode
-            return null;
-        }
-    }
-
-    [CanBeNull]
-    private object ConvertValues(string parameterName, IReadOnlyCollection<string> values, Type destinationType)
-    {
-        try
-        {
-            return Convert(values, destinationType);
-        }
-        catch (Exception ex)
-        {
-            Assert.Fail(new[] { $"Resolving parameter '{parameterName}' failed.", ex.Message }.JoinNewLine());
+            Assert.Fail(new[] { ex.Message, $"Resolving parameter '{variableName}' failed. Environment variable was:", value }.JoinNewLine());
             // ReSharper disable once HeuristicUnreachableCode
             return null;
         }

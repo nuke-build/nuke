@@ -74,6 +74,7 @@ partial class Build
         new (string Text, string Url)[]
         {
             ("Octopus Deploy", "https://octopus.com/"),
+            ("Datadog", "https://datadoghq.com/"),
             ("Amazon Web Services", "https://aws.amazon.com/"),
         };
 
@@ -87,14 +88,14 @@ partial class Build
         .Executes(async () =>
         {
             await SendSlackMessageAsync(_ => _
-                    .AddAttachment(_ => _
+                    .AddAttachments(_ => _
                         .SetFallback(AnnouncementTitle)
                         .SetAuthorName(AnnouncementTitle)
                         .SetAuthorLink(AnnouncementLink)
                         .SetColor($"#{AnnouncementColor:x8}")
                         .SetThumbUrl(AnnouncementThumbnailUrl)
                         .SetText(new StringBuilder()
-                            .Append($"<!channel>, this release includes *<{AnnouncementComparisonUrl}|{AnnouncementGitInfo.CommitsText}>*")
+                            .Append($"<!channel>, this new release includes *<{AnnouncementComparisonUrl}|{AnnouncementGitInfo.CommitsText}>*")
                             .AppendLine(AnnouncementGitInfo.NotableCommmitters.Count > 0
                                 ? $" with notable contributions from {AnnouncementGitInfo.NotableCommmitters.JoinCommaAnd()}. A round of applause for them! :clap:"
                                 : ". No contributions this time. :sweat_smile:")
@@ -117,13 +118,13 @@ partial class Build
         {
             await SendDiscordMessageAsync(_ => _
                     .SetContent("@everyone")
-                    .AddEmbed(_ => _
+                    .AddEmbeds(_ => _
                         .SetTitle(AnnouncementTitle)
                         .SetColor(AnnouncementColor)
-                        .SetThumbnail(new DiscordEmbedThumbnail()
+                        .SetThumbnail(_ => _
                             .SetUrl(AnnouncementThumbnailUrl))
                         .SetDescription(new StringBuilder()
-                            .Append($"This [release]({AnnouncementLink}) includes *[{AnnouncementGitInfo.CommitsText}]({AnnouncementComparisonUrl})*")
+                            .Append($"This new release includes *[{AnnouncementGitInfo.CommitsText}]({AnnouncementComparisonUrl})*")
                             .AppendLine(AnnouncementGitInfo.NotableCommmitters.Count > 0
                                 ? $" with notable contributions from {AnnouncementGitInfo.NotableCommmitters.JoinCommaAnd()}. A round of applause for them! 👏"
                                 : ". No contributions this time. 😅")
@@ -132,7 +133,7 @@ partial class Build
                             .AppendLine()
                             .AppendLine(AnnouncementReleaseNotes).ToString()
                             .Replace("*", "**"))
-                        .SetFooter(new DiscordEmbedFooter()
+                        .SetFooter(_ => _
                             .SetText($"Powered by {AnnouncementSponsors.Select(x => x.Text).JoinCommaAnd()}.")
                             .SetIconUrl("https://cdn.discordapp.com/emojis/674275938757771306.webp?size=240&quality=lossless"))),
                 DiscordWebhook);
