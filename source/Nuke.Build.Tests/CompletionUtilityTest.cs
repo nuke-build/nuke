@@ -6,16 +6,48 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 using FluentAssertions;
+using Nuke.Common.IO;
 using Nuke.Common.Utilities;
+using VerifyTests;
+using VerifyXunit;
 using Xunit;
 
 namespace Nuke.Common.Tests;
 
 public class CompletionUtilityTest
 {
+    private readonly VerifySettings _verifySettings;
+    private static AbsolutePath RootDirectory => Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory).NotNull();
+    private static AbsolutePath TestDirectory => RootDirectory / "source" / "Nuke.Build.Tests";
+
+    public CompletionUtilityTest()
+    {
+        _verifySettings = new VerifySettings();
+        _verifySettings.DontIgnoreEmptyCollections();
+    }
+
     [Fact]
-    public void TestGetCompletionItemsFromSchema()
+    public async Task TestGetCompletionItemsTargetBuild()
+    {
+        var file = TestDirectory / "SchemaUtilityTest.TestTargetBuild.verified.json";
+        var schema = JsonDocument.Parse(file.ReadAllText());
+        var items = CompletionUtility.GetItemsFromSchema(schema, new[] { "dev" });
+        await Verifier.Verify(items, _verifySettings);
+    }
+
+    [Fact]
+    public async Task TestGetCompletionItemsParameterBuild()
+    {
+        var file = TestDirectory / "SchemaUtilityTest.TestParameterBuild.verified.json";
+        var schema = JsonDocument.Parse(file.ReadAllText());
+        var items = CompletionUtility.GetItemsFromSchema(schema, []);
+        await Verifier.Verify(items, _verifySettings);
+    }
+
+    [Fact]
+    public async Task TestGetCompletionItemsFromSchema()
     {
         var schema = JsonDocument.Parse("""
                 {
@@ -62,14 +94,7 @@ public class CompletionUtilityTest
                 """);
         var profileNames = new[] { "dev" };
         var items = CompletionUtility.GetItemsFromSchema(schema, profileNames);
-        items.Should().BeEquivalentTo(
-            new Dictionary<string, string[]>
-            {
-                ["NoLogo"] = null,
-                ["Configuration"] = new[] { "Debug", "Release" },
-                ["Target"] = new[] { "Restore", "Compile" },
-                [Constants.LoadedLocalProfilesParameterName] = profileNames
-            });
+        await Verifier.Verify(items, _verifySettings);
     }
 
     [Theory]
@@ -94,9 +119,9 @@ public class CompletionUtilityTest
         var completionItems =
             new Dictionary<string, string[]>
             {
-                { Constants.InvokedTargetsParameterName, new[] { "Compile", "GitHubPublish" } },
-                { "ApiKey", null },
-                { "NuGetSource", null }
+                { Constants.InvokedTargetsParameterName, ["Compile", "GitHubPublish"] },
+                { "ApiKey", [] },
+                { "NuGetSource", [] }
             };
         CompletionUtility.GetRelevantItems(words, completionItems)
             .Should()

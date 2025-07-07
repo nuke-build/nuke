@@ -55,26 +55,12 @@ public class NuGetPackageAttribute : ToolInjectionAttributeBase
 
     public override ToolRequirement GetRequirement(MemberInfo member)
     {
-        return NuGetPackageRequirement.Create(_packageId, Version);
+        return new NuGetPackageRequirement(_packageId, Version);
     }
 
     public override object GetValue(MemberInfo member, object instance)
     {
         return ToolResolver.TryGetEnvironmentTool(member.Name) ??
                ToolResolver.GetNuGetTool(_packageId, _packageExecutable, Version, Framework);
-    }
-}
-
-[Obsolete($"Use {nameof(NuGetPackageAttribute)} instead")]
-public class PackageExecutableAttribute : NuGetPackageAttribute
-{
-    public PackageExecutableAttribute(string packageId, string packageExecutable)
-        : this(packageId, packageExecutable32: packageExecutable, packageExecutable64: packageExecutable)
-    {
-    }
-
-    public PackageExecutableAttribute(string packageId, string packageExecutable32, string packageExecutable64)
-        : base(packageId, packageExecutable32, packageExecutable64)
-    {
     }
 }

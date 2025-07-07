@@ -45,10 +45,10 @@ internal static class ValueInjectionUtility
         return (T) (s_valueCache[parameter] = s_valueCache.GetValueOrDefault(parameter) ?? GetValue());
     }
 
-    public static void InjectValues<T>(T instance = default, Func<ValueInjectionAttributeBase, bool> filter = null)
+    public static void InjectValues<T>(T instance = default, Func<MemberInfo, Attribute, bool> filter = null)
     {
-        filter ??= _ => true;
-        InjectValuesInternal(instance, GetInjectionMembers(instance?.GetType() ?? typeof(T)).Where(x => filter(x.Attribute)));
+        filter ??= (_, _) => true;
+        InjectValuesInternal(instance, GetInjectionMembers(instance?.GetType() ?? typeof(T)).Where(x => filter(x.Member, x.Attribute)));
     }
 
     private static void InjectValuesInternal<T>(

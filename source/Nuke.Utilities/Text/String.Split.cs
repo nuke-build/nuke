@@ -64,9 +64,18 @@ public static partial class StringExtensions
     /// Splits a given string by new-lines with empty entries preserved.
     /// </summary>
     [Pure]
-    public static string[] SplitLineBreaks(this string str)
+    public static string[] SplitLineBreaks(this string str, StringSplitOptions options = StringSplitOptions.None)
     {
-        return str.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None);
+        return str.Split(new[] { "\r\n", "\n" }, options);
+    }
+
+    /// <summary>
+    /// Splits a given string by paragraphs (double new-line) with empty entries preserved.
+    /// </summary>
+    [Pure]
+    public static string[] SplitParagraphs(this string str, StringSplitOptions options = StringSplitOptions.None)
+    {
+        return str.Split(new[] { "\r\n\r\n", "\n\n" }, options);
     }
 
     /// <summary>

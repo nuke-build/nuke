@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -20,7 +21,7 @@ internal partial class Telemetry
 {
     private static readonly string[] s_knownTargets = { "Restore", "Compile", "Test" };
 
-    private static IDictionary<string, string> GetCommonProperties(INukeBuild build = null)
+    private static Dictionary<string, string> GetCommonProperties(INukeBuild build = null)
     {
         var version = ControlFlow.SuppressErrors(
             () =>
@@ -42,7 +43,7 @@ internal partial class Telemetry
                };
     }
 
-    private static IDictionary<string, string> GetRepositoryProperties(string directory)
+    private static Dictionary<string, string> GetRepositoryProperties(string directory)
     {
         var repository = ControlFlow.SuppressErrors(() => GitRepository.FromLocalDirectory(directory), logWarning: false);
         if (repository == null)
@@ -76,7 +77,7 @@ internal partial class Telemetry
                };
     }
 
-    private static IDictionary<string, string> GetBuildProperties(INukeBuild build)
+    private static ReadOnlyDictionary<string, string> GetBuildProperties(INukeBuild build)
     {
         var startTimeString = EnvironmentInfo.Variables.GetValueOrDefault(Constants.GlobalToolStartTimeEnvironmentKey);
         var compileTime = startTimeString != null
@@ -99,10 +100,10 @@ internal partial class Telemetry
                        .Select(GetTypeName).Distinct().OrderBy(x => x).JoinCommaSpace(),
                    ["build_components"] = build.GetType().GetInterfaces().Where(x => IsCommonType(x) && x != typeof(INukeBuild))
                        .Select(GetTypeName).Distinct().OrderBy(x => x).JoinCommaSpace()
-               };
+               }.AsReadOnly();
     }
 
-    private static IDictionary<string, string> GetTargetProperties(INukeBuild build, ExecutableTarget target)
+    private static Dictionary<string, string> GetTargetProperties(INukeBuild build, ExecutableTarget target)
     {
         return new Dictionary<string, string>
                {
@@ -113,7 +114,7 @@ internal partial class Telemetry
                };
     }
 
-    private static IDictionary<string, string> GetGeneratorProperties(Type hostType, string generatorId)
+    private static Dictionary<string, string> GetGeneratorProperties(Type hostType, string generatorId)
     {
         return new Dictionary<string, string>
                {
@@ -124,7 +125,9 @@ internal partial class Telemetry
 
     private static bool IsCommonType(Type type)
     {
-        return type.Assembly == typeof(NukeBuild).Assembly;
+        return type.Assembly
+            .GetCustomAttributes<AssemblyMetadataAttribute>()
+            .Any(x => x is { Key: "RepositoryUrl", Value: "https://github.com/nuke-build/nuke.git" });
     }
 
     private static bool IsCustomType(Type type)

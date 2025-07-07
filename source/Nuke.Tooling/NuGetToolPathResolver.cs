@@ -67,8 +67,8 @@ public static class NuGetToolPathResolver
         if (frameworks.Count == 1)
             return GetPackageExecutable(frameworks.Single());
 
-        framework ??= Assembly.GetEntryAssembly().NotNull().GetCustomAttribute<TargetFrameworkAttribute>()
-            .FrameworkDisplayName.Replace(".NET ", "net");
+        framework ??= (Assembly.GetEntryAssembly()?.GetCustomAttribute<TargetFrameworkAttribute>()
+            ?.FrameworkDisplayName?.Replace(".NET ", "net")).NotNull();
         var sortedFrameworks = frameworks.Select(x => x.Key)
             .OrderBy(x => x == framework)
             .ThenBy(x => x.Contains("."))

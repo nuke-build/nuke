@@ -125,9 +125,9 @@ public static partial class StringExtensions
     [Pure]
     public static string JoinCommaOr(this IEnumerable<string> values)
     {
-        var valuesList = values.ToArray();
-        return valuesList.Length >= 2
-            ? valuesList.Reverse().Skip(1).Reverse().JoinCommaSpace() + $"{(valuesList.Length > 2 ? "," : string.Empty)} or " + valuesList.Last()
+        ICollection<string> valuesList = values.ToList();
+        return valuesList.Count >= 2
+            ? valuesList.Reverse().Skip(1).Reverse().JoinCommaSpace() + $"{(valuesList.Count > 2 ? "," : string.Empty)} or " + valuesList.Last()
             : valuesList.JoinCommaSpace();
     }
 
@@ -137,9 +137,9 @@ public static partial class StringExtensions
     [Pure]
     public static string JoinCommaAnd(this IEnumerable<string> values)
     {
-        var valuesList = values.ToArray();
-        return valuesList.Length >= 2
-            ? valuesList.Reverse().Skip(1).Reverse().JoinCommaSpace() + $"{(valuesList.Length > 2 ? "," : string.Empty)} and " + valuesList.Last()
+        ICollection<string> valuesList = values.ToList();
+        return valuesList.Count >= 2
+            ? valuesList.Reverse().Skip(1).Reverse().JoinCommaSpace() + $"{(valuesList.Count > 2 ? "," : string.Empty)} and " + valuesList.Last()
             : valuesList.JoinCommaSpace();
     }
 
@@ -155,5 +155,19 @@ public static partial class StringExtensions
                 ? "\r\n"
                 : "\n";
         return values.Join(newLine);
+    }
+
+    /// <summary>
+    /// Joins all strings as paragraphs (double new-line).
+    /// </summary>
+    [Pure]
+    public static string JoinParagraph(this IEnumerable<string> values, PlatformFamily? platformFamily = null)
+    {
+        var newLine = !platformFamily.HasValue
+            ? Environment.NewLine
+            : platformFamily.Value == PlatformFamily.Windows
+                ? "\r\n"
+                : "\n";
+        return values.Join(newLine + newLine);
     }
 }

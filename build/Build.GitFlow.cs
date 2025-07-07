@@ -23,14 +23,14 @@ partial class Build
     [Parameter] readonly bool Major;
 
     string MajorMinorPatchVersion => Major ? $"{GitVersion.Major + 1}.0.0" : GitVersion.MajorMinorPatch;
+    string MilestoneTitle => $"v{MajorMinorPatchVersion}";
 
     Target Milestone => _ => _
         .Unlisted()
         .OnlyWhenStatic(() => GitRepository.IsOnReleaseBranch() || GitRepository.IsOnHotfixBranch())
         .Executes(async () =>
         {
-            var milestoneTitle = $"v{MajorMinorPatchVersion}";
-            var milestone = await GitRepository.GetGitHubMilestone(milestoneTitle);
+            var milestone = await GitRepository.GetGitHubMilestone(MilestoneTitle);
             if (milestone == null)
                 return;
 
@@ -51,7 +51,7 @@ partial class Build
             System.Console.ReadKey();
 
             Git($"add {changelogFile}");
-            Git($"commit -m \"Finalize {Path.GetFileName(changelogFile)} for {MajorMinorPatchVersion}\"");
+            Git($"commit -m \"chore: {Path.GetFileName(changelogFile)} for {MajorMinorPatchVersion}\"");
         });
 
     [UsedImplicitly]
@@ -77,7 +77,7 @@ partial class Build
                 .SetUrl(RootDirectory)
                 .SetBranch(MasterBranch)
                 .EnableNoFetch()
-                .DisableProcessLogOutput()).Result;
+                .DisableProcessOutputLogging()).Result;
 
             if (!GitRepository.IsOnHotfixBranch())
                 Checkout($"{HotfixBranchPrefix}/{masterVersion.Major}.{masterVersion.Minor}.{masterVersion.Patch + 1}", start: MasterBranch);

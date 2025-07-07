@@ -68,12 +68,13 @@ complete -fc nuke --arguments '(nuke :complete (commandline -cp))'
 You can complete targets, parameters, and enumeration values by hitting the <kbd>TAB</kbd> key:
 
 <p style={{maxWidth: '750px'}}>
-    <AsciinemaPlayer
-        src="/casts/shell-completion.cast"
-        idleTimeLimit={1}
-        autoplay={true}
-        poster="npt:12.077312"
-        preload={true}
-        // terminalFontFamily="'JetBrains Mono', Consolas, Menlo, 'Bitstream Vera Sans Mono', monospace"
-        loop={true}/>
+<AsciinemaPlayer
+    src="/casts/shell-completion.cast"
+    maxWidth="750px"
+    idleTimeLimit={1}
+    autoplay={true}
+    poster="npt:12.077312"
+    preload={true}
+    terminalFontFamily="'JetBrains Mono', Consolas, Menlo, 'Bitstream Vera Sans Mono', monospace"
+    loop={true}/>
 </p>

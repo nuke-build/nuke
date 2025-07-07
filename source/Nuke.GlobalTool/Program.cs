@@ -111,7 +111,7 @@ public partial class Program
                     : ToolPathResolver.GetPathExecutable("bash"),
                 Arguments = EnvironmentInfo.IsWin
                     ? $"-ExecutionPolicy ByPass -NoProfile -File {buildScript.DoubleQuoteIfNeeded()} {arguments}"
-                    : $"{buildScript} {arguments}"
+                    : $"{buildScript.DoubleQuoteIfNeeded()} {arguments}"
             };
         startInfo.Environment[Constants.GlobalToolVersionEnvironmentKey] = typeof(Program).Assembly.GetVersionText();
         startInfo.Environment[Constants.GlobalToolStartTimeEnvironmentKey] = DateTime.Now.ToString("O");
@@ -180,8 +180,19 @@ public partial class Program
         if (confirmation)
         {
             AnsiConsole.MarkupLine($":hourglass_not_done:  {title} ...");
-            action.Invoke();
-            ClearPreviousLine();
+            try
+            {
+                action.Invoke();
+            }
+            catch (Exception)
+            {
+                confirmation = false;
+                title = $"{title} (failed)";
+            }
+            finally
+            {
+                ClearPreviousLine();
+            }
         }
 
         var (emoji, color) = confirmation ? ("check_mark", "green") : ("multiply", "red");

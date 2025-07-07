@@ -9,11 +9,19 @@
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-clean.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-publish.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-nuget-push.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-nuget-delete.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-nuget-sign.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-nuget-verify.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-install.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-uninstall.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-tool-update.md",
     "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-msbuild.md",
-    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-format.md"
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-format.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-workload-install.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-workload-repair.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-workload-restore.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-workload-uninstall.md",
+    "https://raw.githubusercontent.com/dotnet/docs/main/docs/core/tools/dotnet-workload-update.md"
   ],
   "name": "DotNet",
   "officialUrl": "https://docs.microsoft.com/en-us/dotnet/core/tools/",
@@ -34,6 +42,7 @@
             "name": "ProjectFile",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "Specifies a path to the test project. If omitted, it defaults to current directory."
           },
           {
@@ -123,8 +132,7 @@
           {
             "name": "Properties",
             "type": "Dictionary<string, object>",
-            "format": "/property:{value}",
-            "itemFormat": "{key}={value}",
+            "format": "/property:{key}={value}",
             "disallowedCharacter": ";",
             "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>"
           },
@@ -173,16 +181,21 @@
           {
             "name": "RunSettings",
             "type": "Dictionary<string, object>",
-            "format": "-- {value}",
-            "itemFormat": "{key}={value}",
+            "format": "-- {key}={value}",
             "separator": " ",
-            "isTailArgument": true
+            "position": -1
           },
           {
             "name": "NoLogo",
             "type": "bool",
             "format": "--nologo",
             "help": "Run test(s), without displaying Microsoft Testplatform banner. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -198,10 +211,22 @@
       "settingsClass": {
         "properties": [
           {
+            "name": "Architecture",
+            "type": "string",
+            "format": "--arch {value}",
+            "help": "Specifies the target architecture. This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7."
+          },
+          {
             "name": "Configuration",
             "type": "string",
             "format": "--configuration {value}",
             "help": "Configuration to use for building the project. The default value is Debug."
+          },
+          {
+            "name": "DisableBuildServers",
+            "type": "bool",
+            "format": "--disable-build-servers",
+            "help": "Force the command to ignore any persistent build servers. This option provides a consistent way to disable all use of build caching, which forces a build from scratch. A build that doesn't rely on caches is useful when the caches might be corrupted or incorrect for some reason. Available since .NET 7 SDK."
           },
           {
             "name": "Framework",
@@ -214,6 +239,12 @@
             "type": "string",
             "format": "--launch-profile {value}",
             "help": "The name of the launch profile (if any) to use when launching the application. Launch profiles are defined in the <em>launchSettings.json</em> file and are typically called <c>Development</c>, <c>Staging</c> and <c>Production</c>. For more information, see <a href=\"https://docs.microsoft.com/en-us/aspnetcore/fundamentals/environments\">Working with multiple environments</a>."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK."
           },
           {
             "name": "NoBuild",
@@ -234,18 +265,55 @@
             "help": "Doesn't perform an implicit restore when running the command."
           },
           {
+            "name": "NoSelfContained",
+            "type": "bool",
+            "format": "--no-self-contained",
+            "help": "Publish your application as a framework dependent application. A compatible .NET runtime must be installed on the target machine to run your application."
+          },
+          {
+            "name": "OperatingSystem",
+            "type": "string",
+            "format": "--os {value}",
+            "help": "Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6."
+          },
+          {
             "name": "ProjectFile",
             "type": "string",
             "format": "--project {value}",
             "help": "Specifies the path and name of the project file. (See the NOTE.) It defaults to the current directory if not specified."
           },
           {
-            "name": "ApplicationArguments",
+            "name": "Runtime",
             "type": "string",
+            "format": "--runtime {value}",
+            "help": "Specifies the target runtime. For a list of Runtime Identifiers (RIDs), see the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/rid-catalog\">RID catalog</a>."
+          },
+          {
+            "name": "SelfContained",
+            "type": "bool",
+            "format": "--self-contained {value}",
+            "help": "Publishes the .NET runtime with the application so the runtime doesn't need to be installed on the target machine. The default is <c>false</c>. However, when targeting .NET 7 or lower, the default is <c>true</c> if a runtime identifier is specified."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          },
+          {
+            "name": "ApplicationArguments",
+            "type": "List<string>",
             "format": "-- {value}",
+            "separator": " ",
+            "position": -1,
             "customValue": true,
-            "help": "Arguments passed to the application being run.",
-            "isTailArgument": true
+            "help": "Arguments passed to the application being run."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -264,6 +332,7 @@
             "name": "ProjectFile",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "createOverload": true,
             "help": "Optional path to the project file to restore."
           },
@@ -296,6 +365,7 @@
             "name": "Project",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "createOverload": true,
             "help": "The project to pack. It's either a path to a csproj file or to a directory. If omitted, it defaults to the current directory."
           },
@@ -358,6 +428,12 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -375,6 +451,7 @@
             "name": "ProjectFile",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "createOverload": true,
             "help": "The project file to build. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in proj and uses that file."
           },
@@ -455,6 +532,12 @@
             "type": "string",
             "format": "-bl:{value}",
             "help": "Generare MSBuild <a href=\"https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md\">binary log</a>."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -462,6 +545,7 @@
     {
       "help": "The <c>dotnet msbuild</c> command allows access to a fully functional MSBuild.<para/>The command has the exact same capabilities as the existing MSBuild command-line client for SDK-style projects only. The options are all the same. For more information about the available options, see the <a href=\"https://docs.microsoft.com/en-us/visualstudio/msbuild/msbuild-command-line-reference\">MSBuild command-line reference</a>.<para/>The <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build\">dotnet build</a> command is equivalent to <c>dotnet msbuild -restore</c>. When you don't want to build the project and you have a specific target you want to run, use <c>dotnet build</c> or <c>dotnet msbuild</c> and specify the target.",
       "postfix": "MSBuild",
+      "omitCommonProperties": true,
       "definiteArgument": "msbuild",
       "settingsClass": {
         "properties": [
@@ -469,6 +553,7 @@
             "name": "TargetPath",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "createOverload": true,
             "help": "The solution or project file on which MSBuild is executed."
           },
@@ -543,7 +628,152 @@
             "name": "BinaryLog",
             "type": "string",
             "format": "-bl:{value}",
-            "help": "Generare MSBuild <a href=\"https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md\">binary log</a>."
+            "help": "Generate MSBuild <a href=\"https://github.com/dotnet/msbuild/blob/main/documentation/wiki/Binary-Log.md\">binary log</a>."
+          },
+          {
+            "name": "Properties",
+            "type": "Dictionary<string, object>",
+            "format": "/property:{key}={value}",
+            "disallowedCharacter": ";",
+            "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
+            "delegates": [
+              {
+                "name": "RunCodeAnalysis",
+                "type": "bool"
+              },
+              {
+                "name": "NoWarn",
+                "type": "List<int>",
+                "separator": ";"
+              },
+              {
+                "name": "WarningsAsErrors",
+                "type": "List<int>",
+                "separator": ";"
+              },
+              {
+                "name": "WarningLevel",
+                "type": "int"
+              },
+              {
+                "name": "TreatWarningsAsErrors",
+                "type": "bool"
+              },
+              {
+                "name": "AssemblyVersion",
+                "type": "string"
+              },
+              {
+                "name": "FileVersion",
+                "type": "string"
+              },
+              {
+                "name": "InformationalVersion",
+                "type": "string"
+              },
+              {
+                "name": "PackageId",
+                "type": "string"
+              },
+              {
+                "name": "Version",
+                "type": "string"
+              },
+              {
+                "name": "VersionPrefix",
+                "type": "string"
+              },
+              {
+                "name": "Authors",
+                "type": "List<string>",
+                "separator": ","
+              },
+              {
+                "name": "Title",
+                "type": "string"
+              },
+              {
+                "name": "Description",
+                "type": "string"
+              },
+              {
+                "name": "Copyright",
+                "type": "string"
+              },
+              {
+                "name": "PackageRequireLicenseAcceptance",
+                "type": "bool"
+              },
+              {
+                "name": "PackageLicenseUrl",
+                "type": "string"
+              },
+              {
+                "name": "PackageProjectUrl",
+                "type": "string"
+              },
+              {
+                "name": "PackageIconUrl",
+                "type": "string"
+              },
+              {
+                "name": "PackageTags",
+                "type": "List<string>",
+                "separator": " "
+              },
+              {
+                "name": "PackageReleaseNotes",
+                "type": "string"
+              },
+              {
+                "name": "RepositoryUrl",
+                "type": "string"
+              },
+              {
+                "name": "RepositoryType",
+                "type": "string"
+              },
+              {
+                "name": "SymbolPackageFormat",
+                "type": "DotNetSymbolPackageFormat",
+                "help": "Format for packaging symbols."
+              },
+              {
+                "name": "PublishReadyToRun",
+                "type": "bool",
+                "help": "Compiles application assemblies as ReadyToRun (R2R) format. R2R is a form of ahead-of-time (AOT) compilation. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/ready-to-run\">ReadyToRun images</a>. Available since .NET Core 3.0 SDK.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+              },
+              {
+                "name": "PublishSingleFile",
+                "type": "bool",
+                "help": "Packages the app into a platform-specific single-file executable. The executable is self-extracting and contains all dependencies (including native) that are required to run the app. When the app is first run, the application is extracted to a directory based on the app name and build identifier. Startup is faster when the application is run again. The application doesn't need to extract itself a second time unless a new version is used. Available since .NET Core 3.0 SDK.<para/> For more information about single-file publishing, see the <a href=\"https://github.com/dotnet/designs/blob/master/accepted/2020/single-file/design.md\">single-file bundler design document</a>.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+              },
+              {
+                "name": "PublishTrimmed",
+                "type": "bool",
+                "help": "Trims unused libraries to reduce the deployment size of an app when publishing a self-contained executable. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained\">Trim self-contained deployments and executables</a>. Available since .NET Core 3.0 SDK as a preview feature.<para/>We recommend that you specify this option in a publish profile rather than on the command line. For more information, see <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-publish#msbuild\">MSBuild</a>."
+              },
+              {
+                "name": "PublishProfile",
+                "type": "string"
+              },
+              {
+                "name": "Platform",
+                "type": "string"
+              },
+              {
+                "name": "ContinuousIntegrationBuild",
+                "type": "bool"
+              },
+              {
+                "name": "DeterministicSourcePaths",
+                "type": "bool"
+              },
+              {
+                "name": "Deterministic",
+                "type": "bool"
+              }
+            ]
           }
         ]
       }
@@ -558,6 +788,7 @@
             "name": "Project",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "createOverload": true,
             "help": "The MSBuild project to clean. If a project file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> and uses that file."
           },
@@ -596,6 +827,12 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -610,6 +847,7 @@
             "name": "Project",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "createOverload": true,
             "help": "The MSBuild project or solution to run code formatting on. If a project or solution file is not specified, MSBuild searches the current working directory for a file that has a file extension that ends in <em>proj</em> or <em>sln</em>, and uses that file."
           },
@@ -683,7 +921,14 @@
             "name": "Project",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The project to publish, which defaults to the current directory if not specified."
+          },
+          {
+            "name": "Architecture",
+            "type": "string",
+            "format": "--arch {value}",
+            "help": "Specifies the target architecture. This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --arch x86 sets the RID to win-x86. If you use this option, don't use the -r|--runtime option. Available since .NET 6 Preview 7."
           },
           {
             "name": "Configuration",
@@ -722,6 +967,12 @@
             "help": "Specifies the path for the output directory. If not specified, it defaults to <em>./bin/[configuration]/[framework]/</em> for a framework-dependent deployment or <em>./bin/[configuration]/[framework]/[runtime]</em> for a self-contained deployment.<para/>If a relative path is provided, the output directory generated is relative to the project file location, not to the current working directory."
           },
           {
+            "name": "OperatingSystem",
+            "type": "string",
+            "format": "--os {value}",
+            "help": "Specifies the target operating system (OS). This is a shorthand syntax for setting the <a href=\"https://learn.microsoft.com/en-us/dotnet/core/rid-catalog\">Runtime Identifier (RID)</a>, where the provided value is combined with the default RID. For example, on a win-x64 machine, specifying --os linux sets the RID to linux-x64. If you use this option, don't use the -r|--runtime option. Available since .NET 6."
+          },
+          {
             "name": "SelfContained",
             "type": "bool",
             "format": "--self-contained {value}",
@@ -750,6 +1001,19 @@
             "type": "bool",
             "format": "--nologo",
             "help": "Doesn't display the startup banner or the copyright message. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "Targets",
+            "type": "List<string>",
+            "format": "/t:{value}",
+            "separator": ";",
+            "help": "<p>Build the specified targets in the project. Specify each target separately, or use a semicolon or comma to separate multiple targets, as the following example shows:<br/><c>/target:Resources;Compile</c></p><p>If you specify any targets by using this switch, they are run instead of any targets in the DefaultTargets attribute in the project file. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ee216359.aspx\">Target Build Order</a> and <a href=\"https://msdn.microsoft.com/en-us/library/ms171463.aspx\">How to: Specify Which Target to Build First</a>.</p><p>A target is a group of tasks. For more information, see <a href=\"https://msdn.microsoft.com/en-us/library/ms171462.aspx\">Targets</a>.</p>"
+          },
+          {
+            "name": "ArtifactsPath",
+            "type": "string",
+            "format": "--artifacts-path {value}",
+            "help": "All build output files from the executed command will go in subfolders under the specified path, separated by project. For more information see <a href=\"https://learn.microsoft.com/en-us/dotnet/core/sdk/artifacts-output\">Artifacts Output Layout</a>. Available since .NET 8 SDK."
           }
         ]
       }
@@ -765,6 +1029,7 @@
             "name": "TargetPath",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "Path of the package to push."
           },
           {
@@ -833,6 +1098,192 @@
       }
     },
     {
+      "help": "The dotnet nuget delete command deletes or unlists a package from the server. For nuget.org, the action is to unlist the package.",
+      "postfix": "NuGetDelete",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget delete",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "PackageId",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "Package Id to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted."
+          },
+          {
+            "name": "PackageVersion",
+            "type": "string",
+            "format": "{value}",
+            "position": 2,
+            "help": "Package Version to delete. The exact behavior depends on the source. For local folders, for instance, the package is deleted; for nuget.org the package is unlisted."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "Specifies the server URL. This option is required unless <c>DefaultPushSource</c> config value is set in the NuGet config file."
+          },
+          {
+            "name": "ApiKey",
+            "type": "string",
+            "format": "--api-key {value}",
+            "secret": true,
+            "help": "The API key for the server."
+          },
+          {
+            "name": "ForceEnglishOutput",
+            "type": "bool",
+            "format": "--force-english-output",
+            "help": "Forces all logged output in English."
+          },
+          {
+            "name": "NoServiceEndpoint",
+            "type": "bool",
+            "format": "--no-service-endpoint",
+            "help": "Doesn't append <c>api/v2/package</c> to the source URL. Option available since .NET Core 2.1 SDK."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication. Available since .NET Core 3.0 SDK."
+          },
+          {
+            "name": "NonInteractive",
+            "type": "bool",
+            "format": "--non-interactive",
+            "help": "Doesn't prompt for user input or confirmations."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The dotnet nuget sign command signs all the packages matching the first argument with a certificate. The certificate with the private key can be obtained from a file or from a certificate installed in a certificate store by providing a subject name or a SHA-1 fingerprint.",
+      "postfix": "NuGetSign",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget sign",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "Path of the package to sign."
+          },
+          {
+            "name": "CertificatePath",
+            "type": "string",
+            "format": "--certificate-path {value}",
+            "help": "Specifies the file path to the certificate to be used in signing the package."
+          },
+          {
+            "name": "CertificateStoreName",
+            "type": "string",
+            "format": "--certificate-store-name {value}",
+            "help": "Specifies the name of the X.509 certificate store to use to search for the certificate. Defaults to 'My', the X.509 certificate store for personal certificates. This option should be used when specifying the certificate via --certificate-subject-name or --certificate-fingerprint options."
+          },
+          {
+            "name": "CertificateStoreLocation",
+            "type": "string",
+            "format": "--certificate-store-location {value}",
+            "help": "Specifies the name of the X.509 certificate store use to search for the certificate. Defaults to 'CurrentUser', the X.509 certificate store used by the current user. This option should be used when specifying the certificate via --certificate-subject-name or --certificate-fingerprint options."
+          },
+          {
+            "name": "CertificateSubjectName",
+            "type": "string",
+            "format": "--certificate-subject-name {value}",
+            "help": "Specifies the subject name of the certificate used to search a local certificate store for the certificate. The search is a case-insensitive string comparison using the supplied value, which finds all certificates with the subject name containing that string, regardless of other subject values. The certificate store can be specified by --certificate-store-name and --certificate-store-location options."
+          },
+          {
+            "name": "CertificateFingerprint",
+            "type": "string",
+            "format": "--certificate-fingerprint {value}",
+            "help": "Specifies the fingerprint of the certificate used to search a local certificate store for the certificate. Starting with .NET 9, this option can be used to specify the SHA-1, SHA-256, SHA-384, or SHA-512 fingerprint of the certificate. However, a NU3043 warning is raised when a SHA-1 certificate fingerprint is used because it is no longer considered secure."
+          },
+          {
+            "name": "CertificatePassword",
+            "type": "string",
+            "format": "--certificate-password {value}",
+            "secret": true,
+            "help": "Specifies the certificate password, if needed. If a certificate is password protected but no password is provided, the sign command will fail."
+          },
+          {
+            "name": "HashAlgorithm",
+            "type": "DotNetNuGetSignHashAlgorithm",
+            "format": "--hash-algorithm {value}",
+            "help": "Hash algorithm to be used to sign the package. Defaults to SHA256. Possible values are SHA256, SHA384, and SHA512."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "Specifies the directory where the signed package should be saved. If this option isn't specified, by default the original package is overwritten by the signed package."
+          },
+          {
+            "name": "Overwrite",
+            "type": "bool",
+            "format": "--overwrite",
+            "help": "Indicate that the current signature should be overwritten. By default the command will fail if the package already has a signature."
+          },
+          {
+            "name": "TimestampHashAlgorithm",
+            "type": "DotNetNuGetSignHashAlgorithm",
+            "format": "--timestamp-hash-algorithm {value}",
+            "help": "Hash algorithm to be used by the RFC 3161 timestamp server. Defaults to SHA256."
+          },
+          {
+            "name": "Timestamper",
+            "type": "string",
+            "format": "--timestamper {value}",
+            "help": "URL to an RFC 3161 timestamping server."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The dotnet nuget verify command verifies a signed NuGet package.",
+      "postfix": "NuGetVerify",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget verify",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "TargetPath",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "Path of the package to verify."
+          },
+          {
+            "name": "CertificateFingerprint",
+            "type": "string",
+            "format": "--certificate-fingerprint {value}",
+            "help": "Verify that the signer certificate matches with one of the specified SHA256 fingerprints. This option can be supplied multiple times to provide multiple fingerprints."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
       "help": "Adds a NuGet source.",
       "postfix": "NuGetAddSource",
       "omitCommonProperties": true,
@@ -843,6 +1294,7 @@
             "name": "Source",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "URL of the source."
           },
           {
@@ -868,14 +1320,77 @@
             "name": "StorePasswordInClearText",
             "type": "bool",
             "format": "--store-password-in-clear-text",
+            "secret": false,
             "help": "Enables storing portable package source credentials by disabling password encryption."
           },
           {
             "name": "ValidAuthenticationTypes",
             "type": "List<DotNetNuGetAuthentication>",
-            "format": "--valid-authentication-types",
+            "format": "--valid-authentication-types {value}",
             "separator": ",",
             "help": "List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href=\"https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior\">Common NuGet Configurations</a>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "Updates a NuGet source.",
+      "postfix": "NuGetUpdateSource",
+      "omitCommonProperties": true,
+      "definiteArgument": "nuget update source",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Name",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "Name of the source."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "URL of the source."
+          },
+          {
+            "name": "Username",
+            "type": "string",
+            "format": "--username {value}",
+            "help": "Username to be used when connecting to an authenticated source."
+          },
+          {
+            "name": "Password",
+            "type": "string",
+            "format": "--password {value}",
+            "secret": true,
+            "help": "Password to be used when connecting to an authenticated source."
+          },
+          {
+            "name": "StorePasswordInClearText",
+            "type": "bool",
+            "format": "--store-password-in-clear-text",
+            "secret": false,
+            "help": "Enables storing portable package source credentials by disabling password encryption."
+          },
+          {
+            "name": "ValidAuthenticationTypes",
+            "type": "List<DotNetNuGetAuthentication>",
+            "format": "--valid-authentication-types {value}",
+            "separator": ",",
+            "help": "List of valid authentication types for this source. Set this to <c>basic</c> if the server advertises NTLM or Negotiate and your credentials must be sent using the Basic mechanism, for instance when using a PAT with on-premises Azure DevOps Server. Other valid values include <c>negotiate</c>, <c>kerberos</c>, <c>ntlm</c>, and <c>digest</c>, but these values are unlikely to be useful."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configfile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used. For more information, see <a href=\"https://learn.microsoft.com/en-us/nuget/consume-packages/configuring-nuget-behavior\">Common NuGet Configurations</a>."
           }
         ]
       }
@@ -891,6 +1406,7 @@
             "name": "PackageName",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The Name/ID of the NuGet package that contains the .NET Core Global Tool to install."
           },
           {
@@ -1001,6 +1517,7 @@
             "name": "PackageName",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The Name/ID of the NuGet package that contains the .NET Core Global Tool to uninstall. You can find the package name using the <a href=\"https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-list\">dotnet tool list</a> command."
           },
           {
@@ -1035,6 +1552,7 @@
             "name": "PackageName",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The Name/ID of the NuGet package that contains the .NET Core Global Tool to install."
           },
           {
@@ -1081,16 +1599,349 @@
           }
         ]
       }
+    },
+    {
+      "help": "The <c>dotnet workload install</c> command installs one or more optional workloads. Optional workloads can be installed on top of the .NET SDK to provide support for various application types, such as .NET MAUI and Blazor WebAssembly AOT.",
+      "postfix": "WorkloadInstall",
+      "omitCommonProperties": true,
+      "definiteArgument": "workload install",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "WorkloadId",
+            "type": "List<string>",
+            "format": "{value}",
+            "position": 1,
+            "help": "The workload ID or multiple IDs to install."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configFile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used."
+          },
+          {
+            "name": "DisableParallel",
+            "type": "bool",
+            "format": "--disable-parallel",
+            "help": "Prevents restoring multiple projects in parallel."
+          },
+          {
+            "name": "IgnoreFailedSources",
+            "type": "bool",
+            "format": "--ignore-failed-sources",
+            "help": "Treats package source failures as warnings."
+          },
+          {
+            "name": "IncludePreviews",
+            "type": "bool",
+            "format": "--include-previews",
+            "help": "Allows prerelease workload manifests."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "--no-cache",
+            "help": "Prevents caching of packages and http requests."
+          },
+          {
+            "name": "SkipManifestUpdate",
+            "type": "bool",
+            "format": "--skip-manifest-update",
+            "help": "Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload."
+          },
+          {
+            "name": "SkipSignCheck",
+            "type": "bool",
+            "format": "--skip-sign-check",
+            "help": "Skipping the nuget package signature verification."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times."
+          },
+          {
+            "name": "TempDir",
+            "type": "string",
+            "format": "--temp-dir {value}",
+            "help": "Specify the temporary directory used to download and extract NuGet packages (must be secure)."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet workload uninstall</c> command uninstalls one or more workloads.",
+      "postfix": "WorkloadUninstall",
+      "omitCommonProperties": true,
+      "definiteArgument": "workload uninstall",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "WorkloadId",
+            "type": "List<string>",
+            "format": "{value}",
+            "help": "The workload ID or multiple IDs to install."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet workload restore</c> command analyzes a project or solution to determine which workloads it needs, then installs any workloads that are missing.",
+      "postfix": "WorkloadRestore",
+      "omitCommonProperties": true,
+      "definiteArgument": "workload restore",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "Project",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "The project or solution file to install workloads for. If a file is not specified, the command searches the current directory for one."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configFile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used."
+          },
+          {
+            "name": "DisableParallel",
+            "type": "bool",
+            "format": "--disable-parallel",
+            "help": "Prevents restoring multiple projects in parallel."
+          },
+          {
+            "name": "IgnoreFailedSources",
+            "type": "bool",
+            "format": "--ignore-failed-sources",
+            "help": "Treats package source failures as warnings."
+          },
+          {
+            "name": "IncludePreviews",
+            "type": "bool",
+            "format": "--include-previews",
+            "help": "Allows prerelease workload manifests."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "--no-cache",
+            "help": "Prevents caching of packages and http requests."
+          },
+          {
+            "name": "SkipManifestUpdate",
+            "type": "bool",
+            "format": "--skip-manifest-update",
+            "help": "Skip updating the workload manifests. The workload manifests define what assets and versions need to be installed for each workload."
+          },
+          {
+            "name": "SkipSignCheck",
+            "type": "bool",
+            "format": "--skip-sign-check",
+            "help": "Skipping the nuget package signature verification."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times."
+          },
+          {
+            "name": "TempDir",
+            "type": "string",
+            "format": "--temp-dir {value}",
+            "help": "Specify the temporary directory used to download and extract NuGet packages (must be secure)."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet workload update</c> command updates all installed workloads to the newest available versions. It queries Nuget.org for updated workload manifests. It then updates local manifests, downloads new versions of the installed workloads, and removes all old versions of each workload.",
+      "postfix": "WorkloadUpdate",
+      "omitCommonProperties": true,
+      "definiteArgument": "workload update",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "AdvertisingManifestsOnly",
+            "type": "bool",
+            "format": "--advertising-manifests-only",
+            "help": "Downloads advertising manifests but doesn't update any workloads."
+          },
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configFile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used."
+          },
+          {
+            "name": "DisableParallel",
+            "type": "bool",
+            "format": "--disable-parallel",
+            "help": "Prevents restoring multiple projects in parallel."
+          },
+          {
+            "name": "FromPreviousSdk",
+            "type": "bool",
+            "format": "--from-previous-sdk",
+            "help": "Include workloads installed with previous SDK versions in the update."
+          },
+          {
+            "name": "IgnoreFailedSources",
+            "type": "bool",
+            "format": "--ignore-failed-sources",
+            "help": "Treats package source failures as warnings."
+          },
+          {
+            "name": "IncludePreviews",
+            "type": "bool",
+            "format": "--include-previews",
+            "help": "Allows prerelease workload manifests."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "--no-cache",
+            "help": "Prevents caching of packages and http requests."
+          },
+          {
+            "name": "SkipSignCheck",
+            "type": "bool",
+            "format": "--skip-sign-check",
+            "help": "Skipping the nuget package signature verification."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times."
+          },
+          {
+            "name": "TempDir",
+            "type": "string",
+            "format": "--temp-dir {value}",
+            "help": "Specify the temporary directory used to download and extract NuGet packages (must be secure)."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
+    },
+    {
+      "help": "The <c>dotnet workload repair</c>  command reinstalls all installed workloads. Workloads are made up of multiple workload packs and it's possible to get into a state where some installed successfully but others didn't. For example, a dotnet workload install command might not finish installing because of a dropped internet connection.",
+      "postfix": "WorkloadRepair",
+      "omitCommonProperties": true,
+      "definiteArgument": "workload repair",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "ConfigFile",
+            "type": "string",
+            "format": "--configFile {value}",
+            "help": "The NuGet configuration file (nuget.config) to use. If specified, only the settings from this file will be used. If not specified, the hierarchy of configuration files from the current directory will be used."
+          },
+          {
+            "name": "DisableParallel",
+            "type": "bool",
+            "format": "--disable-parallel",
+            "help": "Prevents restoring multiple projects in parallel."
+          },
+          {
+            "name": "IgnoreFailedSources",
+            "type": "bool",
+            "format": "--ignore-failed-sources",
+            "help": "Treats package source failures as warnings."
+          },
+          {
+            "name": "IncludePreviews",
+            "type": "bool",
+            "format": "--include-previews",
+            "help": "Allows prerelease workload manifests."
+          },
+          {
+            "name": "Interactive",
+            "type": "bool",
+            "format": "--interactive",
+            "help": "Allows the command to stop and wait for user input or action. For example, to complete authentication."
+          },
+          {
+            "name": "NoCache",
+            "type": "bool",
+            "format": "--no-cache",
+            "help": "Prevents caching of packages and http requests."
+          },
+          {
+            "name": "SkipSignCheck",
+            "type": "bool",
+            "format": "--skip-sign-check",
+            "help": "Skipping the nuget package signature verification."
+          },
+          {
+            "name": "Source",
+            "type": "string",
+            "format": "--source {value}",
+            "help": "Specifies the URI of the NuGet package source to use. This setting overrides all of the sources specified in the nuget.config files. Multiple sources can be provided by specifying this option multiple times."
+          },
+          {
+            "name": "TempDir",
+            "type": "string",
+            "format": "--temp-dir {value}",
+            "help": "Specify the temporary directory used to download and extract NuGet packages (must be secure)."
+          },
+          {
+            "name": "Verbosity",
+            "type": "DotNetVerbosity",
+            "format": "--verbosity {value}",
+            "help": "Sets the verbosity level of the command. Allowed values are <c>q[uiet]</c>, <c>m[inimal]</c>, <c>n[ormal]</c>, <c>d[etailed]</c>, and <c>diag[nostic]</c>."
+          }
+        ]
+      }
     }
   ],
   "commonTaskProperties": [
     {
       "name": "Properties",
       "type": "Dictionary<string, object>",
-      "format": "/property:{value}",
-      "itemFormat": "{key}={value}",
+      "format": "--property:{key}={value}",
       "disallowedCharacter": ";",
-      "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>/property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
+      "help": "<p>Set or override the specified project-level properties, where name is the property name and value is the property value. Specify each property separately, or use a semicolon or comma to separate multiple properties, as the following example shows:</p><p><c>--property:WarningLevel=2;OutDir=bin\\Debug</c></p>",
       "delegates": [
         {
           "name": "RunCodeAnalysis",
@@ -1313,11 +2164,11 @@
     {
       "name": "DotNetVerbosity",
       "values": [
-        "Quiet",
-        "Minimal",
-        "Normal",
-        "Detailed",
-        "Diagnostic"
+        "quiet",
+        "minimal",
+        "normal",
+        "detailed",
+        "diagnostic"
       ]
     },
     {
@@ -1343,6 +2194,14 @@
         "info",
         "warn",
         "error"
+      ]
+    },
+    {
+      "name": "DotNetNuGetSignHashAlgorithm",
+      "values": [
+        "sha256",
+        "sha384",
+        "sha512"
       ]
     }
   ]

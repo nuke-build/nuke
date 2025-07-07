@@ -6,14 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="Humanizer" Version="2.14.1" />
-    <PackageReference Include="Serilog" Version="2.10.0" />
-    <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
+    <PackageReference Include="HtmlAgilityPack" />
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="Humanizer" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="System.ComponentModel.Annotations" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Nuke.Tooling\Nuke.Tooling.csproj" />
     <ProjectReference Include="..\Nuke.Utilities\Nuke.Utilities.csproj" />
     <ProjectReference Include="..\Nuke.Utilities.Net\Nuke.Utilities.Net.csproj" />
   </ItemGroup>

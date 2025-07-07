@@ -1,0 +1,114 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nuke-build/nuke/master/source/Nuke.Tooling.Generator/schema.json",
+  "name": "NuGetKeyVaultSignTool",
+  "officialUrl": "https://github.com/novotnyllc/NuGetKeyVaultSignTool",
+  "help": "NuGet Key Vault Sign Tool is similar to <c>nuget sign</c>, with the major difference being that it uses Azure Key Vault for performing the signing process. Similar usage configuration like <c>AzureSignTool</c>, except is used to sign nuget package.",
+  "nugetPackageId": "NuGetKeyVaultSignTool",
+  "packageExecutable": "NuGetKeyVaultSignTool.dll",
+  "tasks": [
+    {
+      "definiteArgument": "sign",
+      "settingsClass": {
+        "properties": [
+          {
+            "name": "File",
+            "type": "string",
+            "format": "{value}",
+            "position": 1,
+            "help": "Package to sign."
+          },
+          {
+            "name": "KeyVaultUrl",
+            "type": "string",
+            "format": "--azure-key-vault-url {value}",
+            "secret": false,
+            "help": "A fully qualified URL of the key vault with the certificate that will be used for signing. An example value might be <c>https://my-vault.vault.azure.net</c>."
+          },
+          {
+            "name": "KeyVaultClientId",
+            "type": "string",
+            "format": "--azure-key-vault-client-id {value}",
+            "secret": false,
+            "help": "This is the client ID used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option. If this parameter is supplied, <c>--azure-key-vault-client-secret</c> and <c>--azure-key-vault-tenant-id</c> must be supplied as well."
+          },
+          {
+            "name": "KeyVaultClientSecret",
+            "type": "string",
+            "format": "--azure-key-vault-client-secret {value}",
+            "secret": true,
+            "help": "This is the client secret used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option or when using managed identities with <c>--azure-key-vault-managed-identity</c>. If this parameter is supplied, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-tenant-id</c> must be supplied as well."
+          },
+          {
+            "name": "KeyVaultTenantId",
+            "type": "string",
+            "format": "--azure-key-vault-tenant-id {value}",
+            "secret": false,
+            "help": "This is the tenant id used to authenticate to Azure, which will be used to generate an access token. This parameter is not required if an access token is supplied directly with the <c>--azure-key-vault-accesstoken</c> option or when using managed identities with <c>--azure-key-vault-managed-identity</c>. If this parameter is supplied, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> must be supplied as well."
+          },
+          {
+            "name": "KeyVaultCertificateName",
+            "type": "string",
+            "format": "--azure-key-vault-certificate {value}",
+            "secret": false,
+            "help": "The name of the certificate used to perform the signing operation."
+          },
+          {
+            "name": "KeyVaultAccessToken",
+            "type": "string",
+            "format": "--azure-key-vault-accesstoken {value}",
+            "secret": true,
+            "help": "An access token used to authenticate to Azure. This can be used instead of the <c>--azure-key-vault-managed-identity</c>, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> options. This is useful if NuGetKeyVaultSignTool is being used as part of another program that is already authenticated and has an access token to Azure."
+          },
+          {
+            "name": "KeyVaultManagedIdentity",
+            "type": "bool",
+            "format": "--azure-key-vault-managed-identity",
+            "secret": false,
+            "help": "Use the ambient Managed Identity to authenticate to Azure. This can be used instead of the <c>--azure-key-vault-accesstoken</c>, <c>--azure-key-vault-client-id</c> and <c>--azure-key-vault-client-secret</c> options. This is useful if NuGetKeyVaultSignTool is being used on a VM/service/CLI that is configured for managed identities to Azure."
+          },
+          {
+            "name": "TimestampRfc3161Url",
+            "type": "string",
+            "format": "--timestamp-rfc3161 {value}",
+            "help": "A URL to an RFC3161 compliant timestamping service. This parameter serves the same purpose as the <c>/tr</c> option in the Windows SDK <c>signtool</c>. This parameter should be used in favor of the <c>--timestamp</c> option. Using this parameter will allow using modern, RFC3161 timestamps which also support timestamp digest algorithms other than SHA1."
+          },
+          {
+            "name": "TimestampDigest",
+            "type": "NuGetKeyVaultSignToolDigestAlgorithm",
+            "format": "--timestamp-digest {value}",
+            "help": "The name of the digest algorithm used for timestamping. This parameter is ignored unless the <c>--timestamp-rfc3161</c> parameter is also supplied. The default value is <c>sha256</c>."
+          },
+          {
+            "name": "FileDigest",
+            "type": "NuGetKeyVaultSignToolDigestAlgorithm",
+            "format": "--file-digest {value}",
+            "help": "The name of the digest algorithm used for hashing the file being signed. The default value is <c>sha256</c>."
+          },
+          {
+            "name": "Force",
+            "type": "bool",
+            "format": "--force",
+            "help": "Overwrites a signature if it exists."
+          },
+          {
+            "name": "Output",
+            "type": "string",
+            "format": "--output {value}",
+            "help": "The output file. If omitted, overwrites input."
+          }
+        ]
+      }
+    }
+  ],
+  "enumerations": [
+    {
+      "name": "NuGetKeyVaultSignToolDigestAlgorithm",
+      "values": [
+        "sha1",
+        "sha256",
+        "sha384",
+        "sha512"
+      ]
+    }
+  ]
+}

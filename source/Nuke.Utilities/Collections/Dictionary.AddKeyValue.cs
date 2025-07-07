@@ -11,8 +11,8 @@ namespace Nuke.Common.Utilities.Collections;
 
 public static partial class DictionaryExtensions
 {
-    public static IDictionary<TKey, TValue> AddPair<TKey, TValue>(
-        this IDictionary<TKey, TValue> dictionary,
+    public static Dictionary<TKey, TValue> AddPair<TKey, TValue>(
+        this Dictionary<TKey, TValue> dictionary,
         TKey key,
         [CanBeNull] TValue value = default)
     {
@@ -20,8 +20,8 @@ public static partial class DictionaryExtensions
         return dictionary;
     }
 
-    public static IDictionary<TKey, string> AddPair<TKey, TValue>(
-        this IDictionary<TKey, string> dictionary,
+    public static Dictionary<TKey, string> AddPair<TKey, TValue>(
+        this Dictionary<TKey, string> dictionary,
         TKey key,
         [CanBeNull] TValue value = default)
     {
@@ -29,8 +29,8 @@ public static partial class DictionaryExtensions
         return dictionary;
     }
 
-    public static IDictionary<TKey, TValue> AddPairWhenKeyNotNull<TKey, TValue>(
-        this IDictionary<TKey, TValue> dictionary,
+    public static Dictionary<TKey, TValue> AddPairWhenKeyNotNull<TKey, TValue>(
+        this Dictionary<TKey, TValue> dictionary,
         [CanBeNull] TKey key,
         [CanBeNull] TValue value = default)
         where TKey : class
@@ -40,8 +40,8 @@ public static partial class DictionaryExtensions
             : dictionary;
     }
 
-    public static IDictionary<TKey, TValue> AddPairWhenValueNotNull<TKey, TValue>(
-        this IDictionary<TKey, TValue> dictionary,
+    public static Dictionary<TKey, TValue> AddPairWhenValueNotNull<TKey, TValue>(
+        this Dictionary<TKey, TValue> dictionary,
         [CanBeNull] TKey key,
         [CanBeNull] TValue value)
         where TValue : class

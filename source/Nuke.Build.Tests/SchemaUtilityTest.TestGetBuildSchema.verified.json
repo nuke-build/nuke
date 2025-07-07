@@ -1,0 +1,125 @@
+﻿{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$ref": "#/definitions/build",
+  "title": "Build Schema",
+  "definitions": {
+    "build": {
+      "type": "object",
+      "properties": {
+        "BooleanParam": {
+          "type": "boolean"
+        },
+        "ComplexTypeArrayParam": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "ComplexTypeParam": {
+          "type": "string"
+        },
+        "ComponentInheritedParam": {
+          "type": "string"
+        },
+        "Continue": {
+          "type": "boolean",
+          "description": "Indicates to continue a previously failed build attempt"
+        },
+        "CustomEnumerationArrayParam": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "Debug",
+              "Release"
+            ]
+          }
+        },
+        "CustomEnumerationParam": {
+          "type": "string",
+          "enum": [
+            "Debug",
+            "Release"
+          ]
+        },
+        "Help": {
+          "type": "boolean",
+          "description": "Shows the help text for this build assembly"
+        },
+        "Host": {
+          "type": "string",
+          "description": "Host for execution. Default is 'automatic'"
+        },
+        "IntegerArrayParam": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "NoLogo": {
+          "type": "boolean",
+          "description": "Disables displaying the NUKE logo"
+        },
+        "NullableBooleanParam": {
+          "type": "boolean"
+        },
+        "Partition": {
+          "type": "string",
+          "description": "Partition to use on CI"
+        },
+        "Plan": {
+          "type": "boolean",
+          "description": "Shows the execution plan (HTML)"
+        },
+        "Profile": {
+          "type": "array",
+          "description": "Defines the profiles to load",
+          "items": {
+            "type": "string"
+          }
+        },
+        "RegularParam": {
+          "type": "string"
+        },
+        "Root": {
+          "type": "string",
+          "description": "Root directory during build execution"
+        },
+        "SecretParam": {
+          "type": "string",
+          "default": "Secrets must be entered via 'nuke :secrets [profile]'"
+        },
+        "Skip": {
+          "type": "array",
+          "description": "List of targets to be skipped. Empty list skips all dependencies",
+          "items": {
+            "type": "string"
+          }
+        },
+        "StringArrayParam": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Target": {
+          "type": "array",
+          "description": "List of targets to be invoked. Default is '{default_target}'",
+          "items": {
+            "type": "string"
+          }
+        },
+        "Verbosity": {
+          "type": "string",
+          "description": "Logging verbosity during build execution. Default is 'Normal'",
+          "enum": [
+            "Minimal",
+            "Normal",
+            "Quiet",
+            "Verbose"
+          ]
+        }
+      }
+    }
+  }
+}

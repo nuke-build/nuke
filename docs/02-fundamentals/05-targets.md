@@ -131,7 +131,7 @@ When choosing a direction, you should ask yourself which target should know abou
 
 :::caution
 
-Dependencies between targets are solely defined between the individual targets and _not_ through the position they take in a dependency call. The following examples illustrate the difference between the **partial and total order** of targets:
+Dependencies between targets are ONLY defined between the individual targets and NOT through their positions in a dependency call. The following examples illustrate the difference between the **partial and total order** of targets:
 
 <Tabs>
   <TabItem value="partial" label="Partial Order">
@@ -207,7 +207,7 @@ class Build : NukeBuild
         // highlight-start
         .OnlyWhenDynamic(() => Data.Any())
         // highlight-end
-        .Execute(() => { });
+        .Executes(() => { });
 }
 ```
 
@@ -229,7 +229,7 @@ class Build : NukeBuild
         .WhenSkipped(DependencyBehavior.Execute)
         // highlight-end
         .DependsOn(A)
-        .Execute(() => { });
+        .Executes(() => { });
 }
 ```
 
@@ -286,7 +286,7 @@ class Build : NukeBuild
 
     Target B => _ => _
         .DependsOn(A)
-        .Execute(() => { });
+        .Executes(() => { });
 }
 ```
 
@@ -309,7 +309,7 @@ class Build : NukeBuild
         .AssuredAfterFailure()
         // highlight-end
         .DependsOn(A)
-        .Execute(() => { });
+        .Executes(() => { });
 }
 ```
 

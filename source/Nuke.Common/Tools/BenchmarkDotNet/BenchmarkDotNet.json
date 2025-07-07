@@ -16,6 +16,7 @@
             "name": "AssemblyFile",
             "type": "string",
             "format": "{value}",
+            "position": 1,
             "help": "The assembly with the benchmarks (required)."
           },
           {

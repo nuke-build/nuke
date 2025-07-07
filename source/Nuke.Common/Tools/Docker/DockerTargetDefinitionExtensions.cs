@@ -4,7 +4,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using JetBrains.Annotations;
@@ -63,8 +62,8 @@ public static class DockerTargetDefinitionExtensions
                     .SetOutput(buildAssemblyDirectory)
                     .SetRuntime(settings.DotNetRuntime)
                     .EnableSelfContained()
-                    .DisableProcessLogInvocation()
-                    .DisableProcessLogOutput());
+                    .DisableProcessOutputLogging()
+                    .DisableProcessInvocationLogging());
             }
             else
             {
@@ -85,7 +84,8 @@ public static class DockerTargetDefinitionExtensions
             var envFile = buildAssemblyDirectory / $".env.{definition.Name}";
             var environmentVariables = GetEnvironmentVariables(settings, rootDirectory, tempDirectory);
 
-            envFile.WriteAllLines(environmentVariables.Select(x => $"{x.Key}={x.Value}"));
+            envFile.WriteAllLines(environmentVariables.Where(x => x.Value != null).Select(x => $"{x.Key}={x.Value}")
+                .Concat(environmentVariables.Where(x => x.Value == null).Select(x => x.Key)));
             localTempDirectory.CreateOrCleanDirectory();
 
             if (!settings.Username.IsNullOrEmpty())
@@ -95,31 +95,39 @@ public static class DockerTargetDefinitionExtensions
                     .SetUsername(settings.Username)
                     .SetPassword(settings.Password)
                     .SetServer(settings.Server)
-                    .DisableProcessLogInvocation()
-                    .DisableProcessLogOutput());
+                    .DisableProcessInvocationLogging()
+                    .DisableProcessOutputLogging());
             }
 
             try
             {
-                using (DelegateDisposable.SetAndRestore(() => DockerLogger, (_, message) => Log.Write(LogEventReader.ReadFromString(message))))
-                {
-                    Log.Information("Launching target in {Image}...", settings.Image);
-                    DockerTasks.DockerRun(_ => settings
-                        .When(!settings.Rm.HasValue, _ => _
-                            .EnableRm())
-                        .AddVolume($"{build.RootDirectory}:{rootDirectory}")
-                        .AddVolume($"{NuGetPackageResolver.GetPackagesDirectory(NuGetToolPathResolver.NuGetPackagesConfigFile)}:{nugetDirectory}")
-                        .SetPlatform(settings.Platform)
-                        .SetWorkdir(rootDirectory)
-                        .SetEnvFile(envFile)
-                        .SetEntrypoint(rootDirectory / build.RootDirectory.GetRelativePathTo(buildAssembly))
-                        .SetArgs(new[]
-                                 {
-                                     definition.Target.Name,
-                                     $"--{ParameterService.GetParameterDashedName(Constants.SkippedTargetsParameterName)}"
-                                 }.Concat(settings.Args))
-                        .DisableProcessLogInvocation());
-                }
+                Log.Information("Launching target in {Image}...", settings.Image);
+                DockerTasks.DockerRun(_ => settings
+                    .When(!settings.Rm.HasValue, _ => _
+                        .EnableRm())
+                    .AddVolume($"{build.RootDirectory}:{rootDirectory}")
+                    .AddVolume($"{NuGetPackageResolver.GetPackagesDirectory(NuGetToolPathResolver.NuGetPackagesConfigFile)}:{nugetDirectory}")
+                    .SetPlatform(settings.Platform)
+                    .SetWorkdir(rootDirectory)
+                    .SetEnvFile(envFile)
+                    .SetEntrypoint(rootDirectory / build.RootDirectory.GetRelativePathTo(buildAssembly))
+                    .SetArgs(new[]
+                             {
+                                 definition.Target.Name,
+                                 $"--{ParameterService.GetParameterDashedName(Constants.SkippedTargetsParameterName)}"
+                             }.Concat(settings.Args))
+                    .DisableProcessInvocationLogging()
+                    .SetProcessLogger((_, message) =>
+                    {
+                        try
+                        {
+                            Log.Write(LogEventReader.ReadFromString(message));
+                        }
+                        catch
+                        {
+                            Log.Debug(message);
+                        }
+                    }));
             }
             finally
             {
@@ -133,8 +141,8 @@ public static class DockerTargetDefinitionExtensions
         return definition;
     }
 
-    private static IReadOnlyDictionary<string, string> GetEnvironmentVariables(
-        ToolSettings settings,
+    private static Dictionary<string, string> GetEnvironmentVariables(
+        ToolOptions settings,
         AbsolutePath rootDirectory,
         AbsolutePath tempDirectory)
     {
@@ -164,14 +172,17 @@ public static class DockerTargetDefinitionExtensions
                 "USERPROFILE",
             };
 
+        settings.ProcessEnvironmentVariables.Where(x => x.Value.Contains(EnvironmentInfo.NewLine))
+            .ForEach(x => Log.Warning("Environment variable {Variable} contains newlines and cannot be passed to Docker", x.Key));
+
         return customEnvironmentVariables
             .AddDictionary(settings.ProcessEnvironmentVariables
                 .Where(x =>
                     !customEnvironmentVariables.Keys.Contains(x.Key, StringComparer.OrdinalIgnoreCase) &&
                     // TODO: Copy from TeamCity?
                     !x.Key.Contains(' ') &&
-                    !x.Key.EqualsAnyOrdinalIgnoreCase(excludedEnvironmentVariables))
-                .ToDictionary(x => x.Key, x => x.Value).AsReadOnly())
-            .ToImmutableSortedDictionary();
+                    !x.Key.EqualsAnyOrdinalIgnoreCase(excludedEnvironmentVariables) &&
+                    !x.Value.Contains(EnvironmentInfo.NewLine))
+                .ToDictionary(x => x.Key, _ => default(string)));
     }
 }

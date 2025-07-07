@@ -13,6 +13,7 @@ using JetBrains.Annotations;
 using Nuke.Common.Utilities;
 using Nuke.Common.Utilities.Collections;
 using Serilog;
+using Serilog.Events;
 
 namespace Nuke.Common.Tooling;
 
@@ -22,8 +23,10 @@ public static class ProcessTasks
     public static bool DefaultLogOutput = true;
     public static bool DefaultLogInvocation = true;
     public static bool LogWorkingDirectory = true;
+    public static string DefaultWorkingDirectory = EnvironmentInfo.WorkingDirectory;
 
     private static readonly char[] s_pathSeparators = { EnvironmentInfo.IsWin ? ';' : ':' };
+    private static readonly object s_lock = new();
 
     public static IProcess StartShell(
         string command,
@@ -46,22 +49,6 @@ public static class ProcessTasks
             logInvocation,
             logger,
             outputFilter);
-    }
-
-    public static IProcess StartProcess(ToolSettings toolSettings)
-    {
-        var arguments = toolSettings.GetProcessArguments();
-
-        return StartProcess(
-            toolSettings.ProcessToolPath,
-            arguments.RenderForExecution(),
-            toolSettings.ProcessWorkingDirectory,
-            toolSettings.ProcessEnvironmentVariables,
-            toolSettings.ProcessExecutionTimeout,
-            toolSettings.ProcessLogOutput,
-            toolSettings.ProcessLogInvocation,
-            toolSettings.ProcessLogger,
-            arguments.FilterSecrets);
     }
 
 #if NET6_0_OR_GREATER
@@ -101,7 +88,7 @@ public static class ProcessTasks
         Action<OutputType, string> logger = null,
         Func<string, string> outputFilter = null)
     {
-        Assert.True(toolPath != null);
+        Assert.NotNull(toolPath);
         if (!Path.IsPathRooted(toolPath) && !toolPath.Contains(Path.DirectorySeparatorChar))
             toolPath = ToolPathResolver.GetPathExecutable(toolPath);
 
@@ -112,25 +99,17 @@ public static class ProcessTasks
             toolPath = toolPathOverride;
         }
 
-        outputFilter ??= x => x;
-        Assert.FileExists(toolPath);
-        if (logInvocation ?? DefaultLogInvocation)
-        {
-            // TODO: logging additional
-            Log.Information("> {ToolPath} {Arguments}", Path.GetFullPath(toolPath).DoubleQuoteIfNeeded(), outputFilter(arguments));
-            if (LogWorkingDirectory && workingDirectory != null)
-                Log.Information("@ {WorkingDirectory}", workingDirectory);
-        }
-
-        return StartProcessInternal(toolPath,
-            arguments,
-            workingDirectory,
+        return StartProcessInternal(
+            toolPath,
+            arguments ?? string.Empty,
+            workingDirectory ?? DefaultWorkingDirectory,
             environmentVariables,
             timeout,
+            logInvocation ?? DefaultLogInvocation,
             logOutput ?? DefaultLogOutput
                 ? logger ?? DefaultLogger
                 : null,
-            outputFilter);
+            outputFilter ?? (x => x));
     }
 
     [CanBeNull]
@@ -154,20 +133,22 @@ public static class ProcessTasks
     [CanBeNull]
     private static IProcess StartProcessInternal(
         string toolPath,
-        [CanBeNull] string arguments,
-        [CanBeNull] string workingDirectory,
+        string arguments,
+        string workingDirectory,
         [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
         int? timeout,
+        bool logInvocation,
         [CanBeNull] Action<OutputType, string> logger,
         Func<string, string> outputFilter)
     {
-        Assert.True(workingDirectory == null || Directory.Exists(workingDirectory), $"WorkingDirectory '{workingDirectory}' does not exist");
+        Assert.FileExists(toolPath);
+        Assert.DirectoryExists(workingDirectory);
 
         var startInfo = new ProcessStartInfo
                         {
                             FileName = toolPath,
-                            Arguments = arguments ?? string.Empty,
-                            WorkingDirectory = workingDirectory ?? EnvironmentInfo.WorkingDirectory,
+                            Arguments = arguments ,
+                            WorkingDirectory = workingDirectory,
                             RedirectStandardOutput = true,
                             RedirectStandardError = true,
                             UseShellExecute = false,
@@ -175,8 +156,15 @@ public static class ProcessTasks
                             StandardOutputEncoding = Encoding.UTF8
                         };
 
-        ApplyEnvironmentVariables(environmentVariables, startInfo);
-        // PrintEnvironmentVariables(startInfo);
+        if (environmentVariables != null)
+        {
+            startInfo.Environment.Clear();
+            foreach (var (key, value) in environmentVariables)
+                startInfo.Environment[key] = value;
+        }
+
+        if (logInvocation)
+            LogInvocation(startInfo, outputFilter, environmentVariables != null);
 
         var process = Process.Start(startInfo);
         if (process == null)
@@ -186,17 +174,26 @@ public static class ProcessTasks
         return new Process2(process, outputFilter, timeout, output);
     }
 
-    private static void ApplyEnvironmentVariables(
-        [CanBeNull] IReadOnlyDictionary<string, string> environmentVariables,
-        ProcessStartInfo startInfo)
+    private static void LogInvocation(ProcessStartInfo startInfo, Func<string, string> outputFilter, bool hasEnvironmentVariables)
     {
-        if (environmentVariables == null)
-            return;
+        lock (s_lock)
+        {
+            // TODO: logging additional
+            Log.Information("> {ToolPath} {Arguments}", startInfo.FileName.DoubleQuoteIfNeeded(), outputFilter(startInfo.Arguments));
 
-        startInfo.Environment.Clear();
+            if (LogWorkingDirectory)
+            {
+                Log.Write(
+                    startInfo.WorkingDirectory != DefaultWorkingDirectory
+                        ? LogEventLevel.Information
+                        : LogEventLevel.Verbose,
+                    "@ {WorkingDirectory}",
+                    startInfo.WorkingDirectory);
+            }
 
-        foreach (var (key, value) in environmentVariables)
-            startInfo.Environment[key] = value;
+            // if (hasEnvironmentVariables)
+            //     PrintEnvironmentVariables(startInfo.Environment);
+        }
     }
 
     private static BlockingCollection<Output> GetOutputCollection(
@@ -239,33 +236,28 @@ public static class ProcessTasks
             Log.Error(output);
     }
 
-    public static void DefaultExitHandler(ToolSettings toolSettings, IProcess process)
+    public static void PrintEnvironmentVariables()
     {
-        process.AssertZeroExitCode();
+        PrintEnvironmentVariables(EnvironmentInfo.Variables.ToDictionary(x => x.Key, x => x.Value));
     }
 
-    private static void PrintEnvironmentVariables(ProcessStartInfo startInfo)
+    private static void PrintEnvironmentVariables(IDictionary<string, string> environmentVariables)
     {
-        static void TraceItem(string key, string value) => Log.Verbose($"  - {key} = {value}");
+        static IEnumerable<(string Key, string Value)> Split(KeyValuePair<string, string> pair)
+        {
+            var values = pair.Value.Split(s_pathSeparators, StringSplitOptions.RemoveEmptyEntries);
+            var padding = values.Length.ToString().Length;
+
+            return values.Length == 1
+                ? new[] { (pair.Key, values.Single()) }
+                : values.Select((x, i) => ($"{pair.Key}[{i.ToString().PadLeft(padding, paddingChar: '0')}]", x));
+        }
 
         // TODO: logging additional
-        Log.Verbose("Environment variables:");
-
-        foreach (var (key, value) in startInfo.Environment.OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase))
-        {
-            if (key.EqualsOrdinalIgnoreCase("path"))
-            {
-                var paths = value.Split(s_pathSeparators);
-                var padding = paths.Length.ToString().Length;
-
-                for (var i = 0; i < paths.Length; i++)
-                    TraceItem($"{key}[{i.ToString().PadLeft(padding, paddingChar: '0')}]", paths[i]);
-            }
-            else
-            {
-                TraceItem(key, value);
-            }
-        }
+        environmentVariables
+            .SelectMany(Split)
+            .OrderBy(x => x.Key, StringComparer.OrdinalIgnoreCase)
+            .ForEach(x => Log.Verbose("$ {Key} = {Value}", x.Key, x.Value));
     }
 
     public static void CheckPathEnvironmentVariable()

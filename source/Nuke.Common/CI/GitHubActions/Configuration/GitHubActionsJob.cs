@@ -18,6 +18,8 @@ public class GitHubActionsJob : ConfigurationEntity
     public GitHubActionsImage Image { get; set; }
     public int TimeoutMinutes { get; set; }
     public string ConcurrencyGroup { get; set; }
+    public string EnvironmentName { get; set; }
+    public string EnvironmentUrl { get; set; }
     public bool ConcurrencyCancelInProgress { get; set; }
     public GitHubActionsStep[] Steps { get; set; }
 
@@ -52,6 +54,23 @@ public class GitHubActionsJob : ConfigurationEntity
                     if (ConcurrencyCancelInProgress)
                     {
                         writer.WriteLine("cancel-in-progress: true");
+                    }
+                }
+            }
+
+            if (!EnvironmentName.IsNullOrWhiteSpace())
+            {
+                if (EnvironmentUrl.IsNullOrWhiteSpace())
+                {
+                    writer.WriteLine($"environment: {EnvironmentName}");
+                }
+                else
+                {
+                    writer.WriteLine("environment:");
+                    using (writer.Indent())
+                    {
+                        writer.WriteLine($"name: {EnvironmentName}");
+                        writer.WriteLine($"url: {EnvironmentUrl}");
                     }
                 }
             }

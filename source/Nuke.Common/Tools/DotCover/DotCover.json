@@ -6,7 +6,7 @@
   "name": "DotCover",
   "officialUrl": "https://www.jetbrains.com/dotcover",
   "help": "dotCover is a .NET unit testing and code coverage tool that works right in Visual Studio, helps you know to what extent your code is covered with unit tests, provides great ways to visualize code coverage, and is Continuous Integration ready. dotCover calculates and reports statement-level code coverage in applications targeting .NET Framework, Silverlight, and .NET Core.",
-  "nugetPackageId": "JetBrains.dotCover.DotNetCliTool",
+  "nugetPackageId": "JetBrains.dotCover.DotNetCliTool|JetBrains.dotCover.CommandLineTools",
   "tasks": [
     {
       "postfix": "Analyse",
@@ -19,7 +19,8 @@
           {
             "name": "Configuration",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "TargetExecutable",
@@ -59,7 +60,8 @@
           {
             "name": "Configuration",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "TargetExecutable",
@@ -93,7 +95,8 @@
           {
             "name": "Configuration",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "OutputFile",
@@ -118,7 +121,8 @@
           {
             "name": "Configuration",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "Source",
@@ -138,7 +142,8 @@
           {
             "name": "Configuration",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "Source",
@@ -170,7 +175,8 @@
           {
             "name": "Configuration",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "Source",
@@ -208,7 +214,8 @@
           {
             "name": "Configuration",
             "type": "string",
-            "format": "{value}"
+            "format": "{value}",
+            "position": 1
           },
           {
             "name": "Source",

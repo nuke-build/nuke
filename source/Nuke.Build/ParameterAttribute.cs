@@ -67,20 +67,32 @@ public class ParameterAttribute : ValueInjectionAttributeBase
     }
 }
 
+/// <summary>
+/// Marks a member as being required for the whole build.
+/// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-public class RequiredAttribute : Attribute
-{
-}
+public class RequiredAttribute : Attribute;
 
+/// <summary>
+/// Suppresses warning logging if value injection throws an exception.
+/// </summary>
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field)]
-public class OptionalAttribute : Attribute
-{
-}
+public class OptionalAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
-public class SecretAttribute : Attribute
-{
-}
+public class SecretAttribute : Attribute;
+
+/// <summary>
+/// Enables on-demand value injection, where non-parameter members are only injected if required by a target.
+/// </summary>
+[AttributeUsage(AttributeTargets.Class)]
+public class OnDemandValueInjectionAttribute : Attribute;
+
+/// <summary>
+/// Marks a member to be injected only if required by a target.
+/// </summary>
+[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
+public class OnDemandAttribute : Attribute;
 
 [AttributeUsage(AttributeTargets.Interface, AllowMultiple = false, Inherited = false)]
 public class ParameterPrefixAttribute : Attribute

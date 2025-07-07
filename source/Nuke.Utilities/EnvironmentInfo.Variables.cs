@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -21,8 +22,8 @@ public static partial class EnvironmentInfo
     /// <summary>
     /// Returns a dictionary of environment variables for the current process.
     /// </summary>
-    public static IReadOnlyDictionary<string, string> Variables
-        => Environment.GetEnvironmentVariables().ToGeneric<string, string>(StringComparer.CurrentCulture);
+    public static ReadOnlyDictionary<string, string> Variables
+        => Environment.GetEnvironmentVariables().ToGeneric<string, string>(StringComparer.CurrentCulture).AsReadOnly();
 
     /// <summary>
     /// Returns all paths from the <em>PATH</em> environment variable.
@@ -62,7 +63,7 @@ public static partial class EnvironmentInfo
         if (value == null)
             return default;
 
-        return (T)ReflectionUtility.Convert(value, typeof(T), separator);
+        return (T)ReflectionUtility.Convert(value, typeof(T), separator, booleanDefault: false);
     }
 
     /// <summary>

@@ -18,7 +18,9 @@ using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
+using Nuke.Common.Tools.GitHub;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Utilities;
 using Nuke.Components;
 using static Nuke.Common.ControlFlow;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -104,6 +106,7 @@ partial class Build
 
     Target ITest.Test => _ => _
         .Inherit<ITest>()
+        .OnlyWhenStatic(() => Host is not GitHubActions { Workflow: AlphaDeployment })
         .Partition(2);
 
     bool IReportCoverage.CreateCoverageHtmlReport => true;
@@ -176,13 +179,19 @@ partial class Build
         .Inherit<ICreateGitHubRelease>()
         .TriggeredBy<IPublish>()
         .ProceedAfterFailure()
-        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch());
+        .OnlyWhenStatic(() => GitRepository.IsOnMasterBranch())
+        .Executes(async () =>
+        {
+            var issues = await GitRepository.GetGitHubMilestoneIssues(MilestoneTitle);
+            foreach (var issue in issues)
+                await GitHubActions.Instance.CreateComment(issue.Number, $"Released in {MilestoneTitle}! 🎉");
+        });
 
     Target Install => _ => _
         .DependsOn<IPack>()
         .Executes(() =>
         {
-            SuppressErrors(() => DotNet($"tool uninstall -g {Solution.Nuke_GlobalTool.Name}"));
+            SuppressErrors(() => DotNet($"tool uninstall -g {Solution.Nuke_GlobalTool.Name}"), logWarning: false);
             DotNet($"tool install -g {Solution.Nuke_GlobalTool.Name} --add-source {OutputDirectory} --version {DefaultDeploymentVersion}");
         });
 

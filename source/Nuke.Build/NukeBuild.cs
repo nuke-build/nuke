@@ -87,8 +87,7 @@ public abstract partial class NukeBuild : INukeBuild
     /// </summary>
     [Parameter("List of targets to be invoked. Default is '{default_target}'.",
         Name = InvokedTargetsParameterName,
-        Separator = TargetsSeparator,
-        ValueProviderMember = nameof(TargetNames))]
+        Separator = TargetsSeparator)]
     public IReadOnlyCollection<ExecutableTarget> InvokedTargets => ExecutionPlan.Where(x => x.Invoked).ToList();
 
     /// <summary>
@@ -96,8 +95,7 @@ public abstract partial class NukeBuild : INukeBuild
     /// </summary>
     [Parameter("List of targets to be skipped. Empty list skips all dependencies.",
         Name = SkippedTargetsParameterName,
-        Separator = TargetsSeparator,
-        ValueProviderMember = nameof(TargetNames))]
+        Separator = TargetsSeparator)]
     public IReadOnlyCollection<ExecutableTarget> SkippedTargets => ExecutionPlan.Where(x => x.Status == ExecutionStatus.Skipped).ToList();
 
     /// <summary>
@@ -186,10 +184,7 @@ public abstract partial class NukeBuild : INukeBuild
     internal IEnumerable<string> TargetNames => ExecutableTargetFactory.GetTargetProperties(GetType()).Select(x => x.GetDisplayShortName());
     internal IEnumerable<string> HostNames => Host.AvailableTypes.Select(x => x.Name);
 
-    public bool IsSuccessful => ExecutionPlan.All(x => x.Status is
-        ExecutionStatus.Succeeded or
-        ExecutionStatus.Skipped or
-        ExecutionStatus.Collective);
+    public bool IsSucceeding => !IsFailing;
 
     public bool IsFailing => ExecutionPlan.Any(x => x.Status is
         ExecutionStatus.Failed or
@@ -207,13 +202,13 @@ public abstract partial class NukeBuild : INukeBuild
 
     private bool IsInterceptorExecution => Environment.GetEnvironmentVariable(InterceptorEnvironmentKey) == "1";
 
-    public void ReportSummary(Configure<IDictionary<string, string>> configurator = null)
+    public void ReportSummary(Configure<Dictionary<string, string>> configurator = null)
     {
         var target = ExecutionPlan.Single(x => x.Status == ExecutionStatus.Running);
         ReportSummary(target, configurator);
     }
 
-    internal void ReportSummary(ExecutableTarget target, Configure<IDictionary<string, string>> configurator)
+    internal void ReportSummary(ExecutableTarget target, Configure<Dictionary<string, string>> configurator)
     {
         target.SummaryInformation = configurator.InvokeSafe(new Dictionary<string, string>()).ToDictionary(x => x.Key, x => x.Value);
         ExecuteExtension<IOnTargetSummaryUpdated>(x => x.OnTargetSummaryUpdated(this, target));

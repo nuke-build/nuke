@@ -281,7 +281,7 @@ public partial class TeamCity : Host, IBuildServer
                 .AddPairWhenValueNotNull("errorDetails", errorDetails));
     }
 
-    public void Write(string command, Func<IDictionary<string, object>, IDictionary<string, object>> dictionaryConfigurator)
+    public void Write(string command, Func<Dictionary<string, object>, Dictionary<string, object>> dictionaryConfigurator)
     {
         Write(new[] { command }.Concat(dictionaryConfigurator(new Dictionary<string, object>())
             .Select(x => $"{x.Key}='{Escape(x.Value.ToString())}'")

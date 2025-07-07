@@ -32,7 +32,7 @@ public abstract class FileSystemDependentTest
         ExecutionDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location).NotNull();
         RootDirectory = Constants.TryGetRootDirectoryFrom(EnvironmentInfo.WorkingDirectory);
         TestProjectDirectory = ExecutionDirectory.FindParentOrSelf(x => x.ContainsFile("*.csproj"));
-        TestTempDirectory = ExecutionDirectory / "temp"  / $"{GetType().Name}.{TestName}";
+        TestTempDirectory = ExecutionDirectory / "temp" / $"{GetType().Name}.{TestName}";
 
         TestTempDirectory.CreateOrCleanDirectory();
     }

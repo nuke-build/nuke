@@ -16,6 +16,7 @@
             "name": "TestAssemblies",
             "type": "List<string>",
             "format": "{value}",
+            "position": 1,
             "help": "Run tests from the specified files. Separate multiple test file names with spaces."
           },
           {
