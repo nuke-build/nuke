@@ -105,7 +105,7 @@
             "type": "Dictionary<string, object>",
             "format": "/p:{value}",
             "itemFormat": "{key}={value}",
-            "help": "Specifies a name value pair for an [action-specific property](#properties-specific-to-the-publish-action);{PropertyName}={Value}.",
+            "help": "Specifies a name value pair for an <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-publish.md#properties-specific-to-the-publish-action\">action-specific property</a>;{PropertyName}={Value}.",
             "delegates": [
               {
                 "name": "AdditionalDeploymentContributorArguments",
@@ -153,27 +153,27 @@
               {
                 "name": "AzureSharedAccessSignatureToken",
                 "type": "string",
-                "help": "Azure shared access signature (SAS) token. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#publish-import-data)."
+              "help": "Azure shared access signature (SAS) token. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageBlobEndpoint",
                 "type": "string",
-                "help": "Azure Blob Storage endpoint, see [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#publish-import-data)."
+              "help": "Azure Blob Storage endpoint, see <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageContainer",
                 "type": "string",
-                "help": "Azure Blob Storage container, see [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#publish-import-data)."
+              "help": "Azure Blob Storage container, see <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageKey",
                 "type": "string",
-                "help": "Azure storage account key, see [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#publish-import-data)."
+              "help": "Azure storage account key, see <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageRootPath",
                 "type": "string",
-                "help": "Storage root path within the container. Without this property, the path defaults to `servername/databasename/timestamp/`. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#publish-import-data)."
+              "help": "Storage root path within the container. Without this property, the path defaults to `servername/databasename/timestamp/`. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#publish-import-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "BackupDatabaseBeforeChanges",
@@ -213,7 +213,7 @@
               {
                 "name": "DatabaseEdition",
                 "type": "DatabaseEdition",
-                "help": "Defines the edition of an Azure SQL Database. See [Azure SQL Database service tiers](/azure/azure-sql/database/service-tiers-general-purpose-business-critical)."
+                "help": "Defines the edition of an Azure SQL Database. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-publish.md#databaseedition\">Azure SQL Database service tiers</a>."
               },
               {
                 "name": "DatabaseLockTimeout",
@@ -268,23 +268,13 @@
               {
                 "name": "DoNotDropObjectType",
                 "type": "string",
-                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages. This property may be specified multiple times to indicate multiple options."
+                "help": "An object type that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers. This property may be specified multiple times to indicate multiple options."
               },
               {
                 "name": "DoNotDropObjectTypes",
                 "type": "List<string>",
                 "separator": ";",
-                "help": "A semicolon-delimited list of object types that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
-              },
-              {
-                "name": "DoNotDropWorkloadClassifiers",
-                "type": "bool",
-                "help": "When false, WorkloadClassifiers in the target database that are not defined in the source will be dropped during deployment."
-              },
-              {
-                "name": "DoNotEvaluateSqlCmdVariables",
-                "type": "bool",
-                "help": "Specifies whether SQLCMD variables to not replace with values"
+                "help": "A semicolon-delimited list of object types that should not be dropped when DropObjectsNotInSource is true. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers."
               },
               {
                 "name": "DropConstraintsNotInSource",
@@ -345,17 +335,12 @@
                 "name": "ExcludeObjectTypes",
                 "type": "List<string>",
                 "separator": ";",
-                "help": "A semicolon delimited list of object types that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
+                "help": "A semicolon-delimited list of object types that should be ignored during deployment. Valid object type names are Aggregates, ApplicationRoles, Assemblies, AssemblyFiles, AsymmetricKeys, BrokerPriorities, Certificates, ColumnEncryptionKeys, ColumnMasterKeys, Contracts, DatabaseOptions, DatabaseRoles, DatabaseTriggers, Defaults, ExtendedProperties, ExternalDataSources, ExternalFileFormats, ExternalTables, Filegroups, Files, FileTables, FullTextCatalogs, FullTextStoplists, MessageTypes, PartitionFunctions, PartitionSchemes, Permissions, Queues, RemoteServiceBindings, RoleMembership, Rules, ScalarValuedFunctions, SearchPropertyLists, SecurityPolicies, Sequences, Services, Signatures, StoredProcedures, SymmetricKeys, Synonyms, Tables, TableValuedFunctions, UserDefinedDataTypes, UserDefinedTableTypes, ClrUserDefinedTypes, Users, Views, XmlSchemaCollections, Audits, Credentials, CryptographicProviders, DatabaseAuditSpecifications, DatabaseEncryptionKeys, DatabaseScopedCredentials, Endpoints, ErrorMessages, EventNotifications, EventSessions, LinkedServerLogins, LinkedServers, Logins, MasterKeys, Routes, ServerAuditSpecifications, ServerRoleMembership, ServerRoles, ServerTriggers, ExternalStreams, ExternalStreamingJobs, DatabaseWorkloadGroups, WorkloadClassifiers, ExternalLibraries, ExternalLanguages."
               },
               {
                 "name": "GenerateSmartDefaults",
                 "type": "bool",
                 "help": "Automatically provides a default value when updating a table that contains data with a column that does not allow null values."
-              },
-              {
-                "name": "HashObjectNamesInLogs",
-                "type": "bool",
-                "help": "Specifies whether to replace all object names in logs with a random hash value."
               },
               {
                 "name": "IgnoreAnsiNulls",
@@ -558,11 +543,6 @@
                 "help": "Specifies whether differences in the value of the WITH NOCHECK clause for foreign keys will be ignored or updated when you publish to a database."
               },
               {
-                "name": "IgnoreWorkloadClassifiers",
-                "type": "bool",
-                "help": "Specifies whether to exclude workload classifiers that exist on the target during deployment."
-              },
-              {
                 "name": "IncludeCompositeObjects",
                 "type": "bool",
                 "help": "Include all composite elements with the same database as part of a single publish operation."
@@ -708,7 +688,7 @@
             "name": "SourceConnectionString",
             "type": "string",
             "format": "/SourceConnectionString:{value}",
-            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the source database. If this name is specified, it shall be used exclusively of all other source names."
+            "help": "Specifies a valid <a href=\"https://learn.microsoft.com/en-us/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring\">SQL Server/Azure connection string</a> to the source database. If this parameter is specified, it shall be used exclusively of all other source parameters."
           },
           {
             "name": "SourceDatabaseName",
@@ -762,7 +742,7 @@
             "name": "TargetConnectionString",
             "type": "string",
             "format": "/TargetConnectionString:{value}",
-            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the target database. If this name is specified, it shall be used exclusively of all other target names."
+            "help": "Specifies a valid <a href=\"https://learn.microsoft.com/en-us/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring\">SQL Server/Azure connection string</a> to the target database. If this name is specified, it shall be used exclusively of all other target names."
           },
           {
             "name": "TargetDatabaseName",
@@ -816,7 +796,7 @@
             "name": "TenantId",
             "type": "string",
             "format": "/TenantId:{value}",
-            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this name is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
           },
           {
             "name": "ThreadMaxStackSize",
@@ -828,7 +808,7 @@
             "name": "UniversalAuthentication",
             "type": "bool",
             "format": "/UniversalAuthentication:{value}",
-            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+"help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
           },
           {
             "name": "Variables",
@@ -894,7 +874,7 @@
             "type": "Dictionary<string, object>",
             "format": "/p:{value}",
             "itemFormat": "{key}={value}",
-            "help": "Specifies a name value pair for an [action-specific property](#deployreport-action-properties); {key}={value}.",
+            "help": "Specifies a name value pair for an <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-deploy-drift-report.md#deployreport-action-properties\">action-specific property</a>; {key}={value}.",
             "delegates": [
               {
                 "name": "AdditionalDeploymentContributorArguments",
@@ -967,7 +947,7 @@
               {
                 "name": "DatabaseEdition",
                 "type": "DatabaseEdition",
-                "help": "Defines the edition of an Azure SQL Database. See [Azure SQL Database service tiers](/azure/azure-sql/database/service-tiers-general-purpose-business-critical)."
+              "help": "Defines the edition of an Azure SQL Database. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-publish.md#databaseedition\">Azure SQL Database service tiers</a>."
               },
               {
                 "name": "DatabaseLockTimeout",
@@ -1374,7 +1354,7 @@
             "name": "SourceConnectionString",
             "type": "string",
             "format": "/SourceConnectionString:{value}",
-            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the source database. If this name is ecified, it shall be used exclusively of all other sourcen."
+            "help": "Specifies a valid <a href=\"(https://learn.microsoft.com/en-us/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring\">SQL Server/Azure connection string</a> to the source database. If this name is ecified, it shall be used exclusively of all other sourcen."
           },
           {
             "name": "SourceDatabaseName",
@@ -1434,7 +1414,7 @@
             "name": "TargetConnectionString",
             "type": "string",
             "format": "/TargetConnectionString:{value}",
-            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the target database. If this name is ecified, it shall be used exclusively of all other targetn "
+            "help": "Specifies a valid <a href=\"(https://learn.microsoft.com/en-us/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring\">SQL Server/Azure connection string</a> to the target database. If this name is ecified, it shall be used exclusively of all other targetn "
           },
           {
             "name": "TargetDatabaseName",
@@ -1488,13 +1468,13 @@
             "name": "TenantId",
             "type": "string",
             "format": "/TenantId:{value}",
-            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this name is itted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfaauthenticati."
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this name is itted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication."
           },
           {
             "name": "UniversalAuthentication",
             "type": "bool",
             "format": "/UniversalAuthentication:{value}",
-            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+"help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
           },
           {
             "name": "Variables",
@@ -1613,13 +1593,13 @@
             "name": "TenantId",
             "type": "string",
             "format": "/TenantId:{value}",
-            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\"> Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA) </a>."
           },
           {
             "name": "UniversalAuthentication",
             "type": "bool",
             "format": "/UniversalAuthentication:{value}",
-            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\"> Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA) </a>."
           }
         ]
       }
@@ -1702,7 +1682,7 @@
             "type": "Dictionary<string, object>",
             "format": "/p:{value}",
             "itemFormat": "{key}={value}",
-            "help": "Specifies a name value pair for an [action-specific property](#properties-specific-to-the-script-action); {PropertyValue}={Value}.",
+            "help": "Specifies a name value pair for an <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-script.md#properties-specific-to-the-script-action\">action-specific property</a>; {PropertyValue}={Value}.",
             "delegates": [
               {
                 "name": "AdditionalDeploymentContributorArguments",
@@ -1785,7 +1765,7 @@
               {
                 "name": "DatabaseEdition",
                 "type": "DatabaseEdition",
-                "help": "Defines the edition of an Azure SQL Database. See [Azure SQL Database service tiers](/azure/azure-sql/database/service-tiers-general-purpose-business-critical)."
+                "help": "Defines the edition of an Azure SQL Database. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-publish.md#databaseedition\">Azure SQL Database service tiers</a>."
               },
               {
                 "name": "DatabaseLockTimeout",
@@ -2254,7 +2234,7 @@
             "name": "SourceConnectionString",
             "type": "string",
             "format": "/SourceConnectionString:{value}",
-            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the source database. If this parameter is specified, it shall be used exclusively of all other source parameters."
+            "help": "Specifies a valid <a href=\"(https://learn.microsoft.com/en-us/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring\">SQL Server/Azure connection string</a> to the source database. If this parameter is specified, it shall be used exclusively of all other source parameters."
           },
           {
             "name": "SourceDatabaseName",
@@ -2314,7 +2294,7 @@
             "name": "TargetConnectionString",
             "type": "string",
             "format": "/TargetConnectionString:{value}",
-            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the target database. If this parameter is specified, it shall be used exclusively of all other target parameters."
+            "help": "Specifies a valid <a href=\"(https://learn.microsoft.com/en-us/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring\">SQL Server/Azure connection string</a> to the target database. If this parameter is specified, it shall be used exclusively of all other target parameters."
           },
           {
             "name": "TargetDatabaseName",
@@ -2368,7 +2348,7 @@
             "name": "TenantId",
             "type": "string",
             "format": "/TenantId:{value}",
-            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\"> Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA) </a>."
           },
           {
             "name": "ThreadMaxStackSize",
@@ -2380,7 +2360,7 @@
             "name": "UniversalAuthentication",
             "type": "bool",
             "format": "/UniversalAuthentication:{value}",
-            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\"> Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA) </a>."
           },
           {
             "name": "Variables",
@@ -2440,7 +2420,7 @@
             "type": "Dictionary<string, object>",
             "format": "/p:{value}",
             "itemFormat": "{key}={value}",
-            "help": "Specifies a name value pair for an [action-specific property](#properties-specific-to-the-import-action); {PropertyName}={Value}.",
+            "help": "Specifies a name value pair for an <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-import.md#properties-specific-to-the-import-action\">action-specific property</a>; {PropertyName}={Value}.",
             "delegates": [
               {
                 "name": "CommandTimeout",
@@ -2450,7 +2430,7 @@
               {
                 "name": "DatabaseEdition",
                 "type": "DatabaseEdition",
-                "help": "Defines the edition of an Azure SQL Database. See [Azure SQL Database service tiers](/azure/azure-sql/database/service-tiers-general-purpose-business-critical)."
+                "help": "Defines the edition of an Azure SQL Database. See <a href=\"https://learn.microsoft.com/en-us/azure/azure-sql/database/service-tiers-general-purpose-business-critical\">Azure SQL Database service tiers</a>."
               },
               {
                 "name": "DatabaseLockTimeout",
@@ -2538,7 +2518,7 @@
             "name": "TargetConnectionString",
             "type": "string",
             "format": "/TargetConnectionString:{value}",
-            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the target database. If this parameter is specified, it shall be used exclusively of all other target parameters."
+            "help": "Specifies a valid <a href=\"(https://learn.microsoft.com/en-us/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring\">SQL Server/Azure connection string</a> to the target database. If this parameter is specified, it shall be used exclusively of all other target parameters."
           },
           {
             "name": "TargetDatabaseName",
@@ -2592,7 +2572,7 @@
             "name": "TenantId",
             "type": "string",
             "format": "/TenantId:{value}",
-            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\"> Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA) </a>."
           },
           {
             "name": "ThreadMaxStackSize",
@@ -2604,7 +2584,7 @@
             "name": "UniversalAuthentication",
             "type": "bool",
             "format": "/UniversalAuthentication:{value}",
-            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\"> Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA) </a>."
           }
         ]
       }
@@ -2657,7 +2637,7 @@
             "type": "Dictionary<string, object>",
             "format": "/p:{value}",
             "itemFormat": "{key}={value}",
-            "help": "Specifies a name value pair for an [action-specific property](#properties-specific-to-the-export-action);{PropertyName}={Value}.",
+            "help": "Specifies a name value pair for an <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-export.md#properties-specific-to-the-export-action\">action-specific property</a>;{PropertyName}={Value}.",
             "delegates": [
               {
                 "name": "CommandTimeout",
@@ -2731,7 +2711,7 @@
             "name": "SourceConnectionString",
             "type": "string",
             "format": "/SourceConnectionString:{value}",
-            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the source database. If this parameter is specified, it shall be used exclusively of all other source parameters."
+            "help": "Specifies a valid <a href=\"https://learn.microsoft.com/en-us/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring\">SQL Server/Azure connection string</a> to the source database. If this parameter is specified, it shall be used exclusively of all other source parameters."
           },
           {
             "name": "SourceDatabaseName",
@@ -2791,7 +2771,7 @@
             "name": "TenantId",
             "type": "string",
             "format": "/TenantId:{value}",
-            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
           },
           {
             "name": "ThreadMaxStackSize",
@@ -2803,7 +2783,7 @@
             "name": "UniversalAuthentication",
             "type": "bool",
             "format": "/UniversalAuthentication:{value}",
-            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
           }
         ]
       }
@@ -2856,27 +2836,27 @@
             "type": "Dictionary<string, object>",
             "format": "/p:{value}",
             "itemFormat": "{key}={value}",
-            "help": "Specifies a name value pair for an [action-specific property](#properties-specific-to-the-extract-action); {PropertyName}={Value}.",
+            "help": "Specifies a name value pair for an <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-extract.md#properties-specific-to-the-extract-action\">action-specific property</a>; {PropertyName}={Value}.",
             "delegates": [
               {
                 "name": "AzureStorageBlobEndpoint",
                 "type": "string",
-                "help": "Azure Blob Storage endpoint. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#extract-export-data)."
+                "help": "Azure Blob Storage endpoint. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#extract-export-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageContainer",
                 "type": "string",
-                "help": "Azure Blob Storage container. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#extract-export-data)."
+                "help": "Azure Blob Storage container. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#extract-export-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageKey",
                 "type": "string",
-                "help": "Azure storage account key. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#extract-export-data)."
+                "help": "Azure storage account key. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#extract-export-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "AzureStorageRootPath",
                 "type": "string",
-                "help": "Storage root path within the container. Without this property, the path defaults to `servername/databasename/timestamp/`. See [SqlPackage for Azure Synapse Analytics](sqlpackage-for-azure-synapse-analytics.md#extract-export-data)."
+                "help": "Storage root path within the container. Without this property, the path defaults to `servername/databasename/timestamp/`. See <a href=\"https://github.com/MicrosoftDocs/sql-docs/blob/live/docs/tools/sqlpackage/sqlpackage-for-azure-synapse-analytics.md#extract-export-data\">SqlPackage for Azure Synapse Analytics</a>."
               },
               {
                 "name": "CommandTimeout",
@@ -2995,7 +2975,7 @@
             "name": "SourceConnectionString",
             "type": "string",
             "format": "/SourceConnectionString:{value}",
-            "help": "Specifies a valid [SQL Server/Azure connection string](/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring) to the source database. If this parameter is specified, it shall be used exclusively of all other source parameters."
+            "help": "Specifies a valid <a href=\"https://learn.microsoft.com/en-us/dotnet/api/microsoft.data.sqlclient.sqlconnection.connectionstring\">SQL Server/Azure connection string</a> to the source database. If this parameter is specified, it shall be used exclusively of all other source parameters."
           },
           {
             "name": "SourceDatabaseName",
@@ -3049,13 +3029,13 @@
             "name": "TargetFile",
             "type": "string",
             "format": "/TargetFile:{value}",
-            "help": "Specifies a target file (that is, a .dacpac file) in local storage to be used as the target of action instead of a database. If this parameter is used, no other target parameter shall be valid. This parameter shall be invalid for actions that only support database targets."
+            "help": "Specifies a target file (that is, a .dacpac file) to be used as the target of action instead of a database. If this parameter is used, no other target parameter shall be valid. This parameter shall be invalid for actions that only support database targets."
           },
           {
             "name": "TenantId",
             "type": "string",
             "format": "/TenantId:{value}",
-            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Represents the Azure AD tenant ID or domain name. This option is required to support guest or imported Azure AD users as well as Microsoft accounts such as outlook.com, hotmail.com, or live.com. If this parameter is omitted, the default tenant ID for Azure AD will be used, assuming that the authenticated user is a native user for this AD. However, in this case any guest or imported users and/or Microsoft accounts hosted in this Azure AD are not supported and the operation will fail. <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
           },
           {
             "name": "ThreadMaxStackSize",
@@ -3067,7 +3047,7 @@
             "name": "UniversalAuthentication",
             "type": "bool",
             "format": "/UniversalAuthentication:{value}",
-            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see [Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)](/azure/sql-database/sql-database-ssms-mfa-authentication)."
+            "help": "Specifies if Universal Authentication should be used. When set to True, the interactive authentication protocol is activated supporting MFA. This option can also be used for Azure AD authentication without MFA, using an interactive protocol requiring the user to enter their username and password or integrated authentication (Windows credentials). When /UniversalAuthentication is set to True, no Azure AD authentication can be specified in SourceConnectionString (/scs). When /UniversalAuthentication is set to False, Azure AD authentication must be specified in SourceConnectionString (/scs). <br/> For more information about Active Directory Universal Authentication, see <a href=\"https://learn.microsoft.com/en-us/azure/sql-database/sql-database-ssms-mfa-authentication\">Universal Authentication with SQL Database and Azure Synapse Analytics (SSMS support for MFA)</a>."
           }
         ]
       }
