@@ -739,6 +739,307 @@ public static partial class MSBuildSettingsExtensions
     [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.NoConsoleLogger))]
     public static T ToggleNoConsoleLogger<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.Set(() => o.NoConsoleLogger, !o.NoConsoleLogger));
     #endregion
+
+         #region PublishProfile
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetPublishProfile<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PublishProfile", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetPublishProfile<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PublishProfile"));
+ #endregion
+
+ #region PublishDir
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetPublishDir<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PublishDir", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetPublishDir<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PublishDir"));
+ #endregion
+
+ #region RuntimeIdentifiers
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetRuntimeIdentifiers<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "RuntimeIdentifiers", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetRuntimeIdentifiers<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "RuntimeIdentifiers"));
+ #endregion
+
+ #region UpdateUrl
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetUpdateUrl<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "UpdateUrl", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetUpdateUrl<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "UpdateUrl"));
+ #endregion
+
+ #region BootstrapperEnabled
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetBootstrapperEnabled<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "BootstrapperEnabled", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetBootstrapperEnabled<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "BootstrapperEnabled"));
+ #endregion
+
+ #region GenerateManifests
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetGenerateManifests<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "GenerateManifests", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetGenerateManifests<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "GenerateManifests"));
+ #endregion
+
+ #region Platform
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetPlatform<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "Platform", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetPlatform<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "Platform"));
+ #endregion
+
+ #region TargetFramework
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetTargetFramework<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "TargetFramework", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetTargetFramework<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "TargetFramework"));
+ #endregion
+
+ #region ApplicationVersion
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetApplicationVersion<T>(this T o, Version v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "ApplicationVersion", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetApplicationVersion<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "ApplicationVersion"));
+ #endregion
+
+ #region ApplicationRevision
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetApplicationRevision<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "ApplicationRevision", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetApplicationRevision<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "ApplicationRevision"));
+ #endregion
+
+ #region CreateWebPageOnPublish 
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetCreateWebPageOnPublish<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "CreateWebPageOnPublish", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetCreateWebPageOnPublish<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "CreateWebPageOnPublish"));
+ #endregion
+
+ #region Install
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetInstall<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "Install", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetInstall<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "Install"));
+ #endregion
+
+ #region InstallFrom
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetInstallFrom<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "InstallFrom", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetInstallFrom<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "InstallFrom"));
+ #endregion
+
+ #region MapFileExtensions
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetMapFileExtensions<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "MapFileExtensions", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetMapFileExtensions<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "MapFileExtensions"));
+
+ #endregion
+
+ #region OpenBrowserOnPublish
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetOpenBrowserOnPublish<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "OpenBrowserOnPublish", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure] [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetOpenBrowserOnPublish<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "OpenBrowserOnPublish"));
+
+ #endregion
+
+ #region PublishProtocol
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetPublishProtocol<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PublishProtocol", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetPublishProtocol<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PublishProtocol"));
+ #endregion
+
+ #region PublishReadyToRun
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SePublishReadyToRun<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PublishReadyToRun", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetPublishReadyToRun<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PublishReadyToRun"));
+ #endregion
+
+ #region PublishSingleFile
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetPublishSingleFile<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "PublishSingleFile", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetPublishSingleFile<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "PublishSingleFile"));
+ #endregion
+
+ #region SelfContained
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetSelfContained<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "SelfContained", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetSelfContained<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "SelfContained"));
+ #endregion
+
+ #region SignManifests
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetSignManifests<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "SignManifests", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetSignManifests<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "SignManifests"));
+ #endregion
+
+ #region SkipPublishVerification
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetSkipPublishVerification<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "SkipPublishVerification", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetSkipPublishVerification<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "SkipPublishVerification"));
+ #endregion
+
+ #region UpdateEnabled
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetUpdateEnabled<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "UpdateEnabled", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetUpdateEnabled<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "UpdateEnabled"));
+ #endregion
+
+ #region ManifestKeyFile
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetManifestKeyFile<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "ManifestKeyFile", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetManifestKeyFile<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "ManifestKeyFile"));
+ #endregion
+
+ #region CreateDesktopShortcut
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetCreateDesktopShortcut<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "CreateDesktopShortcut", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetCreateDesktopShortcut<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "CreateDesktopShortcut"));
+ #endregion
+
+ #region UpdateRequired
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T SetUpdateRequired<T>(this T o, string v) where T : MSBuildSettings => o.Modify(b => b.SetDictionary(() => o.Properties, "UpdateRequired", v));
+
+ /// <inheritdoc cref="MSBuildSettings.Properties"/>
+ [Pure]
+ [Builder(Type = typeof(MSBuildSettings), Property = nameof(MSBuildSettings.Properties))]
+ public static T ResetUpdateRequired<T>(this T o) where T : MSBuildSettings => o.Modify(b => b.RemoveDictionary(() => o.Properties, "UpdateRequired"));
+
+ #endregion
 }
 #endregion
 #region MSBuildToolsVersion
