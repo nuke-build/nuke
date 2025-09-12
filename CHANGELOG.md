@@ -2,7 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+This project DOES NOT adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html), instead breaking changes may happen during minor (or patch) releases. Major versions are released alongside major .NET SDK releases. This is to reflect that our releases are compatible with a specific .NET SDK version. As a consequence, breaking changes may and will happen during minor releases for various reasons. Most often, it is to improve an API, fix legacy mistakes, or update a tool task to a new version.
 
 ## [vNext]
 
