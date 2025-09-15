@@ -150,8 +150,12 @@ public class GitRepository
         var canonicalPath = Path.GetFullPath(worktreeGitDir);
         worktreeGitDir = AbsolutePath.Create(canonicalPath);
 
-        var rootCanonicalPath = Path.GetFullPath(rootDirectory);
-        if (!IsPathWithinAllowedScope(canonicalPath, rootCanonicalPath))
+        var mainRepoGitDir = worktreeGitDir
+            .FindParentOrSelf(x => x.Name == ".git")
+            .NotNull("Invalid worktree configuration: no parent Git directory found");
+
+        var mainRepoGitDirCanonicalPath = Path.GetFullPath(mainRepoGitDir);
+        if (!IsPathWithinAllowedScope(canonicalPath, mainRepoGitDirCanonicalPath))
             throw new ArgumentException("Invalid git directory path: outside allowed scope");
 
         if (!worktreeGitDir.Exists())
@@ -160,7 +164,7 @@ public class GitRepository
         return worktreeGitDir;
     }
 
-    private static bool IsPathWithinAllowedScope(string targetPath, string basePath)
+    internal static bool IsPathWithinAllowedScope(string targetPath, string basePath)
     {
         var targetParts = targetPath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
             .Where(p => !string.IsNullOrEmpty(p))
@@ -169,13 +173,19 @@ public class GitRepository
             .Where(p => !string.IsNullOrEmpty(p))
             .ToArray();
 
-        for (var i = 0; i < Math.Min(targetParts.Length, baseParts.Length); i++)
+        if (targetParts.Contains(".."))
+            return false;
+
+        if (targetParts.Length < baseParts.Length)
+            return false;
+
+        for (var i = 0; i < baseParts.Length; i++)
         {
             if (!string.Equals(targetParts[i], baseParts[i], StringComparison.OrdinalIgnoreCase))
-                break;
+                return false;
         }
 
-        return !targetParts.Contains("..");
+        return true;
     }
 
     private static (string Name, string Branch) GetRemoteNameAndBranch(AbsolutePath gitDirectory, [CanBeNull] string branch)

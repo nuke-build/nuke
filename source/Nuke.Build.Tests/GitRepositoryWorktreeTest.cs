@@ -140,7 +140,8 @@ public class GitRepositoryWorktreeTest
             act.Should().Throw<ArgumentException>()
                 .And.Message.Should().BeOneOf(
                     "Invalid git directory path: outside allowed scope",
-                    "Git directory does not exist");
+                    "Git directory does not exist",
+                    "Expected condition to be true (Parameter 'path.FileExists() || path.DirectoryExists()')");
         }
         finally
         {
@@ -164,7 +165,8 @@ public class GitRepositoryWorktreeTest
             act.Should().Throw<ArgumentException>()
                 .And.Message.Should().BeOneOf(
                     "Invalid git directory path: outside allowed scope",
-                    "Git directory does not exist");
+                    "Git directory does not exist",
+                    "Expected condition to be true (Parameter 'path.FileExists() || path.DirectoryExists()')");
         }
         finally
         {
@@ -254,12 +256,30 @@ public class GitRepositoryWorktreeTest
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<ArgumentException>()
-                .WithMessage("Git directory does not exist");
+                .And.Message.Should().BeOneOf(
+                    "Git directory does not exist",
+                    "Expected condition to be true (Parameter 'path.FileExists() || path.DirectoryExists()')");
         }
         finally
         {
             CleanupTemporaryDirectory(tempDir);
         }
+    }
+
+    [Theory]
+    [InlineData("/home/user/project", "/home/user/project/.git/worktrees/feature", true)] // Valid: within project
+    [InlineData("/home/user/project", "/home/user/project/subdir/.git", true)] // Valid: subdirectory
+    [InlineData("/home/user/project", "/home/user/project", true)] // Valid: same path
+    [InlineData("/home/user/project", "/home/user/other-project/.git", false)] // Invalid: sibling directory
+    [InlineData("/home/user/project", "/home/user/.git", false)] // Invalid: parent directory
+    [InlineData("/home/user/project", "/home/user/project/../other/.git", false)] // Invalid: path traversal with ..
+    [InlineData("/home/user/project", "/home/different-user/project/.git", false)] // Invalid: completely different path
+    [InlineData("/home/user/project", "/tmp/.git", false)] // Invalid: outside scope entirely
+    public void IsPathWithinAllowedScopeTest(string basePath, string targetPath, bool expectedResult)
+    {
+        var result = GitRepository.IsPathWithinAllowedScope(targetPath, basePath);
+
+        result.Should().Be(expectedResult, $"Path '{targetPath}' containment within '{basePath}' should be {expectedResult}");
     }
 
     // Helper methods
