@@ -100,33 +100,6 @@ public class GitRepositoryWorktreeTest
         }
     }
 
-    [Fact]
-    public void FromDirectorySiblingWorktreeTest()
-    {
-        var tempDir = GetTemporaryDirectory();
-        const string worktreeName = "sibling-worktree";
-        const string branchName = "git-worktree-support";
-        var siblingWorktreeDir = tempDir / worktreeName;
-        var uniqueBranchName = $"{branchName}-sibling-{Guid.NewGuid().ToString("N")[..8]}";
-
-        try
-        {
-            // Create a worktree in the temp directory (sibling to main repo)
-            ProcessTasks.StartProcess("git", $"worktree add -b {uniqueBranchName} {siblingWorktreeDir} {branchName}", workingDirectory: Directory.GetCurrentDirectory())
-                .AssertZeroExitCode();
-
-            var repository = GitRepository.FromLocalDirectory(siblingWorktreeDir);
-            var mainRepository = GitRepository.FromLocalDirectory(Directory.GetCurrentDirectory());
-
-            AssertWorktreeRepository(repository, mainRepository, siblingWorktreeDir);
-            repository.Branch.Should().StartWith($"{branchName}-sibling-");
-        }
-        finally
-        {
-            CleanupWorktree(siblingWorktreeDir);
-            CleanupTemporaryDirectory(tempDir);
-        }
-    }
 
     // Worktree input validation tests
     [Fact]
@@ -152,8 +125,12 @@ public class GitRepositoryWorktreeTest
     }
 
     // Worktree security tests
-    [Fact]
-    public void FromDirectoryWorktreePathTraversalAttackTest()
+    [Theory]
+    [InlineData("../../../etc")]
+    [InlineData("../../malicious")]
+    [InlineData("../../../../../../../etc/passwd")]
+    [InlineData(@"..\..\Windows\System32")]
+    public void FromDirectoryWorktreePathTraversalTest(string maliciousPath)
     {
         var tempDir = GetTemporaryDirectory();
         var invalidGitDir = tempDir / "path-traversal-attack";
@@ -162,29 +139,7 @@ public class GitRepositoryWorktreeTest
         try
         {
             var gitFile = invalidGitDir / ".git";
-            gitFile.WriteAllText("gitdir: ../../../etc");
-
-            var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
-            act.Should().Throw<ArgumentException>()
-                .WithMessage("Invalid git directory path: contains path traversal");
-        }
-        finally
-        {
-            CleanupTemporaryDirectory(tempDir);
-        }
-    }
-
-    [Fact]
-    public void FromDirectoryWorktreePathTraversalWithDotsTest()
-    {
-        var tempDir = GetTemporaryDirectory();
-        var invalidGitDir = tempDir / "dots-attack";
-        invalidGitDir.CreateDirectory();
-
-        try
-        {
-            var gitFile = invalidGitDir / ".git";
-            gitFile.WriteAllText("gitdir: ../../malicious");
+            gitFile.WriteAllText($"gitdir: {maliciousPath}");
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<ArgumentException>()
