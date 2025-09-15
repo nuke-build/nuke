@@ -137,6 +137,9 @@ public class GitRepository
         if (gitDirPath.Contains('\0') || gitDirPath.Any(c => char.IsControl(c) && c != '\t'))
             throw new ArgumentException("Invalid git directory path: contains invalid characters");
 
+        if (gitDirPath.Contains(".."))
+            throw new ArgumentException("Invalid git directory path: contains path traversal");
+
         AbsolutePath worktreeGitDir;
         try
         {
@@ -144,17 +147,33 @@ public class GitRepository
         }
         catch (Exception ex)
         {
-            throw new ArgumentException("Invalid git directory path format", ex);
+            throw new ArgumentException("Invalid git directory path: path does not exist or is inaccessible", ex);
         }
 
-        var canonicalPath = Path.GetFullPath(worktreeGitDir);
-        worktreeGitDir = AbsolutePath.Create(canonicalPath);
+        string canonicalPath;
+        try
+        {
+            canonicalPath = Path.GetFullPath(worktreeGitDir);
+            worktreeGitDir = AbsolutePath.Create(canonicalPath);
+        }
+        catch (Exception ex)
+        {
+            throw new ArgumentException("Invalid git directory path: path does not exist or is inaccessible", ex);
+        }
 
-        var mainRepoGitDir = worktreeGitDir
-            .FindParentOrSelf(x => x.Name == ".git")
-            .NotNull("Invalid worktree configuration: no parent Git directory found");
+        string mainRepoGitDirCanonicalPath;
+        try
+        {
+            var mainRepoGitDir = worktreeGitDir
+                .FindParentOrSelf(x => x.Name == ".git")
+                .NotNull("Invalid worktree configuration: no parent Git directory found");
+            mainRepoGitDirCanonicalPath = Path.GetFullPath(mainRepoGitDir);
+        }
+        catch (Exception ex)
+        {
+            throw new ArgumentException("Invalid git directory path: path does not exist or is inaccessible", ex);
+        }
 
-        var mainRepoGitDirCanonicalPath = Path.GetFullPath(mainRepoGitDir);
         if (!IsPathWithinAllowedScope(canonicalPath, mainRepoGitDirCanonicalPath))
             throw new ArgumentException("Invalid git directory path: outside allowed scope");
 

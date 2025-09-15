@@ -138,10 +138,7 @@ public class GitRepositoryWorktreeTest
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<ArgumentException>()
-                .And.Message.Should().BeOneOf(
-                    "Invalid git directory path: outside allowed scope",
-                    "Git directory does not exist",
-                    "Expected condition to be true (Parameter 'path.FileExists() || path.DirectoryExists()')");
+                .WithMessage("Invalid git directory path: contains path traversal");
         }
         finally
         {
@@ -163,10 +160,7 @@ public class GitRepositoryWorktreeTest
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<ArgumentException>()
-                .And.Message.Should().BeOneOf(
-                    "Invalid git directory path: outside allowed scope",
-                    "Git directory does not exist",
-                    "Expected condition to be true (Parameter 'path.FileExists() || path.DirectoryExists()')");
+                .WithMessage("Invalid git directory path: contains path traversal");
         }
         finally
         {
@@ -256,9 +250,7 @@ public class GitRepositoryWorktreeTest
 
             var act = () => GitRepository.FromLocalDirectory(invalidGitDir);
             act.Should().Throw<ArgumentException>()
-                .And.Message.Should().BeOneOf(
-                    "Git directory does not exist",
-                    "Expected condition to be true (Parameter 'path.FileExists() || path.DirectoryExists()')");
+                .WithMessage("Invalid git directory path: path does not exist or is inaccessible");
         }
         finally
         {
