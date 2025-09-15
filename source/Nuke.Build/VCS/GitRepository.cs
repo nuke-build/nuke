@@ -366,17 +366,11 @@ public class GitRepository
 
     /// <summary>Url in the form of <c>https://endpoint/identifier.git</c></summary>
     [CanBeNull]
-    public string HttpsUrl
-    {
-        get => Endpoint != null ? $"https://{Endpoint}/{Identifier}.git" : null;
-    }
+    public string HttpsUrl => Endpoint != null ? $"https://{Endpoint}/{Identifier}.git" : null;
 
     /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
     [CanBeNull]
-    public string SshUrl
-    {
-        get => Endpoint != null ? $"git@{Endpoint}:{Identifier}.git" : null;
-    }
+    public string SshUrl => Endpoint != null ? $"git@{Endpoint}:{Identifier}.git" : null;
 
     public GitRepository SetBranch(string branch)
     {
