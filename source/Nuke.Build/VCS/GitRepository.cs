@@ -1,9 +1,10 @@
-// Copyright 2023 Maintainers of NUKE.
+﻿// Copyright 2023 Maintainers of NUKE.
 // Distributed under the MIT License.
 // https://github.com/nuke-build/nuke/blob/master/LICENSE
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
@@ -83,28 +84,99 @@ public class GitRepository
         }
 
         rootDirectory = directory.FindParentOrSelf(x => x.ContainsFile(".git"))
-            .NotNull($"No parent Git directory or file for '{directory}'");
+            .NotNull("No parent Git directory or file found");
 
         const string gitDirPrefix = "gitdir:";
         var gitFile = rootDirectory / ".git";
 
-        var worktreeGitDirLine = gitFile.ReadAllLines()
-            .FirstOrDefault(s => s.StartsWith(gitDirPrefix))
-            .NotNullOrEmpty($"Couldn't find {gitDirPrefix} line in {gitFile}.");
-
-        var worktreeGitDir = AbsolutePath.Create(worktreeGitDirLine
-            .Substring(gitDirPrefix.Length)
-            .TrimStart());
+        var worktreeGitDirLine = ReadGitFileSecurely(gitFile, gitDirPrefix);
+        var worktreeGitDir = ParseAndValidateWorktreeGitDir(worktreeGitDirLine, gitDirPrefix, rootDirectory);
 
         var mainWorktreeGitDir = worktreeGitDir
             .FindParentOrSelf(x => x.Name == ".git")
-            .NotNull($"No parent Git directory for worktree '{worktreeGitDir}'");
+            .NotNull("Invalid worktree configuration: no parent Git directory found");
 
         var worktreeHead = GetHead(worktreeGitDir);
         return new GitMetadata(rootDirectory, mainWorktreeGitDir, worktreeHead);
     }
 
-    private record GitMetadata(AbsolutePath RootDirectory, AbsolutePath GitDirectory, string Head);
+    private static string ReadGitFileSecurely(AbsolutePath gitFile, string expectedPrefix)
+    {
+        const int maxFileSize = 4096;
+
+        if (!gitFile.Exists())
+            throw new ArgumentException("Git file does not exist");
+
+        var fileInfo = new FileInfo(gitFile);
+        if (fileInfo.Length > maxFileSize)
+            throw new ArgumentException($"Git file exceeds maximum size of {maxFileSize} bytes");
+
+        var lines = gitFile.ReadAllLines();
+        if (lines.Length == 0)
+            throw new ArgumentException("Git file is empty");
+
+        var targetLine = lines.FirstOrDefault(line =>
+            !string.IsNullOrWhiteSpace(line) &&
+            line.TrimStart().StartsWith(expectedPrefix, StringComparison.OrdinalIgnoreCase));
+
+        if (string.IsNullOrEmpty(targetLine))
+            throw new ArgumentException($"Required '{expectedPrefix}' entry not found in git file");
+
+        return targetLine.Trim();
+    }
+
+    private static AbsolutePath ParseAndValidateWorktreeGitDir(string worktreeGitDirLine, string gitDirPrefix, AbsolutePath rootDirectory)
+    {
+        var gitDirPath = worktreeGitDirLine
+            .Substring(gitDirPrefix.Length)
+            .Trim();
+
+        if (string.IsNullOrWhiteSpace(gitDirPath))
+            throw new ArgumentException("Invalid git directory path: path is empty");
+
+        if (gitDirPath.Contains('\0') || gitDirPath.Any(c => char.IsControl(c) && c != '\t'))
+            throw new ArgumentException("Invalid git directory path: contains invalid characters");
+
+        AbsolutePath worktreeGitDir;
+        try
+        {
+            worktreeGitDir = AbsolutePath.Create(gitDirPath);
+        }
+        catch (Exception ex)
+        {
+            throw new ArgumentException("Invalid git directory path format", ex);
+        }
+
+        var canonicalPath = Path.GetFullPath(worktreeGitDir);
+        worktreeGitDir = AbsolutePath.Create(canonicalPath);
+
+        var rootCanonicalPath = Path.GetFullPath(rootDirectory);
+        if (!IsPathWithinAllowedScope(canonicalPath, rootCanonicalPath))
+            throw new ArgumentException("Invalid git directory path: outside allowed scope");
+
+        if (!worktreeGitDir.Exists())
+            throw new ArgumentException("Git directory does not exist");
+
+        return worktreeGitDir;
+    }
+
+    private static bool IsPathWithinAllowedScope(string targetPath, string basePath)
+    {
+        var targetParts = targetPath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+            .Where(p => !string.IsNullOrEmpty(p))
+            .ToArray();
+        var baseParts = basePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+            .Where(p => !string.IsNullOrEmpty(p))
+            .ToArray();
+
+        for (var i = 0; i < Math.Min(targetParts.Length, baseParts.Length); i++)
+        {
+            if (!string.Equals(targetParts[i], baseParts[i], StringComparison.OrdinalIgnoreCase))
+                break;
+        }
+
+        return !targetParts.Contains("..");
+    }
 
     private static (string Name, string Branch) GetRemoteNameAndBranch(AbsolutePath gitDirectory, [CanBeNull] string branch)
     {
@@ -294,11 +366,17 @@ public class GitRepository
 
     /// <summary>Url in the form of <c>https://endpoint/identifier.git</c></summary>
     [CanBeNull]
-    public string HttpsUrl => Endpoint != null ? $"https://{Endpoint}/{Identifier}.git" : null;
+    public string HttpsUrl
+    {
+        get => Endpoint != null ? $"https://{Endpoint}/{Identifier}.git" : null;
+    }
 
     /// <summary>Url in the form of <c>git@endpoint:identifier.git</c></summary>
     [CanBeNull]
-    public string SshUrl => Endpoint != null ? $"git@{Endpoint}:{Identifier}.git" : null;
+    public string SshUrl
+    {
+        get => Endpoint != null ? $"git@{Endpoint}:{Identifier}.git" : null;
+    }
 
     public GitRepository SetBranch(string branch)
     {
@@ -319,4 +397,6 @@ public class GitRepository
     {
         return (Protocol == GitProtocol.Https ? HttpsUrl : SshUrl).TrimEnd(".git");
     }
+
+    private record GitMetadata(AbsolutePath RootDirectory, AbsolutePath GitDirectory, string Head);
 }
