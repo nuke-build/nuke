@@ -185,10 +185,10 @@ public class GitRepository
 
     internal static bool IsPathWithinAllowedScope(string targetPath, string basePath)
     {
-        var targetParts = targetPath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+        var targetParts = targetPath.Split(PathConstruction.AllSeparators)
             .Where(p => !string.IsNullOrEmpty(p))
             .ToArray();
-        var baseParts = basePath.Split(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar)
+        var baseParts = basePath.Split(PathConstruction.AllSeparators)
             .Where(p => !string.IsNullOrEmpty(p))
             .ToArray();
 

@@ -259,14 +259,19 @@ public class GitRepositoryWorktreeTest
     }
 
     [Theory]
-    [InlineData("/home/user/project", "/home/user/project/.git/worktrees/feature", true)] // Valid: within project
-    [InlineData("/home/user/project", "/home/user/project/subdir/.git", true)] // Valid: subdirectory
-    [InlineData("/home/user/project", "/home/user/project", true)] // Valid: same path
-    [InlineData("/home/user/project", "/home/user/other-project/.git", false)] // Invalid: sibling directory
-    [InlineData("/home/user/project", "/home/user/.git", false)] // Invalid: parent directory
-    [InlineData("/home/user/project", "/home/user/project/../other/.git", false)] // Invalid: path traversal with ..
-    [InlineData("/home/user/project", "/home/different-user/project/.git", false)] // Invalid: completely different path
-    [InlineData("/home/user/project", "/tmp/.git", false)] // Invalid: outside scope entirely
+    // Valid worktree scenarios
+    [InlineData("/Users/dev/myproject/.git", "/Users/dev/myproject/.git/worktrees/feature-branch", true)] // Standard worktree location
+    [InlineData("/home/user/repo/.git", "/home/user/repo/.git/worktrees/hotfix", true)] // Linux worktree
+    [InlineData(@"C:\dev\project\.git", @"C:\dev\project\.git\worktrees\release", true)] // Windows worktree
+    [InlineData("/opt/repos/main/.git", "/opt/repos/main/.git/worktrees/experimental", true)] // Server worktree
+    [InlineData("/home/ci/build/.git", "/home/ci/build/.git/worktrees/pr-123", true)] // CI worktree
+    // Invalid worktree scenarios - security violations
+    [InlineData("/Users/dev/myproject/.git", "/Users/dev/other-project/.git/worktrees/malicious", false)] // Different project
+    [InlineData("/home/user/repo/.git", "/home/attacker/malicious/.git", false)] // Attacker's repository
+    [InlineData("/opt/repos/main/.git", "/etc/passwd", false)] // System file access
+    [InlineData(@"C:\dev\project\.git", @"C:\Windows\System32\config", false)] // Windows system access
+    [InlineData("/home/user/repo/.git", "/home/user/repo/.git/../../../etc/shadow", false)] // Path traversal attempt
+    [InlineData("/Users/dev/project/.git", "/tmp/malicious-worktree", false)] // Outside project scope
     public void IsPathWithinAllowedScopeTest(string basePath, string targetPath, bool expectedResult)
     {
         var result = GitRepository.IsPathWithinAllowedScope(targetPath, basePath);
